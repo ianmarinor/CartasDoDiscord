@@ -8,18 +8,18 @@ const seedRNG = Math.floor(Math.random() * totalNumOfSeeds)
 // if a string, it'll be converted
 function generateSeed(input){
     //se a chave for LETRA!
-     if (typeof input === 'string' && input.length < 12 && input != ''){
+     if (typeof input === 'string' && input.length < 20 && input.length >= 3){
         let sum = 1
         for (let i = 0; i < input.length; i++){
-                sum = sum + input[i].charCodeAt()   
+                sum = sum + input[i].charCodeAt()  
         }
-        return sum * input.length
+        return sum * 27452900482
     } else {
         return  seedRNG
     }
 }
 
-let seed = generateSeed()
+let seed = generateSeed('123456789101112131')
 // console.log('Seed: ', seed);
 
 
@@ -84,17 +84,48 @@ function escolherIntegrante(generateSeed){
 let cidade = ''
 function escolherCidade(generateSeed){
     let seedString = seed.toString()
-    console.log('string', seedString[1])
-    if (seedString[1] === 1){
-        return cidade = 'Caxias do Sul'
-    } else if (seedString[1] === 2){
-        return cidade = 'Itapira'
-    } else if (seedString[1] === 3) {
-        return cidade = 'Ubatuba'
-    } else if (seedString[1] === 4){
-        return cidade = 'goiania'
-    } else {
-        cidade = 'fucniona cidade'
+    // console.log('string', seedString[1])
+    if (
+        // seedString[1] == 0 && 
+        seedString[2] == 0){
+        return cidade = 'Velha de Caxias do Sul'
+    } else if 
+    (
+        // seedString[1] == 0 && 
+        seedString[2] == 1)
+        { return cidade = 'Velha de Itapira'} 
+        else if (
+        // seedString[1] == 0 && 
+        seedString[2] == 2) {
+        return cidade = 'Velha de Ubatuba'
+    } else if (
+        // seedString[1] == 0 && 
+        seedString[2] == 3) {
+        return cidade = 'Velha de Sao Jose Dos Pinhais'
+    } else if (
+        // seedString[1] == 0 && 
+        seedString[2] == 4) {
+        return cidade = 'Velha do Rio de Janeiro'
+    } else if (
+        // seedString[1] == 0 && 
+        seedString[2] == 5) {
+        return cidade = 'Velha de Maringá'
+    } else if (
+        // seedString[1] == 1 && 
+        seedString[2] == 6) {
+        return cidade = 'Velha de '
+    } else if (
+        // seedString[1] == 0 && 
+        seedString[2] == 7) {
+        return cidade = 'Velha de '
+    } else if (
+        // seedString[1] == 0 && 
+        seedString[2] == 8) {
+        return cidade = 'Velha de Jaraguá'
+    } else if (
+        // seedString[1] == 0 && 
+        seedString[2] == 9) {
+        return cidade = 'Velha de Curitiba'
     }
     
 }
@@ -102,11 +133,11 @@ function escolherCidade(generateSeed){
 
 console.log('seed: ', seed);
 // console.log('seed: ', seed[0]);
-console.log('generateSeed(): ', generateSeed());
+// console.log('generateSeed(): ', generateSeed());
 escolherIntegrante()
-// escolherCidade()
-console.log('integrante: ' + integrante)
-console.log('cidade ' + cidade)
+escolherCidade()
+console.log(integrante)
+console.log( cidade)
 
 // var idIntegrante = document.getElementById('integrante')
 // var idSeed = document.getElementById('seed')
