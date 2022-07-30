@@ -1,5 +1,20 @@
 const totalNumOfSeeds = (999999999999 - 111111111111)
-const seedRNG = Math.floor(Math.random() * totalNumOfSeeds)
+function seedRNG(){
+    return Math.floor(Math.random() * totalNumOfSeeds)
+} 
+
+////D O M 
+let button = document.getElementById('btn')
+let h1 = document.getElementsByTagName('h1')[0]
+
+let nomeP = document.getElementsByTagName('p')[0]
+let cargoP = document.getElementsByTagName('p')[1]
+let cidadeP = document.getElementsByTagName('p')[2]
+let ataqueP = document.getElementsByTagName('p')[3]
+let defesaP = document.getElementsByTagName('p')[4]
+let especialP = document.getElementsByTagName('p')[5]
+
+
 
 
 
@@ -18,12 +33,15 @@ function generateSeed(input){
         return input
     }
     else {
-        return  seedRNG
+        return  seedRNG()
     }
+    
 }
 
 
-let seed = generateSeed()
+
+// generateSeed('')
+// let seed = generateSeed()
 // console.log('Seed: ', seed);
 
 
@@ -40,8 +58,9 @@ let seed = generateSeed()
 //integrante
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 let integrante = ''
-function escolherIntegrante(generateSeed){
-    let seedString = seed.toString()
+function escolherIntegrante(){
+    let seedString = generateSeed().toString()
+    console.log('seedString: ', seedString);
     if (
         // seedString[0] == 0 && 
         seedString[1] == 0){
@@ -88,58 +107,58 @@ function escolherIntegrante(generateSeed){
 //cidade
 // THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 let cidade = ''
-function escolherCidade(generateSeed){
-    let seedString = seed.toString()
-    // console.log('string', seedString[1])
+function escolherCidade(){
+    let seedString = generateSeed().toString()
+    console.log('string cidade', seedString[1])
     if (
         // seedString[1] == 0 && 
         seedString[2] == 0){
-        return cidade = 'Velha de Caxias do Sul'
+        return cidade = 'de Caxias do Sul'
     } else if 
     (
         // seedString[1] == 0 && 
         seedString[2] == 1)
-        { return cidade = 'Velha de Itapira'} 
+        { return cidade = 'de Itapira'} 
         else if (
         // seedString[1] == 0 && 
         seedString[2] == 2) {
-        return cidade = 'Velha de Ubatuba'
+        return cidade = 'de Ubatuba'
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 3) {
-        return cidade = 'Velha de Sao Jose Dos Pinhais'
+        return cidade = 'de Sao Jose Dos Pinhais'
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 4) {
-        return cidade = 'Velha do Rio de Janeiro'
+        return cidade = 'do Rio de Janeiro'
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 5) {
-        return cidade = 'Velha de Maringá'
+        return cidade = 'de Maringá'
     } else if (
         // seedString[1] == 1 && 
         seedString[2] == 6) {
-        return cidade = 'Velha de '
+        return cidade = 'de '
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 7) {
-        return cidade = 'Velha da Lapa'
+        return cidade = 'da Lapa'
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 8) {
-        return cidade = 'Velha de Jaraguá'
+        return cidade = 'de Jaraguá'
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 9) {
-        return cidade = 'Velha de Curitiba'
+        return cidade = 'de Curitiba'
     }  
 }
 //CARGO
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = ''
-function escolherCargo(generateSeed){
-    let seedString = seed.toString()
-    // console.log('string', seedString[4])
+function escolherCargo(){
+    let seedString = generateSeed().toString()
+    console.log('stringcargo', seedString[4])
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
         {return cargo = 'Premio Marino'
@@ -281,46 +300,39 @@ function fabricaDeCarta(integrante, cidade, cargo, poder){
 
 
 
-////D O M 
-let button = document.getElementById('btn')
-let h1 = document.getElementsByTagName('h1')[0]
-
-let nomeP = document.getElementsByTagName('p')[0]
-let cargoP = document.getElementsByTagName('p')[1]
-let cidadeP = document.getElementsByTagName('p')[2]
-let ataqueP = document.getElementsByTagName('p')[3]
-let defesaP = document.getElementsByTagName('p')[4]
-let especialP = document.getElementsByTagName('p')[5]
 
 
 
-function teste(){
-    especialP.innerHTML =  'juj'
+
+
+
+
+
+
+
+function colocarInfoNoWrap(){
+
+    const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
+
+    nomeP.innerHTML = '&nbsp;' + novaCarta._integrante
+    cargoP.innerHTML = '&nbsp;' + novaCarta._cargo
+    cidadeP.innerHTML = '&nbsp;' + novaCarta._cidade
+    ataqueP.innerHTML =  '&nbsp;' + novaCarta._poder._ataque
+    defesaP.innerHTML = '&nbsp;' + novaCarta._poder._defesa
+    especialP.innerHTML =  '&nbsp;' + novaCarta._poder._especial
 }
 
 
-button.addEventListener('click', ()=> nomeP.innerHTML= seed )
-// button.addEventListener('click', escolherIntegrante)
-// button.addEventListener('click', escolherCidade)
-// button.addEventListener('click', escolherCargo)
-// button.addEventListener('click', escolherPoder)
-// button.addEventListener('click', teste)
-
-// function colocarInfoNoWrap(){
-
-//     const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
-
-//     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante
-    // cargoP.innerHTML = '&nbsp;' + novaCarta._cargo
-//     cidadeP.innerHTML = '&nbsp;' + novaCarta._cidade
-//     ataqueP.innerHTML =  '&nbsp;' + novaCarta._poder._ataque
-//     defesaP.innerHTML = '&nbsp;' + novaCarta._poder._defesa
-//     // especialP.innerHTML =  '&nbsp;' + novaCarta._poder._especial
-// }
+button.addEventListener('click', generateSeed)
+button.addEventListener('click', escolherIntegrante)
+button.addEventListener('click', escolherCidade)
+button.addEventListener('click', escolherCargo)
+button.addEventListener('click', escolherPoder)
+button.addEventListener('click', colocarInfoNoWrap)
 
 
 
-// button.addEventListener('click', colocarInfoNoWrap)
+
 
 
 
