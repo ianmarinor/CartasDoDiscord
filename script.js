@@ -22,7 +22,7 @@ function generateSeed(input){
     }
 }
 
-let seed = generateSeed()
+let seed = generateSeed('xuxa')
 // console.log('Seed: ', seed);
 
 
@@ -60,7 +60,7 @@ function escolherIntegrante(generateSeed){
     } else if (
         // seedString[0] == 0 && 
         seedString[1] == 4) {
-        return integrante = 'Antonio'
+        return integrante = 'SrAntonio'
     } else if (
         // seedString[0] == 0 && 
         seedString[1] == 5) {
@@ -166,21 +166,30 @@ function escolherCargo(generateSeed){
 
 
 //RNG DOS PONTES DE PODER
-let pontoPoderEspecial = Math.floor(Math.random() * 5)
+let pontoPoderEspecial = Math.floor(Math.random() * (5 - 1) + 1)
 // console.log('pontoPoderEspecial: ', pontoPoderEspecial);
 let pontoPoderSemCargo = Math.floor(Math.random() * 10)
+let pontoPoderSemCargoD = Math.floor(Math.random() * 10)
 // console.log('pontoPoderSemCargo: ', pontoPoderSemCargo);
 let pontoPoderPeople = Math.floor(Math.random() * 20)
+let pontoPoderPeopleD = Math.floor(Math.random() * 20)
 // console.log('pontoPoderPeople: ', pontoPoderPeople);
-let pontoPoderGentleman = Math.floor(Math.random() * 30)
+let pontoPoderGentleman = Math.floor(Math.random() * (30 - 5) + 5)
+let pontoPoderGentlemanD = Math.floor(Math.random() * (30 - 5) + 5)
 let pontoPoderMonark = Math.floor(Math.random() * 5)
-let pontoPoderNobre = Math.floor(Math.random() * 40)
+let pontoPoderMonarkD = Math.floor(Math.random() * 5)
+let pontoPoderNobre = Math.floor(Math.random() * (40 - 15) +15)
+let pontoPoderNobreD = Math.floor(Math.random() * (40 - 15) +15)
 let pontoPoderLord = Math.floor(Math.random() * (35 - 10) + 10)
+let pontoPoderLordD = Math.floor(Math.random() * (35 - 10) + 10)
 // console.log('pontoPoderLord: ', pontoPoderLord);
 let pontoPoderMinistro = Math.floor(Math.random() * (60 - 30) + 30)
+let pontoPoderMinistroD = Math.floor(Math.random() * (60 - 30) + 30)
 // console.log('pontoPoderMinistro: ', pontoPoderMinistro);
 let pontoPoderPrimeMinister = Math.floor(Math.random() * (70 - 50) + 50)
-let pontoPoderRNGPremioMarino = Math.floor(Math.random() * (100 - 90) + 90)
+let pontoPoderPrimeMinisterD = Math.floor(Math.random() * (70 - 50) + 50)
+let pontoPoderRNGPremioMarino = Math.floor(Math.random() * (150 - 90) + 90)
+let pontoPoderRNGPremioMarinoD = Math.floor(Math.random() * (150 - 90) + 90)
 // console.log('pontoPoderRNGPremioMarino: ', pontoPoderRNGPremioMarino);
 
 
@@ -191,55 +200,55 @@ function escolherPoder(){
     if(cargo === 'Sem-cargo'){
        return  poder = {
                 _ataque: pontoPoderSemCargo,
-                _defesa: pontoPoderSemCargo,
+                _defesa: pontoPoderSemCargoD,
                 _especial: pontoPoderEspecial
        }
     } else if (cargo === 'People'){
         return  poder = {
                  _ataque: pontoPoderPeople,
-                 _defesa: pontoPoderPeople,
+                 _defesa: pontoPoderPeopleD,
                  _especial: pontoPoderEspecial
         }
      } else if (cargo === 'Gentleman'){
         return  poder = {
                  _ataque: pontoPoderGentleman,
-                 _defesa: pontoPoderGentleman,
+                 _defesa: pontoPoderGentlemanD,
                  _especial: pontoPoderEspecial
         }
      } else if (cargo === 'Monark'){
         return  poder = {
                  _ataque: pontoPoderMonark,
-                 _defesa: pontoPoderMonark,
+                 _defesa: pontoPoderMonarkD,
                  _especial: pontoPoderEspecial
         }
      } else if (cargo === 'Nobre'){
         return  poder = {
                  _ataque: pontoPoderNobre,
-                 _defesa: pontoPoderNobre,
+                 _defesa: pontoPoderNobreD,
                  _especial: pontoPoderEspecial
         }
      } else if (cargo === 'Lord'){
         return  poder = {
                  _ataque: pontoPoderLord,
-                 _defesa: pontoPoderLord,
+                 _defesa: pontoPoderLordD,
                  _especial: pontoPoderEspecial
         }
      } else if (cargo === 'Ministro'){
         return  poder = {
                  _ataque: pontoPoderMinistro,
-                 _defesa: pontoPoderMinistro,
+                 _defesa: pontoPoderMinistroD,
                  _especial: pontoPoderEspecial
         }
      } else if (cargo === 'Prime Minister'){
         return  poder = {
                  _ataque: pontoPoderPrimeMinister,
-                 _defesa: pontoPoderPrimeMinister,
+                 _defesa: pontoPoderPrimeMinisterD,
                  _especial: pontoPoderEspecial
         }
      } else if (cargo === 'Premio Marino'){
         return  poder = {
                  _ataque: pontoPoderRNGPremioMarino,
-                 _defesa: pontoPoderRNGPremioMarino,
+                 _defesa: pontoPoderRNGPremioMarinoD,
                  _especial: pontoPoderEspecial
         }
      }
