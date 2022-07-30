@@ -22,7 +22,8 @@ function generateSeed(input){
     }
 }
 
-let seed = generateSeed('xuxa')
+
+let seed = generateSeed()
 // console.log('Seed: ', seed);
 
 
@@ -273,18 +274,56 @@ function fabricaDeCarta(integrante, cidade, cargo, poder){
 }
 
 //*********************************************************** */
-escolherIntegrante()
-escolherCidade()
-escolherCargo()
-escolherPoder()
-const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
+// escolherIntegrante()
+// escolherCidade()
+// escolherCargo()
+// escolherPoder()
+
 
 
 ////D O M 
 let button = document.getElementById('btn')
 let h1 = document.getElementsByTagName('h1')[0]
 
-// button.onclick = h1.innerHTML = novaCarta
+let nomeP = document.getElementsByTagName('p')[0]
+let cargoP = document.getElementsByTagName('p')[1]
+let cidadeP = document.getElementsByTagName('p')[2]
+let ataqueP = document.getElementsByTagName('p')[3]
+let defesaP = document.getElementsByTagName('p')[4]
+let especialP = document.getElementsByTagName('p')[5]
+
+
+
+function teste(){
+    especialP.innerHTML =  'juj'
+}
+
+
+button.addEventListener('click', ()=> nomeP.innerHTML= seed )
+// button.addEventListener('click', escolherIntegrante)
+// button.addEventListener('click', escolherCidade)
+// button.addEventListener('click', escolherCargo)
+// button.addEventListener('click', escolherPoder)
+// button.addEventListener('click', teste)
+
+// function colocarInfoNoWrap(){
+
+//     const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
+
+//     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante
+    // cargoP.innerHTML = '&nbsp;' + novaCarta._cargo
+//     cidadeP.innerHTML = '&nbsp;' + novaCarta._cidade
+//     ataqueP.innerHTML =  '&nbsp;' + novaCarta._poder._ataque
+//     defesaP.innerHTML = '&nbsp;' + novaCarta._poder._defesa
+//     // especialP.innerHTML =  '&nbsp;' + novaCarta._poder._especial
+// }
+
+
+
+// button.addEventListener('click', colocarInfoNoWrap)
+
+
+
 
 
 

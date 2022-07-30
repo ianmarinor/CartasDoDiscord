@@ -38,7 +38,7 @@ li{
     width: 400px;
     background-color: rgb(138, 128, 138);
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
 }
 
@@ -49,7 +49,22 @@ li{
 }
 
 #carta{
-    font-size: 10em;
+    font-size: 2em;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items:left;
+    justify-content: space-between;
+    /* left: 0; */
+}
+.espaco{
+    /* background-color: aqua; */
+    display: flex;
+    margin: 20px;
     
+
+}
+p{
+    font-size: 0.95em;
     text-align: center;
 }
