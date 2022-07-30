@@ -37,6 +37,7 @@ let seed = generateSeed('xuxa')
 //**************************/
 
 //integrante
+//THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 let integrante = ''
 function escolherIntegrante(generateSeed){
     let seedString = seed.toString()
@@ -84,6 +85,7 @@ function escolherIntegrante(generateSeed){
     }
 }
 //cidade
+// THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 let cidade = ''
 function escolherCidade(generateSeed){
     let seedString = seed.toString()
@@ -131,6 +133,8 @@ function escolherCidade(generateSeed){
         return cidade = 'Velha de Curitiba'
     }  
 }
+//CARGO
+//THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = ''
 function escolherCargo(generateSeed){
     let seedString = seed.toString()
@@ -254,6 +258,9 @@ function escolherPoder(){
      }
 }
 
+
+//************************************************ */
+
 function fabricaDeCarta(integrante, cidade, cargo, poder){
     
     return{
@@ -265,39 +272,23 @@ function fabricaDeCarta(integrante, cidade, cargo, poder){
  }
 }
 
-
-
-// console.log('seed: ', seed[0]);
-// console.log('generateSeed(): ', generateSeed());
+//*********************************************************** */
 escolherIntegrante()
 escolherCidade()
-// console.log('seed: ', seed);
-// console.log(integrante)
-// console.log( cidade)
-
 escolherCargo()
 escolherPoder()
-// console.log('cargo: ', cargo)
-console.log(fabricaDeCarta(integrante, cidade, cargo, poder));
-
-// var idIntegrante = document.getElementById('integrante')
-// var idSeed = document.getElementById('seed')
-
-// idIntegrante.innerHTML = integrante
-// idSeed.innerHTML = seed
+const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
 
 
-// //cidade 
-// let cidade = ''
-// if (seed >= 33334  && seed <= 66666){
-    
-// }
+////D O M 
+let button = document.getElementById('btn')
+let h1 = document.getElementsByTagName('h1')[0]
 
-// //frase 
-// let frase = ''
-// if (seed >= 66667  && seed <= 99991){
-    
-// }
+// button.onclick = h1.innerHTML = novaCarta
+
+
+
+
 
 
 
