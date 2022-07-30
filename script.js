@@ -166,7 +166,7 @@ function escolherCargo(generateSeed){
 
 
 //RNG DOS PONTES DE PODER
-let pontoPoderEspecial = Math.floor(Math.random() * 50)
+let pontoPoderEspecial = Math.floor(Math.random() * 5)
 // console.log('pontoPoderEspecial: ', pontoPoderEspecial);
 let pontoPoderSemCargo = Math.floor(Math.random() * 10)
 // console.log('pontoPoderSemCargo: ', pontoPoderSemCargo);
@@ -181,21 +181,69 @@ let pontoPoderMinistro = Math.floor(Math.random() * (60 - 30) + 30)
 // console.log('pontoPoderMinistro: ', pontoPoderMinistro);
 let pontoPoderPrimeMinister = Math.floor(Math.random() * (70 - 50) + 50)
 let pontoPoderRNGPremioMarino = Math.floor(Math.random() * (100 - 90) + 90)
-console.log('pontoPoderRNGPremioMarino: ', pontoPoderRNGPremioMarino);
+// console.log('pontoPoderRNGPremioMarino: ', pontoPoderRNGPremioMarino);
 
 
 
 
-
-// function escolherPoder(){
-//     let pontoPoderRNGEspecial = Math.floor(Math.random * 50)
-//     let pontoPoderRNGSemCargo = Math.floor(Math.random * 10)
-//     if(cargo === 'Sem-cargo'){
-//        return {poder._ataque = pontoPoderRNGSemCargo  
-//         poder._defesa = pontoPoderRNGSemCargo
-// }
-
-
+let poder = {}
+function escolherPoder(){
+    if(cargo === 'Sem-cargo'){
+       return  poder = {
+                _ataque: pontoPoderSemCargo,
+                _defesa: pontoPoderSemCargo,
+                _especial: pontoPoderEspecial
+       }
+    } else if (cargo === 'People'){
+        return  poder = {
+                 _ataque: pontoPoderPeople,
+                 _defesa: pontoPoderPeople,
+                 _especial: pontoPoderEspecial
+        }
+     } else if (cargo === 'Gentleman'){
+        return  poder = {
+                 _ataque: pontoPoderGentleman,
+                 _defesa: pontoPoderGentleman,
+                 _especial: pontoPoderEspecial
+        }
+     } else if (cargo === 'Monark'){
+        return  poder = {
+                 _ataque: pontoPoderMonark,
+                 _defesa: pontoPoderMonark,
+                 _especial: pontoPoderEspecial
+        }
+     } else if (cargo === 'Nobre'){
+        return  poder = {
+                 _ataque: pontoPoderNobre,
+                 _defesa: pontoPoderNobre,
+                 _especial: pontoPoderEspecial
+        }
+     } else if (cargo === 'Lord'){
+        return  poder = {
+                 _ataque: pontoPoderLord,
+                 _defesa: pontoPoderLord,
+                 _especial: pontoPoderEspecial
+        }
+     } else if (cargo === 'Ministro'){
+        return  poder = {
+                 _ataque: pontoPoderMinistro,
+                 _defesa: pontoPoderMinistro,
+                 _especial: pontoPoderEspecial
+        }
+     } else if (cargo === 'Prime Minister'){
+        return  poder = {
+                 _ataque: pontoPoderPrimeMinister,
+                 _defesa: pontoPoderPrimeMinister,
+                 _especial: pontoPoderEspecial
+        }
+     } else if (cargo === 'Premio Marino'){
+        return  poder = {
+                 _ataque: pontoPoderRNGPremioMarino,
+                 _defesa: pontoPoderRNGPremioMarino,
+                 _especial: pontoPoderEspecial
+        }
+     }
+}
 
 function fabricaDeCarta(integrante, cidade, cargo, poder){
     
@@ -214,13 +262,14 @@ function fabricaDeCarta(integrante, cidade, cargo, poder){
 // console.log('generateSeed(): ', generateSeed());
 escolherIntegrante()
 escolherCidade()
-console.log('seed: ', seed);
-console.log(integrante)
-console.log( cidade)
-// console.log(fabricaDeCarta(integrante, cidade, 'joao', 'joao'));
+// console.log('seed: ', seed);
+// console.log(integrante)
+// console.log( cidade)
+
 escolherCargo()
-// escolherPoder()
-console.log('cargo: ', cargo)
+escolherPoder()
+// console.log('cargo: ', cargo)
+console.log(fabricaDeCarta(integrante, cidade, cargo, poder));
 
 // var idIntegrante = document.getElementById('integrante')
 // var idSeed = document.getElementById('seed')
