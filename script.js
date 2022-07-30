@@ -22,7 +22,7 @@ function generateSeed(input){
     }
 }
 
-let seed = generateSeed('PremioMarino')
+let seed = generateSeed()
 // console.log('Seed: ', seed);
 
 
@@ -161,7 +161,40 @@ function escolherCargo(generateSeed){
         { return cargo = 'People'}
         else 
         { return cargo = 'Sem-cargo'}
-}            
+}
+
+
+
+//RNG DOS PONTES DE PODER
+let pontoPoderEspecial = Math.floor(Math.random() * 50)
+// console.log('pontoPoderEspecial: ', pontoPoderEspecial);
+let pontoPoderSemCargo = Math.floor(Math.random() * 10)
+// console.log('pontoPoderSemCargo: ', pontoPoderSemCargo);
+let pontoPoderPeople = Math.floor(Math.random() * 20)
+// console.log('pontoPoderPeople: ', pontoPoderPeople);
+let pontoPoderGentleman = Math.floor(Math.random() * 30)
+let pontoPoderMonark = Math.floor(Math.random() * 5)
+let pontoPoderNobre = Math.floor(Math.random() * 40)
+let pontoPoderLord = Math.floor(Math.random() * (35 - 10) + 10)
+// console.log('pontoPoderLord: ', pontoPoderLord);
+let pontoPoderMinistro = Math.floor(Math.random() * (60 - 30) + 30)
+// console.log('pontoPoderMinistro: ', pontoPoderMinistro);
+let pontoPoderPrimeMinister = Math.floor(Math.random() * (70 - 50) + 50)
+let pontoPoderRNGPremioMarino = Math.floor(Math.random() * (100 - 90) + 90)
+console.log('pontoPoderRNGPremioMarino: ', pontoPoderRNGPremioMarino);
+
+
+
+
+
+// function escolherPoder(){
+//     let pontoPoderRNGEspecial = Math.floor(Math.random * 50)
+//     let pontoPoderRNGSemCargo = Math.floor(Math.random * 10)
+//     if(cargo === 'Sem-cargo'){
+//        return {poder._ataque = pontoPoderRNGSemCargo  
+//         poder._defesa = pontoPoderRNGSemCargo
+// }
+
 
 
 function fabricaDeCarta(integrante, cidade, cargo, poder){
@@ -186,6 +219,7 @@ console.log(integrante)
 console.log( cidade)
 // console.log(fabricaDeCarta(integrante, cidade, 'joao', 'joao'));
 escolherCargo()
+// escolherPoder()
 console.log('cargo: ', cargo)
 
 // var idIntegrante = document.getElementById('integrante')
