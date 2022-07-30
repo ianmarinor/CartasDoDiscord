@@ -14,12 +14,15 @@ function generateSeed(input){
                 sum = sum + input[i].charCodeAt()  
         }
         return sum * 27452900482
-    } else {
+    } else if (typeof input === 'number'){
+        return input
+    }
+    else {
         return  seedRNG
     }
 }
 
-let seed = generateSeed('123456789101112131')
+let seed = generateSeed('PremioMarino')
 // console.log('Seed: ', seed);
 
 
@@ -117,7 +120,7 @@ function escolherCidade(generateSeed){
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 7) {
-        return cidade = 'Velha de '
+        return cidade = 'Velha da Lapa'
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 8) {
@@ -128,6 +131,38 @@ function escolherCidade(generateSeed){
         return cidade = 'Velha de Curitiba'
     }  
 }
+let cargo = ''
+function escolherCargo(generateSeed){
+    let seedString = seed.toString()
+    // console.log('string', seedString[4])
+    if (
+        seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
+        {return cargo = 'Premio Marino'
+    } else if (
+        seedString[5] >= 5 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
+        { return cargo = 'Prime Minister'} 
+        else if (
+        seedString[6] == 5 && seedString[7] == 4 && seedString[8] == 5)
+        { return cargo = 'Ministro'} 
+        else if (
+        seedString[6] >= 5 && seedString[7] == 4 && seedString[8] == 5)
+        { return cargo = 'Lord'}
+        else if (
+        seedString[7] == 4 && seedString[8] == 5)
+        { return cargo = 'Nobre'}
+        else if (
+        seedString[7] == 4 && seedString[8] == 1)
+        { return cargo = 'Monark'}
+        else if (
+        seedString[7] >= 4 && seedString[8] == 5)
+        { return cargo = 'Gentleman'}
+        else if (
+        seedString[7] >= 4 && seedString[8] >= 5)
+        { return cargo = 'People'}
+        else 
+        { return cargo = 'Sem-cargo'}
+}            
+
 
 function fabricaDeCarta(integrante, cidade, cargo, poder){
     
@@ -149,7 +184,9 @@ escolherCidade()
 console.log('seed: ', seed);
 console.log(integrante)
 console.log( cidade)
-console.log(fabricaDeCarta(integrante, cidade, 'joao', 'joao'));
+// console.log(fabricaDeCarta(integrante, cidade, 'joao', 'joao'));
+escolherCargo()
+console.log('cargo: ', cargo)
 
 // var idIntegrante = document.getElementById('integrante')
 // var idSeed = document.getElementById('seed')
