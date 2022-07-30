@@ -126,18 +126,30 @@ function escolherCidade(generateSeed){
         // seedString[1] == 0 && 
         seedString[2] == 9) {
         return cidade = 'Velha de Curitiba'
-    }
+    }  
+}
+
+function fabricaDeCarta(integrante, cidade, cargo, poder){
     
+    return{
+    _integrante: integrante,
+    _cidade: cidade,
+    _cargo: cargo,
+    _poder: poder,
+
+ }
 }
 
 
-console.log('seed: ', seed);
+
 // console.log('seed: ', seed[0]);
 // console.log('generateSeed(): ', generateSeed());
 escolherIntegrante()
 escolherCidade()
+console.log('seed: ', seed);
 console.log(integrante)
 console.log( cidade)
+console.log(fabricaDeCarta(integrante, cidade, 'joao', 'joao'));
 
 // var idIntegrante = document.getElementById('integrante')
 // var idSeed = document.getElementById('seed')
