@@ -49,10 +49,12 @@ function generateSeed(input){
 
 //integrante
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
+
 let integrante = ''
-function escolherIntegrante(){
-    let seedString = generateSeed(input).toString()
-    console.log('seedString: ', seedString);
+   
+function escolherIntegrante(){ 
+    seedString = generateSeed(input).toString()
+    console.log('integrante seed', seedString);
     if (
         // seedString[0] == 0 && 
         seedString[1] == 0){
@@ -100,8 +102,8 @@ function escolherIntegrante(){
 // THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 let cidade = ''
 function escolherCidade(){
-    let seedString = generateSeed(input).toString()
-    console.log('string cidade', seedString[1])
+    seedString = generateSeed(input).toString()
+    console.log('string cidade', seedString)
     if (
         // seedString[1] == 0 && 
         seedString[2] == 0){
@@ -149,8 +151,8 @@ function escolherCidade(){
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = ''
 function escolherCargo(){
-    let seedString = generateSeed(input).toString()
-    console.log('stringcargo', seedString[4])
+    seedString = generateSeed(input).toString()
+    console.log('stringcargo', seedString)
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
         {return cargo = 'carta-premiomarino'
@@ -318,7 +320,7 @@ function colocarInfoNoWrap(){
     ataqueP.innerHTML =  '&nbsp;' + '&#9889;'  + novaCarta._poder._ataque
     defesaP.innerHTML = '&nbsp;' +  '&#128150;'+ novaCarta._poder._defesa
     especialP.innerHTML =  '&nbsp;' + '&#11088;' + novaCarta._poder._especial
-    seedP.innerHTML = '&nbsp;' + generateSeed(input)
+    seedP.innerHTML = '&nbsp;' + seedString
     cartaP.id = novaCarta._cargo
 
     if (novaCarta._cargo === 'carta-semcargo'){
@@ -348,7 +350,7 @@ function colocarInfoNoWrap(){
 }
 
 function colocarInput(){
-    input =  ''
+    input =  generateSeed()
 }
 
 button.addEventListener('click', colocarInput)
