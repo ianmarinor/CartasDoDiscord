@@ -12,6 +12,7 @@ function seedRNG(){
 // This function generates a seed or takes a seed as input
 // the input will always be translated to the same seed if an integer
 // if a string, it'll be converted
+let input = ''
 function generateSeed(input){
     //se a chave for LETRA!
      if (typeof input === 'string' && input.length < 20 && input.length >= 3){
@@ -20,7 +21,7 @@ function generateSeed(input){
                 sum = sum + input[i].charCodeAt()  
         }
         return sum * 27452900482
-    } else if (typeof input === 'number'){
+    } else if (typeof input === 'number' && input > 9999999999){
         return input
     }
     else {
@@ -50,7 +51,7 @@ function generateSeed(input){
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 let integrante = ''
 function escolherIntegrante(){
-    let seedString = generateSeed().toString()
+    let seedString = generateSeed(input).toString()
     console.log('seedString: ', seedString);
     if (
         // seedString[0] == 0 && 
@@ -99,7 +100,7 @@ function escolherIntegrante(){
 // THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 let cidade = ''
 function escolherCidade(){
-    let seedString = generateSeed().toString()
+    let seedString = generateSeed(input).toString()
     console.log('string cidade', seedString[1])
     if (
         // seedString[1] == 0 && 
@@ -148,7 +149,7 @@ function escolherCidade(){
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = ''
 function escolherCargo(){
-    let seedString = generateSeed().toString()
+    let seedString = generateSeed(input).toString()
     console.log('stringcargo', seedString[4])
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
@@ -346,8 +347,11 @@ function colocarInfoNoWrap(){
     }
 }
 
+function colocarInput(){
+    input = 308540253176
+}
 
-button.addEventListener('click', generateSeed)
+button.addEventListener('click', colocarInput)
 button.addEventListener('click', escolherIntegrante)
 button.addEventListener('click', escolherCidade)
 button.addEventListener('click', escolherCargo)
