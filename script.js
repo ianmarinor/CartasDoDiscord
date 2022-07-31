@@ -152,30 +152,30 @@ function escolherCargo(){
     console.log('stringcargo', seedString[4])
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
-        {return cargo = 'Premio Marino'
+        {return cargo = 'carta-premiomarino'
     } else if (
         seedString[5] >= 5 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
-        { return cargo = 'Prime Minister'} 
+        { return cargo = 'carta-primeminister'} 
         else if (
         seedString[6] == 5 && seedString[7] == 4 && seedString[8] == 5)
-        { return cargo = 'Ministro'} 
+        { return cargo = 'carta-ministro'} 
         else if (
         seedString[6] >= 5 && seedString[7] == 4 && seedString[8] == 5)
-        { return cargo = 'Lord'}
+        { return cargo = 'carta-lord'}
         else if (
         seedString[7] == 4 && seedString[8] == 5)
-        { return cargo = 'Nobre'}
+        { return cargo = 'carta-nobre'}
         else if (
         seedString[7] == 4 && seedString[8] == 1)
         { return cargo = 'Monark'}
         else if (
         seedString[7] >= 4 && seedString[8] == 5)
-        { return cargo = 'Gentleman'}
+        { return cargo = 'carta-gentleman'}
         else if (
         seedString[7] >= 4 && seedString[8] >= 5)
-        { return cargo = 'People'}
+        { return cargo = 'carta-people'}
         else 
-        { return cargo = 'Sem-cargo'}
+        { return cargo = 'carta-semcargo'}
 }
 
 
@@ -212,55 +212,55 @@ let pontoPoderRNGPremioMarinoD = Math.floor(Math.random() * (150 - 90) + 90)
 
 let poder = {}
 function escolherPoder(){
-    if(cargo === 'Sem-cargo'){
+    if(cargo === 'carta-semcargo'){
        return  poder = {
                 _ataque: pontoPoderSemCargo,
                 _defesa: pontoPoderSemCargoD,
                 _especial: pontoPoderEspecial
        }
-    } else if (cargo === 'People'){
+    } else if (cargo === 'carta-people'){
         return  poder = {
                  _ataque: pontoPoderPeople,
                  _defesa: pontoPoderPeopleD,
                  _especial: pontoPoderEspecial
         }
-     } else if (cargo === 'Gentleman'){
+     } else if (cargo === 'carta-gentleman'){
         return  poder = {
                  _ataque: pontoPoderGentleman,
                  _defesa: pontoPoderGentlemanD,
                  _especial: pontoPoderEspecial
         }
-     } else if (cargo === 'Monark'){
+     } else if (cargo === 'carta-monark'){
         return  poder = {
                  _ataque: pontoPoderMonark,
                  _defesa: pontoPoderMonarkD,
                  _especial: pontoPoderEspecial
         }
-     } else if (cargo === 'Nobre'){
+     } else if (cargo === 'carta-nobre'){
         return  poder = {
                  _ataque: pontoPoderNobre,
                  _defesa: pontoPoderNobreD,
                  _especial: pontoPoderEspecial
         }
-     } else if (cargo === 'Lord'){
+     } else if (cargo === 'carta-lord'){
         return  poder = {
                  _ataque: pontoPoderLord,
                  _defesa: pontoPoderLordD,
                  _especial: pontoPoderEspecial
         }
-     } else if (cargo === 'Ministro'){
+     } else if (cargo === 'carta-ministro'){
         return  poder = {
                  _ataque: pontoPoderMinistro,
                  _defesa: pontoPoderMinistroD,
                  _especial: pontoPoderEspecial
         }
-     } else if (cargo === 'Prime Minister'){
+     } else if (cargo === 'carta-primeminister'){
         return  poder = {
                  _ataque: pontoPoderPrimeMinister,
                  _defesa: pontoPoderPrimeMinisterD,
                  _especial: pontoPoderEspecial
         }
-     } else if (cargo === 'Premio Marino'){
+     } else if (cargo === 'carta-premiomarino'){
         return  poder = {
                  _ataque: pontoPoderRNGPremioMarino,
                  _defesa: pontoPoderRNGPremioMarinoD,
@@ -303,6 +303,8 @@ let defesaP = document.querySelector('.defesa')
 let especialP = document.querySelector('.especial')
 
 let seedP = document.querySelector('.seed')
+//carta
+let cartaP = document.getElementById('carta')
 
 
 function colocarInfoNoWrap(){
@@ -310,12 +312,38 @@ function colocarInfoNoWrap(){
     const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
 
     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante.toUpperCase()
-    cargoP.innerHTML = '&nbsp;' + novaCarta._cargo.toUpperCase()
+    
     cidadeP.innerHTML = '&nbsp;' +  novaCarta._cidade
     ataqueP.innerHTML =  '&nbsp;' + '&#9889;'  + novaCarta._poder._ataque
     defesaP.innerHTML = '&nbsp;' +  '&#128150;'+ novaCarta._poder._defesa
     especialP.innerHTML =  '&nbsp;' + '&#11088;' + novaCarta._poder._especial
     seedP.innerHTML = '&nbsp;' + generateSeed()
+    cartaP.id = novaCarta._cargo
+
+    if (novaCarta._cargo === 'carta-semcargo'){
+        cargoP.innerHTML = '&nbsp;' + 'sem cargo'.toUpperCase()
+
+    } else if (novaCarta._cargo === 'carta-people'){
+        cargoP.innerHTML = '&nbsp;' + 'people'.toUpperCase()
+
+    } else if (novaCarta._cargo === 'carta-gentleman'){
+        cargoP.innerHTML = '&nbsp;' + 'gentleman'.toUpperCase()
+
+    } else if (novaCarta._cargo === 'carta-ministro'){
+        cargoP.innerHTML = '&nbsp;' + 'ministro'.toUpperCase()
+
+    } else if (novaCarta._cargo === 'carta-lord'){
+        cargoP.innerHTML = '&nbsp;' + 'lord'.toUpperCase()
+
+    } else if (novaCarta._cargo === 'carta-nobre'){
+        cargoP.innerHTML = '&nbsp;' + 'nobre'.toUpperCase()
+
+    } else if (novaCarta._cargo === 'carta-primeminister'){
+        cargoP.innerHTML = '&nbsp;' + 'prime minister'.toUpperCase()
+
+    } else if (novaCarta._cargo === 'carta-premiomarino'){
+        cargoP.innerHTML = '&nbsp;' + '&#127942; premio marino &#127942;'.toUpperCase()
+    }
 }
 
 

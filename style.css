@@ -203,7 +203,7 @@ li{
 }
 
 .retrato{
-    display: none;
+    /* display: none; */
     width: 75%;
     height: 30%;
     background-color: #4b4747;
