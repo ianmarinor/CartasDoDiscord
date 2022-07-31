@@ -311,10 +311,10 @@ function colocarInfoNoWrap(){
 
     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante.toUpperCase()
     cargoP.innerHTML = '&nbsp;' + novaCarta._cargo.toUpperCase()
-    cidadeP.innerHTML = '&nbsp;' + novaCarta._cidade
-    ataqueP.innerHTML =  '&nbsp;' + novaCarta._poder._ataque
-    defesaP.innerHTML = '&nbsp;' + novaCarta._poder._defesa
-    especialP.innerHTML =  '&nbsp;' + novaCarta._poder._especial
+    cidadeP.innerHTML = '&nbsp;' +  novaCarta._cidade
+    ataqueP.innerHTML =  '&nbsp;' + '&#9889;'  + novaCarta._poder._ataque
+    defesaP.innerHTML = '&nbsp;' +  '&#128150;'+ novaCarta._poder._defesa
+    especialP.innerHTML =  '&nbsp;' + '&#11088;' + novaCarta._poder._especial
     seedP.innerHTML = '&nbsp;' + generateSeed()
 }
 

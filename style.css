@@ -60,40 +60,60 @@ li{
     background-color: #19ee11;
     height: 70%;
     width: 57%;
-    /* display: flex; */
-    /* flex-direction: column; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
 }
 
 
 .nome{
-
-    background-color: #3d1a1a;
+    margin-top: 0.2em;
+    font-size: 2em;
+    /* background-color: #6c4d4d; */
     
 }
 .cidade{
-    background-color: #6637be;
+    /* background-color: #6637be; */
+    text-align: end;
+    
 }
 
 .retrato{
-    
+    width: 75%;
+    height: 30%;
     background-color: #a8a5a5;
+    border-radius: 5px;
     
 }
 
 .cargo{
-    background-color: #37be49;
+    /* background-color: #37be49; */
+    font-size: 2em;
+    transform: rotate(-10deg);
     
 }
 .poder{
-
-    background-color: #beac37;
-}
-.poder{
+    width: 80%;
+    font-size: 1.2em;
+    /* background-color: #beac37; */
     display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
 }
+
 
 .seed{
-    background-color: #7e7a7a;
+    /* background-color: #7e7a7a; */
+    width: 100%;
+    position: absolute;
+    left: 47%;
+    bottom: 54%;
+    transform: rotate(90deg);
+    font-size: 0.90em;
+    opacity: 0.6;
 }
 
 #btn{
