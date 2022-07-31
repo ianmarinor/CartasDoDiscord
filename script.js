@@ -394,6 +394,8 @@ function colocarInfoNoWrap(){
         retratoP.style.backgroundImage = "url('pics/speaker.webp')"
     } else if (novaCarta._integrante === 'Turu'){
         retratoP.style.backgroundImage = "url('pics/turu.webp')"
+    } else if (novaCarta._integrante === 'Blackao'){
+        retratoP.style.backgroundImage = "url('pics/blackao.jpeg')"
     }
     else {
         retratoP.style.backgroundImage = ""
