@@ -19,7 +19,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Quicksand', sans-serif;
-    color: rgb(9, 1, 17);
+    /* color: rgb(9, 1, 17); */
 }
 
 body {
@@ -56,8 +56,12 @@ li{
     justify-content: center;
     align-items: center;
 }
+/* ************************* */
+/* CARTAS VARIACOES */
+/* ************************* */
 #carta{
-    background-color: #19ee11;
+    display: none;
+    /* background-color: #ffffff; */
     height: 70%;
     width: 57%;
     display: flex;
@@ -67,6 +71,123 @@ li{
     border-radius: 15px;
     position: relative;
 }
+#carta-premiomarino{
+    background-color: var(--premioMarino);
+    background: radial-gradient(circle, rgba(252,213,3,1) 40%, rgba(200,232,57,1) 87%);
+    height: 70%;
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+}
+
+#carta-primeminister{
+    background-color: var(--primeMinister);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 74%, rgba(80,78,78,1) 100%);
+    height: 70%;
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    color: wheat;
+}
+
+#carta-ministro{
+    background-color: var(--ministro);
+    background: linear-gradient(180deg, rgba(43,214,214,1) 18%, rgba(43,145,214,1) 61%);
+    height: 70%;
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    color: #020101;
+    
+}
+
+#carta-lord{
+    background-color: var(--lord);
+    background: linear-gradient(0deg, rgba(110,6,120,1) 0%, rgba(238,23,173,1) 46%);
+    height: 70%;
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    color: #090909;
+}
+
+#carta-nobre{
+    background-color: var(--nobre);
+    height: 70%;
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+}
+
+#carta-gentleman{
+    background-color: var(--gentleman);
+    height: 70%;
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+}
+
+#carta-people{
+    background-color: var(--people);
+    height: 70%;
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+}
+#carta-semcargo{
+    background-color: var(--semCargo);
+    height: 70%;
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+}
+
+
+#carta-monark{
+    background-color: var(--monark);
+    height: 70%;
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    color: #b0b0b6;
+}
+
 
 
 .nome{
@@ -82,9 +203,10 @@ li{
 }
 
 .retrato{
+    display: none;
     width: 75%;
     height: 30%;
-    background-color: #a8a5a5;
+    background-color: #4b4747;
     border-radius: 5px;
     
 }
