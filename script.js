@@ -54,7 +54,7 @@ let integrante = ''
    
 function escolherIntegrante(){ 
     seedString = generateSeed(input).toString()
-    // console.log('integrante seed', seedString);
+    console.log('integrante seed', seedString);
     if (
         // seedString[0] == 0 && 
         seedString[1] == 0){
@@ -103,7 +103,7 @@ function escolherIntegrante(){
 let cidade = ''
 function escolherCidade(){
     seedString = generateSeed(input).toString()
-    // console.log('string cidade', seedString)
+    console.log('string cidade', seedString)
     if (
         // seedString[1] == 0 && 
         seedString[2] == 0){
@@ -152,7 +152,7 @@ function escolherCidade(){
 let cargo = ''
 function escolherCargo(){
     seedString = generateSeed(input).toString()
-    // console.log('stringcargo', seedString)
+    console.log('stringcargo', seedString)
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
         {return cargo = 'carta-premiomarino'
@@ -313,6 +313,8 @@ let cartaP = document.getElementById('carta')
 // let coloqueSuaSeed = document.getElementById('seed').value
 //wrap
 let wrap = document.getElementsByClassName('wrap')[0]
+//input
+let getSeed = document.getElementById('getseed')
 
 
 function colocarInfoNoWrap(){
@@ -383,7 +385,7 @@ function colocarInfoNoWrap(){
 }
 
 function colocarInput(){
-    input =  generateSeed()
+    input =  getSeed.value
 }
 
 button.addEventListener('click', colocarInput)
