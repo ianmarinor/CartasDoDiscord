@@ -158,7 +158,10 @@ function escolherCargo(){
         {return cargo = 'carta-premiomarino'
     } else if (
         seedString[5] >= 5 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
-        { return cargo = 'carta-primeminister'} 
+        { return cargo = 'carta-primeminister'}
+        else if (
+        seedString[0] < 5 && seedString[6] == 5 && seedString[7] == 4 && seedString[8] == 5)
+        { return cargo = 'carta-speaker'}
         else if (
         seedString[6] == 5 && seedString[7] == 4 && seedString[8] == 5)
         { return cargo = 'carta-ministro'} 
@@ -270,7 +273,17 @@ function escolherPoder(){
                  _defesa: pontoPoderRNGPremioMarinoD(),
                  _especial: pontoPoderEspecial()
         }
+     } else if (cargo === 'carta-speaker'){
+        return  poder = {
+                 _ataque: 'ORDER!!',
+                 _defesa: pontoPoderRNGPremioMarinoD(),
+                 _especial: '20'
+        }
      }
+
+     
+
+
 }
 
 
@@ -332,12 +345,22 @@ function colocarInfoNoWrap(){
     cartaP.id = novaCarta._cargo
 
     retratoP.style.display = "block"
-    //colocar retrato
-    if (novaCarta._integrante === 'Turu'){
-        retratoP.style.backgroundImage = "url('pics/turu.webp')"
+
+    //CARTAS ESPECIAIS 
+    if (novaCarta._cargo === 'carta-speaker'){
+        nomeP.innerHTML = '&nbsp; SPEAKER'  
+        cidadeP.innerHTML = '&nbsp; PARLAMENTO'
         
-    } 
-    else{
+    }
+
+
+    //colocar retrato
+     if (novaCarta._cargo === 'carta-speaker'){
+        retratoP.style.backgroundImage = "url('pics/speaker.webp')"
+    } else if (novaCarta._integrante === 'Turu'){
+        retratoP.style.backgroundImage = "url('pics/turu.webp')"
+    }
+    else {
         retratoP.style.backgroundImage = ""
     }
     
@@ -371,13 +394,15 @@ function colocarInfoNoWrap(){
         cargoP.style.backgroundImage = 'pics/wrapPremioMarino.webp'
         retratoP.style.border = ''
         
-
     } else if (novaCarta._cargo === 'carta-premiomarino'){
         cargoP.innerHTML = '&nbsp;' + '&#127942; premio marino &#127942;'.toUpperCase()
         retratoP.style.border = ''
     } else if (novaCarta._cargo === 'carta-monark'){
         cargoP.innerHTML = '&nbsp;' + 'monark' + '&#128169;'
         retratoP.style.border = ''
+    }  else if (novaCarta._cargo === 'carta-speaker'){
+        cargoP.innerHTML = novaCarta._integrante.toUpperCase() + ' BANIDO! <BR> 🔨'
+        retratoP.style.border = '2px dotted green'
     } else {
         true
     }
@@ -385,7 +410,8 @@ function colocarInfoNoWrap(){
 }
 
 function colocarInput(){
-    input =  getSeed.value
+    input = 411115545111
+    // input =  getSeed.value
 }
 
 button.addEventListener('click', colocarInput)
