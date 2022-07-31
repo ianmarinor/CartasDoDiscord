@@ -21,7 +21,7 @@ function generateSeed(input){
                 sum = sum + input[i].charCodeAt()  
         }
         return sum * 27452900482
-    } else if (typeof input === 'number' && input > 9999999999){
+    } else if (typeof input === 'number' && input > 9999999){
         return input
     }
     else {
@@ -184,30 +184,31 @@ function escolherCargo(){
 
 
 //RNG DOS PONTES DE PODER
-let pontoPoderEspecial = Math.floor(Math.random() * (5 - 1) + 1)
-// console.log('pontoPoderEspecial: ', pontoPoderEspecial);
-let pontoPoderSemCargo = Math.floor(Math.random() * 10)
-let pontoPoderSemCargoD = Math.floor(Math.random() * 10)
+let pontoPoderEspecial = () => Math.floor(Math.random() * (5 - 1) + 1)
+
+console.log('pontoPoderEspecial: ', pontoPoderEspecial);
+let pontoPoderSemCargo = () => Math.floor(Math.random() * (10 - 1) + 1)
+let pontoPoderSemCargoD = () => Math.floor(Math.random() * (10 - 1) + 1)
 // console.log('pontoPoderSemCargo: ', pontoPoderSemCargo);
-let pontoPoderPeople = Math.floor(Math.random() * 20)
-let pontoPoderPeopleD = Math.floor(Math.random() * 20)
+let pontoPoderPeople = () => Math.floor(Math.random() * (20 - 1) + 1)
+let pontoPoderPeopleD = () => Math.floor(Math.random() * (20 - 1) + 1)
 // console.log('pontoPoderPeople: ', pontoPoderPeople);
-let pontoPoderGentleman = Math.floor(Math.random() * (30 - 5) + 5)
-let pontoPoderGentlemanD = Math.floor(Math.random() * (30 - 5) + 5)
-let pontoPoderMonark = Math.floor(Math.random() * 5)
-let pontoPoderMonarkD = Math.floor(Math.random() * 5)
-let pontoPoderNobre = Math.floor(Math.random() * (40 - 15) +15)
-let pontoPoderNobreD = Math.floor(Math.random() * (40 - 15) +15)
-let pontoPoderLord = Math.floor(Math.random() * (35 - 10) + 10)
-let pontoPoderLordD = Math.floor(Math.random() * (35 - 10) + 10)
+let pontoPoderGentleman = () => Math.floor(Math.random() * (30 - 5) + 5)
+let pontoPoderGentlemanD = () => Math.floor(Math.random() * (30 - 5) + 5)
+let pontoPoderMonark = () => Math.floor(Math.random() * 5)
+let pontoPoderMonarkD = () => Math.floor(Math.random() * 5)
+let pontoPoderNobre = () => Math.floor(Math.random() * (40 - 15) +15)
+let pontoPoderNobreD = () => Math.floor(Math.random() * (40 - 15) +15)
+let pontoPoderLord = () => Math.floor(Math.random() * (35 - 10) + 10)
+let pontoPoderLordD = () =>Math.floor(Math.random() * (35 - 10) + 10)
 // console.log('pontoPoderLord: ', pontoPoderLord);
-let pontoPoderMinistro = Math.floor(Math.random() * (60 - 30) + 30)
-let pontoPoderMinistroD = Math.floor(Math.random() * (60 - 30) + 30)
+let pontoPoderMinistro = () => Math.floor(Math.random() * (60 - 30) + 30)
+let pontoPoderMinistroD = () => Math.floor(Math.random() * (60 - 30) + 30)
 // console.log('pontoPoderMinistro: ', pontoPoderMinistro);
-let pontoPoderPrimeMinister = Math.floor(Math.random() * (70 - 50) + 50)
-let pontoPoderPrimeMinisterD = Math.floor(Math.random() * (70 - 50) + 50)
-let pontoPoderRNGPremioMarino = Math.floor(Math.random() * (150 - 90) + 90)
-let pontoPoderRNGPremioMarinoD = Math.floor(Math.random() * (150 - 90) + 90)
+let pontoPoderPrimeMinister = () => Math.floor(Math.random() * (70 - 50) + 50)
+let pontoPoderPrimeMinisterD = () => Math.floor(Math.random() * (70 - 50) + 50)
+let pontoPoderRNGPremioMarino = () => Math.floor(Math.random() * (150 - 90) + 90)
+let pontoPoderRNGPremioMarinoD = () => Math.floor(Math.random() * (150 - 90) + 90)
 // console.log('pontoPoderRNGPremioMarino: ', pontoPoderRNGPremioMarino);
 
 
@@ -217,57 +218,57 @@ let poder = {}
 function escolherPoder(){
     if(cargo === 'carta-semcargo'){
        return  poder = {
-                _ataque: pontoPoderSemCargo,
-                _defesa: pontoPoderSemCargoD,
-                _especial: pontoPoderEspecial
+                _ataque: pontoPoderSemCargo(),
+                _defesa: pontoPoderSemCargoD(),
+                _especial: pontoPoderEspecial()
        }
     } else if (cargo === 'carta-people'){
         return  poder = {
-                 _ataque: pontoPoderPeople,
-                 _defesa: pontoPoderPeopleD,
-                 _especial: pontoPoderEspecial
+                 _ataque: pontoPoderPeople(),
+                 _defesa: pontoPoderPeopleD(),
+                 _especial: pontoPoderEspecial()
         }
      } else if (cargo === 'carta-gentleman'){
         return  poder = {
-                 _ataque: pontoPoderGentleman,
-                 _defesa: pontoPoderGentlemanD,
-                 _especial: pontoPoderEspecial
+                 _ataque: pontoPoderGentleman(),
+                 _defesa: pontoPoderGentlemanD(),
+                 _especial: pontoPoderEspecial()
         }
      } else if (cargo === 'carta-monark'){
         return  poder = {
-                 _ataque: pontoPoderMonark,
-                 _defesa: pontoPoderMonarkD,
-                 _especial: pontoPoderEspecial
+                 _ataque: pontoPoderMonark(),
+                 _defesa: pontoPoderMonarkD(),
+                 _especial: pontoPoderEspecial()
         }
      } else if (cargo === 'carta-nobre'){
         return  poder = {
-                 _ataque: pontoPoderNobre,
-                 _defesa: pontoPoderNobreD,
-                 _especial: pontoPoderEspecial
+                 _ataque: pontoPoderNobre(),
+                 _defesa: pontoPoderNobreD(),
+                 _especial: pontoPoderEspecial()
         }
      } else if (cargo === 'carta-lord'){
         return  poder = {
-                 _ataque: pontoPoderLord,
-                 _defesa: pontoPoderLordD,
-                 _especial: pontoPoderEspecial
+                 _ataque: pontoPoderLord(),
+                 _defesa: pontoPoderLordD(),
+                 _especial: pontoPoderEspecial()
         }
      } else if (cargo === 'carta-ministro'){
         return  poder = {
-                 _ataque: pontoPoderMinistro,
-                 _defesa: pontoPoderMinistroD,
-                 _especial: pontoPoderEspecial
+                 _ataque: pontoPoderMinistro(),
+                 _defesa: pontoPoderMinistroD(),
+                 _especial: pontoPoderEspecial()
         }
      } else if (cargo === 'carta-primeminister'){
         return  poder = {
-                 _ataque: pontoPoderPrimeMinister,
-                 _defesa: pontoPoderPrimeMinisterD,
-                 _especial: pontoPoderEspecial
+                 _ataque: pontoPoderPrimeMinister(),
+                 _defesa: pontoPoderPrimeMinisterD(),
+                 _especial: pontoPoderEspecial()
         }
      } else if (cargo === 'carta-premiomarino'){
         return  poder = {
-                 _ataque: pontoPoderRNGPremioMarino,
-                 _defesa: pontoPoderRNGPremioMarinoD,
-                 _especial: pontoPoderEspecial
+                 _ataque: pontoPoderRNGPremioMarino(),
+                 _defesa: pontoPoderRNGPremioMarinoD(),
+                 _especial: pontoPoderEspecial()
         }
      }
 }
@@ -308,6 +309,8 @@ let especialP = document.querySelector('.especial')
 let seedP = document.querySelector('.seed')
 //carta
 let cartaP = document.getElementById('carta')
+// input da seed cliente
+// let coloqueSuaSeed = document.getElementById('seed').value
 
 
 function colocarInfoNoWrap(){
@@ -350,7 +353,7 @@ function colocarInfoNoWrap(){
 }
 
 function colocarInput(){
-    input =  generateSeed()
+    input =  generateSeed(622528758881)
 }
 
 button.addEventListener('click', colocarInput)
