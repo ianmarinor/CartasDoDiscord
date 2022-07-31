@@ -410,8 +410,8 @@ function colocarInfoNoWrap(){
 }
 
 function colocarInput(){
-    input = 411115545111
-    // input =  getSeed.value
+    // input = 411115545111
+    input =  getSeed.value
 }
 
 button.addEventListener('click', colocarInput)
