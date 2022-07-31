@@ -1,7 +1,7 @@
 :root{
     --monark: #411a12;
-    --semCargo: #b0b0b6;
-    --people: #be3737;
+    --semCargo: #b0b0b6f4;
+    --people: #be3737f2;
     --gentleman: #d49f09;
     --nobre: #8888f1;
     --lord: #ee17ad;
@@ -55,6 +55,10 @@ li{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url(pics/stage.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 /* ************************* */
 /* CARTAS VARIACOES */
@@ -83,7 +87,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
-    border: 1px solid #020101;
+    border: 2px solid #020101;
 }
 
 #carta-primeminister{
@@ -98,7 +102,7 @@ li{
     border-radius: 15px;
     position: relative;
     color: wheat;
-    border: 1px solid #020101;
+    border: 2px solid #020101;
 }
 
 #carta-ministro{
@@ -113,7 +117,7 @@ li{
     border-radius: 15px;
     position: relative;
     color: #020101;
-    border: 1px solid #020101;
+    border: 2px solid #020101;
     
 }
 
@@ -129,7 +133,7 @@ li{
     border-radius: 15px;
     position: relative;
     color: #090909;
-    border: 1px solid #020101;
+    border: 2px solid #020101;
 }
 
 #carta-nobre{
@@ -142,7 +146,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
-    border: 1px solid #020101;
+    border: 2px solid #020101;
 }
 
 #carta-gentleman{
@@ -155,7 +159,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
-    border: 1px solid #020101;
+    border: 2px solid #020101;
 }
 
 #carta-people{
@@ -168,7 +172,8 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
-    border: 1px solid #020101;
+    border: 2px solid #020101;
+   
 }
 #carta-semcargo{
     background-color: var(--semCargo);
@@ -180,7 +185,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
-    border: 1px solid #020101;
+    border: 2px solid #020101;
 }
 
 
@@ -195,7 +200,7 @@ li{
     border-radius: 15px;
     position: relative;
     color: #b0b0b6;
-    border: 1px solid #020101;
+    border: 2px solid #020101;
 }
 /* **************************************************** */
 /* **************************************************** */
@@ -218,7 +223,7 @@ li{
 }
 
 .retrato{
-    /* display: none; */
+    display: none;
     width: 75%;
     height: 30%;
     background-color: #4b4747;

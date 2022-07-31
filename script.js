@@ -1,4 +1,4 @@
-const totalNumOfSeeds = (999999999999 - 111111111111)
+const totalNumOfSeeds = (99999999999999 - 11111111111111)
 function seedRNG(){
     return Math.floor(Math.random() * totalNumOfSeeds)
 } 
@@ -317,6 +317,7 @@ function colocarInfoNoWrap(){
 
     const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
 
+    //DOM
     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante.toUpperCase()
     
     cidadeP.innerHTML = '&nbsp;' +  novaCarta._cidade
@@ -326,39 +327,53 @@ function colocarInfoNoWrap(){
     seedP.innerHTML = '&nbsp;' + seedString
     cartaP.id = novaCarta._cargo
 
+    retratoP.style.display = "block"
+    //colocar retrato
     if (novaCarta._integrante === 'Turu'){
         retratoP.style.backgroundImage = "url('pics/turu.webp')"
+        
     } 
     else{
         retratoP.style.backgroundImage = ""
     }
     
-     
+     //colocar cargo
     if (novaCarta._cargo === 'carta-semcargo'){
         cargoP.innerHTML = '&nbsp;' + 'sem cargo'.toUpperCase()
+        retratoP.style.border = ''
 
     } else if (novaCarta._cargo === 'carta-people'){
         cargoP.innerHTML = '&nbsp;' + 'people'.toUpperCase()
+        retratoP.style.border = ''
 
     } else if (novaCarta._cargo === 'carta-gentleman'){
         cargoP.innerHTML = '&nbsp;' + 'gentleman'.toUpperCase()
+        retratoP.style.border = ''
 
     } else if (novaCarta._cargo === 'carta-ministro'){
-        cargoP.innerHTML = '&nbsp;' + 'ministro'.toUpperCase()
+        cargoP.innerHTML = '&nbsp;' + 'ministro'.toUpperCase() + '👨‍⚖️'
+        retratoP.style.border = ''
 
     } else if (novaCarta._cargo === 'carta-lord'){
-        cargoP.innerHTML = '&nbsp;' + 'lord'.toUpperCase()
+        cargoP.innerHTML = '&nbsp;' + 'lord'.toUpperCase() + '👑'
+        retratoP.style.border = ''
 
     } else if (novaCarta._cargo === 'carta-nobre'){
-        cargoP.innerHTML = '&nbsp;' + 'nobre'.toUpperCase()
+        cargoP.innerHTML = '&nbsp;' + 'nobre'.toUpperCase() + '💙'
+        retratoP.style.border = ''
 
     } else if (novaCarta._cargo === 'carta-primeminister'){
-        cargoP.innerHTML = '&nbsp;' + 'prime minister'.toUpperCase()
+        cargoP.innerHTML = '&nbsp;' + 'prime minister'.toUpperCase() + '💪'
+        retratoP.style.border = ''
 
     } else if (novaCarta._cargo === 'carta-premiomarino'){
         cargoP.innerHTML = '&nbsp;' + '&#127942; premio marino &#127942;'.toUpperCase()
-    } else {
+        retratoP.style.border = ''
+    } else if (novaCarta._cargo === 'carta-monark'){
         cargoP.innerHTML = '&nbsp;' + 'monark' + '&#128169;'
+        retratoP.style.border = ''
+    } else {
+        true
     }
         
 }
