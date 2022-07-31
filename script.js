@@ -170,7 +170,7 @@ function escolherCargo(){
         { return cargo = 'carta-nobre'}
         else if (
         seedString[7] == 4 && seedString[8] == 1)
-        { return cargo = 'Monark'}
+        { return cargo = 'carta-monark'}
         else if (
         seedString[7] >= 4 && seedString[8] == 5)
         { return cargo = 'carta-gentleman'}
@@ -195,8 +195,8 @@ let pontoPoderPeopleD = () => Math.floor(Math.random() * (20 - 1) + 1)
 // console.log('pontoPoderPeople: ', pontoPoderPeople);
 let pontoPoderGentleman = () => Math.floor(Math.random() * (30 - 5) + 5)
 let pontoPoderGentlemanD = () => Math.floor(Math.random() * (30 - 5) + 5)
-let pontoPoderMonark = () => Math.floor(Math.random() * 5)
-let pontoPoderMonarkD = () => Math.floor(Math.random() * 5)
+let pontoPoderMonark = () => Math.floor(Math.random() * 3)
+let pontoPoderMonarkD = () => Math.floor(Math.random() * 3)
 let pontoPoderNobre = () => Math.floor(Math.random() * (40 - 15) +15)
 let pontoPoderNobreD = () => Math.floor(Math.random() * (40 - 15) +15)
 let pontoPoderLord = () => Math.floor(Math.random() * (35 - 10) + 10)
@@ -238,7 +238,7 @@ function escolherPoder(){
         return  poder = {
                  _ataque: pontoPoderMonark(),
                  _defesa: pontoPoderMonarkD(),
-                 _especial: pontoPoderEspecial()
+                 _especial: 0
         }
      } else if (cargo === 'carta-nobre'){
         return  poder = {
@@ -349,11 +349,14 @@ function colocarInfoNoWrap(){
 
     } else if (novaCarta._cargo === 'carta-premiomarino'){
         cargoP.innerHTML = '&nbsp;' + '&#127942; premio marino &#127942;'.toUpperCase()
+    } else {
+        cargoP.innerHTML = '&nbsp;' + 'monark' + '&#128169;'
     }
+        
 }
 
 function colocarInput(){
-    input =  generateSeed(622528758881)
+    input =  generateSeed()
 }
 
 button.addEventListener('click', colocarInput)
