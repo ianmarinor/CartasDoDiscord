@@ -318,7 +318,7 @@ function colocarInfoNoWrap(){
     ataqueP.innerHTML =  '&nbsp;' + '&#9889;'  + novaCarta._poder._ataque
     defesaP.innerHTML = '&nbsp;' +  '&#128150;'+ novaCarta._poder._defesa
     especialP.innerHTML =  '&nbsp;' + '&#11088;' + novaCarta._poder._especial
-    seedP.innerHTML = '&nbsp;' + generateSeed()
+    seedP.innerHTML = '&nbsp;' + generateSeed(input)
     cartaP.id = novaCarta._cargo
 
     if (novaCarta._cargo === 'carta-semcargo'){
@@ -348,7 +348,7 @@ function colocarInfoNoWrap(){
 }
 
 function colocarInput(){
-    input = 308540253176
+    input =  526004112847
 }
 
 button.addEventListener('click', colocarInput)
