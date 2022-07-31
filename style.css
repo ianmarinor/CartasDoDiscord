@@ -1,3 +1,19 @@
+:root{
+    --monark: #411a12;
+    --semCargo: #b0b0b6;
+    --people: #be3737;
+    --gentleman: #d49f09;
+    --nobre: #8888f1;
+    --lord: #ee17ad;
+    --lideDaOposicao: #ff4400;
+    --ministro: #2bd6d6;
+    --speaker: #19ee11;
+    --primeMinister: #050505;
+    --premioMarino: #fcd503;
+
+}
+
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,7 +21,6 @@
     font-family: 'Quicksand', sans-serif;
     color: rgb(9, 1, 17);
 }
-
 
 body {
     display: flex;
@@ -33,37 +48,63 @@ li{
 
 }
 .wrap{
-    margin-top: 100px;
-    height: 500px;
-    width: 400px;
-    background-color: rgb(138, 128, 138);
+    margin-top: 40px;
+    height: 600px;
+    width: 500px;
+    background-color: rgb(218, 212, 218);
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
+}
+#carta{
+    background-color: #19ee11;
+    height: 70%;
+    width: 57%;
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+
+.nome{
+
+    background-color: #3d1a1a;
+    
+}
+.cidade{
+    background-color: #6637be;
+}
+
+.retrato{
+    
+    background-color: #a8a5a5;
+    
+}
+
+.cargo{
+    background-color: #37be49;
+    
+}
+.poder{
+
+    background-color: #beac37;
+}
+.poder{
+    display: flex;
+}
+
+.seed{
+    background-color: #7e7a7a;
 }
 
 #btn{
     width: 150px;
     height: 40px;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
-#carta{
-    font-size: 1.5em;
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    align-items:left;
-    justify-content: space-between;
-    /* left: 0; */
-}
-.espaco{
-    /* background-color: aqua; */
-    display: flex;
-    margin: 20px;
-    
 
-}
+
+
 p{
     font-size: 1em;
     text-align: center;

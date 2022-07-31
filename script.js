@@ -3,16 +3,7 @@ function seedRNG(){
     return Math.floor(Math.random() * totalNumOfSeeds)
 } 
 
-////D O M 
-let button = document.getElementById('btn')
-let h1 = document.getElementsByTagName('h1')[0]
 
-let nomeP = document.getElementsByTagName('p')[0]
-let cargoP = document.getElementsByTagName('p')[1]
-let cidadeP = document.getElementsByTagName('p')[2]
-let ataqueP = document.getElementsByTagName('p')[3]
-let defesaP = document.getElementsByTagName('p')[4]
-let especialP = document.getElementsByTagName('p')[5]
 
 
 
@@ -81,7 +72,7 @@ function escolherIntegrante(){
     } else if (
         // seedString[0] == 0 && 
         seedString[1] == 4) {
-        return integrante = 'SrAntonio'
+        return integrante = 'Sr. Antonio'
     } else if (
         // seedString[0] == 0 && 
         seedString[1] == 5) {
@@ -138,7 +129,7 @@ function escolherCidade(){
     } else if (
         // seedString[1] == 1 && 
         seedString[2] == 6) {
-        return cidade = 'de '
+        return cidade = 'de Goiania'
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 7) {
@@ -298,28 +289,33 @@ function fabricaDeCarta(integrante, cidade, cargo, poder){
 // escolherCargo()
 // escolherPoder()
 
+////D O M 
+let button = document.getElementById('btn')
+let h1 = document.getElementsByTagName('h1')[0]
 
+let nomeP = document.querySelector('.nome')
+let cidadeP = document.querySelector('.cidade')
+let retratoP = document.querySelector('.retrato')
+let cargoP = document.querySelector('.cargo')
+//div poder
+let ataqueP = document.querySelector('.ataque')
+let defesaP = document.querySelector('.defesa')
+let especialP = document.querySelector('.especial')
 
-
-
-
-
-
-
-
-
+let seedP = document.querySelector('.seed')
 
 
 function colocarInfoNoWrap(){
 
     const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
 
-    nomeP.innerHTML = '&nbsp;' + novaCarta._integrante
-    cargoP.innerHTML = '&nbsp;' + novaCarta._cargo
+    nomeP.innerHTML = '&nbsp;' + novaCarta._integrante.toUpperCase()
+    cargoP.innerHTML = '&nbsp;' + novaCarta._cargo.toUpperCase()
     cidadeP.innerHTML = '&nbsp;' + novaCarta._cidade
     ataqueP.innerHTML =  '&nbsp;' + novaCarta._poder._ataque
     defesaP.innerHTML = '&nbsp;' + novaCarta._poder._defesa
     especialP.innerHTML =  '&nbsp;' + novaCarta._poder._especial
+    seedP.innerHTML = '&nbsp;' + generateSeed()
 }
 
 
