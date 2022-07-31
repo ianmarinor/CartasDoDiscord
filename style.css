@@ -9,7 +9,7 @@
     --ministro: #2bd6d6;
     --speaker: #19ee11;
     --primeMinister: #050505;
-    --premioMarino: #fcd503;
+    --premioMarino: #fcd703;
 
 }
 
@@ -77,8 +77,9 @@ li{
     /* border: 1px solid #020101; */
 }
 #carta-premiomarino{
-    background-color: var(--premioMarino);
-    background: radial-gradient(circle, rgba(252,213,3,1) 40%, rgba(200,232,57,1) 87%);
+    background-image: url(pics/wrapPremioMarino.webp);
+    /* background-color: var(--premioMarino); */
+    /* background: radial-gradient(circle, rgba(252,213,3,1) 40%, rgba(200,232,57,1) 87%); */
     height: 70%;
     width: 57%;
     display: flex;
@@ -88,6 +89,10 @@ li{
     border-radius: 15px;
     position: relative;
     border: 2px solid #020101;
+    font-weight: 900;
+    color: rgb(0, 0, 0);
+    
+    
 }
 
 #carta-primeminister{
@@ -229,6 +234,7 @@ li{
     background-color: #4b4747;
     border-radius: 5px;
     background-size: cover;
+    border: #020101 2px solid;
 }
 
 .cargo{

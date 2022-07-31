@@ -311,6 +311,8 @@ let seedP = document.querySelector('.seed')
 let cartaP = document.getElementById('carta')
 // input da seed cliente
 // let coloqueSuaSeed = document.getElementById('seed').value
+//wrap
+let wrap = document.getElementsByClassName('wrap')[0]
 
 
 function colocarInfoNoWrap(){
@@ -364,7 +366,9 @@ function colocarInfoNoWrap(){
 
     } else if (novaCarta._cargo === 'carta-primeminister'){
         cargoP.innerHTML = '&nbsp;' + 'prime minister'.toUpperCase() + '💪'
+        cargoP.style.backgroundImage = 'pics/wrapPremioMarino.webp'
         retratoP.style.border = ''
+        
 
     } else if (novaCarta._cargo === 'carta-premiomarino'){
         cargoP.innerHTML = '&nbsp;' + '&#127942; premio marino &#127942;'.toUpperCase()
