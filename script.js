@@ -54,7 +54,7 @@ let integrante = ''
    
 function escolherIntegrante(){ 
     seedString = generateSeed(input).toString()
-    console.log('integrante seed', seedString);
+    // console.log('integrante seed', seedString);
     if (
         // seedString[0] == 0 && 
         seedString[1] == 0){
@@ -103,7 +103,7 @@ function escolherIntegrante(){
 let cidade = ''
 function escolherCidade(){
     seedString = generateSeed(input).toString()
-    console.log('string cidade', seedString)
+    // console.log('string cidade', seedString)
     if (
         // seedString[1] == 0 && 
         seedString[2] == 0){
@@ -152,7 +152,7 @@ function escolherCidade(){
 let cargo = ''
 function escolherCargo(){
     seedString = generateSeed(input).toString()
-    console.log('stringcargo', seedString)
+    // console.log('stringcargo', seedString)
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
         {return cargo = 'carta-premiomarino'
@@ -326,6 +326,14 @@ function colocarInfoNoWrap(){
     seedP.innerHTML = '&nbsp;' + seedString
     cartaP.id = novaCarta._cargo
 
+    if (novaCarta._integrante === 'Turu'){
+        retratoP.style.backgroundImage = "url('pics/turu.webp')"
+    } 
+    else{
+        retratoP.style.backgroundImage = ""
+    }
+    
+     
     if (novaCarta._cargo === 'carta-semcargo'){
         cargoP.innerHTML = '&nbsp;' + 'sem cargo'.toUpperCase()
 

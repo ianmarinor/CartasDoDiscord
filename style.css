@@ -70,6 +70,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
+    /* border: 1px solid #020101; */
 }
 #carta-premiomarino{
     background-color: var(--premioMarino);
@@ -82,6 +83,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
+    border: 1px solid #020101;
 }
 
 #carta-primeminister{
@@ -96,6 +98,7 @@ li{
     border-radius: 15px;
     position: relative;
     color: wheat;
+    border: 1px solid #020101;
 }
 
 #carta-ministro{
@@ -110,6 +113,7 @@ li{
     border-radius: 15px;
     position: relative;
     color: #020101;
+    border: 1px solid #020101;
     
 }
 
@@ -125,6 +129,7 @@ li{
     border-radius: 15px;
     position: relative;
     color: #090909;
+    border: 1px solid #020101;
 }
 
 #carta-nobre{
@@ -137,6 +142,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
+    border: 1px solid #020101;
 }
 
 #carta-gentleman{
@@ -149,6 +155,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
+    border: 1px solid #020101;
 }
 
 #carta-people{
@@ -161,6 +168,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
+    border: 1px solid #020101;
 }
 #carta-semcargo{
     background-color: var(--semCargo);
@@ -172,6 +180,7 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
+    border: 1px solid #020101;
 }
 
 
@@ -186,8 +195,14 @@ li{
     border-radius: 15px;
     position: relative;
     color: #b0b0b6;
+    border: 1px solid #020101;
 }
-
+/* **************************************************** */
+/* **************************************************** */
+/* **************************************************** */
+/* RETRATO */
+/* ***************************************************** */
+/* **************************************************** */
 
 
 .nome{
@@ -208,7 +223,7 @@ li{
     height: 30%;
     background-color: #4b4747;
     border-radius: 5px;
-    
+    background-size: cover;
 }
 
 .cargo{
