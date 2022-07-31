@@ -348,7 +348,7 @@ function colocarInfoNoWrap(){
 }
 
 function colocarInput(){
-    input =  526004112847
+    input =  ''
 }
 
 button.addEventListener('click', colocarInput)
