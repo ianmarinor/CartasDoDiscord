@@ -56,47 +56,82 @@ function escolherIntegrante(){
     seedString = generateSeed(input).toString()
     console.log('integrante seed', seedString);
     if (
-        // seedString[0] == 0 && 
-        seedString[1] == 0){
-        return integrante = 'Gandalf'
+        seedString[0] == 1 
+        // && 
+        // seedString[1] == 0
+        )
+        {return integrante = 'Gandalf'
     } else if 
-    (
-        // seedString[0] == 0 && 
-        seedString[1] == 1)
+        (
+        seedString[0] == 2 
+        // && 
+        // seedString[1] == 0
+        )
         { return integrante = 'Turu'} 
-        else if (
-        // seedString[0] == 0 && 
-        seedString[1] == 2) {
-        return integrante = 'Nefesto'
-    } else if (
-        // seedString[0] == 0 && 
-        seedString[1] == 3) {
-        return integrante = 'Blackao'
-    } else if (
-        // seedString[0] == 0 && 
-        seedString[1] == 4) {
-        return integrante = 'Sr. Antonio'
-    } else if (
-        // seedString[0] == 0 && 
-        seedString[1] == 5) {
-        return integrante = 'Pedro'
-    } else if (
-        // seedString[0] == 1 && 
-        seedString[1] == 6) {
-        return integrante = 'Bispo'
-    } else if (
-        // seedString[0] == 0 && 
-        seedString[1] == 7) {
-        return integrante = 'Rafael'
-    } else if (
-        // seedString[0] == 0 && 
-        seedString[1] == 8) {
-        return integrante = 'Junks'
-    } else if (
-        // seedString[0] == 0 && 
-        seedString[1] == 9) {
-        return integrante = 'Kerscher'
-    }
+        else if 
+        (
+        seedString[0] == 3 
+        // && 
+        // seedString[1] == 0
+        ) 
+        {return integrante = 'Nefesto'
+    } else if 
+        (
+        seedString[0]== 4 
+        // && 
+        // seedString[1] == 0
+        ) 
+        {return integrante = 'Blackao'
+    } else if 
+        (
+        seedString[0] == 5 
+        // && 
+        // seedString[1] == 0
+        ) 
+        {return integrante = 'Sr. Antonio'
+    } else if 
+        (
+        seedString[0] == 6 
+        // && 
+        // seedString[1] == 0
+        ) 
+        {return integrante = 'Pedro'
+    } else if 
+        (
+        seedString[0] == 7 
+        // && 
+        // seedString[1] == 0
+        ) 
+        {return integrante = 'Bispo'
+    } else if 
+        (
+        seedString[0] == 8 
+        // && 
+        // seedString[1] == 0
+        ) 
+        {return integrante = 'Rafael'
+    } else if 
+        (
+        seedString[0] == 9 
+        // && 
+        // seedString[1] == 0
+        ) 
+        {return integrante = 'Junks'
+    } else if 
+        (
+        seedString[0] == 0 
+        // &&
+        // seedString[1] == 0
+        ) 
+        {return integrante = 'Kerscher'} 
+        // else if 
+    //     (
+    //     // seedString[0] == 1  && 
+    //     seedString[1]
+    //     ) 
+    //     {return integrante = 'Curtas'
+    // } else 
+    //     {return integrante = 'SEM NOME'}
 }
 //cidade
 // THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
@@ -108,7 +143,8 @@ function escolherCidade(){
         // seedString[1] == 0 && 
         seedString[2] == 0){
         return cidade = 'de Caxias do Sul'
-    } else if 
+    } 
+    else if 
     (
         // seedString[1] == 0 && 
         seedString[2] == 1)
@@ -130,9 +166,9 @@ function escolherCidade(){
         seedString[2] == 5) {
         return cidade = 'de Maringá'
     } else if (
-        // seedString[1] == 1 && 
+        // seedString[1] == 0 && 
         seedString[2] == 6) {
-        return cidade = 'de Goiania'
+        return cidade = 'de Itanhaém'
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 7) {
@@ -145,7 +181,7 @@ function escolherCidade(){
         // seedString[1] == 0 && 
         seedString[2] == 9) {
         return cidade = 'de Curitiba'
-    }  
+    }
 }
 //CARGO
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
@@ -156,7 +192,7 @@ function escolherCargo(){
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
         {return cargo = 'carta-premiomarino'
-    } else if (
+        } else if (
         seedString[5] >= 5 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
         { return cargo = 'carta-primeminister'}
         else if (
@@ -336,7 +372,6 @@ function colocarInfoNoWrap(){
 
     //DOM
     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante.toUpperCase()
-    
     cidadeP.innerHTML = '&nbsp;' +  novaCarta._cidade
     ataqueP.innerHTML =  '&nbsp;' + '&#9889;'  + novaCarta._poder._ataque
     defesaP.innerHTML = '&nbsp;' +  '&#128150;'+ novaCarta._poder._defesa
