@@ -56,70 +56,70 @@ function escolherIntegrante(){
     seedString = generateSeed(input).toString()
     console.log('integrante seed', seedString);
     if (
-        seedString[0] == 1 
+        seedString[4] == 1 
         // && 
         // seedString[1] == 0
         )
         {return integrante = 'Gandalf'
     } else if 
         (
-        seedString[0] == 2 
+        seedString[4] == 2 
         // && 
         // seedString[1] == 0
         )
         { return integrante = 'Turu'} 
         else if 
         (
-        seedString[0] == 3 
+        seedString[4] == 3 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Nefesto'
     } else if 
         (
-        seedString[0]== 4 
+        seedString[4]== 4 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Blackao'
     } else if 
         (
-        seedString[0] == 5 
+        seedString[4] == 5 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Sr. Antonio'
     } else if 
         (
-        seedString[0] == 6 
+        seedString[4] == 6 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Pedro'
     } else if 
         (
-        seedString[0] == 7 
+        seedString[4] == 7 
         // && 
         // seedString[1] == 0
         ) 
-        {return integrante = 'Bispo'
+        {return integrante = 'Curtas'
     } else if 
         (
-        seedString[0] == 8 
+        seedString[4] == 8 
         // && 
         // seedString[1] == 0
         ) 
-        {return integrante = 'Rafael'
+        {return integrante = 'Twelve'
     } else if 
         (
-        seedString[0] == 9 
+        seedString[4] == 9 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Junks'
     } else if 
         (
-        seedString[0] == 0 
+        seedString[4] == 0 
         // &&
         // seedString[1] == 0
         ) 
@@ -398,9 +398,22 @@ function colocarInfoNoWrap(){
         retratoP.style.backgroundImage = "url('pics/turu.webp')"
     } else if (novaCarta._integrante === 'Blackao'){
         retratoP.style.backgroundImage = "url('pics/blackao.jpeg')"
+
     } else if (novaCarta._integrante === 'Gandalf'){
         retratoP.style.backgroundImage = "url('pics/gandarfu.png')"
-    } else {
+    } 
+
+    } else if (novaCarta._integrante === 'Kerscher'){
+        retratoP.style.backgroundImage = "url('pics/kerscher.png')"
+    } else if (novaCarta._integrante === 'Pedro'){
+        retratoP.style.backgroundImage = "url('pics/pedro.png')"
+    } else if (novaCarta._integrante === 'Nefesto'){
+        retratoP.style.backgroundImage = "url('pics/nefesto.png')"
+    } else if (novaCarta._integrante === 'Sr. Antonio'){
+        retratoP.style.backgroundImage = "url('pics/antonio.png')"
+    }
+    else {
+
         retratoP.style.backgroundImage = ""
     }
     
