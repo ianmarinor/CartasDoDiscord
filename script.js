@@ -465,7 +465,7 @@ function colocarInfoNoWrap(){
 
 
 function colocarInput(){
-    // input = 111112345
+    // input = 1111111111111
     input =  getSeed.value
 }
 
@@ -507,6 +507,25 @@ function moverCarta(){
     }  
 }
 
+function moverCartaMonark(){
+
+    copyCard = cartaParaMover.cloneNode(true)
+    // copySeed = copy.getElementsByClassName('seed')
+    cardShrinker(copyCard)
+    if (inv.childElementCount < 4 &&  inv.children[0] === undefined && copyCard.id === 'carta-monark'){
+        inv.appendChild(copyCard)
+    } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined && copyCard.id === 'carta-monark'){
+        inv.appendChild(copyCard)
+    } else if (inv.childElementCount < 4 &&  inv.children[1].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[2] === undefined && copyCard.id === 'carta-monark'){
+        inv.appendChild(copyCard)
+    } else if (inv.childElementCount < 4 &&  inv.children[2].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[3] === undefined && copyCard.id === 'carta-monark'){
+        inv.appendChild(copyCard)
+    }  
+
+
+}
+
+
 /****************************************** */
 // TIRAR CARTA DO INVENTARIO
 // /******************************************** */
@@ -514,12 +533,19 @@ function moverCarta(){
 btnReset = document.getElementById('btnReset')
 
 function deletarDeck(e){
+
+    if(e.target.id != 'carta-monark'){
     inv.removeChild(e.target)
+    }
+    
+    
+    
 }   
 
 function resetarDeck(){
 
     for (let i = 0; i < 4; i++){
+        
         inv.removeChild(inv.children[0])
     }
 }
@@ -534,6 +560,7 @@ button.addEventListener('click', escolherCidade)
 button.addEventListener('click', escolherCargo)
 button.addEventListener('click', escolherPoder)
 button.addEventListener('click', colocarInfoNoWrap)
+button.addEventListener('click', moverCartaMonark)
 mover.addEventListener('click', moverCarta)
 inv.addEventListener('click', deletarDeck)
 btnReset.addEventListener('click', resetarDeck)
