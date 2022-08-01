@@ -190,7 +190,7 @@ function escolherCargo(){
     seedString = generateSeed(input).toString()
     console.log('stringcargo', seedString)
     if (
-        seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
+        seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] >= 5)
         {return cargo = 'carta-premiomarino'
         } else if (
         seedString[5] >= 5 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
@@ -208,7 +208,7 @@ function escolherCargo(){
         seedString[7] == 4 && seedString[8] == 5)
         { return cargo = 'carta-nobre'}
         else if (
-        seedString[7] == 4 && seedString[8] >= 1)
+        seedString[7] == 4 && seedString[8] == 1)
         { return cargo = 'carta-monark'}
         else if (
         seedString[7] >= 4 && seedString[8] == 5)
