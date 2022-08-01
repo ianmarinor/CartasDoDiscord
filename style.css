@@ -23,11 +23,16 @@
 }
 
 body {
-    display: flex;
+    display: grid;
+    grid-template-areas: "nav nav nav"
+                   "wrap inv inv";
     justify-content: center;
     align-items: center;
     flex-direction: column;
     background-color: #121212;
+}
+@media only screen and (max-width: 480px){
+   
 }
 nav{
     background-color: rgb(136, 74, 195);
@@ -35,6 +40,10 @@ nav{
     height: 55px;
 
     grid-area: nav;
+}
+@media only screen and (max-width: 480px){
+    nav{width: 100vh;
+    }
 }
 
 nav ul{
@@ -48,12 +57,11 @@ li{
     font-size: 1.25em;
     color: rgb(213, 187, 238);;
 }
-body{
-    display: grid;
-    grid-template-areas: "nav nav nav"
-                   "wrap inv inv";
-    
+@media only screen and (max-width: 480px){
+    .wrap{
+        width: 100%;
 
+    }
 }
 .wrap{
     margin-top: 40px;
@@ -328,3 +336,32 @@ p{
     
 }
 
+@media only screen and (max-width: 480px){
+    
+    body{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+    }
+    
+    nav{width: 100vh;
+    }
+    .wrap{
+        width: 100%;
+        background-image: none;
+        background-color: #121212;
+    }
+    
+    
+    #inv{
+        /* width: 50%; */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+        gap: 0px;
+        overflow: visible;
+
+    }
+}
