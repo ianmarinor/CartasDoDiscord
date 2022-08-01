@@ -135,6 +135,7 @@ function escolherIntegrante(){
 }
 //cidade
 // THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
+// ******************************************************************
 let cidade = ''
 function escolherCidade(){
     seedString = generateSeed(input).toString()
@@ -223,31 +224,68 @@ function escolherCargo(){
 
 
 //RNG DOS PONTES DE PODER
-let pontoPoderEspecial = () => Math.floor(Math.random() * (5 - 1) + 1)
-
+// let pontoPoderEspecial = () => Math.floor(Math.random() * (5 - 1) + 1)
+let pontoPoderEspecial = () => parseInt((seedString[7]) / 2 + 1) 
 console.log('pontoPoderEspecial: ', pontoPoderEspecial);
-let pontoPoderSemCargo = () => Math.floor(Math.random() * (10 - 1) + 1)
-let pontoPoderSemCargoD = () => Math.floor(Math.random() * (10 - 1) + 1)
+
+
+let pontoPoderSemCargo = () =>  Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 1)
+let pontoPoderSemCargoD = () => Math.floor((parseInt(seedString[5]) + parseInt(seedString[1])) / 2 + 1)
+// let pontoPoderSemCargo = () => Math.floor(Math.random() * (10 - 1) + 1)
+// let pontoPoderSemCargoD = () => Math.floor(Math.random() * (10 - 1) + 1)
 // console.log('pontoPoderSemCargo: ', pontoPoderSemCargo);
-let pontoPoderPeople = () => Math.floor(Math.random() * (20 - 1) + 1)
-let pontoPoderPeopleD = () => Math.floor(Math.random() * (20 - 1) + 1)
+
+
+
+
+let pontoPoderPeople = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 5)
+let pontoPoderPeopleD = () => Math.floor((parseInt(seedString[5]) + parseInt(seedString[1])) / 2 + 5)
+// let pontoPoderPeople = () => Math.floor(Math.random() * (20 - 1) + 1)
+// let pontoPoderPeopleD = () => Math.floor(Math.random() * (20 - 1) + 1) 
 // console.log('pontoPoderPeople: ', pontoPoderPeople);
-let pontoPoderGentleman = () => Math.floor(Math.random() * (30 - 5) + 5)
-let pontoPoderGentlemanD = () => Math.floor(Math.random() * (30 - 5) + 5)
+
+
+
+let pontoPoderGentleman = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 9)
+let pontoPoderGentlemanD = () => Math.floor((parseInt(seedString[5]) + parseInt(seedString[1])) / 2 + 9)
+// let pontoPoderGentleman = () => Math.floor(Math.random() * (30 - 5) + 5)
+// let pontoPoderGentlemanD = () => Math.floor(Math.random() * (30 - 5) + 5)
+
+
 let pontoPoderMonark = () => Math.floor(Math.random() * 3)
 let pontoPoderMonarkD = () => Math.floor(Math.random() * 3)
-let pontoPoderNobre = () => Math.floor(Math.random() * (40 - 15) +15)
-let pontoPoderNobreD = () => Math.floor(Math.random() * (40 - 15) +15)
-let pontoPoderLord = () => Math.floor(Math.random() * (35 - 10) + 10)
-let pontoPoderLordD = () =>Math.floor(Math.random() * (35 - 10) + 10)
+
+
+let pontoPoderNobre = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 13)
+let pontoPoderNobreD = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 13)
+// let pontoPoderNobre = () => Math.floor(Math.random() * (40 - 15) +15)
+// let pontoPoderNobreD = () => Math.floor(Math.random() * (40 - 15) +15)
+
+
+let pontoPoderLord = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 17)
+let pontoPoderLordD = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 17)
+// let pontoPoderLord = () => Math.floor(Math.random() * (35 - 10) + 10)
+// let pontoPoderLordD = () =>Math.floor(Math.random() * (35 - 10) + 10)
 // console.log('pontoPoderLord: ', pontoPoderLord);
-let pontoPoderMinistro = () => Math.floor(Math.random() * (60 - 30) + 30)
-let pontoPoderMinistroD = () => Math.floor(Math.random() * (60 - 30) + 30)
+
+
+let pontoPoderMinistro = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 27)
+let pontoPoderMinistroD = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 27)
+// let pontoPoderMinistro = () => Math.floor(Math.random() * (60 - 30) + 30)
+// let pontoPoderMinistroD = () => Math.floor(Math.random() * (60 - 30) + 30)
 // console.log('pontoPoderMinistro: ', pontoPoderMinistro);
-let pontoPoderPrimeMinister = () => Math.floor(Math.random() * (70 - 50) + 50)
-let pontoPoderPrimeMinisterD = () => Math.floor(Math.random() * (70 - 50) + 50)
-let pontoPoderRNGPremioMarino = () => Math.floor(Math.random() * (150 - 90) + 90)
-let pontoPoderRNGPremioMarinoD = () => Math.floor(Math.random() * (150 - 90) + 90)
+
+
+let pontoPoderPrimeMinister = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 37)
+let pontoPoderPrimeMinisterD = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 37)
+// let pontoPoderPrimeMinister = () => Math.floor(Math.random() * (70 - 50) + 50)
+// let pontoPoderPrimeMinisterD = () => Math.floor(Math.random() * (70 - 50) + 50)
+
+
+let pontoPoderRNGPremioMarino = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 60)
+let pontoPoderRNGPremioMarinoD = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 60)
+// let pontoPoderRNGPremioMarino = () => Math.floor(Math.random() * (150 - 90) + 90)
+// let pontoPoderRNGPremioMarinoD = () => Math.floor(Math.random() * (150 - 90) + 90)
 // console.log('pontoPoderRNGPremioMarino: ', pontoPoderRNGPremioMarino);
 
 
@@ -371,6 +409,8 @@ let getSeed = document.getElementById('getseed')
 function colocarInfoNoWrap(){
 
     const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
+    console.log('novaCarta: ', novaCarta);
+
 
     //DOM
     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante.toUpperCase()
@@ -465,7 +505,7 @@ function colocarInfoNoWrap(){
 
 
 function colocarInput(){
-    // input = 1111111111111
+    // input = 0111111111111
     input =  getSeed.value
 }
 

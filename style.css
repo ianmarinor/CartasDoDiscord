@@ -31,9 +31,7 @@ body {
     flex-direction: column;
     background-color: #121212;
 }
-@media only screen and (max-width: 480px){
-   
-}
+
 nav{
     background-color: rgb(136, 74, 195);
     width: 100%;
@@ -41,10 +39,7 @@ nav{
 
     grid-area: nav;
 }
-@media only screen and (max-width: 480px){
-    nav{width: 100vh;
-    }
-}
+
 
 nav ul{
     list-style: none;
@@ -57,12 +52,7 @@ li{
     font-size: 1.25em;
     color: rgb(213, 187, 238);;
 }
-@media only screen and (max-width: 480px){
-    .wrap{
-        width: 100%;
 
-    }
-}
 .wrap{
     margin-top: 40px;
     height: 600px;
@@ -346,10 +336,11 @@ p{
     }
     
     nav{
-        width: 80vh;
+        display: none;
         
     }
     .wrap{
+        display: none;
         width: 100%;
         background-image: none;
         background-color: #121212;
