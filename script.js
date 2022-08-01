@@ -345,6 +345,8 @@ function fabricaDeCarta(integrante, cidade, cargo, poder){
 ////D O M 
 let button = document.getElementById('btn')
 let h1 = document.getElementsByTagName('h1')[0]
+let mover = document.getElementById('mover')
+let inv = document.getElementById('inv')
 
 let nomeP = document.querySelector('.nome')
 let cidadeP = document.querySelector('.cidade')
@@ -396,6 +398,11 @@ function colocarInfoNoWrap(){
         retratoP.style.backgroundImage = "url('pics/turu.webp')"
     } else if (novaCarta._integrante === 'Blackao'){
         retratoP.style.backgroundImage = "url('pics/blackao.jpeg')"
+
+    } else if (novaCarta._integrante === 'Gandalf'){
+        retratoP.style.backgroundImage = "url('pics/gandarfu.png')"
+    } 
+
     } else if (novaCarta._integrante === 'Kerscher'){
         retratoP.style.backgroundImage = "url('pics/kerscher.png')"
     } else if (novaCarta._integrante === 'Pedro'){
@@ -406,6 +413,7 @@ function colocarInfoNoWrap(){
         retratoP.style.backgroundImage = "url('pics/antonio.png')"
     }
     else {
+
         retratoP.style.backgroundImage = ""
     }
     
@@ -454,10 +462,71 @@ function colocarInfoNoWrap(){
         
 }
 
+
+
 function colocarInput(){
-    // input = 411115545111
+    // input = 111112345
     input =  getSeed.value
 }
+
+//*************************MOVER CARTA PARA O INVENTARIO */
+//****************************************************** */
+//*************************MOVER CARTA PARA O INVENTARIO */
+//****************************************************** */
+//*************************MOVER CARTA PARA O INVENTARIO */
+//****************************************************** */
+//*************************MOVER CARTA PARA O INVENTARIO */
+//****************************************************** */
+
+let cartaParaMover = document.querySelectorAll('div')[1]
+let copyCard = ''
+let copySeed = ''
+
+
+function cardShrinker(cartaGrande){
+    cartaGrande.style.height = '295px'
+    cartaGrande.style.width = '190px'
+    cartaGrande.style.fontSize = '10px'
+    cartaGrande.children[1].style.backgroundSize = '139px 87px'
+
+}
+
+function moverCarta(){
+
+    copyCard = cartaParaMover.cloneNode(true)
+    // copySeed = copy.getElementsByClassName('seed')
+    cardShrinker(copyCard)
+    if (inv.childElementCount < 4 &&  inv.children[0] === undefined){
+        inv.appendChild(copyCard)
+    } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined){
+        inv.appendChild(copyCard)
+    } else if (inv.childElementCount < 4 &&  inv.children[1].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[2] === undefined){
+        inv.appendChild(copyCard)
+    } else if (inv.childElementCount < 4 &&  inv.children[2].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[3] === undefined){
+        inv.appendChild(copyCard)
+    }  
+}
+
+/****************************************** */
+// TIRAR CARTA DO INVENTARIO
+// /******************************************** */
+
+btnReset = document.getElementById('btnReset')
+
+function deletarDeck(e){
+    inv.removeChild(e.target)
+}   
+
+function resetarDeck(){
+
+    for (let i = 0; i < 4; i++){
+        inv.removeChild(inv.children[0])
+    }
+}
+    
+
+
+
 
 button.addEventListener('click', colocarInput)
 button.addEventListener('click', escolherIntegrante)
@@ -465,7 +534,9 @@ button.addEventListener('click', escolherCidade)
 button.addEventListener('click', escolherCargo)
 button.addEventListener('click', escolherPoder)
 button.addEventListener('click', colocarInfoNoWrap)
-
+mover.addEventListener('click', moverCarta)
+inv.addEventListener('click', deletarDeck)
+btnReset.addEventListener('click', resetarDeck)
 
 
 
