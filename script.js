@@ -208,7 +208,7 @@ function escolherCargo(){
         seedString[7] == 4 && seedString[8] == 5)
         { return cargo = 'carta-nobre'}
         else if (
-        seedString[7] == 4 && seedString[8] == 1)
+        seedString[7] == 4 && seedString[8] >= 1)
         { return cargo = 'carta-monark'}
         else if (
         seedString[7] >= 4 && seedString[8] == 5)
@@ -534,6 +534,8 @@ btnReset = document.getElementById('btnReset')
 
 function deletarDeck(e){
 
+
+    
     if(e.target.id != 'carta-monark'){
     inv.removeChild(e.target)
     }
@@ -543,11 +545,13 @@ function deletarDeck(e){
 }   
 
 function resetarDeck(){
-
+    
     for (let i = 0; i < 4; i++){
         
         inv.removeChild(inv.children[0])
+        
     }
+    
 }
     
 
@@ -564,6 +568,8 @@ button.addEventListener('click', moverCartaMonark)
 mover.addEventListener('click', moverCarta)
 inv.addEventListener('click', deletarDeck)
 btnReset.addEventListener('click', resetarDeck)
+btnReset.addEventListener('click', moverCartaMonark)
+
 
 
 
