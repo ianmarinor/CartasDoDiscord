@@ -403,7 +403,7 @@ function colocarInfoNoWrap(){
         retratoP.style.backgroundImage = "url('pics/gandarfu.png')"
     } 
 
-    } else if (novaCarta._integrante === 'Kerscher'){
+     else if (novaCarta._integrante === 'Kerscher'){
         retratoP.style.backgroundImage = "url('pics/kerscher.png')"
     } else if (novaCarta._integrante === 'Pedro'){
         retratoP.style.backgroundImage = "url('pics/pedro.png')"
