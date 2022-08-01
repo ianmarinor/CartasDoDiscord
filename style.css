@@ -345,7 +345,9 @@ p{
         overflow-x: hidden;
     }
     
-    nav{width: 100vh;
+    nav{
+        width: 80vh;
+        
     }
     .wrap{
         width: 100%;
