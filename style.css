@@ -336,11 +336,11 @@ p{
     }
     
     nav{
-        display: none;
+        /* display: none; */
         
     }
     .wrap{
-        display: none;
+        /* display: none; */
         width: 100%;
         background-image: none;
         background-color: #121212;
