@@ -51,7 +51,7 @@ function generateSeed(input){
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 
 let integrante = ''
-   
+let seedString = ''
 function escolherIntegrante(){ 
     seedString = generateSeed(input).toString()
     console.log('integrante seed', seedString);
@@ -123,7 +123,7 @@ function escolherIntegrante(){
         // &&
         // seedString[1] == 0
         ) 
-        {return integrante = 'Kerscher'} 
+        {return integrante = 'Murilo'} 
         // else if 
     //     (
     //     // seedString[0] == 1  && 
@@ -138,7 +138,6 @@ function escolherIntegrante(){
 // ******************************************************************
 let cidade = ''
 function escolherCidade(){
-    seedString = generateSeed(input).toString()
     console.log('string cidade', seedString)
     if (
         // seedString[1] == 0 && 
@@ -188,7 +187,6 @@ function escolherCidade(){
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = ''
 function escolherCargo(){
-    seedString = generateSeed(input).toString()
     console.log('stringcargo', seedString)
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] >= 5)
@@ -349,7 +347,7 @@ function escolherPoder(){
         }
      } else if (cargo === 'carta-speaker'){
         return  poder = {
-                 _ataque: 'ORDER!!',
+                 _ataque: '🔨',
                  _defesa: pontoPoderRNGPremioMarinoD(),
                  _especial: '20'
         }
@@ -426,7 +424,7 @@ function colocarInfoNoWrap(){
     //CARTAS ESPECIAIS 
     if (novaCarta._cargo === 'carta-speaker'){
         nomeP.innerHTML = '&nbsp; SPEAKER'  
-        cidadeP.innerHTML = '&nbsp; PARLAMENTO'
+        cidadeP.innerHTML = ''
         
     }
 
@@ -443,16 +441,22 @@ function colocarInfoNoWrap(){
         retratoP.style.backgroundImage = "url('pics/gandarfu.png')"
     } 
 
-     else if (novaCarta._integrante === 'Kerscher'){
-        retratoP.style.backgroundImage = "url('pics/kerscher.png')"
+     else if (novaCarta._integrante === 'Murillo'){
+        retratoP.style.backgroundImage = "url('pics/Murilo.png')"
     } else if (novaCarta._integrante === 'Pedro'){
         retratoP.style.backgroundImage = "url('pics/pedro.png')"
     } else if (novaCarta._integrante === 'Nefesto'){
         retratoP.style.backgroundImage = "url('pics/nefesto.png')"
     } else if (novaCarta._integrante === 'Sr. Antonio'){
         retratoP.style.backgroundImage = "url('pics/antonio.png')"
+    } else if (novaCarta._integrante === 'Curtas'){
+        retratoP.style.backgroundImage = "url('pics/curtas.png')"
+    } else if (novaCarta._integrante === 'Junks'){
+        retratoP.style.backgroundImage = "url('pics/junks.jpeg')"
+    // } else if (novaCarta._integrante === 'Twelve'){
+    //     retratoP.style.backgroundImage = "url('pics/twelve.jpeg')"
     }
-    else {
+    else { 
 
         retratoP.style.backgroundImage = ""
     }
@@ -494,7 +498,7 @@ function colocarInfoNoWrap(){
         cargoP.innerHTML = '&nbsp;' + 'monark' + '&#128169;'
         retratoP.style.border = ''
     }  else if (novaCarta._cargo === 'carta-speaker'){
-        cargoP.innerHTML = novaCarta._integrante.toUpperCase() + ' BANIDO! <BR> 🔨'
+        cargoP.innerHTML = novaCarta._integrante.toUpperCase() + ' BAN!'
         retratoP.style.border = '2px dotted green'
     } else {
         true
@@ -507,7 +511,7 @@ function colocarInfoNoWrap(){
 
 function colocarInput(){
     input = getSeed.value
-    // input = 080712345111
+    // input = 13315754569994
 }
 
 //*************************MOVER CARTA PARA O INVENTARIO */
@@ -519,24 +523,24 @@ function colocarInput(){
 //*************************MOVER CARTA PARA O INVENTARIO */
 //****************************************************** */
 
-let cartaParaMover = document.querySelectorAll('div')[1]
+
+
+// function cardShrinker(cartaGrande){
+//     cartaGrande.style.height = '49%'
+//     cartaGrande.style.width = '38%'
+//     // cartaGrande.style.fontSize = '10px'
+//     // cartaGrande.children[1].style.backgroundSize = '139px 87px'
+
+// }
+
+let cartaParaMover = document.getElementById('pack').firstElementChild
 let copyCard = ''
-let copySeed = ''
-
-
-function cardShrinker(cartaGrande){
-    cartaGrande.style.height = '295px'
-    cartaGrande.style.width = '190px'
-    cartaGrande.style.fontSize = '10px'
-    cartaGrande.children[1].style.backgroundSize = '139px 87px'
-
-}
 
 function moverCarta(){
 
     copyCard = cartaParaMover.cloneNode(true)
     // copySeed = copy.getElementsByClassName('seed')
-    cardShrinker(copyCard)
+    // cardShrinker(copyCard)
     if (inv.childElementCount < 4 &&  inv.children[0] === undefined){
         inv.appendChild(copyCard)
     } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined){
@@ -552,7 +556,7 @@ function moverCartaMonark(){
 
     copyCard = cartaParaMover.cloneNode(true)
     // copySeed = copy.getElementsByClassName('seed')
-    cardShrinker(copyCard)
+    // cardShrinker(copyCard)
     if (inv.childElementCount < 4 &&  inv.children[0] === undefined && copyCard.id === 'carta-monark'){
         inv.appendChild(copyCard)
     } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined && copyCard.id === 'carta-monark'){
@@ -575,13 +579,22 @@ btnReset = document.getElementById('btnReset')
 
 function deletarDeck(e){
 
+    if (e.target.id != 'carta-monark' && e.target.parentElement.id != 'carta-monark' && e.target.parentElement.parentElement.id != 'carta-monark'){
 
-    
-    if(e.target.id != 'carta-monark'){
-    inv.removeChild(e.target)
+        if( e.target.id != 'inv' && e.target.clientHeight === 291  ){
+        e.target.remove()
+
+        } else if (e.target.id != 'inv' && e.target.clientHeight != 291 && e.target.className != 'seed' ){
+
+            if(e.target.parentElement.clientHeight === 291){
+                e.target.parentElement.remove()
+            }
+            else{
+                e.target.parentElement.parentElement.remove()
+            }
+
+        }
     }
-    
-    
     
 }   
 
@@ -597,19 +610,29 @@ function resetarDeck(){
     
 
 
+function tudo(){
+    colocarInput()
+    escolherIntegrante()
+    escolherCidade()
+    escolherCargo()
+    escolherPoder()
+    colocarInfoNoWrap()
+    moverCartaMonark()
+
+}
 
 
-button.addEventListener('click', colocarInput)
-button.addEventListener('click', escolherIntegrante)
-button.addEventListener('click', escolherCidade)
-button.addEventListener('click', escolherCargo)
-button.addEventListener('click', escolherPoder)
-button.addEventListener('click', colocarInfoNoWrap)
-button.addEventListener('click', moverCartaMonark)
-mover.addEventListener('click', moverCarta)
+
+
+button.addEventListener('click', tudo)
+
+
+cartaParaMover.addEventListener('click', moverCarta)
 inv.addEventListener('click', deletarDeck)
+
 btnReset.addEventListener('click', resetarDeck)
-btnReset.addEventListener('click', moverCartaMonark)
+// btnReset.addEventListener('click', moverCartaMonark)
+btnReset.addEventListener('click', tudo)
 
 
 
