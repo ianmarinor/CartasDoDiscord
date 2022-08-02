@@ -123,7 +123,7 @@ function escolherIntegrante(){
         // &&
         // seedString[1] == 0
         ) 
-        {return integrante = 'Murilo'} 
+        {return integrante = 'Murillo'} 
         // else if 
     //     (
     //     // seedString[0] == 1  && 
@@ -442,7 +442,7 @@ function colocarInfoNoWrap(){
     } 
 
      else if (novaCarta._integrante === 'Murillo'){
-        retratoP.style.backgroundImage = "url('pics/Murilo.png')"
+        retratoP.style.backgroundImage = "url('pics/murilo.jpeg')"
     } else if (novaCarta._integrante === 'Pedro'){
         retratoP.style.backgroundImage = "url('pics/pedro.png')"
     } else if (novaCarta._integrante === 'Nefesto'){
