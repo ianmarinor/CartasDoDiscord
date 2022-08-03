@@ -221,7 +221,7 @@ function escolherCargo(){
         seedString[7] == 4 && seedString[8] == 5)
         { return cargo = 'carta-nobre'}
         else if (
-        seedString[7] >= 4 && seedString[8] >= 1)
+        seedString[7] == 4 && seedString[8] == 1)
         { return cargo = 'carta-monark'}
         else if (
         seedString[7] >= 4 && seedString[8] == 5)
