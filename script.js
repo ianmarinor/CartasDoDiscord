@@ -649,77 +649,81 @@ function teste(){
     cartaParaMover.children[0].children[1].style.fontWeight = ''
     cartaParaMover.classList.remove('critico')
     //gandalf
-    if (seedString[4] == '1' && seedString[2] == '0' ){
-     cartaParaMover.classList.add('critico')
-     cartaParaMover.children[0].children[0].style.color = 'red'
-     cartaParaMover.children[0].children[1].style.color = 'red'
-     cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
-     }
-     //turu
-     if (seedString[4] == '2' && seedString[2] == '1' ){
-        cartaParaMover.classList.add('critico')
-        cartaParaMover.children[0].children[0].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
-     }
-     //nefesto
-     if (seedString[4] == '3' && seedString[2] == '2' ){
-        cartaParaMover.classList.add('critico')
-        cartaParaMover.children[0].children[0].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
-     }
-     //blackao
-     if (seedString[4] == '4' && seedString[2] == '3' ){
-        cartaParaMover.classList.add('critico')
-        cartaParaMover.children[0].children[0].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
-     }
-     //antonio
-     if (seedString[4] == '5' && seedString[2] == '4' ){
-        cartaParaMover.classList.add('critico')
-        cartaParaMover.children[0].children[0].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
-     }
-     //pedro
-     if (seedString[4] == '6' && seedString[2] == '5' ){
-        cartaParaMover.classList.add('critico')
-        cartaParaMover.children[0].children[0].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
-     }
-     //curtas
-     if (seedString[4] == '7' && seedString[2] == '6' ){
-        cartaParaMover.classList.add('critico')
-        cartaParaMover.children[0].children[0].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
-     }
-     //twelve
-     if (seedString[4] == '8' && seedString[2] == '7' ){
-        cartaParaMover.classList.add('critico')
-        cartaParaMover.children[0].children[0].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
-     }
-     //junks
-     if (seedString[4] == '9' && seedString[2] == '8' ){
-        cartaParaMover.classList.add('critico')
-        cartaParaMover.children[0].children[0].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+    if (cartaParaMover.id != 'carta-monark' && cartaParaMover.id != 'carta-speaker' ){
 
-     }
-     //murilo
-     if (seedString[4] == '0' && seedString[2] == '9' ){
+    
+        if (seedString[4] == '1' && seedString[2] == '0' ){
         cartaParaMover.classList.add('critico')
         cartaParaMover.children[0].children[0].style.color = 'red'
         cartaParaMover.children[0].children[1].style.color = 'red'
         cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
-     } 
-   
+        }
+        //turu
+        if (seedString[4] == '2' && seedString[2] == '1' ){
+            cartaParaMover.classList.add('critico')
+            cartaParaMover.children[0].children[0].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+        }
+        //nefesto
+        if (seedString[4] == '3' && seedString[2] == '2' ){
+            cartaParaMover.classList.add('critico')
+            cartaParaMover.children[0].children[0].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+        }
+        //blackao
+        if (seedString[4] == '4' && seedString[2] == '3' ){
+            cartaParaMover.classList.add('critico')
+            cartaParaMover.children[0].children[0].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+        }
+        //antonio
+        if (seedString[4] == '5' && seedString[2] == '4' ){
+            cartaParaMover.classList.add('critico')
+            cartaParaMover.children[0].children[0].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+        }
+        //pedro
+        if (seedString[4] == '6' && seedString[2] == '5' ){
+            cartaParaMover.classList.add('critico')
+            cartaParaMover.children[0].children[0].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+        }
+        //curtas
+        if (seedString[4] == '7' && seedString[2] == '6' ){
+            cartaParaMover.classList.add('critico')
+            cartaParaMover.children[0].children[0].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+        }
+        //twelve
+        if (seedString[4] == '8' && seedString[2] == '7' ){
+            cartaParaMover.classList.add('critico')
+            cartaParaMover.children[0].children[0].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+        }
+        //junks
+        if (seedString[4] == '9' && seedString[2] == '8' ){
+            cartaParaMover.classList.add('critico')
+            cartaParaMover.children[0].children[0].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+        }
+        //murilo
+        if (seedString[4] == '0' && seedString[2] == '9' ){
+            cartaParaMover.classList.add('critico')
+            cartaParaMover.children[0].children[0].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.color = 'red'
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+        } 
+    }
+    
    
    
    
@@ -759,7 +763,7 @@ function deletarDeck(e){
 }   
 
 function resetarDeck(){
-    cartaParaMover.classList.remove('critico')
+    teste()
     for (let i = 0; i < 4; i++){
         
         inv.removeChild(inv.children[0])
