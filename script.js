@@ -641,14 +641,19 @@ const cartaParaMoverNome = cartaParaMover.children[0].children[0].textContent
 const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent
 
 function teste(){
+    //nome
     cartaParaMover.children[0].children[1].style.color = ''
+    //cidade
     cartaParaMover.children[0].children[0].style.color = ''
+    //cidade negrito
+    cartaParaMover.children[0].children[1].style.fontWeight = ''
     cartaParaMover.classList.remove('critico')
     //gandalf
     if (seedString[4] == '1' && seedString[2] == '0' ){
      cartaParaMover.classList.add('critico')
      cartaParaMover.children[0].children[0].style.color = 'red'
      cartaParaMover.children[0].children[1].style.color = 'red'
+     cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
      }
      //turu
      if (seedString[4] == '2' && seedString[2] == '1' ){
