@@ -70,70 +70,70 @@ function escolherIntegrante(){
     seedString = generateSeed(input).toString()
     // console.log('integrante seed', seedString);
     if (
-        seedString[4] == 1 
+        seedString[1] == 1 
         // && 
         // seedString[1] == 0
         )
         {return integrante = 'Gandalf'
     } else if 
         (
-        seedString[4] == 2 
+        seedString[1] == 2 
         // && 
         // seedString[1] == 0
         )
         { return integrante = 'Turu'} 
         else if 
         (
-        seedString[4] == 3 
+        seedString[1] == 3 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Nefesto'
     } else if 
         (
-        seedString[4]== 4 
+        seedString[1]== 4 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Blackao'
     } else if 
         (
-        seedString[4] == 5 
+        seedString[1] == 5 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Sr. Antonio'
     } else if 
         (
-        seedString[4] == 6 
+        seedString[1] == 6 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Pedro'
     } else if 
         (
-        seedString[4] == 7 
+        seedString[1] == 7 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Curtas'
     } else if 
         (
-        seedString[4] == 8 
+        seedString[1] == 8 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Twelve'
     } else if 
         (
-        seedString[4] == 9 
+        seedString[1] == 9 
         // && 
         // seedString[1] == 0
         ) 
         {return integrante = 'Junks'
     } else if 
         (
-        seedString[4] == 0 
+        seedString[1] == 0 
         // &&
         // seedString[1] == 0
         ) 
@@ -704,63 +704,63 @@ function critico(){
     if (cartaParaMover.id != 'carta-monark' && cartaParaMover.id != 'carta-speaker' ){
 
     
-        if (seedString[4] == '1' && seedString[2] == '0' ){
+        if (seedString[1] == '1' && seedString[2] == '0' ){
         cartaParaMover.classList.add('critico')
         cartaParaMover.children[0].children[0].style.color = 'red'
         cartaParaMover.children[0].children[1].style.color = 'red'
         cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //turu
-        if (seedString[4] == '2' && seedString[2] == '1' ){
+        if (seedString[1] == '2' && seedString[2] == '1' ){
             cartaParaMover.classList.add('critico')
             cartaParaMover.children[0].children[0].style.color = 'red'
             cartaParaMover.children[0].children[1].style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //nefesto
-        if (seedString[4] == '3' && seedString[2] == '2' ){
+        if (seedString[1] == '3' && seedString[2] == '2' ){
             cartaParaMover.classList.add('critico')
             cartaParaMover.children[0].children[0].style.color = 'red'
             cartaParaMover.children[0].children[1].style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //blackao
-        if (seedString[4] == '4' && seedString[2] == '3' ){
+        if (seedString[1] == '4' && seedString[2] == '3' ){
             cartaParaMover.classList.add('critico')
             cartaParaMover.children[0].children[0].style.color = 'red'
             cartaParaMover.children[0].children[1].style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //antonio
-        if (seedString[4] == '5' && seedString[2] == '4' ){
+        if (seedString[1] == '5' && seedString[2] == '4' ){
             cartaParaMover.classList.add('critico')
             cartaParaMover.children[0].children[0].style.color = 'red'
             cartaParaMover.children[0].children[1].style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //pedro
-        if (seedString[4] == '6' && seedString[2] == '5' ){
+        if (seedString[1] == '6' && seedString[2] == '5' ){
             cartaParaMover.classList.add('critico')
             cartaParaMover.children[0].children[0].style.color = 'red'
             cartaParaMover.children[0].children[1].style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //curtas
-        if (seedString[4] == '7' && seedString[2] == '6' ){
+        if (seedString[1] == '7' && seedString[2] == '6' ){
             cartaParaMover.classList.add('critico')
             cartaParaMover.children[0].children[0].style.color = 'red'
             cartaParaMover.children[0].children[1].style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //twelve
-        if (seedString[4] == '8' && seedString[2] == '7' ){
+        if (seedString[1] == '8' && seedString[2] == '7' ){
             cartaParaMover.classList.add('critico')
             cartaParaMover.children[0].children[0].style.color = 'red'
             cartaParaMover.children[0].children[1].style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //junks
-        if (seedString[4] == '9' && seedString[2] == '8' ){
+        if (seedString[1] == '9' && seedString[2] == '8' ){
             cartaParaMover.classList.add('critico')
             cartaParaMover.children[0].children[0].style.color = 'red'
             cartaParaMover.children[0].children[1].style.color = 'red'
@@ -768,7 +768,7 @@ function critico(){
 
         }
         //murilo
-        if (seedString[4] == '0' && seedString[2] == '9' ){
+        if (seedString[1] == '0' && seedString[2] == '9' ){
             cartaParaMover.classList.add('critico')
             cartaParaMover.children[0].children[0].style.color = 'red'
             cartaParaMover.children[0].children[1].style.color = 'red'
