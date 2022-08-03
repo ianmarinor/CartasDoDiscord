@@ -194,7 +194,7 @@ function escolherCidade(){
     } else if (
         // seedString[1] == 0 && 
         seedString[2] == 9) {
-        return cidade = 'de Curitiba'
+        return cidade = 'de Santo André'
     }
 }
 //CARGO
@@ -551,6 +551,7 @@ function colocarInput(){
 
 // }
 
+
 let cartaParaMover = document.getElementById('pack').firstElementChild
 let copyCard = ''
 
@@ -573,6 +574,18 @@ function moverCarta(){
         } 
     }
 }
+
+
+
+
+
+
+
+
+        
+
+
+
 
 
 
@@ -624,6 +637,62 @@ function moverCartaMonark(){
     }
 }
 
+const cartaParaMoverNome = cartaParaMover.children[0].children[0].textContent
+const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent
+
+function teste(){
+    cartaParaMover.classList.remove('critico')
+    //gandalf
+    if (seedString[4] == '1' && seedString[2] == '0' ){
+     cartaParaMover.classList.add('critico')
+     }
+     //turu
+     if (seedString[4] == '2' && seedString[2] == '1' ){
+        cartaParaMover.classList.add('critico')
+     }
+     //nefesto
+     if (seedString[4] == '3' && seedString[2] == '2' ){
+        cartaParaMover.classList.add('critico')
+     }
+     //blackao
+     if (seedString[4] == '4' && seedString[2] == '3' ){
+        cartaParaMover.classList.add('critico')
+     }
+     //antonio
+     if (seedString[4] == '5' && seedString[2] == '4' ){
+        cartaParaMover.classList.add('critico')
+     }
+     //pedro
+     if (seedString[4] == '6' && seedString[2] == '5' ){
+        cartaParaMover.classList.add('critico')
+     }
+     //curtas
+     if (seedString[4] == '7' && seedString[2] == '6' ){
+        cartaParaMover.classList.add('critico')
+     }
+     //twelve
+     if (seedString[4] == '8' && seedString[2] == '7' ){
+        cartaParaMover.classList.add('critico')
+     }
+     //junks
+     if (seedString[4] == '9' && seedString[2] == '8' ){
+        cartaParaMover.classList.add('critico')
+     }
+     //murilo
+     if (seedString[4] == '0' && seedString[2] == '9' ){
+        cartaParaMover.classList.add('critico')
+     } 
+   
+   
+   
+   
+   
+   
+   
+
+}
+
+
 
 /****************************************** */
 // TIRAR CARTA DO INVENTARIO
@@ -660,8 +729,20 @@ function resetarDeck(){
         
     }
     
+
 }
+
+
+/////// CRITICO 
     
+
+        
+      
+
+   
+
+
+
 function blockInv(){
     if(parseInt(input) > 99999999){
         
@@ -679,6 +760,8 @@ function tudo(){
     escolherPoder()
     colocarInfoNoWrap()
     moverCartaMonark()
+    teste()
+    
     // inv.style.backgroundColor = ''
     
 }
