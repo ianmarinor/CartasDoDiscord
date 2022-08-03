@@ -15,19 +15,33 @@ function seedRNG(){
 let input = ''
 function generateSeed(input){
     //se a chave for LETRA!
-     if (typeof input === 'string' && input.length < 20 && input.length >= 3){
-        let sum = 1
-        for (let i = 0; i < input.length; i++){
-                sum = sum + input[i].charCodeAt()  
-        }
-        return sum * 27452900482
-    } else if (typeof input === 'number' && input > 9999999){
-        return input
-    }
-    else {
-        return  seedRNG()
-    }
-    
+     if (input.length > 9){
+            if(parseInt(input) > 9){
+            return parseInt(input)
+            } else {
+                   if(input.length >= 3 && input.length <= 25) {         
+                            let sum = 1
+                            for (let i = 0; i < input.length; i++){
+                                    sum = sum + input[i].charCodeAt()  
+                            }
+                            return sum * 27452900482
+            
+                        }  else {
+                            return  seedRNG()
+                        }
+                    }   
+     } else {
+        if(input.length >= 3 && input.length <= 25) {         
+                 let sum = 1
+                 for (let i = 0; i < input.length; i++){
+                         sum = sum + input[i].charCodeAt()  
+                 }
+                 return sum * 27452900482
+ 
+             }  else {
+                 return  seedRNG()
+             }
+            }
 }
 
 
@@ -54,7 +68,7 @@ let integrante = ''
 let seedString = ''
 function escolherIntegrante(){ 
     seedString = generateSeed(input).toString()
-    console.log('integrante seed', seedString);
+    // console.log('integrante seed', seedString);
     if (
         seedString[4] == 1 
         // && 
@@ -138,7 +152,7 @@ function escolherIntegrante(){
 // ******************************************************************
 let cidade = ''
 function escolherCidade(){
-    console.log('string cidade', seedString)
+    // console.log('string cidade', seedString)
     if (
         // seedString[1] == 0 && 
         seedString[2] == 0){
@@ -187,7 +201,7 @@ function escolherCidade(){
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = ''
 function escolherCargo(){
-    console.log('stringcargo', seedString)
+    // console.log('stringcargo', seedString)
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] >= 5)
         {return cargo = 'carta-premiomarino'
@@ -224,7 +238,7 @@ function escolherCargo(){
 //RNG DOS PONTES DE PODER
 // let pontoPoderEspecial = () => Math.floor(Math.random() * (5 - 1) + 1)
 let pontoPoderEspecial = () => parseInt((seedString[7]) / 2 + 1) 
-console.log('pontoPoderEspecial: ', pontoPoderEspecial);
+// console.log('pontoPoderEspecial: ', pontoPoderEspecial);
 
 
 let pontoPoderSemCargo = () =>  Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 1)
@@ -402,12 +416,16 @@ let cartaP = document.getElementById('carta')
 let wrap = document.getElementsByClassName('wrap')[0]
 //input
 let getSeed = document.getElementById('getseed')
+//pagin procura seed
+let seedCheckInput = document.getElementById('seedcheckinput')
+let seedCheckBtn = document.getElementById('seedcheckbtn')
+let seedCheckPage = document.getElementById('seedcheck')
 
 
 function colocarInfoNoWrap(){
 
     const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
-    console.log('novaCarta: ', novaCarta);
+    // console.log('novaCarta: ', novaCarta);
 
 
     //DOM
@@ -453,8 +471,8 @@ function colocarInfoNoWrap(){
         retratoP.style.backgroundImage = "url('pics/curtas.png')"
     } else if (novaCarta._integrante === 'Junks'){
         retratoP.style.backgroundImage = "url('pics/junks.jpeg')"
-    // } else if (novaCarta._integrante === 'Twelve'){
-    //     retratoP.style.backgroundImage = "url('pics/twelve.jpeg')"
+    } else if (novaCarta._integrante === 'Twelve'){
+        retratoP.style.backgroundImage = "url('pics/twelve.png')"
     }
     else { 
 
@@ -541,15 +559,19 @@ function moverCarta(){
     copyCard = cartaParaMover.cloneNode(true)
     // copySeed = copy.getElementsByClassName('seed')
     // cardShrinker(copyCard)
-    if (inv.childElementCount < 4 &&  inv.children[0] === undefined){
-        inv.appendChild(copyCard)
-    } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined){
-        inv.appendChild(copyCard)
-    } else if (inv.childElementCount < 4 &&  inv.children[1].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[2] === undefined){
-        inv.appendChild(copyCard)
-    } else if (inv.childElementCount < 4 &&  inv.children[2].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[3] === undefined){
-        inv.appendChild(copyCard)
-    }  
+    if(parseInt(input) > 99999999){
+        false
+    } else {
+        if (inv.childElementCount < 4 &&  inv.children[0] === undefined){
+            inv.appendChild(copyCard)
+        } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined){
+            inv.appendChild(copyCard)
+        } else if (inv.childElementCount < 4 &&  inv.children[1].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[2] === undefined){
+            inv.appendChild(copyCard)
+        } else if (inv.childElementCount < 4 &&  inv.children[2].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[3] === undefined){
+            inv.appendChild(copyCard)
+        } 
+    }
 }
 
 function moverCartaMonark(){
@@ -609,7 +631,6 @@ function resetarDeck(){
 }
     
 
-
 function tudo(){
     colocarInput()
     escolherIntegrante()
@@ -624,6 +645,8 @@ function tudo(){
 
 
 
+
+
 button.addEventListener('click', tudo)
 
 
@@ -633,6 +656,7 @@ inv.addEventListener('click', deletarDeck)
 btnReset.addEventListener('click', resetarDeck)
 // btnReset.addEventListener('click', moverCartaMonark)
 btnReset.addEventListener('click', tudo)
+
 
 
 
