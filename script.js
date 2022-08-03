@@ -221,7 +221,7 @@ function escolherCargo(){
         seedString[7] == 4 && seedString[8] == 5)
         { return cargo = 'carta-nobre'}
         else if (
-        seedString[7] == 4 && seedString[8] == 1)
+        seedString[7] >= 4 && seedString[8] >= 1)
         { return cargo = 'carta-monark'}
         else if (
         seedString[7] >= 4 && seedString[8] == 5)
@@ -556,6 +556,9 @@ let cartaParaMover = document.getElementById('pack').firstElementChild
 let copyCard = ''
 
 function moverCarta(){
+    let seedCopyCard = cartaParaMover.children[4].textContent
+    //  seedNode = .children[4].textContent
+
     copyCard = cartaParaMover.cloneNode(true)
     // copySeed = copy.getElementsByClassName('seed')
     // cardShrinker(copyCard)
@@ -563,15 +566,24 @@ function moverCarta(){
         false
         // inv.style.backgroundColor = '#db4f4f'
     } else {
-        if (inv.childElementCount < 4 &&  inv.children[0] === undefined){
-            inv.appendChild(copyCard)
-        } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined){
-            inv.appendChild(copyCard)
-        } else if (inv.childElementCount < 4 &&  inv.children[1].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[2] === undefined){
-            inv.appendChild(copyCard)
-        } else if (inv.childElementCount < 4 &&  inv.children[2].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[3] === undefined){
-            inv.appendChild(copyCard)
-        } 
+        
+        if (inv.children[0].id != "empty"){
+
+                if (inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent){
+                    if (inv.children[1].id == "empty"){
+                        inv.replaceChild(copyCard,inv.children[1])
+                    } else if (inv.children[2].id == "empty" && seedCopyCard != inv.children[1].children[4].textContent){
+                        inv.replaceChild(copyCard,inv.children[2])
+                    } else if (inv.children[3].id == "empty" && seedCopyCard != inv.children[2].children[4].textContent){
+                        inv.replaceChild(copyCard,inv.children[3])
+                    }
+                }
+        } else {
+            inv.replaceChild(copyCard,inv.children[0])
+        }
+                    
+
+ 
     }
 }
 
@@ -592,41 +604,80 @@ function moverCarta(){
 function moverCartaMonark(){
 
     copyCard = cartaParaMover.cloneNode(true)
+    copyCardSeed = copyCard.children[4].textContent
+    copyCardName = copyCard.children[0].children[0].textContent
+    // var slotSeed = inv.children[0].children[4].textContent
+    // VAR slotName = inv.children[0].children[0].children[0].textContent
+    
+
     if(parseInt(input) > 99999999){
         false
         
     } else {
-        if (inv.childElementCount < 4 &&  inv.children[0] === undefined && copyCard.id === 'carta-monark'){
-            inv.appendChild(copyCard)
-        } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined && copyCard.id === 'carta-monark'){
-            inv.appendChild(copyCard)
-        } else if (inv.childElementCount < 4 &&  inv.children[1].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[2] === undefined && copyCard.id === 'carta-monark'){
-            inv.appendChild(copyCard)
-        } else if (inv.childElementCount < 4 &&  inv.children[2].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[3] === undefined && copyCard.id === 'carta-monark'){
-            inv.appendChild(copyCard)
-            //substitui o monark com o homonimo
-        }  else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent  === inv.children[0].children[0].children[0].textContent && inv.children[0].id != 'carta-monark'){
+        if (copyCard.id === 'carta-monark'){
+                     if (inv.children[0].id === 'empty' && copyCard.id === 'carta-monark'){
 
-            inv.replaceChild(copyCard,inv.children[0])
-            // inv.children[0].remove()
-            // inv.appendChild(copyCard)
-        } else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent  === inv.children[1].children[0].children[0].textContent && inv.children[1].id != 'carta-monark'){
+                        inv.replaceChild(copyCard, inv.children[0])
 
-            inv.replaceChild(copyCard,inv.children[1])
-            // inv.children[1].remove()
-            // inv.appendChild(copyCard)
-        } else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent === inv.children[2].children[0].children[0].textContent && inv.children[2].id != 'carta-monark'){
+                    } else if (inv.children[1].id === 'empty' && copyCard.id === 'carta-monark' && copyCardSeed != inv.children[0].children[4].textContent){
+                        inv.replaceChild(copyCard, inv.children[1])
 
-            inv.replaceChild(copyCard,inv.children[2])
-            // inv.children[2].remove()
-            // inv.appendChild(copyCard)
-        } else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent  === inv.children[3].children[0].children[0].textContent && inv.children[3].id != 'carta-monark'){
-            
-            inv.replaceChild(copyCard,inv.children[3])
+                    } else if (inv.children[2].id === 'empty' && copyCard.id === 'carta-monark' && copyCardSeed != inv.children[1].children[4].textContent){
+                        inv.replaceChild(copyCard, inv.children[2])
 
-            // inv.children[3].remove()
-            // inv.appendChild(copyCard)
+                    } else if (inv.children[3].id === 'empty' && copyCard.id === 'carta-monark' && copyCardSeed != inv.children[2].children[4].textContent){
+                        inv.replaceChild(copyCard, inv.children[3])
+
+                        //MONARK SUBSTITUI O HOMONIMO -------------------------
+
+                    } else if (copyCardName === inv.children[0].children[0].children[0].textContent && copyCard.id != inv.children[0].id){
+                        inv.replaceChild(copyCard, inv.children[0])
+                        
+
+                    } else if (copyCardName === inv.children[1].children[0].children[0].textContent && copyCard.id != inv.children[1].id){
+                        inv.replaceChild(copyCard, inv.children[1])
+                        
+
+                    } else if (copyCardName === inv.children[2].children[0].children[0].textContent && copyCard.id != inv.children[2].id){
+                        inv.replaceChild(copyCard, inv.children[2])
+                        
+
+                    } else if (copyCardName === inv.children[3].children[0].children[0].textContent && copyCard.id != inv.children[3].id){
+                        inv.replaceChild(copyCard, inv.children[3])
+                        
+                    } 
+
         }
+    
+        
+
+        // } else if (inv.childElementCount < 4 &&  inv.children[1].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[2] === undefined && copyCard.id === 'carta-monark'){
+        //     inv.appendChild(copyCard)
+        // } else if (inv.childElementCount < 4 &&  inv.children[2].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[3] === undefined && copyCard.id === 'carta-monark'){
+        //     inv.appendChild(copyCard)
+        //     //substitui o monark com o homonimo
+        // }  else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent  === inv.children[0].children[0].children[0].textContent && inv.children[0].id != 'carta-monark'){
+
+        //     inv.replaceChild(copyCard,inv.children[0])
+        //     // inv.children[0].remove()
+        //     // inv.appendChild(copyCard)
+        // } else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent  === inv.children[1].children[0].children[0].textContent && inv.children[1].id != 'carta-monark'){
+
+        //     inv.replaceChild(copyCard,inv.children[1])
+        //     // inv.children[1].remove()
+        //     // inv.appendChild(copyCard)
+        // } else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent === inv.children[2].children[0].children[0].textContent && inv.children[2].id != 'carta-monark'){
+
+        //     inv.replaceChild(copyCard,inv.children[2])
+        //     // inv.children[2].remove()
+        //     // inv.appendChild(copyCard)
+        // } else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent  === inv.children[3].children[0].children[0].textContent && inv.children[3].id != 'carta-monark'){
+            
+        //     inv.replaceChild(copyCard,inv.children[3])
+
+        //     // inv.children[3].remove()
+        //     // inv.appendChild(copyCard)
+        // }
 
     
     
@@ -635,12 +686,13 @@ function moverCartaMonark(){
     
 
     }
+
 }
 
 const cartaParaMoverNome = cartaParaMover.children[0].children[0].textContent
 const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent
 
-function teste(){
+function critico(){
     //nome
     cartaParaMover.children[0].children[1].style.color = ''
     //cidade
@@ -739,36 +791,90 @@ function teste(){
 // TIRAR CARTA DO INVENTARIO
 // /******************************************** */
 
+
+
 btnReset = document.getElementById('btnReset')
 
 function deletarDeck(e){
+    
 
+        // 1.0Se a carta nao for Monark
     if (e.target.id != 'carta-monark' && e.target.parentElement.id != 'carta-monark' && e.target.parentElement.parentElement.id != 'carta-monark'){
 
-        if( e.target.id != 'inv' && e.target.clientHeight === 291  ){
+
+        // console.log('carta nao é monark')
+
+        // 1.1 se for a carta inteira
+        if(e.target.id != 'inv' && e.target.clientHeight === 291){
+        console.log('carta inteira')
         e.target.remove()
+        inv.appendChild(document.createElement('div')).id = "empty"
 
-        } else if (e.target.id != 'inv' && e.target.clientHeight != 291 && e.target.className != 'seed' ){
-
+        //1.2 se nao for a seed
+    } else if (e.target.id != 'inv' && e.target.clientHeight != 291 && e.target.className != 'seed' ){
+            // console.log('nao é a seed')
+            
+            // 1.2.1 se for filho da carta
             if(e.target.parentElement.clientHeight === 291){
+                // console.log('filho da carta')
                 e.target.parentElement.remove()
-            }
-            else{
+                inv.appendChild(document.createElement('div')).id = "empty"
+                }
+
+                // 1.2.2 se nao for nada disso, sera filho do filho
+            else { 
+                // console.log('filho do filho')
                 e.target.parentElement.parentElement.remove()
+                inv.appendChild(document.createElement('div')).id = "empty"
+                }
+
             }
 
-        }
-    }
+    }      
+
+}       
     
-}   
+
+
+
+    
+
 
 function resetarDeck(){
-    teste()
+    // let empty = document.createElement('div').id = "empty"
+    let empty0 = document.createElement('div')
+    let empty1 = document.createElement('div')
+    let empty2 = document.createElement('div')
+    let empty3 = document.createElement('div')
+    critico()
+   
+    
     for (let i = 0; i < 4; i++){
         
         inv.removeChild(inv.children[0])
+        // inv.appendChild(empty)
+        // inv.replaceChild(inv.children[i], inv.appendChild(document.createElement('div')).id = "empty")
         
     }
+    
+    
+        
+       
+        inv.appendChild(empty0).id = 'empty'
+        inv.appendChild(empty1).id = 'empty'
+        inv.appendChild(empty2).id = 'empty'
+        inv.appendChild(empty3).id = 'empty'
+        
+        
+        
+   
+      
+        // inv.removeChild(inv.children[0])
+        // inv.appendChild(empty)
+        // console.log('kek')
+       
+        
+   
     
 
 }
@@ -800,8 +906,9 @@ function tudo(){
     escolherCargo()
     escolherPoder()
     colocarInfoNoWrap()
+    critico()
     moverCartaMonark()
-    teste()
+    
     
     // inv.style.backgroundColor = ''
     
