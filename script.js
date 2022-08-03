@@ -555,12 +555,12 @@ let cartaParaMover = document.getElementById('pack').firstElementChild
 let copyCard = ''
 
 function moverCarta(){
-
     copyCard = cartaParaMover.cloneNode(true)
     // copySeed = copy.getElementsByClassName('seed')
     // cardShrinker(copyCard)
     if(parseInt(input) > 99999999){
         false
+        // inv.style.backgroundColor = '#db4f4f'
     } else {
         if (inv.childElementCount < 4 &&  inv.children[0] === undefined){
             inv.appendChild(copyCard)
@@ -574,11 +574,12 @@ function moverCarta(){
     }
 }
 
+
+
 function moverCartaMonark(){
 
     copyCard = cartaParaMover.cloneNode(true)
-    // copySeed = copy.getElementsByClassName('seed')
-    // cardShrinker(copyCard)
+
     if (inv.childElementCount < 4 &&  inv.children[0] === undefined && copyCard.id === 'carta-monark'){
         inv.appendChild(copyCard)
     } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined && copyCard.id === 'carta-monark'){
@@ -630,6 +631,14 @@ function resetarDeck(){
     
 }
     
+function blockInv(){
+    if(parseInt(input) > 99999999){
+        
+        inv.style.border = '3px dotted red'
+    } else {
+        inv.style.border = ''
+    }
+}
 
 function tudo(){
     colocarInput()
@@ -639,7 +648,8 @@ function tudo(){
     escolherPoder()
     colocarInfoNoWrap()
     moverCartaMonark()
-
+    // inv.style.backgroundColor = ''
+    
 }
 
 
@@ -648,6 +658,7 @@ function tudo(){
 
 
 button.addEventListener('click', tudo)
+button.addEventListener('click', blockInv)
 
 
 cartaParaMover.addEventListener('click', moverCarta)
