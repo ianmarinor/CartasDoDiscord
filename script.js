@@ -205,12 +205,18 @@ function escolherCargo(){
     if (
         seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] >= 5)
         {return cargo = 'carta-premiomarino'
+        
+
         } else if (
         seedString[5] >= 5 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
         { return cargo = 'carta-primeminister'}
+        
+
         else if (
-        seedString[0] < 5 && seedString[6] == 5 && seedString[7] == 4 && seedString[8] == 5)
+        seedString[0] < 7 && seedString[6] == 5 && seedString[7] == 4 && seedString[8] == 5)
         { return cargo = 'carta-speaker'}
+        
+
         else if (
         seedString[6] == 5 && seedString[7] == 4 && seedString[8] == 5)
         { return cargo = 'carta-ministro'} 
@@ -799,7 +805,7 @@ function deletarDeck(e){
     
 
         // 1.0Se a carta nao for Monark
-    if (e.target.id != 'carta-monark' && e.target.parentElement.id != 'carta-monark' && e.target.parentElement.parentElement.id != 'carta-monark'){
+    if (e.target.id != 'carta-monark' && e.target.parentElement.id != 'carta-monark' && e.target.parentElement.parentElement.id != 'carta-monark' &&  e.target.id != 'inv' &&  e.target.id != 'empty'){
 
 
         // console.log('carta nao é monark')
@@ -815,7 +821,7 @@ function deletarDeck(e){
             // console.log('nao é a seed')
             
             // 1.2.1 se for filho da carta
-            if(e.target.parentElement.clientHeight === 291){
+            if(e.target.parentElement.clientHeight === 291 && e.target.id != 'inv'){
                 // console.log('filho da carta')
                 e.target.parentElement.remove()
                 inv.appendChild(document.createElement('div')).id = "empty"
@@ -883,8 +889,7 @@ function resetarDeck(){
 /////// CRITICO 
     
 
-        
-      
+    
 
    
 
