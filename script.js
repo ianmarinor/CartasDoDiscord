@@ -579,18 +579,49 @@ function moverCarta(){
 function moverCartaMonark(){
 
     copyCard = cartaParaMover.cloneNode(true)
+    if(parseInt(input) > 99999999){
+        false
+        
+    } else {
+        if (inv.childElementCount < 4 &&  inv.children[0] === undefined && copyCard.id === 'carta-monark'){
+            inv.appendChild(copyCard)
+        } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined && copyCard.id === 'carta-monark'){
+            inv.appendChild(copyCard)
+        } else if (inv.childElementCount < 4 &&  inv.children[1].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[2] === undefined && copyCard.id === 'carta-monark'){
+            inv.appendChild(copyCard)
+        } else if (inv.childElementCount < 4 &&  inv.children[2].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[3] === undefined && copyCard.id === 'carta-monark'){
+            inv.appendChild(copyCard)
+            //substitui o monark com o homonimo
+        }  else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent  === inv.children[0].children[0].children[0].textContent && inv.children[0].id != 'carta-monark'){
 
-    if (inv.childElementCount < 4 &&  inv.children[0] === undefined && copyCard.id === 'carta-monark'){
-        inv.appendChild(copyCard)
-    } else if (inv.childElementCount < 4 &&  inv.children[0].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[1] === undefined && copyCard.id === 'carta-monark'){
-        inv.appendChild(copyCard)
-    } else if (inv.childElementCount < 4 &&  inv.children[1].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[2] === undefined && copyCard.id === 'carta-monark'){
-        inv.appendChild(copyCard)
-    } else if (inv.childElementCount < 4 &&  inv.children[2].children[4].textContent != cartaParaMover.children[4].textContent && inv.children[3] === undefined && copyCard.id === 'carta-monark'){
-        inv.appendChild(copyCard)
-    }  
+            inv.replaceChild(copyCard,inv.children[0])
+            // inv.children[0].remove()
+            // inv.appendChild(copyCard)
+        } else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent  === inv.children[1].children[0].children[0].textContent && inv.children[1].id != 'carta-monark'){
 
+            inv.replaceChild(copyCard,inv.children[1])
+            // inv.children[1].remove()
+            // inv.appendChild(copyCard)
+        } else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent === inv.children[2].children[0].children[0].textContent && inv.children[2].id != 'carta-monark'){
 
+            inv.replaceChild(copyCard,inv.children[2])
+            // inv.children[2].remove()
+            // inv.appendChild(copyCard)
+        } else if (copyCard.id === 'carta-monark' && copyCard.children[0].children[0].textContent  === inv.children[3].children[0].children[0].textContent && inv.children[3].id != 'carta-monark'){
+            
+            inv.replaceChild(copyCard,inv.children[3])
+
+            // inv.children[3].remove()
+            // inv.appendChild(copyCard)
+        }
+
+    
+    
+    
+    
+    
+
+    }
 }
 
 
