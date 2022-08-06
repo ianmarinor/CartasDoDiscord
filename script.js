@@ -240,78 +240,85 @@ function escolherEspecial(){
     console.log('stringEspecial', seedString)
     if (
         seedString[5] == 8 && seedString[6] == 9 && seedString[7] == 9 && seedString[8] == 1 && seedString[9] == 0)
-        {return cargo = 'especial-tenica'
+        {return especial = 'especial-tenica'
         
 
         } else if (
         seedString[5] == 8 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 4)
-        { return cargo = ''}
+        { return especial = ''}
         
 
         else if (
          seedString[5] == 8 && seedString[6] == 1 && seedString[7] == 7 && seedString[8] >= 4)
-        { return cargo = 'especial-puxa-premio-marino'}
+        { return especial = 'especial-puxa-premio-marino'}
         
         
         else if (
         seedString[5] == 8 && seedString[6] == 4 && seedString[7] == 2)
-        { return cargo = 'especial-puxa-prime-minister'} 
+        { return especial = 'especial-puxa-prime-minister'} 
 
         else if (
         seedString[5] == 8 && seedString[6] == 1 && seedString[7] <= 5)
-        { return cargo = 'especial-puxa-ministro'}
+        { return especial = 'especial-puxa-ministro'}
         else if (
         seedString[5] == 8 && seedString[6] == 7 )
-        { return cargo = 'carta-speaker'}
+        { return especial = 'carta-speaker'}
         else if (
         seedString[5] == 8 && seedString[7] >= 5)
-        { return cargo = 'especial-click'}
+        { return especial = 'especial-click'}
+        else{
+            return especial = 'sem especial'
+        }
 }
+
 let variante = ''
+console.log('variante: ', variante);
 function escolherVariante(){
     console.log('stringvariante', seedString)
     if (
         seedString[5] == 9 && 
         seedString[6] == 0){
-        return cidade = 'variante-farmaceutico'
+        return variante = 'variante-farmaceutico'
     } 
     else if 
     (
         seedString[5] == 9 && 
         seedString[6] == 1)
-        { return cidade = 'variante-bao'} 
+        { return variante = 'variante-bao'} 
         else if (
         seedString[5] == 9 && 
         seedString[6] == 2) {
-        return cidade = 'variante-apenas'
+        return variante = 'variante-apenas'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 3) {
-        return cidade = 'variante-fonte'
+        return variante = 'variante-fonte'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 4) {
-        return cidade = 'variante-ixqueiro'
+        return variante = 'variante-ixqueiro'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 5) {
-        return cidade = 'variante-abalo'
+        return variante = 'variante-abalo'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 6) {
-        return cidade = 'variante-grito'
+        return variante = 'variante-grito'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 7) {
-        return cidade = 'variante-dia'
+        return variante = 'variante-dia'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 8) {
-        return cidade = 'variante-quimico'
+        return variante = 'variante-quimico'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 9) {
-        return cidade = 'variante-pera'
+        return variante = 'variante-pera'
+    } else {
+        return variante = 'sem-variante'
     }
 }
 
@@ -391,80 +398,77 @@ function escolherPoder(){
     if(cargo === 'carta-semcargo'){
        return  poder = {
                 _ataque: pontoPoderSemCargo(),
-                _defesa: pontoPoderSemCargoD(),
-                _especial: pontoPoderEspecial()
+                
+                
        }
     } else if (cargo === 'carta-people'){
         return  poder = {
                  _ataque: pontoPoderPeople(),
-                 _defesa: pontoPoderPeopleD(),
-                 _especial: pontoPoderEspecial()
+                 
+                 
         }
      } else if (cargo === 'carta-gentleman'){
         return  poder = {
                  _ataque: pontoPoderGentleman(),
-                 _defesa: pontoPoderGentlemanD(),
-                 _especial: pontoPoderEspecial()
+                 
+                 
         }
      } else if (cargo === 'carta-monark'){
         return  poder = {
                  _ataque: pontoPoderMonark(),
-                 _defesa: pontoPoderMonarkD(),
-                 _especial: 0
+                
         }
      } else if (cargo === 'carta-nobre'){
         return  poder = {
                  _ataque: pontoPoderNobre(),
-                 _defesa: pontoPoderNobreD(),
-                 _especial: pontoPoderEspecial()
+                 
         }
      } else if (cargo === 'carta-lord'){
         return  poder = {
                  _ataque: pontoPoderLord(),
-                 _defesa: pontoPoderLordD(),
-                 _especial: pontoPoderEspecial()
+                 
         }
      } else if (cargo === 'carta-ministro'){
         return  poder = {
                  _ataque: pontoPoderMinistro(),
-                 _defesa: pontoPoderMinistroD(),
-                 _especial: pontoPoderEspecial()
+                 
+                 
         }
      } else if (cargo === 'carta-primeminister'){
         return  poder = {
                  _ataque: pontoPoderPrimeMinister(),
-                 _defesa: pontoPoderPrimeMinisterD(),
-                 _especial: pontoPoderEspecial()
+                 
+                 
         }
      } else if (cargo === 'carta-premiomarino'){
         return  poder = {
                  _ataque: pontoPoderRNGPremioMarino(),
-                 _defesa: pontoPoderRNGPremioMarinoD(),
-                 _especial: pontoPoderEspecial()
+                 
+                 
         }
      } else if (cargo === 'carta-speaker'){
         return  poder = {
                  _ataque: '🔨',
-                 _defesa: pontoPoderRNGPremioMarinoD(),
-                 _especial: '20'
-        }
+                 
      }
 
      
-
+    }
 
 }
 
 
 //************************************************ */
 
-function fabricaDeCarta(integrante, cidade, cargo, poder){
+function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial){
     
     return{
     _integrante: integrante,
     _cidade: cidade,
     _cargo: cargo,
     _poder: poder,
+    _variante: variante,
+    _especial: especial
 
  }
 }
@@ -485,6 +489,7 @@ let nomeP = document.querySelector('.nome')
 let cidadeP = document.querySelector('.cidade')
 let retratoP = document.querySelector('.retrato')
 let cargoP = document.querySelector('.cargo')
+let varianteP = document.querySelector('.variante')
 //div poder
 let ataqueP = document.querySelector('.ataque')
 let defesaP = document.querySelector('.defesa')
@@ -507,18 +512,22 @@ let seedCheckPage = document.getElementById('seedcheck')
 
 function colocarInfoNoWrap(){
 
-    const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder);
-    // console.log('novaCarta: ', novaCarta);
+    const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial);
+    console.log('novaCarta: ', novaCarta);
 
 
     //DOM
     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante.toUpperCase()
     cidadeP.innerHTML = '&nbsp;' +  novaCarta._cidade
     ataqueP.innerHTML =  '&nbsp;' + '&#9889;'  + novaCarta._poder._ataque
-    defesaP.innerHTML = '&nbsp;' +  '&#128150;'+ novaCarta._poder._defesa
-    especialP.innerHTML =  '&nbsp;' + '&#11088;' + novaCarta._poder._especial
+    varianteP.innerHTML =   novaCarta._variante
     seedP.innerHTML = '&nbsp;' + seedString
-    cartaP.id = novaCarta._cargo
+    if (seedString[5] == 8){
+        cartaP.id = novaCarta._especial
+    } else {
+        cartaP.id = novaCarta._cargo
+    }
+    
 
     retratoP.style.display = "block"
 
@@ -606,6 +615,7 @@ function colocarInfoNoWrap(){
     }
         
 }
+
 
 
 
@@ -777,6 +787,7 @@ const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent
 
 function critico(){
     //nome
+
     cartaParaMover.children[0].children[1].style.color = ''
     //cidade
     cartaParaMover.children[0].children[0].style.color = ''
@@ -979,6 +990,8 @@ function tudo(){
     escolherCidade()
     escolherCargo()
     escolherPoder()
+    escolherVariante()
+    escolherEspecial()
     colocarInfoNoWrap()
     critico()
     moverCartaMonark()
