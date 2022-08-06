@@ -1,10 +1,7 @@
-const totalNumOfSeeds = (99999999999999 - 11111111111111)
+const totalNumOfSeeds = (9999999999999999 - 111111111111111)
 function seedRNG(){
     return Math.floor(Math.random() * totalNumOfSeeds)
 } 
-
-
-
 
 
 
@@ -22,9 +19,9 @@ function generateSeed(input){
                    if(input.length >= 3 && input.length <= 25) {         
                             let sum = 1
                             for (let i = 0; i < input.length; i++){
-                                    sum = sum + input[i].charCodeAt()  
+                                    sum = sum * input[i].charCodeAt()
                             }
-                            return sum * 27452900482
+                            return sum * 516515615165159
             
                         }  else {
                             return  seedRNG()
@@ -36,7 +33,7 @@ function generateSeed(input){
                  for (let i = 0; i < input.length; i++){
                          sum = sum + input[i].charCodeAt()  
                  }
-                 return sum * 27452900482
+                 return sum * 516515615165159
  
              }  else {
                  return  seedRNG()
@@ -68,74 +65,75 @@ let integrante = ''
 let seedString = ''
 function escolherIntegrante(){ 
     seedString = generateSeed(input).toString()
+    console.log(seedString.length)
     // console.log('integrante seed', seedString);
     if (
         seedString[1] == 1 
         // && 
-        // seedString[1] == 0
+        // seedString[2] == 0
         )
         {return integrante = 'Gandalf'
     } else if 
         (
         seedString[1] == 2 
         // && 
-        // seedString[1] == 0
+        // seedString[2] == 0
         )
         { return integrante = 'Turu'} 
         else if 
         (
         seedString[1] == 3 
         // && 
-        // seedString[1] == 0
+        // seedString[2] == 0
         ) 
         {return integrante = 'Nefesto'
     } else if 
         (
         seedString[1]== 4 
         // && 
-        // seedString[1] == 0
+        // seedString[2] == 0
         ) 
         {return integrante = 'Blackao'
     } else if 
         (
         seedString[1] == 5 
         // && 
-        // seedString[1] == 0
+        // seedString[2] == 0
         ) 
         {return integrante = 'Sr. Antonio'
     } else if 
         (
         seedString[1] == 6 
         // && 
-        // seedString[1] == 0
+        // seedString[2] == 0
         ) 
         {return integrante = 'Pedro'
     } else if 
         (
         seedString[1] == 7 
         // && 
-        // seedString[1] == 0
+        // seedString[2] == 0
         ) 
         {return integrante = 'Curtas'
     } else if 
         (
         seedString[1] == 8 
         // && 
-        // seedString[1] == 0
+        // seedString[2] == 0
         ) 
         {return integrante = 'Twelve'
     } else if 
         (
         seedString[1] == 9 
         // && 
-        // seedString[1] == 0
+        // seedString[2] == 0
         ) 
         {return integrante = 'Junks'
     } else if 
         (
         seedString[1] == 0 
         // &&
-        // seedString[1] == 0
+        // seedString[2] == 0
         ) 
         {return integrante = 'Murillo'} 
         // else if 
@@ -154,46 +152,46 @@ let cidade = ''
 function escolherCidade(){
     // console.log('string cidade', seedString)
     if (
-        // seedString[1] == 0 && 
-        seedString[2] == 0){
+        // seedString[4] == 0 && 
+        seedString[3] == 0){
         return cidade = 'de Caxias do Sul'
     } 
     else if 
     (
-        // seedString[1] == 0 && 
-        seedString[2] == 1)
+        // seedString[4] == 0 && 
+        seedString[3] == 1)
         { return cidade = 'de Itapira'} 
         else if (
-        // seedString[1] == 0 && 
-        seedString[2] == 2) {
+        // seedString[4] == 0 && 
+        seedString[3] == 2) {
         return cidade = 'de Ubatuba'
     } else if (
-        // seedString[1] == 0 && 
-        seedString[2] == 3) {
+        // seedString[4] == 0 && 
+        seedString[3] == 3) {
         return cidade = 'de Sao Jose Dos Pinhais'
     } else if (
-        // seedString[1] == 0 && 
-        seedString[2] == 4) {
+        // seedString[4] == 0 && 
+        seedString[3] == 4) {
         return cidade = 'do Rio de Janeiro'
     } else if (
-        // seedString[1] == 0 && 
-        seedString[2] == 5) {
+        // seedString[4] == 0 && 
+        seedString[3] == 5) {
         return cidade = 'de Maringá'
     } else if (
-        // seedString[1] == 0 && 
-        seedString[2] == 6) {
+        // seedString[4] == 0 && 
+        seedString[3] == 6) {
         return cidade = 'de Itanhaém'
     } else if (
-        // seedString[1] == 0 && 
-        seedString[2] == 7) {
+        // seedString[4] == 0 && 
+        seedString[3] == 7) {
         return cidade = 'da Lapa'
     } else if (
-        // seedString[1] == 0 && 
-        seedString[2] == 8) {
+        // seedString[4] == 0 && 
+        seedString[3] == 8) {
         return cidade = 'de Jaraguá'
     } else if (
-        // seedString[1] == 0 && 
-        seedString[2] == 9) {
+        // seedString[4] == 0 && 
+        seedString[3] == 9) {
         return cidade = 'de Santo André'
     }
 }
@@ -201,43 +199,122 @@ function escolherCidade(){
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = ''
 function escolherCargo(){
-    // console.log('stringcargo', seedString)
+    console.log('stringCargo', seedString)
     if (
-        seedString[4] == 1 && seedString[5] == 2 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] >= 5)
+        seedString[10] == 1 && seedString[11] == 2 && seedString[12] == 3 && seedString[13] == 4 && seedString[14] <= 4)
         {return cargo = 'carta-premiomarino'
         
 
         } else if (
-        seedString[5] >= 5 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 5)
+        seedString[11] == 5 && seedString[12] == 3 && seedString[13] == 4 && seedString[14] <= 4)
         { return cargo = 'carta-primeminister'}
         
 
         else if (
-        seedString[0] < 7 && seedString[6] == 5 && seedString[7] == 4 && seedString[8] == 5)
-        { return cargo = 'carta-speaker'}
+         seedString[12] == 2 && seedString[13] == 4 && seedString[14] == 9)
+        { return cargo = 'carta-ministro'}
         
+        
+        else if (
+        seedString[12] == 5 && seedString[13] == 4 && seedString[14] <= 2)
+        { return cargo = 'carta-lord'} 
 
         else if (
-        seedString[6] == 5 && seedString[7] == 4 && seedString[8] == 5)
-        { return cargo = 'carta-ministro'} 
-        else if (
-        seedString[6] >= 5 && seedString[7] == 4 && seedString[8] == 5)
-        { return cargo = 'carta-lord'}
-        else if (
-        seedString[7] == 4 && seedString[8] == 5)
+        seedString[12] == 8 && seedString[13] == 1 && seedString[14] <= 4)
         { return cargo = 'carta-nobre'}
         else if (
-        seedString[7] == 4 && seedString[8] == 1)
+        seedString[12] == 4 && seedString[13] == 1 && seedString[14] >= 7)
         { return cargo = 'carta-monark'}
         else if (
-        seedString[7] >= 4 && seedString[8] == 5)
+        seedString[13] == 4 && seedString[14] == 5)
         { return cargo = 'carta-gentleman'}
         else if (
-        seedString[7] >= 4 && seedString[8] >= 5)
+        seedString[14] >= 8 )
         { return cargo = 'carta-people'}
         else 
         { return cargo = 'carta-semcargo'}
 }
+
+let especial = ''
+function escolherEspecial(){
+    console.log('stringEspecial', seedString)
+    if (
+        seedString[5] == 8 && seedString[6] == 9 && seedString[7] == 9 && seedString[8] == 1 && seedString[9] == 0)
+        {return cargo = 'especial-tenica'
+        
+
+        } else if (
+        seedString[5] == 8 && seedString[6] == 3 && seedString[7] == 4 && seedString[8] == 4)
+        { return cargo = ''}
+        
+
+        else if (
+         seedString[5] == 8 && seedString[6] == 1 && seedString[7] == 7 && seedString[8] >= 4)
+        { return cargo = 'especial-puxa-premio-marino'}
+        
+        
+        else if (
+        seedString[5] == 8 && seedString[6] == 4 && seedString[7] == 2)
+        { return cargo = 'especial-puxa-prime-minister'} 
+
+        else if (
+        seedString[5] == 8 && seedString[6] == 1 && seedString[7] <= 5)
+        { return cargo = 'especial-puxa-ministro'}
+        else if (
+        seedString[5] == 8 && seedString[6] == 7 )
+        { return cargo = 'carta-speaker'}
+        else if (
+        seedString[5] == 8 && seedString[7] >= 5)
+        { return cargo = 'especial-click'}
+}
+let variante = ''
+function escolherVariante(){
+    console.log('stringvariante', seedString)
+    if (
+        seedString[5] == 9 && 
+        seedString[6] == 0){
+        return cidade = 'variante-farmaceutico'
+    } 
+    else if 
+    (
+        seedString[5] == 9 && 
+        seedString[6] == 1)
+        { return cidade = 'variante-bao'} 
+        else if (
+        seedString[5] == 9 && 
+        seedString[6] == 2) {
+        return cidade = 'variante-apenas'
+    } else if (
+        seedString[5] == 9 && 
+        seedString[6] == 3) {
+        return cidade = 'variante-fonte'
+    } else if (
+        seedString[5] == 9 && 
+        seedString[6] == 4) {
+        return cidade = 'variante-ixqueiro'
+    } else if (
+        seedString[5] == 9 && 
+        seedString[6] == 5) {
+        return cidade = 'variante-abalo'
+    } else if (
+        seedString[5] == 9 && 
+        seedString[6] == 6) {
+        return cidade = 'variante-grito'
+    } else if (
+        seedString[5] == 9 && 
+        seedString[6] == 7) {
+        return cidade = 'variante-dia'
+    } else if (
+        seedString[5] == 9 && 
+        seedString[6] == 8) {
+        return cidade = 'variante-quimico'
+    } else if (
+        seedString[5] == 9 && 
+        seedString[6] == 9) {
+        return cidade = 'variante-pera'
+    }
+}
+
 
 
 
@@ -833,17 +910,9 @@ function deletarDeck(e){
                 e.target.parentElement.parentElement.remove()
                 inv.appendChild(document.createElement('div')).id = "empty"
                 }
-
             }
-
     }      
-
 }       
-    
-
-
-
-    
 
 
 function resetarDeck(){
