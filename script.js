@@ -272,9 +272,10 @@ function escolherEspecial(){
 }
 
 let variante = ''
-console.log('variante: ', variante);
+
 function escolherVariante(){
     console.log('stringvariante', seedString)
+    console.log('variante: ', variante);
     if (
         seedString[5] == 9 && 
         seedString[6] == 0){
@@ -326,90 +327,85 @@ function escolherVariante(){
 
 
 //RNG DOS PONTES DE PODER
-// let pontoPoderEspecial = () => Math.floor(Math.random() * (5 - 1) + 1)
-let pontoPoderEspecial = () => parseInt((seedString[7]) / 2 + 1) 
-// console.log('pontoPoderEspecial: ', pontoPoderEspecial);
 
 
-let pontoPoderSemCargo = () =>  Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 1)
-let pontoPoderSemCargoD = () => Math.floor((parseInt(seedString[2]) + parseInt(seedString[3])) / 2 + 1)
-// let pontoPoderSemCargo = () => Math.floor(Math.random() * (10 - 1) + 1)
-// let pontoPoderSemCargoD = () => Math.floor(Math.random() * (10 - 1) + 1)
-// console.log('pontoPoderSemCargo: ', pontoPoderSemCargo);
+let pontoPoderSemCargo = () =>  Math.floor((parseInt(seedString[14]) + parseInt(seedString[13])) / 2 + 1)
 
 
 
 
-let pontoPoderPeople = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 5)
-let pontoPoderPeopleD = () => Math.floor((parseInt(seedString[2]) + parseInt(seedString[3])) / 2 + 5)
-// let pontoPoderPeople = () => Math.floor(Math.random() * (20 - 1) + 1)
-// let pontoPoderPeopleD = () => Math.floor(Math.random() * (20 - 1) + 1) 
-// console.log('pontoPoderPeople: ', pontoPoderPeople);
+
+
+let pontoPoderPeople = () => Math.floor((parseInt(seedString[13]) + parseInt(seedString[12])) / 2 + 5)
 
 
 
-let pontoPoderGentleman = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 9)
-let pontoPoderGentlemanD = () => Math.floor((parseInt(seedString[2]) + parseInt(seedString[3])) / 2 + 9)
-// let pontoPoderGentleman = () => Math.floor(Math.random() * (30 - 5) + 5)
-// let pontoPoderGentlemanD = () => Math.floor(Math.random() * (30 - 5) + 5)
 
 
-let pontoPoderMonark = () => Math.floor(Math.random() * 3)
-let pontoPoderMonarkD = () => Math.floor(Math.random() * 3)
+let pontoPoderGentleman = () => Math.floor((parseInt(seedString[12]) + parseInt(seedString[14])) / 2 + 9)
 
 
-let pontoPoderNobre = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 13)
-let pontoPoderNobreD = () => Math.floor((parseInt(seedString[2]) + parseInt(seedString[3])) / 2 + 13)
-// let pontoPoderNobre = () => Math.floor(Math.random() * (40 - 15) +15)
-// let pontoPoderNobreD = () => Math.floor(Math.random() * (40 - 15) +15)
+
+let pontoPoderMonark = () => Math.floor(Math.random() * 2)
 
 
-let pontoPoderLord = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 17)
-let pontoPoderLordD = () => Math.floor((parseInt(seedString[2]) + parseInt(seedString[3])) / 2 + 17)
-// let pontoPoderLord = () => Math.floor(Math.random() * (35 - 10) + 10)
-// let pontoPoderLordD = () =>Math.floor(Math.random() * (35 - 10) + 10)
-// console.log('pontoPoderLord: ', pontoPoderLord);
+
+let pontoPoderNobre = () => Math.floor((parseInt(seedString[11]) + parseInt(seedString[10])) / 2 + 13)
 
 
-let pontoPoderMinistro = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 27)
-let pontoPoderMinistroD = () => Math.floor((parseInt(seedString[2]) + parseInt(seedString[3])) / 2 + 27)
-// let pontoPoderMinistro = () => Math.floor(Math.random() * (60 - 30) + 30)
-// let pontoPoderMinistroD = () => Math.floor(Math.random() * (60 - 30) + 30)
-// console.log('pontoPoderMinistro: ', pontoPoderMinistro);
 
 
-let pontoPoderPrimeMinister = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 36)
-let pontoPoderPrimeMinisterD = () => Math.floor((parseInt(seedString[2]) + parseInt(seedString[3])) / 2 + 36)
-// let pontoPoderPrimeMinister = () => Math.floor(Math.random() * (70 - 50) + 50)
-// let pontoPoderPrimeMinisterD = () => Math.floor(Math.random() * (70 - 50) + 50)
+let pontoPoderLord = () => Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 20)
 
 
-let pontoPoderRNGPremioMarino = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 66)
-let pontoPoderRNGPremioMarinoD = () => Math.floor((parseInt(seedString[2]) + parseInt(seedString[3])) / 2 + 66)
-// let pontoPoderRNGPremioMarino = () => Math.floor(Math.random() * (150 - 90) + 90)
-// let pontoPoderRNGPremioMarinoD = () => Math.floor(Math.random() * (150 - 90) + 90)
-// console.log('pontoPoderRNGPremioMarino: ', pontoPoderRNGPremioMarino);
 
+
+let pontoPoderMinistro = () => Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 27)
+
+
+
+let pontoPoderPrimeMinister = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 36)
+
+
+
+
+let pontoPoderRNGPremioMarino = () => Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 80)
+
+
+let pontoVarianteValor = 0
+function pontoVariante(){
+    
+    if (variante != ''){
+       return pontoVarianteValor = Math.floor((parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 15)
+       
+    } else {
+        return pontoVarianteValor = 0
+        
+    }
+
+}
 
 
 
 let poder = {}
 function escolherPoder(){
+    console.log('pontoVarianteValor: ', pontoVarianteValor);
     if(cargo === 'carta-semcargo'){
+      
        return  poder = {
-                _ataque: pontoPoderSemCargo(),
-                
-                
+                _ataque: pontoPoderSemCargo() + pontoVarianteValor,    
        }
-    } else if (cargo === 'carta-people'){
+    }
+    
+    else if (cargo === 'carta-people'){
         return  poder = {
-                 _ataque: pontoPoderPeople(),
+                 _ataque: pontoPoderPeople() + pontoVarianteValor,
                  
                  
         }
      } else if (cargo === 'carta-gentleman'){
         return  poder = {
-                 _ataque: pontoPoderGentleman(),
+                 _ataque: pontoPoderGentleman() + pontoVarianteValor,
                  
                  
         }
@@ -420,35 +416,37 @@ function escolherPoder(){
         }
      } else if (cargo === 'carta-nobre'){
         return  poder = {
-                 _ataque: pontoPoderNobre(),
+                 _ataque: pontoPoderNobre() + pontoVarianteValor,
                  
         }
      } else if (cargo === 'carta-lord'){
         return  poder = {
-                 _ataque: pontoPoderLord(),
+                 _ataque: pontoPoderLord() + pontoVarianteValor,
                  
         }
      } else if (cargo === 'carta-ministro'){
         return  poder = {
-                 _ataque: pontoPoderMinistro(),
+                 _ataque: pontoPoderMinistro() + pontoVarianteValor,
                  
                  
         }
      } else if (cargo === 'carta-primeminister'){
         return  poder = {
-                 _ataque: pontoPoderPrimeMinister(),
+                 _ataque: pontoPoderPrimeMinister() + pontoVarianteValor,
                  
                  
         }
      } else if (cargo === 'carta-premiomarino'){
         return  poder = {
-                 _ataque: pontoPoderRNGPremioMarino(),
+                 _ataque: pontoPoderRNGPremioMarino() + pontoVarianteValor,
                  
                  
         }
+     
      }
 
 }
+
 
 
 //************************************************ */
@@ -484,6 +482,7 @@ let retratoP = document.querySelector('.retrato')
 let cargoP = document.querySelector('.cargo')
 let varianteP = document.querySelector('.variante')
 let actionP = document.querySelector('.action')
+let novoAtaquerP = document.querySelector('.novoAtaque')
 //div poder
 let ataqueP = document.querySelector('.ataque')
 let defesaP = document.querySelector('.defesa')
@@ -504,6 +503,7 @@ let seedCheckBtn = document.getElementById('seedcheckbtn')
 let seedCheckPage = document.getElementById('seedcheck')
 
 
+
 function colocarInfoNoWrap(){
 
     const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial);
@@ -514,9 +514,14 @@ function colocarInfoNoWrap(){
     cartaP.style.border = 'none'
     cartaP.style.color = ''
     actionP.style.visibility = 'hidden'
+    ataqueP.style.textDecorationLine = ''
+    novoAtaquerP.innerHTML = ''
 
     cartaParaMover.children[0].children[0].classList.remove('critico')
     cartaParaMover.children[0].children[2].classList.remove('critico')
+    cartaParaMover.classList.remove('critico')
+     varianteP.classList.remove('critico')
+     cartaParaMover.children[3].children[1].classList.remove('critico')
 
     cartaParaMover.children[0].children[0].style.color = ''
     cartaParaMover.children[0].children[2].style.color = ''
@@ -528,7 +533,7 @@ function colocarInfoNoWrap(){
     //DOM
     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante.toUpperCase()
     cidadeP.innerHTML = '&nbsp;' +  novaCarta._cidade
-    ataqueP.innerHTML =  '&nbsp;' + '&#9889;'  + novaCarta._poder._ataque
+    ataqueP.innerHTML = novaCarta._poder._ataque + '&#9889;'  
     varianteP.innerHTML =  novaCarta._variante
     seedP.innerHTML = '&nbsp;' + seedString
     if (novaCarta._especial != ''){
@@ -942,98 +947,239 @@ function critico(){
     //cidade negrito
     cartaParaMover.children[0].children[1].style.fontWeight = ''
     cartaParaMover.classList.remove('critico')
+    //PODER 
+    let poderTremer = cartaParaMover.children[3].children[0]
+    let poderNovo = cartaParaMover.children[3].children[1]
+
+
     //gandalf
     if (cartaParaMover.id != 'carta-monark' && cartaParaMover.id != 'carta-speaker' ){
 
     
         if (seedString[1] == '1' && seedString[3] == '0' ){
+
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
+            cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
 
-        corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
-        cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 0){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 5 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                    }
+
+            
         }
+
+
         //turu
         if (seedString[1] == '2' && seedString[3] == '1' ){
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
-
-            corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 1){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                }
         }
         //nefesto
         if (seedString[1] == '3' && seedString[3] == '2' ){
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
-
-            corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 2){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                }
         }
         //blackao
         if (seedString[1] == '4' && seedString[3] == '3' ){
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
-
-            corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 3){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                }
         }
         //antonio
         if (seedString[1] == '5' && seedString[3] == '4' ){
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
-
-            corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 4){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                }
         }
         //pedro
         if (seedString[1] == '6' && seedString[3] == '5' ){
-            
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
-
-            corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
-
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 5){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                }
         }
         //curtas
         if (seedString[1] == '7' && seedString[3] == '6' ){
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
-
-            corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 6){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                }
         }
         //twelve
         if (seedString[1] == '8' && seedString[3] == '7' ){
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
-            corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 7){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                }
         }
         //junks
         if (seedString[1] == '9' && seedString[3] == '8' ){
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
-            corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 8){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                }
 
         }
         //murilo
         if (seedString[1] == '0' && seedString[3] == '9' ){
             corDaCidade.classList.add('critico')
             corDoNome.classList.add('critico')
-            corDaCidade.style.color = 'red'
-            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
+
+                    poderTremer.style.textDecorationLine = 'line-through'
+                    poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + '⚡'
+                    
+
+
+                if (seedString[5] == 9 &&  seedString[6] == 9){
+
+                        cartaParaMover.classList.add('critico')
+                        varianteP.classList.add('critico')
+                        poderNovo.classList.add('critico')
+
+                        poderTremer.style.textDecorationLine = 'line-through'
+                        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + '⚡'
+                        poderNovo.style.fontSize = '1.5em'
+                }
         } 
     }
     
@@ -1066,17 +1212,17 @@ function deletarDeck(e){
         // console.log('carta nao é monark')
 
         // 1.1 se for a carta inteira
-        if(e.target.id != 'inv' && e.target.clientHeight === 291){
+        if(e.target.id != 'inv' && e.target.childElementCount === 5){
         console.log('carta inteira')
         e.target.remove()
         inv.appendChild(document.createElement('div')).id = "empty"
 
         //1.2 se nao for a seed
-    } else if (e.target.id != 'inv' && e.target.clientHeight != 291 && e.target.className != 'seed' ){
+    } else if (e.target.id != 'inv' && e.target.childElementCount != 5 && e.target.className != 'seed' ){
             // console.log('nao é a seed')
             
             // 1.2.1 se for filho da carta
-            if(e.target.parentElement.clientHeight === 291 && e.target.id != 'inv'){
+            if(e.target.parentElement.children[0].className === 'nameAndCidadeWrapper' && e.target.id != 'inv'){
                 // console.log('filho da carta')
                 e.target.parentElement.remove()
                 inv.appendChild(document.createElement('div')).id = "empty"
@@ -1156,20 +1302,36 @@ function tudo(){
     escolherIntegrante()
     escolherCidade()
     escolherCargo()
-    escolherPoder()
     escolherVariante()
     escolherEspecial()
+    pontoVariante()
+    escolherPoder()
+    
+
+
     colocarInfoNoWrap()
     critico()
     moverCartaMonark()
     
+    somaPontos()
     
     // inv.style.backgroundColor = ''
     
 }
 
+let totalPontos = 0
+// let pontoVelho = inv.children[j].children[4].children[0]
+// let pontoNovo = inv.children[j].children[4].children[1]
+// function somaPontos(){
+    
 
-
+//     for (let j = 0; j < 4; j++){
+//         totalPontos =+ totalPontos + inv.children[j].children[4].children[0].textContent
+// }
+//     }
+    
+        
+    
 
 
 
