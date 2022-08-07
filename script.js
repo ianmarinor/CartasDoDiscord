@@ -267,7 +267,7 @@ function escolherEspecial(){
         seedString[5] == 8 && seedString[7] >= 5)
         { return especial = 'especial-click'}
         else{
-            return especial = 'sem especial'
+            return especial = ''
         }
 }
 
@@ -278,47 +278,47 @@ function escolherVariante(){
     if (
         seedString[5] == 9 && 
         seedString[6] == 0){
-        return variante = 'variante-farmaceutico'
+        return variante = 'farmacêutico'
     } 
     else if 
     (
         seedString[5] == 9 && 
         seedString[6] == 1)
-        { return variante = 'variante-bao'} 
+        { return variante = 'bão'} 
         else if (
         seedString[5] == 9 && 
         seedString[6] == 2) {
-        return variante = 'variante-apenas'
+        return variante = 'apenas'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 3) {
-        return variante = 'variante-fonte'
+        return variante = 'fonte'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 4) {
-        return variante = 'variante-ixqueiro'
+        return variante = 'ixqueiro'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 5) {
-        return variante = 'variante-abalo'
+        return variante = 'abalo'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 6) {
-        return variante = 'variante-grito'
+        return variante = 'grito'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 7) {
-        return variante = 'variante-dia'
+        return variante = 'dia'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 8) {
-        return variante = 'variante-quimico'
+        return variante = 'quimico'
     } else if (
         seedString[5] == 9 && 
         seedString[6] == 9) {
-        return variante = 'variante-pera'
+        return variante = 'pêra'
     } else {
-        return variante = 'sem-variante'
+        return variante = ''
     }
 }
 
@@ -446,14 +446,7 @@ function escolherPoder(){
                  
                  
         }
-     } else if (cargo === 'carta-speaker'){
-        return  poder = {
-                 _ataque: '🔨',
-                 
      }
-
-     
-    }
 
 }
 
@@ -490,6 +483,7 @@ let cidadeP = document.querySelector('.cidade')
 let retratoP = document.querySelector('.retrato')
 let cargoP = document.querySelector('.cargo')
 let varianteP = document.querySelector('.variante')
+let actionP = document.querySelector('.action')
 //div poder
 let ataqueP = document.querySelector('.ataque')
 let defesaP = document.querySelector('.defesa')
@@ -515,105 +509,257 @@ function colocarInfoNoWrap(){
     const novaCarta = fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial);
     console.log('novaCarta: ', novaCarta);
 
+    //LIMPAR A CARTA
+    cartaP.style.backgroundImage = ''
+    cartaP.style.border = 'none'
+    cartaP.style.color = ''
+    actionP.style.visibility = 'hidden'
+
+    cartaParaMover.children[0].children[0].classList.remove('critico')
+    cartaParaMover.children[0].children[2].classList.remove('critico')
+
+    cartaParaMover.children[0].children[0].style.color = ''
+    cartaParaMover.children[0].children[2].style.color = ''
+    cartaParaMover.children[0].children[1].style.fontWeight = ''
+
+
+
 
     //DOM
     nomeP.innerHTML = '&nbsp;' + novaCarta._integrante.toUpperCase()
     cidadeP.innerHTML = '&nbsp;' +  novaCarta._cidade
     ataqueP.innerHTML =  '&nbsp;' + '&#9889;'  + novaCarta._poder._ataque
-    varianteP.innerHTML =   novaCarta._variante
+    varianteP.innerHTML =  novaCarta._variante
     seedP.innerHTML = '&nbsp;' + seedString
-    if (seedString[5] == 8){
+    if (novaCarta._especial != ''){
         cartaP.id = novaCarta._especial
     } else {
         cartaP.id = novaCarta._cargo
     }
+
+    
+    
+
+
+
+
     
 
     retratoP.style.display = "block"
 
-    //CARTAS ESPECIAIS 
-    if (novaCarta._cargo === 'carta-speaker'){
-        nomeP.innerHTML = '&nbsp; SPEAKER'  
-        cidadeP.innerHTML = ''
+    
+
+
+
+
+
+
+
         
-    }
+
+
+
+
+
+
+
+
 
 
     //colocar retrato
-     if (novaCarta._cargo === 'carta-speaker'){
-        retratoP.style.backgroundImage = "url('pics/speaker.webp')"
-    } else if (novaCarta._integrante === 'Turu'){
-        retratoP.style.backgroundImage = "url('pics/turu.webp')"
-    } else if (novaCarta._integrante === 'Blackao'){
-        retratoP.style.backgroundImage = "url('pics/blackao.jpeg')"
+    if (novaCarta._especial == ''){
 
-    } else if (novaCarta._integrante === 'Gandalf'){
-        retratoP.style.backgroundImage = "url('pics/gandarfu.png')"
-    } 
+        if (novaCarta._integrante === 'Turu'){
+            retratoP.style.backgroundImage = "url('pics/turu.webp')"
+        } else if (novaCarta._integrante === 'Blackao'){
+            retratoP.style.backgroundImage = "url('pics/blackao.jpeg')"
 
-     else if (novaCarta._integrante === 'Murillo'){
-        retratoP.style.backgroundImage = "url('pics/murilo.jpeg')"
-    } else if (novaCarta._integrante === 'Pedro'){
-        retratoP.style.backgroundImage = "url('pics/pedro.png')"
-    } else if (novaCarta._integrante === 'Nefesto'){
-        retratoP.style.backgroundImage = "url('pics/nefesto.png')"
-    } else if (novaCarta._integrante === 'Sr. Antonio'){
-        retratoP.style.backgroundImage = "url('pics/antonio.png')"
-    } else if (novaCarta._integrante === 'Curtas'){
-        retratoP.style.backgroundImage = "url('pics/curtas.png')"
-    } else if (novaCarta._integrante === 'Junks'){
-        retratoP.style.backgroundImage = "url('pics/junks.jpeg')"
-    } else if (novaCarta._integrante === 'Twelve'){
-        retratoP.style.backgroundImage = "url('pics/twelve.png')"
+        } else if (novaCarta._integrante === 'Gandalf'){
+            retratoP.style.backgroundImage = "url('pics/gandarfu.png')"
+        } 
+
+        else if (novaCarta._integrante === 'Murillo'){
+            retratoP.style.backgroundImage = "url('pics/murilo.jpeg')"
+        } else if (novaCarta._integrante === 'Pedro'){
+            retratoP.style.backgroundImage = "url('pics/pedro.png')"
+        } else if (novaCarta._integrante === 'Nefesto'){
+            retratoP.style.backgroundImage = "url('pics/nefesto.png')"
+        } else if (novaCarta._integrante === 'Sr. Antonio'){
+            retratoP.style.backgroundImage = "url('pics/antonio.png')"
+        } else if (novaCarta._integrante === 'Curtas'){
+            retratoP.style.backgroundImage = "url('pics/curtas.png')"
+        } else if (novaCarta._integrante === 'Junks'){
+            retratoP.style.backgroundImage = "url('pics/junks.jpeg')"
+        } else if (novaCarta._integrante === 'Twelve'){
+            retratoP.style.backgroundImage = "url('pics/twelve.png')"
+        }
+        else { 
+
+            retratoP.style.backgroundImage = ""
+        }
     }
-    else { 
+     //colocar cargo
+     if (novaCarta._especial == ''){
 
-        retratoP.style.backgroundImage = ""
+     
+        if (novaCarta._cargo === 'carta-semcargo'){
+            cargoP.innerHTML = '&nbsp;' + 'sem cargo'.toUpperCase()
+            retratoP.style.border = ''
+
+        } else if (novaCarta._cargo === 'carta-people'){
+            cargoP.innerHTML = '&nbsp;' + 'people'.toUpperCase()
+            retratoP.style.border = ''
+
+        } else if (novaCarta._cargo === 'carta-gentleman'){
+            cargoP.innerHTML = '&nbsp;' + 'gentleman'.toUpperCase()
+            retratoP.style.border = ''
+
+        } else if (novaCarta._cargo === 'carta-ministro'){
+            cargoP.innerHTML = '&nbsp;' + 'ministro'.toUpperCase() + '👨‍⚖️'
+            retratoP.style.border = ''
+
+        } else if (novaCarta._cargo === 'carta-lord'){
+            cargoP.innerHTML = '&nbsp;' + 'lord'.toUpperCase() + '👑'
+            retratoP.style.border = ''
+
+        } else if (novaCarta._cargo === 'carta-nobre'){
+            cargoP.innerHTML = '&nbsp;' + 'nobre'.toUpperCase() + '💙'
+            retratoP.style.border = ''
+
+        } else if (novaCarta._cargo === 'carta-primeminister'){
+            cargoP.innerHTML = '&nbsp;' + 'prime minister'.toUpperCase() + '💪'
+            cargoP.style.backgroundImage = 'pics/wrapPremioMarino.webp'
+            retratoP.style.border = ''
+            
+        } else if (novaCarta._cargo === 'carta-premiomarino'){
+            cargoP.innerHTML = '&nbsp;' + '&#127942; premio marino &#127942;'.toUpperCase()
+            retratoP.style.border = ''
+        } else if (novaCarta._cargo === 'carta-monark'){
+            cargoP.innerHTML = '&nbsp;' + 'monark' + '&#128169;'
+            retratoP.style.border = ''
+        }  else {
+            true
+        }
     }
     
-     //colocar cargo
-    if (novaCarta._cargo === 'carta-semcargo'){
-        cargoP.innerHTML = '&nbsp;' + 'sem cargo'.toUpperCase()
-        retratoP.style.border = ''
+//CARTAS ESPECIAIS 
+if (novaCarta._especial === 'carta-speaker'){
+    retratoP.style.backgroundImage = "url('pics/speaker.webp')"
+    nomeP.innerHTML = '&nbsp; SPEAKER'  
+    cidadeP.innerHTML = ''
+    cargoP.innerHTML = novaCarta._integrante.toUpperCase() + ' BAN!'
+    retratoP.style.border = '2px dotted green'
+    
+} else if (novaCarta._especial === 'especial-tenica'){
 
-    } else if (novaCarta._cargo === 'carta-people'){
-        cargoP.innerHTML = '&nbsp;' + 'people'.toUpperCase()
-        retratoP.style.border = ''
+    cargoP.style.fontFamily = "Cormorant Upright"
+    retratoP.style.backgroundImage = "url('pics/tenica.webp')"
+    retratoP.style.backgroundSize = '139px 150px'
+    nomeP.innerHTML = ''  
+    cidadeP.innerHTML = ''
+    cargoP.style.fontSize = '2.5em'
+    cargoP.style.fontWeight = 'bolder'
+    cargoP.innerHTML = '&nbsp; TÉNICA'
+    cargoP.style.color = 'black'
+    retratoP.style.border = '2px double gold'
+    ataqueP.style.color = 'black'
+    ataqueP.style.fontSize = '1.5em'
+}
 
-    } else if (novaCarta._cargo === 'carta-gentleman'){
-        cargoP.innerHTML = '&nbsp;' + 'gentleman'.toUpperCase()
-        retratoP.style.border = ''
 
-    } else if (novaCarta._cargo === 'carta-ministro'){
-        cargoP.innerHTML = '&nbsp;' + 'ministro'.toUpperCase() + '👨‍⚖️'
-        retratoP.style.border = ''
+    //CARTAS VARIANTES
+if ( novaCarta._variante != ''){
+    actionP.style.visibility = 'visible'
+    varianteP.style.fontFamily = 'Righteous'
+    varianteP.style.textShadow = '-2px 5px 5px #010101'
+    varianteP.style.fontSize = '1.1em'
+    
+    
 
-    } else if (novaCarta._cargo === 'carta-lord'){
-        cargoP.innerHTML = '&nbsp;' + 'lord'.toUpperCase() + '👑'
-        retratoP.style.border = ''
-
-    } else if (novaCarta._cargo === 'carta-nobre'){
-        cargoP.innerHTML = '&nbsp;' + 'nobre'.toUpperCase() + '💙'
-        retratoP.style.border = ''
-
-    } else if (novaCarta._cargo === 'carta-primeminister'){
-        cargoP.innerHTML = '&nbsp;' + 'prime minister'.toUpperCase() + '💪'
-        cargoP.style.backgroundImage = 'pics/wrapPremioMarino.webp'
-        retratoP.style.border = ''
+    if (novaCarta._variante === 'farmacêutico'){
+        varianteP.innerHTML =  '💊' + novaCarta._variante.toUpperCase() + '💊'
+        cartaP.style.color = 'white'
+        cartaP.style.backgroundImage = 'url("pics/variantes/varianteGandalf.gif")'
+        cartaP.style.border = '3px white solid'
         
-    } else if (novaCarta._cargo === 'carta-premiomarino'){
-        cargoP.innerHTML = '&nbsp;' + '&#127942; premio marino &#127942;'.toUpperCase()
-        retratoP.style.border = ''
-    } else if (novaCarta._cargo === 'carta-monark'){
-        cargoP.innerHTML = '&nbsp;' + 'monark' + '&#128169;'
-        retratoP.style.border = ''
-    }  else if (novaCarta._cargo === 'carta-speaker'){
-        cargoP.innerHTML = novaCarta._integrante.toUpperCase() + ' BAN!'
-        retratoP.style.border = '2px dotted green'
+
+    } else if (novaCarta._variante === 'bão'){
+        varianteP.innerHTML =  '👌 ' + 'AÔPA, ' + novaCarta._variante.toUpperCase() + ' 👌'
+        cartaP.style.color = 'orange'
+        cartaP.style.backgroundImage = 'url("pics/variantes/varianteTuru.gif")'
+        cartaP.style.border = '3px orange solid'
+        
+    } else if (novaCarta._variante === 'apenas'){
+        varianteP.innerHTML =  '🤤 ' + novaCarta._variante.toUpperCase() + ' 🤤'
+        cartaP.style.color = 'wheat'
+        cartaP.style.backgroundImage = 'url("pics/variantes/varianteNefesto.gif")'
+        cartaP.style.border = '3px wheat solid'
+        
+    } else if (novaCarta._variante === 'fonte'){
+        varianteP.innerHTML =  '😖' + 'COMO MUDA A ' + novaCarta._variante.toUpperCase() + '😖'
+        cartaP.style.color = '  white'
+        
+        cartaP.style.backgroundImage = 'url("pics/variantes/varianteBlackao.gif")'
+        cartaP.style.border = '3px white solid'
+        varianteP.style.fontSize = '0.86em'
+        // varianteP.style.textShadow = '-2px 5px 5px #ffffff'
+
+    } else if (novaCarta._variante === 'ixqueiro'){
+        varianteP.innerHTML =  '🏄' + 'CHIQUEIRO, ' + novaCarta._variante.toUpperCase() + '🏄'
+        cartaP.style.color = ' #d8fbb5'
+        
+        
+        cartaP.style.backgroundImage = 'url("pics/variantes/varianteAntonio.gif")'
+        cartaP.style.border = '3px #d8fbb5 solid'
+        varianteP.style.fontSize = '0.86em'
+    
+    } else if (novaCarta._variante === 'abalo'){
+        varianteP.innerHTML =  '🎉' + 'UM ' + novaCarta._variante.toUpperCase() + '! 🎉'
+        cartaP.style.color = '  #fbb5f2 '
+        
+        
+        cartaP.style.backgroundImage = 'url("pics/variantes/variantePedro.gif")'
+        cartaP.style.border = '3px #fbb5f2 solid'
+        
+    
+    } else if (novaCarta._variante === 'grito'){
+        varianteP.innerHTML =  '📢AAAAAAAAAAHHH!!!!!📢'
+        cartaP.style.color = '   #42b028   '
+        
+        
+        cartaP.style.backgroundImage = 'url("pics/variantes/varianteCurtas.gif")'
+        cartaP.style.border = '3px  #25a406  solid'
+        varianteP.style.fontSize = '0.86em'
+    
+    } else if (novaCarta._variante === 'dia'){
+        varianteP.innerHTML =  '⛪ TODO DIA ISSO ⛪'
+        cartaP.style.color = '   #27ebe2     '
+        
+        
+        cartaP.style.backgroundImage = 'url("pics/variantes/varianteTwelve.gif")'
+        cartaP.style.border = '3px  #27ebe2   solid'
+        varianteP.style.fontSize = '0.99em'
+    
+    } else if (novaCarta._variante === 'quimico'){
+        varianteP.innerHTML =  '🐶 O PUGO 🐶'
+        cartaP.style.color = 'white'
+        cartaP.style.backgroundImage = 'url("pics/variantes/varianteJunks.gif")'
+        cartaP.style.border = '3px  white   solid'
+        
+    
+    } else if (novaCarta._variante === 'pêra'){
+        varianteP.innerHTML =  '🥛 LEITE COM PÊRA 🍐'
+        cartaP.style.color = 'white'
+        cartaP.style.backgroundImage = 'url("pics/variantes/varianteMurillo.gif")'
+        cartaP.style.border = '3px  white   solid'
+        varianteP.style.fontSize = '0.90em'
+    
     } else {
-        true
-    }
         
+    }
+    
+    
+}  
 }
 
 
@@ -787,6 +933,8 @@ const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent
 
 function critico(){
     //nome
+     let = corDoNome = cartaParaMover.children[0].children[0]
+     let = corDaCidade = cartaParaMover.children[0].children[2]
 
     cartaParaMover.children[0].children[1].style.color = ''
     //cidade
@@ -798,74 +946,93 @@ function critico(){
     if (cartaParaMover.id != 'carta-monark' && cartaParaMover.id != 'carta-speaker' ){
 
     
-        if (seedString[1] == '1' && seedString[2] == '0' ){
-        cartaParaMover.classList.add('critico')
-        cartaParaMover.children[0].children[0].style.color = 'red'
-        cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '1' && seedString[3] == '0' ){
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+
+        corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
         cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //turu
-        if (seedString[1] == '2' && seedString[2] == '1' ){
-            cartaParaMover.classList.add('critico')
-            cartaParaMover.children[0].children[0].style.color = 'red'
-            cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '2' && seedString[3] == '1' ){
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+
+            corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //nefesto
-        if (seedString[1] == '3' && seedString[2] == '2' ){
-            cartaParaMover.classList.add('critico')
-            cartaParaMover.children[0].children[0].style.color = 'red'
-            cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '3' && seedString[3] == '2' ){
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+
+            corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //blackao
-        if (seedString[1] == '4' && seedString[2] == '3' ){
-            cartaParaMover.classList.add('critico')
-            cartaParaMover.children[0].children[0].style.color = 'red'
-            cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '4' && seedString[3] == '3' ){
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+
+            corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //antonio
-        if (seedString[1] == '5' && seedString[2] == '4' ){
-            cartaParaMover.classList.add('critico')
-            cartaParaMover.children[0].children[0].style.color = 'red'
-            cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '5' && seedString[3] == '4' ){
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+
+            corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //pedro
-        if (seedString[1] == '6' && seedString[2] == '5' ){
-            cartaParaMover.classList.add('critico')
-            cartaParaMover.children[0].children[0].style.color = 'red'
-            cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '6' && seedString[3] == '5' ){
+            
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+
+            corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
+
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //curtas
-        if (seedString[1] == '7' && seedString[2] == '6' ){
-            cartaParaMover.classList.add('critico')
-            cartaParaMover.children[0].children[0].style.color = 'red'
-            cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '7' && seedString[3] == '6' ){
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+
+            corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //twelve
-        if (seedString[1] == '8' && seedString[2] == '7' ){
-            cartaParaMover.classList.add('critico')
-            cartaParaMover.children[0].children[0].style.color = 'red'
-            cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '8' && seedString[3] == '7' ){
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+            corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         }
         //junks
-        if (seedString[1] == '9' && seedString[2] == '8' ){
-            cartaParaMover.classList.add('critico')
-            cartaParaMover.children[0].children[0].style.color = 'red'
-            cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '9' && seedString[3] == '8' ){
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+            corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
 
         }
         //murilo
-        if (seedString[1] == '0' && seedString[2] == '9' ){
-            cartaParaMover.classList.add('critico')
-            cartaParaMover.children[0].children[0].style.color = 'red'
-            cartaParaMover.children[0].children[1].style.color = 'red'
+        if (seedString[1] == '0' && seedString[3] == '9' ){
+            corDaCidade.classList.add('critico')
+            corDoNome.classList.add('critico')
+            corDaCidade.style.color = 'red'
+            corDoNome.style.color = 'red'
             cartaParaMover.children[0].children[1].style.fontWeight = 'bold'
         } 
     }
