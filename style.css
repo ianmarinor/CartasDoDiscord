@@ -66,6 +66,19 @@ li{
     font-size: 1.25em;
     color: rgb(213, 187, 238);;
 }
+.arena{
+    margin: 0.7em;
+    font-size: 5em;
+    color: wheat;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.placar{
+    
+    text-align: center;
+    font-size: 2em;
+    color: wheat;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
 
 .wrap{
     
