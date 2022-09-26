@@ -1088,83 +1088,235 @@ function criarBtn() {
             let poderNovoCartaPack = cartaParaMover.children[3].children[1];
             // let poderCartaInv = inv.children[i].children[3].children[2]
 
+
+            // se a carta para mover nao for especial
             if (seedString[5] != 9) { 
+              // inv 0
               if (i == 0) {
                 
-
+                //se nao CartaPMover NAO tiver poder novo
                if (poderNovoCartaPack.textContent == ''){
-                  poderCartaPack.textContent =
-                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
 
-                  inv.children[0].children[3].children[2].style.visibility =
-                    "hidden";
-               } 
-                    else {
-                    poderNovoCartaPack.textContent =
-                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+                  // e se a carta inv tiver poder novo
+                  if (inv.children[i].children[3].children[1].textContent != ''){
 
+                    // transforme poder velho da CartaPack em novo da inv
+                    poderCartaPack.textContent =
+                    parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
+
+                    // e transforme o botao em invisivel
                     inv.children[0].children[3].children[2].style.visibility =
-                    "hidden";
+                      "hidden";
+
+
+                    // se nao, transforme poder velho CartaPMover em poder velho inv
+                  } else {
+
+                    // transaforme o poder velho da CartaPack no poder velho da carta inv 0
+                    poderCartaPack.textContent =
+                      parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+
+                      // e transforme o botao em invisivel
+                    inv.children[0].children[3].children[2].style.visibility =
+                      "hidden";
+                  }
+               } 
+                
+                // se carta para mover TIVER poder novo
+                    else {
+                      // e se a carta inv tiver poder novo
+                      if (inv.children[i].children[3].children[1].textContent != ''){
+
+                        // transforme poder novo da CartaPack em novo da inv
+                        poderNovoCartaPack.textContent =
+                        parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
+
+                        // e transforme o botao em invisivel
+                        inv.children[0].children[3].children[2].style.visibility =
+                        "hidden";
+
+                      } else {
+                        // transforme o poder novo da CartaPack no poder velho da inv 0
+                        poderNovoCartaPack.textContent =
+                        parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+
+                        // e transforme o botao em invisivel
+                        inv.children[0].children[3].children[2].style.visibility =
+                        "hidden";
+                      }  
                 }
               }
 
+              // inv 1
               if (i == 1) {
                 
 
-                if (poderNovoCartaPack.textContent == ''){
-                    poderCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-  
-                    inv.children[1].children[3].children[2].style.visibility =
-                      "hidden";
-                 } 
-                      else {
-                      poderNovoCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-  
-                      inv.children[1].children[3].children[2].style.visibility =
-                      "hidden";
+                //se nao CartaPMover NAO tiver poder novo
+               if (poderNovoCartaPack.textContent == ''){
+
+                // e se a carta inv tiver poder novo
+                if (inv.children[i].children[3].children[1].textContent != ''){
+
+                  // transforme poder velho da CartaPack em novo da inv
+                  poderCartaPack.textContent =
+                  parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
+
+                  // e transforme o botao em invisivel
+                  inv.children[i].children[3].children[2].style.visibility =
+                    "hidden";
+
+
+                  // se nao, transforme poder velho CartaPMover em poder velho inv
+                  } else {
+
+                  // transaforme o poder velho da CartaPack no poder velho da carta inv 0
+                  poderCartaPack.textContent =
+                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+
+                    // e transforme o botao em invisivel
+                  inv.children[i].children[3].children[2].style.visibility =
+                    "hidden";
                   }
-                
+                } 
+              
+                // se carta para mover TIVER poder novo
+                  else {
+                    // e se a carta inv tiver poder novo
+                    if (inv.children[i].children[3].children[1].textContent != ''){
+
+                      // transforme poder novo da CartaPack em novo da inv
+                      poderNovoCartaPack.textContent =
+                      parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
+
+                      // e transforme o botao em invisivel
+                      inv.children[i].children[3].children[2].style.visibility =
+                      "hidden";
+
+                  } else {
+                    // transforme o poder novo da CartaPack no poder velho da inv 0
+                    poderNovoCartaPack.textContent =
+                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+
+                    // e transforme o botao em invisivel
+                    inv.children[i].children[3].children[2].style.visibility =
+                    "hidden";
+                  }  
+                }  
               }
+
+
               if (i == 2) {
                
 
                
-                if (poderNovoCartaPack.textContent == ''){
-                    poderCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-  
-                    inv.children[2].children[3].children[2].style.visibility =
-                      "hidden";
-                 } 
-                      else {
-                      poderNovoCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-  
-                      inv.children[2].children[3].children[2].style.visibility =
-                      "hidden";
+                //se nao CartaPMover NAO tiver poder novo
+               if (poderNovoCartaPack.textContent == ''){
+
+                // e se a carta inv tiver poder novo
+                if (inv.children[i].children[3].children[1].textContent != ''){
+
+                  // transforme poder velho da CartaPack em novo da inv
+                  poderCartaPack.textContent =
+                  parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
+
+                  // e transforme o botao em invisivel
+                  inv.children[i].children[3].children[2].style.visibility =
+                    "hidden";
+
+
+                  // se nao, transforme poder velho CartaPMover em poder velho inv
+                  } else {
+
+                  // transaforme o poder velho da CartaPack no poder velho da carta inv 0
+                  poderCartaPack.textContent =
+                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+
+                    // e transforme o botao em invisivel
+                  inv.children[i].children[3].children[2].style.visibility =
+                    "hidden";
                   }
+                } 
+              
+                // se carta para mover TIVER poder novo
+                  else {
+                    // e se a carta inv tiver poder novo
+                    if (inv.children[i].children[3].children[1].textContent != ''){
+
+                      // transforme poder novo da CartaPack em novo da inv
+                      poderNovoCartaPack.textContent =
+                      parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
+
+                      // e transforme o botao em invisivel
+                      inv.children[i].children[3].children[2].style.visibility =
+                      "hidden";
+
+                  } else {
+                    // transforme o poder novo da CartaPack no poder velho da inv 0
+                    poderNovoCartaPack.textContent =
+                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+
+                    // e transforme o botao em invisivel
+                    inv.children[i].children[3].children[2].style.visibility =
+                    "hidden";
+                  }  
+                }
                 
               }
               if (i == 3) {
                 
 
                
-                if (poderNovoCartaPack.textContent == ''){
-                    poderCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-  
-                    inv.children[3].children[3].children[2].style.visibility =
-                      "hidden";
-                 } 
-                      else {
-                      poderNovoCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-  
-                      inv.children[3].children[3].children[2].style.visibility =
-                      "hidden";
+                //se nao CartaPMover NAO tiver poder novo
+               if (poderNovoCartaPack.textContent == ''){
+
+                // e se a carta inv tiver poder novo
+                if (inv.children[i].children[3].children[1].textContent != ''){
+
+                  // transforme poder velho da CartaPack em novo da inv
+                  poderCartaPack.textContent =
+                  parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
+
+                  // e transforme o botao em invisivel
+                  inv.children[i].children[3].children[2].style.visibility =
+                    "hidden";
+
+
+                  // se nao, transforme poder velho CartaPMover em poder velho inv
+                  } else {
+
+                  // transaforme o poder velho da CartaPack no poder velho da carta inv 0
+                  poderCartaPack.textContent =
+                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+
+                    // e transforme o botao em invisivel
+                  inv.children[i].children[3].children[2].style.visibility =
+                    "hidden";
                   }
+                } 
+              
+                // se carta para mover TIVER poder novo
+                  else {
+                    // e se a carta inv tiver poder novo
+                    if (inv.children[i].children[3].children[1].textContent != ''){
+
+                      // transforme poder novo da CartaPack em novo da inv
+                      poderNovoCartaPack.textContent =
+                      parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
+
+                      // e transforme o botao em invisivel
+                      inv.children[i].children[3].children[2].style.visibility =
+                      "hidden";
+
+                  } else {
+                    // transforme o poder novo da CartaPack no poder velho da inv 0
+                    poderNovoCartaPack.textContent =
+                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+
+                    // e transforme o botao em invisivel
+                    inv.children[i].children[3].children[2].style.visibility =
+                    "hidden";
+                  }  
+                }
                 
               }
             }
@@ -1223,6 +1375,10 @@ function criarBtn() {
     }
   }
 }
+
+
+
+
 }
 // if (inv.children[0].id != 'empty' && inv.children[1].id != 'empty' && inv.children[2].id != 'empty' && inv.children[3].id != 'empty') {
 
