@@ -1,10 +1,14 @@
-import { generateSeed } from "./modules/generateSeed.js";
+
+// import { generateSeed } from "./modules/generateSeed.js";
+import { escolherIntegrante } from "./modules/escolherIntegrante.js";
+import { integrante } from "./modules/escolherIntegrante.js";
+
 
 // import { colocarInput } from "./colocarInput.js";
 // import { escolherIntegrante } from "./modules/escolherIntegrante.js";
 
 
- let input = "";
+export let input = "";
 
 // ***********************
 // LINK SEED TO ELEMENT
@@ -13,82 +17,83 @@ import { generateSeed } from "./modules/generateSeed.js";
 //integrante
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 
-let integrante = "";
+
 let seedString = "";
-function escolherIntegrante() {
-  seedString = generateSeed(input).toString();
-  // console.log(seedString.length);
-  console.log('integrante seed', seedString);
-  if (
-    seedString[1] == 1
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Gandalf");
-  } else if (
-    seedString[1] == 2
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Turu");
-  } else if (
-    seedString[1] == 3
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Nefesto");
-  } else if (
-    seedString[1] == 4
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Blackao");
-  } else if (
-    seedString[1] == 5
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Sr. Antonio");
-  } else if (
-    seedString[1] == 6
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Pedro");
-  } else if (
-    seedString[1] == 7
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Curtas");
-  } else if (
-    seedString[1] == 8
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Twelve");
-  } else if (
-    seedString[1] == 9
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Junks");
-  } else if (
-    seedString[1] == 0
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Murillo");
-  }
-  // else if
-  //     (
-  //     // seedString[0] == 1  &&
-  //     seedString[1]
-  //     )
-  //     {return integrante = 'Curtas'
-  // } else
-  //     {return integrante = 'SEM NOME'}
-}
+// console.log('seedString: ', seedString);
+// function escolherIntegrante() {
+//   seedString = generateSeed(input).toString();
+//   // console.log(seedString.length);
+//   console.log('integrante seed', seedString);
+//   if (
+//     seedString[1] == 1
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Gandalf");
+//   } else if (
+//     seedString[1] == 2
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Turu");
+//   } else if (
+//     seedString[1] == 3
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Nefesto");
+//   } else if (
+//     seedString[1] == 4
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Blackao");
+//   } else if (
+//     seedString[1] == 5
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Sr. Antonio");
+//   } else if (
+//     seedString[1] == 6
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Pedro");
+//   } else if (
+//     seedString[1] == 7
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Curtas");
+//   } else if (
+//     seedString[1] == 8
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Twelve");
+//   } else if (
+//     seedString[1] == 9
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Junks");
+//   } else if (
+//     seedString[1] == 0
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Murillo");
+//   }
+//   // else if
+//   //     (
+//   //     // seedString[0] == 1  &&
+//   //     seedString[1]
+//   //     )
+//   //     {return integrante = 'Curtas'
+//   // } else
+//   //     {return integrante = 'SEM NOME'}
+// }
 
 
 
@@ -154,7 +159,7 @@ function escolherCidade() {
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = "";
 function escolherCargo() {
-  console.log("stringCargo", seedString);
+  // console.log("stringCargo", seedString);
   if (
     seedString[10] == 1 &&
     seedString[11] == 2 &&
@@ -245,7 +250,7 @@ let variante = "";
 
 function escolherVariante() {
   // console.log('stringvariante', seedString)
-  console.log("variante: ", variante);
+  // console.log("variante: ", variante);
 if (seedString[12] != 4 &&
     seedString[13] != 1 &&
     seedString[14] < 7){
@@ -320,7 +325,7 @@ function pontoVariante() {
 
 let poder = {};
 function escolherPoder() {
-  console.log("pontoVarianteValor: ", pontoVarianteValor);
+  // console.log("pontoVarianteValor: ", pontoVarianteValor);
   if (cargo === "carta-semcargo") {
     return (poder = {
       _ataque: pontoPoderSemCargo() + pontoVarianteValor,
@@ -1300,14 +1305,13 @@ function tudo() {
         button.style.backgroundColor = ''
         button.innerHTML = 'NEW CARD'
         colocarInput();
-        escolherIntegrante();
+        escolherIntegrante()
         escolherCidade();
         escolherCargo();
         escolherVariante();
         escolherEspecial();
         pontoVariante();
         escolherPoder();
-      
         colocarInfoNoWrap();
         critico();
         moverCartaMonark();
@@ -1326,7 +1330,7 @@ function tudo() {
 
 function clicks() {
     totalClicks--;
-  console.log('click: ' + totalClicks);
+  // console.log('click: ' + totalClicks);
 }
 let totalPontos = 0
 
