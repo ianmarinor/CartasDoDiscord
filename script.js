@@ -53,7 +53,7 @@ function generateSeed(input) {
 let seedString = "";
 function escolherIntegrante() {
   seedString = generateSeed(input).toString();
-  console.log(seedString.length);
+  console.log('tamanho seed: ' + seedString.length);
   // console.log('integrante seed', seedString);
   if (
     seedString[1] == 1
@@ -279,6 +279,7 @@ let variante = "";
 function escolherVariante() {
   // console.log('stringvariante', seedString)
   // console.log("variante: ", variante);
+  variante = ''
 if (seedString[12] != 4 &&
     seedString[13] != 1 &&
     seedString[14] < 7){
@@ -1075,7 +1076,7 @@ function criarBtn() {
       if (
         inv.children[i].children[3].children[2].style.visibility == "visible"
       ) {
-        console.log("butao visivel");
+        // console.log("butao visivel");
 // PODER VARIANTES
         if (inv.children[i].children[0].children[1].textContent != "") {
           inv.children[i].children[3].children[2].addEventListener(
@@ -1563,10 +1564,12 @@ let ponto3 = 0
 
    totalPontos = ponto0 + ponto1 + ponto2 + ponto3
    placarP.innerHTML = totalPontos + ' PONTOS'
-   console.log(ponto0)
-   console.log(ponto1)
-   console.log(ponto2)
-   console.log(ponto3)
+   console.log('--------')
+   console.log('ponto inv 0: ' + ponto0)
+   console.log('ponto inv 1: ' + ponto1)
+   console.log('ponto inv 2: ' + ponto2)
+   console.log('ponto inv 3: ' + ponto3)
+   console.log('--------')
 }
 
 button.addEventListener("click", tudo);
