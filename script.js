@@ -1,14 +1,46 @@
+const totalNumOfSeeds = 999999999999999999 - 11111111111111111;
+function seedRNG() {
+  return Math.floor(Math.random() * totalNumOfSeeds);
+}
 
-// import { generateSeed } from "./modules/generateSeed.js";
-import { escolherIntegrante } from "./modules/escolherIntegrante.js";
-import { integrante } from "./modules/escolherIntegrante.js";
+// This function generates a seed or takes a seed as input
+// the input will always be translated to the same seed if an integer
+// if a string, it'll be converted
+let input = "";
+function generateSeed(input) {
+  //se a chave for LETRA!
+  if (input.length > 9) {
+    if (parseInt(input) > 9) {
+      return parseInt(input);
+    } else {
+      if (input.length >= 3 && input.length <= 25) {
+        let sum = 1;
+        for (let i = 0; i < input.length; i++) {
+          sum = sum * input[i].charCodeAt();
+        }
+        return sum * 516515615165159;
+      } else {
+        return seedRNG();
+      }
+    }
+  } else {
+    if (input.length >= 3 && input.length <= 25) {
+      let sum = 1;
+      for (let i = 0; i < input.length; i++) {
+        sum = sum + input[i].charCodeAt();
+      }
+      return sum * 516515615165159;
+    } else {
+      return seedRNG();
+    }
+  }
+}
 
+// generateSeed('')
+// let seed = generateSeed()
+// console.log('Seed: ', seed);
 
-// import { colocarInput } from "./colocarInput.js";
-// import { escolherIntegrante } from "./modules/escolherIntegrante.js";
-
-
-export let input = "";
+// generateSeed('a')
 
 // ***********************
 // LINK SEED TO ELEMENT
@@ -19,84 +51,80 @@ export let input = "";
 
 
 let seedString = "";
-// console.log('seedString: ', seedString);
-// function escolherIntegrante() {
-//   seedString = generateSeed(input).toString();
-//   // console.log(seedString.length);
-//   console.log('integrante seed', seedString);
-//   if (
-//     seedString[1] == 1
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Gandalf");
-//   } else if (
-//     seedString[1] == 2
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Turu");
-//   } else if (
-//     seedString[1] == 3
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Nefesto");
-//   } else if (
-//     seedString[1] == 4
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Blackao");
-//   } else if (
-//     seedString[1] == 5
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Sr. Antonio");
-//   } else if (
-//     seedString[1] == 6
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Pedro");
-//   } else if (
-//     seedString[1] == 7
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Curtas");
-//   } else if (
-//     seedString[1] == 8
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Twelve");
-//   } else if (
-//     seedString[1] == 9
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Junks");
-//   } else if (
-//     seedString[1] == 0
-//     // &&
-//     // seedString[2] == 0
-//   ) {
-//     return (integrante = "Murillo");
-//   }
-//   // else if
-//   //     (
-//   //     // seedString[0] == 1  &&
-//   //     seedString[1]
-//   //     )
-//   //     {return integrante = 'Curtas'
-//   // } else
-//   //     {return integrante = 'SEM NOME'}
-// }
-
-
-
+function escolherIntegrante() {
+  seedString = generateSeed(input).toString();
+  console.log(seedString.length);
+  // console.log('integrante seed', seedString);
+  if (
+    seedString[1] == 1
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Gandalf");
+  } else if (
+    seedString[1] == 2
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Turu");
+  } else if (
+    seedString[1] == 3
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Nefesto");
+  } else if (
+    seedString[1] == 4
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Blackao");
+  } else if (
+    seedString[1] == 5
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Sr. Antonio");
+  } else if (
+    seedString[1] == 6
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Pedro");
+  } else if (
+    seedString[1] == 7
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Curtas");
+  } else if (
+    seedString[1] == 8
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Twelve");
+  } else if (
+    seedString[1] == 9
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Junks");
+  } else if (
+    seedString[1] == 0
+    // &&
+    // seedString[2] == 0
+  ) {
+    return (integrante = "Murillo");
+  }
+  // else if
+  //     (
+  //     // seedString[0] == 1  &&
+  //     seedString[1]
+  //     )
+  //     {return integrante = 'Curtas'
+  // } else
+  //     {return integrante = 'SEM NOME'}
+}
 //cidade
 // THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 // ******************************************************************
@@ -751,9 +779,9 @@ function moverCarta() {
 }
 
 function moverCartaMonark() {
-  let copyCard = cartaParaMover.cloneNode(true);
-  let copyCardSeed = copyCard.children[4].textContent;
- let copyCardName = copyCard.children[0].children[0].textContent;
+  copyCard = cartaParaMover.cloneNode(true);
+  copyCardSeed = copyCard.children[4].textContent;
+  copyCardName = copyCard.children[0].children[0].textContent;
   // var slotSeed = inv.children[0].children[4].textContent
   // VAR slotName = inv.children[0].children[0].children[0].textContent
 
@@ -823,8 +851,8 @@ const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent;
 
 function critico() {
   //nome
-  let  corDoNome = cartaParaMover.children[0].children[0];
-  let  corDaCidade = cartaParaMover.children[0].children[2];
+  let = corDoNome = cartaParaMover.children[0].children[0];
+  let = corDaCidade = cartaParaMover.children[0].children[2];
 
   cartaParaMover.children[0].children[1].style.color = "";
   //cidade
@@ -1362,7 +1390,7 @@ function criarBtn() {
 // TIRAR CARTA DO INVENTARIO
 // /******************************************** */
 
-let btnReset = document.getElementById("btnReset");
+btnReset = document.getElementById("btnReset");
 
 function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
