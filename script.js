@@ -1,46 +1,14 @@
-const totalNumOfSeeds = 999999999999999999 - 11111111111111111;
-function seedRNG() {
-  return Math.floor(Math.random() * totalNumOfSeeds);
-}
 
-// This function generates a seed or takes a seed as input
-// the input will always be translated to the same seed if an integer
-// if a string, it'll be converted
-let input = "";
-function generateSeed(input) {
-  //se a chave for LETRA!
-  if (input.length > 9) {
-    if (parseInt(input) > 9) {
-      return parseInt(input);
-    } else {
-      if (input.length >= 3 && input.length <= 25) {
-        let sum = 1;
-        for (let i = 0; i < input.length; i++) {
-          sum = sum * input[i].charCodeAt();
-        }
-        return sum * 516515615165159;
-      } else {
-        return seedRNG();
-      }
-    }
-  } else {
-    if (input.length >= 3 && input.length <= 25) {
-      let sum = 1;
-      for (let i = 0; i < input.length; i++) {
-        sum = sum + input[i].charCodeAt();
-      }
-      return sum * 516515615165159;
-    } else {
-      return seedRNG();
-    }
-  }
-}
+// import { generateSeed } from "./modules/generateSeed.js";
+import { escolherIntegrante } from "./modules/escolherIntegrante.js";
+import { integrante } from "./modules/escolherIntegrante.js";
 
-// generateSeed('')
-// let seed = generateSeed()
-// console.log('Seed: ', seed);
 
-// generateSeed('a')
+// import { colocarInput } from "./colocarInput.js";
+// import { escolherIntegrante } from "./modules/escolherIntegrante.js";
+
+
+export let input = "";
 
 // ***********************
 // LINK SEED TO ELEMENT
@@ -49,82 +17,86 @@ function generateSeed(input) {
 //integrante
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 
-let integrante = "";
+
 let seedString = "";
-function escolherIntegrante() {
-  seedString = generateSeed(input).toString();
-  console.log(seedString.length);
-  // console.log('integrante seed', seedString);
-  if (
-    seedString[1] == 1
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Gandalf");
-  } else if (
-    seedString[1] == 2
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Turu");
-  } else if (
-    seedString[1] == 3
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Nefesto");
-  } else if (
-    seedString[1] == 4
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Blackao");
-  } else if (
-    seedString[1] == 5
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Sr. Antonio");
-  } else if (
-    seedString[1] == 6
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Pedro");
-  } else if (
-    seedString[1] == 7
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Curtas");
-  } else if (
-    seedString[1] == 8
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Twelve");
-  } else if (
-    seedString[1] == 9
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Junks");
-  } else if (
-    seedString[1] == 0
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Murillo");
-  }
-  // else if
-  //     (
-  //     // seedString[0] == 1  &&
-  //     seedString[1]
-  //     )
-  //     {return integrante = 'Curtas'
-  // } else
-  //     {return integrante = 'SEM NOME'}
-}
+// console.log('seedString: ', seedString);
+// function escolherIntegrante() {
+//   seedString = generateSeed(input).toString();
+//   // console.log(seedString.length);
+//   console.log('integrante seed', seedString);
+//   if (
+//     seedString[1] == 1
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Gandalf");
+//   } else if (
+//     seedString[1] == 2
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Turu");
+//   } else if (
+//     seedString[1] == 3
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Nefesto");
+//   } else if (
+//     seedString[1] == 4
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Blackao");
+//   } else if (
+//     seedString[1] == 5
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Sr. Antonio");
+//   } else if (
+//     seedString[1] == 6
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Pedro");
+//   } else if (
+//     seedString[1] == 7
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Curtas");
+//   } else if (
+//     seedString[1] == 8
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Twelve");
+//   } else if (
+//     seedString[1] == 9
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Junks");
+//   } else if (
+//     seedString[1] == 0
+//     // &&
+//     // seedString[2] == 0
+//   ) {
+//     return (integrante = "Murillo");
+//   }
+//   // else if
+//   //     (
+//   //     // seedString[0] == 1  &&
+//   //     seedString[1]
+//   //     )
+//   //     {return integrante = 'Curtas'
+//   // } else
+//   //     {return integrante = 'SEM NOME'}
+// }
+
+
+
 //cidade
 // THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 // ******************************************************************
@@ -187,7 +159,7 @@ function escolherCidade() {
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = "";
 function escolherCargo() {
-  console.log("stringCargo", seedString);
+  // console.log("stringCargo", seedString);
   if (
     seedString[10] == 1 &&
     seedString[11] == 2 &&
@@ -278,7 +250,7 @@ let variante = "";
 
 function escolherVariante() {
   // console.log('stringvariante', seedString)
-  console.log("variante: ", variante);
+  // console.log("variante: ", variante);
 if (seedString[12] != 4 &&
     seedString[13] != 1 &&
     seedString[14] < 7){
@@ -353,7 +325,7 @@ function pontoVariante() {
 
 let poder = {};
 function escolherPoder() {
-  console.log("pontoVarianteValor: ", pontoVarianteValor);
+  // console.log("pontoVarianteValor: ", pontoVarianteValor);
   if (cargo === "carta-semcargo") {
     return (poder = {
       _ataque: pontoPoderSemCargo() + pontoVarianteValor,
@@ -779,9 +751,9 @@ function moverCarta() {
 }
 
 function moverCartaMonark() {
-  copyCard = cartaParaMover.cloneNode(true);
-  copyCardSeed = copyCard.children[4].textContent;
-  copyCardName = copyCard.children[0].children[0].textContent;
+  let copyCard = cartaParaMover.cloneNode(true);
+  let copyCardSeed = copyCard.children[4].textContent;
+ let copyCardName = copyCard.children[0].children[0].textContent;
   // var slotSeed = inv.children[0].children[4].textContent
   // VAR slotName = inv.children[0].children[0].children[0].textContent
 
@@ -851,8 +823,8 @@ const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent;
 
 function critico() {
   //nome
-  let = corDoNome = cartaParaMover.children[0].children[0];
-  let = corDaCidade = cartaParaMover.children[0].children[2];
+  let  corDoNome = cartaParaMover.children[0].children[0];
+  let  corDaCidade = cartaParaMover.children[0].children[2];
 
   cartaParaMover.children[0].children[1].style.color = "";
   //cidade
@@ -1390,7 +1362,7 @@ function criarBtn() {
 // TIRAR CARTA DO INVENTARIO
 // /******************************************** */
 
-btnReset = document.getElementById("btnReset");
+let btnReset = document.getElementById("btnReset");
 
 function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
@@ -1489,14 +1461,13 @@ function tudo() {
         button.style.backgroundColor = ''
         button.innerHTML = 'NEW CARD'
         colocarInput();
-        escolherIntegrante();
+        escolherIntegrante()
         escolherCidade();
         escolherCargo();
         escolherVariante();
         escolherEspecial();
         pontoVariante();
         escolherPoder();
-      
         colocarInfoNoWrap();
         critico();
         moverCartaMonark();
@@ -1515,7 +1486,7 @@ function tudo() {
 
 function clicks() {
     totalClicks--;
-  console.log('click: ' + totalClicks);
+  // console.log('click: ' + totalClicks);
 }
 let totalPontos = 0
 
