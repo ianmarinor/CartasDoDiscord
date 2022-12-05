@@ -1070,21 +1070,27 @@ function critico() {
 //
 ////////////////////////////////////////////////
 
-function criarBtn() {
+function criarBtn()   {
   for (let i = 0; i < 4; i++) {
+    //se i nao for vazio
     if (inv.children[i].id != "empty") {
+
+      // e for variante
       if (
         inv.children[i].children[3].children[2].style.visibility == "visible"
       ) {
         // console.log("butao visivel");
-// PODER VARIANTES
+        // PODER VARIANTES
         if (inv.children[i].children[0].children[1].textContent != "") {
           inv.children[i].children[3].children[2].addEventListener(
             "click",
             testinho
           );
-         
-          function testinho() {
+
+          
+         // essa funçao se ativa quando clico no butao das cartas variante no deck
+          function testinho(e) {
+
             let poderCartaPack = cartaParaMover.children[3].children[0];
             let poderNovoCartaPack = cartaParaMover.children[3].children[1];
             // let poderCartaInv = inv.children[i].children[3].children[2]
@@ -1092,22 +1098,35 @@ function criarBtn() {
 
             // se a carta para mover nao for especial
             if (seedString[5] != 9) { 
-              // inv 0
-              if (i == 0) {
-                
+
+
+              let cartaVariante = e.target.offsetParent
+              // console.log('cartaVariante: ', cartaVariante);
+
+              let cartaVariantePoderVelho = cartaVariante.children[3].children[0]
+              // console.log('cartaVariantePoderVelho: ', cartaVariantePoderVelho);
+
+              let cartaVariantePoderNovo = cartaVariante.children[3].children[1]
+              // console.log('cartaVariantePoderNovo: ', cartaVariantePoderNovo);
+
+              let varianteTemPoderNovo = cartaVariante.children[3].children[1].textContent != ''
+              // console.log('varianteTemPoderNovo: ', varianteTemPoderNovo);
+
+              // a o butao fica invisivel quando clicado
+              e.target.style.visibility = "hidden";
+                      
+
                 //se nao CartaPMover NAO tiver poder novo
                if (poderNovoCartaPack.textContent == ''){
 
-                  // e se a carta inv tiver poder novo
-                  if (inv.children[i].children[3].children[1].textContent != ''){
+        
+                  if (varianteTemPoderNovo){
 
                     // transforme poder velho da CartaPack em novo da inv
                     poderCartaPack.textContent =
-                    parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
+                    parseInt(cartaVariantePoderNovo.textContent) + ' 🤩'
 
-                    // e transforme o botao em invisivel
-                    inv.children[0].children[3].children[2].style.visibility =
-                      "hidden";
+                    
 
 
                     // se nao, transforme poder velho CartaPMover em poder velho inv
@@ -1115,211 +1134,29 @@ function criarBtn() {
 
                     // transaforme o poder velho da CartaPack no poder velho da carta inv 0
                     poderCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+                      parseInt(cartaVariantePoderVelho.textContent) + ' 🤩'
 
-                      // e transforme o botao em invisivel
-                    inv.children[0].children[3].children[2].style.visibility =
-                      "hidden";
+                      
                   }
                } 
                 
                 // se carta para mover TIVER poder novo
                     else {
                       // e se a carta inv tiver poder novo
-                      if (inv.children[i].children[3].children[1].textContent != ''){
+                      if (varianteTemPoderNovo){
 
                         // transforme poder novo da CartaPack em novo da inv
                         poderNovoCartaPack.textContent =
-                        parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
-
-                        // e transforme o botao em invisivel
-                        inv.children[0].children[3].children[2].style.visibility =
-                        "hidden";
+                        parseInt(cartaVariantePoderNovo.textContent) + ' 🤩'
 
                       } else {
                         // transforme o poder novo da CartaPack no poder velho da inv 0
                         poderNovoCartaPack.textContent =
-                        parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
+                        parseInt(cartaVariantePoderVelho.textContent) + ' 🤩'
 
-                        // e transforme o botao em invisivel
-                        inv.children[0].children[3].children[2].style.visibility =
-                        "hidden";
+                      
                       }  
-                }
-              }
-
-              // inv 1
-              if (i == 1) {
-                
-
-                //se nao CartaPMover NAO tiver poder novo
-               if (poderNovoCartaPack.textContent == ''){
-
-                // e se a carta inv tiver poder novo
-                if (inv.children[i].children[3].children[1].textContent != ''){
-
-                  // transforme poder velho da CartaPack em novo da inv
-                  poderCartaPack.textContent =
-                  parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
-
-                  // e transforme o botao em invisivel
-                  inv.children[i].children[3].children[2].style.visibility =
-                    "hidden";
-
-
-                  // se nao, transforme poder velho CartaPMover em poder velho inv
-                  } else {
-
-                  // transaforme o poder velho da CartaPack no poder velho da carta inv 0
-                  poderCartaPack.textContent =
-                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-
-                    // e transforme o botao em invisivel
-                  inv.children[i].children[3].children[2].style.visibility =
-                    "hidden";
-                  }
-                } 
-              
-                // se carta para mover TIVER poder novo
-                  else {
-                    // e se a carta inv tiver poder novo
-                    if (inv.children[i].children[3].children[1].textContent != ''){
-
-                      // transforme poder novo da CartaPack em novo da inv
-                      poderNovoCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
-
-                      // e transforme o botao em invisivel
-                      inv.children[i].children[3].children[2].style.visibility =
-                      "hidden";
-
-                  } else {
-                    // transforme o poder novo da CartaPack no poder velho da inv 0
-                    poderNovoCartaPack.textContent =
-                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-
-                    // e transforme o botao em invisivel
-                    inv.children[i].children[3].children[2].style.visibility =
-                    "hidden";
-                  }  
-                }  
-              }
-
-
-              if (i == 2) {
-               
-
-               
-                //se nao CartaPMover NAO tiver poder novo
-               if (poderNovoCartaPack.textContent == ''){
-
-                // e se a carta inv tiver poder novo
-                if (inv.children[i].children[3].children[1].textContent != ''){
-
-                  // transforme poder velho da CartaPack em novo da inv
-                  poderCartaPack.textContent =
-                  parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
-
-                  // e transforme o botao em invisivel
-                  inv.children[i].children[3].children[2].style.visibility =
-                    "hidden";
-
-
-                  // se nao, transforme poder velho CartaPMover em poder velho inv
-                  } else {
-
-                  // transaforme o poder velho da CartaPack no poder velho da carta inv 0
-                  poderCartaPack.textContent =
-                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-
-                    // e transforme o botao em invisivel
-                  inv.children[i].children[3].children[2].style.visibility =
-                    "hidden";
-                  }
-                } 
-              
-                // se carta para mover TIVER poder novo
-                  else {
-                    // e se a carta inv tiver poder novo
-                    if (inv.children[i].children[3].children[1].textContent != ''){
-
-                      // transforme poder novo da CartaPack em novo da inv
-                      poderNovoCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
-
-                      // e transforme o botao em invisivel
-                      inv.children[i].children[3].children[2].style.visibility =
-                      "hidden";
-
-                  } else {
-                    // transforme o poder novo da CartaPack no poder velho da inv 0
-                    poderNovoCartaPack.textContent =
-                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-
-                    // e transforme o botao em invisivel
-                    inv.children[i].children[3].children[2].style.visibility =
-                    "hidden";
-                  }  
-                }
-                
-              }
-              if (i == 3) {
-                
-
-               
-                //se nao CartaPMover NAO tiver poder novo
-               if (poderNovoCartaPack.textContent == ''){
-
-                // e se a carta inv tiver poder novo
-                if (inv.children[i].children[3].children[1].textContent != ''){
-
-                  // transforme poder velho da CartaPack em novo da inv
-                  poderCartaPack.textContent =
-                  parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
-
-                  // e transforme o botao em invisivel
-                  inv.children[i].children[3].children[2].style.visibility =
-                    "hidden";
-
-
-                  // se nao, transforme poder velho CartaPMover em poder velho inv
-                  } else {
-
-                  // transaforme o poder velho da CartaPack no poder velho da carta inv 0
-                  poderCartaPack.textContent =
-                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-
-                    // e transforme o botao em invisivel
-                  inv.children[i].children[3].children[2].style.visibility =
-                    "hidden";
-                  }
-                } 
-              
-                // se carta para mover TIVER poder novo
-                  else {
-                    // e se a carta inv tiver poder novo
-                    if (inv.children[i].children[3].children[1].textContent != ''){
-
-                      // transforme poder novo da CartaPack em novo da inv
-                      poderNovoCartaPack.textContent =
-                      parseInt(inv.children[i].children[3].children[1].textContent) + '🤩'
-
-                      // e transforme o botao em invisivel
-                      inv.children[i].children[3].children[2].style.visibility =
-                      "hidden";
-
-                  } else {
-                    // transforme o poder novo da CartaPack no poder velho da inv 0
-                    poderNovoCartaPack.textContent =
-                    parseInt(inv.children[i].children[3].children[0].textContent) + '🤩'
-
-                    // e transforme o botao em invisivel
-                    inv.children[i].children[3].children[2].style.visibility =
-                    "hidden";
-                  }  
-                }
-                
-              }
+             }
             }
           }
         //   PODER SPEAKER
@@ -1586,12 +1423,12 @@ let ponto3 = 0
 
    totalPontos = ponto0 + ponto1 + ponto2 + ponto3
    placarP.innerHTML = totalPontos + ' PONTOS'
-   console.log('--------')
-   console.log('ponto inv 0: ' + ponto0)
-   console.log('ponto inv 1: ' + ponto1)
-   console.log('ponto inv 2: ' + ponto2)
-   console.log('ponto inv 3: ' + ponto3)
-   console.log('--------')
+  //  console.log('--------')
+  //  console.log('ponto inv 0: ' + ponto0)
+  //  console.log('ponto inv 1: ' + ponto1)
+  //  console.log('ponto inv 2: ' + ponto2)
+  //  console.log('ponto inv 3: ' + ponto3)
+  //  console.log('--------')
 }
 
 button.addEventListener("click", tudo);
