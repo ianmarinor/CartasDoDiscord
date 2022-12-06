@@ -713,10 +713,10 @@ function moverCarta() {
   copyCard = cartaParaMover.cloneNode(true);
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-  //   if(parseInt(input) > 99999999){
-  //       false
+    if(parseInt(input) > 99999999){
+        false
 
-  //   } else
+    } else
   {
     if (inv.children[0].id != "empty") {
       if (
