@@ -16,6 +16,7 @@
     
 
 }
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@700&display=swap');
 
 
 * {
@@ -64,6 +65,19 @@ nav ul{
 li{
     font-size: 1.25em;
     color: rgb(213, 187, 238);;
+}
+.arena{
+    margin: 0.7em;
+    font-size: 5em;
+    color: wheat;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.placar{
+    
+    text-align: center;
+    font-size: 2em;
+    color: wheat;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .wrap{
@@ -208,6 +222,7 @@ li{
     border-radius: 15px;
     position: relative;
     border: 2px solid #020101;
+    color: black;
 }
 
 
@@ -237,10 +252,51 @@ li{
     border: 2px solid #18d742;
     font-weight: 900;
     color: rgb(255, 255, 255);
-    background-size: cover;
-    
+    background-repeat: no-repeat;
+    background-size: 300px 300px;
+}
+#especial-tenica{
+
+    /* font-family: 'verdana'; */
+
+    background-image: url(pics/fundoTenica.gif);
+    height: var(--tamanhoCartaHeight);
+    width: var(--tamanhoCartaWidth);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    border: 2px solid #dde630;
+    font-weight: 900;
+    color: rgb(255, 255, 255);
+    background-repeat: no-repeat;
+    background-size: 300px 300px;
+}
+#especial-click{
+
+    /* font-family: 'verdana'; */
+
+    /* background-image: url(pics/click.webp); */
+    background-color: #ddddeb;
+    height: var(--tamanhoCartaHeight);
+    width: var(--tamanhoCartaWidth);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    border: 2px solid #dde630;
+    font-weight: 900;
+    color: rgb(255, 255, 255);
+    background-repeat: no-repeat;
+    background-size: 280px 440px;
     
 }
+
+
 
 /* **************************************************** */
 /* **************************************************** */
@@ -289,6 +345,8 @@ li{
     font-size: 0.98em;
     /* background-color: #beac37; */
     display: flex;
+    /* flex-direction: row-reverse; */
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
 }
@@ -326,7 +384,15 @@ li{
 }
 
 
-
+/* ---------------------------------------*/
+/* VARIANTES */
+/* ---------------------------------------*/
+.action {
+    visibility:hidden;
+}
+.variante {
+    text-align: center;
+}
 
 p{
     font-size: 1em;
