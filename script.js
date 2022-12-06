@@ -1179,9 +1179,10 @@ function criarBtn() {
 
               // se a carta for de qualquer cargo sem ser esses elencados perde ponto
               if (
-                inv.children[j].id != "carta-semcargo" &&
                 inv.children[j].id != "carta-speaker" &&
-                inv.children[j].id != "carta-monark"
+                inv.children[j].id != "carta-monark" &&
+                inv.children[j].id != "empty"
+
               ) {
                 if (parseInt(pontoSpeaker.textContent) > 4) {
                   pontoSpeaker.textContent =
