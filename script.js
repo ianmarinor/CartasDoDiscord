@@ -781,7 +781,7 @@ function moverCarta() {
       inv.replaceChild(copyCard, inv.children[0]);
       somaPontos();
       tudo();
-      totalClicks = totalClicks - 1
+      
       
     }
   }
