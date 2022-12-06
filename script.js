@@ -1174,42 +1174,43 @@ function criarBtn() {
               return Math.floor(Math.random() * 1 + 3);
             }
 
+            function multiSpeakerSono() {
+              return Math.floor(Math.random() * 11 + 25);
+            }
+
             for (let j = 0; j < 4; j++) {
               console.log(j);
 
-              // se a carta for de qualquer cargo sem ser esses elencados perde ponto
-              if (
+              
+            if ( parseInt(pontoSpeaker.textContent) < multiSpeakerSono()){
 
-                inv.children[j].id != "carta-speaker" &&
-                inv.children[j].id != "carta-monark" &&
-                inv.children[j].id != "empty"
+            
 
-              ) {
-                if (parseInt(pontoSpeaker.textContent) > 4) {
-                  pontoSpeaker.textContent =
-                  Math.trunc(parseInt(pontoSpeaker.textContent) / 2) + "😴";
-                  console.log("perdeu 2 pontos");
-                }
-              };
 
               if (inv.children[j].id == "carta-monark") {
 
-                pontoSpeaker.textContent =
-                parseInt(pontoSpeaker.textContent) * multiSpeaker() + "😡";
-                console.log("ganhou * 3!!!!");
+                  pontoSpeaker.textContent =
+                  parseInt(pontoSpeaker.textContent) * 2 + "😡";
+                  console.log("ganhou * 3!!!!");
 
 
-                inv.children[j].remove();
-                inv.appendChild(document.createElement("div")).id = "empty";
+                  inv.children[j].remove();
+                  inv.appendChild(document.createElement("div")).id = "empty";
 
-                
+                  
 
-                // pontoSpeaker = Math.trunc(parseInt(pontoSpeaker) * 2) + '😡'
+                  // pontoSpeaker = Math.trunc(parseInt(pontoSpeaker) * 2) + '😡'
 
-                somaPontos();
-                tudo();
-              }
+                  somaPontos();
+                  tudo();
+              } 
+
+            } else {
+              pontoSpeaker.textContent = parseInt(pontoSpeaker.textContent) + '😴'
+              varianteSpeaker.children[3].children[2].style.visibility = "hidden"
+
             }
+           }
           }
         }
 
@@ -1233,7 +1234,7 @@ function criarBtn() {
 
           totalClicks =
             totalClicks +
-            parseInt(varianteClique.children[3].children[0].textContent);
+            parseInt(varianteClique.children[3].children[0].textContent) + 1;
 
           varianteClique.children[3].children[2].style.visibility = "hidden";
           button.style.backgroundColor = "";
@@ -1401,7 +1402,7 @@ function resetarDeck() {
   // inv.removeChild(inv.children[0])
   // inv.appendChild(empty)
   // console.log('kek')
-  totalClicks = totalClicks + 1;
+  totalClicks = 50
   somaPontos();
 }
 
