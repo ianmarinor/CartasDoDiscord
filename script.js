@@ -1185,7 +1185,7 @@ function criarBtn() {
               ) {
                 if (parseInt(pontoSpeaker.textContent) > 4) {
                   pontoSpeaker.textContent =
-                  parseInt(pontoSpeaker.textContent) / 2 + "😴";
+                  Math.trunc(parseInt(pontoSpeaker.textContent) / 2) + "😴";
                   console.log("perdeu 2 pontos");
                 }
               }
