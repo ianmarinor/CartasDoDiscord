@@ -733,6 +733,8 @@ function moverCarta() {
 
           inv.replaceChild(copyCard, inv.children[1]);
           somaPontos();
+          tudo();
+          totalClicks = totalClicks - 1
         } else if (
           inv.children[2].id == "empty" &&
           seedCopyCard != inv.children[1].children[4].textContent
@@ -746,6 +748,8 @@ function moverCarta() {
 
           inv.replaceChild(copyCard, inv.children[2]);
           somaPontos();
+          tudo();
+          totalClicks = totalClicks - 1
         } else if (
           inv.children[3].id == "empty" &&
           seedCopyCard != inv.children[2].children[4].textContent
@@ -759,6 +763,8 @@ function moverCarta() {
 
           inv.replaceChild(copyCard, inv.children[3]);
           somaPontos();
+          tudo();
+          totalClicks = totalClicks - 1
         }
       }
     } else {
@@ -774,6 +780,9 @@ function moverCarta() {
 
       inv.replaceChild(copyCard, inv.children[0]);
       somaPontos();
+      tudo();
+      totalClicks = totalClicks - 1
+      
     }
   }
   criarBtn();
