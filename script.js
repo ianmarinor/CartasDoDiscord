@@ -32,7 +32,7 @@ function generateSeed(input) {
       let sum = 1;
       for (let i = 0; i < input.length; i++) {
         sum = sum + input[i].charCodeAt();
-        console.log(sum);
+        // console.log(sum);
       }
       return sum * 516515615165159;
     } else {
@@ -558,7 +558,7 @@ function colocarInfoNoWrap() {
     cargoP.innerHTML = "MONARK BAN!";
     retratoP.style.border = "2px dotted green";
     especialP.style.visibility = "hidden";
-    ataqueP.innerHTML = Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "😴";
+    ataqueP.innerHTML = Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
   } else if (novaCarta._especial === "especial-tenica") {
     cargoP.style.fontFamily = "Cormorant Upright";
     retratoP.style.backgroundImage = "url('pics/tenica.webp')";
@@ -590,7 +590,7 @@ function colocarInfoNoWrap() {
     ataqueP.style.color = "black";
     ataqueP.style.fontSize = "1.5em";
     // actionP.style.visibility = 'visible'
-    ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 1 + "🔄";
+    ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
     seedP.style.color = "black";
   }
 
@@ -713,7 +713,7 @@ function moverCarta() {
   copyCard = cartaParaMover.cloneNode(true);
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-    if(parseInt(input) > 99999999){
+    if(parseInt(input) == 99999999){
         false
 
     } else
@@ -1079,7 +1079,7 @@ function critico() {
 ////////////////////////////////////////////////
 
 function criarBtn() {
-  console.log("rodou o loop");
+  // console.log("rodou o loop");
 
   for (let i = 0; i < 4; i++) {
     //se i nao for vazio
@@ -1166,41 +1166,59 @@ function criarBtn() {
           }
         }
 
-        //   PODER SPEAKER
+        //   PODER speaker
         if (inv.children[i].id == "carta-speaker" && inv.children[i].children[0].id != "foi") {
           inv.children[i].children[3].children[2].addEventListener(
             "click",
             explusarMonark
           );
           inv.children[i].children[0].id = "foi";
-          console.log("adicionei o botao ao inv" + i);}
+          // console.log("adicionei o botao ao inv" + i);
+        }
 
           function explusarMonark(e) {
             let varianteSpeaker = e.target.offsetParent;
             let pontoSpeaker = varianteSpeaker.children[3].children[0];
+            let retratoVariante = varianteSpeaker.children[1]
+            let speakerDorminfo = 'url("pics/speakerDormindo.jpg")'
+            let descriptionSpeaker = varianteSpeaker.children[2]
+            let multiplicador
+            let pontoParaDormir 
 
             function multiSpeaker() {
-              return Math.floor(Math.random() * 1 + 3);
+              multiplicador = Math.floor(Math.random() * 2 + 2);
             }
 
-            function multiSpeakerSono() {
-              return Math.floor(Math.random() * 11 + 25);
-            }
-
-            for (let j = 0; j < 4; j++) {
-              console.log(j);
-
-              
-            if ( parseInt(pontoSpeaker.textContent) < multiSpeakerSono()){
-
+            multiSpeaker()
+            multiSpeakerSono()
             
 
+            function multiSpeakerSono() {
+              
+              pontoParaDormir = Math.floor(Math.random() * 16 + 25);
+          
+            }
+            
+            for (let j = 0; j < 4; j++) {
+              // console.log(j);
 
+              console.log('to verificando a carta ' + j)
+            
+
+              
               if (inv.children[j].id == "carta-monark") {
 
+                  console.log('pontoParaDormir: ', pontoParaDormir);
+                  console.log('pontoSpeaker: ', parseInt(pontoSpeaker.textContent));
+
+                if ( parseInt(pontoSpeaker.textContent) < pontoParaDormir){
+                  
+
+                  
+                  console.log('vou banir a carta ' + j + ' e * ' + multiplicador);
                   pontoSpeaker.textContent =
-                  parseInt(pontoSpeaker.textContent) * 2 + "😡";
-                  console.log("ganhou * 3!!!!");
+                  parseInt(pontoSpeaker.textContent) * multiplicador + " 😡";
+                  
 
 
                   inv.children[j].remove();
@@ -1209,20 +1227,27 @@ function criarBtn() {
                   
 
                   // pontoSpeaker = Math.trunc(parseInt(pontoSpeaker) * 2) + '😡'
-
+                  
                   somaPontos();
-                  tudo();
-              } 
+                  break
 
-            } else {
-              pontoSpeaker.textContent = parseInt(pontoSpeaker.textContent) + '😴'
-              varianteSpeaker.children[3].children[2].style.visibility = "hidden"
 
+              } else {
+
+                retratoVariante.style.backgroundImage = speakerDorminfo
+                pontoSpeaker.innerHTML = parseInt(pontoSpeaker.textContent) + "&#9889;"
+                descriptionSpeaker.innerHTML = 'durmi kkjk <br> &#128564; &#128564;'
+                varianteSpeaker.children[3].children[2].style.visibility = "hidden"
+  
+              }
+              
             }
+            console.log('a ' + j + ' nao e monark');
+            
            }
           }
         }
-
+      
         // PODER CLICKS
         if (
           inv.children[i].id == "especial-click" &&
@@ -1251,7 +1276,6 @@ function criarBtn() {
           arenaP.innerHTML = totalClicks;
           varianteClique.remove();
           inv.appendChild(document.createElement("div")).id = "empty";
-          tudo();
         }
 
         // PODER TENICA
@@ -1347,7 +1371,8 @@ function deletarDeck(e) {
     e.target.parentElement.parentElement.id != "carta-monark" &&
     e.target.id != "inv" &&
     e.target.id != "empty" &&
-    e.target.className != "action"
+    e.target.className != "action" &&
+    e.target.className == 'retrato'
   ) {
     // console.log('carta nao é monark')
 
