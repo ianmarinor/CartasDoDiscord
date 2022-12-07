@@ -257,11 +257,11 @@ let especial = "";
 function escolherEspecial() {
   // console.log('stringEspecial', seedString)
   if (
-    seedString[5] == 8 &&
-    seedString[6] == 9 &&
-    seedString[7] == 9 &&
-    seedString[8] == 1 &&
-    seedString[9] >= 4
+    // seedString[5] == 8 &&
+    seedString[6] == 9 
+    // seedString[7] == 9 &&
+    // seedString[8] == 1 &&
+    // seedString[9] >= 4
   ) {
     return (especial = "especial-tenica");
   } else if (
@@ -1547,7 +1547,10 @@ function tudo() {
 }
 
 function clicks() {
-  totalClicks--;
+  if(!cartaCustom ){
+    totalClicks--;
+  }
+  
   // console.log('click: ' + totalClicks);
 }
 let totalPontos = 0;
