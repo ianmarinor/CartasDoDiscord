@@ -10,9 +10,13 @@ function seedRNG() {
 
 
 let input = "";
-let cartaComSeed = parseInt(input) >= 10000000000000 &&
-parseInt(input) <= 99999999999999999
+
+
+
 function generateSeed(input) {
+
+  let cartaComSeed = parseInt(input) >= 10000000000000 && parseInt(input) <= 9999999999999999
+  console.log('cartaComSeed: ', cartaComSeed);
   //se a chave for LETRA!
   if (input.length > 9) {
     if (
@@ -1472,7 +1476,7 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-
+    console.log( 'input: ' + input);
     clicks();
   } else {
     button.style.backgroundColor = "red";
