@@ -16,7 +16,18 @@ let input = "";
 function generateSeed(input) {
 
   let cartaComSeed = parseInt(input) >= 10000000000000 && parseInt(input) <= 9999999999999999
-  console.log('cartaComSeed: ', cartaComSeed);
+  let cartaCustom= input != ''
+
+  if (cartaCustom == true){
+    console.log('adicionei carta custom')
+    getSeed.setAttribute('class', 'customOff')
+    console.log('getSeed: ', getSeed);
+
+
+  }
+
+  console.log('cartaCustom: ', cartaCustom);
+  // console.log('cartaComSeed: ', cartaComSeed);
   //se a chave for LETRA!
   if (input.length > 9) {
     if (
@@ -722,7 +733,7 @@ function moverCarta() {
   copyCard = cartaParaMover.cloneNode(true);
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-    if(cartaComSeed){
+    if(cartaComSeed && getSeed.className == 'customOff'){
         false
 
     } else
