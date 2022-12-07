@@ -1272,7 +1272,7 @@ function criarBtn() {
 
           varianteClique.children[3].children[2].style.visibility = "hidden";
           button.style.backgroundColor = "";
-          button.innerHTML = "NEW CARD";
+          button.innerHTML = "&#127381; NOVA CARTA &#127381;";
           arenaP.innerHTML = totalClicks;
           varianteClique.remove();
           inv.appendChild(document.createElement("div")).id = "empty";
@@ -1455,7 +1455,7 @@ function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
   if (totalClicks >= 0) {
     button.style.backgroundColor = "";
-    button.innerHTML = "NEW CARD";
+    button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     colocarInput();
     escolherIntegrante();
     escolherCidade();
@@ -1471,7 +1471,7 @@ function tudo() {
     clicks();
   } else {
     button.style.backgroundColor = "red";
-    button.innerHTML = "0 CLICKS";
+    button.innerHTML = "0 CARTAS";
   }
 }
 
