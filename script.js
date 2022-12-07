@@ -16,17 +16,10 @@ let input = "";
 function generateSeed(input) {
 
   let cartaComSeed = parseInt(input) >= 10000000000000 && parseInt(input) <= 9999999999999999
-  let cartaCustom= input != ''
-
-  if (cartaCustom == true){
-    console.log('adicionei carta custom')
-    getSeed.setAttribute('class', 'customOff')
-    console.log('getSeed: ', getSeed);
+  
 
 
-  }
-
-  console.log('cartaCustom: ', cartaCustom);
+  // console.log('cartaCustom: ', cartaCustom);
   // console.log('cartaComSeed: ', cartaComSeed);
   //se a chave for LETRA!
   if (input.length > 9) {
@@ -72,10 +65,24 @@ function generateSeed(input) {
 
 //integrante
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
-
+let cartaCustom
 let seedString = "";
 function escolherIntegrante() {
   seedString = generateSeed(input).toString();
+
+  cartaCustom = input.length >= 3;
+  console.log('cartaCustom: ', cartaCustom);
+
+
+  if (cartaCustom == true){
+    console.log('adicionei carta custom')
+    if (getSeed.className == ''){
+    getSeed.setAttribute('class', 'customOn')
+    console.log('getSeed: ', getSeed);
+    }
+
+  }
+
   console.log("tamanho seed: " + seedString.length);
   // console.log("integrante seed", seedString);
   if (
@@ -729,15 +736,29 @@ let copyCard = "";
 function moverCarta() {
   let seedCopyCard = cartaParaMover.children[4].textContent;
   //  seedNode = .children[4].textContent
+  
+  blockInv()
+  // let cartaCustom = input.length >= 3;
 
   copyCard = cartaParaMover.cloneNode(true);
+  let cartaIsEspecial = copyCard.children[0].children[3].textContent != ''
+
+  console.log(getSeed.className + '  ' + cartaCustom)
+  let cartaIsMonark = copyCard.id == 'carta-monark'
+  let naoPodeMover = getSeed.className == 'customOn' && cartaIsEspecial || getSeed.className == 'customOn' && cartaIsMonark || getSeed.className == 'customOff' && cartaCustom == true
+
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-    if(cartaComSeed && getSeed.className == 'customOff'){
-        false
+    if(naoPodeMover){
+
+      false
+      // getSeed.setAttribute('class', 'customOff')
 
     } else
   {
+    if(getSeed.className == 'customOn'){
+    getSeed.className = 'customOff'}
+
     if (inv.children[0].id != "empty") {
       if (
         inv.children[0].children[4].textContent !=
@@ -1090,6 +1111,8 @@ function critico() {
       }
     }
   }
+  // getSeed.setAttribute('class', 'customOff')
+
 }
 
 // //////////////////////////////////////////////
@@ -1384,6 +1407,9 @@ function criarBtn() {
 btnReset = document.getElementById("btnReset");
 
 function deletarDeck(e) {
+
+
+
   // 1.0Se a carta nao for Monark
   if (
     e.target.id != "carta-monark" &&
@@ -1435,6 +1461,14 @@ function deletarDeck(e) {
 }
 
 function resetarDeck() {
+
+  
+  
+  getSeed.setAttribute('class', '')
+
+  
+  
+
   // let empty = document.createElement('div').id = "empty"
   let empty0 = document.createElement("div");
   let empty1 = document.createElement("div");
@@ -1458,15 +1492,31 @@ function resetarDeck() {
   // console.log('kek')
   totalClicks = 50
   somaPontos();
+  tudo()
+  cartaCustom = input.length >= 3;
+  console.log('cartaCustom: ', cartaCustom);
+
+  if (cartaCustom == true){
+    getSeed.className = 'customOn'
+  }
+  
 }
 
 /////// CRITICO
 
 function blockInv() {
-  if (parseInt(input) > 99999999) {
-    inv.style.border = "3px dotted red";
+
+  let cartaIsEspecial = copyCard.children[0].children[3].textContent != ''
+  let cartaIsMonark = copyCard.id == 'carta-monark'
+
+  
+  let naoPodeMover = getSeed.className == 'customOff'  || cartaCustom && cartaIsEspecial || cartaIsMonark && cartaCustom
+
+  if (naoPodeMover) 
+  {
+    inv.style.border = "10px double red";
   } else {
-    inv.style.border = "";
+    inv.style.border = "7px double green";
   }
 }
 let totalClicks = 50;
@@ -1489,6 +1539,7 @@ function tudo() {
     moverCartaMonark();
     console.log( 'input: ' + input);
     clicks();
+    blockInv()
   } else {
     button.style.backgroundColor = "red";
     button.innerHTML = "0 CLICKS";
@@ -1579,6 +1630,6 @@ button.addEventListener("click", blockInv);
 cartaParaMover.addEventListener("click", moverCarta);
 inv.addEventListener("click", deletarDeck);
 
-btnReset.addEventListener("click", resetarDeck);
 // btnReset.addEventListener('click', moverCartaMonark)
-btnReset.addEventListener("click", tudo);
+
+btnReset.addEventListener("click", resetarDeck);
