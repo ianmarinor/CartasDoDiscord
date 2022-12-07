@@ -6,13 +6,17 @@ function seedRNG() {
 // This function generates a seed or takes a seed as input
 // the input will always be translated to the same seed if an integer
 // if a string, it'll be converted
+
+
+
 let input = "";
+let cartaComSeed = parseInt(input) >= 10000000000000 &&
+parseInt(input) <= 99999999999999999
 function generateSeed(input) {
   //se a chave for LETRA!
   if (input.length > 9) {
     if (
-      parseInt(input) >= 100000000000000 &&
-      parseInt(input) <= 999999999999999
+      cartaComSeed
     ) {
       return parseInt(input);
     } else {
@@ -706,6 +710,7 @@ function colocarInput() {
 let cartaParaMover = document.getElementById("pack").firstElementChild;
 let copyCard = "";
 
+
 function moverCarta() {
   let seedCopyCard = cartaParaMover.children[4].textContent;
   //  seedNode = .children[4].textContent
@@ -713,7 +718,7 @@ function moverCarta() {
   copyCard = cartaParaMover.cloneNode(true);
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-    if(parseInt(input) == 99999999){
+    if(cartaComSeed){
         false
 
     } else
