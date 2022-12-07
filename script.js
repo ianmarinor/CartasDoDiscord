@@ -836,7 +836,7 @@ function moverCartaMonark() {
   // var slotSeed = inv.children[0].children[4].textContent
   // VAR slotName = inv.children[0].children[0].children[0].textContent
 
-  if (parseInt(input) > 99999999) {
+  if (cartaCustom) {
     false;
   } else {
     if (copyCard.id === "carta-monark") {
