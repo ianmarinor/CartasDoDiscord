@@ -476,7 +476,7 @@ function colocarInfoNoWrap() {
   varianteP.innerHTML = novaCarta._variante;
   especialP.innerHTML = novaCarta._especial;
   seedP.innerHTML = "&nbsp;" + seedString;
-  arenaP.innerHTML = totalClicks;
+  arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
 
   if (novaCarta._especial != "") {
