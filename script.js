@@ -1273,7 +1273,7 @@ function criarBtn() {
           varianteClique.children[3].children[2].style.visibility = "hidden";
           button.style.backgroundColor = "";
           button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-          arenaP.innerHTML = totalClicks;
+          arenaP.innerHTML = totalClicks  + " CARTAS";
           varianteClique.remove();
           inv.appendChild(document.createElement("div")).id = "empty";
         }
