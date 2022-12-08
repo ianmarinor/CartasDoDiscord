@@ -1,3 +1,8 @@
+let versaoHTML = document.getElementById('versao')
+let versao = 'PreAlpha 1.3.4'
+versaoHTML.innerHTML = versao
+console.log('versao: ', versao);
+
 const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
 function seedRNG() {
   return Math.floor(Math.random() * totalNumOfSeeds);
@@ -244,7 +249,11 @@ function escolherCargo() {
     return (cargo = "carta-nobre");
   } else if (seedString[13] == 9) {
     return (cargo = "carta-gentleman");
-  } else if (seedString[13] == 7 && seedString[14] >= 4 && seedString[4] != 4) {
+  } else if (
+            // seedString[13] == 7 
+             seedString[14] >= 4 
+            // && seedString[4] != 4
+            ) {
     return (cargo = "carta-monark");
   } else if (seedString[14] >= 8) {
     return (cargo = "carta-people");
@@ -257,11 +266,11 @@ let especial = "";
 function escolherEspecial() {
   // console.log('stringEspecial', seedString)
   if (
-    // seedString[5] == 8 &&
-    seedString[6] == 9 
-    // seedString[7] == 9 &&
-    // seedString[8] == 1 &&
-    // seedString[9] >= 4
+    seedString[5] == 8 &&
+    seedString[6] == 9 &&
+    seedString[7] == 9 &&
+    seedString[8] == 1 &&
+    seedString[9] >= 4
   ) {
     return (especial = "especial-tenica");
   } else if (
@@ -282,7 +291,12 @@ function escolherEspecial() {
     return (especial = "");
   } else if (seedString[5] == 8 && seedString[6] == 1 && seedString[7] <= 3) {
     return (especial = "");
-  } else if (seedString[5] == 8 && seedString[6] >= 8) {
+  } 
+  
+  else if (seedString[5] >= 6) 
+  // else if (seedString[5] == 8 && seedString[6] >= 8) 
+  
+  {
     return (especial = "carta-speaker");
   } else if (seedString[5] == 8 && seedString[6] <= 4) {
     return (especial = "especial-click");
@@ -743,7 +757,7 @@ function moverCarta() {
   copyCard = cartaParaMover.cloneNode(true);
   let cartaIsEspecial = copyCard.children[0].children[3].textContent != ''
 
-  console.log(getSeed.className + '  ' + cartaCustom)
+  
   let cartaIsMonark = copyCard.id == 'carta-monark'
   let naoPodeMover = getSeed.className == 'customOn' && cartaIsEspecial || getSeed.className == 'customOn' && cartaIsMonark || getSeed.className == 'customOff' && cartaCustom == true
 
@@ -756,14 +770,16 @@ function moverCarta() {
 
     } else
   {
-    if(getSeed.className == 'customOn'){
-    getSeed.className = 'customOff'}
+    
 
     if (inv.children[0].id != "empty") {
       if (
         inv.children[0].children[4].textContent !=
         cartaParaMover.children[4].textContent
       ) {
+
+        
+
         if (inv.children[1].id == "empty") {
           if (
             copyCard.children[0].children[1].textContent != "" ||
@@ -771,8 +787,10 @@ function moverCarta() {
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
-
+          if(getSeed.className == 'customOn'){
+            getSeed.className = 'customOff'}
           inv.replaceChild(copyCard, inv.children[1]);
+          
           somaPontos();
           tudo();
           
@@ -780,29 +798,43 @@ function moverCarta() {
           inv.children[2].id == "empty" &&
           seedCopyCard != inv.children[1].children[4].textContent
         ) {
+
+          if(getSeed.className == 'customOn'){
+            getSeed.className = 'customOff'}
+
           if (
             copyCard.children[0].children[1].textContent != "" ||
             copyCard.children[0].children[3].textContent != ""
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
-
+          if(getSeed.className == 'customOn'){
+            getSeed.className = 'customOff'}
           inv.replaceChild(copyCard, inv.children[2]);
+          
           somaPontos();
           tudo();
           
         } else if (
           inv.children[3].id == "empty" &&
           seedCopyCard != inv.children[2].children[4].textContent
+
+
         ) {
+
+          if(getSeed.className == 'customOn'){
+            getSeed.className = 'customOff'}
+
           if (
             copyCard.children[0].children[1].textContent != "" ||
             copyCard.children[0].children[3].textContent != ""
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
-
+          if(getSeed.className == 'customOn'){
+            getSeed.className = 'customOff'}
           inv.replaceChild(copyCard, inv.children[3]);
+          
           somaPontos();
           tudo();
           
@@ -818,8 +850,10 @@ function moverCarta() {
       ) {
         copyCard.children[3].children[2].style.visibility = "visible";
       }
-
+      if(getSeed.className == 'customOn'){
+        getSeed.className = 'customOff'}
       inv.replaceChild(copyCard, inv.children[0]);
+      
       somaPontos();
       tudo();
       
@@ -1537,7 +1571,7 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-    console.log( 'input: ' + input);
+    // console.log( 'input: ' + input);
     clicks();
     blockInv()
   } else {
