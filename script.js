@@ -1,5 +1,5 @@
 let versaoHTML = document.getElementById('versao')
-let versao = 'Pre-Release Alpha 1.3'
+let versao = 'Pre-Release Alpha 1.3.1'
 versaoHTML.innerHTML = versao
 console.log('versao: ', versao);
 
