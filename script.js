@@ -309,68 +309,71 @@ let variante = "";
 
 function escolherVariante() {
   console.log("stringvariante", seedString);
-
+  let cartasQueNaoTemVariante = cargo != "carta-monark" && cargo != "carta-semcargo" && cargo != "carta-people" && cargo != "carta-people" 
   variante = "";
-  if (seedString[4] == 4) {
-    if (seedString[5] == 9 && seedString[6] == 0) {
-      return (variante = "farmacêutico");
-    } else if (seedString[5] == 9 && seedString[6] == 1) {
-      return (variante = "bão");
-    } else if (seedString[5] == 9 && seedString[6] == 2) {
-      return (variante = "apenas");
-    } else if (seedString[5] == 9 && seedString[6] == 3) {
-      return (variante = "fonte");
-    } else if (seedString[5] == 9 && seedString[6] == 4) {
-      return (variante = "ixqueiro");
-    } else if (seedString[5] == 9 && seedString[6] == 5) {
-      return (variante = "abalo");
-    } else if (seedString[5] == 9 && seedString[6] == 6) {
-      return (variante = "grito");
-    } else if (seedString[5] == 9 && seedString[6] == 7) {
-      return (variante = "dia");
-    } else if (seedString[5] == 9 && seedString[6] == 8) {
-      return (variante = "quimico");
-    } else if (seedString[5] == 9 && seedString[6] == 9) {
-      return (variante = "pêra");
-    } else {
-      return (variante = "");
-    }
-  }
-}
+if (cartasQueNaoTemVariante){
+
+
+    if (seedString[4] == 4) {
+      if (seedString[5] == 9 && seedString[6] == 0) {
+        return (variante = "farmacêutico");
+      } else if (seedString[5] == 9 && seedString[6] == 1) {
+        return (variante = "bão");
+      } else if (seedString[5] == 9 && seedString[6] == 2) {
+        return (variante = "apenas");
+      } else if (seedString[5] == 9 && seedString[6] == 3) {
+        return (variante = "fonte");
+      } else if (seedString[5] == 9 && seedString[6] == 4) {
+        return (variante = "ixqueiro");
+      } else if (seedString[5] == 9 && seedString[6] == 5) {
+        return (variante = "abalo");
+      } else if (seedString[5] == 9 && seedString[6] == 6) {
+        return (variante = "grito");
+      } else if (seedString[5] == 9 && seedString[6] == 7) {
+        return (variante = "dia");
+      } else if (seedString[5] == 9 && seedString[6] == 8) {
+        return (variante = "quimico");
+      } else if (seedString[5] == 9 && seedString[6] == 9) {
+        return (variante = "pêra");
+      } else {
+        return (variante = "");
+      }
+    }  
+}}
 
 //RNG DOS PONTES DE PODER
 
 let pontoPoderSemCargo = () =>
-  Math.floor((parseInt(seedString[5]) + parseInt(seedString[0])) / 2 + 1);
+  Math.floor((parseInt(seedString[5]) + parseInt(seedString[0])) / 2 + 1); // 1 a 10
 
 let pontoPoderPeople = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[12])) / 2 + 5);
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[12])) / 2 + 11); // 11 a 20
 
 let pontoPoderGentleman = () =>
-  Math.floor((parseInt(seedString[12]) + parseInt(seedString[0])) / 2 + 9);
+  Math.floor((parseInt(seedString[12]) + parseInt(seedString[0])) / 2 + 21); // 21 a 30
 
 let pontoPoderMonark = () => Math.floor(Math.random() * 2);
 
 let pontoPoderNobre = () =>
-  Math.floor((parseInt(seedString[11]) + parseInt(seedString[10])) / 2 + 13);
+  Math.floor((parseInt(seedString[11]) + parseInt(seedString[10])) / 2 + 31); // 31 a 40
 
 let pontoPoderLord = () =>
-  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 20);
-
+  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 41); // 41 a 50
+ 
 let pontoPoderMinistro = () =>
-  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 27);
+  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 51); //51 a 60
 
 let pontoPoderPrimeMinister = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 80);
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 71); // 70 a 80
 
 let pontoPoderRNGPremioMarino = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 120);
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 121); // 121 a 130
 
 let pontoVarianteValor = 0;
 function pontoVariante() {
   if (variante != "") {
     return (pontoVarianteValor = Math.floor(
-      (parseInt(seedString[0]) + parseInt(seedString[1])) / 2 + 15
+      (parseInt(seedString[0]) + parseInt(seedString[1])) + 10 * 5 // 50 a 140
     ));
   } else {
     return (pontoVarianteValor = 0);
@@ -488,6 +491,7 @@ function colocarInfoNoWrap() {
   cartaP.style.color = "";
   actionP.style.visibility = "hidden";
   ataqueP.style.textDecorationLine = "";
+  ataqueP.id = "";
   novoAtaquerP.innerHTML = "";
   novoAtaquerP.style.fontSize = "";
   retratoP.style.backgroundSize = "";
@@ -611,7 +615,7 @@ function colocarInfoNoWrap() {
     cargoP.style.color = "black";
     retratoP.style.border = "2px double gold";
     ataqueP.style.color = "black";
-    ataqueP.innerHTML = parseInt(ataqueP.innerHTML) * 109 + "👑";
+    ataqueP.innerHTML = parseInt(ataqueP.innerHTML) * 90 + "👑";
     seedP.style.color = "black";
 
     ataqueP.style.fontSize = "1.5em";
@@ -634,8 +638,10 @@ function colocarInfoNoWrap() {
     seedP.style.color = "black";
   }
 
+  
+
   //CARTAS VARIANTES
-  if (novaCarta._variante != "" && novaCarta._cargo != "carta-monark") {
+  if (novaCarta._variante != "") {
     // actionP.style.visibility = 'visible'
     varianteP.style.fontFamily = "Righteous";
     varianteP.style.textShadow = "-2px 5px 5px #010101";
@@ -761,12 +767,12 @@ function moverCarta() {
   let cartaIsMonark = copyCard.id == 'carta-monark'
   let naoPodeMover = getSeed.className == 'customOn' && cartaIsEspecial || getSeed.className == 'customOn' && cartaIsMonark || getSeed.className == 'customOff' && cartaCustom == true
 
-  // copySeed = copy.getElementsByClassName('seed')
-  // cardShrinker(copyCard)
+  copySeed = copy.getElementsByClassName('seed')
+  cardShrinker(copyCard)
     if(naoPodeMover){
 
       false
-      // getSeed.setAttribute('class', 'customOff')
+      getSeed.setAttribute('class', 'customOff')
 
     } else
   {
@@ -1169,14 +1175,17 @@ function criarBtn() {
 
         // PODER VARIANTES
         // se nao for especial
-        if (inv.children[i].children[0].children[1].textContent != "") {
+        if (inv.children[i].children[0].children[1].textContent != "" && inv.children[i].children[0].id != "foi") {
           inv.children[i].children[3].children[2].addEventListener(
             "click",
             testinho
-          );
+          ); 
+          inv.children[i].children[0].id = "foi"}
 
           // essa funçao se ativa quando clico no butao das cartas variante no deck
           function testinho(e) {
+            let semBoost = cartaParaMover.children[3].children[0].id == ''
+            let boostar = cartaParaMover.children[3].children[0].id = 'boost'
             let poderCartaPack = cartaParaMover.children[3].children[0];
             let poderNovoCartaPack = cartaParaMover.children[3].children[1];
             let cartaNaoEspecial =
@@ -1187,7 +1196,7 @@ function criarBtn() {
             // let poderCartaInv = inv.children[i].children[3].children[2]
 
             // se a carta para mover nao for especial
-            if (cartaNaoEspecial && cartaNaoVariante && cartaNaoMonark) {
+            if (cartaNaoEspecial && cartaNaoVariante && cartaNaoMonark && semBoost ) {
               let cartaVariante = e.target.offsetParent;
               let emojiVariante = "🌟";
               // console.log('cartaVariante: ', cartaVariante);
@@ -1212,15 +1221,17 @@ function criarBtn() {
                 if (varianteTemPoderNovo) {
                   // transforme poder velho da CartaPack em novo da inv
                   poderCartaPack.textContent =
-                    parseInt(cartaVariantePoderNovo.textContent) +
-                    emojiVariante;
+                    parseInt(cartaVariantePoderNovo.textContent) + parseInt(poderCartaPack.textContent) + emojiVariante;
+                    boostar
+                    
 
                   // se nao, transforme poder velho CartaPMover em poder velho inv
                 } else {
                   // transaforme o poder velho da CartaPack no poder velho da carta inv 0
                   poderCartaPack.textContent =
-                    parseInt(cartaVariantePoderVelho.textContent) +
-                    emojiVariante;
+                    parseInt(cartaVariantePoderVelho.textContent) + parseInt(poderCartaPack.textContent) + emojiVariante;
+                    boostar
+                    
                 }
               }
 
@@ -1230,18 +1241,20 @@ function criarBtn() {
                 if (varianteTemPoderNovo) {
                   // transforme poder novo da CartaPack em novo da inv
                   poderNovoCartaPack.textContent =
-                    parseInt(cartaVariantePoderNovo.textContent) +
-                    emojiVariante;
+                    parseInt(cartaVariantePoderNovo.textContent) + parseInt(poderNovoCartaPack.textContent) + emojiVariante
+                    boostar
+                    
                 } else {
                   // transforme o poder novo da CartaPack no poder velho da inv 0
                   poderNovoCartaPack.textContent =
-                    parseInt(cartaVariantePoderVelho.textContent) +
-                    emojiVariante;
+                    parseInt(cartaVariantePoderVelho.textContent) + parseInt(poderNovoCartaPack.textContent) + emojiVariante
+                    boostar
+                    
                 }
               }
             }
           }
-        }
+        
 
         //   PODER speaker
         if (inv.children[i].id == "carta-speaker" && inv.children[i].children[0].id != "foi") {
