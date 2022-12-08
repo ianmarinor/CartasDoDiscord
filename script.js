@@ -250,9 +250,9 @@ function escolherCargo() {
   } else if (seedString[13] == 9) {
     return (cargo = "carta-gentleman");
   } else if (
-            // seedString[13] == 7 
+            seedString[13] == 7 &&
              seedString[14] >= 4 
-            // && seedString[4] != 4
+            && seedString[4] != 4
             ) {
     return (cargo = "carta-monark");
   } else if (seedString[14] >= 8) {
@@ -293,8 +293,8 @@ function escolherEspecial() {
     return (especial = "");
   } 
   
-  else if (seedString[5] >= 6) 
-  // else if (seedString[5] == 8 && seedString[6] >= 8) 
+  // else if (seedString[5] >= 6) 
+  else if (seedString[5] == 8 && seedString[6] >= 8) 
   
   {
     return (especial = "carta-speaker");
