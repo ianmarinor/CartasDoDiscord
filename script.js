@@ -74,14 +74,15 @@ let cartaCustom
 let seedString = "";
 function escolherIntegrante() {
   seedString = generateSeed(input).toString();
-
+  let cartaComSeed = parseInt(input) >= 10000000000000 && parseInt(input) <= 9999999999999999
   cartaCustom = input.length >= 3;
+  isSeedFalsa = parseInt(input)
   console.log('cartaCustom: ', cartaCustom);
 
 
-  if (cartaCustom == true){
+  if (cartaCustom == true  ){
     console.log('adicionei carta custom')
-    if (getSeed.className == ''){
+    if (getSeed.className == '' && !cartaComSeed){
     getSeed.setAttribute('class', 'customOn')
     console.log('getSeed: ', getSeed);
     }
@@ -765,14 +766,14 @@ function moverCarta() {
 
   
   let cartaIsMonark = copyCard.id == 'carta-monark'
-  let naoPodeMover = getSeed.className == 'customOn' && cartaIsEspecial || getSeed.className == 'customOn' && cartaIsMonark || getSeed.className == 'customOff' && cartaCustom == true
+  let naoPodeMover = getSeed.className == 'customOn' && cartaIsEspecial || getSeed.className == 'customOn' && cartaIsMonark || getSeed.className == 'customOff' && cartaCustom == true || getSeed.className == ''
 
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
     if(naoPodeMover){
 
       false
-      getSeed.setAttribute('class', 'customOff')
+      getSeed.setAttribute('class', 'customOn')
 
     } else
   {
