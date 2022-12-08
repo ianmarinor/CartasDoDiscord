@@ -1,5 +1,5 @@
 let versaoHTML = document.getElementById('versao')
-let versao = 'PreAlpha 1.3.4'
+let versao = 'Pre-Release Alpha 1.3'
 versaoHTML.innerHTML = versao
 console.log('versao: ', versao);
 
@@ -767,8 +767,8 @@ function moverCarta() {
   let cartaIsMonark = copyCard.id == 'carta-monark'
   let naoPodeMover = getSeed.className == 'customOn' && cartaIsEspecial || getSeed.className == 'customOn' && cartaIsMonark || getSeed.className == 'customOff' && cartaCustom == true
 
-  copySeed = copy.getElementsByClassName('seed')
-  cardShrinker(copyCard)
+  // copySeed = copy.getElementsByClassName('seed')
+  // cardShrinker(copyCard)
     if(naoPodeMover){
 
       false
