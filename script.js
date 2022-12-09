@@ -1,7 +1,7 @@
 import {seed} from './module.js'
 
 let versaoHTML = document.getElementById('versao')
-let versao = 'Alpha 1.3.7'
+let versao = 'Alpha 1.3.8'
 versaoHTML.innerHTML = versao
 
 // console.log(ian)
