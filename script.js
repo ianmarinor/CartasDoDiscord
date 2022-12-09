@@ -1,5 +1,5 @@
 let versaoHTML = document.getElementById('versao')
-let versao = 'Alpha 1.3.3'
+let versao = 'Alpha 1.3.4'
 versaoHTML.innerHTML = versao
 console.log('versao: ', versao);
 
@@ -37,7 +37,7 @@ function generateSeed(input) {
         let sum = 1;
         for (let i = 0; i < input.length; i++) {
           sum = sum + input[i].charCodeAt();
-          console.log(sum);
+          // console.log(sum);
         }
         return sum * 516515615165159;
       } else {
@@ -72,24 +72,34 @@ function generateSeed(input) {
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 let cartaCustom
 let seedString = "";
+let cartaComSeedParaAdicionar
 function escolherIntegrante() {
   seedString = generateSeed(input).toString();
   let cartaComSeed = parseInt(input) >= 10000000000000 && parseInt(input) <= 9999999999999999
   cartaCustom = input.length >= 3;
+  console.log('tem seed na barra? ' + cartaCustom+'!');
+  
   isSeedFalsa = parseInt(input)
-  console.log('cartaCustom: ', cartaCustom);
+  
 
 
   if (cartaCustom == true  ){
-    console.log('adicionei carta custom')
-    if (getSeed.className == '' && !cartaComSeed){
-    getSeed.setAttribute('class', 'customOn')
-    console.log('getSeed: ', getSeed);
+    
+    if (getSeed.className == '' ){
+      cartaComSeedParaAdicionar = seedString
+
+
+      console.log('cartaComSeedParaAdicionar: ', cartaComSeedParaAdicionar);
+
+      // se tover carta para adicionar o a classe do input muda pra customOn
+     getSeed.setAttribute('class', 'customOn')
+
+    
     }
 
   }
 
-  console.log("tamanho seed: " + seedString.length);
+  // console.log("tamanho seed: " + seedString.length);
   // console.log("integrante seed", seedString);
   if (
     seedString[1] == 1
@@ -766,20 +776,19 @@ function moverCarta() {
 
   
   let cartaIsMonark = copyCard.id == 'carta-monark'
-  let naoPodeMover = getSeed.className == 'customOn' && cartaIsEspecial || getSeed.className == 'customOn' && cartaIsMonark || getSeed.className == 'customOff' && cartaCustom == true || getSeed.className == ''
+  let naoPodeMover = getSeed.className == 'customOn' && cartaIsEspecial || getSeed.className == 'customOn' && cartaIsMonark  
+  
+  let jaPassouACarta = getSeed.className == 'customOff' && cartaCustom == true
+  console.log('jaPassouACarta: ', jaPassouACarta);
+  
+  console.log('cartaCustom: ', cartaCustom);
 
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-    if(naoPodeMover){
+if(!naoPodeMover){
+  
 
-      false
-      getSeed.setAttribute('class', 'customOn')
-
-    } else
-  {
-    
-
-    if (inv.children[0].id != "empty") {
+  if (inv.children[0].id != "empty") {
       if (
         inv.children[0].children[4].textContent !=
         cartaParaMover.children[4].textContent
@@ -866,9 +875,19 @@ function moverCarta() {
       
       
     }
+    criarBtn();
+  } else {
+    false
+    getSeed.setAttribute('class', 'customOn')
   }
-  criarBtn();
+
+  // if(jaPassouACarta){
+  //   false
+    
+  // }
+
 }
+
 
 function moverCartaMonark() {
   copyCard = cartaParaMover.cloneNode(true);
