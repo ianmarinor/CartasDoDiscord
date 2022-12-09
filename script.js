@@ -1,7 +1,7 @@
 import {seed} from './module.js'
 
 let versaoHTML = document.getElementById('versao')
-let versao = 'Alpha 1.3.8'
+let versao = 'Alpha 1.4'
 versaoHTML.innerHTML = versao
 
 // console.log(ian)
@@ -40,7 +40,7 @@ function generateSeed(input) {
   // 
   // 
   //se for colocada um seed real
-  if (input.length > 9) {
+  if (input.length > 10) {
     if (
       seedReal
     ) {
