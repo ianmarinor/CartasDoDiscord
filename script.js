@@ -36,7 +36,7 @@ let input = "";
 
 function generateSeed(input) {
 
-  let seedReal = parseInt(input) >= 10000000000000 && parseInt(input) <= 9999999999999999
+  let seedReal = parseInt(input) >= 1000000000000000 && parseInt(input) <= 1000000000000000000
   // 
   // 
   //se for colocada um seed real
