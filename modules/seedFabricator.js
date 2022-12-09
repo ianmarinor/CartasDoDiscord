@@ -1,3 +1,5 @@
+
+
 export function seed(seed,isReal,seedFalsa,isPutByPlayer ) {
     return{
       _seed: seed,

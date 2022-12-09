@@ -1,4 +1,13 @@
-import {seed} from './module.js'
+
+
+import {seed} from './modules/seedFabricator.js'
+
+import {escolherIntegrante, integrante} from './modules/escolherIntegrante.js'
+
+import {escolherCidade, cidade} from './modules/escolherCidade.js';
+import {variante, escolherVariante} from './modules/variante.js';
+
+
 
 let versaoHTML = document.getElementById('versao')
 let versao = 'Alpha 1.4'
@@ -18,7 +27,7 @@ function seedRNG() {
 
 
 
-let input = "";
+export let input = "";
 
 // function seed(seed,isReal,seedFalsa,isPutByPlayer ) {
 //   return{
@@ -34,7 +43,7 @@ let input = "";
 
 
 
-function generateSeed(input) {
+export function generateSeed(input) {
 
   let seedReal = parseInt(input) >= 1000000000000000 && parseInt(input) <= 1000000000000000000
   // 
@@ -119,156 +128,9 @@ function generateSeed(input) {
 }
 
 
-// ***********************
-// LINK SEED TO ELEMENT
-//**************************/
-
-//integrante
-//THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
-let integrante
-let cartaCustom
-let seedObj 
-let seedString = ''
-let cartaComSeedParaAdicionar
-function escolherIntegrante() {
-  seedObj = generateSeed(input)
-  seedString = seedObj._seedString
 
 
-  console.log('em escolher integrante: ',seedObj)
-  
-  // 
-  // 
-  if (
-    seedString[1] == 1
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Gandalf");
-  } else if (
-    seedString[1] == 2
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Turu");
-  } else if (
-    seedString[1] == 3
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Nefesto");
-  } else if (
-    seedString[1] == 4
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Blackao");
-  } else if (
-    seedString[1] == 5
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Sr. Antonio");
-  } else if (
-    seedString[1] == 6
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Pedro");
-  } else if (
-    seedString[1] == 7
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Curtas");
-  } else if (
-    seedString[1] == 8
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Twelve");
-  } else if (
-    seedString[1] == 9
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Junks");
-  } else if (
-    seedString[1] == 0
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Murillo");
-  }
-  // else if
-  //     (
-  //     // seedString[0] == 1  &&
-  //     seedString[1]
-  //     )
-  //     {return integrante = 'Curtas'
-  // } else
-  //     {return integrante = 'SEM NOME'}
-}
 
-//cidade
-// THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
-// ******************************************************************
-let cidade = "";
-function escolherCidade() {
-  // 
-  if (
-    // seedString[4] == 0 &&
-    seedString[3] == 0
-  ) {
-    return (cidade = "de Caxias do Sul");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 1
-  ) {
-    return (cidade = "de Itapira");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 2
-  ) {
-    return (cidade = "de Ubatuba");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 3
-  ) {
-    return (cidade = "de Sao Jose Dos Pinhais");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 4
-  ) {
-    return (cidade = "do Rio de Janeiro");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 5
-  ) {
-    return (cidade = "de Maringá");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 6
-  ) {
-    return (cidade = "de Itanhaém");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 7
-  ) {
-    return (cidade = "da Lapa");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 8
-  ) {
-    return (cidade = "de Jaraguá");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 9
-  ) {
-    return (cidade = "de Santo André");
-  }
-
-}
 //CARGO
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 let cargo = "";
@@ -356,41 +218,41 @@ function escolherEspecial() {
   }
 }
 
-let variante = "";
+// let variante = "";
 
-function escolherVariante() {
+// function escolherVariante() {
   
-  let cartasQueNaoTemVariante = cargo != "carta-monark" && cargo != "carta-semcargo" && cargo != "carta-people" && cargo != "carta-people" 
-  variante = "";
-if (cartasQueNaoTemVariante){
+//   let cartasQueNaoTemVariante = cargo != "carta-monark" && cargo != "carta-semcargo" && cargo != "carta-people" && cargo != "carta-people" 
+//   variante = "";
+// if (cartasQueNaoTemVariante){
 
 
-    if (seedString[4] == 4) {
-      if (seedString[5] == 9 && seedString[6] == 0) {
-        return (variante = "farmacêutico");
-      } else if (seedString[5] == 9 && seedString[6] == 1) {
-        return (variante = "bão");
-      } else if (seedString[5] == 9 && seedString[6] == 2) {
-        return (variante = "apenas");
-      } else if (seedString[5] == 9 && seedString[6] == 3) {
-        return (variante = "fonte");
-      } else if (seedString[5] == 9 && seedString[6] == 4) {
-        return (variante = "ixqueiro");
-      } else if (seedString[5] == 9 && seedString[6] == 5) {
-        return (variante = "abalo");
-      } else if (seedString[5] == 9 && seedString[6] == 6) {
-        return (variante = "grito");
-      } else if (seedString[5] == 9 && seedString[6] == 7) {
-        return (variante = "dia");
-      } else if (seedString[5] == 9 && seedString[6] == 8) {
-        return (variante = "quimico");
-      } else if (seedString[5] == 9 && seedString[6] == 9) {
-        return (variante = "pêra");
-      } else {
-        return (variante = "");
-      }
-    }  
-}}
+//     if (seedString[4] == 4) {
+//       if (seedString[5] == 9 && seedString[6] == 0) {
+//         return (variante = "farmacêutico");
+//       } else if (seedString[5] == 9 && seedString[6] == 1) {
+//         return (variante = "bão");
+//       } else if (seedString[5] == 9 && seedString[6] == 2) {
+//         return (variante = "apenas");
+//       } else if (seedString[5] == 9 && seedString[6] == 3) {
+//         return (variante = "fonte");
+//       } else if (seedString[5] == 9 && seedString[6] == 4) {
+//         return (variante = "ixqueiro");
+//       } else if (seedString[5] == 9 && seedString[6] == 5) {
+//         return (variante = "abalo");
+//       } else if (seedString[5] == 9 && seedString[6] == 6) {
+//         return (variante = "grito");
+//       } else if (seedString[5] == 9 && seedString[6] == 7) {
+//         return (variante = "dia");
+//       } else if (seedString[5] == 9 && seedString[6] == 8) {
+//         return (variante = "quimico");
+//       } else if (seedString[5] == 9 && seedString[6] == 9) {
+//         return (variante = "pêra");
+//       } else {
+//         return (variante = "");
+//       }
+//     }  
+// }}
 
 //RNG DOS PONTES DE PODER
 
@@ -776,6 +638,8 @@ function colocarInfoNoWrap() {
     } else {
     }
   }
+
+  console.log(novaCarta);
 }
 
 function colocarInput() {
@@ -1020,8 +884,13 @@ function moverCartaMonark() {
 const cartaParaMoverNome = cartaParaMover.children[0].children[0].textContent;
 const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent;
 
+
+
 function critico() {
   //nome
+
+  const cartaCritica = seedString[1]  ===  seedString[2]
+  const cartaSuperCritica = seedString[4] == 4 && seedString[5] == 9 && seedString[6] == 0 
 
   let corDoNome = cartaParaMover.children[0].children[0];
   let corDaCidade = cartaParaMover.children[0].children[2];
@@ -1042,7 +911,7 @@ function critico() {
     cartaParaMover.id != "carta-speaker" &&
     cartaParaMover.children[0].children[3].textContent == ""
   ) {
-    if (seedString[1] == "1" && seedString[3] == "0") {
+    if (cartaCritica) {
       corDaCidade.classList.add("critico");
       corDoNome.classList.add("critico");
       cartaParaMover.children[0].children[1].style.fontWeight = "bold";
@@ -1050,7 +919,7 @@ function critico() {
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
 
-      if (variante == "farmacêutico") {
+      if (cartaSuperCritica) {
         cartaParaMover.classList.add("critico");
         varianteP.classList.add("critico");
         poderNovo.classList.add("critico");
@@ -1061,181 +930,12 @@ function critico() {
       }
     }
 
-    //turu
-    if (seedString[1] == "2" && seedString[3] == "1") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (variante == "bão") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
-    }
-    //nefesto
-    if (seedString[1] == "3" && seedString[3] == "2") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (variante == "apenas") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
-    }
-    //blackao
-    if (seedString[1] == "4" && seedString[3] == "3") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (variante == "fonte") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
-    }
-    //antonio
-    if (seedString[1] == "5" && seedString[3] == "4") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (variante == "ixqueiro") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
-    }
-    //pedro
-    if (seedString[1] == "6" && seedString[3] == "5") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (variante == "abalo") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
-    }
-    //curtas
-    if (seedString[1] == "7" && seedString[3] == "6") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (variante == "grito") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
-    }
-    //twelve
-    if (seedString[1] == "8" && seedString[3] == "7") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (variante == "dia") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
-    }
-    //junks
-    if (seedString[1] == "9" && seedString[3] == "8") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (variante == "quimico") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
-    }
-    //murilo
-    if (seedString[1] == "0" && seedString[3] == "9") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (variante == "pêra") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
+    
     }
   }
   // getSeed.setAttribute('class', 'customOff')
 
-}
+
 
 // //////////////////////////////////////////////
 // PODERES DECK
@@ -1652,12 +1352,22 @@ function blockInv() {
 }
 let totalClicks = 50;
 
+export let seedObj
+let seedString
 function tudo() {
+  
+
+  
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
   if (totalClicks >= 0) {
+
+    
+
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     colocarInput();
+    seedObj = generateSeed(input);
+    seedString =  seedObj._seedString
     escolherIntegrante();
     escolherCidade();
     escolherCargo();
@@ -1677,10 +1387,13 @@ function tudo() {
   }
 }
 
+
+// let seedString = seedObj._seedString
+
 function clicks() {
-  if(!cartaCustom ){
+  
     totalClicks--;
-  }
+  
   
   // 
 }

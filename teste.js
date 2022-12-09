@@ -36,3 +36,6 @@ console.log(Math.floor(Math.random() *   2 + 2))
     
     
 // }
+
+let seed = '1234'
+console.log('seed: ', seed[1][2])
