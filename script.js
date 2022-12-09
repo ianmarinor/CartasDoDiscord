@@ -1,7 +1,7 @@
 import {seed} from './module.js'
 
 let versaoHTML = document.getElementById('versao')
-let versao = 'Alpha 1.3.8'
+let versao = 'Alpha 1.3.9'
 versaoHTML.innerHTML = versao
 
 // console.log(ian)
@@ -833,7 +833,7 @@ function moverCarta() {
 
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-if(PodeMover && naoMoviAinda){
+  if(PodeMover && naoMoviAinda){
   
 
   if (inv.children[0].id != "empty") {
@@ -1533,7 +1533,7 @@ function criarBtn() {
 // TIRAR CARTA DO INVENTARIO
 // /******************************************** */
 
-btnReset = document.getElementById("btnReset");
+let btnReset = document.getElementById("btnReset");
 
 function deletarDeck(e) {
 
