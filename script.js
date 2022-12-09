@@ -1,8 +1,10 @@
+import {seed} from './module.js'
+
 let versaoHTML = document.getElementById('versao')
 let versao = 'Alpha 1.3.5'
 versaoHTML.innerHTML = versao
 
-
+// console.log(ian)
 
 
 const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
@@ -18,29 +20,23 @@ function seedRNG() {
 
 let input = "";
 
-function seed(seed,isReal,seedFalsa,isPutByPlayer ) {
-  return{
-    _seed: seed,
-    _seedString: seed.toString(),
-    _isSeedReal: isReal,
-    _seedFalsaInput: seedFalsa,
-    _seedLength:  seed.toString().length,
-    _isPutByPlayer: isPutByPlayer
+// function seed(seed,isReal,seedFalsa,isPutByPlayer ) {
+//   return{
+//     _seed: seed,
+//     _seedString: seed.toString(),
+//     _isSeedReal: isReal,
+//     _seedFalsaInput: seedFalsa,
+//     _seedLength:  seed.toString().length,
+//     _isPutByPlayer: isPutByPlayer
 
-  }
-}
+//   }
+// }
 
 
 
 function generateSeed(input) {
 
   let seedReal = parseInt(input) >= 10000000000000 && parseInt(input) <= 9999999999999999
-
-
-  
-  
-
-
   // 
   // 
   //se for colocada um seed real
@@ -855,8 +851,11 @@ if(PodeMover && naoMoviAinda){
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
-          
-          getSeed.className = 'customOff'
+            if(seedObj._isPutByPlayer){
+              getSeed.className = 'customOff'
+            }
+            
+
           inv.replaceChild(copyCard, inv.children[1]);
           
           somaPontos();
@@ -876,7 +875,10 @@ if(PodeMover && naoMoviAinda){
             copyCard.children[3].children[2].style.visibility = "visible";
           }
 
-          getSeed.className = 'customOff'
+          if(seedObj._isPutByPlayer){
+            getSeed.className = 'customOff'
+          }
+          
           inv.replaceChild(copyCard, inv.children[2]);
           
           somaPontos();
@@ -897,7 +899,10 @@ if(PodeMover && naoMoviAinda){
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
-          getSeed.className = 'customOff'
+          if(seedObj._isPutByPlayer){
+            getSeed.className = 'customOff'
+          }
+          
           inv.replaceChild(copyCard, inv.children[3]);
           
           somaPontos();
@@ -916,7 +921,11 @@ if(PodeMover && naoMoviAinda){
         copyCard.children[3].children[2].style.visibility = "visible";
       }
       
+      if(seedObj._isPutByPlayer){
         getSeed.className = 'customOff'
+      }
+      
+      
       inv.replaceChild(copyCard, inv.children[0]);
       
       somaPontos();
@@ -938,6 +947,8 @@ if(PodeMover && naoMoviAinda){
 
 }
 
+let copyCardSeed
+let copyCardName
 
 function moverCartaMonark() {
   copyCard = cartaParaMover.cloneNode(true);
@@ -1011,8 +1022,9 @@ const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent;
 
 function critico() {
   //nome
-  let = corDoNome = cartaParaMover.children[0].children[0];
-  let = corDaCidade = cartaParaMover.children[0].children[2];
+
+  let corDoNome = cartaParaMover.children[0].children[0];
+  let corDaCidade = cartaParaMover.children[0].children[2];
 
   cartaParaMover.children[0].children[1].style.color = "";
   //cidade

@@ -1,0 +1,20 @@
+{
+  "name": "cartas-do-discord",
+  "version": "1.0.0",
+  "description": "Projeto de Lootbox do discord",
+  "main": "script.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianmarinor/CartasDoDiscord.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ianmarinor/CartasDoDiscord/issues"
+  },
+  "homepage": "https://github.com/ianmarinor/CartasDoDiscord#readme"
+}
