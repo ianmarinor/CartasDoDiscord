@@ -2,9 +2,9 @@
 
 import {seed} from './modules/seedFabricator.js'
 
-import {escolherIntegrante, integrante} from './modules/escolherIntegrante.js'
+import {escolherIntegrante, integrante} from './modules/integrante.js'
 
-import {escolherCidade, cidade} from './modules/escolherCidade.js';
+import {escolherCidade, cidade} from './modules/cidade.js';
 import {variante, escolherVariante} from './modules/variante.js';
 
 
@@ -13,7 +13,8 @@ let versaoHTML = document.getElementById('versao')
 let versao = 'Alpha 1.4'
 versaoHTML.innerHTML = versao
 
-// console.log(ian)
+console.log(new Date().toUTCString())
+console.log(versao)
 
 
 const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
@@ -1387,6 +1388,8 @@ function tudo() {
   } else {
     button.style.backgroundColor = "red";
     button.innerHTML = "0 CARTAS";
+    console.log(new Date().toUTCString())
+    console.log(versao)
   }
 }
 
@@ -1395,7 +1398,10 @@ function tudo() {
 
 function clicks() {
   
+  if(!seedObj._isPutByPlayer){
     totalClicks--;
+  }
+    
   
   
   // 
