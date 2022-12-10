@@ -834,7 +834,7 @@ function moverCarta() {
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
   if(
-    // !PodeMover  && 
+    PodeMover  && 
     naoMoviAinda
     ){
   
