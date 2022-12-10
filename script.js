@@ -67,7 +67,7 @@ export function generateSeed(input) {
         let constanteSeedFalsa = 516515615165159;
         let calculoSeedFalsa = sum * constanteSeedFalsa;
 
-        return seed(calculoSeedFalsa, false, input, true);
+        return seed(calculoSeedFalsa, false, input, true);1149
       } else {
         return seed(seedRNG(), true, "", false);
       }
@@ -471,7 +471,7 @@ function colocarInfoNoWrap() {
     }
   }
 
-  console.log(novaCarta);
+  // console.log(novaCarta);
 }
 
 function colocarInput() {
@@ -624,7 +624,7 @@ function moverCartaMonark() {
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
 
-  console.log("no mvoer monark", seedObj);
+  // console.log("no mvoer monark", seedObj);
 
   if (seedObj._isPutByPlayer) {
     false;
@@ -1121,7 +1121,7 @@ let seedString;
 
 // TESTAR PROBABILIDADE DE CARTAS
 
-let quantasCartas = 50;
+let quantasCartas = 1000000;
 function numeroDeCartasTeste() {
   for (let j = 0; j < quantasCartas; j++) {
     tudoParaTeste();
@@ -1139,14 +1139,14 @@ function tudo() {
     seedObj = generateSeed(input);
     seedString = seedObj._seedString;
     escolherIntegrante();
-    console.log(integrante);
+    // console.log(integrante);
     escolherCidade();
-    console.log(cidade);
+    // console.log(cidade);
     escolherCargo();
-    console.log("no tudo cargo", cargo);
+    // console.log("no tudo cargo", cargo);
     escolherVariante();
     escolherEspecial();
-    console.log("no tudo especial", especial);
+    // console.log("no tudo especial", especial);
     pontoVariante();
     escolherPoder();
     colocarInfoNoWrap();

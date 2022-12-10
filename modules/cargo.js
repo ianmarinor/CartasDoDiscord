@@ -140,7 +140,7 @@ export function escolherCargo() {
       //SEMCARGO  - 1 EM 2 - 50%
   } else if (true) {
     cargo = cargos[8];
-    console.log(cargo, 'no moduilo');
+    // console.log(cargo, 'no moduilo');
 
     numeroDeCartas.cartasNormais.semCargo++;
     numeroDeCartas.porcentagemCartasNormais.semCargo =
