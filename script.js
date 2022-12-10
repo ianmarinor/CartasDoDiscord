@@ -697,7 +697,10 @@ function moverCarta() {
 
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-if(PodeMover && naoMoviAinda){
+if(
+  PodeMover && 
+  naoMoviAinda
+  ){
   
 
   if (inv.children[0].id != "empty") {
@@ -1190,7 +1193,7 @@ function criarBtn() {
             }
           }
 
-          for (j = 0; j < 4; j++) {
+          for (let j = 0; j < 4; j++) {
             if (
               inv.children[j].id != "especial-click" &&
               inv.children[j].id != "empty" &&
