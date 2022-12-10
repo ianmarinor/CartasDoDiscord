@@ -1,37 +1,36 @@
+import { seed } from "./modules/seedFabricator.js";
+import { escolherIntegrante, integrante } from "./modules/integrante.js";
+import { escolherCidade, cidade } from "./modules/cidade.js";
 
-import {seed} from './modules/seedFabricator.js'
-import {escolherIntegrante, integrante} from './modules/integrante.js'
-import {escolherCidade, cidade} from './modules/cidade.js';
+import {
+  cargo,
+  numeroDeCartas,
+  escolherCargo,
+  cargos,
+} from "./modules/cargo.js";
+let premiomarino = cargos[0];
+let primeminister = cargos[1];
+let ministro = cargos[2];
+let monark = cargos[3];
+let lord = cargos[4];
+let nobre = cargos[5];
+let gentleman = cargos[6];
+let people = cargos[7];
+let semcargo = cargos[8];
 
-// import * as cargomodule from './modules/cargo.js';
-import {cargo, numeroDeCartas,escolherCargo } from './modules/cargo.js';
-  
- let premiomarino = 'premiomarino'
- let primeminister = 'primeminister'
- let ministro = 'ministro'
- let monark = 'monark'
- let lord = 'lord'
- let nobre = 'nobre'
- let gentleman = 'gentleman'
- let people = 'people'  
- let semcargo = 'semcargo'
+import { variante, escolherVariante } from "./modules/variante.js";
 
+import { especial, escolherEspecial, especiais,cartaNaoEspecial} from "./modules/especial.js";
+let tenica = especiais[0]
+let speaker = especiais[1]
+let bonusCartasMais = especiais[2]
 
-import {variante, escolherVariante} from './modules/variante.js';
+let versaoHTML = document.getElementById("versao");
+let versao = "Alpha 1.4";
+versaoHTML.innerHTML = versao;
 
-
-
-import {especial, escolherEspecial} from './modules/especial.js';
-
-
-
-let versaoHTML = document.getElementById('versao')
-let versao = 'Alpha 1.4'
-versaoHTML.innerHTML = versao
-
-console.log(new Date().toUTCString())
-console.log(versao)
-
+console.log(new Date().toUTCString());
+console.log(versao);
 
 const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
 function seedRNG() {
@@ -42,27 +41,20 @@ function seedRNG() {
 // the input will always be translated to the same seed if an integer
 // if a string, it'll be converted
 
-
 export let input = "";
 
 export function generateSeed(input) {
-
-  let seedReal = parseInt(input) >= 1000000000000000 && parseInt(input) <= 1000000000000000000
-  // 
-  // 
+  let seedReal =
+    parseInt(input) >= 1000000000000000 &&
+    parseInt(input) <= 1000000000000000000;
+  //
+  //
   //se for colocada um seed real
   if (input.length > 10) {
-    if (
-      seedReal
-    ) {
+    if (seedReal) {
       // return parseInt(input);
 
-      return seed(
-        parseInt(input),
-        true,
-        "",
-        true
-      )
+      return seed(parseInt(input), true, "", true);
 
       // se for colocada uma seed falsa
     } else {
@@ -70,65 +62,30 @@ export function generateSeed(input) {
         let sum = 1;
         for (let i = 0; i < input.length; i++) {
           sum = sum + input[i].charCodeAt();
-          
-           
         }
-        let constanteSeedFalsa = 516515615165159
+        let constanteSeedFalsa = 516515615165159;
         let calculoSeedFalsa = sum * constanteSeedFalsa;
-        
-        return seed(
-          calculoSeedFalsa,
-          false,
-          input,
-          true
-        )
 
-
-
+        return seed(calculoSeedFalsa, false, input, true);
       } else {
-       
-        return seed(
-          seedRNG(),
-          true,
-          '',
-          false
-        )
-
+        return seed(seedRNG(), true, "", false);
       }
     }
   } else {
-
-
     if (input.length >= 3 && input.length <= 25) {
       let sum = 1;
       for (let i = 0; i < input.length; i++) {
         sum = sum + input[i].charCodeAt();
-        
       }
-      let constanteSeedFalsa = 516515615165159
+      let constanteSeedFalsa = 516515615165159;
       let calculoSeedFalsa = sum * constanteSeedFalsa;
-      
-      return seed(
-        calculoSeedFalsa,
-        false,
-        input,
-        true,
-      )
 
-
-
+      return seed(calculoSeedFalsa, false, input, true);
     } else {
-      
-      return seed(
-        seedRNG(),
-        true,
-        '',
-        false,
-      )
+      return seed(seedRNG(), true, "", false);
     }
   }
 }
-
 
 //RNG DOS PONTES DE PODER
 
@@ -148,7 +105,7 @@ let pontoPoderNobre = () =>
 
 let pontoPoderLord = () =>
   Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 41); // 41 a 50
- 
+
 let pontoPoderMinistro = () =>
   Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 51); //51 a 60
 
@@ -162,7 +119,7 @@ let pontoVarianteValor = 0;
 function pontoVariante() {
   if (variante != "") {
     return (pontoVarianteValor = Math.floor(
-      (parseInt(seedString[0]) + parseInt(seedString[1])) + 10 * 5 // 50 a 140
+      parseInt(seedString[0]) + parseInt(seedString[1]) + 10 * 5 // 50 a 140
     ));
   } else {
     return (pontoVarianteValor = 0);
@@ -171,7 +128,7 @@ function pontoVariante() {
 
 let poder = {};
 function escolherPoder() {
-  // 
+  //
   if (cargo == semcargo) {
     return (poder = {
       _ataque: pontoPoderSemCargo() + pontoVarianteValor,
@@ -272,7 +229,6 @@ function colocarInfoNoWrap() {
     variante,
     especial
   );
-  
 
   //LIMPAR A CARTA
   cartaP.style.backgroundImage = "";
@@ -384,15 +340,16 @@ function colocarInfoNoWrap() {
   }
 
   //CARTAS ESPECIAIS
-  if (novaCarta._especial === "carta-speaker") {
+  if (novaCarta._especial === speaker) {
     retratoP.style.backgroundImage = "url('pics/speaker.webp')";
     nomeP.innerHTML = "&nbsp; SPEAKER";
     cidadeP.innerHTML = "";
     cargoP.innerHTML = "MONARK BAN!";
     retratoP.style.border = "2px dotted green";
     especialP.style.visibility = "hidden";
-    ataqueP.innerHTML = Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
-  } else if (novaCarta._especial === "especial-tenica") {
+    ataqueP.innerHTML =
+      Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
+  } else if (novaCarta._especial === tenica) {
     cargoP.style.fontFamily = "Cormorant Upright";
     retratoP.style.backgroundImage = "url('pics/tenica.webp')";
     retratoP.style.backgroundSize = "139px 150px";
@@ -409,7 +366,7 @@ function colocarInfoNoWrap() {
 
     ataqueP.style.fontSize = "1.5em";
     especialP.style.visibility = "hidden";
-  } else if (novaCarta._especial === "especial-click") {
+  } else if (novaCarta._especial === bonusCartasMais) {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
     nomeP.innerHTML = "";
@@ -426,8 +383,6 @@ function colocarInfoNoWrap() {
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
     seedP.style.color = "black";
   }
-
-  
 
   //CARTAS VARIANTES
   if (novaCarta._variante != "") {
@@ -543,50 +498,36 @@ function colocarInput() {
 let cartaParaMover = document.getElementById("pack").firstElementChild;
 let copyCard = "";
 
-
 function moverCarta() {
   let seedCopyCard = cartaParaMover.children[4].textContent;
-  console.log('em mover carta ', seedObj );
-  
-  
-  blockInv()
+  console.log("em mover carta ", seedObj);
 
-
-  
+  blockInv();
 
   copyCard = cartaParaMover.cloneNode(true);
-  let cartaNotEspecial = copyCard.children[0].children[3].textContent == ''
-  let customOff = getSeed.className == 'customOff'
-  
-  let cartaNotMonark = copyCard.id == monark
+  let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
+  let customOff = getSeed.className == "customOff";
 
-  
-  let PodeMover = !seedObj._isSeedReal && cartaNotEspecial || !seedObj._isSeedReal && cartaNotMonark || seedObj._isSeedReal && !seedObj._isPutByPlayer
+  let cartaNotMonark = copyCard.id == monark;
 
-  
+  let PodeMover =
+    (!seedObj._isSeedReal && cartaNotEspecial) ||
+    (!seedObj._isSeedReal && cartaNotMonark) ||
+    (seedObj._isSeedReal && !seedObj._isPutByPlayer);
 
-  let naoMoviAinda = !customOff || customOff && !seedObj._isPutByPlayer 
-  
-  
-  
-  
+  let naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
 
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-if(
-  PodeMover && 
-  naoMoviAinda
-  ){
-  
+  if (
+    // PodeMover && 
 
-  if (inv.children[0].id != "empty") {
+    naoMoviAinda) {
+    if (inv.children[0].id != "empty") {
       if (
         inv.children[0].children[4].textContent !=
         cartaParaMover.children[4].textContent
       ) {
-
-        
-
         if (inv.children[1].id == "empty") {
           if (
             copyCard.children[0].children[1].textContent != "" ||
@@ -594,23 +535,18 @@ if(
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
-            if(seedObj._isPutByPlayer){
-              getSeed.className = 'customOff'
-            }
-            
+          if (seedObj._isPutByPlayer) {
+            getSeed.className = "customOff";
+          }
 
           inv.replaceChild(copyCard, inv.children[1]);
-          
+
           somaPontos();
           tudo();
-          
         } else if (
           inv.children[2].id == "empty" &&
           seedCopyCard != inv.children[1].children[4].textContent
         ) {
-
-          
-
           if (
             copyCard.children[0].children[1].textContent != "" ||
             copyCard.children[0].children[3].textContent != ""
@@ -618,39 +554,32 @@ if(
             copyCard.children[3].children[2].style.visibility = "visible";
           }
 
-          if(seedObj._isPutByPlayer){
-            getSeed.className = 'customOff'
+          if (seedObj._isPutByPlayer) {
+            getSeed.className = "customOff";
           }
-          
+
           inv.replaceChild(copyCard, inv.children[2]);
-          
+
           somaPontos();
           tudo();
-          
         } else if (
           inv.children[3].id == "empty" &&
           seedCopyCard != inv.children[2].children[4].textContent
-
-
         ) {
-
-          
-
           if (
             copyCard.children[0].children[1].textContent != "" ||
             copyCard.children[0].children[3].textContent != ""
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
-          if(seedObj._isPutByPlayer){
-            getSeed.className = 'customOff'
+          if (seedObj._isPutByPlayer) {
+            getSeed.className = "customOff";
           }
-          
+
           inv.replaceChild(copyCard, inv.children[3]);
-          
+
           somaPontos();
           tudo();
-          
         }
       }
     } else {
@@ -663,42 +592,38 @@ if(
       ) {
         copyCard.children[3].children[2].style.visibility = "visible";
       }
-      
-      if(seedObj._isPutByPlayer){
-        getSeed.className = 'customOff'
+
+      if (seedObj._isPutByPlayer) {
+        getSeed.className = "customOff";
       }
-      
-      
+
       inv.replaceChild(copyCard, inv.children[0]);
-      
+
       somaPontos();
       tudo();
-      
-      
     }
     criarBtn();
   } else {
-    false
+    false;
     // getSeed.setAttribute('class', 'customOn')
-    console.log('NAO MOVI');
+    console.log("NAO MOVI");
   }
 
   // if(jaPassouACarta){
   //   false
-    
-  // }
 
+  // }
 }
 
-let copyCardSeed
-let copyCardName
+let copyCardSeed;
+let copyCardName;
 
 function moverCartaMonark() {
   copyCard = cartaParaMover.cloneNode(true);
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
-  
-  console.log('no mvoer monark', seedObj);
+
+  console.log("no mvoer monark", seedObj);
 
   if (seedObj._isPutByPlayer) {
     false;
@@ -763,13 +688,12 @@ function moverCartaMonark() {
 const cartaParaMoverNome = cartaParaMover.children[0].children[0].textContent;
 const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent;
 
-
-
 function critico() {
   //nome
 
-  const cartaCritica = seedString[1]  ===  seedString[2]
-  const cartaSuperCritica = seedString[4] == 4 && seedString[5] == 9 && seedString[6] == 0 
+  const cartaCritica = seedString[1] === seedString[2];
+  const cartaSuperCritica =
+    seedString[4] == 4 && seedString[5] == 9 && seedString[6] == 0;
 
   let corDoNome = cartaParaMover.children[0].children[0];
   let corDaCidade = cartaParaMover.children[0].children[2];
@@ -787,7 +711,7 @@ function critico() {
   //gandalf
   if (
     cartaParaMover.id != monark &&
-    cartaParaMover.id != "carta-speaker" &&
+    cartaParaMover.id != speaker &&
     cartaParaMover.children[0].children[3].textContent == ""
   ) {
     if (cartaCritica) {
@@ -808,13 +732,9 @@ function critico() {
         poderNovo.style.fontSize = "1.5em";
       }
     }
-
-    
-    }
   }
-  // getSeed.setAttribute('class', 'customOff')
-
-
+}
+// getSeed.setAttribute('class', 'customOff')
 
 // //////////////////////////////////////////////
 // PODERES DECK
@@ -823,7 +743,7 @@ function critico() {
 ////////////////////////////////////////////////
 
 function criarBtn() {
-  // 
+  //
 
   for (let i = 0; i < 4; i++) {
     //se i nao for vazio
@@ -832,275 +752,255 @@ function criarBtn() {
       if (
         inv.children[i].children[3].children[2].style.visibility == "visible"
       ) {
-        // 
+        //
 
         // PODER VARIANTES
         // se nao for especial
-        if (inv.children[i].children[0].children[1].textContent != "" && inv.children[i].children[0].id != "foi") {
+        if (
+          inv.children[i].children[0].children[1].textContent != "" &&
+          inv.children[i].children[0].id != "foi"
+        ) {
           inv.children[i].children[3].children[2].addEventListener(
             "click",
             testinho
-          ); 
-          inv.children[i].children[0].id = "foi"}
+          );
+          inv.children[i].children[0].id = "foi";
+        }
 
-          // essa funçao se ativa quando clico no butao das cartas variante no deck
-          function testinho(e) {
-            let semBoost = cartaParaMover.children[3].children[0].id == ''
-            let boostar = cartaParaMover.children[3].children[0].id = 'boost'
-            let poderCartaPack = cartaParaMover.children[3].children[0];
-            let poderNovoCartaPack = cartaParaMover.children[3].children[1];
-            let cartaNaoEspecial =
-              cartaParaMover.children[0].children[3].textContent == "";
-            let cartaNaoVariante =
-              cartaParaMover.children[0].children[1].textContent == "";
-            let cartaNaoMonark = cartaParaMover.id != monark;
-            // let poderCartaInv = inv.children[i].children[3].children[2]
+        // essa funçao se ativa quando clico no butao das cartas variante no deck
+        function testinho(e) {
+          let semBoost = cartaParaMover.children[3].children[0].id == "";
+          let boostar = (cartaParaMover.children[3].children[0].id = "boost");
+          let poderCartaPack = cartaParaMover.children[3].children[0];
+          let poderNovoCartaPack = cartaParaMover.children[3].children[1];
+          let cartaNaoEspecial =
+            cartaParaMover.children[0].children[3].textContent == "";
+          let cartaNaoVariante =
+            cartaParaMover.children[0].children[1].textContent == "";
+          let cartaNaoMonark = cartaParaMover.id != monark;
+          // let poderCartaInv = inv.children[i].children[3].children[2]
 
-            // se a carta para mover nao for especial
-            if (cartaNaoEspecial && cartaNaoVariante && cartaNaoMonark && semBoost ) {
-              let cartaVariante = e.target.offsetParent;
-              let emojiVariante = "🌟";
-              // 
+          // se a carta para mover nao for especial
+          if (
+            cartaNaoEspecial &&
+            cartaNaoVariante &&
+            cartaNaoMonark &&
+            semBoost
+          ) {
+            let cartaVariante = e.target.offsetParent;
+            let emojiVariante = "🌟";
+            //
 
-              let cartaVariantePoderVelho =
-                cartaVariante.children[3].children[0];
-              // 
+            let cartaVariantePoderVelho = cartaVariante.children[3].children[0];
+            //
 
-              let cartaVariantePoderNovo =
-                cartaVariante.children[3].children[1];
-              // 
+            let cartaVariantePoderNovo = cartaVariante.children[3].children[1];
+            //
 
-              let varianteTemPoderNovo =
-                cartaVariante.children[3].children[1].textContent != "";
-              // 
+            let varianteTemPoderNovo =
+              cartaVariante.children[3].children[1].textContent != "";
+            //
 
-              // a o butao fica invisivel quando clicado
-              e.target.style.visibility = "hidden";
+            // a o butao fica invisivel quando clicado
+            e.target.style.visibility = "hidden";
 
-              //se nao CartaPMover NAO tiver poder novo
-              if (poderNovoCartaPack.textContent == "") {
-                if (varianteTemPoderNovo) {
-                  // transforme poder velho da CartaPack em novo da inv
-                  poderCartaPack.textContent =
-                    parseInt(cartaVariantePoderNovo.textContent) + parseInt(poderCartaPack.textContent) + emojiVariante;
-                    boostar
-                    
+            //se nao CartaPMover NAO tiver poder novo
+            if (poderNovoCartaPack.textContent == "") {
+              if (varianteTemPoderNovo) {
+                // transforme poder velho da CartaPack em novo da inv
+                poderCartaPack.textContent =
+                  parseInt(cartaVariantePoderNovo.textContent) +
+                  parseInt(poderCartaPack.textContent) +
+                  emojiVariante;
+                boostar;
 
-                  // se nao, transforme poder velho CartaPMover em poder velho inv
-                } else {
-                  // transaforme o poder velho da CartaPack no poder velho da carta inv 0
-                  poderCartaPack.textContent =
-                    parseInt(cartaVariantePoderVelho.textContent) + parseInt(poderCartaPack.textContent) + emojiVariante;
-                    boostar
-                    
-                }
+                // se nao, transforme poder velho CartaPMover em poder velho inv
+              } else {
+                // transaforme o poder velho da CartaPack no poder velho da carta inv 0
+                poderCartaPack.textContent =
+                  parseInt(cartaVariantePoderVelho.textContent) +
+                  parseInt(poderCartaPack.textContent) +
+                  emojiVariante;
+                boostar;
               }
+            }
 
-              // se carta para mover TIVER poder novo
-              else {
-                // e se a carta inv tiver poder novo
-                if (varianteTemPoderNovo) {
-                  // transforme poder novo da CartaPack em novo da inv
-                  poderNovoCartaPack.textContent =
-                    parseInt(cartaVariantePoderNovo.textContent) + parseInt(poderNovoCartaPack.textContent) + emojiVariante
-                    boostar
-                    
-                } else {
-                  // transforme o poder novo da CartaPack no poder velho da inv 0
-                  poderNovoCartaPack.textContent =
-                    parseInt(cartaVariantePoderVelho.textContent) + parseInt(poderNovoCartaPack.textContent) + emojiVariante
-                    boostar
-                    
-                }
+            // se carta para mover TIVER poder novo
+            else {
+              // e se a carta inv tiver poder novo
+              if (varianteTemPoderNovo) {
+                // transforme poder novo da CartaPack em novo da inv
+                poderNovoCartaPack.textContent =
+                  parseInt(cartaVariantePoderNovo.textContent) +
+                  parseInt(poderNovoCartaPack.textContent) +
+                  emojiVariante;
+                boostar;
+              } else {
+                // transforme o poder novo da CartaPack no poder velho da inv 0
+                poderNovoCartaPack.textContent =
+                  parseInt(cartaVariantePoderVelho.textContent) +
+                  parseInt(poderNovoCartaPack.textContent) +
+                  emojiVariante;
+                boostar;
               }
             }
           }
-        
+        }
 
         //   PODER speaker
-        if (inv.children[i].id == "carta-speaker" && inv.children[i].children[0].id != "foi") {
+        if (
+          inv.children[i].id == speaker &&
+          inv.children[i].children[0].id != "foi"
+        ) {
           inv.children[i].children[3].children[2].addEventListener(
             "click",
             explusarMonark
           );
           inv.children[i].children[0].id = "foi";
-          // 
+          //
         }
 
-          function explusarMonark(e) {
-            let varianteSpeaker = e.target.offsetParent;
-            let pontoSpeaker = varianteSpeaker.children[3].children[0];
-            let retratoVariante = varianteSpeaker.children[1]
-            let speakerDorminfo = 'url("pics/speakerDormindo.jpg")'
-            let descriptionSpeaker = varianteSpeaker.children[2]
-            let multiplicador
-            let pontoParaDormir 
+        function explusarMonark(e) {
+          let varianteSpeaker = e.target.offsetParent;
+          let pontoSpeaker = varianteSpeaker.children[3].children[0];
+          let retratoVariante = varianteSpeaker.children[1];
+          let speakerDorminfo = 'url("pics/speakerDormindo.jpg")';
+          let descriptionSpeaker = varianteSpeaker.children[2];
+          let multiplicador;
+          let pontoParaDormir;
 
-            function multiSpeaker() {
-              multiplicador = Math.floor(Math.random() * 2 + 2);
-            }
-
-            multiSpeaker()
-            multiSpeakerSono()
-            
-
-            function multiSpeakerSono() {
-              
-              pontoParaDormir = Math.floor(Math.random() * 16 + 25);
-          
-            }
-            
-            for (let j = 0; j < 4; j++) {
-              // 
-
-              
-            
-
-              
-              if (inv.children[j].id == monark) {
-
-                  
-                  
-
-                if ( parseInt(pontoSpeaker.textContent) < pontoParaDormir){
-                  
-
-                  
-                  
-                  pontoSpeaker.textContent =
-                  parseInt(pontoSpeaker.textContent) * multiplicador + " 😡";
-                  
-
-
-                  inv.children[j].remove();
-                  inv.appendChild(document.createElement("div")).id = "empty";
-
-                  
-
-                  // pontoSpeaker = Math.trunc(parseInt(pontoSpeaker) * 2) + '😡'
-                  
-                  somaPontos();
-                  break
-
-
-              } else {
-
-                retratoVariante.style.backgroundImage = speakerDorminfo
-                pontoSpeaker.innerHTML = parseInt(pontoSpeaker.textContent) + "&#9889;"
-                descriptionSpeaker.innerHTML = 'durmi kkjk <br> &#128564; &#128564;'
-                varianteSpeaker.children[3].children[2].style.visibility = "hidden"
-  
-              }
-              
-            }
-            
-            
-           }
+          function multiSpeaker() {
+            multiplicador = Math.floor(Math.random() * 2 + 2);
           }
-        }
-      
-        // PODER CLICKS
-        if (
-          inv.children[i].id == "especial-click" &&
-          inv.children[i].children[0].id != "foi"
-        ) {
-          inv.children[i].children[3].children[2].addEventListener(
-            "click",
-            cartaClique
-          );
-          inv.children[i].children[0].id = "foi";
-          // 
-        }
 
-        function cartaClique(e) {
-          
+          multiSpeaker();
+          multiSpeakerSono();
 
-          let varianteClique = e.target.offsetParent;
-
-          totalClicks =
-            totalClicks +
-            parseInt(varianteClique.children[3].children[0].textContent) + 1;
-
-          varianteClique.children[3].children[2].style.visibility = "hidden";
-          button.style.backgroundColor = "";
-          button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-          arenaP.innerHTML = totalClicks  + " CARTAS";
-          varianteClique.remove();
-          inv.appendChild(document.createElement("div")).id = "empty";
-        }
-
-        // PODER TENICA
-        if (
-          inv.children[i].id == "especial-tenica" &&
-          inv.children[i].children[0].id != "foi"
-        ) {
-          inv.children[i].children[3].children[2].addEventListener(
-            "click",
-            cartaTenica
-          );
-          inv.children[i].children[0].id = "foi";
-          
-        }
-
-        function cartaTenica(e) {
-          let varianteTenica = e.target.offsetParent;
-          
-
-          varianteTenica.children[3].children[2].style.visibility = "hidden";
-
-          let poderCartaPack = cartaParaMover.children[3].children[0];
-          let poderNovoCartaPack = cartaParaMover.children[3].children[1];
-          // tudo()
-
-          if (
-            cartaParaMover.id != "especial-click" &&
-            cartaParaMover.id != "especial-tenica"
-          ) {
-            if (poderNovoCartaPack.textContent != "") {
-              poderNovoCartaPack.textContent =
-                parseInt(poderNovoCartaPack.textContent) +
-                parseInt(varianteTenica.children[3].children[0].textContent) +
-                "👑";
-            } else {
-              poderCartaPack.textContent =
-                parseInt(poderCartaPack.textContent) +
-                parseInt(varianteTenica.children[3].children[0].textContent) +
-                "👑";
-            }
+          function multiSpeakerSono() {
+            pontoParaDormir = Math.floor(Math.random() * 16 + 25);
           }
 
           for (let j = 0; j < 4; j++) {
-            if (
-              inv.children[j].id != "especial-click" &&
-              inv.children[j].id != "empty" &&
-              inv.children[j].id != "especial-tenica"
-            ) {
-              
+            //
 
-              // se o poder novo for presente
-              if (inv.children[j].children[3].children[1].textContent != "") {
-                inv.children[j].children[3].children[1].textContent =
-                  parseInt(
-                    inv.children[j].children[3].children[1].textContent
-                  ) +
-                  parseInt(varianteTenica.children[3].children[0].textContent) +
-                  "👑";
+            if (inv.children[j].id == monark) {
+              if (parseInt(pontoSpeaker.textContent) < pontoParaDormir) {
+                pontoSpeaker.textContent =
+                  parseInt(pontoSpeaker.textContent) * multiplicador + " 😡";
+
+                inv.children[j].remove();
+                inv.appendChild(document.createElement("div")).id = "empty";
+
+                // pontoSpeaker = Math.trunc(parseInt(pontoSpeaker) * 2) + '😡'
+
+                somaPontos();
+                break;
               } else {
-                inv.children[j].children[3].children[0].textContent =
-                  parseInt(
-                    inv.children[j].children[3].children[0].textContent
-                  ) +
-                  parseInt(varianteTenica.children[3].children[0].textContent) +
-                  "👑";
+                retratoVariante.style.backgroundImage = speakerDorminfo;
+                pontoSpeaker.innerHTML =
+                  parseInt(pontoSpeaker.textContent) + "&#9889;";
+                descriptionSpeaker.innerHTML =
+                  "durmi kkjk <br> &#128564; &#128564;";
+                varianteSpeaker.children[3].children[2].style.visibility =
+                  "hidden";
               }
             }
           }
-          somaPontos();
         }
+      }
+
+      // PODER CLICKS
+      if (
+        inv.children[i].id == bonusCartasMais &&
+        inv.children[i].children[0].id != "foi"
+      ) {
+        inv.children[i].children[3].children[2].addEventListener(
+          "click",
+          cartaClique
+        );
+        inv.children[i].children[0].id = "foi";
+        //
+      }
+
+      function cartaClique(e) {
+        let varianteClique = e.target.offsetParent;
+
+        totalClicks =
+          totalClicks +
+          parseInt(varianteClique.children[3].children[0].textContent) +
+          1;
+
+        varianteClique.children[3].children[2].style.visibility = "hidden";
+        button.style.backgroundColor = "";
+        button.innerHTML = "&#127381; NOVA CARTA &#127381;";
+        arenaP.innerHTML = totalClicks + " CARTAS";
+        varianteClique.remove();
+        inv.appendChild(document.createElement("div")).id = "empty";
+      }
+
+      // PODER TENICA
+      if (
+        inv.children[i].id == tenica &&
+        inv.children[i].children[0].id != "foi"
+      ) {
+        inv.children[i].children[3].children[2].addEventListener(
+          "click",
+          cartaTenica
+        );
+        inv.children[i].children[0].id = "foi";
+      }
+
+      function cartaTenica(e) {
+        let varianteTenica = e.target.offsetParent;
+
+        varianteTenica.children[3].children[2].style.visibility = "hidden";
+
+        let poderCartaPack = cartaParaMover.children[3].children[0];
+        let poderNovoCartaPack = cartaParaMover.children[3].children[1];
+        // tudo()
+
+        if (
+          cartaParaMover.id != bonusCartasMais &&
+          cartaParaMover.id != tenica
+        ) {
+          if (poderNovoCartaPack.textContent != "") {
+            poderNovoCartaPack.textContent =
+              parseInt(poderNovoCartaPack.textContent) +
+              parseInt(varianteTenica.children[3].children[0].textContent) +
+              "👑";
+          } else {
+            poderCartaPack.textContent =
+              parseInt(poderCartaPack.textContent) +
+              parseInt(varianteTenica.children[3].children[0].textContent) +
+              "👑";
+          }
+        }
+
+        for (let j = 0; j < 4; j++) {
+          if (
+            inv.children[j].id != bonusCartasMais &&
+            inv.children[j].id != "empty" &&
+            inv.children[j].id != tenica
+          ) {
+            // se o poder novo for presente
+            if (inv.children[j].children[3].children[1].textContent != "") {
+              inv.children[j].children[3].children[1].textContent =
+                parseInt(inv.children[j].children[3].children[1].textContent) +
+                parseInt(varianteTenica.children[3].children[0].textContent) +
+                "👑";
+            } else {
+              inv.children[j].children[3].children[0].textContent =
+                parseInt(inv.children[j].children[3].children[0].textContent) +
+                parseInt(varianteTenica.children[3].children[0].textContent) +
+                "👑";
+            }
+          }
+        }
+        somaPontos();
       }
     }
   }
-
+}
 
 // if (inv.children[0].id != 'empty' && inv.children[1].id != 'empty' && inv.children[2].id != 'empty' && inv.children[3].id != 'empty') {
 
@@ -1115,9 +1015,6 @@ function criarBtn() {
 btnReset = document.getElementById("btnReset");
 
 function deletarDeck(e) {
-
-
-
   // 1.0Se a carta nao for Monark
   if (
     e.target.id != monark &&
@@ -1126,13 +1023,12 @@ function deletarDeck(e) {
     e.target.id != "inv" &&
     e.target.id != "empty" &&
     e.target.className != "action" &&
-    e.target.className == 'retrato'
+    e.target.className == "retrato"
   ) {
-    // 
+    //
 
     // 1.1 se for a carta inteira
     if (e.target.id != "inv" && e.target.childElementCount === 5) {
-      
       e.target.remove();
       inv.appendChild(document.createElement("div")).id = "empty";
       somaPontos();
@@ -1143,7 +1039,7 @@ function deletarDeck(e) {
       e.target.childElementCount != 5 &&
       e.target.className != "seed"
     ) {
-      // 
+      //
 
       // 1.2.1 se for filho da carta
       if (
@@ -1151,7 +1047,7 @@ function deletarDeck(e) {
           "nameAndCidadeWrapper" &&
         e.target.id != "inv"
       ) {
-        // 
+        //
         e.target.parentElement.remove();
         inv.appendChild(document.createElement("div")).id = "empty";
         somaPontos();
@@ -1159,7 +1055,7 @@ function deletarDeck(e) {
 
       // 1.2.2 se nao for nada disso, sera filho do filho
       else {
-        // 
+        //
         e.target.parentElement.parentElement.remove();
         inv.appendChild(document.createElement("div")).id = "empty";
         somaPontos();
@@ -1169,13 +1065,7 @@ function deletarDeck(e) {
 }
 
 function resetarDeck() {
-
-  
-  
-  getSeed.setAttribute('class', '')
-
-  
-  
+  getSeed.setAttribute("class", "");
 
   // let empty = document.createElement('div').id = "empty"
   let empty0 = document.createElement("div");
@@ -1197,33 +1087,27 @@ function resetarDeck() {
 
   // inv.removeChild(inv.children[0])
   // inv.appendChild(empty)
-  // 
-  totalClicks = 50
+  //
+  totalClicks = 50;
   somaPontos();
-  tudo()
+  tudo();
   // cartaCustom = input.length >= 3;
-  
 
-  
-  getSeed.className = ''
-  
-  
+  getSeed.className = "";
 }
 
 /////// CRITICO
 
 function blockInv() {
+  let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
+  let customOff = getSeed.className == "customOff";
+  let cartaNotMonark = copyCard.id == monark;
+  let PodeMover =
+    (!seedObj._isSeedReal && cartaNotEspecial) ||
+    (!seedObj._isSeedReal && cartaNotMonark) ||
+    (seedObj._isSeedReal && !seedObj._isPutByPlayer);
 
-  let cartaNotEspecial = copyCard.children[0].children[3].textContent == ''
-  let customOff = getSeed.className == 'customOff'
-  let cartaNotMonark = copyCard.id == monark
-  let PodeMover = !seedObj._isSeedReal && cartaNotEspecial || !seedObj._isSeedReal && cartaNotMonark || seedObj._isSeedReal && !seedObj._isPutByPlayer
-
-  
-   
-
-  if (!PodeMover || customOff) 
-  {
+  if (!PodeMover || customOff) {
     inv.style.border = "10px double red";
   } else {
     inv.style.border = "7px double green";
@@ -1231,43 +1115,34 @@ function blockInv() {
 }
 let totalClicks = 50;
 
-export let seedObj
-let seedString
-
+export let seedObj;
+let seedString;
 
 // TESTAR PROBABILIDADE DE CARTAS
 
-let quantasCartas = 50
-function numeroDeCartasTeste(){
-  
+let quantasCartas = 50;
+function numeroDeCartasTeste() {
   for (let j = 0; j < quantasCartas; j++) {
-    tudoParaTeste()
+    tudoParaTeste();
   }
-  console.log(numeroDeCartas)
+  console.log(numeroDeCartas);
 }
-numeroDeCartasTeste()
-
+numeroDeCartasTeste();
 
 function tudo() {
-  
-
-  
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
   if (totalClicks >= 0) {
-
-    
-
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     colocarInput();
     seedObj = generateSeed(input);
-    seedString =  seedObj._seedString
+    seedString = seedObj._seedString;
     escolherIntegrante();
     console.log(integrante);
     escolherCidade();
     console.log(cidade);
     escolherCargo();
-    console.log('no tudo',cargo);
+    console.log("no tudo", cargo);
     escolherVariante();
     escolherEspecial();
     pontoVariante();
@@ -1275,61 +1150,49 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-    // 
+    //
     clicks();
-    blockInv()
+    blockInv();
   } else {
     button.style.backgroundColor = "red";
     button.innerHTML = "0 CARTAS";
-    console.log(new Date().toUTCString())
-    console.log(versao)
+    console.log(new Date().toUTCString());
+    console.log(versao);
     // console.log(numeroDeCartas)
   }
 }
 
 function tudoParaTeste() {
-  
-
-  
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
-  
 
-    
-
-    // button.style.backgroundColor = "";
-    // button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-    colocarInput();
-    seedObj = generateSeed(input);
-    seedString =  seedObj._seedString
-    escolherIntegrante();
-    escolherCidade();
-    escolherCargo();
-    escolherVariante();
-    escolherEspecial();
-    // pontoVariante();
-    // escolherPoder();
-    // colocarInfoNoWrap();
-    // critico();
-    // moverCartaMonark();
-    // 
-    // clicks();
-    // blockInv()
-  } 
-
-
-
+  // button.style.backgroundColor = "";
+  // button.innerHTML = "&#127381; NOVA CARTA &#127381;";
+  colocarInput();
+  seedObj = generateSeed(input);
+  seedString = seedObj._seedString;
+  escolherIntegrante();
+  escolherCidade();
+  escolherCargo();
+  escolherVariante();
+  escolherEspecial();
+  // pontoVariante();
+  // escolherPoder();
+  // colocarInfoNoWrap();
+  // critico();
+  // moverCartaMonark();
+  //
+  // clicks();
+  // blockInv()
+}
 
 // let seedString = seedObj._seedString
 
 function clicks() {
-  
-  if(!seedObj._isPutByPlayer){
+  if (!seedObj._isPutByPlayer) {
     totalClicks--;
   }
-    
-  
-  
-  // 
+
+  //
 }
 let totalPontos = 0;
 
@@ -1342,7 +1205,7 @@ function somaPontos() {
   // inv 0
   if (
     inv.children[0].id != "empty" &&
-    inv.children[0].children[0].children[3].textContent != "especial-click"
+    inv.children[0].children[0].children[3].textContent != bonusCartasMais
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (inv.children[0].children[3].children[1].textContent != "") {
@@ -1356,7 +1219,7 @@ function somaPontos() {
   // inv 1
   if (
     inv.children[1].id != "empty" &&
-    inv.children[1].children[0].children[3].textContent != "especial-click"
+    inv.children[1].children[0].children[3].textContent != bonusCartasMais
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (inv.children[1].children[3].children[1].textContent != "") {
@@ -1370,7 +1233,7 @@ function somaPontos() {
   // inv 2
   if (
     inv.children[2].id != "empty" &&
-    inv.children[2].children[0].children[3].textContent != "especial-click"
+    inv.children[2].children[0].children[3].textContent != bonusCartasMais
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (inv.children[2].children[3].children[1].textContent != "") {
@@ -1384,7 +1247,7 @@ function somaPontos() {
   // inv 3
   if (
     inv.children[3].id != "empty" &&
-    inv.children[3].children[0].children[3].textContent != "especial-click"
+    inv.children[3].children[0].children[3].textContent != bonusCartasMais
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (inv.children[3].children[3].children[1].textContent != "") {
@@ -1397,12 +1260,12 @@ function somaPontos() {
 
   totalPontos = ponto0 + ponto1 + ponto2 + ponto3;
   placarP.innerHTML = totalPontos + " PONTOS";
-  //  
-  //  
-  //  
-  //  
-  //  
-  //  
+  //
+  //
+  //
+  //
+  //
+  //
 }
 
 button.addEventListener("click", tudo);

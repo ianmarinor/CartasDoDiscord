@@ -1,16 +1,6 @@
 import { seedObj } from "../script.js";
 
-// export let premiomarino = 'premiomarino'
-// export let primeminister = 'primeminister'
-// export let ministro = 'ministro'
-// export let monark = 'monark'
-// export let lord = 'lord'
-// export let nobre = 'nobre'
-// export let gentleman = 'gentleman'
-// export let people = 'people'
-// export let semcargo = 'semcargo'
-
-let cargos = [
+export let cargos = [
   "premiomarino",
   "primeminister",
   "ministro",
@@ -49,7 +39,7 @@ export let numeroDeCartas = {
   CartasTotais: 0,
 };
 
-export let cargo = ''
+export let cargo = "";
 export function escolherCargo() {
   let seedString = seedObj._seedString;
   numeroDeCartas.CartasTotais++;
@@ -88,7 +78,7 @@ export function escolherCargo() {
 
   //MINISTER - 1 EM 500 - 0.2%
   else if (seedString[8] == 0 && seedString[9] == 3 && seedString[10] >= 8) {
-    cargos[2]
+    cargos[2];
 
     let teste =
       (numeroDeCartas.cartasNormais.ministro * 100) /
@@ -110,7 +100,7 @@ export function escolherCargo() {
 
   //LORD - 1 EM 100 - 1%
   else if (seedString[8] == 0 && seedString[9] == 3) {
-    cargos[4]
+    cargos[4];
     let teste =
       (numeroDeCartas.cartasNormais.lord * 100) / numeroDeCartas.CartasTotais;
     numeroDeCartas.cartasNormais.lord++;
@@ -121,14 +111,14 @@ export function escolherCargo() {
   else if (seedString[8] == 0 && seedString[9] >= 8) {
     let teste =
       (numeroDeCartas.cartasNormais.nobre * 100) / numeroDeCartas.CartasTotais;
-    cargo = cargos[5]
+    cargo = cargos[5];
     numeroDeCartas.cartasNormais.nobre++;
     numeroDeCartas.porcentagemCartasNormais.nobre = teste.toFixed(1) + "%";
   }
 
   //GENTLEMAN - 1 EM 10 - 10%
   else if (seedString[8] == 3) {
-    cargos[6]
+    cargos[6];
     numeroDeCartas.cartasNormais.gentleman++;
     numeroDeCartas.porcentagemCartasNormais.gentleman =
       Math.floor(
@@ -139,23 +129,23 @@ export function escolherCargo() {
 
   //PEOPLE - 1 EM 3 - 30%
   else if (seedString[8] >= 7) {
-    cargo = cargos[7]
+    cargo = cargos[7];
     numeroDeCartas.cartasNormais.people++;
     numeroDeCartas.porcentagemCartasNormais.people =
       Math.floor(
         (numeroDeCartas.cartasNormais.people * 100) /
           numeroDeCartas.CartasTotais
       ) + "%";
-  } else if (true){
-    cargo = cargos[8]
-    
+  } else if (true) {
+    cargo = cargos[8];
+
     numeroDeCartas.cartasNormais.semCargo++;
     numeroDeCartas.porcentagemCartasNormais.semCargo =
       Math.floor(
         (numeroDeCartas.cartasNormais.semCargo * 100) /
           numeroDeCartas.CartasTotais
       ) + "%";
-  } else if (true){
+  } else if (true) {
     console.log("cargo no modulo: ", cargo);
   }
 }
