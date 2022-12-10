@@ -35,3 +35,11 @@ for (let j = 0; j < 1001; j++) {
 
 let seed = '1234'
 console.log('seed: ', seed[1][2])
+
+var a = 'oi'
+var b 
+
+function bar(){
+    b = a
+}
+console.log(b) 

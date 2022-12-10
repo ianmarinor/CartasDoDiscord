@@ -105,7 +105,7 @@ li{
     position: relative;
     /* border: 1px solid #020101; */
 }
-#carta-premiomarino{
+#premiomarino{
     background-image: url(pics/wrapPremioMarino.webp);
     /* background-color: var(--premioMarino); */
     /* background: radial-gradient(circle, rgba(252,213,3,1) 40%, rgba(200,232,57,1) 87%); */
@@ -125,7 +125,7 @@ li{
     
 }
 
-#carta-primeminister{
+#primeminister{
     background-color: var(--primeMinister);
     background: linear-gradient(180deg, rgba(0,0,0,1) 74%, rgba(80,78,78,1) 100%);
     height: var(--tamanhoCartaHeight);
@@ -140,7 +140,7 @@ li{
     border: 2px solid #020101;
 }
 
-#carta-ministro{
+#ministro{
     background-color: var(--ministro);
     background: linear-gradient(180deg, rgba(43,214,214,1) 18%, rgba(43,145,214,1) 61%);
     height: var(--tamanhoCartaHeight);
@@ -156,7 +156,7 @@ li{
     
 }
 
-#carta-lord{
+#lord{
     background-color: var(--lord);
     background: linear-gradient(0deg, rgba(110,6,120,1) 0%, rgba(238,23,173,1) 46%);
     height: var(--tamanhoCartaHeight);
@@ -171,7 +171,7 @@ li{
     border: 2px solid #020101;
 }
 
-#carta-nobre{
+#nobre{
     background-color: var(--nobre);
     height: var(--tamanhoCartaHeight);
     width: var(--tamanhoCartaWidth);
@@ -184,7 +184,7 @@ li{
     border: 2px solid #020101;
 }
 
-#carta-gentleman{
+#gentleman{
     background-color: var(--gentleman);
     height: var(--tamanhoCartaHeight);
     width: var(--tamanhoCartaWidth);
@@ -197,7 +197,7 @@ li{
     border: 2px solid #020101;
 }
 
-#carta-people{
+#people{
     background-color: var(--people);
     height: var(--tamanhoCartaHeight);
     /* height: 550px; */
@@ -211,7 +211,7 @@ li{
     border: 2px solid #020101;
     font-size: 1em;
 }
-#carta-semcargo{
+#semcargo{
     background-color: var(--semCargo);
     height: var(--tamanhoCartaHeight);
     width: var(--tamanhoCartaWidth);
@@ -226,7 +226,7 @@ li{
 }
 
 
-#carta-monark{
+#monark{
     background-color: var(--monark);
     height: var(--tamanhoCartaHeight);
     width: var(--tamanhoCartaWidth);
@@ -239,7 +239,7 @@ li{
     color: #b0b0b6;
     border: 2px solid #020101;
 }
-#carta-speaker{
+#speaker{
     background-image: url(pics/cartaspeaker.webp);
     height: var(--tamanhoCartaHeight);
     width: var(--tamanhoCartaWidth);

@@ -2,8 +2,26 @@
 import {seed} from './modules/seedFabricator.js'
 import {escolherIntegrante, integrante} from './modules/integrante.js'
 import {escolherCidade, cidade} from './modules/cidade.js';
+
+// import * as cargomodule from './modules/cargo.js';
+import {cargo, numeroDeCartas,escolherCargo } from './modules/cargo.js';
+  
+ let premiomarino = 'premiomarino'
+ let primeminister = 'primeminister'
+ let ministro = 'ministro'
+ let monark = 'monark'
+ let lord = 'lord'
+ let nobre = 'nobre'
+ let gentleman = 'gentleman'
+ let people = 'people'  
+ let semcargo = 'semcargo'
+
+
 import {variante, escolherVariante} from './modules/variante.js';
-import {cargo, escolherCargo, numeroDeCartas} from './modules/cargo.js';
+
+
+
+import {especial, escolherEspecial} from './modules/especial.js';
 
 
 
@@ -25,22 +43,7 @@ function seedRNG() {
 // if a string, it'll be converted
 
 
-
 export let input = "";
-
-// function seed(seed,isReal,seedFalsa,isPutByPlayer ) {
-//   return{
-//     _seed: seed,
-//     _seedString: seed.toString(),
-//     _isSeedReal: isReal,
-//     _seedFalsaInput: seedFalsa,
-//     _seedLength:  seed.toString().length,
-//     _isPutByPlayer: isPutByPlayer
-
-//   }
-// }
-
-
 
 export function generateSeed(input) {
 
@@ -127,57 +130,6 @@ export function generateSeed(input) {
 }
 
 
-
-
-
-
-
-
-let especial = "";
-function escolherEspecial() {
-  // 
-  if (
-    seedString[5] == 8 &&
-    seedString[6] == 9 &&
-    seedString[7] == 9 &&
-    seedString[8] == 1 &&
-    seedString[9] >= 4
-  ) {
-    return (especial = "especial-tenica");
-  } else if (
-    seedString[5] == 8 &&
-    seedString[6] == 3 &&
-    seedString[7] == 4 &&
-    seedString[8] == 4
-  ) {
-    return (especial = "");
-  } else if (
-    seedString[5] == 8 &&
-    seedString[6] == 1 &&
-    seedString[7] == 7 &&
-    seedString[8] >= 4
-  ) {
-    return (especial = "");
-  } else if (seedString[5] == 8 && seedString[6] == 4 && seedString[7] == 2) {
-    return (especial = "");
-  } else if (seedString[5] == 8 && seedString[6] == 1 && seedString[7] <= 3) {
-    return (especial = "");
-  } 
-  
-  // else if (seedString[5] >= 6) 
-  else if (seedString[5] == 8 && seedString[6] >= 8) 
-  
-  {
-    return (especial = "carta-speaker");
-  } else if (seedString[5] == 8 && seedString[6] <= 4) {
-    return (especial = "especial-click");
-  } else {
-    return (especial = "");
-  }
-}
-
-
-
 //RNG DOS PONTES DE PODER
 
 let pontoPoderSemCargo = () =>
@@ -220,39 +172,39 @@ function pontoVariante() {
 let poder = {};
 function escolherPoder() {
   // 
-  if (cargo === "carta-semcargo") {
+  if (cargo == semcargo) {
     return (poder = {
       _ataque: pontoPoderSemCargo() + pontoVarianteValor,
     });
-  } else if (cargo === "carta-people") {
+  } else if (cargo == people) {
     return (poder = {
       _ataque: pontoPoderPeople() + pontoVarianteValor,
     });
-  } else if (cargo === "carta-gentleman") {
+  } else if (cargo == gentleman) {
     return (poder = {
       _ataque: pontoPoderGentleman() + pontoVarianteValor,
     });
-  } else if (cargo === "carta-monark") {
+  } else if (cargo == monark) {
     return (poder = {
       _ataque: pontoPoderMonark(),
     });
-  } else if (cargo === "carta-nobre") {
+  } else if (cargo == nobre) {
     return (poder = {
       _ataque: pontoPoderNobre() + pontoVarianteValor,
     });
-  } else if (cargo === "carta-lord") {
+  } else if (cargo == lord) {
     return (poder = {
       _ataque: pontoPoderLord() + pontoVarianteValor,
     });
-  } else if (cargo === "carta-ministro") {
+  } else if (cargo == ministro) {
     return (poder = {
       _ataque: pontoPoderMinistro() + pontoVarianteValor,
     });
-  } else if (cargo === "carta-primeminister") {
+  } else if (cargo === primeminister) {
     return (poder = {
       _ataque: pontoPoderPrimeMinister() + pontoVarianteValor,
     });
-  } else if (cargo === "carta-premiomarino") {
+  } else if (cargo === premiomarino) {
     return (poder = {
       _ataque: pontoPoderRNGPremioMarino() + pontoVarianteValor,
     });
@@ -396,14 +348,14 @@ function colocarInfoNoWrap() {
   }
   //colocar cargo
   if (novaCarta._especial == "") {
-    if (novaCarta._cargo === "carta-semcargo") {
+    if (novaCarta._cargo === semcargo) {
       cargoP.innerHTML = "&nbsp;" + "sem cargo".toUpperCase();
       retratoP.style.border = "";
-    } else if (novaCarta._cargo === "carta-people") {
-      cargoP.innerHTML = "&nbsp;" + "people".toUpperCase();
+    } else if (novaCarta._cargo === people) {
+      cargoP.innerHTML = "&nbsp;" + people.toUpperCase();
       retratoP.style.border = "";
-    } else if (novaCarta._cargo === "carta-gentleman") {
-      cargoP.innerHTML = "&nbsp;" + "gentleman".toUpperCase();
+    } else if (novaCarta._cargo === gentleman) {
+      cargoP.innerHTML = "&nbsp;" + gentleman.toUpperCase();
       retratoP.style.border = "";
     } else if (novaCarta._cargo === "carta-ministro") {
       cargoP.innerHTML = "&nbsp;" + "ministro".toUpperCase() + "👨‍⚖️";
@@ -411,20 +363,20 @@ function colocarInfoNoWrap() {
     } else if (novaCarta._cargo === "carta-lord") {
       cargoP.innerHTML = "&nbsp;" + "lord".toUpperCase() + "👑";
       retratoP.style.border = "";
-    } else if (novaCarta._cargo === "carta-nobre") {
-      cargoP.innerHTML = "&nbsp;" + "nobre".toUpperCase() + "💙";
+    } else if (novaCarta._cargo === nobre) {
+      cargoP.innerHTML = "&nbsp;" + nobre.toUpperCase() + "💙";
       retratoP.style.border = "";
     } else if (novaCarta._cargo === "carta-primeminister") {
       cargoP.innerHTML = "&nbsp;" + "prime minister".toUpperCase() + "💪";
       cargoP.style.backgroundImage = "pics/wrapPremioMarino.webp";
       retratoP.style.border = "";
       seedP.style.color = "white";
-    } else if (novaCarta._cargo === "carta-premiomarino") {
+    } else if (novaCarta._cargo === premiomarino) {
       cargoP.innerHTML =
         "&nbsp;" + "&#127942; premio marino &#127942;".toUpperCase();
       retratoP.style.border = "";
-    } else if (novaCarta._cargo === "carta-monark") {
-      cargoP.innerHTML = "&nbsp;" + "monark" + "&#128169;";
+    } else if (novaCarta._cargo === monark) {
+      cargoP.innerHTML = "&nbsp;" + monark + "&#128169;";
       retratoP.style.border = "";
     } else {
       true;
@@ -606,7 +558,7 @@ function moverCarta() {
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == ''
   let customOff = getSeed.className == 'customOff'
   
-  let cartaNotMonark = copyCard.id == 'carta-monark'
+  let cartaNotMonark = copyCard.id == monark
 
   
   let PodeMover = !seedObj._isSeedReal && cartaNotEspecial || !seedObj._isSeedReal && cartaNotMonark || seedObj._isSeedReal && !seedObj._isPutByPlayer
@@ -751,27 +703,27 @@ function moverCartaMonark() {
   if (seedObj._isPutByPlayer) {
     false;
   } else {
-    if (copyCard.id === "carta-monark") {
-      if (inv.children[0].id === "empty" && copyCard.id === "carta-monark") {
+    if (copyCard.id === monark) {
+      if (inv.children[0].id === "empty" && copyCard.id === monark) {
         inv.replaceChild(copyCard, inv.children[0]);
         somaPontos();
       } else if (
         inv.children[1].id === "empty" &&
-        copyCard.id === "carta-monark" &&
+        copyCard.id === monark &&
         copyCardSeed != inv.children[0].children[4].textContent
       ) {
         inv.replaceChild(copyCard, inv.children[1]);
         somaPontos();
       } else if (
         inv.children[2].id === "empty" &&
-        copyCard.id === "carta-monark" &&
+        copyCard.id === monark &&
         copyCardSeed != inv.children[1].children[4].textContent
       ) {
         inv.replaceChild(copyCard, inv.children[2]);
         somaPontos();
       } else if (
         inv.children[3].id === "empty" &&
-        copyCard.id === "carta-monark" &&
+        copyCard.id === monark &&
         copyCardSeed != inv.children[2].children[4].textContent
       ) {
         inv.replaceChild(copyCard, inv.children[3]);
@@ -834,7 +786,7 @@ function critico() {
 
   //gandalf
   if (
-    cartaParaMover.id != "carta-monark" &&
+    cartaParaMover.id != monark &&
     cartaParaMover.id != "carta-speaker" &&
     cartaParaMover.children[0].children[3].textContent == ""
   ) {
@@ -901,7 +853,7 @@ function criarBtn() {
               cartaParaMover.children[0].children[3].textContent == "";
             let cartaNaoVariante =
               cartaParaMover.children[0].children[1].textContent == "";
-            let cartaNaoMonark = cartaParaMover.id != "carta-monark";
+            let cartaNaoMonark = cartaParaMover.id != monark;
             // let poderCartaInv = inv.children[i].children[3].children[2]
 
             // se a carta para mover nao for especial
@@ -1005,7 +957,7 @@ function criarBtn() {
             
 
               
-              if (inv.children[j].id == "carta-monark") {
+              if (inv.children[j].id == monark) {
 
                   
                   
@@ -1168,9 +1120,9 @@ function deletarDeck(e) {
 
   // 1.0Se a carta nao for Monark
   if (
-    e.target.id != "carta-monark" &&
-    e.target.parentElement.id != "carta-monark" &&
-    e.target.parentElement.parentElement.id != "carta-monark" &&
+    e.target.id != monark &&
+    e.target.parentElement.id != monark &&
+    e.target.parentElement.parentElement.id != monark &&
     e.target.id != "inv" &&
     e.target.id != "empty" &&
     e.target.className != "action" &&
@@ -1264,7 +1216,7 @@ function blockInv() {
 
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == ''
   let customOff = getSeed.className == 'customOff'
-  let cartaNotMonark = copyCard.id == 'carta-monark'
+  let cartaNotMonark = copyCard.id == monark
   let PodeMover = !seedObj._isSeedReal && cartaNotEspecial || !seedObj._isSeedReal && cartaNotMonark || seedObj._isSeedReal && !seedObj._isPutByPlayer
 
   
@@ -1311,8 +1263,11 @@ function tudo() {
     seedObj = generateSeed(input);
     seedString =  seedObj._seedString
     escolherIntegrante();
+    console.log(integrante);
     escolherCidade();
+    console.log(cidade);
     escolherCargo();
+    console.log('no tudo',cargo);
     escolherVariante();
     escolherEspecial();
     pontoVariante();
