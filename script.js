@@ -24,6 +24,7 @@ import { especial, escolherEspecial, especiais,cartaNaoEspecial} from "./modules
 let tenica = especiais[0]
 let speaker = especiais[1]
 let bonusCartasMais = especiais[2]
+let abelha = especiais[3]
 
 let versaoHTML = document.getElementById("versao");
 let versao = "Alpha 1.4";
@@ -1142,9 +1143,10 @@ function tudo() {
     escolherCidade();
     console.log(cidade);
     escolherCargo();
-    console.log("no tudo", cargo);
+    console.log("no tudo cargo", cargo);
     escolherVariante();
     escolherEspecial();
+    console.log("no tudo especial", especial);
     pontoVariante();
     escolherPoder();
     colocarInfoNoWrap();

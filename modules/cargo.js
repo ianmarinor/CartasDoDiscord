@@ -136,8 +136,11 @@ export function escolherCargo() {
         (numeroDeCartas.cartasNormais.people * 100) /
           numeroDeCartas.CartasTotais
       ) + "%";
+
+      //SEMCARGO  - 1 EM 2 - 50%
   } else if (true) {
     cargo = cargos[8];
+    console.log(cargo, 'no moduilo');
 
     numeroDeCartas.cartasNormais.semCargo++;
     numeroDeCartas.porcentagemCartasNormais.semCargo =
@@ -145,7 +148,5 @@ export function escolherCargo() {
         (numeroDeCartas.cartasNormais.semCargo * 100) /
           numeroDeCartas.CartasTotais
       ) + "%";
-  } else if (true) {
-    console.log("cargo no modulo: ", cargo);
-  }
+  } 
 }
