@@ -833,7 +833,10 @@ function moverCarta() {
 
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
-  if(PodeMover && naoMoviAinda){
+  if(
+    // !PodeMover  && 
+    naoMoviAinda
+    ){
   
 
   if (inv.children[0].id != "empty") {
@@ -1496,7 +1499,7 @@ function criarBtn() {
               inv.children[j].id != "empty" &&
               inv.children[j].id != "especial-tenica"
             ) {
-              
+              console.log(j)
 
               // se o poder novo for presente
               if (inv.children[j].children[3].children[1].textContent != "") {
