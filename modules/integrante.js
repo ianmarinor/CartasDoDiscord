@@ -21,7 +21,7 @@ export function escolherIntegrante() {
   
 
   let seedString =  seedObj._seedString
-  console.log('seedObj do integrante ', seedObj);
+  // console.log('seedObj do integrante ', seedObj);
   
 
 

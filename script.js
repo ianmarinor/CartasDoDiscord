@@ -1,11 +1,9 @@
 
-
 import {seed} from './modules/seedFabricator.js'
-
 import {escolherIntegrante, integrante} from './modules/integrante.js'
-
 import {escolherCidade, cidade} from './modules/cidade.js';
 import {variante, escolherVariante} from './modules/variante.js';
+import {cargo, escolherCargo, numeroDeCartas} from './modules/cargo.js';
 
 
 
@@ -132,49 +130,8 @@ export function generateSeed(input) {
 
 
 
-//CARGO
-//THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
-let cargo = "";
-function escolherCargo() {
-  // 
-  if (
-    seedString[11] == 2 &&
-    seedString[12] == 3 &&
-    seedString[13] == 4 &&
-    seedString[14] == 4
-  ) {
-    return (cargo = "carta-premiomarino");
-  } else if (
-    seedString[11] == 5 &&
-    seedString[12] == 3 &&
-    seedString[13] == 4 &&
-    seedString[14] <= 4
-  ) {
-    return (cargo = "carta-primeminister");
-  } else if (
-    seedString[12] == 2 &&
-    seedString[13] == 8 &&
-    seedString[14] <= 4
-  ) {
-    return (cargo = "carta-ministro");
-  } else if (seedString[13] == 4 && seedString[14] == 2) {
-    return (cargo = "carta-lord");
-  } else if (seedString[13] == 1 && seedString[14] >= 4) {
-    return (cargo = "carta-nobre");
-  } else if (seedString[13] == 9) {
-    return (cargo = "carta-gentleman");
-  } else if (
-            seedString[13] == 7 &&
-             seedString[14] >= 4 
-            && seedString[4] != 4
-            ) {
-    return (cargo = "carta-monark");
-  } else if (seedString[14] >= 8) {
-    return (cargo = "carta-people");
-  } else {
-    return (cargo = "carta-semcargo");
-  }
-}
+
+
 
 let especial = "";
 function escolherEspecial() {
@@ -219,41 +176,7 @@ function escolherEspecial() {
   }
 }
 
-// let variante = "";
 
-// function escolherVariante() {
-  
-//   let cartasQueNaoTemVariante = cargo != "carta-monark" && cargo != "carta-semcargo" && cargo != "carta-people" && cargo != "carta-people" 
-//   variante = "";
-// if (cartasQueNaoTemVariante){
-
-
-//     if (seedString[4] == 4) {
-//       if (seedString[5] == 9 && seedString[6] == 0) {
-//         return (variante = "farmacêutico");
-//       } else if (seedString[5] == 9 && seedString[6] == 1) {
-//         return (variante = "bão");
-//       } else if (seedString[5] == 9 && seedString[6] == 2) {
-//         return (variante = "apenas");
-//       } else if (seedString[5] == 9 && seedString[6] == 3) {
-//         return (variante = "fonte");
-//       } else if (seedString[5] == 9 && seedString[6] == 4) {
-//         return (variante = "ixqueiro");
-//       } else if (seedString[5] == 9 && seedString[6] == 5) {
-//         return (variante = "abalo");
-//       } else if (seedString[5] == 9 && seedString[6] == 6) {
-//         return (variante = "grito");
-//       } else if (seedString[5] == 9 && seedString[6] == 7) {
-//         return (variante = "dia");
-//       } else if (seedString[5] == 9 && seedString[6] == 8) {
-//         return (variante = "quimico");
-//       } else if (seedString[5] == 9 && seedString[6] == 9) {
-//         return (variante = "pêra");
-//       } else {
-//         return (variante = "");
-//       }
-//     }  
-// }}
 
 //RNG DOS PONTES DE PODER
 
@@ -1326,7 +1249,7 @@ function resetarDeck() {
   totalClicks = 50
   somaPontos();
   tudo()
-  cartaCustom = input.length >= 3;
+  // cartaCustom = input.length >= 3;
   
 
   
@@ -1358,6 +1281,21 @@ let totalClicks = 50;
 
 export let seedObj
 let seedString
+
+
+// TESTAR PROBABILIDADE DE CARTAS
+
+let quantasCartas = 50
+function numeroDeCartasTeste(){
+  
+  for (let j = 0; j < quantasCartas; j++) {
+    tudoParaTeste()
+  }
+  console.log(numeroDeCartas)
+}
+numeroDeCartasTeste()
+
+
 function tudo() {
   
 
@@ -1390,8 +1328,40 @@ function tudo() {
     button.innerHTML = "0 CARTAS";
     console.log(new Date().toUTCString())
     console.log(versao)
+    // console.log(numeroDeCartas)
   }
 }
+
+function tudoParaTeste() {
+  
+
+  
+  // VOLTAR A CONDICAO PRA (totalClicks > 0)
+  
+
+    
+
+    // button.style.backgroundColor = "";
+    // button.innerHTML = "&#127381; NOVA CARTA &#127381;";
+    colocarInput();
+    seedObj = generateSeed(input);
+    seedString =  seedObj._seedString
+    escolherIntegrante();
+    escolherCidade();
+    escolherCargo();
+    escolherVariante();
+    escolherEspecial();
+    // pontoVariante();
+    // escolherPoder();
+    // colocarInfoNoWrap();
+    // critico();
+    // moverCartaMonark();
+    // 
+    // clicks();
+    // blockInv()
+  } 
+
+
 
 
 // let seedString = seedObj._seedString
@@ -1481,6 +1451,9 @@ function somaPontos() {
 }
 
 button.addEventListener("click", tudo);
+
+// button.addEventListener("click", numeroDeCartasTeste());
+
 button.addEventListener("click", blockInv);
 
 cartaParaMover.addEventListener("click", moverCarta);

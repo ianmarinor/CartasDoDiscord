@@ -27,15 +27,11 @@ console.log(Math.floor(Math.random() *   2 + 2))
 //     console.log('ans: ', ans);
 // }
 
-// for (let j = 0; j < 4; j++) {
-//     console.log(j);
-//     if(j == 2){
-//         console.log(j)
-//         break;
-//     }
+for (let j = 0; j < 1001; j++) {
     
     
-// }
+    
+ }
 
 let seed = '1234'
 console.log('seed: ', seed[1][2])

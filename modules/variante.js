@@ -10,6 +10,7 @@ let variantes = [
   "dia",
   "quimico",
   "pêra",
+  "",
 ];
 
 export let variante = ""
@@ -18,10 +19,10 @@ export function escolherVariante() {
 
     let seedString = seedObj._seedString;
 
-  if (seedString[4] == 4 && seedString[5] == 9 && seedString[6] == 0) {
+  if (seedString[3] == 6 && seedString[4] == 6 && seedString[5] == 6) {
     
-    variante = variantes[seedString[7]];
-    console.log('variante: ', variante);
+    variante = variantes[seedString[6]];
+    // console.log('variante: ', variante);
 
   } else {
     variante = ""
