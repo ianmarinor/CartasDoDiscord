@@ -1,10 +1,15 @@
 import {seed} from './module.js'
 
 let versaoHTML = document.getElementById('versao')
-let versao = 'Alpha 1.3.9'
+let versao = 'Alpha 1.3.10'
 versaoHTML.innerHTML = versao
 
-// console.log(ian)
+function showVersion() {
+  console.log('***',versao,'***')
+  console.log(new Date().toUTCString())
+}
+
+showVersion()
 
 
 const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
@@ -1675,13 +1680,18 @@ function tudo() {
     clicks();
     blockInv()
   } else {
+    showVersion()
+    
+
     button.style.backgroundColor = "red";
     button.innerHTML = "0 CARTAS";
   }
 }
 
 function clicks() {
-  if(!cartaCustom ){
+
+
+  if(!seedObj._isPutByPlayer){
     totalClicks--;
   }
   
