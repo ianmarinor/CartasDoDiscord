@@ -24,7 +24,10 @@ export function escolherCidade() {
     // console.log('seedObj da cidade ', seedObj);
 
 
-    return cidade = cidades[seedString[2]]
+    cidade = cidades[seedString[2]]
+    if(seedString[0] == 1){
+      cidade = ''
+    }
   
 }
 

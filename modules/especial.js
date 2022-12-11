@@ -2,14 +2,71 @@ import { seedObj } from "../script.js";
 let seedString
 export let cartaNaoEspecial
 
-let raridades = ['rainha', 'sangue azul','cavaleiro','campones'] 
-export let especiais = ['tenica', 'speaker', 'bonusCartasMais', 'abelha']
+export let raridades = {
+
+  rainha: {
+    nome: 'rainha'
+  },
+
+  sangueAzul: {
+    nome: 'sangue azul'
+  },
+
+  cavaleiro: {
+    nome: 'cavaleiro'
+  },
+
+  campones: {
+    nome: 'campones'
+  },
+} 
+// export let especiais = ['tenica', 'speaker', 'bonusCartasMais', 'abelha']
+
+export let especiais = {
+  
+    tenica: {
+    nome: 'tenica',
+    raridade: raridades.rainha,
+    pontoEspecial: 0,
+    energia: 0,
+    poder: '',
+    efeito: '',
+    familia: ''
+  },
+
+  speaker: {
+    nome: 'speaker',
+    raridade: raridades.cavaleiro,
+    pontoEspecial: 0,
+    energia: 0,
+    poder: '',
+    efeito: '',
+    familia: ''
+  },
 
 
-let cartasRainha = [especiais[0]]
-let cartasSangueAzul = [especiais[3]]
-let cartasCavaleiro = [especiais[1]]
-let cartasCampones = [especiais[2]]
+  bonusCartasMais: {
+    nome: 'bonusCartasMais',
+    raridade: raridades.campones,
+    pontoEspecial: 0,
+    energia: 0,
+    poder: '',
+    efeito: '',
+    familia: ''
+  },
+
+  abelha: {
+    nome:  'abelha',
+    raridade: raridades.sangueAzul,
+    pontoEspecial: 0,
+    energia: 0,
+    poder: '',
+    efeito: '',
+    familia: ''
+  }
+
+}
+
 
 // //RNG RARIDADES
 // let RNGRainha = seedString[8] == 3 && seedString[9] == 3 && seedString[10] == 3 && seedString[11] >= 3 
@@ -37,40 +94,44 @@ export function escolherEspecial() {
 
     
   if(RNGRainha){
-    raridade = raridades[0]
+    raridade = raridades.rainha
   } else if (RNGSangueAzul){
-    raridade = raridades[1]
+    raridade = raridades.sangueAzul
   } else if (RNGCavaleiro){
-    raridade = raridades[2]
+    raridade = raridades.cavaleiro
   } else if (RNGCampones){
-    raridade = raridades[3]
+    raridade = raridades.campones
   } else {
     raridade = ''
   }
   // console.log(raridade,'raridade modulo')
 
+
+
   // RAINHA
-  if(raridade == raridades[0]){
+  if(raridade == raridades.rainha){
     //tenica
-    especial = cartasRainha[0]
+    especial = especiais.tenica
 
 
 //SANGUE AZUL
-  } else if (raridade == raridades[1]){
+  } else if (raridade == raridades.sangueAzul){
     //abelha
-    especial = cartasSangueAzul[0]
+    especial = especiais.abelha
 
   //CAVALEIRO
-  } else if(raridade == raridades[2]){
+  } else if(raridade == raridades.cavaleiro){
     //speaker 
-    especial = cartasCavaleiro[0]
+    especial = especiais.speaker
 
-  } else if(raridade == raridades[3]){
+  } else if(raridade == raridades.campones){
     //speaker 
-    especial = cartasCampones[0]
-  // console.log(especial,'especial modulo')
+    especial = especiais.bonusCartasMais
+  
   } else {
     especial = ''
   }
+
+  console.log(especial,'especial modulo')
   }
 

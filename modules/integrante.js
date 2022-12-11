@@ -22,10 +22,12 @@ export function escolherIntegrante() {
 
   let seedString =  seedObj._seedString
   // console.log('seedObj do integrante ', seedObj);
+
   
-
-
-
   integrante = integrantes[seedString[1]]
+  if(seedString[0] == 1){
+    integrante = ''
+  }
+  
 }
 

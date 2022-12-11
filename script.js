@@ -21,10 +21,13 @@ let semcargo = cargos[8];
 import { variante, escolherVariante } from "./modules/variante.js";
 
 import { especial, escolherEspecial, especiais,cartaNaoEspecial} from "./modules/especial.js";
-let tenica = especiais[0]
-let speaker = especiais[1]
-let bonusCartasMais = especiais[2]
-let abelha = especiais[3]
+
+let tenica = especiais.tenica
+let speaker = especiais.speaker
+let bonusCartasMais = especiais.bonusCartasMais
+let abelha = especiais.abelha
+console.log(bonusCartasMais);
+
 
 let versaoHTML = document.getElementById("versao");
 let versao = "Alpha 1.4";
@@ -67,7 +70,7 @@ export function generateSeed(input) {
         let constanteSeedFalsa = 516515615165159;
         let calculoSeedFalsa = sum * constanteSeedFalsa;
 
-        return seed(calculoSeedFalsa, false, input, true);1149
+        return seed(calculoSeedFalsa, false, input, true);
       } else {
         return seed(seedRNG(), true, "", false);
       }
@@ -264,13 +267,13 @@ function colocarInfoNoWrap() {
   cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
   varianteP.innerHTML = novaCarta._variante;
-  especialP.innerHTML = novaCarta._especial;
+  especialP.innerHTML = novaCarta._especial.nome;
   seedP.innerHTML = "&nbsp;" + seedString;
   arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
 
   if (novaCarta._especial != "") {
-    cartaP.id = novaCarta._especial;
+    cartaP.id = novaCarta._especial.nome;
   } else {
     cartaP.id = novaCarta._cargo;
   }
@@ -471,7 +474,8 @@ function colocarInfoNoWrap() {
     }
   }
 
-  // console.log(novaCarta);
+  console.log(novaCarta);
+  // console.log(novaCarta._especial.nome);
 }
 
 function colocarInput() {
@@ -1013,7 +1017,7 @@ function criarBtn() {
 // TIRAR CARTA DO INVENTARIO
 // /******************************************** */
 
-btnReset = document.getElementById("btnReset");
+let btnReset = document.getElementById("btnReset");
 
 function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
@@ -1128,7 +1132,7 @@ function numeroDeCartasTeste() {
   }
   console.log(numeroDeCartas);
 }
-numeroDeCartasTeste();
+// numeroDeCartasTeste();
 
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
@@ -1146,7 +1150,7 @@ function tudo() {
     // console.log("no tudo cargo", cargo);
     escolherVariante();
     escolherEspecial();
-    // console.log("no tudo especial", especial);
+    console.log("no tudo especial", especial);
     pontoVariante();
     escolherPoder();
     colocarInfoNoWrap();
