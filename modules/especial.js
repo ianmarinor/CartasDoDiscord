@@ -2,39 +2,58 @@ import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 export let cartaNaoEspecial;
 
+
+
+
+
+
 export let raridades = {
   semRaridade: {
-    nome: "",
-    rng: ()=> seedString[0] != 1
+    nome: "semRaridade",
+    rng: ()=> seedString[14] != 1
   },
 
   rainha: {
     nome: "rainha",
-    rng: ()=>seedString[8] == 3 &&
+    rng: ()=>seedString[8] == 1 &&
     seedString[9] == 3 &&
     seedString[10] == 3 &&
     seedString[11] >= 3 &&
-    seedString[0] == 1
+    seedString[14] == 1
   },
 
   sangueAzul: {
     nome: "sangue azul",
-    rng:()=> seedString[8] == 3 &&
+    rng:()=> seedString[8] == 2 &&
     seedString[9] == 3 &&
     seedString[10] == 3 &&
-    seedString[0] == 1
+    seedString[14] == 1
   },
 
   cavaleiro: {
     nome: "cavaleiro",
-    rng: ()=>seedString[8] == 3 && seedString[9] == 3 && seedString[0] == 1
+    rng: ()=>seedString[8] == 0 && seedString[9] == 3 && seedString[14] == 1
+    // rng: ()=>seedString[14] == 1
   },
 
   campones: {
     nome: "campones",
-    rng: ()=>seedString[0] == 1
+    rng: ()=>seedString[14] == 1 && seedString[8] >=3
+    // rng: ()=>seedString[8] == 3 && seedString[9] == 3 && seedString[14] == 1
   },
 };
+
+
+
+
+
+
+
+
+
+
+
+
 // export let especiais = ['tenica', 'speaker', 'bonusCartasMais', 'abelha']
 
 export let especiais = {
@@ -91,27 +110,42 @@ export let especiais = {
 
 
 export let especial = "";
-let raridade
+let raridade = ''
 
-export function escolherEspecial() {
-  seedString = seedObj._seedString;
+export function escolherEspecial(teste) {
+  if (!teste){
+    seedString = seedObj._seedString;
+ } else{
+ seedString = teste}
   // console.log("seedString no especial", seedString);
-  // console.log("seedString no especial", seedString[0]);
+  // console.log("seedString no especial", seedString[14]);
   
 
   //RNG RARIDADES
   
 
-  if (raridades.rainha.rng()) {
-    raridade = raridades.rainha;
-  } else if (raridades.sangueAzul.rng()) {
-    raridade = raridades.sangueAzul;
-  } else if (raridades.cavaleiro.rng()) {
-    raridade = raridades.cavaleiro;
+  // if (raridades.rainha.rng()) {
+  //   raridade = raridades.rainha;
+  // } else if (raridades.sangueAzul.rng()) {
+  //   raridade = raridades.sangueAzul;
+  // } else if (raridades.cavaleiro.rng()) {
+  //   raridade = raridades.cavaleiro;
+  // } else if (raridades.campones.rng()) {
+  //   raridade = raridades.campones;
+  // } else if (raridades.semRaridade.rng()){
+  //   raridade = raridades.semRaridade;
+  // }
+
+  if (seedString[14] != 1) {
+     raridade = raridades.semRaridade;
   } else if (raridades.campones.rng()) {
-    raridade = raridades.campones;
-  } else if (raridades.semRaridade.rng()){
-    raridade = raridades.semRaridade;
+     raridade = raridades.campones;
+  } else if (raridades.cavaleiro.rng()) {
+     raridade = raridades.cavaleiro;
+  } else if (raridades.sangueAzul.rng()) {
+     raridade = raridades.sangueAzul;
+  } else if (raridades.rainha.rng()){
+     raridade = raridades.rainha;
   }
   // console.log('raridade modulo',raridade)
 
@@ -141,5 +175,4 @@ export function escolherEspecial() {
     especial = especiais.notSpecial;
   }
 
-  // console.log('especial modulo',especial)
 }

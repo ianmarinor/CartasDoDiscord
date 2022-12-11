@@ -29,7 +29,7 @@ export function seed(seed, isReal, seedFalsa, isPutByPlayer) {
   };
 }
 
-function generateSeed(input) {
+export function generateSeed(input) {
   let seedReal =
     parseInt(input) >= 1000000000000000 &&
     parseInt(input) <= 1000000000000000000;
@@ -76,6 +76,14 @@ function generateSeed(input) {
 function start() {
   colocarInput();
   seedObj = generateSeed(input);
+}
+
+let quantasCartas = 10;
+function numeroDeCartasTeste() {
+  for (let j = 0; j < quantasCartas; j++) {
+    generateSeed();
+  }
+  // console.log(numeroDeCartas);
 }
 
 button.addEventListener("click", start);

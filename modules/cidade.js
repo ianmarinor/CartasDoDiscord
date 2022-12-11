@@ -1,5 +1,5 @@
 import { seedObj } from "./seedFabricator.js";
-
+let seedString = seedObj._seedString;
 let cidades = [
   "de Caxias do Sul",
   "de Itapira",
@@ -15,8 +15,13 @@ let cidades = [
 
 export let cidade = "";
 
-export function escolherCidade() {
-  let seedString = seedObj._seedString;
+export function escolherCidade(teste) {
+
+  if (!teste){
+    seedString = seedObj._seedString;
+ } else{
+ seedString = teste}
+  
   // console.log("seedObj da cidade ", seedString);
 
   cidade = cidades[seedString[2]];

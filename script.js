@@ -1,20 +1,13 @@
 import { seedObj } from "./modules/seedFabricator.js";
 
-// let input = "" ;
-
-// let seedObj = seedObj();
-// console.log('seedObj: ', seedObj);
-// buscarSeed()
 
 import { escolherIntegrante, integrante } from "./modules/integrante.js";
 import { escolherCidade, cidade } from "./modules/cidade.js";
 
 import {
   cargo,
-  numeroDeCartas,
   escolherCargo,
   cargos,
-  // buscarSeed
 } from "./modules/cargo.js";
 let premioMarino = cargos.premiomarino;
 let primeMinister = cargos.primeMinister;
@@ -35,13 +28,13 @@ import {
   especial,
   escolherEspecial,
   especiais,
-  cartaNaoEspecial,
 } from "./modules/especial.js";
 
 let tenica = especiais.tenica;
 let speaker = especiais.speaker;
 let bonusCartasMais = especiais.bonusCartasMais;
 let abelha = especiais.abelha;
+let cartaNaoEspecial = especiais.cartaNaoEspecial;
 
 
 ///////   ^^^^^^^^IMPORTS IMPORTS^^^^^^
@@ -272,10 +265,10 @@ function colocarInfoNoWrap() {
     } else if (novaCarta._cargo === gentleman) {
       cargoP.innerHTML = "&nbsp;" + gentleman.nome.toUpperCase();
       retratoP.style.border = "";
-    } else if (novaCarta._cargo === "carta-ministro") {
+    } else if (novaCarta._cargo === lord) {
       cargoP.innerHTML = "&nbsp;" + "ministro".toUpperCase() + "👨‍⚖️";
       retratoP.style.border = "";
-    } else if (novaCarta._cargo === "carta-lord") {
+    } else if (novaCarta._cargo === lord) {
       cargoP.innerHTML = "&nbsp;" + "lord".toUpperCase() + "👑";
       retratoP.style.border = "";
     } else if (novaCarta._cargo === nobre) {
@@ -460,7 +453,7 @@ let copyCard = "";
 
 function moverCarta() {
   let seedCopyCard = cartaParaMover.children[4].textContent;
-  console.log("em mover carta ", seedObj);
+  // console.log("em mover carta ", seedObj);
 
   blockInv();
 
@@ -1097,7 +1090,7 @@ function tudo() {
     // colocarInput();seedObj
     // seedObj = generateSeed(input);
     seedString = seedObj._seedString;
-    console.log("seedString no tudo ", seedString);
+    // console.log("seedString no tudo ", seedString);
 
     escolherIntegrante();
     // console.log(integrante);

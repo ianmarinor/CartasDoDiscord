@@ -47,7 +47,7 @@
 let especiais = {
   
     tenica: {
-      nome: 'tenica',
+      nome: 1,
       raridade: 'raridades[0]',
       pontoEspecial: 0,
       energia: 0,
@@ -55,7 +55,7 @@ let especiais = {
     },
   
     speaker: {
-      nome: 'speaker',
+      nome: 1,
       raridade: 'raridades[0]',
       pontoEspecial: 0,
       energia: 0,
@@ -64,7 +64,7 @@ let especiais = {
   
   
     bonusCartasMais: {
-      nome: 'bonusCartasMais',
+      nome: 1,
       raridade: 'raridades[0]',
       pontoEspecial: 0,
       energia: 0,
@@ -72,7 +72,7 @@ let especiais = {
     },
   
     abelha: {
-      nome:  'abelha',
+      nome:  1,
       raridade: '0',
       pontoEspecial: 0,
       energia: 0,
@@ -80,16 +80,11 @@ let especiais = {
     }
   
   }
-
-  let tenica = especiais.tenica
-  
-  let foo = 1 != 2
-  console.log(foo);
-
-  let bar = {
-    mamae:{
-        rng: 1 != 2
-    }
+  let sum = 3
+  for (let key in especiais){
+    
+    sum = sum + especiais[key].nome
+    // console.log(especiais[key].nome);
+    console.log(sum);
   }
-  console.log( 1 == '1');
   
