@@ -39,6 +39,8 @@ export let numeroDeCartas = {
   CartasTotais: 0,
 };
 
+
+
 export let cargo = "";
 export function escolherCargo() {
   let seedString = seedObj._seedString;
@@ -149,4 +151,5 @@ export function escolherCargo() {
           numeroDeCartas.CartasTotais
       ) + "%";
   } 
+  console.log(cargo)
 }

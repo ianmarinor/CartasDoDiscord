@@ -272,7 +272,7 @@ function colocarInfoNoWrap() {
   arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
 
-  if (novaCarta._especial != "") {
+  if (novaCarta._especial.nome != "") {
     cartaP.id = novaCarta._especial.nome;
   } else {
     cartaP.id = novaCarta._cargo;
@@ -281,7 +281,7 @@ function colocarInfoNoWrap() {
   retratoP.style.display = "block";
 
   //colocar retrato
-  if (novaCarta._especial == "") {
+  if (novaCarta._especial.nome == "") {
     if (novaCarta._integrante === "Turu") {
       retratoP.style.backgroundImage = "url('pics/turu.webp')";
     } else if (novaCarta._integrante === "Blackao") {
@@ -307,7 +307,7 @@ function colocarInfoNoWrap() {
     }
   }
   //colocar cargo
-  if (novaCarta._especial == "") {
+  if (novaCarta._especial.nome == "") {
     if (novaCarta._cargo === semcargo) {
       cargoP.innerHTML = "&nbsp;" + "sem cargo".toUpperCase();
       retratoP.style.border = "";

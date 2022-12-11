@@ -4,6 +4,10 @@ export let cartaNaoEspecial
 
 export let raridades = {
 
+  semRaridade: {
+    nome: ''
+  },
+
   rainha: {
     nome: 'rainha'
   },
@@ -23,6 +27,16 @@ export let raridades = {
 // export let especiais = ['tenica', 'speaker', 'bonusCartasMais', 'abelha']
 
 export let especiais = {
+
+  notSpecial: {
+    nome: '',
+    raridade: '',
+    pontoEspecial: 0,
+    energia: 0,
+    poder: '',
+    efeito: '',
+    familia: ''
+  },
   
     tenica: {
     nome: 'tenica',
@@ -102,7 +116,7 @@ export function escolherEspecial() {
   } else if (RNGCampones){
     raridade = raridades.campones
   } else {
-    raridade = ''
+    raridade = raridades.semRaridade
   }
   // console.log(raridade,'raridade modulo')
 
@@ -129,7 +143,7 @@ export function escolherEspecial() {
     especial = especiais.bonusCartasMais
   
   } else {
-    especial = ''
+    especial = especiais.notSpecial
   }
 
   console.log(especial,'especial modulo')
