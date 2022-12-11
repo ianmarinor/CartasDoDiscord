@@ -82,4 +82,14 @@ let especiais = {
   }
 
   let tenica = especiais.tenica
-console.log(tenica === especiais.tenica);
+  
+  let foo = 1 != 2
+  console.log(foo);
+
+  let bar = {
+    mamae:{
+        rng: 1 != 2
+    }
+  }
+  console.log(bar.mamae.rng);
+  

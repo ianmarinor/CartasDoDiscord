@@ -1,5 +1,27 @@
-import { seed } from "./modules/seedFabricator.js";
-import { escolherIntegrante, integrante } from "./modules/integrante.js";
+import { seedObj } from "./modules/seedFabricator.js";
+
+
+
+let versaoHTML = document.getElementById("versao");
+let versao = "Alpha 1.4";
+versaoHTML.innerHTML = versao;
+console.log(new Date().toUTCString());
+console.log(versao);
+
+
+
+
+// let input = "" ;
+
+// let seedObj = seedObj();
+// console.log('seedObj: ', seedObj);
+// buscarSeed()
+
+
+
+
+
+import { escolherIntegrante, integrante} from "./modules/integrante.js";
 import { escolherCidade, cidade } from "./modules/cidade.js";
 
 import {
@@ -7,16 +29,17 @@ import {
   numeroDeCartas,
   escolherCargo,
   cargos,
+  // buscarSeed
 } from "./modules/cargo.js";
-let premiomarino = cargos[0];
-let primeminister = cargos[1];
-let ministro = cargos[2];
-let monark = cargos[3];
-let lord = cargos[4];
-let nobre = cargos[5];
-let gentleman = cargos[6];
-let people = cargos[7];
-let semcargo = cargos[8];
+let premiomarino = cargos.premiomarino
+let primeminister = cargos.primeMinister
+let ministro = cargos.ministro
+let monark = cargos.monark
+let lord = cargos.lord
+let nobre = cargos.nobre
+let gentleman = cargos.gentleman
+let people = cargos.people
+let semcargo = cargos.semCargo
 
 import { variante, escolherVariante } from "./modules/variante.js";
 
@@ -26,70 +49,19 @@ let tenica = especiais.tenica
 let speaker = especiais.speaker
 let bonusCartasMais = especiais.bonusCartasMais
 let abelha = especiais.abelha
-console.log(bonusCartasMais);
 
 
-let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.4";
-versaoHTML.innerHTML = versao;
 
-console.log(new Date().toUTCString());
-console.log(versao);
 
-const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
-function seedRNG() {
-  return Math.floor(Math.random() * totalNumOfSeeds);
-}
+
 
 // This function generates a seed or takes a seed as input
 // the input will always be translated to the same seed if an integer
 // if a string, it'll be converted
 
-export let input = "";
 
-export function generateSeed(input) {
-  let seedReal =
-    parseInt(input) >= 1000000000000000 &&
-    parseInt(input) <= 1000000000000000000;
-  //
-  //
-  //se for colocada um seed real
-  if (input.length > 10) {
-    if (seedReal) {
-      // return parseInt(input);
 
-      return seed(parseInt(input), true, "", true);
 
-      // se for colocada uma seed falsa
-    } else {
-      if (input.length >= 3 && input.length <= 25) {
-        let sum = 1;
-        for (let i = 0; i < input.length; i++) {
-          sum = sum + input[i].charCodeAt();
-        }
-        let constanteSeedFalsa = 516515615165159;
-        let calculoSeedFalsa = sum * constanteSeedFalsa;
-
-        return seed(calculoSeedFalsa, false, input, true);
-      } else {
-        return seed(seedRNG(), true, "", false);
-      }
-    }
-  } else {
-    if (input.length >= 3 && input.length <= 25) {
-      let sum = 1;
-      for (let i = 0; i < input.length; i++) {
-        sum = sum + input[i].charCodeAt();
-      }
-      let constanteSeedFalsa = 516515615165159;
-      let calculoSeedFalsa = sum * constanteSeedFalsa;
-
-      return seed(calculoSeedFalsa, false, input, true);
-    } else {
-      return seed(seedRNG(), true, "", false);
-    }
-  }
-}
 
 //RNG DOS PONTES DE PODER
 
@@ -218,7 +190,7 @@ let cartaP = document.getElementById("carta");
 //wrap
 let wrap = document.getElementsByClassName("wrap")[0];
 //input
-let getSeed = document.getElementById("getseed");
+// let getSeed = document.getElementById("getseed");
 //pagin procura seed
 let seedCheckInput = document.getElementById("seedcheckinput");
 let seedCheckBtn = document.getElementById("seedcheckbtn");
@@ -275,7 +247,7 @@ function colocarInfoNoWrap() {
   if (novaCarta._especial.nome != "") {
     cartaP.id = novaCarta._especial.nome;
   } else {
-    cartaP.id = novaCarta._cargo;
+    cartaP.id = novaCarta._cargo.nome;
   }
 
   retratoP.style.display = "block";
@@ -477,11 +449,11 @@ function colocarInfoNoWrap() {
   console.log(novaCarta);
   // console.log(novaCarta._especial.nome);
 }
-
-function colocarInput() {
-  input = getSeed.value;
-  // input = 13315754569994
-}
+// let input 
+// function colocarInput() {
+//   input = getSeed.value;
+//   // input = 13315754569994
+// }
 
 //*************************MOVER CARTA PARA O INVENTARIO */
 //****************************************************** */
@@ -1120,7 +1092,7 @@ function blockInv() {
 }
 let totalClicks = 50;
 
-export let seedObj;
+
 let seedString;
 
 // TESTAR PROBABILIDADE DE CARTAS
@@ -1139,9 +1111,11 @@ function tudo() {
   if (totalClicks >= 0) {
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-    colocarInput();
-    seedObj = generateSeed(input);
+    // colocarInput();seedObj
+    // seedObj = generateSeed(input);
     seedString = seedObj._seedString;
+    console.log('seedString no tudo ', seedString);
+
     escolherIntegrante();
     // console.log(integrante);
     escolherCidade();
@@ -1150,7 +1124,7 @@ function tudo() {
     // console.log("no tudo cargo", cargo);
     escolherVariante();
     escolherEspecial();
-    console.log("no tudo especial", especial);
+    // console.log("no tudo especial", especial);
     pontoVariante();
     escolherPoder();
     colocarInfoNoWrap();

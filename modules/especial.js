@@ -1,5 +1,5 @@
-import { seedObj } from "../script.js";
-let seedString
+import {seedObj} from './seedFabricator.js'
+let seedString = seedObj._seedString
 export let cartaNaoEspecial
 
 export let raridades = {
@@ -99,6 +99,8 @@ export function escolherEspecial() {
 
 
   seedString = seedObj._seedString;
+  console.log('seedString no especial', seedString);
+  
   //RNG RARIDADES
   let RNGRainha = seedString[8] == 3 && seedString[9] == 3 && seedString[10] == 3 && seedString[11] >= 3  && seedString[0] == 1
   let RNGSangueAzul = seedString[8] == 3 && seedString[9] == 3 && seedString[10] == 3 && seedString[0] == 1
@@ -146,6 +148,6 @@ export function escolherEspecial() {
     especial = especiais.notSpecial
   }
 
-  console.log(especial,'especial modulo')
+  // console.log(especial,'especial modulo')
   }
 

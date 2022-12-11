@@ -1,4 +1,4 @@
-import { seedObj } from "../script.js";
+import {seedObj} from './seedFabricator.js'
 
 let variantes = [
   "farmacêutico",

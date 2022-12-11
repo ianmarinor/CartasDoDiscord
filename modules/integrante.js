@@ -1,4 +1,8 @@
-import {seedObj} from '../script.js'
+import {seedObj} from './seedFabricator.js'
+
+
+
+
 
 let integrantes = [
     "Gandalf",
@@ -21,7 +25,7 @@ export function escolherIntegrante() {
   
 
   let seedString =  seedObj._seedString
-  // console.log('seedObj do integrante ', seedObj);
+  console.log('seedObj do integrante ', seedString);
 
   
   integrante = integrantes[seedString[1]]
@@ -30,4 +34,4 @@ export function escolherIntegrante() {
   }
   
 }
-
+// buscarSeed()
