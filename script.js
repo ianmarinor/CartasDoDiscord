@@ -16,15 +16,18 @@ import {
   cargos,
   // buscarSeed
 } from "./modules/cargo.js";
-let premiomarino = cargos.premiomarino;
-let primeminister = cargos.primeMinister;
+let premioMarino = cargos.premiomarino;
+let primeMinister = cargos.primeMinister;
 let ministro = cargos.ministro;
 let monark = cargos.monark;
 let lord = cargos.lord;
 let nobre = cargos.nobre;
 let gentleman = cargos.gentleman;
 let people = cargos.people;
-let semcargo = cargos.semCargo;
+let semCargo = cargos.semCargo;
+let noCargo = cargos.noCargo
+
+
 
 import { variante, escolherVariante } from "./modules/variante.js";
 
@@ -40,9 +43,8 @@ let speaker = especiais.speaker;
 let bonusCartasMais = especiais.bonusCartasMais;
 let abelha = especiais.abelha;
 
-// This function generates a seed or takes a seed as input
-// the input will always be translated to the same seed if an integer
-// if a string, it'll be converted
+
+///////   ^^^^^^^^IMPORTS IMPORTS^^^^^^
 
 //RNG DOS PONTES DE PODER
 
@@ -86,7 +88,7 @@ function pontoVariante() {
 let poder = {};
 function escolherPoder() {
   //
-  if (cargo == semcargo) {
+  if (cargo == semCargo) {
     return (poder = {
       _ataque: pontoPoderSemCargo() + pontoVarianteValor,
     });
@@ -114,11 +116,11 @@ function escolherPoder() {
     return (poder = {
       _ataque: pontoPoderMinistro() + pontoVarianteValor,
     });
-  } else if (cargo === primeminister) {
+  } else if (cargo === primeMinister) {
     return (poder = {
       _ataque: pontoPoderPrimeMinister() + pontoVarianteValor,
     });
-  } else if (cargo === premiomarino) {
+  } else if (cargo === premioMarino) {
     return (poder = {
       _ataque: pontoPoderRNGPremioMarino() + pontoVarianteValor,
     });
@@ -261,8 +263,8 @@ function colocarInfoNoWrap() {
   }
   //colocar cargo
   if (novaCarta._especial.nome == "") {
-    if (novaCarta._cargo === semcargo) {
-      cargoP.innerHTML = "&nbsp;" + semcargo.nome.toUpperCase();
+    if (novaCarta._cargo === semCargo) {
+      cargoP.innerHTML = "&nbsp;" + semCargo.nome.toUpperCase();
       retratoP.style.border = "";
     } else if (novaCarta._cargo === people) {
       cargoP.innerHTML = "&nbsp;" + people.nome.toUpperCase();
@@ -284,7 +286,7 @@ function colocarInfoNoWrap() {
       cargoP.style.backgroundImage = "pics/wrapPremioMarino.webp";
       retratoP.style.border = "";
       seedP.style.color = "white";
-    } else if (novaCarta._cargo === premiomarino) {
+    } else if (novaCarta._cargo === premioMarino) {
       cargoP.innerHTML =
         "&nbsp;" + "&#127942; premio marino &#127942;".toUpperCase();
       retratoP.style.border = "";
@@ -1111,7 +1113,6 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-    //
     clicks();
     blockInv();
   } else {

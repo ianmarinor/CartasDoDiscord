@@ -91,5 +91,5 @@ let especiais = {
         rng: 1 != 2
     }
   }
-  console.log(bar.mamae.rng);
+  console.log( 1 == '1');
   

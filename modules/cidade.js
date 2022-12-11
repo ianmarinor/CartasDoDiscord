@@ -17,7 +17,7 @@ export let cidade = "";
 
 export function escolherCidade() {
   let seedString = seedObj._seedString;
-  console.log("seedObj da cidade ", seedString);
+  // console.log("seedObj da cidade ", seedString);
 
   cidade = cidades[seedString[2]];
   if (seedString[0] == 1) {
