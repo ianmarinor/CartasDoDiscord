@@ -2,11 +2,7 @@ import { seedObj } from "./modules/seedFabricator.js";
 
 
 
-let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.4";
-versaoHTML.innerHTML = versao;
-console.log(new Date().toUTCString());
-console.log(versao);
+
 
 
 

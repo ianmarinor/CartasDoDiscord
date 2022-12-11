@@ -1,11 +1,24 @@
-let getSeed = document.getElementById("getseed");
-let input = ''
+let versaoHTML = document.getElementById("versao");
+let versao = "Alpha 1.4";
+versaoHTML.innerHTML = versao;
+console.log(new Date().toUTCString());
+console.log(versao);
 
-// function colocarInput() {
-//   input = getSeed.value;
-//   // input = 13315754569994
-// }
-// colocarInput();
+
+let getSeed = document.getElementById("getseed");
+let button = document.getElementById("btn");
+
+
+let input = ''
+function colocarInput() {
+  input = getSeed.value;
+  // input = 11111111331561567
+}
+
+
+
+
+
 
 const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
 function seedRNG() {
@@ -68,4 +81,15 @@ export function seed(seed,isReal,seedFalsa,isPutByPlayer ) {
     }
   }
 
+  
+  function start(){
+    colocarInput();
+     seedObj = generateSeed(input)
+  }
+
+
+  button.addEventListener("click", start);
   export let seedObj = generateSeed(input)
+  console.log('seedObj no seedfab ', seedObj);
+
+  
