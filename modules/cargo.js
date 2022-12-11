@@ -1,8 +1,6 @@
-import {seedObj} from './seedFabricator.js'
+import { seedObj } from "./seedFabricator.js";
 
-
-  let seedString = seedObj._seedString
-
+let seedString = seedObj._seedString;
 
 export let cargos = {
   premiomarino: {
@@ -16,51 +14,52 @@ export let cargos = {
 
   primeMinister: {
     nome: "primeminister",
-    rng: seedString[8] == 0 &&
-    seedString[9] == 3 &&
-    seedString[10] == 4 &&
-    seedString[11] >= 8
+    rng:
+      seedString[8] == 0 &&
+      seedString[9] == 3 &&
+      seedString[10] == 4 &&
+      seedString[11] >= 8,
   },
 
   ministro: {
     nome: "ministro",
-    rng: seedString[8] == 0 && seedString[9] == 3 && seedString[10] >= 8
+    rng: seedString[8] == 0 && seedString[9] == 3 && seedString[10] >= 8,
   },
 
   monark: {
     nome: "monark",
-    rng: seedString[8] == 1 && seedString[9] >= 3 && seedString[10] != 4
+    rng: seedString[8] == 1 && seedString[9] >= 3 && seedString[10] != 4,
   },
 
   lord: {
     nome: "lord",
-    rng: seedString[8] == 0 && seedString[9] == 3
+    rng: seedString[8] == 0 && seedString[9] == 3,
   },
 
   nobre: {
     nome: "nobre",
-    rng: seedString[8] == 0 && seedString[9] >= 8
+    rng: seedString[8] == 0 && seedString[9] >= 8,
   },
 
   gentleman: {
     nome: "gentleman",
-    rng: seedString[8] == 3
+    rng: seedString[8] == 3,
   },
 
   people: {
     nome: "people",
     // rng: seedString[8] >= 7
-    rng: seedString
+    rng: seedString,
   },
 
   semCargo: {
     nome: "semcargo",
-    rng: false
+    rng: false,
   },
-  showSeed(){
+  showSeed() {
     // console.log(this.people.rng);
     // console.log(seedString);
-  }
+  },
 };
 
 export let numeroDeCartas = {
@@ -92,32 +91,25 @@ export let numeroDeCartas = {
 
 export let cargo = "";
 export function escolherCargo() {
-
-
   // seedString = seedObj._seedString;
   numeroDeCartas.CartasTotais++;
-  console.log('no modulo cargo', seedString,);
+  console.log("no modulo cargo", seedString);
   // cargos.showSeed()
 
-
   //PREMIO MARINO - 0.01% - 1 EM 10K
-  if (
-    cargos.premiomarino.rng
-  ) {
+  if (cargos.premiomarino.rng) {
     let teste =
       (numeroDeCartas.cartasNormais.premioMarino * 100) /
       numeroDeCartas.CartasTotais;
-    cargo =  cargos.premiomarino
+    cargo = cargos.premiomarino;
     numeroDeCartas.cartasNormais.premioMarino++;
     numeroDeCartas.porcentagemCartasNormais.premioMarino =
       teste.toFixed(3) + "%";
   }
 
   //PRIME MINISTER - 1 EM 5k - 0.02%
-  else if (
-    cargos.primeMinister.rng
-  ) {
-    cargo = cargos.primeMinister
+  else if (cargos.primeMinister.rng) {
+    cargo = cargos.primeMinister;
     let teste =
       (numeroDeCartas.cartasNormais.primeMinister * 100) /
       numeroDeCartas.CartasTotais;
@@ -128,7 +120,7 @@ export function escolherCargo() {
 
   //MINISTER - 1 EM 500 - 0.2%
   else if (cargos.ministro.rng) {
-    cargo = cargos.ministro
+    cargo = cargos.ministro;
 
     let teste =
       (numeroDeCartas.cartasNormais.ministro * 100) /
@@ -139,7 +131,7 @@ export function escolherCargo() {
 
   //MONARK - 1 EM ???
   else if (cargos.monark.rng) {
-    cargo = cargos.monark
+    cargo = cargos.monark;
     numeroDeCartas.cartasNormais.monark++;
     numeroDeCartas.porcentagemCartasNormais.monark =
       Math.floor(
@@ -150,7 +142,7 @@ export function escolherCargo() {
 
   //LORD - 1 EM 100 - 1%
   else if (cargos.lord.rng) {
-    cargo = cargos.lord
+    cargo = cargos.lord;
     let teste =
       (numeroDeCartas.cartasNormais.lord * 100) / numeroDeCartas.CartasTotais;
     numeroDeCartas.cartasNormais.lord++;
@@ -161,14 +153,14 @@ export function escolherCargo() {
   else if (cargos.nobre.rng) {
     let teste =
       (numeroDeCartas.cartasNormais.nobre * 100) / numeroDeCartas.CartasTotais;
-    cargo = cargos.nobre
+    cargo = cargos.nobre;
     numeroDeCartas.cartasNormais.nobre++;
     numeroDeCartas.porcentagemCartasNormais.nobre = teste.toFixed(1) + "%";
   }
 
   //GENTLEMAN - 1 EM 10 - 10%
   else if (cargos.gentleman.rng) {
-    cargo = cargos.gentleman
+    cargo = cargos.gentleman;
     numeroDeCartas.cartasNormais.gentleman++;
     numeroDeCartas.porcentagemCartasNormais.gentleman =
       Math.floor(
@@ -179,7 +171,7 @@ export function escolherCargo() {
 
   //PEOPLE - 1 EM 3 - 30%
   else if (cargos.people.rng) {
-    cargo = cargos.people
+    cargo = cargos.people;
     numeroDeCartas.cartasNormais.people++;
     numeroDeCartas.porcentagemCartasNormais.people =
       Math.floor(
@@ -189,7 +181,7 @@ export function escolherCargo() {
 
     //SEMCARGO  - 1 EM 2 - 50%
   } else {
-    cargo = cargos.semCargo
+    cargo = cargos.semCargo;
     // console.log(cargo, 'no moduilo');
 
     numeroDeCartas.cartasNormais.semCargo++;

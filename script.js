@@ -1,23 +1,12 @@
 import { seedObj } from "./modules/seedFabricator.js";
 
-
-
-
-
-
-
-
 // let input = "" ;
 
 // let seedObj = seedObj();
 // console.log('seedObj: ', seedObj);
 // buscarSeed()
 
-
-
-
-
-import { escolherIntegrante, integrante} from "./modules/integrante.js";
+import { escolherIntegrante, integrante } from "./modules/integrante.js";
 import { escolherCidade, cidade } from "./modules/cidade.js";
 
 import {
@@ -27,37 +16,33 @@ import {
   cargos,
   // buscarSeed
 } from "./modules/cargo.js";
-let premiomarino = cargos.premiomarino
-let primeminister = cargos.primeMinister
-let ministro = cargos.ministro
-let monark = cargos.monark
-let lord = cargos.lord
-let nobre = cargos.nobre
-let gentleman = cargos.gentleman
-let people = cargos.people
-let semcargo = cargos.semCargo
+let premiomarino = cargos.premiomarino;
+let primeminister = cargos.primeMinister;
+let ministro = cargos.ministro;
+let monark = cargos.monark;
+let lord = cargos.lord;
+let nobre = cargos.nobre;
+let gentleman = cargos.gentleman;
+let people = cargos.people;
+let semcargo = cargos.semCargo;
 
 import { variante, escolherVariante } from "./modules/variante.js";
 
-import { especial, escolherEspecial, especiais,cartaNaoEspecial} from "./modules/especial.js";
+import {
+  especial,
+  escolherEspecial,
+  especiais,
+  cartaNaoEspecial,
+} from "./modules/especial.js";
 
-let tenica = especiais.tenica
-let speaker = especiais.speaker
-let bonusCartasMais = especiais.bonusCartasMais
-let abelha = especiais.abelha
-
-
-
-
-
+let tenica = especiais.tenica;
+let speaker = especiais.speaker;
+let bonusCartasMais = especiais.bonusCartasMais;
+let abelha = especiais.abelha;
 
 // This function generates a seed or takes a seed as input
 // the input will always be translated to the same seed if an integer
 // if a string, it'll be converted
-
-
-
-
 
 //RNG DOS PONTES DE PODER
 
@@ -277,13 +262,13 @@ function colocarInfoNoWrap() {
   //colocar cargo
   if (novaCarta._especial.nome == "") {
     if (novaCarta._cargo === semcargo) {
-      cargoP.innerHTML = "&nbsp;" + "sem cargo".toUpperCase();
+      cargoP.innerHTML = "&nbsp;" + semcargo.nome.toUpperCase();
       retratoP.style.border = "";
     } else if (novaCarta._cargo === people) {
-      cargoP.innerHTML = "&nbsp;" + people.toUpperCase();
+      cargoP.innerHTML = "&nbsp;" + people.nome.toUpperCase();
       retratoP.style.border = "";
     } else if (novaCarta._cargo === gentleman) {
-      cargoP.innerHTML = "&nbsp;" + gentleman.toUpperCase();
+      cargoP.innerHTML = "&nbsp;" + gentleman.nome.toUpperCase();
       retratoP.style.border = "";
     } else if (novaCarta._cargo === "carta-ministro") {
       cargoP.innerHTML = "&nbsp;" + "ministro".toUpperCase() + "👨‍⚖️";
@@ -292,7 +277,7 @@ function colocarInfoNoWrap() {
       cargoP.innerHTML = "&nbsp;" + "lord".toUpperCase() + "👑";
       retratoP.style.border = "";
     } else if (novaCarta._cargo === nobre) {
-      cargoP.innerHTML = "&nbsp;" + nobre.toUpperCase() + "💙";
+      cargoP.innerHTML = "&nbsp;" + nobre.nome.toUpperCase() + "💙";
       retratoP.style.border = "";
     } else if (novaCarta._cargo === "carta-primeminister") {
       cargoP.innerHTML = "&nbsp;" + "prime minister".toUpperCase() + "💪";
@@ -304,7 +289,7 @@ function colocarInfoNoWrap() {
         "&nbsp;" + "&#127942; premio marino &#127942;".toUpperCase();
       retratoP.style.border = "";
     } else if (novaCarta._cargo === monark) {
-      cargoP.innerHTML = "&nbsp;" + monark + "&#128169;";
+      cargoP.innerHTML = "&nbsp;" + monark.nome + "&#128169;";
       retratoP.style.border = "";
     } else {
       true;
@@ -445,7 +430,7 @@ function colocarInfoNoWrap() {
   console.log(novaCarta);
   // console.log(novaCarta._especial.nome);
 }
-// let input 
+// let input
 // function colocarInput() {
 //   input = getSeed.value;
 //   // input = 13315754569994
@@ -493,9 +478,10 @@ function moverCarta() {
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
   if (
-    // PodeMover && 
+    // PodeMover &&
 
-    naoMoviAinda) {
+    naoMoviAinda
+  ) {
     if (inv.children[0].id != "empty") {
       if (
         inv.children[0].children[4].textContent !=
@@ -1070,7 +1056,7 @@ function resetarDeck() {
 }
 
 /////// CRITICO
-
+let getSeed = document.getElementById("getseed");
 function blockInv() {
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   let customOff = getSeed.className == "customOff";
@@ -1087,7 +1073,6 @@ function blockInv() {
   }
 }
 let totalClicks = 50;
-
 
 let seedString;
 
@@ -1110,7 +1095,7 @@ function tudo() {
     // colocarInput();seedObj
     // seedObj = generateSeed(input);
     seedString = seedObj._seedString;
-    console.log('seedString no tudo ', seedString);
+    console.log("seedString no tudo ", seedString);
 
     escolherIntegrante();
     // console.log(integrante);
