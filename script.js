@@ -1,7 +1,7 @@
 import {seed} from './module.js'
 
 let versaoHTML = document.getElementById('versao')
-let versao = 'Alpha 1.3.10'
+let versao = 'Alpha 1.3.11'
 versaoHTML.innerHTML = versao
 
 function showVersion() {
