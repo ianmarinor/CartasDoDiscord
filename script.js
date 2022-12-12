@@ -1799,11 +1799,19 @@ inv.addEventListener("click", deletarDeck);
 
 
 btnReset.addEventListener("click", resetarDeck);
-// document.addEventListener("keydown", (event)=>{
-//   if(event.ctrlKey){
-//     resetarDeck()
-// }
-// })
+
+
+document.addEventListener("keydown", (event)=>{
+  
+    if(event.code == 'KeyQ'){
+      resetarDeck()
+      moverCarta()
+      moverCarta()
+      moverCarta()
+      moverCarta()
+  }
+})
+
 document.addEventListener("keydown", (event)=>{
   if(event.code == 'ControlLeft'){
     resetarDeck()
