@@ -1773,10 +1773,39 @@ function somaPontos() {
 
 button.addEventListener("click", tudo);
 button.addEventListener("click", blockInv);
+document.addEventListener("keydown", (event)=>{
+  if(event.code == 'KeyW'){
+    tudo()
+    blockInv()
+}
+})
+
+let charCode = '32'
 
 cartaParaMover.addEventListener("click", moverCarta);
+document.addEventListener("keydown", (event)=>{
+  if(copyCard){
+    if(event.code == 'Space'){
+      moverCarta()
+  }    
+  }
+  
+})
+
 inv.addEventListener("click", deletarDeck);
 
 // btnReset.addEventListener('click', moverCartaMonark)
 
+
+
 btnReset.addEventListener("click", resetarDeck);
+// document.addEventListener("keydown", (event)=>{
+//   if(event.ctrlKey){
+//     resetarDeck()
+// }
+// })
+document.addEventListener("keydown", (event)=>{
+  if(event.code == 'ControlLeft'){
+    resetarDeck()
+}
+})
