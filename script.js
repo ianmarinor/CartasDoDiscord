@@ -1665,7 +1665,7 @@ let totalClicks = 50;
 
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
-  if (totalClicks >= 0) {
+  if (totalClicks > 0) {
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     colocarInput();
