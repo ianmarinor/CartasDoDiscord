@@ -1782,14 +1782,18 @@ document.addEventListener("keydown", (event)=>{
 }
 })
 
-let charCode = '32'
+
+
+// BIND MOVER COM TECLA
+let teclaMoverCarta = 'Space'
 
 cartaParaMover.addEventListener("click", moverCarta);
 document.addEventListener("keydown", (event)=>{
   if(copyCard){
-    if(event.code == 'Space'){
-      moverCarta()
-  }    
+    if(event.code == teclaMoverCarta){
+      
+      setTimeout(moverCarta, 200)
+    }    
   }
   
 })
@@ -1802,22 +1806,25 @@ inv.addEventListener("click", deletarDeck);
 
 btnReset.addEventListener("click", resetarDeck);
 
+// DECK COMECA COM 4 CARTAS
+let teclaDeckPronto = 'KeyQ'
+function deckPronto(){
 
-
-//começa com 10 click a mais
+        resetarDeck()
+        moverCarta()
+        moverCarta()
+        moverCarta()
+        moverCarta()
+        // totalClicks += 10
+        // arenaP.innerHTML = totalClicks + " CARTAS";
+}
 
 document.addEventListener("keydown", (event)=>{
   
-    if(event.code == 'KeyQ'){
+    if(event.code == teclaDeckPronto){
       
-      resetarDeck()
-      moverCarta()
-      moverCarta()
-      moverCarta()
-      moverCarta()
-      // totalClicks += 10
-      // arenaP.innerHTML = totalClicks + " CARTAS";
-      
+        setTimeout(deckPronto, 600)  
+  
   }
 })
 
