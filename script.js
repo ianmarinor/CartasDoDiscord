@@ -1234,4 +1234,10 @@ inv.addEventListener("click", deletarDeck);
 
 // btnReset.addEventListener('click', moverCartaMonark)
 
+document.addEventListener("keydown", (event) =>{
+  if(event.ctrlKey){
+
+    resetarDeck()
+  }
+});
 btnReset.addEventListener("click", resetarDeck);
