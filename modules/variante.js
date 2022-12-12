@@ -1,31 +1,34 @@
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 let variantes = [
-  "farmacêutico",
-  "bão",
-  "fonte",
-  "ixqueiro",
-  "abalo",
-  "grito",
-  "dia",
-  "quimico",
-  "pêra",
-  "",
+  { nome: "Gandalf", display: "💊 FARMACEUTICO 💊"},
+  { nome: "Turu", display: "👌 " + "AÔPA, BÃO 👌" },
+  { nome: "Nefesto", display:"variante nefesto"},
+  { nome: "Blackao", display: "😖" + "COMO MUDA A FONTE 😖" },
+  { nome: "Sr. Antonio", display: 'variante anto' },
+  { nome: "Pedro", display: "🎉" + "UM  ABALO ! 🎉" },
+  { nome: "Curtas", display: "📢AAAAAAAAAAHHH!!!!📢" },
+  { nome: "Twelve", display: "⛪ TODO DIA ISSO ⛪" },
+  { nome: "Junks", display: "🐶 O PUGO 🐶" },
+  { nome: "Murillo", display:"🥛 LEITE COM PÊRA 🍐"},
+  { nome: "", display: "" },
 ];
 
 export let variante = "";
 
 export function escolherVariante(teste) {
-  
-  if (!teste){
+  if (!teste) {
     seedString = seedObj._seedString;
- } else{
-  seedString = teste}
+  } else {
+    seedString = teste;
+  }
 
   if (seedString[3] == 6 && seedString[4] == 6 && seedString[5] == 6) {
     variante = variantes[seedString[6]];
     // console.log('variante: ', variante);
   } else {
-    variante = "";
+    variante = variantes[10];
   }
+
+  console.log("variante: ", variante.display);
 }

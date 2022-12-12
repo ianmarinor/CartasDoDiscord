@@ -257,7 +257,7 @@ li{
 }
 #tenica{
 
-    /* font-family: 'verdana'; */
+    font-family: "Cormorant Upright";
 
     background-image: url(pics/fundoTenica.gif);
     height: var(--tamanhoCartaHeight);
@@ -321,12 +321,15 @@ li{
 }
 
 .retrato{
-    display: none;
-    width: 75%;
-    height: 45%;
+    display: block;
+     width: 75%;
+     height: 45%; 
+
+    /* width: 70px;
+    height: 45px; */
+
     background-color: #4b4747;
     border-radius: 5px;
-
     background-size: 210px 124px;
     background-repeat: no-repeat;
     background-size: cover;

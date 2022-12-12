@@ -1,10 +1,11 @@
-let DEBUG = true
+let DEBUG = false
 
 import { seedObj } from "./modules/seedFabricator.js";
 
 
 import { escolherIntegrante, integrante } from "./modules/integrante.js";
 import { escolherCidade, cidade } from "./modules/cidade.js";
+// import { energia } from "./modules/energia.js";
 
 import {
   cargo,
@@ -141,18 +142,7 @@ function fabricaDeCartaNormal(integrante, cidade, cargo, poder, variante,seedObj
 // escolherCargo()
 // escolherPoder()
 
-const baralho = {
-  nome:'test',
-  variante: 'test',
-  cidade:'test',
-  retrato:'test',
-  cargo: 'test',
-  ataque:'test',
-  pontoEspecial: 'test',
-  poder: 'test',
-  seed:'test'
 
-}
 
 ////D O M
 let button = document.getElementById("btn");
@@ -196,25 +186,39 @@ function colocarInfoNoWrap() {
     seedObj
   );
 
-  
+  const baralho = {
+  nome: integrante.nome.toUpperCase() ,
+  variante: variante.display,
+  cidade: cidade,
+  retrato: integrante.retrato,
+  retratoEspecial: 'RETRATO ESPECIAL',
+  descricao:'DESCRICAO',
+  cargo: cargo.nome,
+  energia: '0',
+  pontoEspecial: 'PE',
+  poder: 'PODER',
+  seed: seedObj._seedString
+}
+console.log(cargo.nome);
+
 
   //LIMPAR A CARTA
-  cartaP.style.backgroundImage = "";
-  cartaP.style.border = "none";
-  cartaP.style.color = "";
-  actionP.style.visibility = "hidden";
-  ataqueP.style.textDecorationLine = "";
-  ataqueP.id = "";
-  novoAtaquerP.innerHTML = "";
-  novoAtaquerP.style.fontSize = "";
-  retratoP.style.backgroundSize = "";
-  cargoP.style.fontSize = "";
-  cargoP.style.color = "";
-  cargoP.style.fontWeight = "";
-  cargoP.style.fontFamily = "";
-  ataqueP.style.color = "";
-  ataqueP.style.fontSize = "";
-  ataqueP.textContent = "";
+  // cartaP.style.backgroundImage = "";
+  // cartaP.style.border = "none";
+  // cartaP.style.color = "";
+  // actionP.style.visibility = "hidden";
+  // ataqueP.style.textDecorationLine = "";
+  // ataqueP.id = "";
+  // novoAtaquerP.innerHTML = "";
+  // novoAtaquerP.style.fontSize = "";
+  // retratoP.style.backgroundSize = "";
+  // cargoP.style.fontSize = "";
+  // cargoP.style.color = "";
+  // cargoP.style.fontWeight = "";
+  // cargoP.style.fontFamily = "";
+  // ataqueP.style.color = "";
+  // ataqueP.style.fontSize = "";
+  // ataqueP.textContent = "";
 
   cartaParaMover.children[0].children[0].classList.remove("critico");
   cartaParaMover.children[0].children[2].classList.remove("critico");
@@ -227,216 +231,148 @@ function colocarInfoNoWrap() {
   cartaParaMover.children[0].children[1].style.fontWeight = "";
 
   //DOM
-  nomeP.innerHTML = "&nbsp;" + novaCarta._integrante.nome.toUpperCase();
-  cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
-  ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
-  varianteP.innerHTML = novaCarta._variante;
-  especialP.innerHTML = novaCarta._especial.nome;
-  seedP.innerHTML = "&nbsp;" + seedString;
+  nomeP.innerHTML = baralho.nome
+  cidadeP.innerHTML = baralho.cidade
+  ataqueP.innerHTML = baralho.energia
+  varianteP.innerHTML = baralho.variante
+  seedP.innerHTML = baralho.seed
   arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
-
-  if (novaCarta._especial.nome != "") {
-    cartaP.id = novaCarta._especial.nome;
-  } else {
-    cartaP.id = novaCarta._cargo.nome;
-  }
-
-  retratoP.style.display = "block";
+  novoAtaquerP.innerHTML = baralho.pontoEspecial
+  cargoP.innerHTML = baralho.cargo.toUpperCase()
+  retratoP.style.backgroundImage = baralho.retrato
+  cartaP.id = baralho.cargo
+  
+  // retratoP.style.display = "block";
 
   //colocar retrato
-  if (novaCarta._especial.nome == "") {
-    if (novaCarta._integrante === "Turu") {
-      retratoP.style.backgroundImage = "url('pics/turu.webp')";
-    } else if (novaCarta._integrante === "Blackao") {
-      retratoP.style.backgroundImage = "url('pics/blackao.jpeg')";
-    } else if (novaCarta._integrante === "Gandalf") {
-      retratoP.style.backgroundImage = "url('pics/gandarfu.png')";
-    } else if (novaCarta._integrante === "Murillo") {
-      retratoP.style.backgroundImage = "url('pics/murilo.jpeg')";
-    } else if (novaCarta._integrante === "Pedro") {
-      retratoP.style.backgroundImage = "url('pics/pedro.png')";
-    } else if (novaCarta._integrante === "Nefesto") {
-      retratoP.style.backgroundImage = "url('pics/nefesto.png')";
-    } else if (novaCarta._integrante === "Sr. Antonio") {
-      retratoP.style.backgroundImage = "url('pics/antonio.png')";
-    } else if (novaCarta._integrante === "Curtas") {
-      retratoP.style.backgroundImage = "url('pics/curtas.png')";
-    } else if (novaCarta._integrante === "Junks") {
-      retratoP.style.backgroundImage = "url('pics/junks.jpeg')";
-    } else if (novaCarta._integrante === "Twelve") {
-      retratoP.style.backgroundImage = "url('pics/twelve.png')";
-    } else {
-      retratoP.style.backgroundImage = "";
-    }
-  }
+  
   //colocar cargo
-  if (novaCarta._especial.nome == "") {
-    if (novaCarta._cargo === semCargo) {
-      cargoP.innerHTML = "&nbsp;" + semCargo.nome.toUpperCase();
-      retratoP.style.border = "";
-    } else if (novaCarta._cargo === people) {
-      cargoP.innerHTML = "&nbsp;" + people.nome.toUpperCase();
-      retratoP.style.border = "";
-    } else if (novaCarta._cargo === gentleman) {
-      cargoP.innerHTML = "&nbsp;" + gentleman.nome.toUpperCase();
-      retratoP.style.border = "";
-    } else if (novaCarta._cargo === lord) {
-      cargoP.innerHTML = "&nbsp;" + "ministro".toUpperCase() + "👨‍⚖️";
-      retratoP.style.border = "";
-    } else if (novaCarta._cargo === lord) {
-      cargoP.innerHTML = "&nbsp;" + "lord".toUpperCase() + "👑";
-      retratoP.style.border = "";
-    } else if (novaCarta._cargo === nobre) {
-      cargoP.innerHTML = "&nbsp;" + nobre.nome.toUpperCase() + "💙";
-      retratoP.style.border = "";
-    } else if (novaCarta._cargo === "carta-primeminister") {
-      cargoP.innerHTML = "&nbsp;" + "prime minister".toUpperCase() + "💪";
-      cargoP.style.backgroundImage = "pics/wrapPremioMarino.webp";
-      retratoP.style.border = "";
-      seedP.style.color = "white";
-    } else if (novaCarta._cargo === premioMarino) {
-      cargoP.innerHTML =
-        "&nbsp;" + "&#127942; premio marino &#127942;".toUpperCase();
-      retratoP.style.border = "";
-    } else if (novaCarta._cargo === monark) {
-      cargoP.innerHTML = "&nbsp;" + monark.nome + "&#128169;";
-      retratoP.style.border = "";
-    } else {
-      true;
-    }
-  }
+  
 
   //CARTAS ESPECIAIS
-  if (novaCarta._especial === speaker) {
-    retratoP.style.backgroundImage = "url('pics/speaker.webp')";
-    nomeP.innerHTML = "&nbsp; SPEAKER";
-    cidadeP.innerHTML = "";
-    cargoP.innerHTML = "MONARK BAN!";
-    retratoP.style.border = "2px dotted green";
-    especialP.style.visibility = "hidden";
-    ataqueP.innerHTML =
-      Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
-  } else if (novaCarta._especial === tenica) {
-    cargoP.style.fontFamily = "Cormorant Upright";
-    retratoP.style.backgroundImage = "url('pics/tenica.webp')";
-    retratoP.style.backgroundSize = "139px 150px";
-    nomeP.innerHTML = "";
-    cidadeP.innerHTML = "";
-    cargoP.style.fontSize = "2.5em";
-    cargoP.style.fontWeight = "bolder";
-    cargoP.innerHTML = "&nbsp; TÉNICA";
-    cargoP.style.color = "black";
-    retratoP.style.border = "2px double gold";
-    ataqueP.style.color = "black";
-    ataqueP.innerHTML = parseInt(ataqueP.innerHTML) * 90 + "👑";
-    seedP.style.color = "black";
+  
+  // } else if (novaCarta._especial === tenica) {
+  //   cargoP.style.fontFamily = "Cormorant Upright";
+  //   retratoP.style.backgroundImage = "url('pics/tenica.webp')";
+  //   retratoP.style.backgroundSize = "139px 150px";
+  //   nomeP.innerHTML = "";
+  //   cidadeP.innerHTML = "";
+  //   cargoP.style.fontSize = "2.5em";
+  //   cargoP.style.fontWeight = "bolder";
+  //   cargoP.innerHTML = "&nbsp; TÉNICA";
+  //   cargoP.style.color = "black";
+  //   retratoP.style.border = "2px double gold";
+  //   ataqueP.style.color = "black";
+  //   ataqueP.innerHTML = parseInt(ataqueP.innerHTML) * 90 + "👑";
+  //   seedP.style.color = "black";
 
-    ataqueP.style.fontSize = "1.5em";
-    especialP.style.visibility = "hidden";
-  } else if (novaCarta._especial === bonusCartasMais) {
-    retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
-    retratoP.style.backgroundSize = "cover";
-    nomeP.innerHTML = "";
-    cidadeP.innerHTML = "";
-    especialP.style.visibility = "hidden";
-    cargoP.style.fontSize = "2.3em";
-    cargoP.style.fontWeight = "bolder";
-    cargoP.innerHTML = "CLICKS";
-    cargoP.style.color = "gray";
-    // retratoP.style.border = '2px double gold'
-    ataqueP.style.color = "black";
-    ataqueP.style.fontSize = "1.5em";
-    // actionP.style.visibility = 'visible'
-    ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
-    seedP.style.color = "black";
-  }
+    // ataqueP.style.fontSize = "1.5em";
+    // especialP.style.visibility = "hidden";
+
+  // } else if (novaCarta._especial === bonusCartasMais) {
+  //   retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
+  //   retratoP.style.backgroundSize = "cover";
+  //   nomeP.innerHTML = "";
+  //   cidadeP.innerHTML = "";
+  //   especialP.style.visibility = "hidden";
+  //   cargoP.style.fontSize = "2.3em";
+  //   cargoP.style.fontWeight = "bolder";
+  //   cargoP.innerHTML = "CLICKS";
+  //   cargoP.style.color = "gray";
+  //   // retratoP.style.border = '2px double gold'
+  //   ataqueP.style.color = "black";
+  //   ataqueP.style.fontSize = "1.5em";
+  //   // actionP.style.visibility = 'visible'
+  //   ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
+  //   seedP.style.color = "black";
+  // }
 
   //CARTAS VARIANTES
-  if (novaCarta._variante != "") {
-    // actionP.style.visibility = 'visible'
-    varianteP.style.fontFamily = "Righteous";
-    varianteP.style.textShadow = "-2px 5px 5px #010101";
-    varianteP.style.fontSize = "1.1em";
+  // if (novaCarta._variante != "") {
+  //   // actionP.style.visibility = 'visible'
+  //   varianteP.style.fontFamily = "Righteous";
+  //   varianteP.style.textShadow = "-2px 5px 5px #010101";
+  //   varianteP.style.fontSize = "1.1em";
 
-    if (novaCarta._variante === "farmacêutico") {
-      varianteP.innerHTML = "💊" + novaCarta._variante.toUpperCase() + "💊";
-      cartaP.style.color = "white";
-      cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteGandalf.gif")';
-      cartaP.style.border = "3px white solid";
-      varianteP.style.fontSize = "1em";
-    } else if (novaCarta._variante === "bão") {
-      varianteP.innerHTML =
-        "👌 " + "AÔPA, " + novaCarta._variante.toUpperCase() + " 👌";
-      cartaP.style.color = "orange";
-      cartaP.style.backgroundImage = 'url("pics/variantes/varianteTuru.gif")';
-      cartaP.style.border = "3px orange solid";
-    } else if (novaCarta._variante === "apenas") {
-      varianteP.innerHTML = "🤤 " + novaCarta._variante.toUpperCase() + " 🤤";
-      cartaP.style.color = "wheat";
-      cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteNefesto.gif")';
-      cartaP.style.border = "3px wheat solid";
-    } else if (novaCarta._variante === "fonte") {
-      varianteP.innerHTML =
-        "😖" + "COMO MUDA A " + novaCarta._variante.toUpperCase() + "😖";
-      cartaP.style.color = "  white";
+  //   if (novaCarta._variante === "farmacêutico") {
+      // varianteP.innerHTML = "💊" + novaCarta._variante.toUpperCase() + "💊";
+  //     cartaP.style.color = "white";
+  //     cartaP.style.backgroundImage =
+  //       'url("pics/variantes/varianteGandalf.gif")';
+  //     cartaP.style.border = "3px white solid";
+  //     varianteP.style.fontSize = "1em";
+  //   } else if (novaCarta._variante === "bão") {
+  //     varianteP.innerHTML =
+  //       "👌 " + "AÔPA, " + novaCarta._variante.toUpperCase() + " 👌";
+  //     cartaP.style.color = "orange";
+  //     cartaP.style.backgroundImage = 'url("pics/variantes/varianteTuru.gif")';
+  //     cartaP.style.border = "3px orange solid";
+  //   } else if (novaCarta._variante === "apenas") {
+  //     varianteP.innerHTML = "🤤 " + novaCarta._variante.toUpperCase() + " 🤤";
+  //     cartaP.style.color = "wheat";
+  //     cartaP.style.backgroundImage =
+  //       'url("pics/variantes/varianteNefesto.gif")';
+  //     cartaP.style.border = "3px wheat solid";
+  //   } else if (novaCarta._variante === "fonte") {
+  //     varianteP.innerHTML =
+  //       "😖" + "COMO MUDA A " + novaCarta._variante.toUpperCase() + "😖";
+  //     cartaP.style.color = "  white";
 
-      cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteBlackao.gif")';
-      cartaP.style.border = "3px white solid";
-      varianteP.style.fontSize = "0.86em";
-      // varianteP.style.textShadow = '-2px 5px 5px #ffffff'
-    } else if (novaCarta._variante === "ixqueiro") {
-      varianteP.innerHTML =
-        "&#127940;" +
-        "CHIQUEIRO, " +
-        novaCarta._variante.toUpperCase() +
-        "&#127940;";
-      cartaP.style.color = " #d8fbb5";
-      varianteP.style.fontSize = "1em";
+  //     cartaP.style.backgroundImage =
+  //       'url("pics/variantes/varianteBlackao.gif")';
+  //     cartaP.style.border = "3px white solid";
+  //     varianteP.style.fontSize = "0.86em";
+  //     // varianteP.style.textShadow = '-2px 5px 5px #ffffff'
+  //   } else if (novaCarta._variante === "ixqueiro") {
+  //     varianteP.innerHTML =
+  //       "&#127940;" +
+  //       "CHIQUEIRO, " +
+  //       novaCarta._variante.toUpperCase() +
+  //       "&#127940;";
+  //     cartaP.style.color = " #d8fbb5";
+  //     varianteP.style.fontSize = "1em";
 
-      cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteAntonio.gif")';
-      cartaP.style.border = "3px #d8fbb5 solid";
-      varianteP.style.fontSize = "0.86em";
-    } else if (novaCarta._variante === "abalo") {
-      varianteP.innerHTML =
-        "🎉" + "UM " + novaCarta._variante.toUpperCase() + "! 🎉";
-      cartaP.style.color = "  #fbb5f2 ";
+  //     cartaP.style.backgroundImage =
+  //       'url("pics/variantes/varianteAntonio.gif")';
+  //     cartaP.style.border = "3px #d8fbb5 solid";
+  //     varianteP.style.fontSize = "0.86em";
+  //   } else if (novaCarta._variante === "abalo") {
+  //     varianteP.innerHTML =
+  //       "🎉" + "UM " + novaCarta._variante.toUpperCase() + "! 🎉";
+  //     cartaP.style.color = "  #fbb5f2 ";
 
-      cartaP.style.backgroundImage = 'url("pics/variantes/variantePedro.gif")';
-      cartaP.style.border = "3px #fbb5f2 solid";
-    } else if (novaCarta._variante === "grito") {
-      varianteP.innerHTML = "📢AAAAAAAAAAHHH!!!!!📢";
-      cartaP.style.color = "   #42b028   ";
+  //     cartaP.style.backgroundImage = 'url("pics/variantes/variantePedro.gif")';
+  //     cartaP.style.border = "3px #fbb5f2 solid";
+  //   } else if (novaCarta._variante === "grito") {
+  //     varianteP.innerHTML = "📢AAAAAAAAAAHHH!!!!!📢";
+  //     cartaP.style.color = "   #42b028   ";
 
-      cartaP.style.backgroundImage = 'url("pics/variantes/varianteCurtas.gif")';
-      cartaP.style.border = "3px  #25a406  solid";
-      varianteP.style.fontSize = "0.86em";
-    } else if (novaCarta._variante === "dia") {
-      varianteP.innerHTML = "⛪ TODO DIA ISSO ⛪";
-      cartaP.style.color = "   #27ebe2     ";
+  //     cartaP.style.backgroundImage = 'url("pics/variantes/varianteCurtas.gif")';
+  //     cartaP.style.border = "3px  #25a406  solid";
+  //     varianteP.style.fontSize = "0.86em";
+  //   } else if (novaCarta._variante === "dia") {
+  //     varianteP.innerHTML = "⛪ TODO DIA ISSO ⛪";
+  //     cartaP.style.color = "   #27ebe2     ";
 
-      cartaP.style.backgroundImage = 'url("pics/variantes/varianteTwelve.gif")';
-      cartaP.style.border = "3px  #27ebe2   solid";
-      varianteP.style.fontSize = "0.99em";
-    } else if (novaCarta._variante === "quimico") {
-      varianteP.innerHTML = "🐶 O PUGO 🐶";
-      cartaP.style.color = "white";
-      cartaP.style.backgroundImage = 'url("pics/variantes/varianteJunks.gif")';
-      cartaP.style.border = "3px  white   solid";
-    } else if (novaCarta._variante === "pêra") {
-      varianteP.innerHTML = "🥛 LEITE COM PÊRA 🍐";
-      cartaP.style.color = "white";
-      cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteMurillo.gif")';
-      cartaP.style.border = "3px  white   solid";
-      varianteP.style.fontSize = "0.90em";
-    } else {
-    }
-  }
+  //     cartaP.style.backgroundImage = 'url("pics/variantes/varianteTwelve.gif")';
+  //     cartaP.style.border = "3px  #27ebe2   solid";
+  //     varianteP.style.fontSize = "0.99em";
+  //   } else if (novaCarta._variante === "quimico") {
+  //     varianteP.innerHTML = "🐶 O PUGO 🐶";
+  //     cartaP.style.color = "white";
+  //     cartaP.style.backgroundImage = 'url("pics/variantes/varianteJunks.gif")';
+  //     cartaP.style.border = "3px  white   solid";
+  //   } else if (novaCarta._variante === "pêra") {
+  //     varianteP.innerHTML = "🥛 LEITE COM PÊRA 🍐";
+  //     cartaP.style.color = "white";
+  //     cartaP.style.backgroundImage =
+  //       'url("pics/variantes/varianteMurillo.gif")';
+  //     cartaP.style.border = "3px  white   solid";
+  //     varianteP.style.fontSize = "0.90em";
+  //   } else {
+  //   }
+  // }
 
   DEBUG && console.log(novaCarta);
   
@@ -1110,13 +1046,14 @@ function tudo() {
     // DEBUG && console.log("seedString no tudo ", seedString);
 
     escolherIntegrante();
-    // DEBUG && console.log(integrante);
+    DEBUG && console.log(integrante);
     escolherCidade();
     // DEBUG && console.log(cidade);
     escolherCargo();
     // DEBUG && console.log("no tudo cargo", cargo);
     escolherVariante();
     escolherEspecial();
+    escolherPoder();
     // DEBUG && console.log("no tudo especial", especial);
     pontoVariante();
     escolherPoder();

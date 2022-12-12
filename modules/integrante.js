@@ -1,16 +1,16 @@
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 let integrantes = [
-  {nome: "Gandalf"},
-  {nome:"Turu"},
-  {nome: "Nefesto"},
-  {nome: "Blackao"},
-  {nome:"Sr. Antonio"},
-  {nome: "Pedro"},
-  {nome: "Curtas"},
-  {nome: "Twelve"},
-  {nome: "Junks"},
-  {nome: "Murillo"},
+  {nome: "Gandalf", retrato: "url('pics/gandarfu.png')"},
+  {nome:"Turu", retrato: "url('pics/turu.webp')"},
+  {nome: "Nefesto", retrato: "url('pics/nefesto.png')"},
+  {nome: "Blackao", retrato: "url('pics/blackao.jpeg')"},
+  {nome:"Sr. Antonio", retrato: "url('pics/antonio.png')"},
+  {nome: "Pedro", retrato: "url('pics/pedro.png')"},
+  {nome: "Curtas", retrato: "url('pics/curtas.png')"},
+  {nome: "Twelve", retrato: "url('pics/twelve.png')"},
+  {nome: "Junks", retrato: "url('pics/junks.jpeg')"},
+  {nome: "Murillo", retrato: "url('pics/murilo.jpeg')"},
 ];
 
 // let seedString

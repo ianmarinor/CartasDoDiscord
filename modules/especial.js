@@ -1,4 +1,4 @@
-let DEBUG = true;
+let DEBUG = false;
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 
@@ -54,12 +54,17 @@ export let raridades = {
 export let especiais = {
   notSpecial: {
     nome: "",
-    raridade: false,
+    raridade: 'false',
     pontoEspecial: 0,
     energia: 0,
-    poder: false,
-    efeito: false,
-    familia: false,
+    poder: '',
+    efeito: '',
+    familia: '',
+    descricao: '',
+    emoji: '',
+    retrato: ''
+    
+
   },
 
   tenica: {
@@ -70,6 +75,9 @@ export let especiais = {
     poder: 0,
     efeito: "",
     familia: "",
+    descricao:'',
+    emoji: "👑",
+    retrato: ''
   },
 
   speaker: {
@@ -80,6 +88,9 @@ export let especiais = {
     poder: "",
     efeito: "",
     familia: "",
+    descricao:'MONARK BAN!',
+    emoji: "&#9889;",
+    retrato: ''
   },
 
   bonusCartasMais: {
@@ -90,6 +101,9 @@ export let especiais = {
     poder: "",
     efeito: "",
     familia: "",
+    descricao:"CLICKS",
+    emoji: "🔄",
+    retrato: "url('pics/clickretrato.webp')"
   },
 
   abelha: {

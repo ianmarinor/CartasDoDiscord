@@ -85,4 +85,5 @@ function escolherPoder() {
       _ataque: pontoPoderRNGPremioMarino() + pontoVarianteValor,
     });
   }
+  DEBUG && console.log('modulo energia',seedString);
 }

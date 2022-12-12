@@ -1,4 +1,6 @@
-let DEBUG = false;
+let DEBUG = true;
+
+
 
 import { generateSeed } from "./seedFabricator.js";
 import { escolherIntegrante, integrante } from "./integrante.js";
@@ -21,6 +23,9 @@ let speaker = especiais.speaker;
 let bonusCartasMais = especiais.bonusCartasMais;
 let abelha = especiais.abelha;
 let cartaNaoEspecial = especiais.cartaNaoEspecial;
+
+
+
 
 let numeroDeSeeds = {
   seeds15Nums: 0,
@@ -123,7 +128,7 @@ function tudoParaTeste() {
 tudoParaTeste();
 
 let quantasCartas = 1000000;
-
+// numeroDeCartasTeste();
 function numeroDeCartasTeste() {
   for (let j = 0; j < quantasCartas; j++) {
     // tudoParaTeste();
@@ -289,4 +294,4 @@ function numeroDeCartasTeste() {
   console.log('!!!!!!! NAO ESQUECA DE DESLIGAR O SIMULADOR !!!!!!!!!!!');
 }
 
-// numeroDeCartasTeste();
+

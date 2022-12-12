@@ -54,7 +54,7 @@ let especiais = {
       poder: ()=> 1+3
     },
 
-    
+    juj:this.tenica,
   
     speaker: {
       nome: 1,
@@ -89,6 +89,17 @@ let especiais = {
   //   // console.log(especiais[key].nome);
   //   console.log(sum);
   // }
+
+
+  // let cu = [{nome:"bão",display:0},
+  // {nome:"ixqueiro",display:0},
+  // {nome:"abalo",display:0},
+  // {nome:"grito",display:0},
+  // {nome:"dia",display:0},
+  // {nome:"quimico",display:0},
+  // {nome:"pêra", display: this.nome},
+  // {nome:"",display:0}]
+
   especiais.tenica.poder =especiais.tenica.poder() 
   console.log(especiais.tenica.poder);
   
