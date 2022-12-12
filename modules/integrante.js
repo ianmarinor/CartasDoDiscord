@@ -27,7 +27,7 @@ export function escolherIntegrante(teste) {
   // console.log("seedObj do integrante ", seedObj);
 
   integrante = integrantes[seedString[1]];
-  if (seedString[0] == 1) {
+  if (seedString[14] == 0) {
     integrante = "";
   }
 }

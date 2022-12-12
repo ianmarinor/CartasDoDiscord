@@ -25,7 +25,7 @@ export function escolherCidade(teste) {
   // console.log("seedObj da cidade ", seedString);
 
   cidade = cidades[seedString[2]];
-  if (seedString[0] == 1) {
+  if (seedString[14] == 0) {
     cidade = "";
   }
 }

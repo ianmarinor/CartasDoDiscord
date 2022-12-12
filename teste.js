@@ -90,5 +90,5 @@ let especiais = {
   //   console.log(sum);
   // }
   especiais.tenica.poder =especiais.tenica.poder() 
-  console.log(especiais.tenica);
+  console.log(especiais.tenica.poder);
   

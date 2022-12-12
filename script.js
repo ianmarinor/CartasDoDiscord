@@ -1,4 +1,4 @@
-let DEBUG = false
+let DEBUG = true
 
 import { seedObj } from "./modules/seedFabricator.js";
 
@@ -73,7 +73,7 @@ let pontoVarianteValor = 0;
 function pontoVariante() {
   if (variante != "") {
     return (pontoVarianteValor = Math.floor(
-      parseInt(seedString[0]) + parseInt(seedString[1]) + 10 * 5 // 50 a 140
+      parseInt(seedString[0]) +1  * 1+ parseInt(seedString[1]) + 1 * 7 // 50 a 140
     ));
   } else {
     return (pontoVarianteValor = 0);

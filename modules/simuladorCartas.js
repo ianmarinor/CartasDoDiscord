@@ -122,7 +122,7 @@ function tudoParaTeste() {
 
 tudoParaTeste();
 
-let quantasCartas = 50;
+let quantasCartas = 1000000;
 
 function numeroDeCartasTeste() {
   for (let j = 0; j < quantasCartas; j++) {
@@ -278,12 +278,15 @@ function numeroDeCartasTeste() {
 
  
 
-  
+  console.log('!!!!!!! NAO ESQUECA DE DESLIGAR O SIMULADOR !!!!!!!!!!!');
+  console.log('!!!!!!! NAO ESQUECA DE DESLIGAR O SIMULADOR !!!!!!!!!!!');
   console.log(variante);
   console.log("numTotais:", numTotais);
   console.log("numNormais:", numNormais);
   console.log('numEspeciais: ', numEspeciais);
   console.log('**PROBABILIDADE CARTAS**',probabilidadeCartas);
+  console.log('!!!!!!! NAO ESQUECA DE DESLIGAR O SIMULADOR !!!!!!!!!!!');
+  console.log('!!!!!!! NAO ESQUECA DE DESLIGAR O SIMULADOR !!!!!!!!!!!');
 }
 
-numeroDeCartasTeste();
+// numeroDeCartasTeste();
