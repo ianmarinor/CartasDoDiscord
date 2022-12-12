@@ -7,6 +7,7 @@ let seedString = seedObj._seedString;
 export let cargos = {
   premiomarino: {
     nome: "premiomarino",
+    energia:0,
     rng:() => seedString[8] == 0 &&
       seedString[9] == 3 &&
       seedString[10] == 4 &&
@@ -16,6 +17,7 @@ export let cargos = {
   },
     primeMinister: {
       nome: "primeminister",
+      energia:0,
       rng: () =>
         seedString[8] == 0 &&
         seedString[9] == 3 &&
@@ -25,38 +27,45 @@ export let cargos = {
 
     ministro: {
       nome: "ministro",
+      energia:0,
       rng: () =>
         seedString[8] == 0 && seedString[9] == 3 && seedString[10] >= 8,
     },
 
     monark: {
       nome: "monark",
+      energia:0,
       rng: () =>
         seedString[8] == 1 && seedString[9] >= 3,
     },
 
     lord: {
       nome: "lord",
+      energia:0,
       rng: () => seedString[8] == 0 && seedString[9] == 3,
     },
 
     nobre: {
       nome: "nobre",
+      energia:0,
       rng: () => seedString[8] == 0 && seedString[9] >= 8,
     },
 
     gentleman: {
       nome: "gentleman",
+      energia:0,
       rng: () => seedString[8] == 3,
     },
 
     people: {
       nome: "people",
+      energia:0,
       rng: () => seedString[8] >= 7,
     },
 
     semCargo: {
       nome: "semcargo",
+      energia:0,
       rng: false,
     },
 

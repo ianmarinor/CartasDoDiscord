@@ -1,16 +1,16 @@
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 let integrantes = [
-  "Gandalf",
-  "Turu",
-  "Nefesto",
-  "Blackao",
-  "Sr. Antonio",
-  "Pedro",
-  "Curtas",
-  "Twelve",
-  "Junks",
-  "Murillo",
+  {nome: "Gandalf"},
+  {nome:"Turu"},
+  {nome: "Nefesto"},
+  {nome: "Blackao"},
+  {nome:"Sr. Antonio"},
+  {nome: "Pedro"},
+  {nome: "Curtas"},
+  {nome: "Twelve"},
+  {nome: "Junks"},
+  {nome: "Murillo"},
 ];
 
 // let seedString

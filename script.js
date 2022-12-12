@@ -124,14 +124,13 @@ function escolherPoder() {
 
 //************************************************ */
 
-function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial,seedObj) {
+function fabricaDeCartaNormal(integrante, cidade, cargo, poder, variante,seedObj) {
   return {
     _integrante: integrante,
     _cidade: cidade,
     _cargo: cargo,
     _poder: poder,
     _variante: variante,
-    _especial: especial,
     seedObj,
   };
 }
@@ -142,10 +141,21 @@ function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial,see
 // escolherCargo()
 // escolherPoder()
 
+const baralho = {
+  nome:'test',
+  variante: 'test',
+  cidade:'test',
+  retrato:'test',
+  cargo: 'test',
+  ataque:'test',
+  pontoEspecial: 'test',
+  poder: 'test',
+  seed:'test'
+
+}
+
 ////D O M
 let button = document.getElementById("btn");
-let h1 = document.getElementsByTagName("h1")[0];
-let mover = document.getElementById("mover");
 let inv = document.getElementById("inv");
 let arenaP = document.querySelector(".arena");
 let nomeP = document.querySelector(".nome");
@@ -158,7 +168,6 @@ let novoAtaquerP = document.querySelector(".novoAtaque");
 let placarP = document.querySelector(".placar");
 //div poder
 let ataqueP = document.querySelector(".ataque");
-let defesaP = document.querySelector(".defesa");
 let especialP = document.querySelector(".especial");
 
 let seedP = document.querySelector(".seed");
@@ -167,24 +176,27 @@ let cartaP = document.getElementById("carta");
 // input da seed cliente
 // let coloqueSuaSeed = document.getElementById('seed').value
 //wrap
-let wrap = document.getElementsByClassName("wrap")[0];
 //input
 // let getSeed = document.getElementById("getseed");
 //pagin procura seed
-let seedCheckInput = document.getElementById("seedcheckinput");
-let seedCheckBtn = document.getElementById("seedcheckbtn");
-let seedCheckPage = document.getElementById("seedcheck");
+
+
+
+
+
+
 
 function colocarInfoNoWrap() {
-  const novaCarta = fabricaDeCarta(
+  const novaCarta = fabricaDeCartaNormal(
     integrante,
     cidade,
     cargo,
     poder,
     variante,
-    especial,
     seedObj
   );
+
+  
 
   //LIMPAR A CARTA
   cartaP.style.backgroundImage = "";
@@ -215,7 +227,7 @@ function colocarInfoNoWrap() {
   cartaParaMover.children[0].children[1].style.fontWeight = "";
 
   //DOM
-  nomeP.innerHTML = "&nbsp;" + novaCarta._integrante.toUpperCase();
+  nomeP.innerHTML = "&nbsp;" + novaCarta._integrante.nome.toUpperCase();
   cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
   varianteP.innerHTML = novaCarta._variante;
