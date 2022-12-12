@@ -823,6 +823,7 @@ function moverCarta() {
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == ''
   let customOff = getSeed.className == 'customOff'
   
+  
   let cartaNotMonark = copyCard.id == 'carta-monark'
 
   
@@ -1693,6 +1694,7 @@ function clicks() {
 
   if(!seedObj._isPutByPlayer){
     totalClicks--;
+    arenaP.innerHTML = totalClicks + " CARTAS";
   }
   
   // 
@@ -1801,16 +1803,61 @@ inv.addEventListener("click", deletarDeck);
 btnReset.addEventListener("click", resetarDeck);
 
 
+
+//começa com 10 click a mais
+
 document.addEventListener("keydown", (event)=>{
   
     if(event.code == 'KeyQ'){
+      
       resetarDeck()
       moverCarta()
       moverCarta()
       moverCarta()
       moverCarta()
+      // totalClicks += 10
+      // arenaP.innerHTML = totalClicks + " CARTAS";
+      
   }
 })
+
+// começa so com 2 cartas
+
+// document.addEventListener("keydown", (event)=>{
+  
+//   if(event.code == 'KeyQ'){
+    
+//     resetarDeck()
+//     moverCarta()
+//     moverCarta()
+    
+//     arenaP.innerHTML = totalClicks + " CARTAS";
+    
+// }
+// })
+
+
+
+
+
+// q adiciona todas as cartas
+
+// document.addEventListener("keydown", (event)=>{
+  
+//   if(event.code == 'KeyQ'){
+    
+//     resetarDeck()
+//     moverCarta()
+//     moverCarta()
+//     moverCarta()
+//     moverCarta()
+//     getSeed.className = 'customOff'
+//     blockInv()
+
+        
+// }
+// })
+
 
 document.addEventListener("keydown", (event)=>{
   if(event.code == 'ControlLeft'){
