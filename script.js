@@ -1825,7 +1825,8 @@ document.addEventListener("keydown", (event)=>{
   
     if(event.code == teclaDeckPronto){
       
-        setTimeout(deckPronto, 600)  
+        // setTimeout(deckPronto, 600)  
+        deckPronto()
   
   }
 })
