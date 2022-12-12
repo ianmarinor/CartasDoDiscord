@@ -1,3 +1,5 @@
+let DEBUG = false
+
 import { seedObj } from "./seedFabricator.js";
 
 let seedString = seedObj._seedString;
@@ -30,7 +32,7 @@ export let cargos = {
     monark: {
       nome: "monark",
       rng: () =>
-        seedString[8] == 1 && seedString[9] >= 3 && seedString[10] != 4,
+        seedString[8] == 1 && seedString[9] >= 3,
     },
 
     lord: {
@@ -60,7 +62,7 @@ export let cargos = {
 
     noCargo: {
       nome: "noCargo",
-      rng: () => seedString[14] == 1          
+      rng: () => seedString[14] == 0         
     },
 }
 
@@ -79,7 +81,7 @@ export function escolherCargo(teste) {
   // console.log("no modulo cargo", seedString);
   // cargos.showSeed()
 
-  if(seedString[0] == 1){
+  if(seedString[14] == 0){
     return cargo = cargos.noCargo;
 
   } else {

@@ -1,3 +1,5 @@
+let DEBUG = false
+
 let versaoHTML = document.getElementById("versao");
 let versao = "Alpha 1.4";
 versaoHTML.innerHTML = versao;
@@ -13,7 +15,7 @@ function colocarInput() {
   // input = 11111111331561567
 }
 
-const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
+const totalNumOfSeeds = 90000000000000000 + 2000000000000000000;
 function seedRNG() {
   return Math.floor(Math.random() * totalNumOfSeeds);
 }
@@ -71,6 +73,7 @@ export function generateSeed(input) {
       return seed(seedRNG(), true, "", false);
     }
   }
+  
 }
 
 function start() {
@@ -88,4 +91,4 @@ function numeroDeCartasTeste() {
 
 button.addEventListener("click", start);
 export let seedObj = generateSeed(input);
-console.log("seedObj no seedfab ", seedObj);
+

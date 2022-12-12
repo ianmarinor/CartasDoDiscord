@@ -1,3 +1,5 @@
+let DEBUG = false
+
 import { seedObj } from "./modules/seedFabricator.js";
 
 
@@ -122,7 +124,7 @@ function escolherPoder() {
 
 //************************************************ */
 
-function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial) {
+function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial,seedObj) {
   return {
     _integrante: integrante,
     _cidade: cidade,
@@ -130,6 +132,7 @@ function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial) {
     _poder: poder,
     _variante: variante,
     _especial: especial,
+    seedObj,
   };
 }
 
@@ -179,7 +182,8 @@ function colocarInfoNoWrap() {
     cargo,
     poder,
     variante,
-    especial
+    especial,
+    seedObj
   );
 
   //LIMPAR A CARTA
@@ -422,8 +426,9 @@ function colocarInfoNoWrap() {
     }
   }
 
-  console.log(novaCarta);
-  // console.log(novaCarta._especial.nome);
+  DEBUG && console.log(novaCarta);
+  
+  // DEBUG && console.log(novaCarta._especial.nome);
 }
 // let input
 // function colocarInput() {
@@ -453,7 +458,7 @@ let copyCard = "";
 
 function moverCarta() {
   let seedCopyCard = cartaParaMover.children[4].textContent;
-  // console.log("em mover carta ", seedObj);
+  // DEBUG && console.log("em mover carta ", seedObj);
 
   blockInv();
 
@@ -560,7 +565,7 @@ function moverCarta() {
   } else {
     false;
     // getSeed.setAttribute('class', 'customOn')
-    console.log("NAO MOVI");
+    DEBUG && console.log("NAO MOVI");
   }
 
   // if(jaPassouACarta){
@@ -577,7 +582,7 @@ function moverCartaMonark() {
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
 
-  // console.log("no mvoer monark", seedObj);
+  // DEBUG && console.log("no mvoer monark", seedObj);
 
   if (seedObj._isPutByPlayer) {
     false;
@@ -958,7 +963,7 @@ function criarBtn() {
 
 // if (inv.children[0].id != 'empty' && inv.children[1].id != 'empty' && inv.children[2].id != 'empty' && inv.children[3].id != 'empty') {
 
-//     console.log ('sem loop')
+//     DEBUG && console.log ('sem loop')
 
 // }
 
@@ -1078,7 +1083,7 @@ function numeroDeCartasTeste() {
   for (let j = 0; j < quantasCartas; j++) {
     tudoParaTeste();
   }
-  console.log(numeroDeCartas);
+  DEBUG && console.log(numeroDeCartas);
 }
 // numeroDeCartasTeste();
 
@@ -1090,17 +1095,17 @@ function tudo() {
     // colocarInput();seedObj
     // seedObj = generateSeed(input);
     seedString = seedObj._seedString;
-    // console.log("seedString no tudo ", seedString);
+    // DEBUG && console.log("seedString no tudo ", seedString);
 
     escolherIntegrante();
-    // console.log(integrante);
+    // DEBUG && console.log(integrante);
     escolherCidade();
-    // console.log(cidade);
+    // DEBUG && console.log(cidade);
     escolherCargo();
-    // console.log("no tudo cargo", cargo);
+    // DEBUG && console.log("no tudo cargo", cargo);
     escolherVariante();
     escolherEspecial();
-    // console.log("no tudo especial", especial);
+    // DEBUG && console.log("no tudo especial", especial);
     pontoVariante();
     escolherPoder();
     colocarInfoNoWrap();
@@ -1113,7 +1118,7 @@ function tudo() {
     button.innerHTML = "0 CARTAS";
     console.log(new Date().toUTCString());
     console.log(versao);
-    // console.log(numeroDeCartas)
+    // DEBUG && console.log(numeroDeCartas)
   }
 }
 

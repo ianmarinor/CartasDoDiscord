@@ -1,5 +1,5 @@
 import { seedObj } from "./seedFabricator.js";
-
+let seedString = seedObj._seedString;
 let variantes = [
   "farmacêutico",
   "bão",
@@ -15,8 +15,12 @@ let variantes = [
 
 export let variante = "";
 
-export function escolherVariante() {
-  let seedString = seedObj._seedString;
+export function escolherVariante(teste) {
+  
+  if (!teste){
+    seedString = seedObj._seedString;
+ } else{
+  seedString = teste}
 
   if (seedString[3] == 6 && seedString[4] == 6 && seedString[5] == 6) {
     variante = variantes[seedString[6]];

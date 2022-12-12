@@ -1,3 +1,5 @@
+let DEBUG = false;
+
 import { generateSeed } from "./seedFabricator.js";
 import { escolherIntegrante, integrante } from "./integrante.js";
 import { escolherCidade, cidade } from "./cidade.js";
@@ -20,61 +22,92 @@ let bonusCartasMais = especiais.bonusCartasMais;
 let abelha = especiais.abelha;
 let cartaNaoEspecial = especiais.cartaNaoEspecial;
 
+let numeroDeSeeds = {
+  seeds15Nums: 0,
+};
 
+let numTotais = {
+  cartasTotais: 0,
+  cartasNormais: 0,
+  cartasEspeciais: 0,
 
-let numeroDeCartas = {
-    cartasTotais: 0,
-    cartasPorcEspeciais:0,
-    cartasPorcNormais: 0,
-  
-    cartasNormais: {
-      cartasNormaisTotais: 0,
-  
-      cargos: {
-        semCargo: 0,
-        people: 0,
-        gentleman: 0,
-        nobre: 0,
-        lord: 0,
-        ministro: 0,
-        primeMinister: 0,
-        premioMarino: 0,
-        monark: 0,
-      },
-    
-    porcentagemCartasNormais: {
-      semCargo: 0,
-      people: 0,
-      gentleman: 0,
-      nobre: 0,
-      lord: 0,
-      ministro: 0,
-      primeMinister: 0,
-      premioMarino: 0,
-      monark: 0,
-    }
+  porc: {
+    cartasNormaisPorc: 0,
+    cartasEspeciaisPorc: 0,
+  }
+
+};
+
+let numNormais = {
+  cargos: {
+    semCargo: 0,
+    people: 0,
+    gentleman: 0,
+    nobre: 0,
+    lord: 0,
+    ministro: 0,
+    primeMinister: 0,
+    premioMarino: 0,
+    monark: 0,
   },
-    cartaEspeciais: {
-  
-      cartaEspeciaisTotais:0,
-  
-    especiais: {
-      tenica: 0,
-      speaker: 0,
-      bonusCartasMais: 0,
-      abelha: 0,
-    },
-    cartaEspeciaisPorcentagens: {
-      tenica: 0,
-      speaker: 0,
-      bonusCartasMais: 0,
-      abelha: 0,
-    },
-    somarCartasEspeciais(){
-        this.especiais.tenica + this.especiais.speaker + this.especiais.bonusCartasMais + this.especiais.abelha
-    },
-  }
-  }
+
+  cargosPorc: {
+    semCargo: 0,
+    people: 0,
+    gentleman: 0,
+    nobre: 0,
+    lord: 0,
+    ministro: 0,
+    primeMinister: 0,
+    premioMarino: 0,
+    monark: 0,
+  },
+
+  var: 0,
+  varPorc: 0
+
+};
+
+
+
+let numEspeciais = {
+  especiais: { tenica: 0, speaker: 0, bonusCartasMais: 0, abelha: 0 },
+
+  especiaisPorc: {
+    tenica: 0,
+    speaker: 0,
+    bonusCartasMais: 0,
+    abelha: 0,
+  },
+};
+
+let probabilidadeCartas = {
+  normais:{
+    semCargo: 0,
+    people: 0,
+    gentleman: 0,
+    nobre: 0,
+    lord: 0,
+    ministro: 0,
+    primeMinister: 0,
+    premioMarino: 0,
+    monark: 0,
+  },
+  especiais:{
+    tenica: 0,
+    speaker: 0,
+    bonusCartasMais: 0,
+    abelha: 0,
+  },
+  variantes: 0
+}
+
+
+
+
+function calcPorc(a, b) {
+  return (a * 100) / b;
+}
 
 let seedObj;
 
@@ -89,172 +122,168 @@ function tudoParaTeste() {
 
 tudoParaTeste();
 
-let quantasCartas = 1000000;
-
-
-
+let quantasCartas = 50;
 
 function numeroDeCartasTeste() {
   for (let j = 0; j < quantasCartas; j++) {
     // tudoParaTeste();
     seedObj = generateSeed("");
-    // console.log(seedObj);
+    numTotais.cartasTotais++;
+    // DEBUG && console.log(seedObj);
 
-    // console.log(integrante);
+    // DEBUG && console.log(integrante);
+
+    //SEPARAR SEED
+    if (seedObj._seedLength >= 15) {
+      numeroDeSeeds.seeds15Nums++;
+    }
 
     //SEPARAR INTEGRANTE
     escolherIntegrante(seedObj._seedString);
-    if (integrante != "") {
-      numeroDeCartas.cartasNormais.cartasNormaisTotais++;
-    }
-    numeroDeCartas.cartasTotais++;
 
     //SEPARAR CARGO
     escolherCargo(seedObj._seedString);
-    // console.log(cargo);
+    DEBUG && console.log(cargo);
+
+    // calcular cartas totais
+    if (cargo == noCargo) {
+      numTotais.cartasEspeciais++;
+    } else {
+      numTotais.cartasNormais++;
+    }
+
     if (cargo == semCargo) {
-      numeroDeCartas.cartasNormais.cargos.semCargo++;
+      numNormais.cargos.semCargo++;
     }
     if (cargo == people) {
-      numeroDeCartas.cartasNormais.cargos.people++;
+      numNormais.cargos.people++;
     }
     if (cargo == gentleman) {
-      numeroDeCartas.cartasNormais.cargos.gentleman++;
+      numNormais.cargos.gentleman++;
     }
     if (cargo == nobre) {
-      numeroDeCartas.cartasNormais.cargos.nobre++;
+      numNormais.cargos.nobre++;
     }
     if (cargo == lord) {
-      numeroDeCartas.cartasNormais.cargos.lord++;
+      numNormais.cargos.lord++;
     }
     if (cargo == monark) {
-      numeroDeCartas.cartasNormais.cargos.monark++;
+      numNormais.cargos.monark++;
     }
     if (cargo == ministro) {
-      numeroDeCartas.cartasNormais.cargos.ministro++;
-      
+      numNormais.cargos.ministro++;
     }
     if (cargo == primeMinister) {
-      numeroDeCartas.cartasNormais.cargos.primeMinister++;
+      numNormais.cargos.primeMinister++;
     }
     if (cargo == premioMarino) {
-      numeroDeCartas.cartasNormais.cargos.premioMarino++;
+      numNormais.cargos.premioMarino++;
     }
 
-    
-    let teste =
-        (numeroDeCartas.cartasNormais.cargos.semCargo * 100) /
-        numeroDeCartas.cartasNormais.cartasNormaisTotais
-        numeroDeCartas.cartasNormais.porcentagemCartasNormais.semCargo =
-        teste.toFixed(0) + "%";
-
-        let teste1 =
-        (numeroDeCartas.cartasNormais.cargos.people * 100) /
-        numeroDeCartas.cartasNormais.cartasNormaisTotais
-        numeroDeCartas.cartasNormais.porcentagemCartasNormais.people =
-        teste1.toFixed(0) + "%";
-        let teste2 =
-        (numeroDeCartas.cartasNormais.cargos.gentleman * 100) /
-        numeroDeCartas.cartasNormais.cartasNormaisTotais
-        numeroDeCartas.cartasNormais.porcentagemCartasNormais.gentleman =
-        teste2.toFixed(1) + "%";
-        let teste3 =
-        (numeroDeCartas.cartasNormais.cargos.nobre * 100) /
-        numeroDeCartas.cartasNormais.cartasNormaisTotais
-        numeroDeCartas.cartasNormais.porcentagemCartasNormais.nobre =
-        teste3.toFixed(2) + "%";
-        let teste4 =
-        (numeroDeCartas.cartasNormais.cargos.lord * 100) /
-        numeroDeCartas.cartasNormais.cartasNormaisTotais
-        numeroDeCartas.cartasNormais.porcentagemCartasNormais.lord =
-        teste4.toFixed(2) + "%";
-        let teste5 =
-        (numeroDeCartas.cartasNormais.cargos.monark * 100) /
-        numeroDeCartas.cartasNormais.cartasNormaisTotais
-        numeroDeCartas.cartasNormais.porcentagemCartasNormais.monark =
-        teste5.toFixed(2) + "%";
-        let teste7 =
-        (numeroDeCartas.cartasNormais.cargos.primeMinister * 100) /
-        numeroDeCartas.cartasNormais.cartasNormaisTotais
-        numeroDeCartas.cartasNormais.porcentagemCartasNormais.primeMinister =
-        teste7.toFixed(3) + "%"  
-        let teste8 =
-        (numeroDeCartas.cartasNormais.cargos.ministro * 100) /
-        numeroDeCartas.cartasNormais.cartasNormaisTotais
-        numeroDeCartas.cartasNormais.porcentagemCartasNormais.ministro =
-        teste8.toFixed(3) + "%";
-        let teste9 =
-        (numeroDeCartas.cartasNormais.cargos.premioMarino * 100) /
-        numeroDeCartas.cartasNormais.cartasNormaisTotais
-        numeroDeCartas.cartasNormais.porcentagemCartasNormais.premioMarino =
-        teste9.toFixed(3) + "%";
-
-        //SEPARAR ESPECIAL
-        escolherEspecial(seedObj._seedString);
-        // console.log(especial);
-        if (especial == tenica){
-            numeroDeCartas.cartaEspeciais.especiais.tenica++
-        }
-        if (especial == speaker){
-            numeroDeCartas.cartaEspeciais.especiais.speaker++
-        }
-        if (especial == abelha){
-            numeroDeCartas.cartaEspeciais.especiais.abelha++
-        }
-        if (especial == bonusCartasMais){
-            numeroDeCartas.cartaEspeciais.especiais.bonusCartasMais++
-        }
-        numeroDeCartas.cartaEspeciais.cartaEspeciaisTotais = 
-        numeroDeCartas.cartaEspeciais.especiais.bonusCartasMais +
-        numeroDeCartas.cartaEspeciais.especiais.abelha +
-        numeroDeCartas.cartaEspeciais.especiais.speaker + 
-        numeroDeCartas.cartaEspeciais.especiais.tenica
-
-        let porcetnage = (numeroDeCartas.cartaEspeciais.especiais.tenica * 100) /
-        numeroDeCartas.cartaEspeciais.cartaEspeciaisTotais
-
-        numeroDeCartas.cartaEspeciais.cartaEspeciaisPorcentagens.tenica =
-        porcetnage.toFixed(3) + "%";
-        
-
-
-        let porcetnageaaa = (numeroDeCartas.cartaEspeciais.especiais.bonusCartasMais * 100) /
-        numeroDeCartas.cartaEspeciais.cartaEspeciaisTotais
-
-        numeroDeCartas.cartaEspeciais.cartaEspeciaisPorcentagens.bonusCartasMais =
-        porcetnageaaa.toFixed(0) + "%";
-
-
-        let porcetnageaaaa = (numeroDeCartas.cartaEspeciais.especiais.speaker * 100) /
-        numeroDeCartas.cartaEspeciais.cartaEspeciaisTotais
-
-        numeroDeCartas.cartaEspeciais.cartaEspeciaisPorcentagens.speaker =
-        porcetnageaaaa.toFixed(3) + "%";
-
-        let pora = (numeroDeCartas.cartaEspeciais.especiais.abelha * 100) /
-        (numeroDeCartas.cartaEspeciais.cartaEspeciaisTotais)
-
-        numeroDeCartas.cartaEspeciais.cartaEspeciaisPorcentagens.abelha =
-        pora.toFixed(3) + "%"; 
-
-
-       numeroDeCartas.cartasPorcNormais = (numeroDeCartas.cartasNormais.cartasNormaisTotais * 100 / numeroDeCartas.cartasTotais).toFixed(1) + '%'
-       numeroDeCartas.cartasPorcEspeciais = (numeroDeCartas.cartaEspeciais.cartaEspeciaisTotais * 100 / numeroDeCartas.cartasTotais).toFixed(1) + '%'
-
-
-
-
+    escolherVariante(seedObj._seedString)
+    if(variante!=''){
+      numNormais.var++
     }
 
-    
+    //SEPARAR ESPECIAL
+    escolherEspecial(seedObj._seedString);
+    // DEBUG && console.log(especial);
+    if (especial == tenica) {
+      numEspeciais.especiais.tenica++;
+    }
+    if (especial == speaker) {
+      numEspeciais.especiais.speaker++;
+    }
+    if (especial == abelha) {
+      numEspeciais.especiais.abelha++;
+    }
+    if (especial == bonusCartasMais) {
+      numEspeciais.especiais.bonusCartasMais++;
+    }
+  }
+
+  // CALCULO PORCENTAGENS
+  numTotais.porc.cartasNormaisPorc =
+    calcPorc(numTotais.cartasNormais, numTotais.cartasTotais)
+      .toFixed(1) + "%";
+
+  numTotais.porc.cartasEspeciaisPorc =
+    calcPorc(numTotais.cartasEspeciais, numTotais.cartasTotais)
+      .toFixed(1) + "%";
+
+  numNormais.cargosPorc.semCargo = calcPorc(numNormais.cargos.semCargo , numTotais.cartasNormais).toFixed(0) + "%"
+
+  numNormais.cargosPorc.people = calcPorc(numNormais.cargos.people , numTotais.cartasNormais).toFixed(0) + "%"
+
+  numNormais.cargosPorc.gentleman = calcPorc(numNormais.cargos.gentleman , numTotais.cartasNormais).toFixed(0) + "%"
+
+  numNormais.cargosPorc.nobre = calcPorc(numNormais.cargos.nobre , numTotais.cartasNormais).toFixed(0) + "%"
+
+  numNormais.cargosPorc.lord = calcPorc(numNormais.cargos.lord , numTotais.cartasNormais).toFixed(1) + "%"
+
+  numNormais.cargosPorc.ministro = calcPorc(numNormais.cargos.ministro , numTotais.cartasNormais).toFixed(1) + "%"
+
+  numNormais.cargosPorc.primeMinister = calcPorc(numNormais.cargos.primeMinister , numTotais.cartasNormais).toFixed(3) + "%"
+
+  numNormais.cargosPorc.premioMarino = calcPorc(numNormais.cargos.premioMarino , numTotais.cartasNormais).toFixed(3) + "%"
+
+  numNormais.cargosPorc.monark = calcPorc(numNormais.cargos.monark , numTotais.cartasNormais).toFixed(1) + "%"
+
+
+  // porc especiais
+
+  numEspeciais.especiaisPorc.abelha =  calcPorc(numEspeciais.especiais.abelha , numTotais.cartasEspeciais).toFixed(2) + "%"
+
+  numEspeciais.especiaisPorc.bonusCartasMais =  calcPorc(numEspeciais.especiais.bonusCartasMais , numTotais.cartasEspeciais).toFixed(1) + "%"
+
+  numEspeciais.especiaisPorc.tenica =  calcPorc(numEspeciais.especiais.tenica , numTotais.cartasEspeciais).toFixed(3) + "%"
+
+  numEspeciais.especiaisPorc.speaker =  calcPorc(numEspeciais.especiais.speaker , numTotais.cartasEspeciais).toFixed(1) + "%"
+
+  // porc var
+  numNormais.varPorc = calcPorc(numNormais.var,numTotais.cartasNormais).toFixed(2) + "%"
+
+  // PROBABLIDADES GERAIS
+  //NORMAIS CARGOS
+  probabilidadeCartas.normais.semCargo = calcPorc(numNormais.cargos.semCargo , numTotais.cartasTotais).toFixed(0) + "%"
+
+  probabilidadeCartas.normais.people = calcPorc(numNormais.cargos.people , numTotais.cartasTotais).toFixed(0) + "%"
+
+  probabilidadeCartas.normais.gentleman = calcPorc(numNormais.cargos.gentleman , numTotais.cartasTotais).toFixed(0) + "%"
+
+  probabilidadeCartas.normais.nobre = calcPorc(numNormais.cargos.nobre , numTotais.cartasTotais).toFixed(1) + "%"
+
+  probabilidadeCartas.normais.lord = calcPorc(numNormais.cargos.lord , numTotais.cartasTotais).toFixed(1) + "%"
+
+  probabilidadeCartas.normais.ministro = calcPorc(numNormais.cargos.ministro , numTotais.cartasTotais).toFixed(1) + "%"
+
+  probabilidadeCartas.normais.primeMinister = calcPorc(numNormais.cargos.primeMinister , numTotais.cartasTotais).toFixed(3) + "%"
+
+  probabilidadeCartas.normais.premioMarino = calcPorc(numNormais.cargos.premioMarino , numTotais.cartasTotais).toFixed(3) + "%"
+
+  probabilidadeCartas.normais.monark = calcPorc(numNormais.cargos.monark , numTotais.cartasTotais).toFixed(1) + "%"
+
+
+  //ESPECIAIS
+  probabilidadeCartas.especiais.abelha =  calcPorc(numEspeciais.especiais.abelha , numTotais.cartasTotais).toFixed(3) + "%"
+ 
+  probabilidadeCartas.especiais.tenica =  calcPorc(numEspeciais.especiais.tenica , numTotais.cartasTotais).toFixed(3) + "%"
+
+  probabilidadeCartas.especiais.speaker =  calcPorc(numEspeciais.especiais.speaker , numTotais.cartasTotais).toFixed(3) + "%"
+
+  probabilidadeCartas.especiais.bonusCartasMais =  calcPorc(numEspeciais.especiais.bonusCartasMais , numTotais.cartasTotais).toFixed(3) + "%"
+
+  //variante
+  probabilidadeCartas.variantes = calcPorc(numNormais.var,numTotais.cartasTotais).toFixed(2) + "%"
+
+ 
+
+  
+  console.log(variante);
+  console.log("numTotais:", numTotais);
+  console.log("numNormais:", numNormais);
+  console.log('numEspeciais: ', numEspeciais);
+  console.log('**PROBABILIDADE CARTAS**',probabilidadeCartas);
 }
 
-
-
-
 numeroDeCartasTeste();
-
-console.log(numeroDeCartas);
-console.log(numeroDeCartas.cartasNormais);
-console.log(numeroDeCartas.cartaEspeciais);
-console.log(numeroDeCartas.cartaEspeciais.somarCartasEspeciais());

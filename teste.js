@@ -51,8 +51,10 @@ let especiais = {
       raridade: 'raridades[0]',
       pontoEspecial: 0,
       energia: 0,
-      poder: ''
+      poder: ()=> 1+3
     },
+
+    
   
     speaker: {
       nome: 1,
@@ -77,14 +79,16 @@ let especiais = {
       pontoEspecial: 0,
       energia: 0,
       poder: ''
-    }
-  
-  }
-  let sum = 3
-  for (let key in especiais){
+    },
     
-    sum = sum + especiais[key].nome
-    // console.log(especiais[key].nome);
-    console.log(sum);
   }
+  // let sum = 3
+  // for (let key in especiais){
+    
+  //   sum = sum + especiais[key].nome
+  //   // console.log(especiais[key].nome);
+  //   console.log(sum);
+  // }
+  especiais.tenica.poder =especiais.tenica.poder() 
+  console.log(especiais.tenica);
   

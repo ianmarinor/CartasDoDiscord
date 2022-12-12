@@ -1,70 +1,58 @@
+let DEBUG = false;
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 export let cartaNaoEspecial;
 
-
-
-
-
-
 export let raridades = {
   semRaridade: {
     nome: "semRaridade",
-    rng: ()=> seedString[14] != 1
+    rng: () => seedString[14] != 0
   },
 
   rainha: {
     nome: "rainha",
-    rng: ()=>seedString[8] == 1 &&
-    seedString[9] == 3 &&
-    seedString[10] == 3 &&
-    seedString[11] >= 3 &&
-    seedString[14] == 1
+    rng: () =>
+      seedString[8] == 1 &&
+      seedString[9] == 0 &&
+      seedString[10] == 1 
+      && seedString[11] == 0
+      
   },
 
   sangueAzul: {
     nome: "sangue azul",
-    rng:()=> seedString[8] == 2 &&
-    seedString[9] == 3 &&
-    seedString[10] == 3 &&
-    seedString[14] == 1
+    rng: () =>
+      seedString[8] == 0 &&
+      seedString[9] == 1 &&
+      seedString[10] == 0 
+      
   },
 
   cavaleiro: {
     nome: "cavaleiro",
-    rng: ()=>seedString[8] == 0 && seedString[9] == 3 && seedString[14] == 1
+    rng: () => seedString[9] >= 7
     // rng: ()=>seedString[14] == 1
   },
 
   campones: {
     nome: "campones",
-    rng: ()=>seedString[14] == 1 && seedString[8] >=3
+    rng: () => seedString[11] > 2 
+    // && seedString[8] >=3
     // rng: ()=>seedString[8] == 3 && seedString[9] == 3 && seedString[14] == 1
   },
 };
-
-
-
-
-
-
-
-
-
-
-
 
 // export let especiais = ['tenica', 'speaker', 'bonusCartasMais', 'abelha']
 
 export let especiais = {
   notSpecial: {
     nome: "",
-    raridade: "",
+    raridade: false,
     pontoEspecial: 0,
     energia: 0,
-    poder: "",
-    efeito: "",
-    familia: "",
+    poder: false,
+    efeito: false,
+    familia: false,
   },
 
   tenica: {
@@ -108,71 +96,56 @@ export let especiais = {
   },
 };
 
-
 export let especial = "";
-let raridade = ''
+let raridade = "";
 
 export function escolherEspecial(teste) {
-  if (!teste){
+  if (!teste) {
     seedString = seedObj._seedString;
- } else{
- seedString = teste}
-  // console.log("seedString no especial", seedString);
-  // console.log("seedString no especial", seedString[14]);
-  
-
-  //RNG RARIDADES
-  
-
-  // if (raridades.rainha.rng()) {
-  //   raridade = raridades.rainha;
-  // } else if (raridades.sangueAzul.rng()) {
-  //   raridade = raridades.sangueAzul;
-  // } else if (raridades.cavaleiro.rng()) {
-  //   raridade = raridades.cavaleiro;
-  // } else if (raridades.campones.rng()) {
-  //   raridade = raridades.campones;
-  // } else if (raridades.semRaridade.rng()){
-  //   raridade = raridades.semRaridade;
-  // }
-
-  if (seedString[14] != 1) {
-     raridade = raridades.semRaridade;
-  } else if (raridades.campones.rng()) {
-     raridade = raridades.campones;
-  } else if (raridades.cavaleiro.rng()) {
-     raridade = raridades.cavaleiro;
-  } else if (raridades.sangueAzul.rng()) {
-     raridade = raridades.sangueAzul;
-  } else if (raridades.rainha.rng()){
-     raridade = raridades.rainha;
-  }
-  // console.log('raridade modulo',raridade)
-
-  // RAINHA ---------------------
-  if (raridade == raridades.rainha) {
-    //tenica
-    especial = especiais.tenica;
-
-
-    //SANGUE AZUL ---------------
-  } else if (raridade == raridades.sangueAzul) {
-    //abelha
-    especial = especiais.abelha;
-
-    //CAVALEIRO -----------------
-  } else if (raridade == raridades.cavaleiro) {
-    //speaker
-    especial = especiais.speaker;
-
-
-    //CAMPONES ---------------------
-  } else if (raridade == raridades.campones) {
-    //speaker
-    especial = especiais.bonusCartasMais;
-
   } else {
-    especial = especiais.notSpecial;
+    seedString = teste;
   }
 
+  DEBUG && console.log("seedString no especial", seedString);
+  DEBUG && console.log("seedString no especial", seedString[14]);
+
+  if (!raridades.semRaridade.rng()) {
+
+    if (raridades.rainha.rng()) {
+    raridade = raridades.rainha;
+
+    if (true) {
+      especial = especiais.tenica;
+    }
+
+
+  } else if (raridades.sangueAzul.rng()) {
+    raridade = raridades.sangueAzul;
+
+    if (true) {
+      especial = especiais.abelha;
+    }
+  } else if (raridades.cavaleiro.rng()) {
+    raridade = raridades.cavaleiro;
+    DEBUG && console.log(raridades.cavaleiro.rng());
+
+    if (true) {
+      especial = especiais.speaker;
+    }
+  } else {
+    raridade = raridades.campones;
+
+    if (true) {
+      especial = especiais.bonusCartasMais;
+    }
+  } 
+
+}else{
+  raridade = raridades.semRaridade
+  especial = especiais.notSpecial
+}
+
+  DEBUG && console.log("TAMANHO SEED", seedObj._seedLength);
+  DEBUG && console.log("raridade modulo", raridade);
+  DEBUG && console.log("especial modulo", especial);
 }
