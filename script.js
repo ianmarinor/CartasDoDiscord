@@ -1,7 +1,7 @@
 import {seed} from './module.js'
 
 let versaoHTML = document.getElementById('versao')
-let versao = 'Alpha 1.3.12'
+let versao = 'Alpha 1.3.14'
 versaoHTML.innerHTML = versao
 
 function showVersion() {
@@ -41,7 +41,7 @@ let input = "";
 
 function generateSeed(input) {
 
-  let seedReal = parseInt(input) >= 1000000000000000 && parseInt(input) <= 1000000000000000000
+  let seedReal = parseInt(input) >= 10000000000000 && parseInt(input) <= 1000000000000000000
   // 
   // 
   //se for colocada um seed real
@@ -780,7 +780,9 @@ function colocarInfoNoWrap() {
       varianteP.style.fontSize = "0.90em";
     } else {
     }
+    
   }
+  console.log('carta: ',novaCarta);
 }
 
 function colocarInput() {
@@ -964,7 +966,7 @@ function moverCartaMonark() {
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
   
-  console.log('no mvoer monark', seedObj);
+  // console.log('no mvoer monark', seedObj);
 
   if (seedObj._isPutByPlayer) {
     false;
