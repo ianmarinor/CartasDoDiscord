@@ -7,71 +7,195 @@ let seedString = seedObj._seedString;
 export let cargos = {
   premiomarino: {
     nome: "premiomarino",
+    display: 'PRÉMIO MARINO',
     energia:0,
     rng:() => seedString[8] == 0 &&
       seedString[9] == 3 &&
       seedString[10] == 4 &&
       seedString[11] == 5,
+      emoji: '🏆',
+      bg: 'url("pics/wrapPremioMarino.webp")',
+      css: {
+      cargoPFontSize: '',
+      cargoPFontWeight: "",
+      retratoPBorder: '',
+      retratoBackgroundSize: '',
+      ataquePFontSize: '',
+      ataquePColor: '',
+      epColor: '',
+      epFontSize: '',
+      }
+      ,
 
     
   },
     primeMinister: {
       nome: "primeminister",
+      display: 'PRIME MINISTER',
       energia:0,
       rng: () =>
         seedString[8] == 0 &&
         seedString[9] == 3 &&
         seedString[10] == 4 &&
         seedString[11] >= 8,
+        emoji: '💪',
+        bg: '',
+        css: {
+          cargoPFontSize: '',
+          cargoPFontWeight: "",
+          retratoPBorder: '',
+          retratoBackgroundSize: '',
+          ataquePFontSize: '',
+          ataquePColor: '',
+          epColor: '',
+          epFontSize: '',
+        }
+        ,
     },
 
     ministro: {
       nome: "ministro",
-      
+      display: 'MINISTRO',
       rng: () =>
         seedString[8] == 0 && seedString[9] == 3 && seedString[10] >= 8,
+        emoji: '👨‍⚖️',
+        bg: '',
+        css: {
+          cargoPFontSize: '',
+          cargoPFontWeight: "",
+          retratoPBorder: '',
+          retratoBackgroundSize: '',
+          ataquePFontSize: '',
+          ataquePColor: '',
+          epColor: '',
+          epFontSize: '',
+        }
     },
 
     monark: {
       nome: "monark",
-      
+      display: 'MONARK',
       rng: () =>
         seedString[8] == 1 && seedString[9] >= 3,
+        emoji: '💩',
+        bg: '',
+        css: {
+          cargoPFontSize: '',
+          cargoPFontWeight: "",
+          retratoPBorder: '',
+          retratoBackgroundSize: '',
+          ataquePFontSize: '',
+          ataquePColor: '',
+          epColor: '',
+          epFontSize: '',
+        }
     },
 
     lord: {
       nome: "lord",
-      
+      display: 'LORD',
       rng: () => seedString[8] == 0 && seedString[9] == 3,
+      emoji: '🤴',
+      bg: '',
+      css: {
+        cargoPFontSize: '',
+        cargoPFontWeight: "",
+        retratoPBorder: '',
+        retratoBackgroundSize: '',
+        ataquePFontSize: '',
+        ataquePColor: '',
+        epColor: '',
+        epFontSize: '',
+      }
     },
 
     nobre: {
       nome: "nobre",
-      
+      display: 'NOBRE',
       rng: () => seedString[8] == 0 && seedString[9] >= 8,
+      emoji: '💙',
+      bg: '',
+      css: {
+        cargoPFontSize: '',
+        cargoPFontWeight: "",
+        retratoPBorder: '',
+        retratoBackgroundSize: '',
+        ataquePFontSize: '',
+        ataquePColor: '',
+        epColor: '',
+        epFontSize: '',
+      }
     },
 
     gentleman: {
       nome: "gentleman",
-      
+      display: 'GENTLEMAN',
       rng: () => seedString[8] == 3,
+      emoji: '',
+      bg: '',
+      css: {
+        cargoPFontSize: '',
+        cargoPFontWeight: "",
+        retratoPBorder: '',
+        retratoBackgroundSize: '',
+        ataquePFontSize: '',
+        ataquePColor: '',
+        epColor: '',
+        epFontSize: '',
+      }
     },
 
     people: {
       nome: "people",
-      
+      display: 'PEOPLE',
       rng: () => seedString[8] >= 7,
+      emoji: '',
+      bg: '',
+      css: {
+        cargoPFontSize: '',
+        cargoPFontWeight: "",
+        retratoPBorder: '',
+        retratoBackgroundSize: '',
+        ataquePFontSize: '',
+        ataquePColor: '',
+        epColor: '',
+        epFontSize: '',
+      }
     },
 
     semCargo: {
       nome: "semcargo",
-      
+      display: 'SEM CARGO',
       rng: false,
+      emoji: '',
+      bg: '',
+      css: {
+        cargoPFontSize: '',
+        cargoPFontWeight: "",
+        retratoPBorder: '',
+        retratoBackgroundSize: '',
+        ataquePFontSize: '',
+        ataquePColor: '',
+        epColor: '',
+        epFontSize: '',
+      }
     },
 
     noCargo: {
       nome: "noCargo",
-      rng: () => seedString[14] == 0         
+      rng: () => seedString[14] == 0 ,
+      emoji: '',
+      bg: '', 
+      css: {
+        cargoPFontSize: '',
+      cargoPFontWeight: "",
+      retratoPBorder: '',
+      retratoBackgroundSize: '',
+      ataquePFontSize: '',
+      ataquePColor: '',
+      epColor: '',
+      epFontSize: '',
+      }       
     },
 }
 

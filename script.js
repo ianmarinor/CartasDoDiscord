@@ -108,10 +108,9 @@ function colocarInfoNoWrap() {
     nome: integrante.nome,
     variante: variante.display,
     cidade: cidade,
-    cargo: cargo.nome,
+    cargo: cargo.display,
     retrato: integrante.retrato,
     energia: energia.energiaTotal,
-    emoji: integrante.emoji,
     critico: criticoTag,
 
     //ESPECIAIS
@@ -130,14 +129,26 @@ function colocarInfoNoWrap() {
   //DOM
   //CARTA NORMAL
   if (especial == cartaNaoEspecial) {
-    cartaP.id = baralho.cargo;
-    nomeP.innerHTML = baralho.nome.toUpperCase();
+    nomeP.innerHTML = baralho.nome.toUpperCase()
     cidadeP.innerHTML = baralho.cidade;
-    ataqueP.innerHTML = baralho.energia + baralho.emoji;
+    ataqueP.innerHTML = baralho.energia + integrante.emoji;
     varianteP.innerHTML = baralho.variante;
-    cargoP.innerHTML = baralho.cargo.toUpperCase();
+    cargoP.innerHTML = baralho.cargo + cargo.emoji
     retratoP.style.backgroundImage = baralho.retrato;
-    novoAtaqueP.innerHTML = baralho.energia * criticoTag.multi;
+    novoAtaqueP.innerHTML = baralho.energia * criticoTag.multi + integrante.emoji
+
+
+
+    cartaP.id = cargo.nome;
+    cargoP.style.fontSize = cargo.css.cargoPFontSize;
+    cargoP.style.fontWeight = cargo.css.cargoPFontWeight;
+    ataqueP.style.fontSize = cargo.css.ataquePFontSize;
+    ataqueP.style.color = cargo.css.ataquePColor;
+    novoAtaqueP.style.color = cargo.css.epColor;
+    novoAtaqueP.style.fontSize = cargo.css.epFontSize;
+    retratoP.style.border = cargo.css.retratoPBorder;
+    retratoP.style.backgroundSize = cargo.css.retratoBackgroundSize;
+
     //variantes
     cartaP.style.color = variante.css.cartaP_Color
     cartaP.style.backgroundImage = variante.css.cartaP_BGImage
