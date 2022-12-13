@@ -1,3 +1,5 @@
+let DEBUG = true
+
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 let variantes = [
@@ -30,5 +32,5 @@ export function escolherVariante(teste) {
     variante = variantes[10];
   }
 
-  console.log("variante: ", variante.display);
+  DEBUG && console.log("variante modulo: ", variante);
 }
