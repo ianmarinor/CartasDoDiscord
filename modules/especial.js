@@ -1,4 +1,4 @@
-let DEBUG = true;
+let DEBUG = false;
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 
@@ -84,8 +84,11 @@ export let especiais = {
       cargoPFontSize: '1.4em',
       cargoPFontWeight: "",
       retratoPBorder: '2px double gold',
-      ataquePFontSize: '1.4em',
-      retratoBackgroundSize: '139px 150px'
+      ataquePFontSize: '1.3em',
+      retratoBackgroundSize: '139px 150px',
+      ataquePColor: '',
+      epColor: '',
+      epFontSize: '',
     }
   },
 
@@ -107,30 +110,36 @@ export let especiais = {
       cargoPFontWeight: "",
       retratoPBorder: "2px dotted green",
       retratoBackgroundSize: '',
-      ataquePFontSize: ''
+      ataquePFontSize: '',
+      ataquePColor: '',
+      epColor: '',
+      epFontSize: '',
     }
   },
 
   bonusCartasMais: {
     cartaId: 'bonusCartasMais',
-    nome: "bonusCartasMais",
+    nome: "+ cartas +",
     raridade: raridades.campones,
     pontoEspecial: 0,
     energia: '',
     poder: "",
     efeito: "",
     familia: "",
-    descricao:"CLICKS",
-    emojiEsp: "🔄",
+    descricao:"BONUS?",
+    emojiEsp: "🃏",
     emoji: "",
     retrato: "url('pics/clickretrato.webp')",
     css:{
-      
-      cargoPFontSize: '',
+      cargoPFontSize: '1.7em',
       cargoPFontWeight: "bolder",
       retratoPBorder: '',
       retratoBackgroundSize: 'cover',
-      ataquePFontSize: '1.5em'
+      ataquePFontSize: '',
+      ataquePColor: '',
+      epColor: 'black',
+      epFontSize: '1.4em',
+
     }
   },
 
@@ -153,7 +162,10 @@ export let especiais = {
       cargoPFontWeight: "",
       retratoPBorder: "",
       retratoBackgroundSize: '',
-      ataquePFontSize: ''
+      ataquePFontSize: '',
+      ataquePColor: '',
+      epColor: '',
+      epFontSize: '',
     }
   },
 };

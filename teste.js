@@ -44,44 +44,44 @@
 // }
 // console.log(b) 
 
-let especiais = {
+// let especiais = {
   
-    tenica: {
-      nome: 1,
-      raridade: 'raridades[0]',
-      pontoEspecial: 0,
-      energia: 0,
-      poder: ()=> 1+3
-    },
+//     tenica: {
+//       nome: 1,
+//       raridade: 'raridades[0]',
+//       pontoEspecial: 0,
+//       energia: 0,
+//       poder: ()=> 1+3
+//     },
 
-    juj:this.tenica,
+//     juj:this.tenica,
   
-    speaker: {
-      nome: 1,
-      raridade: 'raridades[0]',
-      pontoEspecial: 0,
-      energia: 0,
-      poder: ''
-    },
+//     speaker: {
+//       nome: 1,
+//       raridade: 'raridades[0]',
+//       pontoEspecial: 0,
+//       energia: 0,
+//       poder: ''
+//     },
   
   
-    bonusCartasMais: {
-      nome: 1,
-      raridade: 'raridades[0]',
-      pontoEspecial: 0,
-      energia: 0,
-      poder: ''
-    },
+//     bonusCartasMais: {
+//       nome: 1,
+//       raridade: 'raridades[0]',
+//       pontoEspecial: 0,
+//       energia: 0,
+//       poder: ''
+//     },
   
-    abelha: {
-      nome:  1,
-      raridade: '0',
-      pontoEspecial: 0,
-      energia: 0,
-      poder: ''
-    },
+//     abelha: {
+//       nome:  1,
+//       raridade: '0',
+//       pontoEspecial: 0,
+//       energia: 0,
+//       poder: ''
+//     },
     
-  }
+//   }
   // let sum = 3
   // for (let key in especiais){
     
@@ -100,6 +100,16 @@ let especiais = {
   // {nome:"pêra", display: this.nome},
   // {nome:"",display:0}]
 
-  especiais.tenica.poder =especiais.tenica.poder() 
-  console.log(especiais.tenica.poder);
+  // especiais.tenica.poder =especiais.tenica.poder() 
+  // console.log(especiais.tenica.poder);
+
+  
+
+  
+  if(1 > 0){
+    console.log(2)
+  } else if (2 > 0){
+    console.log(3)
+  }
+
   

@@ -293,10 +293,10 @@ li{
 }
 #bonusCartasMais{
 
-    /* font-family: 'verdana'; */
+    font-family: 'verdana';
 
     /* background-image: url(pics/click.webp); */
-    background-color: #ddddeb;
+    background-color: #6d6dc3;
     height: var(--tamanhoCartaHeight);
     width: var(--tamanhoCartaWidth);
     display: flex;
@@ -305,9 +305,9 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
-    border: 2px solid #dde630;
+    border: 2px solid #30cbe6;
     font-weight: 900;
-    color: rgb(255, 255, 255);
+    color: rgb(19, 34, 134);
     background-repeat: no-repeat;
     background-size: 280px 440px;
     

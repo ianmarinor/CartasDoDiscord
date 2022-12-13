@@ -1,4 +1,5 @@
 let DEBUG = false
+// let DEBUG = true
 
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
@@ -26,11 +27,12 @@ export function escolherVariante(teste) {
   }
 
   if (seedString[3] == 6 && seedString[4] == 6 && seedString[5] == 6) {
+    console.log('variante: ', variante);
    return  variante = variantes[seedString[6]];
-    // console.log('variante: ', variante);
   } else {
+    DEBUG && console.log("variante modulo: ", variante);
     return variante = variantes[10];
   }
 
-  DEBUG && console.log("variante modulo: ", variante);
+  
 }

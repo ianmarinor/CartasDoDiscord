@@ -1,3 +1,4 @@
+// let DEBUG = true
 let DEBUG = false
 
 import { seedObj } from "./modules/seedFabricator.js";
@@ -46,6 +47,7 @@ let bonusCartasMais = especiais.bonusCartasMais;
 let abelha = especiais.abelha;
 let cartaNaoEspecial = especiais.notSpecial
 
+import { criticoTag, criticoCheck} from "./modules/critico.js";
 
 
 ///////   ^^^^^^^^IMPORTS IMPORTS^^^^^^
@@ -159,6 +161,7 @@ function colocarInfoNoWrap() {
   
   } else {
     //CARTA ESPECIAL
+    cidadeP.innerHTML = ''
     nomeP.innerHTML = baralho.nomeEsp.toUpperCase()
     retratoP.style.backgroundImage = baralho.retratoEspecial
     cargoP.innerHTML = baralho.descricao
@@ -169,6 +172,10 @@ function colocarInfoNoWrap() {
   cargoP.style.fontSize = especial.css.cargoPFontSize
   cargoP.style.fontWeight = especial.css.cargoPFontWeight
   ataqueP.style.fontSize = especial.css.ataquePFontSize
+  ataqueP.style.color = especial.css.ataquePColor
+  novoAtaqueP.style.color = especial.css.epColor
+  novoAtaqueP.style.fontSize = especial.css.epFontSize
+  // novoAtaqueP.style.fontSize = especial.css.epFontSize
   retratoP.style.border = especial.css.retratoPBorder
   retratoP.style.backgroundSize = especial.css.retratoBackgroundSize
   }
@@ -181,9 +188,10 @@ function colocarInfoNoWrap() {
   arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
 
-  console.log('baralho: ', baralho);
-  console.log('cartaNaoEspecial: ', cartaNaoEspecial);
-  console.log('cartaEspecial: ', especial);
+  DEBUG && console.log('baralho: ', baralho);
+  DEBUG && console.log('cartaNaoEspecial: ', cartaNaoEspecial);
+  DEBUG && console.log('especial ', especial);
+  DEBUG && console.log('criticoTag: ', criticoTag);
   
   // retratoP.style.display = "block";
 
@@ -1021,6 +1029,7 @@ function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
+    criticoCheck();
     moverCartaMonark();
     clicks();
     blockInv();
