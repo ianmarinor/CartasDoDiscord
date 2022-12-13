@@ -93,6 +93,26 @@ let cartaP = document.getElementById("carta");
 
 let baralho;
 
+function limpaCarta(){
+  cartaP.style.backgroundImage = "";
+  cartaP.style.border = "none";
+  cartaP.style.color = "";
+  actionP.style.visibility = "hidden";
+  ataqueP.style.textDecorationLine = "";
+  ataqueP.id = "";
+  novoAtaqueP.innerHTML = "";
+  novoAtaqueP.style.fontSize = "";
+  retratoP.style.backgroundSize = "";
+  cargoP.style.fontSize = "";
+  cargoP.style.color = "";
+  cargoP.style.fontWeight = "";
+  cargoP.style.fontFamily = "";
+  ataqueP.style.color = "";
+  ataqueP.style.fontSize = "";
+  ataqueP.textContent = "";
+  varianteP.innerHTML = ''
+}
+
 function colocarInfoNoWrap() {
   // const novaCarta = fabricaDeCartaNormal(
   //   integrante,
@@ -126,6 +146,7 @@ function colocarInfoNoWrap() {
     seed: seedObj._seedString,
   };
 
+  limpaCarta()
   //DOM
   //CARTA NORMAL
   if (especial == cartaNaoEspecial) {
@@ -155,6 +176,12 @@ function colocarInfoNoWrap() {
       cidadeP.className = criticoTag.css.cidadeP
       varianteP.className = (criticoTag.css.varianteP)
       cartaP.className = (criticoTag.css.cartaP)
+
+      ataqueP.style.textDecoration = criticoTag.energia.ataque
+      novoAtaqueP.style.visibility = criticoTag.energia.ataqueNovo
+      novoAtaqueP.style.fontSize = criticoTag.energia.ataqueNovoFontSize
+      novoAtaqueP.style.fontSize = criticoTag.energia.ataqueNovoFontSize
+      novoAtaqueP.className = criticoTag.energia.ataqueNovoCritico
     
 
     //variantes
@@ -164,6 +191,12 @@ function colocarInfoNoWrap() {
     cartaP.style.fontSize = variante.css.varianteP_FontSize
 
   } else {
+
+
+    //limpeza
+    cartaP.style.backgroundImage = ''
+    cartaP.style.border = ''
+
     //CARTA ESPECIAL
     cidadeP.innerHTML = "";
     nomeP.innerHTML = baralho.nomeEsp.toUpperCase();
@@ -181,6 +214,13 @@ function colocarInfoNoWrap() {
     novoAtaqueP.style.fontSize = especial.css.epFontSize;
     retratoP.style.border = especial.css.retratoPBorder;
     retratoP.style.backgroundSize = especial.css.retratoBackgroundSize;
+
+    //reset critico
+    novoAtaqueP.style.visibility = especial.css.ataqueNovo
+    novoAtaqueP.style.fontSize = especial.css.ataqueNovoFontSize
+    ataqueP.style.textDecoration = especial.css.ataque
+    
+    
     //tira critico
       nomeP.className = ''
       cidadeP.className = ''

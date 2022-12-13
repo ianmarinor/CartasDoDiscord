@@ -80,6 +80,7 @@ export let especiais = {
     emoji: "👑",
     emojiEsp: "",
     retrato: "url('pics/tenica.webp')",
+    
     css:{
       cargoPFontSize: '1.4em',
       cargoPFontWeight: "",
@@ -89,6 +90,13 @@ export let especiais = {
       ataquePColor: '',
       epColor: '',
       epFontSize: '',
+
+      ataqueNovo: 'visible',
+      ataque: 'none',
+      ataqueNovoFontSize: '',
+      
+
+      
     }
   },
 
@@ -114,6 +122,10 @@ export let especiais = {
       ataquePColor: '',
       epColor: '',
       epFontSize: '',
+      ataqueNovo: 'visible',
+      ataque: 'none',
+      ataqueNovoFontSize: '',
+
     }
   },
 
@@ -139,6 +151,9 @@ export let especiais = {
       ataquePColor: '',
       epColor: 'black',
       epFontSize: '1.4em',
+      ataqueNovo: 'visible',
+      ataque: 'none',
+      ataqueNovoFontSize: '1.8em',
 
     }
   },
@@ -166,6 +181,10 @@ export let especiais = {
       ataquePColor: '',
       epColor: '',
       epFontSize: '',
+
+      ataqueNovo: 'visible',
+      ataque: 'none',
+      ataqueNovoFontSize: '',
     }
   },
 };

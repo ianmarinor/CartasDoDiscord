@@ -27,6 +27,13 @@ export function criticoCheck() {
           varianteP: "",
           cartaP: "",
         },
+        energia:{
+          ataqueNovo: 'visible',
+          ataque: 'line-through',
+          ataqueNovoFontSize: '1.75em',
+          ataqueNovoCritico: 'critico'
+          
+        }
       };
     } else {
       //CRITICO
@@ -42,13 +49,13 @@ export function criticoCheck() {
           varianteP: "",
           cartaP: "",
         },
-
-        cssRemove: {
-          nomeP: "",
-          cidadeP: "",
-          varianteP: "critico",
-          cartaP: "critico",
-        },
+        energia:{
+          ataqueNovo: 'visible',
+          ataque: 'line-through',
+          ataqueNovoFontSize: '',
+          
+          ataqueNovoCritico: ''
+        }
       };
     }
   } else if (variante.nome != "" && seedString[1] == seedString[6]) {
@@ -60,15 +67,15 @@ export function criticoCheck() {
       multi: 3,
       css: {
         nomeP: "critico",
-        cidadeP: "f",
+        cidadeP: "",
         varianteP: "critico",
-        cartaP: "f",
-      },
-      cssRemove: {
-        nomeP: "",
-        cidadeP: "critico",
-        varianteP: "",
-        cartaP: "fcritico",
+        cartaP: "",
+      },energia:{
+        ataqueNovo: 'visible',
+        ataque: 'line-through',
+        ataqueNovoFontSize: '1.75em',
+        
+          ataqueNovoCritico: ''
       }
     };
   } else {
@@ -80,17 +87,16 @@ export function criticoCheck() {
       ultraCritico: false,
       multi: 1,
       css: {
-        nomeP: "f",
-        cidadeP: "f",
-        varianteP: "f",
-        cartaP: "f",
-      },
-      cssRemove: {
         nomeP: "",
         cidadeP: "",
         varianteP: "",
         cartaP: "",
-      },
+      },energia:{
+        ataqueNovo: 'hidden',
+        ataqueNovoFontSize: '',
+        ataque: '',
+        ataqueNovoCritico: ''
+      }
     };
     //   console.log('criticoTag: ', criticoTag);
     //   console.log('variante.name: ', variante.nome);

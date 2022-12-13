@@ -7,7 +7,7 @@ let seedString = seedObj._seedString;
 export let cargos = {
   premiomarino: {
     nome: "premiomarino",
-    display: 'PRÉMIO MARINO',
+    display: ' 🏆 PRÉMIO MARINO',
     energia:0,
     rng:() => seedString[8] == 0 &&
       seedString[9] == 3 &&
