@@ -6,8 +6,9 @@ versaoHTML.innerHTML = versao;
 console.log(new Date().toUTCString());
 console.log(versao);
 
+
 let getSeed = document.getElementById("getseed");
-let button = document.getElementById("btn");
+// let button = document.getElementById("btn");
 
 let input = "";
 function colocarInput() {
@@ -75,20 +76,29 @@ export function generateSeed(input) {
   }
   
 }
-
-function start() {
+// export let seedObj
+export function start() {
   colocarInput();
-  seedObj = generateSeed(input);
+   seedObj = generateSeed(input);
 }
 
-let quantasCartas = 10;
-function numeroDeCartasTeste() {
-  for (let j = 0; j < quantasCartas; j++) {
-    generateSeed();
-  }
+
+
   // console.log(numeroDeCartas);
-}
 
-button.addEventListener("click", start);
-export let seedObj = generateSeed(input);
+
+// button.addEventListener("click", start);
+// window.onload = function(){
+//   start()
+// }
+
+export let seedObj = {
+  _seed: 0,
+  _seedString: '',
+  _isSeedReal: false,
+  _seedFalsaInput: '',
+  _seedLength: 0,
+  _isPutByPlayer: false,
+};
+console.log('seedObj: ', seedObj);
 

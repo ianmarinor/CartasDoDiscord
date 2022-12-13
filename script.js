@@ -1,22 +1,16 @@
-// let DEBUG = true
-let DEBUG = false
+let DEBUG = true;
+// let DEBUG = false
 
-import { seedObj } from "./modules/seedFabricator.js";
-
-
-import { escolherIntegrante, integrante, integrantes } from "./modules/integrante.js";
-import { escolherCidade, cidade } from "./modules/cidade.js";
-
-
-// import { ian } from "./modules/teste.js";
-// console.log('ian: ', ian);
-
+import { seedObj, start } from "./modules/seedFabricator.js";
 
 import {
-  cargo,
-  escolherCargo,
-  cargos,
-} from "./modules/cargo.js";
+  escolherIntegrante,
+  integrante,
+  integrantes,
+} from "./modules/integrante.js";
+import { escolherCidade, cidade } from "./modules/cidade.js";
+
+import { cargo, escolherCargo, cargos } from "./modules/cargo.js";
 
 let premioMarino = cargos.premiomarino;
 let primeMinister = cargos.primeMinister;
@@ -27,35 +21,34 @@ let nobre = cargos.nobre;
 let gentleman = cargos.gentleman;
 let people = cargos.people;
 let semCargo = cargos.semCargo;
-let noCargo = cargos.noCargo
-
-
+let noCargo = cargos.noCargo;
 
 import { variante, escolherVariante } from "./modules/variante.js";
 
-import {
-  especial,
-  escolherEspecial,
-  especiais,
-} from "./modules/especial.js";
+import { especial, escolherEspecial, especiais } from "./modules/especial.js";
 
-import { energia, escolherPoder} from "./modules/energia.js";
+import { energia, escolherPoder } from "./modules/energia.js";
 
 let tenica = especiais.tenica;
 let speaker = especiais.speaker;
 let bonusCartasMais = especiais.bonusCartasMais;
 let abelha = especiais.abelha;
-let cartaNaoEspecial = especiais.notSpecial
+let cartaNaoEspecial = especiais.notSpecial;
 
-import { criticoTag, criticoCheck} from "./modules/critico.js";
-
+import { criticoTag, criticoCheck } from "./modules/critico.js";
 
 ///////   ^^^^^^^^IMPORTS IMPORTS^^^^^^
 
-
 //************************************************ */
 
-function fabricaDeCartaNormal(integrante, cidade, cargo, poder, variante,seedObj) {
+function fabricaDeCartaNormal(
+  integrante,
+  cidade,
+  cargo,
+  poder,
+  variante,
+  seedObj
+) {
   return {
     _integrante: integrante,
     _cidade: cidade,
@@ -71,8 +64,6 @@ function fabricaDeCartaNormal(integrante, cidade, cargo, poder, variante,seedObj
 // escolherCidade()
 // escolherCargo()
 // escolherPoder()
-
-
 
 ////D O M
 let button = document.getElementById("btn");
@@ -100,13 +91,7 @@ let cartaP = document.getElementById("carta");
 // let getSeed = document.getElementById("getseed");
 //pagin procura seed
 
-
-
-
-
-
-
-
+let baralho;
 
 function colocarInfoNoWrap() {
   // const novaCarta = fabricaDeCartaNormal(
@@ -118,19 +103,16 @@ function colocarInfoNoWrap() {
   //   seedObj
   // );
 
-  const baralho = {
-    
-
+  baralho = {
     //NORMAL
-  nome: integrante.nome,
-  retrato: integrante.retrato,
-  energia: energia.energiaTotal,
-  variante: variante.display,
-  cidade: cidade,
-  cargo: cargo.nome,
-  emoji: integrante.emoji,
-  critico: '',
-
+    nome: integrante.nome,
+    variante: variante.display,
+    cidade: cidade,
+    cargo: cargo.nome,
+    retrato: integrante.retrato,
+    energia: energia.energiaTotal,
+    emoji: integrante.emoji,
+    critico: criticoTag,
 
     //ESPECIAIS
     nomeEsp: especial.nome,
@@ -138,201 +120,66 @@ function colocarInfoNoWrap() {
     descricao: especial.descricao,
     energiaEsp: especial.energia,
     pontoEspecial: especial.pontoEspecial,
-    poder: 'PODER',
+    poder: "PODER",
     emoji: especial.emoji,
     emojiEsp: especial.emojiEsp,
 
-
-    seed: seedObj._seedString
-}
+    seed: seedObj._seedString,
+  };
 
   //DOM
   //CARTA NORMAL
-  if(especial == cartaNaoEspecial){
-  cartaP.id = baralho.cargo
-  nomeP.innerHTML = baralho.nome.toUpperCase()
-  cidadeP.innerHTML = baralho.cidade
-  ataqueP.innerHTML = baralho.energia + baralho.emoji
-  varianteP.innerHTML = baralho.variante
-  cargoP.innerHTML = baralho.cargo.toUpperCase()
-  retratoP.style.backgroundImage = baralho.retrato
-  novoAtaqueP.innerHTML = baralho.critico
+  if (especial == cartaNaoEspecial) {
+    cartaP.id = baralho.cargo;
+    nomeP.innerHTML = baralho.nome.toUpperCase();
+    cidadeP.innerHTML = baralho.cidade;
+    ataqueP.innerHTML = baralho.energia + baralho.emoji;
+    varianteP.innerHTML = baralho.variante;
+    cargoP.innerHTML = baralho.cargo.toUpperCase();
+    retratoP.style.backgroundImage = baralho.retrato;
+    novoAtaqueP.innerHTML = baralho.energia * criticoTag.multi;
+    //variantes
+    cartaP.style.color = variante.css.cartaP_Color
+    cartaP.style.backgroundImage = variante.css.cartaP_BGImage
+    cartaP.style.border = variante.css.cartaP_Border
+    cartaP.style.fontSize = variante.css.varianteP_FontSize
 
-  
   } else {
     //CARTA ESPECIAL
-    cidadeP.innerHTML = ''
-    nomeP.innerHTML = baralho.nomeEsp.toUpperCase()
-    retratoP.style.backgroundImage = baralho.retratoEspecial
-    cargoP.innerHTML = baralho.descricao
-    novoAtaqueP.innerHTML = baralho.pontoEspecial + baralho.emojiEsp
-    ataqueP.innerHTML = baralho.energiaEsp + baralho.emoji
-    
-  cartaP.id = especial.cartaId
-  cargoP.style.fontSize = especial.css.cargoPFontSize
-  cargoP.style.fontWeight = especial.css.cargoPFontWeight
-  ataqueP.style.fontSize = especial.css.ataquePFontSize
-  ataqueP.style.color = especial.css.ataquePColor
-  novoAtaqueP.style.color = especial.css.epColor
-  novoAtaqueP.style.fontSize = especial.css.epFontSize
-  // novoAtaqueP.style.fontSize = especial.css.epFontSize
-  retratoP.style.border = especial.css.retratoPBorder
-  retratoP.style.backgroundSize = especial.css.retratoBackgroundSize
+    cidadeP.innerHTML = "";
+    nomeP.innerHTML = baralho.nomeEsp.toUpperCase();
+    retratoP.style.backgroundImage = baralho.retratoEspecial;
+    cargoP.innerHTML = baralho.descricao;
+    novoAtaqueP.innerHTML = baralho.pontoEspecial + baralho.emojiEsp;
+    ataqueP.innerHTML = baralho.energiaEsp + baralho.emoji;
+
+    cartaP.id = especial.cartaId;
+    cargoP.style.fontSize = especial.css.cargoPFontSize;
+    cargoP.style.fontWeight = especial.css.cargoPFontWeight;
+    ataqueP.style.fontSize = especial.css.ataquePFontSize;
+    ataqueP.style.color = especial.css.ataquePColor;
+    novoAtaqueP.style.color = especial.css.epColor;
+    novoAtaqueP.style.fontSize = especial.css.epFontSize;
+    retratoP.style.border = especial.css.retratoPBorder;
+    retratoP.style.backgroundSize = especial.css.retratoBackgroundSize;
   }
-  
-
-  
-
 
   seedP.innerHTML = baralho.seed
   arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
 
-  DEBUG && console.log('baralho: ', baralho);
-  DEBUG && console.log('cartaNaoEspecial: ', cartaNaoEspecial);
-  DEBUG && console.log('especial ', especial);
-  DEBUG && console.log('criticoTag: ', criticoTag);
-  
-  // retratoP.style.display = "block";
+  DEBUG && console.log("baralho: ", baralho);
+  DEBUG && console.log("cartaNaoEspecial: ", cartaNaoEspecial);
+  DEBUG && console.log("especial ", especial);
+  DEBUG && console.log("criticoTag: ", criticoTag);
 
-  //colocar retrato
-  
-  //colocar cargo
-  
 
-  //CARTAS ESPECIAIS
-  
-  // } else if (novaCarta._especial === tenica) {
-  //   cargoP.style.fontFamily = "Cormorant Upright";
-  //   retratoP.style.backgroundImage = "url('pics/tenica.webp')";
-  //   retratoP.style.backgroundSize = "139px 150px";
-  //   nomeP.innerHTML = "";
-  //   cidadeP.innerHTML = "";
-  //   cargoP.style.fontSize = "2.5em";
-  //   cargoP.style.fontWeight = "bolder";
-  //   cargoP.innerHTML = "&nbsp; TÉNICA";
-  //   cargoP.style.color = "black";
-  //   retratoP.style.border = "2px double gold";
-  //   ataqueP.style.color = "black";
-  //   ataqueP.innerHTML = parseInt(ataqueP.innerHTML) * 90 + "👑";
-  //   seedP.style.color = "black";
 
-    // ataqueP.style.fontSize = "1.5em";
-    // especialP.style.visibility = "hidden";
+  // DEBUG && console.log(novaCarta);
 
-  // } else if (novaCarta._especial === bonusCartasMais) {
-  //   retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
-  //   retratoP.style.backgroundSize = "cover";
-  //   nomeP.innerHTML = "";
-  //   cidadeP.innerHTML = "";
-  //   especialP.style.visibility = "hidden";
-  //   cargoP.style.fontSize = "2.3em";
-  //   cargoP.style.fontWeight = "bolder";
-  //   cargoP.innerHTML = "CLICKS";
-  //   cargoP.style.color = "gray";
-  //   // retratoP.style.border = '2px double gold'
-  //   ataqueP.style.color = "black";
-  //   ataqueP.style.fontSize = "1.5em";
-  //   // actionP.style.visibility = 'visible'
-  //   ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
-  //   seedP.style.color = "black";
-  // }
-
-  //CARTAS VARIANTES
-  // if (novaCarta._variante != "") {
-  //   // actionP.style.visibility = 'visible'
-  //   varianteP.style.fontFamily = "Righteous";
-  //   varianteP.style.textShadow = "-2px 5px 5px #010101";
-  //   varianteP.style.fontSize = "1.1em";
-
-  //   if (novaCarta._variante === "farmacêutico") {
-      // varianteP.innerHTML = "💊" + novaCarta._variante.toUpperCase() + "💊";
-  //     cartaP.style.color = "white";
-  //     cartaP.style.backgroundImage =
-  //       'url("pics/variantes/varianteGandalf.gif")';
-  //     cartaP.style.border = "3px white solid";
-  //     varianteP.style.fontSize = "1em";
-  //   } else if (novaCarta._variante === "bão") {
-  //     varianteP.innerHTML =
-  //       "👌 " + "AÔPA, " + novaCarta._variante.toUpperCase() + " 👌";
-  //     cartaP.style.color = "orange";
-  //     cartaP.style.backgroundImage = 'url("pics/variantes/varianteTuru.gif")';
-  //     cartaP.style.border = "3px orange solid";
-  //   } else if (novaCarta._variante === "apenas") {
-  //     varianteP.innerHTML = "🤤 " + novaCarta._variante.toUpperCase() + " 🤤";
-  //     cartaP.style.color = "wheat";
-  //     cartaP.style.backgroundImage =
-  //       'url("pics/variantes/varianteNefesto.gif")';
-  //     cartaP.style.border = "3px wheat solid";
-  //   } else if (novaCarta._variante === "fonte") {
-  //     varianteP.innerHTML =
-  //       "😖" + "COMO MUDA A " + novaCarta._variante.toUpperCase() + "😖";
-  //     cartaP.style.color = "  white";
-
-  //     cartaP.style.backgroundImage =
-  //       'url("pics/variantes/varianteBlackao.gif")';
-  //     cartaP.style.border = "3px white solid";
-  //     varianteP.style.fontSize = "0.86em";
-  //     // varianteP.style.textShadow = '-2px 5px 5px #ffffff'
-  //   } else if (novaCarta._variante === "ixqueiro") {
-  //     varianteP.innerHTML =
-  //       "&#127940;" +
-  //       "CHIQUEIRO, " +
-  //       novaCarta._variante.toUpperCase() +
-  //       "&#127940;";
-  //     cartaP.style.color = " #d8fbb5";
-  //     varianteP.style.fontSize = "1em";
-
-  //     cartaP.style.backgroundImage =
-  //       'url("pics/variantes/varianteAntonio.gif")';
-  //     cartaP.style.border = "3px #d8fbb5 solid";
-  //     varianteP.style.fontSize = "0.86em";
-  //   } else if (novaCarta._variante === "abalo") {
-  //     varianteP.innerHTML =
-  //       "🎉" + "UM " + novaCarta._variante.toUpperCase() + "! 🎉";
-  //     cartaP.style.color = "  #fbb5f2 ";
-
-  //     cartaP.style.backgroundImage = 'url("pics/variantes/variantePedro.gif")';
-  //     cartaP.style.border = "3px #fbb5f2 solid";
-  //   } else if (novaCarta._variante === "grito") {
-  //     varianteP.innerHTML = "📢AAAAAAAAAAHHH!!!!!📢";
-  //     cartaP.style.color = "   #42b028   ";
-
-  //     cartaP.style.backgroundImage = 'url("pics/variantes/varianteCurtas.gif")';
-  //     cartaP.style.border = "3px  #25a406  solid";
-  //     varianteP.style.fontSize = "0.86em";
-  //   } else if (novaCarta._variante === "dia") {
-  //     varianteP.innerHTML = "⛪ TODO DIA ISSO ⛪";
-  //     cartaP.style.color = "   #27ebe2     ";
-
-  //     cartaP.style.backgroundImage = 'url("pics/variantes/varianteTwelve.gif")';
-  //     cartaP.style.border = "3px  #27ebe2   solid";
-  //     varianteP.style.fontSize = "0.99em";
-  //   } else if (novaCarta._variante === "quimico") {
-  //     varianteP.innerHTML = "🐶 O PUGO 🐶";
-  //     cartaP.style.color = "white";
-  //     cartaP.style.backgroundImage = 'url("pics/variantes/varianteJunks.gif")';
-  //     cartaP.style.border = "3px  white   solid";
-  //   } else if (novaCarta._variante === "pêra") {
-  //     varianteP.innerHTML = "🥛 LEITE COM PÊRA 🍐";
-  //     cartaP.style.color = "white";
-  //     cartaP.style.backgroundImage =
-  //       'url("pics/variantes/varianteMurillo.gif")';
-  //     cartaP.style.border = "3px  white   solid";
-  //     varianteP.style.fontSize = "0.90em";
-  //   } else {
-  //   }
-  // }
-
-  DEBUG && console.log(novaCarta);
-  
   // DEBUG && console.log(novaCarta._especial.nome);
 }
-// let input
-// function colocarInput() {
-//   input = getSeed.value;
-//   // input = 13315754569994
-// }
+
 
 //*************************MOVER CARTA PARA O INVENTARIO */
 //****************************************************** */
@@ -986,52 +833,38 @@ function numeroDeCartasTeste() {
 // numeroDeCartasTeste();
 
 function tudo() {
+  if (!seedObj._isPutByPlayer) {
+    totalClicks--;
+  }
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
   if (totalClicks >= 0) {
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     // colocarInput();seedObj
     // seedObj = generateSeed(input);
-    seedString = seedObj._seedString;
+    // seedString = seedObj._seedString;
     // DEBUG && console.log("seedString no tudo ", seedString);
-
-    if (true){
-      const cartaNormal = {
-        
-
-        integrante: escolherIntegrante(),
-        cidade: escolherCidade(),
-        cargo: escolherCargo(),
-        variante: escolherVariante(),
-        energia: escolherPoder()
-
-
-
-      }
-      console.log('cartaNormal: ', cartaNormal);
-
-
-
-    }
-
+    start()
+    DEBUG && console.log("no tudo SEED", seedObj);
     escolherIntegrante();
-    DEBUG && console.log(integrante);
+    DEBUG && console.log("no tudo INTEGRANTE:", integrante);
     escolherCidade();
-    // DEBUG && console.log(cidade);
+    DEBUG && console.log("no tudo CIDADE", cidade);
     escolherCargo();
-    // DEBUG && console.log("no tudo cargo", cargo);
+    DEBUG && console.log("no tudo CARGO", cargo);
     escolherVariante();
+    DEBUG && console.log("no tudo VARIANTE: ", variante);
     escolherEspecial();
+    DEBUG && console.log("no tudo ESPECIAL: ", especial);
     escolherPoder();
-     console.log('energia',energia);
-    // DEBUG && console.log("no tudo especial", especial);
-    // pontoVariante();
-    escolherPoder();
-    colocarInfoNoWrap();
-    critico();
+    DEBUG && console.log("no tudo ENERGIA", energia);
+    // critico();
     criticoCheck();
+    DEBUG && console.log("no tudo CRITICO-TAG", criticoTag);
+
+    colocarInfoNoWrap();
+    DEBUG && console.log("no tudo BARALHO", baralho);
     moverCartaMonark();
-    clicks();
     blockInv();
   } else {
     button.style.backgroundColor = "red";
@@ -1042,36 +875,9 @@ function tudo() {
   }
 }
 
-function tudoParaTeste() {
-  // VOLTAR A CONDICAO PRA (totalClicks > 0)
-
-  // button.style.backgroundColor = "";
-  // button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-  colocarInput();
-  seedObj = generateSeed(input);
-  seedString = seedObj._seedString;
-  escolherIntegrante();
-  escolherCidade();
-  escolherCargo();
-  escolherVariante();
-  escolherEspecial();
-  pontoVariante();
-  // escolherPoder();
-  // colocarInfoNoWrap();
-  // critico();
-  // moverCartaMonark();
-  //
-  // clicks();
-  // blockInv()
-}
-
 // let seedString = seedObj._seedString
 
 function clicks() {
-  if (!seedObj._isPutByPlayer) {
-    totalClicks--;
-  }
-
   //
 }
 let totalPontos = 0;
@@ -1159,10 +965,12 @@ inv.addEventListener("click", deletarDeck);
 
 // btnReset.addEventListener('click', moverCartaMonark)
 
-document.addEventListener("keydown", (event) =>{
-  if(event.ctrlKey){
-
-    resetarDeck()
+document.addEventListener("keydown", (event) => {
+  if (event.ctrlKey) {
+    resetarDeck();
   }
 });
 btnReset.addEventListener("click", resetarDeck);
+// window.onload = function(){
+//   tudo()
+// }

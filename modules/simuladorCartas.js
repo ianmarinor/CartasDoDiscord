@@ -125,7 +125,7 @@ function tudoParaTeste() {
   escolherEspecial();
 }
 
-tudoParaTeste();
+// tudoParaTeste();
 
 let quantasCartas = 1000000;
 // numeroDeCartasTeste();

@@ -1,3 +1,6 @@
+// let DEBUG = false
+let DEBUG = true
+
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 export let integrantes = [
@@ -24,8 +27,8 @@ export function escolherIntegrante(teste) {
   } else{
   seedString = teste}
 
-  // console.log('seedObj do integrante ', seedString);
-  // console.log("seedObj do integrante ", seedObj);
+  DEBUG && console.log('seedObj do integrante ', seedString);
+  DEBUG && console.log("seedObj do integrante ", seedObj);
 
   integrante = integrantes[seedString[1]];
   if (seedString[14] == 0) {

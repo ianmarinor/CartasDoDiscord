@@ -62,19 +62,19 @@ export let energia
 
 export function escolherPoder() {
 
-  console.log('seedObj: ', seedString);
-  console.log('energia: ', energia);
+ DEBUG && console.log('seedObj: ', seedString);
+ DEBUG && console.log('energia: ', energia);
 
   //VARIANTE
   if (variante.nome != "") {
     seedString = seedObj._seedString;
     (pontoVarianteValor = Math.floor(
-      parseInt(seedString[0]) +1  * 1+ parseInt(seedString[1]) + 1 * 7 // 50 a 140
+      parseInt(seedString[0]) + parseInt(seedString[1]) + 10 * 5 // 50 a 140
     ));
   } else {
     (pontoVarianteValor = 0);
   }
-  console.log('pontoVarianteValor: ', pontoVarianteValor);
+ DEBUG && console.log('pontoVarianteValor: ', pontoVarianteValor);
 
 
   //CARGOS
@@ -132,6 +132,6 @@ export function escolherPoder() {
       energiaTotal: 0,
       bonusVariante: 0
   }
-  console.log('energia: ', energia);
+  //DEBUG && console.log('energia: ', energia);
   
 }}

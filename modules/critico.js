@@ -8,25 +8,30 @@ export function criticoCheck() {
 
   if (seedString[1] == seedString[2]) {
     if (variante.nome != "" && seedString[1] == seedString[6]) {
-        
+        //ULTRACRITICO
        (criticoTag = {
         critico: false,
         superCritico: false,
         ultraCritico: true,
+        multi: 6
       });
     } else {
-       criticoTag = {critico: true, superCritico: false, ultraCritico: false };
+        //CRITICO
+       criticoTag = {critico: true, superCritico: false, ultraCritico: false, multi: 2};
     }
   } else if (variante.nome != "" && seedString[1] == seedString[6]) {
+    //SUPERCRITICO
      (criticoTag = {
       critico: false,
       superCritico: true,
       ultraCritico: false,
+      multi: 3
     });
   } else {
-    criticoTag = {critico: false, superCritico: false, ultraCritico: false };
+    //NAO CRITICO
+    criticoTag = {critico: false, superCritico: false, ultraCritico: false, multi: 1};
   }
-  console.log('criticoTag: ', criticoTag);
-  console.log('variante.name: ', variante.nome);
+//   console.log('criticoTag: ', criticoTag);
+//   console.log('variante.name: ', variante.nome);
     
 }

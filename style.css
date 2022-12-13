@@ -94,7 +94,8 @@ li{
 /* ************************* */
 #carta{
     display: none;
-    /* background-color: #ffffff; */
+    /* background-color: #040404; */
+    /* background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ); */
     height: 70%;
     width: 57%;
     display: flex;
@@ -412,6 +413,11 @@ li{
 }
 .variante {
     text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    font-family: 'Righteous';
+    text-shadow: -2px 5px 5px #010101;
+    
 }
 
 p{
