@@ -77,7 +77,7 @@ export let especiais = {
     familia: "",
     descricao:'',
     emoji: "👑",
-    retrato: ''
+    retrato: "url('pics/tenica.webp')"
   },
 
   speaker: {
@@ -114,6 +114,10 @@ export let especiais = {
     poder: "",
     efeito: "",
     familia: "",
+    descricao:"zzzzzzz",
+    emoji: "🐝",
+    retrato: "url('pics/retratoAbelha.webp')",
+    retrato2: "url('pics/retratoAbelha.webp')"
   },
 };
 

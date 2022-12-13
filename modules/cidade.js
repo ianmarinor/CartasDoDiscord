@@ -28,4 +28,5 @@ export function escolherCidade(teste) {
   if (seedString[14] == 0) {
     cidade = "";
   }
+  return cidade
 }

@@ -27,45 +27,45 @@ export let cargos = {
 
     ministro: {
       nome: "ministro",
-      energia:0,
+      
       rng: () =>
         seedString[8] == 0 && seedString[9] == 3 && seedString[10] >= 8,
     },
 
     monark: {
       nome: "monark",
-      energia:0,
+      
       rng: () =>
         seedString[8] == 1 && seedString[9] >= 3,
     },
 
     lord: {
       nome: "lord",
-      energia:0,
+      
       rng: () => seedString[8] == 0 && seedString[9] == 3,
     },
 
     nobre: {
       nome: "nobre",
-      energia:0,
+      
       rng: () => seedString[8] == 0 && seedString[9] >= 8,
     },
 
     gentleman: {
       nome: "gentleman",
-      energia:0,
+      
       rng: () => seedString[8] == 3,
     },
 
     people: {
       nome: "people",
-      energia:0,
+      
       rng: () => seedString[8] >= 7,
     },
 
     semCargo: {
       nome: "semcargo",
-      energia:0,
+      
       rng: false,
     },
 
@@ -99,7 +99,7 @@ export function escolherCargo(teste) {
     // let teste =
     //   (numeroDeCartas.cartasNormais.premioMarino * 100) /
     //   numeroDeCartas.CartasTotais;
-    cargo = cargos.premiomarino;
+    return cargo = cargos.premiomarino;
     // numeroDeCartas.cartasNormais.premioMarino++;
     // numeroDeCartas.porcentagemCartasNormais.premioMarino =
     //   teste.toFixed(3) + "%";
@@ -107,7 +107,7 @@ export function escolherCargo(teste) {
 
   //PRIME MINISTER - 1 EM 5k - 0.02%
   else if (cargos.primeMinister.rng()) {
-    cargo = cargos.primeMinister;
+    return cargo = cargos.primeMinister;
     // let teste =
     //   (numeroDeCartas.cartasNormais.primeMinister * 100) /
     //   numeroDeCartas.CartasTotais;
@@ -118,7 +118,7 @@ export function escolherCargo(teste) {
 
   //MINISTER - 1 EM 500 - 0.2%
   else if (cargos.ministro.rng()) {
-    cargo = cargos.ministro;
+    return cargo = cargos.ministro;
 
     // let teste =
     //   (numeroDeCartas.cartasNormais.ministro * 100) /
@@ -129,7 +129,7 @@ export function escolherCargo(teste) {
 
   //MONARK - 1 EM ???
   else if (cargos.monark.rng()) {
-    cargo = cargos.monark;
+    return cargo = cargos.monark;
     // numeroDeCartas.cartasNormais.monark++;
     // numeroDeCartas.porcentagemCartasNormais.monark =
     //   Math.floor(
@@ -140,7 +140,7 @@ export function escolherCargo(teste) {
 
   //LORD - 1 EM 100 - 1%
   else if (cargos.lord.rng()) {
-    cargo = cargos.lord;
+    return cargo = cargos.lord;
     // let teste =
     //   (numeroDeCartas.cartasNormais.lord * 100) / numeroDeCartas.CartasTotais;
     // numeroDeCartas.cartasNormais.lord++;
@@ -151,14 +151,14 @@ export function escolherCargo(teste) {
   else if (cargos.nobre.rng()) {
     // let teste =
     //   (numeroDeCartas.cartasNormais.nobre * 100) / numeroDeCartas.CartasTotais;
-    cargo = cargos.nobre;
+    return cargo = cargos.nobre;
     // numeroDeCartas.cartasNormais.nobre++;
     // numeroDeCartas.porcentagemCartasNormais.nobre = teste.toFixed(1) + "%";
   }
 
   //GENTLEMAN - 1 EM 10 - 10%
   else if (cargos.gentleman.rng()) {
-    cargo = cargos.gentleman;
+    return cargo = cargos.gentleman;
     // numeroDeCartas.cartasNormais.gentleman++;
     // numeroDeCartas.porcentagemCartasNormais.gentleman =
     //   Math.floor(
@@ -169,7 +169,7 @@ export function escolherCargo(teste) {
 
   //PEOPLE - 1 EM 3 - 30%
   else if (cargos.people.rng()) {
-    cargo = cargos.people;
+    return cargo = cargos.people;
     // numeroDeCartas.cartasNormais.people++;
     // numeroDeCartas.porcentagemCartasNormais.people =
     //   Math.floor(
@@ -181,7 +181,7 @@ export function escolherCargo(teste) {
 
   //SEMCARGO  - 1 EM 2 - 50%
   else {
-    cargo = cargos.semCargo;
+    return cargo = cargos.semCargo;
     // console.log(cargo, 'no moduilo');
 
     // // numeroDeCartas.cartasNormais.semCargo++;

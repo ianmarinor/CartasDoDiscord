@@ -28,7 +28,8 @@ export function escolherIntegrante(teste) {
 
   integrante = integrantes[seedString[1]];
   if (seedString[14] == 0) {
-    integrante = "";
+    integrante = {nome: ""}
   }
+  return integrante
 }
 // buscarSeed()

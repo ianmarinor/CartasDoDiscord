@@ -274,6 +274,23 @@ li{
     background-repeat: no-repeat;
     background-size: 300px 300px;
 }
+
+#abelha{
+    background-image: url(pics/fundoAbelha.gif);
+    height: var(--tamanhoCartaHeight);
+    width: var(--tamanhoCartaWidth);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    border: 2px solid #4e2c00;
+    font-weight: 900;
+    color: rgb(255, 255, 255);
+    background-repeat: no-repeat;
+    background-size: 300px 300px;
+}
 #bonusCartasMais{
 
     /* font-family: 'verdana'; */

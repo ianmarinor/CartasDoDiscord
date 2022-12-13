@@ -1,4 +1,4 @@
-let DEBUG = true
+let DEBUG = false
 
 import { seedObj } from "./seedFabricator.js";
 
@@ -32,7 +32,7 @@ function energiaGentleman() {
   seedString = seedObj._seedString;
   return  Math.floor((parseInt(seedString[12]) + parseInt(seedString[0])) / 2 + 21); // 21 a 30
 }
-  function energiaMonark() { Math.floor(Math.random() * 2);}
+  function energiaMonark() { return Math.floor(Math.random() * 2);}
 
   function  energiaNobre() {
     seedString = seedObj._seedString;
@@ -81,7 +81,7 @@ export function escolherPoder() {
 
   if (cargo == semCargo) {
     
-    energia = {
+    return energia = {
       energiaTotal: energiaSemCargo() + pontoVarianteValor,
       bonusVariante: pontoVarianteValor
     }}
@@ -89,46 +89,49 @@ export function escolherPoder() {
    if (cargo == people) {
     
       
-    energia = {
+    return energia = {
       energiaTotal: energiaPeople() + pontoVarianteValor,
       bonusVariante: pontoVarianteValor
     
   }} else if (cargo == gentleman) {
-     (energia = {
+    return energia = {
       energiaTotal: energiaGentleman() + pontoVarianteValor,
       bonusVariante: pontoVarianteValor
-    });
+    };
   } else if (cargo == monark) {
-     (energia = {
+    return energia = {
       energiaTotal: energiaMonark(),
-    });
+    };
   } else if (cargo == nobre) {
-     (energia = {
+    return  (energia = {
       energiaTotal: energiaNobre() + pontoVarianteValor,
       bonusVariante: pontoVarianteValor
     });
   } else if (cargo == lord) {
-     (energia = {
+    return (energia = {
       energiaTotal: energiaLord() + pontoVarianteValor,
       bonusVariante: pontoVarianteValor
     });
   } else if (cargo == ministro) {
-     (energia = {
+    return (energia = {
       energiaTotal: energiaMinistro() + pontoVarianteValor,
       bonusVariante: pontoVarianteValor
     });
   } else if (cargo === primeMinister) {
-     (energia = {
+    return (energia = {
       energiaTotal: energiaPrimeMinister() + pontoVarianteValor,
       bonusVariante: pontoVarianteValor
     });
   } else if (cargo === premioMarino) {
-     (energia = {
+    return (energia = {
       energiaTotal: energiaRNGPremioMarino() + pontoVarianteValor,
       bonusVariante: pontoVarianteValor
     });
+  } else {
+   return energia = {
+      energiaTotal: 0,
+      bonusVariante: 0
   }
   console.log('energia: ', energia);
   
-}
-
+}}
