@@ -1,16 +1,17 @@
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
-let integrantes = [
-  {nome: "Gandalf", retrato: "url('pics/gandarfu.png')"},
-  {nome:"Turu", retrato: "url('pics/turu.webp')"},
-  {nome: "Nefesto", retrato: "url('pics/nefesto.png')"},
-  {nome: "Blackao", retrato: "url('pics/blackao.jpeg')"},
-  {nome:"Sr. Antonio", retrato: "url('pics/antonio.png')"},
-  {nome: "Pedro", retrato: "url('pics/pedro.png')"},
-  {nome: "Curtas", retrato: "url('pics/curtas.png')"},
-  {nome: "Twelve", retrato: "url('pics/twelve.png')"},
-  {nome: "Junks", retrato: "url('pics/junks.jpeg')"},
-  {nome: "Murillo", retrato: "url('pics/murilo.jpeg')"},
+export let integrantes = [
+  {nome: "Gandalf", retrato: "url('pics/gandarfu.png')",emoji: "⚡"},
+  {nome:"Turu", retrato: "url('pics/turu.webp')",emoji: "⚡"},
+  {nome: "Nefesto", retrato: "url('pics/nefesto.png')",emoji: "⚡"},
+  {nome: "Blackao", retrato: "url('pics/blackao.jpeg')",emoji: "⚡"},
+  {nome:"Sr. Antonio", retrato: "url('pics/antonio.png')",emoji: "⚡"},
+  {nome: "Pedro", retrato: "url('pics/pedro.png')",emoji: "⚡"},
+  {nome: "Curtas", retrato: "url('pics/curtas.png')",emoji: "⚡"},
+  {nome: "Twelve", retrato: "url('pics/twelve.png')",emoji: "⚡"},
+  {nome: "Junks", retrato: "url('pics/junks.jpeg')",emoji: "⚡"},
+  {nome: "Murillo", retrato: "url('pics/murilo.jpeg')",emoji: "⚡"},
+  {}
 ];
 
 // let seedString

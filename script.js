@@ -1,9 +1,9 @@
-let DEBUG = true
+let DEBUG = false
 
 import { seedObj } from "./modules/seedFabricator.js";
 
 
-import { escolherIntegrante, integrante } from "./modules/integrante.js";
+import { escolherIntegrante, integrante, integrantes } from "./modules/integrante.js";
 import { escolherCidade, cidade } from "./modules/cidade.js";
 
 
@@ -44,7 +44,8 @@ let tenica = especiais.tenica;
 let speaker = especiais.speaker;
 let bonusCartasMais = especiais.bonusCartasMais;
 let abelha = especiais.abelha;
-let cartaNaoEspecial = especiais.cartaNaoEspecial;
+let cartaNaoEspecial = especiais.notSpecial
+
 
 
 ///////   ^^^^^^^^IMPORTS IMPORTS^^^^^^
@@ -81,7 +82,7 @@ let retratoP = document.querySelector(".retrato");
 let cargoP = document.querySelector(".cargo");
 let varianteP = document.querySelector(".variante");
 let actionP = document.querySelector(".action");
-let novoAtaquerP = document.querySelector(".novoAtaque");
+let novoAtaqueP = document.querySelector(".novoAtaque");
 let placarP = document.querySelector(".placar");
 //div poder
 let ataqueP = document.querySelector(".ataque");
@@ -116,78 +117,73 @@ function colocarInfoNoWrap() {
   // );
 
   const baralho = {
-  nome: integrante.nome,
-  nomeEsp: especial.nome,
+    
 
+    //NORMAL
+  nome: integrante.nome,
+  retrato: integrante.retrato,
+  energia: energia.energiaTotal,
   variante: variante.display,
   cidade: cidade,
   cargo: cargo.nome,
+  emoji: integrante.emoji,
+  critico: '',
 
 
-  retrato: integrante.retrato,
-  retratoEspecial: especial.retrato,
+    //ESPECIAIS
+    nomeEsp: especial.nome,
+    retratoEspecial: especial.retrato,
+    descricao: especial.descricao,
+    energiaEsp: especial.energia,
+    pontoEspecial: especial.pontoEspecial,
+    poder: 'PODER',
+    emoji: especial.emoji,
+    emojiEsp: especial.emojiEsp,
 
-  descricao: especial.descricao,
-  
-  energia: energia.energiaTotal,
-  energiaEsp: energia.energiaTotal,
-  pontoEspecial: 'PE',
-  poder: 'PODER',
-  seed: seedObj._seedString
 
-  
+    seed: seedObj._seedString
 }
-console.log(cargo.nome);
-
-
-  //LIMPAR A CARTA
-  // cartaP.style.backgroundImage = "";
-  // cartaP.style.border = "none";
-  // cartaP.style.color = "";
-  // actionP.style.visibility = "hidden";
-  // ataqueP.style.textDecorationLine = "";
-  // ataqueP.id = "";
-  // novoAtaquerP.innerHTML = "";
-  // novoAtaquerP.style.fontSize = "";
-  // retratoP.style.backgroundSize = "";
-  // cargoP.style.fontSize = "";
-  // cargoP.style.color = "";
-  // cargoP.style.fontWeight = "";
-  // cargoP.style.fontFamily = "";
-  // ataqueP.style.color = "";
-  // ataqueP.style.fontSize = "";
-  // ataqueP.textContent = "";
-
-  cartaParaMover.children[0].children[0].classList.remove("critico");
-  cartaParaMover.children[0].children[2].classList.remove("critico");
-  cartaParaMover.classList.remove("critico");
-  varianteP.classList.remove("critico");
-  cartaParaMover.children[3].children[1].classList.remove("critico");
-
-  cartaParaMover.children[0].children[0].style.color = "";
-  cartaParaMover.children[0].children[2].style.color = "";
-  cartaParaMover.children[0].children[1].style.fontWeight = "";
 
   //DOM
+  //CARTA NORMAL
+  if(especial == cartaNaoEspecial){
+  cartaP.id = baralho.cargo
   nomeP.innerHTML = baralho.nome.toUpperCase()
-  nomeP.innerHTML = baralho.nomeEsp.toUpperCase()
-
-
   cidadeP.innerHTML = baralho.cidade
-  ataqueP.innerHTML = baralho.energia
+  ataqueP.innerHTML = baralho.energia + baralho.emoji
   varianteP.innerHTML = baralho.variante
+  cargoP.innerHTML = baralho.cargo.toUpperCase()
+  retratoP.style.backgroundImage = baralho.retrato
+  novoAtaqueP.innerHTML = baralho.critico
+
+  
+  } else {
+    //CARTA ESPECIAL
+    nomeP.innerHTML = baralho.nomeEsp.toUpperCase()
+    retratoP.style.backgroundImage = baralho.retratoEspecial
+    cargoP.innerHTML = baralho.descricao
+    novoAtaqueP.innerHTML = baralho.pontoEspecial + baralho.emojiEsp
+    ataqueP.innerHTML = baralho.energiaEsp + baralho.emoji
+    
+  cartaP.id = especial.cartaId
+  cargoP.style.fontSize = especial.css.cargoPFontSize
+  cargoP.style.fontWeight = especial.css.cargoPFontWeight
+  ataqueP.style.fontSize = especial.css.ataquePFontSize
+  retratoP.style.border = especial.css.retratoPBorder
+  retratoP.style.backgroundSize = especial.css.retratoBackgroundSize
+  }
+  
+
+  
+
+
   seedP.innerHTML = baralho.seed
   arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
-  novoAtaquerP.innerHTML = baralho.pontoEspecial
 
-  cargoP.innerHTML = baralho.cargo.toUpperCase()
-  cargoP.innerHTML = baralho.descricao
-
-  retratoP.style.backgroundImage = baralho.retrato
-  retratoP.style.backgroundImage = baralho.retratoEspecial
-  cartaP.id = baralho.cargo
-  cartaP.id = baralho.nomeEsp
+  console.log('baralho: ', baralho);
+  console.log('cartaNaoEspecial: ', cartaNaoEspecial);
+  console.log('cartaEspecial: ', especial);
   
   // retratoP.style.display = "block";
 
@@ -568,20 +564,20 @@ function critico() {
     cartaParaMover.children[0].children[3].textContent == ""
   ) {
     if (cartaCritica) {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
+      // corDaCidade.classList.add("critico");
+      // corDoNome.classList.add("critico");
+      // cartaParaMover.children[0].children[1].style.fontWeight = "bold";
 
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      // poderTremer.style.textDecorationLine = "line-through";
+      // poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
 
       if (cartaSuperCritica) {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
+        // cartaParaMover.classList.add("critico");
+        // varianteP.classList.add("critico");
+        // poderNovo.classList.add("critico");
 
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 5 + "⚡";
+        // poderTremer.style.textDecorationLine = "line-through";
+        // poderNovo.textContent = parseInt(poderTremer.textContent) * 5 + "⚡";
         poderNovo.style.fontSize = "1.5em";
       }
     }

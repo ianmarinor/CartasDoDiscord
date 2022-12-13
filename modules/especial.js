@@ -1,4 +1,4 @@
-let DEBUG = false;
+let DEBUG = true;
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 
@@ -68,56 +68,93 @@ export let especiais = {
   },
 
   tenica: {
-    nome: "tenica",
+    cartaId: 'tenica',
+    nome: "ténica",
     raridade: raridades.rainha,
-    pontoEspecial: 0,
+    pontoEspecial: '',
     energia: 0,
-    poder: 0,
+    poder: '',
     efeito: "",
     familia: "",
-    descricao:'',
+    descricao:'Prazer, <br> sou a Ténica',
     emoji: "👑",
-    retrato: "url('pics/tenica.webp')"
+    emojiEsp: "",
+    retrato: "url('pics/tenica.webp')",
+    css:{
+      cargoPFontSize: '1.4em',
+      cargoPFontWeight: "",
+      retratoPBorder: '2px double gold',
+      ataquePFontSize: '1.4em',
+      retratoBackgroundSize: '139px 150px'
+    }
   },
 
   speaker: {
+    cartaId: 'speaker',
     nome: "speaker",
     raridade: raridades.cavaleiro,
-    pontoEspecial: 0,
+    pontoEspecial: '',
     energia: 0,
     poder: "",
     efeito: "",
     familia: "",
     descricao:'MONARK BAN!',
     emoji: "&#9889;",
-    retrato: ''
+    emojiEsp: "",
+    retrato: "url('pics/speaker.webp')",
+    css:{
+      cargoPFontSize: '',
+      cargoPFontWeight: "",
+      retratoPBorder: "2px dotted green",
+      retratoBackgroundSize: '',
+      ataquePFontSize: ''
+    }
   },
 
   bonusCartasMais: {
+    cartaId: 'bonusCartasMais',
     nome: "bonusCartasMais",
     raridade: raridades.campones,
     pontoEspecial: 0,
-    energia: 0,
+    energia: '',
     poder: "",
     efeito: "",
     familia: "",
     descricao:"CLICKS",
-    emoji: "🔄",
-    retrato: "url('pics/clickretrato.webp')"
+    emojiEsp: "🔄",
+    emoji: "",
+    retrato: "url('pics/clickretrato.webp')",
+    css:{
+      
+      cargoPFontSize: '',
+      cargoPFontWeight: "bolder",
+      retratoPBorder: '',
+      retratoBackgroundSize: 'cover',
+      ataquePFontSize: '1.5em'
+    }
   },
 
   abelha: {
+    cartaId: 'abelha',
     nome: "abelha",
     raridade: raridades.sangueAzul,
-    pontoEspecial: 0,
+    pontoEspecial: '',
     energia: 0,
     poder: "",
     efeito: "",
-    familia: "",
-    descricao:"zzzzzzz",
+    familia: "minecraft",
+    descricao:"VOU MORRER!!!",
     emoji: "🐝",
+    emojiEsp: "",
     retrato: "url('pics/retratoAbelha.webp')",
-    retrato2: "url('pics/retratoAbelha.webp')"
+    retrato2: "url('pics/retratoAbelha.webp')",
+    css:{
+      cargoPFontSize: '',
+      cargoPFontWeight: "",
+      retratoPBorder: "",
+      retratoBackgroundSize: '',
+      ataquePFontSize: ''
+    }
   },
 };
 
@@ -152,7 +189,7 @@ export function escolherEspecial(teste) {
     raridade = raridades.sangueAzul;
 
     if (true) {
-      abelhaPE()
+      abelhaEnergia()
       especial = especiais.abelha;
     }
   } else if (raridades.cavaleiro.rng()) {
@@ -204,12 +241,12 @@ export function escolherEspecial(teste) {
     }
   }
 
-  function abelhaPE(){
+  function abelhaEnergia(){
     // de 183 a 235
     if(parseInt(seed2) < 5){
-      return especiais.abelha.pontoEspecial =  parseInt(seed3) + 1 * 8 + 175
+      return especiais.abelha.energia =  parseInt(seed3) + 1 * 8 + 175
     } else {
-      return especiais.abelha.pontoEspecial =  parseInt(seed3) + 1 * 10 + 145
+      return especiais.abelha.energia =  parseInt(seed3) + 1 * 10 + 145
     }
   }
 
