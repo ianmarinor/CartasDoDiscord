@@ -69,11 +69,11 @@ function fabricaDeCartaNormal(
 let button = document.getElementById("btn");
 let inv = document.getElementById("inv");
 let arenaP = document.querySelector(".arena");
-let nomeP = document.querySelector(".nome");
-let cidadeP = document.querySelector(".cidade");
+let nomeP = document.querySelector("#nome");
+let cidadeP = document.querySelector("#cidade");
 let retratoP = document.querySelector(".retrato");
 let cargoP = document.querySelector(".cargo");
-let varianteP = document.querySelector(".variante");
+let varianteP = document.querySelector("#variante");
 let actionP = document.querySelector(".action");
 let novoAtaqueP = document.querySelector(".novoAtaque");
 let placarP = document.querySelector(".placar");
@@ -148,6 +148,14 @@ function colocarInfoNoWrap() {
     novoAtaqueP.style.fontSize = cargo.css.epFontSize;
     retratoP.style.border = cargo.css.retratoPBorder;
     retratoP.style.backgroundSize = cargo.css.retratoBackgroundSize;
+    
+
+    //critico
+      nomeP.className = criticoTag.css.nomeP
+      cidadeP.className = criticoTag.css.cidadeP
+      varianteP.className = (criticoTag.css.varianteP)
+      cartaP.className = (criticoTag.css.cartaP)
+    
 
     //variantes
     cartaP.style.color = variante.css.cartaP_Color
@@ -173,6 +181,11 @@ function colocarInfoNoWrap() {
     novoAtaqueP.style.fontSize = especial.css.epFontSize;
     retratoP.style.border = especial.css.retratoPBorder;
     retratoP.style.backgroundSize = especial.css.retratoBackgroundSize;
+    //tira critico
+      nomeP.className = ''
+      cidadeP.className = ''
+      varianteP.className = ''
+      cartaP.className = ''
   }
 
   seedP.innerHTML = baralho.seed
@@ -418,7 +431,8 @@ function critico() {
   cartaParaMover.children[0].children[0].style.color = "";
   //cidade negrito
   cartaParaMover.children[0].children[1].style.fontWeight = "";
-  cartaParaMover.classList.remove("critico");
+  // cartaParaMover.classList.remove(criticoTag.css.);
+  // corDaCidade.classList.add(criticoTag.css.);
   //PODER
   let poderTremer = cartaParaMover.children[3].children[0];
   let poderNovo = cartaParaMover.children[3].children[1];
@@ -430,17 +444,17 @@ function critico() {
     cartaParaMover.children[0].children[3].textContent == ""
   ) {
     if (cartaCritica) {
-      // corDaCidade.classList.add("critico");
-      // corDoNome.classList.add("critico");
+      // corDaCidade.classList.add(criticoTag.css.);
+      // corDoNome.classList.add(criticoTag.css.);
       // cartaParaMover.children[0].children[1].style.fontWeight = "bold";
 
       // poderTremer.style.textDecorationLine = "line-through";
       // poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
 
       if (cartaSuperCritica) {
-        // cartaParaMover.classList.add("critico");
-        // varianteP.classList.add("critico");
-        // poderNovo.classList.add("critico");
+        // cartaParaMover.classList.add(criticoTag.css.);
+        // varianteP.classList.add(criticoTag.css.);
+        // poderNovo.classList.add(criticoTag.css.);
 
         // poderTremer.style.textDecorationLine = "line-through";
         // poderNovo.textContent = parseInt(poderTremer.textContent) * 5 + "⚡";

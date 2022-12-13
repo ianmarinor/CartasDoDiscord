@@ -8,30 +8,91 @@ export function criticoCheck() {
 
   if (seedString[1] == seedString[2]) {
     if (variante.nome != "" && seedString[1] == seedString[6]) {
-        //ULTRACRITICO
-       (criticoTag = {
+      //ULTRACRITICO
+      criticoTag = {
+        noCrit: false,
         critico: false,
         superCritico: false,
         ultraCritico: true,
-        multi: 6
-      });
+        multi: 6,
+        css: {
+          nomeP: "critico",
+          cidadeP: "critico",
+          varianteP: "critico",
+          cartaP: "critico",
+        },
+        cssRemove: {
+          nomeP: "",
+          cidadeP: "",
+          varianteP: "",
+          cartaP: "",
+        },
+      };
     } else {
-        //CRITICO
-       criticoTag = {critico: true, superCritico: false, ultraCritico: false, multi: 2};
+      //CRITICO
+      criticoTag = {
+        noCrit: false,
+        critico: true,
+        superCritico: false,
+        ultraCritico: false,
+        multi: 2,
+        css: {
+          nomeP: "critico",
+          cidadeP: "critico",
+          varianteP: "",
+          cartaP: "",
+        },
+
+        cssRemove: {
+          nomeP: "",
+          cidadeP: "",
+          varianteP: "critico",
+          cartaP: "critico",
+        },
+      };
     }
   } else if (variante.nome != "" && seedString[1] == seedString[6]) {
     //SUPERCRITICO
-     (criticoTag = {
+    criticoTag = {
       critico: false,
       superCritico: true,
       ultraCritico: false,
-      multi: 3
-    });
+      multi: 3,
+      css: {
+        nomeP: "critico",
+        cidadeP: "f",
+        varianteP: "critico",
+        cartaP: "f",
+      },
+      cssRemove: {
+        nomeP: "",
+        cidadeP: "critico",
+        varianteP: "",
+        cartaP: "fcritico",
+      }
+    };
   } else {
     //NAO CRITICO
-    criticoTag = {critico: false, superCritico: false, ultraCritico: false, multi: 1};
+    criticoTag = {
+      noCrit: true,
+      critico: false,
+      superCritico: false,
+      ultraCritico: false,
+      multi: 1,
+      css: {
+        nomeP: "f",
+        cidadeP: "f",
+        varianteP: "f",
+        cartaP: "f",
+      },
+      cssRemove: {
+        nomeP: "",
+        cidadeP: "",
+        varianteP: "",
+        cartaP: "",
+      },
+    };
+    //   console.log('criticoTag: ', criticoTag);
+    //   console.log('variante.name: ', variante.nome);
   }
-//   console.log('criticoTag: ', criticoTag);
-//   console.log('variante.name: ', variante.nome);
-    
 }

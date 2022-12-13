@@ -324,14 +324,14 @@ li{
 /* **************************************************** */
 
 
-.nome{
+#nome{
     margin-top: 0.2em;
     /* margin-bottom: 0.1em; */
     font-size: 1.5em;
     /* background-color: #6c4d4d; */
     
 }
-.cidade{
+#cidade{
     /* background-color: #6637be; */
     text-align: end;
     font-size: 0.95em;
@@ -411,7 +411,7 @@ li{
 .action {
     visibility:hidden;
 }
-.variante {
+#variante {
     text-align: center;
     font-size: 1.1em;
     font-weight: bold;
