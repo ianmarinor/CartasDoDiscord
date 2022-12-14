@@ -1,12 +1,33 @@
+import { especial } from "./especial.js";
 import { seedObj } from "./seedFabricator.js";
 import { variante } from "./variante.js";
+import { cargo } from "./cargo.js";
 
 export let criticoTag;
 
 export function criticoCheck() {
   let seedString = seedObj._seedString;
 
-  if (seedString[1] == seedString[2]) {
+  if(especial.id == "" || cargo.nome == 'monark' ){
+    criticoTag = {
+      noCrit: true,
+      critico: false,
+      superCritico: false,
+      ultraCritico: false,
+      multi: 1,
+      css: {
+        nomeP: "",
+        cidadeP: "",
+        varianteP: "",
+        cartaP: "",
+      },energia:{
+        ataqueNovo: 'hidden',
+        ataqueNovoFontSize: '',
+        ataque: '',
+        ataqueNovoCritico: ''
+      }
+    };
+  } else if (seedString[1] == seedString[2]) {
     if (variante.nome != "" && seedString[1] == seedString[6]) {
       //ULTRACRITICO
       criticoTag = {
@@ -73,9 +94,8 @@ export function criticoCheck() {
       },energia:{
         ataqueNovo: 'visible',
         ataque: 'line-through',
-        ataqueNovoFontSize: '1.75em',
-        
-          ataqueNovoCritico: ''
+        ataqueNovoFontSize: '1.35em',
+        ataqueNovoCritico: ''
       }
     };
   } else {

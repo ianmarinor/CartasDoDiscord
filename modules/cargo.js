@@ -106,6 +106,7 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
+        cartaBorder: ''
       }
     },
 
@@ -124,6 +125,7 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
+        cartaBorder: ''
       }
     },
 
@@ -142,7 +144,7 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
-      }
+        cartaBorder: ''      }
     },
 
     people: {
@@ -160,6 +162,7 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
+        cartaBorder: ''
       }
     },
 
@@ -178,6 +181,7 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
+        cartaBorder: ''
       }
     },
 
@@ -195,6 +199,7 @@ export let cargos = {
       ataquePColor: '',
       epColor: '',
       epFontSize: '',
+      cartaBorder: ''
       }       
     },
 }

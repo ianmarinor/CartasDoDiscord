@@ -94,7 +94,7 @@ export let especiais = {
       ataqueNovo: 'visible',
       ataque: 'none',
       ataqueNovoFontSize: '',
-      
+      cartaBorder: ''
 
       
     }
@@ -125,6 +125,7 @@ export let especiais = {
       ataqueNovo: 'visible',
       ataque: 'none',
       ataqueNovoFontSize: '',
+      cartaBorder: '2px solid #18d742'
 
     }
   },
@@ -154,13 +155,14 @@ export let especiais = {
       ataqueNovo: 'visible',
       ataque: 'none',
       ataqueNovoFontSize: '1.8em',
+      cartaBorder: ''
 
     }
   },
 
   abelha: {
     cartaId: 'abelha',
-    nome: "abelha",
+    nome: "ABELHA",
     raridade: raridades.sangueAzul,
     pontoEspecial: '',
     energia: 0,
@@ -175,16 +177,16 @@ export let especiais = {
     css:{
       cargoPFontSize: '',
       cargoPFontWeight: "",
-      retratoPBorder: "",
+      retratoPBorder: "2px solid #4e2c00",
       retratoBackgroundSize: '',
       ataquePFontSize: '',
       ataquePColor: '',
       epColor: '',
       epFontSize: '',
-
       ataqueNovo: 'visible',
       ataque: 'none',
       ataqueNovoFontSize: '',
+      cartaBorder: '2px solid #4e2c00'
     }
   },
 };

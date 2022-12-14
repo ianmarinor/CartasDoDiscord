@@ -39,31 +39,7 @@ import { criticoTag, criticoCheck } from "./modules/critico.js";
 
 ///////   ^^^^^^^^IMPORTS IMPORTS^^^^^^
 
-//************************************************ */
 
-function fabricaDeCartaNormal(
-  integrante,
-  cidade,
-  cargo,
-  poder,
-  variante,
-  seedObj
-) {
-  return {
-    _integrante: integrante,
-    _cidade: cidade,
-    _cargo: cargo,
-    _poder: poder,
-    _variante: variante,
-    seedObj,
-  };
-}
-
-//*********************************************************** */
-// escolherIntegrante()
-// escolherCidade()
-// escolherCargo()
-// escolherPoder()
 
 ////D O M
 let button = document.getElementById("btn");
@@ -162,17 +138,7 @@ function limpaCarta() {
 }
 
 function colocarInfoNoWrap() {
-  // const novaCarta = fabricaDeCartaNormal(
-  //   integrante,
-  //   cidade,
-  //   cargo,
-  //   poder,
-  //   variante,
-  //   seedObj
-  // );
-
-  //NORMAL
-
+ 
   if (especial == cartaNaoEspecial) {
     baralho = {
       cartaId: cargo.nome,
@@ -185,8 +151,30 @@ function colocarInfoNoWrap() {
       energia2: energia.energiaTotal * criticoTag.multi + integrante.emoji,
       poder: 'hidden' ,
       seed: seedObj._seedString,
+      
 
-      critico: criticoTag,
+      isCritico:{
+        criticoNome: criticoTag.css.nomeP,
+        criticoVariante: criticoTag.css.varianteP,
+        criticoCidade: criticoTag.css.cidadeP,
+        criticoCarta: criticoTag.css.cartaP,
+        criticoEnergia: criticoTag.energia.ataque,
+        criticoEnergia2: criticoTag.energia.ataqueNovo,
+        criticoEnergia2FontSize: criticoTag.energia.ataqueNovoFontSize,
+        criticoEnergia2Critico: criticoTag.energia.ataqueNovoCritico
+      },
+      cssCarta:{
+        cargoFontSize: cargo.css.cargoPFontSize,
+        cargoFontWeight: cargo.css.cargoPFontWeight,
+        retratoBorder: cargo.css.retratoPBorder,
+        energiaFontSize: cargo.css.ataquePFontSize,
+        retratoBGSize: cargo.css.retratoBackgroundSize,
+        energiaColor: cargo.css.ataquePColor,
+        energia2Color: cargo.css.epColor,
+        energia2FontSize: cargo.css.epFontSize,
+        cartaBorder: cargo.css.cartaBorder
+      }
+
     };
   } else {
     baralho = {
@@ -201,108 +189,87 @@ function colocarInfoNoWrap() {
       poder: "visible",
       seed: seedObj._seedString,
 
-      critico: criticoTag,
+      isCritico:{
+        criticoNome: '',
+        criticoVariante: '',
+        criticoCidade:'',
+        criticoCarta: '',
+        criticoEnergia: '',
+        criticoEnergia2: '',
+        criticoEnergia2FontSize: '',
+        criticoEnergia2Critico: ''
+      },
+      cssCarta:{
+        cargoFontSize: especial.css.cargoPFontSize,
+        cargoFontWeight: especial.css.cargoPFontWeight,
+        retratoBorder: especial.css.retratoPBorder,
+        energiaFontSize: especial.css.ataquePFontSize,
+        retratoBGSize: especial.css.retratoBackgroundSize,
+        energiaColor: especial.css.ataquePColor,
+        energia2Color: especial.css.epColor,
+        energia2FontSize: especial.css.epFontSize,
+        cartaBorder: especial.css.cartaBorder
+      }
+
     };
   }
 
   //ESPECIAIS
-
   limpaCarta();
   //DOM
   //CARTA NORMAL
     cartaP.id = baralho.cartaId
+    cartaP.style.border = baralho.cssCarta.cartaBorder
+
     nomeP.innerHTML = baralho.nome
+    varianteP.innerHTML = baralho.variante;
     cidadeP.innerHTML = baralho.cidade;
+
     retratoP.style.backgroundImage = baralho.retrato;
+    retratoP.style.border = baralho.cssCarta.retratoBorder;
+
     cargoP.innerHTML = baralho.cargo + cargo.emoji;
+    cargoP.style.fontSize = baralho.cssCarta.cargoFontSize;
+    cargoP.style.fontWeight = baralho.cssCarta.cargoFontWeight;
+
     ataqueP.innerHTML = baralho.energia 
+    ataqueP.style.color = baralho.cssCarta.energiaColor;
+    ataqueP.style.fontSize = baralho.cssCarta.energiaFontSize;
+
     novoAtaqueP.innerHTML = baralho.energia2
+    novoAtaqueP.style.color = baralho.cssCarta.energia2Color;
+
+    novoAtaqueP.style.fontSize = baralho.cssCarta.energia2FontSize;
     seedP.innerHTML = baralho.seed
 
 
-    // varianteP.innerHTML = baralho.variante;
-    // baralho.energia * criticoTag.multi + integrante.emoji;
+    //critico
+    cartaP.className = baralho.isCritico.criticoCarta;
+    nomeP.className = baralho.isCritico.criticoNome;
+    varianteP.className = baralho.isCritico.criticoVariante;
+    cidadeP.className = baralho.isCritico.criticoCidade;
+    ataqueP.style.textDecorationLine = baralho.isCritico.criticoEnergia;
+    novoAtaqueP.style.visibility = baralho.isCritico.criticoEnergia2;
+    novoAtaqueP.style.fontSize = baralho.isCritico.criticoEnergia2FontSize;
+    novoAtaqueP.className = baralho.isCritico.criticoEnergia2Critico;
 
     
-    // cargoP.style.fontSize = cargo.css.cargoPFontSize;
-    // cargoP.style.fontWeight = cargo.css.cargoPFontWeight;
-    // ataqueP.style.fontSize = cargo.css.ataquePFontSize;
-    // ataqueP.style.color = cargo.css.ataquePColor;
-    // novoAtaqueP.style.color = cargo.css.epColor;
-    // novoAtaqueP.style.fontSize = cargo.css.epFontSize;
-    // retratoP.style.border = cargo.css.retratoPBorder;
-    // retratoP.style.backgroundSize = cargo.css.retratoBackgroundSize;
-
-    // //critico
-    // nomeP.className = criticoTag.css.nomeP;
-    // cidadeP.className = criticoTag.css.cidadeP;
-    // varianteP.className = criticoTag.css.varianteP;
-    // cartaP.className = criticoTag.css.cartaP;
-
-    // ataqueP.style.textDecoration = criticoTag.energia.ataque;
-    // novoAtaqueP.style.visibility = criticoTag.energia.ataqueNovo;
-    // novoAtaqueP.style.fontSize = criticoTag.energia.ataqueNovoFontSize;
-    // novoAtaqueP.style.fontSize = criticoTag.energia.ataqueNovoFontSize;
-    // novoAtaqueP.className = criticoTag.energia.ataqueNovoCritico;
-
-    // //variantes
-    // cartaP.style.color = variante.css.cartaP_Color;
-    // cartaP.style.backgroundImage = variante.css.cartaP_BGImage;
-    // cartaP.style.border = variante.css.cartaP_Border;
-    // cartaP.style.fontSize = variante.css.varianteP_FontSize;
-  
-    // //limpeza
-    // cartaP.style.backgroundImage = "";
-    // cartaP.style.border = "";
-
-    // //CARTA ESPECIAL
-    // cidadeP.innerHTML = "";
-    // nomeP.innerHTML = baralho.nomeEsp.toUpperCase();
-    // retratoP.style.backgroundImage = baralho.retratoEspecial;
-    // cargoP.innerHTML = baralho.descricao;
-    // novoAtaqueP.innerHTML = baralho.pontoEspecial + baralho.emojiEsp;
-    // ataqueP.innerHTML = baralho.energiaEsp + baralho.emoji;
-
-    // cartaP.id = especial.cartaId;
-    // cargoP.style.fontSize = especial.css.cargoPFontSize;
-    // cargoP.style.fontWeight = especial.css.cargoPFontWeight;
-    // ataqueP.style.fontSize = especial.css.ataquePFontSize;
-    // ataqueP.style.color = especial.css.ataquePColor;
-    // novoAtaqueP.style.color = especial.css.epColor;
-    // novoAtaqueP.style.fontSize = especial.css.epFontSize;
-    // retratoP.style.border = especial.css.retratoPBorder;
-    // retratoP.style.backgroundSize = especial.css.retratoBackgroundSize;
-
-    //reset critico
-    // novoAtaqueP.style.visibility = especial.css.ataqueNovo;
-    // novoAtaqueP.style.fontSize = especial.css.ataqueNovoFontSize;
-    // ataqueP.style.textDecoration = especial.css.ataque;
-
-    //tira critico
-    nomeP.className = "";
-    cidadeP.className = "";
-    varianteP.className = "";
-    cartaP.className = "";
-  
-
-  // seedP.innerHTML = baralho.seed;
   arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
 
   DEBUG && console.log("baralho: ", baralho);
-  DEBUG && console.log("cartaNaoEspecial: ", cartaNaoEspecial);
-  DEBUG && console.log("especial ", especial);
   DEBUG && console.log("criticoTag: ", criticoTag);
-
-  // DEBUG && console.log(novaCarta);
-
-  // DEBUG && console.log(novaCarta._especial.nome);
 }
 
 let cloneBaralho;
 
+const invEmpty ={
+  
+}
+
+
 function criarInvOne() {
-  cloneBaralho = Object.assign({isEmpty: true}, baralho);
+  cloneBaralho = Object.assign({isEmpty: false}, baralho);
   // invTwo = Object.assign({isEmpty: true}, baralho);
   // invThree = Object.assign({isEmpty: true}, baralho);
   // invFour = Object.assign({isEmpty: true}, baralho);
@@ -312,7 +279,7 @@ function criarInvOne() {
 
 
 function moverInvOne() {
-    
+
     carta1.id = cloneBaralho.cartaId
     nome1.innerHTML = cloneBaralho.nome
     cidade1.innerHTML = cloneBaralho.cidade;
