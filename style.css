@@ -598,8 +598,8 @@ p{
 
     
     main{
-        width: auto;
-        height: 200vh;
+        width: 800px;
+        height: 720px;
         display: grid;
         gap: 2%;
 
@@ -608,7 +608,7 @@ p{
                          "text  btn"
                          ;
          grid-template-columns: 1fr  4fr;
-         grid-template-rows: 1fr 1.2fr; 
+         grid-template-rows: 1fr 1fr; 
         /* align-items: center;
         justify-items: center;
         flex-direction: column;
@@ -635,7 +635,7 @@ p{
     }
     #btn{
         
-        
+        justify-self: end;
         grid-area: btn;
     }
     #getseed{
@@ -665,7 +665,7 @@ p{
         align-items: center;
         
         height: 90%;
-        width: 90%;
+        width: 100%;
         grid-area: pack;
     
     }
@@ -744,8 +744,8 @@ p{
     
         /* padding: 10%; */
         
-        height: 90%;
-        width: 89%;
+        height: 80%;
+        width: 100%;
         justify-self: start;
         
       
@@ -760,13 +760,15 @@ p{
 
     #binds{
         margin-left: 5%;
-        width: 10%;
-         height: 50%;
+        width: 90%;
+         height: 10%;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         grid-area: inv;
-        align-self: center;
-        justify-self: end;
+        align-self: end;
+        justify-self: center;
+
+        justify-content: space-around;
         
     }
     #btnMover{
