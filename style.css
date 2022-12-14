@@ -45,16 +45,17 @@ body{
 
 main {
     width: auto;
-    min-height: 100vh;
+    height: 100vh;
     display: grid;
     grid-template-areas: 
-                         "- wrap"
+                         "record wrap"
                          "pack inv"
                          "btn btnReset";                 
     align-items: center;
     justify-items: center;
     flex-direction: column;
     background-color: #121212;
+    background: linear-gradient(360deg, rgb(20, 1, 26) 18%, rgb(12, 12, 12) 61%);
     grid-template-columns: 1fr 3fr;
     grid-template-rows: 0.8fr 3fr 1fr;
 }
@@ -79,14 +80,26 @@ li{
     font-size: 1.25em;
     color: rgb(213, 187, 238);;
 } */
+
+
+
+#record, #descr{
+    font-size: 1em; 
+    text-align: center;
+    color: white; 
+    /* grid-area: 'record'; */
+}
+
+
 .arena{
     margin: 0.1em;
     font-size: 3em;
     color: wheat;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
+
 .placar{
-    
     text-align: center;
     font-size: 2em;
     color: wheat;
@@ -97,8 +110,6 @@ li{
     
     
     height: 100px;
-   
-    
     grid-area: wrap;
 
 }
@@ -579,37 +590,179 @@ p{
     100% { transform: translate(1px, -2px) rotate(-1deg); }
   }
 
-/* @media only screen and (max-width: 480px){
+@media only screen and (max-width: 900px){
     
-    body{
-        width: 100%;
-        display: flex;
+    /* #pack{
+        display: none;
+    } */
+
+    
+    main{
+        width: 800px;
+        height: 720px;
+        display: grid;
+        gap: 0.7%;
+
+        grid-template-areas:    
+                        "pack  inv"
+                         "text  btn"
+                         ;
+         grid-template-columns: 1fr  3.5fr;
+         grid-template-rows: 1fr 1fr; 
+        /* align-items: center;
+        justify-items: center;
         flex-direction: column;
-        overflow-x: hidden;
+        background-color: #121212;
+        background: linear-gradient(360deg, rgb(20, 1, 26) 18%, rgb(12, 12, 12) 61%);
+        grid-template-columns: 1fr 3fr;
+        grid-template-rows: 0.8fr 3fr 1fr; */
     }
-    
-    nav{
+    #texto{
+        font-size: 50%;
+        grid-area: text;
+        align-self: start;
+    }
+    #descr{
         display: none;
         
     }
-    .btn{
-        display: none;
-        width: 100%;
-        background-image: none;
-        background-color: #121212;
+    .wrap{
+        height: 20%;
+        font-size: 45%;
+        grid-area: inv;
+        align-self: end;
+        justify-self: start;
+        margin-left: 5%;
     }
-    
-    
-    #inv{
-        width: 50%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        justify-items: center;
-        align-items: center;
-        gap: 0px;
-        overflow: visible;
+    #btn{
+        
+        justify-self: end;
+        grid-area: btn;
+    }
+    #getseed{
+        
+        grid-area: btn;
+        align-self: center;
+    }
+    #btnReset{
+        grid-area: inv;
+        align-self: end;
+        margin-bottom: 5%;
+        
+    }
 
+    #pack{
+
+        /* justify-self: start; */
+        margin-top: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: start;
+        height: 75%;
+        width: 90%;
+        grid-area: pack;
+    
     }
-} */
+
+    #carta1, #carta2, #carta3, #carta4{
+        
+        height: 100%;
+        width: 100%;
+        
+        
+    }
+    .nameAndCidadeWrapper,.nameAndCidadeWrapper1,.nameAndCidadeWrapper2,.nameAndCidadeWrapper3,.nameAndCidadeWrapper4{
+        /* display: none; */
+        width: 100%;
+        height: 19%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #nome, #nome1,#nome2,#nome3,#nome4 {
+    
+        font-size: 90%;
+        font-weight: 500;
+        
+        
+    }
+
+    #variante,#variante1,#variante2,#variante3,#variante4 {
+
+        width: 100%;
+    
+        text-align: center;
+        font-size: 50% !important;
+        font-weight: bold;
+        font-family: 'Righteous';
+        text-shadow: -2px 5px 5px #010101;
+        
+    }
+    
+
+    #cidade,#cidade1,#cidade2,#cidade3,#cidade4{
+        /* background-color: #6637be; */
+        /* align-self: flex-end; */
+        font-size: 70%;
+        
+    }
+
+    .retrato,.retrato1,.retrato2,.retrato3,.retrato4{
+        display: block;
+         width: 70%;
+         height: 35%; 
+    
+        /* width: 70px;
+        height: 45px; */
+    
+        background-color: #4b4747;
+        border-radius: 5px;
+        /* background-size: 210px 124px; */
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    
+        border: #020101 2px solid;
+    }
+
+    .cargo,.cargo1,.cargo2,.cargo3,.cargo4{
+        /* background-color: #37be49; */
+        height: 10%;
+        font-size: 100%;
+        transform: rotate(-10deg);
+        margin: 10px;
+    }
+
+    #inv{
+    
+        /* padding: 10%; */
+        margin-top: 2%;
+        height: 70%;
+        width: 100%;
+        align-items: start;
+        align-self: start;
+      
+    }
+    
+    #inv1, #inv2, #inv3, #inv4{
+        box-sizing: content-box;
+        height: 100%;
+        width: 95%;
+
+        /* margin: 10%; */
+    }
+
+    #Q{
+        grid-area: pack;
+        width: 70%;
+        height: 13%;
+        align-self: end;
+        margin-bottom: 8%;
+    }
+    
+
+}
 
 
