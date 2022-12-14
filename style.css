@@ -45,7 +45,7 @@ body{
 
 main {
     width: auto;
-    min-height: 100vh;
+    height: 100vh;
     display: grid;
     grid-template-areas: 
                          "- wrap"
@@ -55,6 +55,7 @@ main {
     justify-items: center;
     flex-direction: column;
     background-color: #121212;
+    background: linear-gradient(360deg, rgb(20, 1, 26) 18%, rgb(12, 12, 12) 61%);
     grid-template-columns: 1fr 3fr;
     grid-template-rows: 0.8fr 3fr 1fr;
 }
@@ -579,37 +580,9 @@ p{
     100% { transform: translate(1px, -2px) rotate(-1deg); }
   }
 
-/* @media only screen and (max-width: 480px){
-    
-    body{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        overflow-x: hidden;
-    }
-    
-    nav{
-        display: none;
-        
-    }
-    .btn{
-        display: none;
-        width: 100%;
-        background-image: none;
-        background-color: #121212;
-    }
+@media only screen and (max-width: 480px){
     
     
-    #inv{
-        width: 50%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        justify-items: center;
-        align-items: center;
-        gap: 0px;
-        overflow: visible;
-
-    }
-} */
+}
 
 
