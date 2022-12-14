@@ -48,7 +48,7 @@ main {
     height: 100vh;
     display: grid;
     grid-template-areas: 
-                         "- wrap"
+                         "record wrap"
                          "pack inv"
                          "btn btnReset";                 
     align-items: center;
@@ -80,14 +80,26 @@ li{
     font-size: 1.25em;
     color: rgb(213, 187, 238);;
 } */
+
+
+
+#record, #descr{
+    font-size: 1em; 
+    text-align: center;
+    color: white; 
+    /* grid-area: 'record'; */
+}
+
+
 .arena{
     margin: 0.1em;
     font-size: 3em;
     color: wheat;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
+
 .placar{
-    
     text-align: center;
     font-size: 2em;
     color: wheat;
@@ -98,8 +110,6 @@ li{
     
     
     height: 100px;
-   
-    
     grid-area: wrap;
 
 }
@@ -580,9 +590,107 @@ p{
     100% { transform: translate(1px, -2px) rotate(-1deg); }
   }
 
-@media only screen and (max-width: 480px){
+@media only screen and (max-width: 900px){
     
+    /* #pack{
+        display: none;
+    } */
+
     
+    main{
+        width: auto;
+        height: 100vh;
+        display: grid;
+
+        grid-template-areas:    
+                         "text pack btn"
+                         "inv inv  inv";
+         grid-template-columns: 1fr 2fr 1fr;
+         grid-template-rows: 2fr 1fr; 
+        /* align-items: center;
+        justify-items: center;
+        flex-direction: column;
+        background-color: #121212;
+        background: linear-gradient(360deg, rgb(20, 1, 26) 18%, rgb(12, 12, 12) 61%);
+        grid-template-columns: 1fr 3fr;
+        grid-template-rows: 0.8fr 3fr 1fr; */
+    }
+    #texto{
+        font-size: 50%;
+        grid-area: text;
+        align-self: start;
+    }
+    #descr{
+        display: none;
+        
+    }
+    .wrap{
+        /* height: 10%; */
+        font-size: 45%;
+        grid-area: text;
+        /* height: 1px; */
+    
+    }
+    #btn{
+        
+        
+        grid-area: btn;
+    }
+    #getseed{
+        
+        grid-area: btn;
+    }
+    #btnReset{
+        grid-area: btn;
+        
+    }
+
+    #inv{
+    
+       
+        grid-area: inv;
+    
+
+    }
+    #carta1, #carta2, #carta3, #carta4{
+        
+        
+        border-radius: 11px;
+        /* DENTRO DA CARTA vvvv */
+        background-color: 'gray';
+        background: linear-gradient(180deg, rgb(35, 36, 36) 18%, rgbrgb(110, 112, 114));
+        height: var(--tamanhoCartaHeight);
+        width: var(--tamanhoCartaWidth);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        
+        position: relative;
+        color: #020101;
+        border: 1px solid #020101;
+    }
+
+    #pack{
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        height: 87%;
+        width: 35%;
+        grid-area: pack;
+    
+    }
+    .cargo,.cargo1,.cargo2,.cargo3,.cargo4{
+        /* background-color: #37be49; */
+        height: 10%;
+        font-size: 20%;
+        transform: rotate(-10deg);
+        margin: 10px;
+    }
+    
+
 }
 
 
