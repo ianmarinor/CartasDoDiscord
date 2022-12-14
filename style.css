@@ -516,7 +516,7 @@ p{
     justify-content: center;
     align-items: center;
 
-    height: 65%;
+    height: 70%;
     width: 50%;
     grid-area: pack;
 
@@ -672,10 +672,20 @@ p{
         
         
     }
-    .nameAndCidadeWrapper,.nameAndCidadeWrapper1,.nameAndCidadeWrapper2,.nameAndCidadeWrapper3,.nameAndCidadeWrapper4{
+    .nameAndCidadeWrapper{
         /* display: none; */
         width: 100%;
-        height: 19%;
+        height: 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nameAndCidadeWrapper1,.nameAndCidadeWrapper2,.nameAndCidadeWrapper3,.nameAndCidadeWrapper4{
+        /* display: none; */
+        width: 100%;
+        height: 25%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -684,7 +694,7 @@ p{
 
     #nome, #nome1,#nome2,#nome3,#nome4 {
     
-        font-size: 90%;
+        font-size: 100%;
         font-weight: 500;
         
         
@@ -703,14 +713,36 @@ p{
     }
     
 
-    #cidade,#cidade1,#cidade2,#cidade3,#cidade4{
+    #cidade{
         /* background-color: #6637be; */
         /* align-self: flex-end; */
-        font-size: 70%;
+        font-size: 95%;
+        
+    }
+    #cidade1,#cidade2,#cidade3,#cidade4{
+        /* background-color: #6637be; */
+        /* align-self: flex-end; */
+        font-size: 80%;
         
     }
 
-    .retrato,.retrato1,.retrato2,.retrato3,.retrato4{
+    .retrato{
+        display: block;
+         width: 70%;
+         height: 40%; 
+    
+        /* width: 70px;
+        height: 45px; */
+    
+        background-color: #4b4747;
+        border-radius: 5px;
+        /* background-size: 210px 124px; */
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    
+        border: #020101 2px solid;
+    }
+    .retrato1,.retrato2,.retrato3,.retrato4{
         display: block;
          width: 70%;
          height: 35%; 
@@ -727,12 +759,20 @@ p{
         border: #020101 2px solid;
     }
 
-    .cargo,.cargo1,.cargo2,.cargo3,.cargo4{
+
+    .cargo{
+        /* background-color: #37be49; */
+        height: 10%;
+        font-size: 110%;
+        transform: rotate(-10deg);
+        margin: 10%;
+    }
+    .cargo1,.cargo2,.cargo3,.cargo4{
         /* background-color: #37be49; */
         height: 10%;
         font-size: 100%;
         transform: rotate(-10deg);
-        margin: 10px;
+        margin: 10%;
     }
 
     #inv{
