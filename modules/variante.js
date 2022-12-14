@@ -39,10 +39,10 @@ let variantes = [
     nome: "Blackao",
     display: "😖 COMO MUDA A FONTE 😖",
     css: {
-      cartaP_Color: "white",
+      cartaP_Color: "#e600e6",
       cartaP_BGImage: 'url("pics/variantes/varianteBlackao.gif")',
       cartaP_Border: "3px white solid",
-      varianteP_FontSize: "0.72em",
+      varianteP_FontSize: "80%",
     },
   },
   {

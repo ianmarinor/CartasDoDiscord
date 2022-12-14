@@ -51,7 +51,7 @@ let retratoP = document.querySelector(".retrato");
 let cargoP = document.querySelector(".cargo");
 let varianteP = document.querySelector("#variante");
 let actionP = document.querySelector(".action");
-let novoAtaqueP = document.querySelector(".novoAtaque");
+let novoAtaqueP = document.querySelector("#novoAtaque");
 let placarP = document.querySelector(".placar");
 let ataqueP = document.querySelector(".ataque");
 let seedP = document.querySelector(".seed");
@@ -94,10 +94,10 @@ let action2 = document.querySelector(".action2");
 let action3 = document.querySelector(".action3");
 let action4 = document.querySelector(".action4");
 
-let novoAtaque1 = document.querySelector(".novoAtaque1");
-let novoAtaque2 = document.querySelector(".novoAtaque2");
-let novoAtaque3 = document.querySelector(".novoAtaque3");
-let novoAtaque4 = document.querySelector(".novoAtaque4");
+let novoAtaque1 = document.querySelector("#novoAtaque1");
+let novoAtaque2 = document.querySelector("#novoAtaque2");
+let novoAtaque3 = document.querySelector("#novoAtaque3");
+let novoAtaque4 = document.querySelector("#novoAtaque4");
 
 
 let ataque1 = document.querySelector(".ataque1");
@@ -173,6 +173,12 @@ function colocarInfoNoWrap() {
         energia2Color: cargo.css.epColor,
         energia2FontSize: cargo.css.epFontSize,
         cartaBorder: cargo.css.cartaBorder
+      },
+      cssVariante:{
+        cartaColor: variante.css.cartaP_Color,
+        cartaBG: variante.css.cartaP_BGImage,
+        cartaBorder: variante.css.cartaP_Border,
+        varianteFontSize: variante.css.varianteP_FontSize,
       }
 
     };
@@ -196,7 +202,7 @@ function colocarInfoNoWrap() {
         criticoCarta: '',
         criticoEnergia: '',
         criticoEnergia2: '',
-        criticoEnergia2FontSize: '',
+        criticoEnergia2FontSize: especial.css.energia2,
         criticoEnergia2Critico: ''
       },
       cssCarta:{
@@ -209,6 +215,12 @@ function colocarInfoNoWrap() {
         energia2Color: especial.css.epColor,
         energia2FontSize: especial.css.epFontSize,
         cartaBorder: especial.css.cartaBorder
+      },
+      cssVariante:{
+        cartaColor: '',
+        cartaBG: '',
+        cartaBorder: '',
+        varianteFontSize: '',
       }
 
     };
@@ -218,6 +230,8 @@ function colocarInfoNoWrap() {
   limpaCarta();
   //DOM
   //CARTA NORMAL
+
+
     cartaP.id = baralho.cartaId
     cartaP.style.border = baralho.cssCarta.cartaBorder
 
@@ -238,8 +252,10 @@ function colocarInfoNoWrap() {
 
     novoAtaqueP.innerHTML = baralho.energia2
     novoAtaqueP.style.color = baralho.cssCarta.energia2Color;
+    // novoAtaqueP.style.fontSize = '800px'
+    // novoAtaqueP.style.fontSize = baralho.cssCarta.energia2FontSize;
 
-    novoAtaqueP.style.fontSize = baralho.cssCarta.energia2FontSize;
+
     seedP.innerHTML = baralho.seed
 
 
@@ -252,7 +268,12 @@ function colocarInfoNoWrap() {
     novoAtaqueP.style.visibility = baralho.isCritico.criticoEnergia2;
     novoAtaqueP.style.fontSize = baralho.isCritico.criticoEnergia2FontSize;
     novoAtaqueP.className = baralho.isCritico.criticoEnergia2Critico;
+    novoAtaqueP.className = baralho.isCritico.criticoEnergia2Critico;
 
+    //variante 
+    cartaP.style.color = baralho.cssVariante.cartaColor
+    cartaP.style.backgroundImage = baralho.cssVariante.cartaBG
+    varianteP.style.fontSize = baralho.cssVariante.varianteFontSize
     
   arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
@@ -262,10 +283,114 @@ function colocarInfoNoWrap() {
 }
 
 let cloneBaralho;
+// let invEmpty
+// function limparDeck(){
 
-const invEmpty ={
-  
-}
+
+//  invEmpty =
+//   {
+//     cartaId: 'empty',
+//     nome: '',
+//     variante: '',
+//     cidade: '',
+//     retrato: '',
+//     cargo: '',
+//     energia: '',
+//     energia2: '',
+//     poder: '' ,
+//     seed: '',
+    
+
+//     isCritico:{
+//       criticoNome: '',
+//       criticoVariante: '',
+//       criticoCidade: '',
+//       criticoCarta: '',
+//       criticoEnergia: '',
+//       criticoEnergia2: '',
+//       criticoEnergia2FontSize: '',
+//       criticoEnergia2Critico: ''
+//     },
+//     cssCarta:{
+//       cargoFontSize: '',
+//       cargoFontWeight: '',
+//       retratoBorder: '',
+//       energiaFontSize: '',
+//       retratoBGSize: '',
+//       energiaColor: '',
+//       energia2Color: '',
+//       energia2FontSize: '',
+//       cartaBorder: ''
+//     } 
+//   };
+
+    
+//     carta1.id = invEmpty.cartaId
+//     carta2.id = invEmpty.cartaId
+//     carta3.id = invEmpty.cartaId
+//     carta4.id = invEmpty.cartaId
+// }
+//     // carta4.style.border = invEmpty.cssCarta.cartaBorder
+
+//     // nome1.innerHTML = invEmpty.nome
+//     // nome2.innerHTML = invEmpty.nome
+//     // nome3.innerHTML = invEmpty.nome
+//     // nome4.innerHTML = invEmpty.nome
+    
+
+//     // variante1.innerHTML = invEmpty.variante;
+//     // variante2.innerHTML = invEmpty.variante;
+//     // variante3.innerHTML = invEmpty.variante;
+//     // variante4.innerHTML = invEmpty.variante;
+
+//     // cidade1.innerHTML = invEmpty.cidade;
+//     // cidade2.innerHTML = invEmpty.cidade;
+//     // cidade3.innerHTML = invEmpty.cidade;
+//     // cidade4.innerHTML = invEmpty.cidade;
+
+//     // retrato1.style.backgroundImage = invEmpty.retrato;
+//     // retrato2.style.backgroundImage = invEmpty.retrato;
+//     // retrato3.style.backgroundImage = invEmpty.retrato;
+//     // retrato4.style.backgroundImage = invEmpty.retrato;
+
+//     // retrato1.style.border = invEmpty.cssCarta.retratoBorder;
+//     // retrato2.style.border = invEmpty.cssCarta.retratoBorder;
+//     // retrato3.style.border = invEmpty.cssCarta.retratoBorder;
+//     // retrato4.style.border = invEmpty.cssCarta.retratoBorder;
+
+//     // cargo1.innerHTML = invEmpty.cargo
+//     // cargo2.innerHTML = invEmpty.cargo
+//     // cargo3.innerHTML = invEmpty.cargo
+//     // cargo4.innerHTML = invEmpty.cargo
+
+//     // cargo1.style.fontSize = invEmpty.cssCarta.cargoFontSize;
+//     // cargo2.style.fontSize = invEmpty.cssCarta.cargoFontSize;
+//     // cargo3.style.fontSize = invEmpty.cssCarta.cargoFontSize;
+//     // cargo4.style.fontSize = invEmpty.cssCarta.cargoFontSize;
+
+//     // cargo1.style.fontWeight = invEmpty.cssCarta.cargoFontWeight;
+//     // cargo2.style.fontWeight = invEmpty.cssCarta.cargoFontWeight;
+//     // cargo3.style.fontWeight = invEmpty.cssCarta.cargoFontWeight;
+//     // cargo4.style.fontWeight = invEmpty.cssCarta.cargoFontWeight;
+
+//     // ataque1.innerHTML = invEmpty.energia 
+//     // ataque2.innerHTML = invEmpty.energia 
+//     // ataque3.innerHTML = invEmpty.energia 
+//     // ataque4.innerHTML = invEmpty.energia 
+
+
+//     // ataqueP.style.color = invEmpty.cssCarta.energiaColor;
+//     // ataqueP.style.fontSize = invEmpty.cssCarta.energiaFontSize;
+
+//     // novoAtaqueP.innerHTML = invEmpty.energia2
+//     // novoAtaqueP.style.color = invEmpty.cssCarta.energia2Color;
+
+//     // novoAtaqueP.style.fontSize = invEmpty.cssCarta.energia2FontSize;
+//     // seedP.innerHTML = invEmpty.seed
+
+
+
+
 
 
 function criarInvOne() {
@@ -280,47 +405,164 @@ function criarInvOne() {
 
 function moverInvOne() {
 
-    carta1.id = cloneBaralho.cartaId
-    nome1.innerHTML = cloneBaralho.nome
-    cidade1.innerHTML = cloneBaralho.cidade;
-    retrato1.style.backgroundImage = cloneBaralho.retrato;
-    cargo1.innerHTML = cloneBaralho.cargo + cargo.emoji;
-    ataque1.innerHTML = cloneBaralho.energia 
-    novoAtaque1.innerHTML = cloneBaralho.energia2
-    seed1.innerHTML = cloneBaralho.seed
+if(carta1.id == 'carta1'){
+
+  carta1.id = cloneBaralho.cartaId
+  carta1.style.border = cloneBaralho.cssCarta.cartaBorder
+  
+  nome1.innerHTML = cloneBaralho.nome
+  variante1.innerHTML = cloneBaralho.variante;
+  cidade1.innerHTML = cloneBaralho.cidade;
+  
+  retrato1.style.backgroundImage = cloneBaralho.retrato;
+  retrato1.style.border = cloneBaralho.cssCarta.retratoBorder;
+  
+  cargo1.innerHTML = cloneBaralho.cargo + cargo.emoji;
+  cargo1.style.fontSize = cloneBaralho.cssCarta.cargoFontSize;
+  cargo1.style.fontWeight = cloneBaralho.cssCarta.cargoFontWeight;
+  
+  ataque1.innerHTML = cloneBaralho.energia 
+  ataque1.style.color = cloneBaralho.cssCarta.energiaColor;
+  ataque1.style.fontSize = cloneBaralho.cssCarta.energiaFontSize;
+  
+  novoAtaque1.innerHTML = cloneBaralho.energia2
+  novoAtaque1.style.color = cloneBaralho.cssCarta.energia2Color;
+  
+  novoAtaque1.style.fontSize = cloneBaralho.cssCarta.energia2FontSize;
+  seed1.innerHTML = cloneBaralho.seed
+  
+  //critico
+    carta1.className = cloneBaralho.isCritico.criticoCarta;
+    nome1.className = cloneBaralho.isCritico.criticoNome;
+    variante1.className = cloneBaralho.isCritico.criticoVariante;
+    cidade1.className = cloneBaralho.isCritico.criticoCidade;
+    ataque1.style.textDecorationLine = cloneBaralho.isCritico.criticoEnergia;
+    novoAtaque1.style.visibility = cloneBaralho.isCritico.criticoEnergia2;
+    novoAtaque1.style.fontSize = cloneBaralho.isCritico.criticoEnergia2FontSize;
+    novoAtaque1.className = cloneBaralho.isCritico.criticoEnergia2Critico;
+    // tudo()
+}
+
+
 }
 function moverInvTwo() {
     
+  if(carta2.id == 'carta2'){
+
     carta2.id = cloneBaralho.cartaId
-    nome2.innerHTML = baralho.nome
-    cidade2.innerHTML = baralho.cidade;
-    retrato2.style.backgroundImage = baralho.retrato;
-    cargo2.innerHTML = baralho.cargo + cargo.emoji;
-    ataque2.innerHTML = baralho.energia 
-    novoAtaque2.innerHTML = baralho.energia2
-    seed2.innerHTML = baralho.seed
+    carta2.style.border = cloneBaralho.cssCarta.cartaBorder
+    
+    nome2.innerHTML = cloneBaralho.nome
+    variante2.innerHTML = cloneBaralho.variante;
+    cidade2.innerHTML = cloneBaralho.cidade;
+    
+    retrato2.style.backgroundImage = cloneBaralho.retrato;
+    retrato2.style.border = cloneBaralho.cssCarta.retratoBorder;
+    
+    cargo2.innerHTML = cloneBaralho.cargo + cargo.emoji;
+    cargo2.style.fontSize = cloneBaralho.cssCarta.cargoFontSize;
+    cargo2.style.fontWeight = cloneBaralho.cssCarta.cargoFontWeight;
+    
+    ataque2.innerHTML = cloneBaralho.energia 
+    ataque2.style.color = cloneBaralho.cssCarta.energiaColor;
+    ataque2.style.fontSize = cloneBaralho.cssCarta.energiaFontSize;
+    
+    novoAtaque2.innerHTML = cloneBaralho.energia2
+    novoAtaque2.style.color = cloneBaralho.cssCarta.energia2Color;
+    
+    novoAtaque2.style.fontSize = cloneBaralho.cssCarta.energia2FontSize;
+    seed2.innerHTML = cloneBaralho.seed
+    
+    //critico
+      carta2.className = cloneBaralho.isCritico.criticoCarta;
+      nome2.className = cloneBaralho.isCritico.criticoNome;
+      variante2.className = cloneBaralho.isCritico.criticoVariante;
+      cidade2.className = cloneBaralho.isCritico.criticoCidade;
+      ataque2.style.textDecorationLine = cloneBaralho.isCritico.criticoEnergia;
+      novoAtaque2.style.visibility = cloneBaralho.isCritico.criticoEnergia2;
+      novoAtaque2.style.fontSize = cloneBaralho.isCritico.criticoEnergia2FontSize;
+      novoAtaque2.className = cloneBaralho.isCritico.criticoEnergia2Critico;
+      // tudo()
+  }
 }
 function moverInvThree() {
     
-    carta3.id = baralho.cartaId
-    nome3.innerHTML = baralho.nome
-    cidade3.innerHTML = baralho.cidade;
-    retrato3.style.backgroundImage = baralho.retrato;
-    cargo3.innerHTML = baralho.cargo + cargo.emoji;
-    ataque3.innerHTML = baralho.energia 
-    novoAtaque3.innerHTML = baralho.energia2
-    seed3.innerHTML = baralho.seed
+  if(carta3.id == 'carta3'){3
+    carta3.id = cloneBaralho.cartaId
+    carta3.style.border = cloneBaralho.cssCarta.cartaBorder
+    
+    nome3.innerHTML = cloneBaralho.nome
+    variante3.innerHTML = cloneBaralho.variante;
+    cidade3.innerHTML = cloneBaralho.cidade;
+    
+    retrato3.style.backgroundImage = cloneBaralho.retrato;
+    retrato3.style.border = cloneBaralho.cssCarta.retratoBorder;
+    
+    cargo3.innerHTML = cloneBaralho.cargo + cargo.emoji;
+    cargo3.style.fontSize = cloneBaralho.cssCarta.cargoFontSize;
+    cargo3.style.fontWeight = cloneBaralho.cssCarta.cargoFontWeight;
+    
+    ataque3.innerHTML = cloneBaralho.energia 
+    ataque3.style.color = cloneBaralho.cssCarta.energiaColor;
+    ataque3.style.fontSize = cloneBaralho.cssCarta.energiaFontSize;
+    
+    novoAtaque3.innerHTML = cloneBaralho.energia2
+    novoAtaque3.style.color = cloneBaralho.cssCarta.energia2Color;
+    
+    novoAtaque3.style.fontSize = cloneBaralho.cssCarta.energia2FontSize;
+    seed3.innerHTML = cloneBaralho.seed
+    
+    //critico
+      carta3.className = cloneBaralho.isCritico.criticoCarta;
+      nome3.className = cloneBaralho.isCritico.criticoNome;
+      variante3.className = cloneBaralho.isCritico.criticoVariante;
+      cidade3.className = cloneBaralho.isCritico.criticoCidade;
+      ataque3.style.textDecorationLine = cloneBaralho.isCritico.criticoEnergia;
+      novoAtaque3.style.visibility = cloneBaralho.isCritico.criticoEnergia2;
+      novoAtaque3.style.fontSize = cloneBaralho.isCritico.criticoEnergia2FontSize;
+      novoAtaque3.className = cloneBaralho.isCritico.criticoEnergia2Critico;
+      // tudo()
+  }
 }
 function moverInvFour() {
     
-    carta4.id = baralho.cartaId
-    nome4.innerHTML = baralho.nome
-    cidade4.innerHTML = baralho.cidade;
-    retrato4.style.backgroundImage = baralho.retrato;
-    cargo4.innerHTML = baralho.cargo + cargo.emoji;
-    ataque4.innerHTML = baralho.energia 
-    novoAtaque4.innerHTML = baralho.energia2
-    seed4.innerHTML = baralho.seed
+  if(carta4.id == 'carta4'){
+
+    carta4.id = cloneBaralho.cartaId
+    carta4.style.border = cloneBaralho.cssCarta.cartaBorder
+    
+    nome4.innerHTML = cloneBaralho.nome
+    variante4.innerHTML = cloneBaralho.variante;
+    cidade4.innerHTML = cloneBaralho.cidade;
+    
+    retrato4.style.backgroundImage = cloneBaralho.retrato;
+    retrato4.style.border = cloneBaralho.cssCarta.retratoBorder;
+    
+    cargo4.innerHTML = cloneBaralho.cargo + cargo.emoji;
+    cargo4.style.fontSize = cloneBaralho.cssCarta.cargoFontSize;
+    cargo4.style.fontWeight = cloneBaralho.cssCarta.cargoFontWeight;
+    
+    ataque4.innerHTML = cloneBaralho.energia 
+    ataque4.style.color = cloneBaralho.cssCarta.energiaColor;
+    ataque4.style.fontSize = cloneBaralho.cssCarta.energiaFontSize;
+    
+    novoAtaque4.innerHTML = cloneBaralho.energia2
+    novoAtaque4.style.color = cloneBaralho.cssCarta.energia2Color;
+    
+    novoAtaque4.style.fontSize = cloneBaralho.cssCarta.energia2FontSize;
+    seed4.innerHTML = cloneBaralho.seed
+    
+    //critico
+      carta4.className = cloneBaralho.isCritico.criticoCarta;
+      nome4.className = cloneBaralho.isCritico.criticoNome;
+      variante4.className = cloneBaralho.isCritico.criticoVariante;
+      cidade4.className = cloneBaralho.isCritico.criticoCidade;
+      ataque4.style.textDecorationLine = cloneBaralho.isCritico.criticoEnergia;
+      novoAtaque4.style.visibility = cloneBaralho.isCritico.criticoEnergia2;
+      novoAtaque4.style.fontSize = cloneBaralho.isCritico.criticoEnergia2FontSize;
+      novoAtaque4.className = cloneBaralho.isCritico.criticoEnergia2Critico;
+      // tudo()
+  }
 }
 
 
@@ -995,6 +1237,7 @@ function tudo() {
     // seedString = seedObj._seedString;
     // DEBUG && console.log("seedString no tudo ", seedString);
     start();
+    // limparDeck()
     DEBUG && console.log("no tudo SEED", seedObj);
     escolherIntegrante();
     DEBUG && console.log("no tudo INTEGRANTE:", integrante);
@@ -1176,6 +1419,16 @@ document.addEventListener("keydown", (event)=>{
   if(copyCard){
     if(event.code == teclaMoverSlot4){
       moverInvFour()
+      ;
+    }    
+  }
+  
+})
+
+document.addEventListener("keydown", (event)=>{
+  if(copyCard){
+    if(event.code == 'KeyR'){
+      limparDeck()
       ;
     }    
   }

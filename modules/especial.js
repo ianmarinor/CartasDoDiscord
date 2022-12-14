@@ -151,10 +151,9 @@ export let especiais = {
       ataquePFontSize: '',
       ataquePColor: '',
       epColor: 'black',
-      epFontSize: '1.4em',
+      energia2: '200%',
       ataqueNovo: 'visible',
       ataque: 'none',
-      ataqueNovoFontSize: '1.8em',
       cartaBorder: ''
 
     }

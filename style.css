@@ -11,8 +11,11 @@
     --primeMinister: #050505;
     --premioMarino: #fcd703;
 
-    --tamanhoCartaWidth: 190px;
-    --tamanhoCartaHeight: 295px;
+    --tamanhoCartaPackWidth: 69%;
+    --tamanhoCartaPackHeight: 99%;
+
+    --tamanhoCartaWidth: 100%;
+    --tamanhoCartaHeight: 100%;
     
 
 }
@@ -20,19 +23,29 @@
 
 
 * {
+    
+    
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Quicksand', sans-serif;
     /* color: rgb(9, 1, 17); */
 }
-body{
-    display: flex;
+html, body{
+    width: auto;
+    height: 100vh;
+    /* display: flex;
     flex-direction: column;
     background-color: #121212;
+    align-items: stretch; */
+}
+body{
+    min-height: 100vh;
 }
 
 main {
+    width: auto;
+    min-height: 100vh;
     display: grid;
     grid-template-areas: 
                          "- wrap"
@@ -42,8 +55,8 @@ main {
     justify-items: center;
     flex-direction: column;
     background-color: #121212;
-    grid-template-columns: 0.5fr 1fr;
-    grid-template-rows: 0.1fr 1fr 0.26fr;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 0.8fr 3fr 1fr;
 }
 
 /* nav{
@@ -83,7 +96,7 @@ li{
 .wrap{
     
     
-    
+    height: 100px;
    
     
     grid-area: wrap;
@@ -92,7 +105,26 @@ li{
 /* ************************* */
 /* CARTAS VARIACOES */
 /* ************************* */
-#carta, #carta1, #carta2, #carta3, #carta4{
+
+#carta{
+/* DENTRO DA CARTA vvvv */
+background-color: var(--ministro);
+background: linear-gradient(180deg, rgba(43,214,214,1) 18%, rgba(43,145,214,1) 61%);
+height: var(--tamanhoCartaHeight);
+width: var(--tamanhoCartaWidth);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+border-radius: 1.5%;
+position: relative;
+color: #020101;
+border: 2px solid #020101;
+}
+
+
+
+ #carta1, #carta2, #carta3, #carta4{
     /* display: none;
     /* background-color: #040404; */
     /* background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ); */
@@ -107,6 +139,9 @@ li{
     border: 1px solid #020101;  */
 
 
+
+
+    /* DENTRO DA CARTA vvvv */
     background-color: var(--ministro);
     background: linear-gradient(180deg, rgba(43,214,214,1) 18%, rgba(43,145,214,1) 61%);
     height: var(--tamanhoCartaHeight);
@@ -114,8 +149,8 @@ li{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    border-radius: 15px;
+    justify-content: space-around;
+    border-radius: 1.4%;
     position: relative;
     color: #020101;
     border: 2px solid #020101;
@@ -268,7 +303,8 @@ li{
     font-weight: 900;
     color: rgb(255, 255, 255);
     background-repeat: no-repeat;
-    background-size: 300px 300px;
+    background-size: cover;
+    
 }
 #tenica{
 
@@ -287,7 +323,7 @@ li{
     font-weight: 900;
     color: rgb(0, 0, 0);
     background-repeat: no-repeat;
-    background-size: 300px 300px;
+    background-size: cover;
 }
 
 #abelha{
@@ -304,7 +340,7 @@ li{
     font-weight: 900;
     color: rgb(0, 0, 0);
     background-repeat: no-repeat;
-    background-size: 300px 300px;
+    background-size: cover;
 }
 #bonusCartasMais{
 
@@ -324,8 +360,18 @@ li{
     font-weight: 900;
     color: rgb(19, 34, 134);
     background-repeat: no-repeat;
-    background-size: 280px 440px;
+    background-size: cover;
     
+}
+
+.nameAndCidadeWrapper,.nameAndCidadeWrapper1,.nameAndCidadeWrapper2,.nameAndCidadeWrapper3,.nameAndCidadeWrapper4{
+    /* display: none; */
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -339,43 +385,47 @@ li{
 
 
 #nome, #nome1,#nome2,#nome3,#nome4 {
-    margin-top: 0.2em;
-    /* margin-bottom: 0.1em; */
-    font-size: 1.5em;
+    /* height: 100%; */
+    /* margin-top: 0.2%; */
+    /* margin-bottom: 0.2%; */
+    font-size: 150%;
+    font-weight: 500;
     /* background-color: #6c4d4d; */
     
 }
 #cidade,#cidade1,#cidade2,#cidade3,#cidade4{
     /* background-color: #6637be; */
-    text-align: end;
-    font-size: 0.95em;
+    /* align-self: flex-end; */
+    font-size: 110%;
     
 }
 
 .retrato,.retrato1,.retrato2,.retrato3,.retrato4{
     display: block;
      width: 75%;
-     height: 45%; 
+     height: 40%; 
 
     /* width: 70px;
     height: 45px; */
 
     background-color: #4b4747;
     border-radius: 5px;
-    background-size: 210px 124px;
+    /* background-size: 210px 124px; */
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
 
     border: #020101 2px solid;
 }
 
 .cargo,.cargo1,.cargo2,.cargo3,.cargo4{
     /* background-color: #37be49; */
+    height: 26%;
     font-size: 1.5em;
     transform: rotate(-10deg);
     margin: 10px;
 }
 .poder,.poder1,.poder2,.poder3,.poder4{
+    height: 9%;
     width: 80%;
     font-size: 0.98em;
     /* background-color: #beac37; */
@@ -426,8 +476,11 @@ li{
     visibility:hidden;
 }
 #variante,#variante1,#variante2,#variante3,#variante4 {
+
+    width: 100%;
+
     text-align: center;
-    font-size: 1.1em;
+    font-size: 100%;
     font-weight: bold;
     font-family: 'Righteous';
     text-shadow: -2px 5px 5px #010101;
@@ -440,21 +493,36 @@ p{
 }
 
 #pack{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 65%;
+    width: 50%;
     grid-area: pack;
+
 }
 
 #inv{
     
-    height: 320px;
-    width: 800px;
+    /* padding: 10%; */
+    
+    height: 65%;
+    width: 75%;
     background-color: #2a2929;
+
+    box-sizing: border-box;
 
     display: grid;
     justify-items: center;
     align-items: center;
+
+    /* justify-content: center; */
+
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    gap: 10px;
+    gap: 0.8%;
     overflow: hidden;
     grid-area: inv;
 
@@ -463,6 +531,13 @@ p{
     text-align: center;
     border-radius: 10px;
   
+}
+
+#inv1, #inv2, #inv3, #inv4{
+    box-sizing: content-box;
+    height: 96%;
+    width: 90%;
+    /* margin: 10%; */
 }
 
 #empty{
