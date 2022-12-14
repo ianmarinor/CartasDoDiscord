@@ -4,16 +4,16 @@ let DEBUG = true
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 export let integrantes = [
-  {nome: "Gandalf", retrato: "url('pics/gandarfu.png')",emoji: "⚡", },
-  {nome:"Turu", retrato: "url('pics/turu.webp')",emoji: "⚡", },
-  {nome: "Nefesto", retrato: "url('pics/nefesto.png')",emoji: "⚡", },
-  {nome: "Blackao", retrato: "url('pics/blackao.jpeg')",emoji: "⚡", },
-  {nome:"Sr. Antonio", retrato: "url('pics/antonio.png')",emoji: "⚡", },
-  {nome: "Pedro", retrato: "url('pics/pedro.png')",emoji: "⚡", },
-  {nome: "Curtas", retrato: "url('pics/curtas.png')",emoji: "⚡", },
-  {nome: "Twelve", retrato: "url('pics/twelve.png')",emoji: "⚡", },
-  {nome: "Junks", retrato: "url('pics/junks.jpeg')",emoji: "⚡", },
-  {nome: "Murillo", retrato: "url('pics/murilo.jpeg')",emoji: "⚡", },
+  {nome: "GANDALF", retrato: "url('pics/gandarfu.png')",emoji: "⚡", },
+  {nome:"TURU", retrato: "url('pics/turu.webp')",emoji: "⚡", },
+  {nome: "NEFESTO", retrato: "url('pics/nefesto.png')",emoji: "⚡", },
+  {nome: "BLACKAO", retrato: "url('pics/blackao.jpeg')",emoji: "⚡", },
+  {nome:"ANTONIO", retrato: "url('pics/antonio.png')",emoji: "⚡", },
+  {nome: "PEDRO", retrato: "url('pics/pedro.png')",emoji: "⚡", },
+  {nome: "CURTAS", retrato: "url('pics/curtas.png')",emoji: "⚡", },
+  {nome: "TWELVE", retrato: "url('pics/twelve.png')",emoji: "⚡", },
+  {nome: "JUNKS", retrato: "url('pics/junks.jpeg')",emoji: "⚡", },
+  {nome: "MURILLO", retrato: "url('pics/murilo.jpeg')",emoji: "⚡", },
   {}
 ];
 

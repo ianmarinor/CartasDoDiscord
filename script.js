@@ -77,23 +77,71 @@ let varianteP = document.querySelector("#variante");
 let actionP = document.querySelector(".action");
 let novoAtaqueP = document.querySelector(".novoAtaque");
 let placarP = document.querySelector(".placar");
-//div poder
 let ataqueP = document.querySelector(".ataque");
-let especialP = document.querySelector(".especial");
-
 let seedP = document.querySelector(".seed");
-//carta
 let cartaP = document.getElementById("carta");
-// input da seed cliente
-// let coloqueSuaSeed = document.getElementById('seed').value
-//wrap
-//input
-// let getSeed = document.getElementById("getseed");
-//pagin procura seed
+
+
+//DOM INV
+let deckOne = document.getElementById("inv1");
+let deckTwo = document.getElementById("inv1");
+let deckThree = document.getElementById("inv1");
+let deckFour = document.getElementById("inv1");
+
+let nome1 = document.querySelector("#nome1");
+let nome2 = document.querySelector("#nome2");
+let nome3 = document.querySelector("#nome3");
+let nome4 = document.querySelector("#nome4");
+
+let cidade1 = document.querySelector("#cidade1");
+let cidade2 = document.querySelector("#cidade2");
+let cidade3 = document.querySelector("#cidade3");
+let cidade4 = document.querySelector("#cidade4");
+
+let retrato1 = document.querySelector(".retrato1");
+let retrato2 = document.querySelector(".retrato2");
+let retrato3 = document.querySelector(".retrato3");
+let retrato4 = document.querySelector(".retrato4");
+
+let cargo1 = document.querySelector(".cargo1");
+let cargo2 = document.querySelector(".cargo2");
+let cargo3 = document.querySelector(".cargo3");
+let cargo4 = document.querySelector(".cargo4");
+
+let variante1 = document.querySelector("#variante1");
+let variante2 = document.querySelector("#variante2");
+let variante3 = document.querySelector("#variante3")
+let variante4 = document.querySelector("#variante4");
+
+let action1 = document.querySelector(".action1");
+let action2 = document.querySelector(".action2");
+let action3 = document.querySelector(".action3");
+let action4 = document.querySelector(".action4");
+
+let novoAtaque1 = document.querySelector(".novoAtaque1");
+let novoAtaque2 = document.querySelector(".novoAtaque2");
+let novoAtaque3 = document.querySelector(".novoAtaque3");
+let novoAtaque4 = document.querySelector(".novoAtaque4");
+
+
+let ataque1 = document.querySelector(".ataque1");
+let ataque2 = document.querySelector(".ataque2");
+let ataque3 = document.querySelector(".ataque3");
+let ataque4 = document.querySelector(".ataque4");
+
+let seed1 = document.querySelector(".seed1");
+let seed2 = document.querySelector(".seed2");
+let seed3 = document.querySelector(".seed3");
+let seed4 = document.querySelector(".seed4");
+
+let carta1 = document.getElementById("carta1");
+let carta2 = document.getElementById("carta2");
+let carta3 = document.getElementById("carta3");
+let carta4 = document.getElementById("carta4");
 
 let baralho;
 
-function limpaCarta(){
+function limpaCarta() {
   cartaP.style.backgroundImage = "";
   cartaP.style.border = "none";
   cartaP.style.color = "";
@@ -110,7 +158,7 @@ function limpaCarta(){
   ataqueP.style.color = "";
   ataqueP.style.fontSize = "";
   ataqueP.textContent = "";
-  varianteP.innerHTML = ''
+  varianteP.innerHTML = "";
 }
 
 function colocarInfoNoWrap() {
@@ -123,112 +171,121 @@ function colocarInfoNoWrap() {
   //   seedObj
   // );
 
-  baralho = {
-    //NORMAL
-    nome: integrante.nome,
-    variante: variante.display,
-    cidade: cidade,
-    cargo: cargo.display,
-    retrato: integrante.retrato,
-    energia: energia.energiaTotal,
-    critico: criticoTag,
+  //NORMAL
 
-    //ESPECIAIS
-    nomeEsp: especial.nome,
-    retratoEspecial: especial.retrato,
-    descricao: especial.descricao,
-    energiaEsp: especial.energia,
-    pontoEspecial: especial.pontoEspecial,
-    poder: "PODER",
-    emoji: especial.emoji,
-    emojiEsp: especial.emojiEsp,
-
-    seed: seedObj._seedString,
-  };
-
-  limpaCarta()
-  //DOM
-  //CARTA NORMAL
   if (especial == cartaNaoEspecial) {
-    nomeP.innerHTML = baralho.nome.toUpperCase()
-    cidadeP.innerHTML = baralho.cidade;
-    ataqueP.innerHTML = baralho.energia + integrante.emoji;
-    varianteP.innerHTML = baralho.variante;
-    cargoP.innerHTML = baralho.cargo + cargo.emoji
-    retratoP.style.backgroundImage = baralho.retrato;
-    novoAtaqueP.innerHTML = baralho.energia * criticoTag.multi + integrante.emoji
+    baralho = {
+      cartaId: cargo.nome,
+      nome: integrante.nome,
+      variante: variante.display,
+      cidade: cidade,
+      retrato: integrante.retrato,
+      cargo: cargo.display,
+      energia: energia.energiaTotal + integrante.emoji,
+      energia2: energia.energiaTotal * criticoTag.multi + integrante.emoji,
+      poder: 'hidden' ,
+      seed: seedObj._seedString,
 
-
-
-    cartaP.id = cargo.nome;
-    cargoP.style.fontSize = cargo.css.cargoPFontSize;
-    cargoP.style.fontWeight = cargo.css.cargoPFontWeight;
-    ataqueP.style.fontSize = cargo.css.ataquePFontSize;
-    ataqueP.style.color = cargo.css.ataquePColor;
-    novoAtaqueP.style.color = cargo.css.epColor;
-    novoAtaqueP.style.fontSize = cargo.css.epFontSize;
-    retratoP.style.border = cargo.css.retratoPBorder;
-    retratoP.style.backgroundSize = cargo.css.retratoBackgroundSize;
-    
-
-    //critico
-      nomeP.className = criticoTag.css.nomeP
-      cidadeP.className = criticoTag.css.cidadeP
-      varianteP.className = (criticoTag.css.varianteP)
-      cartaP.className = (criticoTag.css.cartaP)
-
-      ataqueP.style.textDecoration = criticoTag.energia.ataque
-      novoAtaqueP.style.visibility = criticoTag.energia.ataqueNovo
-      novoAtaqueP.style.fontSize = criticoTag.energia.ataqueNovoFontSize
-      novoAtaqueP.style.fontSize = criticoTag.energia.ataqueNovoFontSize
-      novoAtaqueP.className = criticoTag.energia.ataqueNovoCritico
-    
-
-    //variantes
-    cartaP.style.color = variante.css.cartaP_Color
-    cartaP.style.backgroundImage = variante.css.cartaP_BGImage
-    cartaP.style.border = variante.css.cartaP_Border
-    cartaP.style.fontSize = variante.css.varianteP_FontSize
-
+      critico: criticoTag,
+    };
   } else {
+    baralho = {
+      cartaId: especial.cartaId,
+      nome: especial.nome,
+      variante: '',
+      cidade: '',
+      retrato: especial.retrato,
+      cargo: especial.descricao,
+      energia: especial.energia + especial.emoji,
+      energia2: especial.pontoEspecial + especial.emojiEsp,
+      poder: "visible",
+      seed: seedObj._seedString,
 
-
-    //limpeza
-    cartaP.style.backgroundImage = ''
-    cartaP.style.border = ''
-
-    //CARTA ESPECIAL
-    cidadeP.innerHTML = "";
-    nomeP.innerHTML = baralho.nomeEsp.toUpperCase();
-    retratoP.style.backgroundImage = baralho.retratoEspecial;
-    cargoP.innerHTML = baralho.descricao;
-    novoAtaqueP.innerHTML = baralho.pontoEspecial + baralho.emojiEsp;
-    ataqueP.innerHTML = baralho.energiaEsp + baralho.emoji;
-
-    cartaP.id = especial.cartaId;
-    cargoP.style.fontSize = especial.css.cargoPFontSize;
-    cargoP.style.fontWeight = especial.css.cargoPFontWeight;
-    ataqueP.style.fontSize = especial.css.ataquePFontSize;
-    ataqueP.style.color = especial.css.ataquePColor;
-    novoAtaqueP.style.color = especial.css.epColor;
-    novoAtaqueP.style.fontSize = especial.css.epFontSize;
-    retratoP.style.border = especial.css.retratoPBorder;
-    retratoP.style.backgroundSize = especial.css.retratoBackgroundSize;
-
-    //reset critico
-    novoAtaqueP.style.visibility = especial.css.ataqueNovo
-    novoAtaqueP.style.fontSize = especial.css.ataqueNovoFontSize
-    ataqueP.style.textDecoration = especial.css.ataque
-    
-    
-    //tira critico
-      nomeP.className = ''
-      cidadeP.className = ''
-      varianteP.className = ''
-      cartaP.className = ''
+      critico: criticoTag,
+    };
   }
 
-  seedP.innerHTML = baralho.seed
+  //ESPECIAIS
+
+  limpaCarta();
+  //DOM
+  //CARTA NORMAL
+    cartaP.id = baralho.cartaId
+    nomeP.innerHTML = baralho.nome
+    cidadeP.innerHTML = baralho.cidade;
+    retratoP.style.backgroundImage = baralho.retrato;
+    cargoP.innerHTML = baralho.cargo + cargo.emoji;
+    ataqueP.innerHTML = baralho.energia 
+    novoAtaqueP.innerHTML = baralho.energia2
+    seedP.innerHTML = baralho.seed
+
+
+    // varianteP.innerHTML = baralho.variante;
+    // baralho.energia * criticoTag.multi + integrante.emoji;
+
+    
+    // cargoP.style.fontSize = cargo.css.cargoPFontSize;
+    // cargoP.style.fontWeight = cargo.css.cargoPFontWeight;
+    // ataqueP.style.fontSize = cargo.css.ataquePFontSize;
+    // ataqueP.style.color = cargo.css.ataquePColor;
+    // novoAtaqueP.style.color = cargo.css.epColor;
+    // novoAtaqueP.style.fontSize = cargo.css.epFontSize;
+    // retratoP.style.border = cargo.css.retratoPBorder;
+    // retratoP.style.backgroundSize = cargo.css.retratoBackgroundSize;
+
+    // //critico
+    // nomeP.className = criticoTag.css.nomeP;
+    // cidadeP.className = criticoTag.css.cidadeP;
+    // varianteP.className = criticoTag.css.varianteP;
+    // cartaP.className = criticoTag.css.cartaP;
+
+    // ataqueP.style.textDecoration = criticoTag.energia.ataque;
+    // novoAtaqueP.style.visibility = criticoTag.energia.ataqueNovo;
+    // novoAtaqueP.style.fontSize = criticoTag.energia.ataqueNovoFontSize;
+    // novoAtaqueP.style.fontSize = criticoTag.energia.ataqueNovoFontSize;
+    // novoAtaqueP.className = criticoTag.energia.ataqueNovoCritico;
+
+    // //variantes
+    // cartaP.style.color = variante.css.cartaP_Color;
+    // cartaP.style.backgroundImage = variante.css.cartaP_BGImage;
+    // cartaP.style.border = variante.css.cartaP_Border;
+    // cartaP.style.fontSize = variante.css.varianteP_FontSize;
+  
+    // //limpeza
+    // cartaP.style.backgroundImage = "";
+    // cartaP.style.border = "";
+
+    // //CARTA ESPECIAL
+    // cidadeP.innerHTML = "";
+    // nomeP.innerHTML = baralho.nomeEsp.toUpperCase();
+    // retratoP.style.backgroundImage = baralho.retratoEspecial;
+    // cargoP.innerHTML = baralho.descricao;
+    // novoAtaqueP.innerHTML = baralho.pontoEspecial + baralho.emojiEsp;
+    // ataqueP.innerHTML = baralho.energiaEsp + baralho.emoji;
+
+    // cartaP.id = especial.cartaId;
+    // cargoP.style.fontSize = especial.css.cargoPFontSize;
+    // cargoP.style.fontWeight = especial.css.cargoPFontWeight;
+    // ataqueP.style.fontSize = especial.css.ataquePFontSize;
+    // ataqueP.style.color = especial.css.ataquePColor;
+    // novoAtaqueP.style.color = especial.css.epColor;
+    // novoAtaqueP.style.fontSize = especial.css.epFontSize;
+    // retratoP.style.border = especial.css.retratoPBorder;
+    // retratoP.style.backgroundSize = especial.css.retratoBackgroundSize;
+
+    //reset critico
+    // novoAtaqueP.style.visibility = especial.css.ataqueNovo;
+    // novoAtaqueP.style.fontSize = especial.css.ataqueNovoFontSize;
+    // ataqueP.style.textDecoration = especial.css.ataque;
+
+    //tira critico
+    nomeP.className = "";
+    cidadeP.className = "";
+    varianteP.className = "";
+    cartaP.className = "";
+  
+
+  // seedP.innerHTML = baralho.seed;
   arenaP.innerHTML = totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " PONTOS";
 
@@ -237,12 +294,69 @@ function colocarInfoNoWrap() {
   DEBUG && console.log("especial ", especial);
   DEBUG && console.log("criticoTag: ", criticoTag);
 
-
-
   // DEBUG && console.log(novaCarta);
 
   // DEBUG && console.log(novaCarta._especial.nome);
 }
+
+let cloneBaralho;
+
+function criarInvOne() {
+  cloneBaralho = Object.assign({isEmpty: true}, baralho);
+  // invTwo = Object.assign({isEmpty: true}, baralho);
+  // invThree = Object.assign({isEmpty: true}, baralho);
+  // invFour = Object.assign({isEmpty: true}, baralho);
+}
+
+
+
+
+function moverInvOne() {
+    
+    carta1.id = cloneBaralho.cartaId
+    nome1.innerHTML = cloneBaralho.nome
+    cidade1.innerHTML = cloneBaralho.cidade;
+    retrato1.style.backgroundImage = cloneBaralho.retrato;
+    cargo1.innerHTML = cloneBaralho.cargo + cargo.emoji;
+    ataque1.innerHTML = cloneBaralho.energia 
+    novoAtaque1.innerHTML = cloneBaralho.energia2
+    seed1.innerHTML = cloneBaralho.seed
+}
+function moverInvTwo() {
+    
+    carta2.id = cloneBaralho.cartaId
+    nome2.innerHTML = baralho.nome
+    cidade2.innerHTML = baralho.cidade;
+    retrato2.style.backgroundImage = baralho.retrato;
+    cargo2.innerHTML = baralho.cargo + cargo.emoji;
+    ataque2.innerHTML = baralho.energia 
+    novoAtaque2.innerHTML = baralho.energia2
+    seed2.innerHTML = baralho.seed
+}
+function moverInvThree() {
+    
+    carta3.id = baralho.cartaId
+    nome3.innerHTML = baralho.nome
+    cidade3.innerHTML = baralho.cidade;
+    retrato3.style.backgroundImage = baralho.retrato;
+    cargo3.innerHTML = baralho.cargo + cargo.emoji;
+    ataque3.innerHTML = baralho.energia 
+    novoAtaque3.innerHTML = baralho.energia2
+    seed3.innerHTML = baralho.seed
+}
+function moverInvFour() {
+    
+    carta4.id = baralho.cartaId
+    nome4.innerHTML = baralho.nome
+    cidade4.innerHTML = baralho.cidade;
+    retrato4.style.backgroundImage = baralho.retrato;
+    cargo4.innerHTML = baralho.cargo + cargo.emoji;
+    ataque4.innerHTML = baralho.energia 
+    novoAtaque4.innerHTML = baralho.energia2
+    seed4.innerHTML = baralho.seed
+}
+
+
 
 
 //*************************MOVER CARTA PARA O INVENTARIO */
@@ -261,6 +375,10 @@ function colocarInfoNoWrap() {
 //     // cartaGrande.children[1].style.backgroundSize = '139px 87px'
 
 // }
+
+/////
+
+// DECK DECK DECK
 
 let cartaParaMover = document.getElementById("pack").firstElementChild;
 let copyCard = "";
@@ -909,7 +1027,7 @@ function tudo() {
     // seedObj = generateSeed(input);
     // seedString = seedObj._seedString;
     // DEBUG && console.log("seedString no tudo ", seedString);
-    start()
+    start();
     DEBUG && console.log("no tudo SEED", seedObj);
     escolherIntegrante();
     DEBUG && console.log("no tudo INTEGRANTE:", integrante);
@@ -928,7 +1046,16 @@ function tudo() {
     DEBUG && console.log("no tudo CRITICO-TAG", criticoTag);
 
     colocarInfoNoWrap();
+    criarInvOne()
+
+    DEBUG && console.log("no tudo CRITICO-TAG", criticoTag);
     DEBUG && console.log("no tudo BARALHO", baralho);
+    DEBUG && console.log("no tudo INVONE", cloneBaralho);
+    ;
+    // moverInvTwo();
+    // moverInvThree();
+    // moverInvFour();
+
     moverCartaMonark();
     blockInv();
   } else {
@@ -1039,3 +1166,51 @@ btnReset.addEventListener("click", resetarDeck);
 // window.onload = function(){
 //   tudo()
 // }
+
+let teclaMoverSlot1 = 'Digit1'
+let teclaMoverSlot2 = 'Digit2'
+let teclaMoverSlot3 = 'Digit3'
+let teclaMoverSlot4 = 'Digit4'
+
+cartaParaMover.addEventListener("click", moverCarta);
+
+
+document.addEventListener("keydown", (event)=>{
+  if(copyCard){
+    if(event.code == teclaMoverSlot1){
+      moverInvOne()
+      ;
+    }    
+  }
+  
+})
+
+document.addEventListener("keydown", (event)=>{
+  if(copyCard){
+    if(event.code == teclaMoverSlot2){
+      moverInvTwo()
+      ;
+    }    
+  }
+  
+})
+
+document.addEventListener("keydown", (event)=>{
+  if(copyCard){
+    if(event.code == teclaMoverSlot3){
+      moverInvThree()
+      ;
+    }    
+  }
+  
+})
+
+document.addEventListener("keydown", (event)=>{
+  if(copyCard){
+    if(event.code == teclaMoverSlot4){
+      moverInvFour()
+      ;
+    }    
+  }
+  
+})

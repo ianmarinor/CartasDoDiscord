@@ -69,7 +69,7 @@ export let especiais = {
 
   tenica: {
     cartaId: 'tenica',
-    nome: "ténica",
+    nome: "TÉNICA",
     raridade: raridades.rainha,
     pontoEspecial: '',
     energia: 0,
@@ -102,7 +102,7 @@ export let especiais = {
 
   speaker: {
     cartaId: 'speaker',
-    nome: "speaker",
+    nome: "SPEAKER",
     raridade: raridades.cavaleiro,
     pontoEspecial: '',
     energia: 0,
@@ -112,7 +112,7 @@ export let especiais = {
     descricao:'MONARK BAN!',
     emoji: "&#9889;",
     emojiEsp: "",
-    retrato: "url('pics/speaker.webp')",
+    retrato: "url('pics/SPEAKER.webp')",
     css:{
       cargoPFontSize: '',
       cargoPFontWeight: "",
@@ -131,7 +131,7 @@ export let especiais = {
 
   bonusCartasMais: {
     cartaId: 'bonusCartasMais',
-    nome: "+ cartas +",
+    nome: "+ CARTAS +",
     raridade: raridades.campones,
     pontoEspecial: 0,
     energia: '',

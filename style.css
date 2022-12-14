@@ -92,11 +92,11 @@ li{
 /* ************************* */
 /* CARTAS VARIACOES */
 /* ************************* */
-#carta{
-    display: none;
+#carta, #carta1, #carta2, #carta3, #carta4{
+    /* display: none;
     /* background-color: #040404; */
     /* background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ); */
-    height: 70%;
+    /* height: 70%;
     width: 57%;
     display: flex;
     flex-direction: column;
@@ -104,7 +104,21 @@ li{
     justify-content: space-between;
     border-radius: 15px;
     position: relative;
-    /* border: 1px solid #020101; */
+    border: 1px solid #020101;  */
+
+
+    background-color: var(--ministro);
+    background: linear-gradient(180deg, rgba(43,214,214,1) 18%, rgba(43,145,214,1) 61%);
+    height: var(--tamanhoCartaHeight);
+    width: var(--tamanhoCartaWidth);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    color: #020101;
+    border: 2px solid #020101;
 }
 #premiomarino{
     background-image: url(pics/wrapPremioMarino.webp);
@@ -324,21 +338,21 @@ li{
 /* **************************************************** */
 
 
-#nome{
+#nome, #nome1,#nome2,#nome3,#nome4 {
     margin-top: 0.2em;
     /* margin-bottom: 0.1em; */
     font-size: 1.5em;
     /* background-color: #6c4d4d; */
     
 }
-#cidade{
+#cidade,#cidade1,#cidade2,#cidade3,#cidade4{
     /* background-color: #6637be; */
     text-align: end;
     font-size: 0.95em;
     
 }
 
-.retrato{
+.retrato,.retrato1,.retrato2,.retrato3,.retrato4{
     display: block;
      width: 75%;
      height: 45%; 
@@ -355,13 +369,13 @@ li{
     border: #020101 2px solid;
 }
 
-.cargo{
+.cargo,.cargo1,.cargo2,.cargo3,.cargo4{
     /* background-color: #37be49; */
     font-size: 1.5em;
     transform: rotate(-10deg);
     margin: 10px;
 }
-.poder{
+.poder,.poder1,.poder2,.poder3,.poder4{
     width: 80%;
     font-size: 0.98em;
     /* background-color: #beac37; */
@@ -373,7 +387,7 @@ li{
 }
 
 
-.seed{
+.seed, .seed1, .seed2, .seed3, .seed4{
     /* background-color: #7e7a7a; */
     width: 100%;
     position: absolute;
@@ -408,10 +422,10 @@ li{
 /* ---------------------------------------*/
 /* VARIANTES */
 /* ---------------------------------------*/
-.action {
+.action, .action1, .action2, .action3, .action4 {
     visibility:hidden;
 }
-#variante {
+#variante,#variante1,#variante2,#variante3,#variante4 {
     text-align: center;
     font-size: 1.1em;
     font-weight: bold;
