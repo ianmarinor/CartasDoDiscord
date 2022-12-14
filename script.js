@@ -377,7 +377,7 @@ function moverInvOne() {
   
   // blockInv();
 
-if(carta1.id == 'empty1'){
+if(carta1.id == 'empty1' || baralho.cartaId == 'monark'){
 
   carta1.id = cloneBaralho.cartaId
   carta1.style.border = cloneBaralho.cssCarta.cartaBorder
@@ -437,7 +437,7 @@ function moverInvTwo() {
 
 
     
-  if(carta2.id == 'empty2'){
+  if(carta2.id == 'empty2' || baralho.cartaId == 'monark'){
 
     carta2.id = cloneBaralho.cartaId
     carta2.style.border = cloneBaralho.cssCarta.cartaBorder
@@ -488,7 +488,7 @@ function moverInvThree() {
 
   // blockInv();
     
-  if(carta3.id == 'empty3'){
+  if(carta3.id == 'empty3' || baralho.cartaId == 'monark'){
     carta3.id = cloneBaralho.cartaId
     carta3.style.border = cloneBaralho.cssCarta.cartaBorder
     
@@ -538,7 +538,7 @@ function moverInvFour() {
 
   // blockInv();
     
-  if(carta4.id == 'empty4'){
+  if(carta4.id == 'empty4' || baralho.cartaId == 'monark'){
 
     carta4.id = cloneBaralho.cartaId
     carta4.style.border = cloneBaralho.cssCarta.cartaBorder
@@ -590,72 +590,40 @@ function moverInvFour() {
 let copyCardSeed;
 let copyCardName;
 
-// function moverCartaMonark() {
-//   // copyCard = cartaParaMover.cloneNode(true);
-//   // copyCardSeed = copyCard.children[4].textContent;
-//   // copyCardName = copyCard.children[0].children[0].textContent;
 
-//   // DEBUG && console.log("no mvoer monark", seedObj);
 
-//   if (seedObj._isPutByPlayer) {
-//     false;
-//   } else {
-//     if (copyCard.id === monark) {
-//       if (inv.children[0].id === "empty" && copyCard.id === monark) {
-//         inv.replaceChild(copyCard, inv.children[0]);
-//         somaPontos();
-//       } else if (
-//         inv.children[1].id === "empty" &&
-//         copyCard.id === monark &&
-//         copyCardSeed != inv.children[0].children[4].textContent
-//       ) {
-//         inv.replaceChild(copyCard, inv.children[1]);
-//         somaPontos();
-//       } else if (
-//         inv.children[2].id === "empty" &&
-//         copyCard.id === monark &&
-//         copyCardSeed != inv.children[1].children[4].textContent
-//       ) {
-//         inv.replaceChild(copyCard, inv.children[2]);
-//         somaPontos();
-//       } else if (
-//         inv.children[3].id === "empty" &&
-//         copyCard.id === monark &&
-//         copyCardSeed != inv.children[2].children[4].textContent
-//       ) {
-//         inv.replaceChild(copyCard, inv.children[3]);
-//         somaPontos();
+function moverCartaMonar(){
 
-//         //MONARK SUBSTITUI O HOMONIMO -------------------------
-//       } else if (
-//         copyCardName === inv.children[0].children[0].children[0].textContent &&
-//         copyCard.id != inv.children[0].id
-//       ) {
-//         inv.replaceChild(copyCard, inv.children[0]);
-//         somaPontos();
-//       } else if (
-//         copyCardName === inv.children[1].children[0].children[0].textContent &&
-//         copyCard.id != inv.children[1].id
-//       ) {
-//         inv.replaceChild(copyCard, inv.children[1]);
-//         somaPontos();
-//       } else if (
-//         copyCardName === inv.children[2].children[0].children[0].textContent &&
-//         copyCard.id != inv.children[2].id
-//       ) {
-//         inv.replaceChild(copyCard, inv.children[2]);
-//         somaPontos();
-//       } else if (
-//         copyCardName === inv.children[3].children[0].children[0].textContent &&
-//         copyCard.id != inv.children[3].id
-//       ) {
-//         inv.replaceChild(copyCard, inv.children[3]);
-//         somaPontos();
-//       }
-//       tudo();
-//     }
-//   }
-// }
+  //Se a carta for monark
+  if(baralho.cartaId == 'monark'){
+    //e tiver vazio
+    if(objCarta1.isEmpty == true){
+      moverInvOne()
+    }
+   else if (objCarta2.isEmpty == true){
+    moverInvTwo()
+    } else if (objCarta3.isEmpty == true){
+      moverInvThree()
+      } else if (objCarta4.isEmpty == true){
+        moverInvFour()
+        // se tiver cheio
+
+        } else if (objCarta1.nome == baralho.nome && objCarta1.Id != 'monark'){
+          deletarCarta1()
+          moverInvOne()
+        } else if (objCarta2.nome == baralho.nome && objCarta2.Id != 'monark'){
+          deletarCarta1()
+          moverInvOne()
+        } else if (objCarta3.nome == baralho.nome && objCarta3.Id != 'monark'){
+          deletarCarta1()
+          moverInvOne()
+        } else if (objCarta4.nome == baralho.nome && objCarta4.Id != 'monark'){
+          deletarCarta1()
+          moverInvOne()
+        } 
+  }
+}
+
 
 
 
@@ -928,10 +896,10 @@ function criarBtn() {
   }
 }
 
-export let objCarta1 = {energiaObj:0}
-export let objCarta2 = {energiaObj:0}
-export let objCarta3 = {energiaObj:0}
-export let objCarta4 = {energiaObj:0}
+export let objCarta1 = {isEmpty: true,energiaObj:0}
+export let objCarta2 = {isEmpty: true,energiaObj:0}
+export let objCarta3 = {isEmpty: true,energiaObj:0}
+export let objCarta4 = {isEmpty: true,energiaObj:0}
 
 
 
@@ -1151,6 +1119,7 @@ function tudo() {
 
     colocarInfoNoWrap();
     criarInvOne()
+    moverCartaMonar()
     somaPontos()
 
     DEBUG && console.log("no tudo CRITICO-TAG", criticoTag);
