@@ -134,26 +134,26 @@ border: 2px solid #020101;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    border-radius: 15px;
     position: relative;
     border: 1px solid #020101;  */
-
+    
+    border-radius: 11px;
 
 
 
     /* DENTRO DA CARTA vvvv */
-    background-color: var(--ministro);
-    background: linear-gradient(180deg, rgba(43,214,214,1) 18%, rgba(43,145,214,1) 61%);
+    background-color: 'gray';
+    background: linear-gradient(180deg, rgb(35, 36, 36) 18%, rgbrgb(110, 112, 114));
     height: var(--tamanhoCartaHeight);
     width: var(--tamanhoCartaWidth);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    border-radius: 1.4%;
+    /* border-radius: 1.4%; */
     position: relative;
     color: #020101;
-    border: 2px solid #020101;
+    border: 1px solid #020101;
 }
 #premiomarino{
     background-image: url(pics/wrapPremioMarino.webp);
@@ -400,6 +400,10 @@ border: 2px solid #020101;
     
 }
 
+
+
+
+
 .retrato,.retrato1,.retrato2,.retrato3,.retrato4{
     display: block;
      width: 75%;
@@ -415,6 +419,9 @@ border: 2px solid #020101;
     background-size: 100% 100%;
 
     border: #020101 2px solid;
+}
+.retrato1,.retrato2,.retrato3,.retrato4{
+    border: #161515 1px solid;
 }
 
 .cargo,.cargo1,.cargo2,.cargo3,.cargo4{
@@ -509,7 +516,7 @@ p{
     /* padding: 10%; */
     
     height: 65%;
-    width: 75%;
+    width: 70%;
     background-color: #2a2929;
 
     box-sizing: border-box;
@@ -522,7 +529,6 @@ p{
 
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    gap: 0.8%;
     overflow: hidden;
     grid-area: inv;
 
