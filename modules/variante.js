@@ -42,7 +42,7 @@ let variantes = [
       cartaP_Color: "#e600e6",
       cartaP_BGImage: 'url("pics/variantes/varianteBlackao.gif")',
       cartaP_Border: "3px white solid",
-      varianteP_FontSize: "80%",
+      varianteP_FontSize: "85%",
     },
   },
   {

@@ -33,7 +33,7 @@ let tenica = especiais.tenica;
 let speaker = especiais.speaker;
 let bonusCartasMais = especiais.bonusCartasMais;
 let abelha = especiais.abelha;
-let cartaNaoEspecial = especiais.notSpecial;
+let cartaNotEspecial = especiais.notSpecial 
 
 import { criticoTag, criticoCheck } from "./modules/critico.js";
 
@@ -143,7 +143,7 @@ function limpaCarta() {
 
 function colocarInfoNoWrap() {
  
-  if (especial == cartaNaoEspecial) {
+  if (especial == cartaNotEspecial) {
     baralho = {
       cartaId: cargo.nome,
       nome: integrante.nome,
@@ -199,7 +199,7 @@ function colocarInfoNoWrap() {
       energia: especial.energia + especial.emoji,
       energia2: especial.pontoEspecial + especial.emojiEsp,
       energiaObj: especial.energia,
-      poder: "visible",
+      poder: especial.poder,
       seed: seedObj._seedString,
 
       isCritico:{
@@ -241,7 +241,7 @@ function colocarInfoNoWrap() {
 
 
     cartaP.id = baralho.cartaId
-    cartaP.style.border = baralho.cssCarta.cartaBorder
+    cartaP.style.border = baralho.cssVariante.cartaBorder
 
     nomeP.innerHTML = baralho.nome
     varianteP.innerHTML = baralho.variante;
@@ -364,20 +364,20 @@ function criarInvOne() {
 
 // let caixa
 
-// let seedDiferente
-// function checkSeedIgual(){
+let seedDiferente
+function checkSeedIgual(){
 
-//   seedDiferente = seedCarta1.includes(cloneBaralho.seed) && seedCarta2.includes(cloneBaralho.seed) && seedCarta3.includes(cloneBaralho.seed) && seedCarta4.includes(cloneBaralho.seed)
+  seedDiferente = baralho.seed != objCarta1.seed && baralho.seed != objCarta2.seed && baralho.seed != objCarta3.seed && baralho.seed != objCarta4.seed
    
-// }
+}
 
 
 
 function moverInvOne() {
   
-  // blockInv();
+  checkSeedIgual()
 
-if(carta1.id == 'empty1' || baralho.cartaId == 'monark'){
+if(carta1.id == 'empty1' && seedDiferente || baralho.cartaId == 'monark'){
 
   carta1.id = cloneBaralho.cartaId
   carta1.style.border = cloneBaralho.cssCarta.cartaBorder
@@ -413,19 +413,22 @@ if(carta1.id == 'empty1' || baralho.cartaId == 'monark'){
     novoAtaque1.style.visibility = cloneBaralho.isCritico.criticoEnergia2;
     novoAtaque1.style.fontSize = cloneBaralho.isCritico.criticoEnergia2FontSize;
     novoAtaque1.className = cloneBaralho.isCritico.criticoEnergia2Critico;
+    carta1.style.border = cloneBaralho.cssVariante.cartaBorder
 
 
     //variante
     carta1.style.color = cloneBaralho.cssVariante.cartaColor
     carta1.style.backgroundImage = cloneBaralho.cssVariante.cartaBG
     variante1.style.fontSize = cloneBaralho.cssVariante.varianteFontSize
-
+    if(cartaIsEspecial){
+      action1.style.visibility = cloneBaralho.poder
     
+    }
     objCarta1 = cloneBaralho
     
-
+    
     tudo()
-}
+  }
 }
 
 
@@ -433,11 +436,11 @@ if(carta1.id == 'empty1' || baralho.cartaId == 'monark'){
 
 function moverInvTwo() {
 
-  // blockInv();
+  checkSeedIgual()
 
 
     
-  if(carta2.id == 'empty2' || baralho.cartaId == 'monark'){
+  if(carta2.id == 'empty2' && seedDiferente || baralho.cartaId == 'monark'){
 
     carta2.id = cloneBaralho.cartaId
     carta2.style.border = cloneBaralho.cssCarta.cartaBorder
@@ -478,6 +481,11 @@ function moverInvTwo() {
     carta2.style.color = cloneBaralho.cssVariante.cartaColor
     carta2.style.backgroundImage = cloneBaralho.cssVariante.cartaBG
     variante2.style.fontSize = cloneBaralho.cssVariante.varianteFontSize
+    carta2.style.border = cloneBaralho.cssVariante.cartaBorder
+    if(cartaIsEspecial){
+      action2.style.visibility = cloneBaralho.poder
+    
+    }
 
     objCarta2 = cloneBaralho
 
@@ -486,9 +494,9 @@ function moverInvTwo() {
 }
 function moverInvThree() {
 
-  // blockInv();
+  checkSeedIgual()
     
-  if(carta3.id == 'empty3' || baralho.cartaId == 'monark'){
+  if(carta3.id == 'empty3' && seedDiferente || baralho.cartaId == 'monark'){
     carta3.id = cloneBaralho.cartaId
     carta3.style.border = cloneBaralho.cssCarta.cartaBorder
     
@@ -528,6 +536,12 @@ function moverInvThree() {
     carta3.style.color = cloneBaralho.cssVariante.cartaColor
     carta3.style.backgroundImage = cloneBaralho.cssVariante.cartaBG
     variante3.style.fontSize = cloneBaralho.cssVariante.varianteFontSize
+    carta3.style.border = cloneBaralho.cssVariante.cartaBorder
+
+    if(cartaIsEspecial){
+      action3.style.visibility = cloneBaralho.poder
+    
+    }
 
     objCarta3 = cloneBaralho
 
@@ -536,9 +550,9 @@ function moverInvThree() {
 }
 function moverInvFour() {
 
-  // blockInv();
+  checkSeedIgual()
     
-  if(carta4.id == 'empty4' || baralho.cartaId == 'monark'){
+  if(carta4.id == 'empty4' && seedDiferente || baralho.cartaId == 'monark'){
 
     carta4.id = cloneBaralho.cartaId
     carta4.style.border = cloneBaralho.cssCarta.cartaBorder
@@ -579,8 +593,14 @@ function moverInvFour() {
     carta4.style.color = cloneBaralho.cssVariante.cartaColor
     carta4.style.backgroundImage = cloneBaralho.cssVariante.cartaBG
     variante4.style.fontSize = cloneBaralho.cssVariante.varianteFontSize
+    carta4.style.border = cloneBaralho.cssVariante.cartaBorder
 
     objCarta4 = cloneBaralho
+
+    if(cartaIsEspecial){
+      action4.style.visibility = cloneBaralho.poder
+    
+    }
 
       tudo()
   }
@@ -896,10 +916,10 @@ function criarBtn() {
   }
 }
 
-export let objCarta1 = {isEmpty: true,energiaObj:0}
-export let objCarta2 = {isEmpty: true,energiaObj:0}
-export let objCarta3 = {isEmpty: true,energiaObj:0}
-export let objCarta4 = {isEmpty: true,energiaObj:0}
+export let objCarta1 = {isEmpty: true,energiaObj:0,seed:0}
+export let objCarta2 = {isEmpty: true,energiaObj:0,seed:0}
+export let objCarta3 = {isEmpty: true,energiaObj:0,seed:0}
+export let objCarta4 = {isEmpty: true,energiaObj:0,seed:0}
 
 
 
@@ -914,6 +934,7 @@ let ataqueDel
 let energia2Del
 let seedDel
 let inV
+let actionDel
 
 
 function deletarCarta(){
@@ -924,6 +945,7 @@ function deletarCarta(){
 
     document.getElementById(inV).children[0].id = emptyDel
     document.getElementById(inV).children[0].style.border = ''
+    document.getElementById(inV).children[0].style.backgroundImage = ''
     
     document.getElementById(nomeDel).innerHTML = ''
     document.getElementById(varianteDel).innerHTML = ''
@@ -954,6 +976,7 @@ function deletarCarta(){
 
     document.getElementById(energia2Del).style.visibility = ''
     document.getElementById(energia2Del).style.fontSize = ''
+    document.getElementById(actionDel).style.visibility = 'hidden'
 }
 
 
@@ -974,6 +997,7 @@ function deletarCarta1(){
     energia2Del = 'novoAtaque1'
     seedDel  =  'seed1'
     inV = 'inv1'
+    actionDel = 'action1'
     
     objCarta1 = {energiaObj:0}
     somaPontos()
@@ -993,6 +1017,7 @@ function deletarCarta2(){
     energia2Del = 'novoAtaque2'
     seedDel  = 'seed2'
     inV = 'inv2'
+    actionDel = 'action2'
     objCarta2 = {energiaObj:0}
     somaPontos()
     deletarCarta() 
@@ -1010,6 +1035,7 @@ function deletarCarta2(){
     energia2Del = 'novoAtaque3'
     seedDel    =  'seed3'
     inV = 'inv3'
+    actionDel = 'action3'
     objCarta3 = {energiaObj:0}
     somaPontos()
     deletarCarta()  
@@ -1026,6 +1052,7 @@ function deletarCarta4(){
     energia2Del = 'novoAtaque4'
     seedDel    =  'seed4'
     inV = 'inv4'
+    actionDel = 'action4'
     objCarta4 = {energiaObj:0}
     somaPontos()
     deletarCarta()  
@@ -1085,7 +1112,7 @@ function numeroDeCartasTeste() {
   DEBUG && console.log(numeroDeCartas);
 }
 // numeroDeCartasTeste();
-
+let cartaIsEspecial
 function tudo() {
   if (!seedObj._isPutByPlayer) {
     totalClicks--;
@@ -1113,11 +1140,15 @@ function tudo() {
     DEBUG && console.log("no tudo ESPECIAL: ", especial);
     escolherPoder();
     DEBUG && console.log("no tudo ENERGIA", energia);
+   
     // critico();
     criticoCheck();
     DEBUG && console.log("no tudo CRITICO-TAG", criticoTag);
 
     colocarInfoNoWrap();
+    cartaIsEspecial = baralho.cidade == ''
+    DEBUG && console.log('cartaIsEspecial: ', cartaIsEspecial);
+
     criarInvOne()
     moverCartaMonar()
     somaPontos()
@@ -1189,7 +1220,7 @@ button.addEventListener("click", tudo);
 // btnReset.addEventListener('click', moverCartaMonark)
 
 document.addEventListener("keydown", (event) => {
-  if (event.ctrlKey) {
+  if (event.code == 'KeyR') {
     resetarDeck();
   }
 });
