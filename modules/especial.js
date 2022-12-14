@@ -94,7 +94,8 @@ export let especiais = {
       ataqueNovo: 'visible',
       ataque: 'none',
       ataqueNovoFontSize: '',
-      cartaBorder: ''
+      cartaBorder: '',
+      energiaVisible: ''
 
       
     }
@@ -125,7 +126,8 @@ export let especiais = {
       ataqueNovo: 'visible',
       ataque: 'none',
       ataqueNovoFontSize: '',
-      cartaBorder: '2px solid #18d742'
+      cartaBorder: '2px solid #18d742',
+      energiaVisible: ''
 
     }
   },
@@ -135,7 +137,7 @@ export let especiais = {
     nome: "+ CARTAS +",
     raridade: raridades.campones,
     pontoEspecial: 0,
-    energia: '',
+    energia: 0,
     poder: "",
     efeito: "",
     familia: "",
@@ -154,7 +156,8 @@ export let especiais = {
       energia2: '200%',
       ataqueNovo: 'visible',
       ataque: 'none',
-      cartaBorder: ''
+      cartaBorder: '',
+      energiaVisible: 'hidden'
 
     }
   },
@@ -185,7 +188,8 @@ export let especiais = {
       ataqueNovo: 'visible',
       ataque: 'none',
       ataqueNovoFontSize: '',
-      cartaBorder: '2px solid #4e2c00'
+      cartaBorder: '2px solid #4e2c00',
+      energiaVisible: ''
     }
   },
 };

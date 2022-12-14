@@ -37,6 +37,10 @@ let cartaNaoEspecial = especiais.notSpecial;
 
 import { criticoTag, criticoCheck } from "./modules/critico.js";
 
+
+// import { deletarCarta1, deletarCarta2, deletarCarta3, deletarCarta4, objCarta1, objCarta2,objCarta3,objCarta4  } from "./modules/limparInventario.js";
+
+
 ///////   ^^^^^^^^IMPORTS IMPORTS^^^^^^
 
 
@@ -45,16 +49,16 @@ import { criticoTag, criticoCheck } from "./modules/critico.js";
 let button = document.getElementById("btn");
 let inv = document.getElementById("inv");
 let arenaP = document.querySelector(".arena");
-let nomeP = document.querySelector("#nome");
-let cidadeP = document.querySelector("#cidade");
-let retratoP = document.querySelector(".retrato");
-let cargoP = document.querySelector(".cargo");
-let varianteP = document.querySelector("#variante");
-let actionP = document.querySelector(".action");
-let novoAtaqueP = document.querySelector("#novoAtaque");
+let nomeP = document.getElementById("nome");
+let cidadeP = document.getElementById("cidade");
+let retratoP = document.getElementById("retrato");
+let cargoP = document.getElementById("cargo");
+let varianteP = document.getElementById("variante");
+let actionP = document.getElementById("action");
+let novoAtaqueP = document.getElementById("novoAtaque");
 let placarP = document.querySelector(".placar");
-let ataqueP = document.querySelector(".ataque");
-let seedP = document.querySelector(".seed");
+let ataqueP = document.getElementById("ataque");
+let seedP = document.getElementById("seed");
 let cartaP = document.getElementById("carta");
 
 
@@ -64,56 +68,56 @@ let deckTwo = document.getElementById("inv1");
 let deckThree = document.getElementById("inv1");
 let deckFour = document.getElementById("inv1");
 
-let nome1 = document.querySelector("#nome1");
-let nome2 = document.querySelector("#nome2");
-let nome3 = document.querySelector("#nome3");
-let nome4 = document.querySelector("#nome4");
+let nome1 = document.getElementById("nome1");
+let nome2 = document.getElementById("nome2");
+let nome3 = document.getElementById("nome3");
+let nome4 = document.getElementById("nome4");
 
-let cidade1 = document.querySelector("#cidade1");
-let cidade2 = document.querySelector("#cidade2");
-let cidade3 = document.querySelector("#cidade3");
-let cidade4 = document.querySelector("#cidade4");
+let cidade1 = document.getElementById("cidade1");
+let cidade2 = document.getElementById("cidade2");
+let cidade3 = document.getElementById("cidade3");
+let cidade4 = document.getElementById("cidade4");
 
-let retrato1 = document.querySelector(".retrato1");
-let retrato2 = document.querySelector(".retrato2");
-let retrato3 = document.querySelector(".retrato3");
-let retrato4 = document.querySelector(".retrato4");
+let retrato1 = document.getElementById("retrato1");
+let retrato2 = document.getElementById("retrato2");
+let retrato3 = document.getElementById("retrato3");
+let retrato4 = document.getElementById("retrato4");
 
-let cargo1 = document.querySelector(".cargo1");
-let cargo2 = document.querySelector(".cargo2");
-let cargo3 = document.querySelector(".cargo3");
-let cargo4 = document.querySelector(".cargo4");
+let cargo1 = document.getElementById("cargo1");
+let cargo2 = document.getElementById("cargo2");
+let cargo3 = document.getElementById("cargo3");
+let cargo4 = document.getElementById("cargo4");
 
-let variante1 = document.querySelector("#variante1");
-let variante2 = document.querySelector("#variante2");
-let variante3 = document.querySelector("#variante3")
-let variante4 = document.querySelector("#variante4");
+let variante1 = document.getElementById("variante1");
+let variante2 = document.getElementById("variante2");
+let variante3 = document.getElementById("variante3")
+let variante4 = document.getElementById("variante4");
 
-let action1 = document.querySelector(".action1");
-let action2 = document.querySelector(".action2");
-let action3 = document.querySelector(".action3");
-let action4 = document.querySelector(".action4");
+let action1 = document.getElementById("action1");
+let action2 = document.getElementById("action2");
+let action3 = document.getElementById("action3");
+let action4 = document.getElementById("action4");
 
-let novoAtaque1 = document.querySelector("#novoAtaque1");
-let novoAtaque2 = document.querySelector("#novoAtaque2");
-let novoAtaque3 = document.querySelector("#novoAtaque3");
-let novoAtaque4 = document.querySelector("#novoAtaque4");
+let novoAtaque1 = document.getElementById("novoAtaque1");
+let novoAtaque2 = document.getElementById("novoAtaque2");
+let novoAtaque3 = document.getElementById("novoAtaque3");
+let novoAtaque4 = document.getElementById("novoAtaque4");
 
 
-let ataque1 = document.querySelector(".ataque1");
-let ataque2 = document.querySelector(".ataque2");
-let ataque3 = document.querySelector(".ataque3");
-let ataque4 = document.querySelector(".ataque4");
+let ataque1 = document.getElementById("ataque1");
+let ataque2 = document.getElementById("ataque2");
+let ataque3 = document.getElementById("ataque3");
+let ataque4 = document.getElementById("ataque4");
 
-let seed1 = document.querySelector(".seed1");
-let seed2 = document.querySelector(".seed2");
-let seed3 = document.querySelector(".seed3");
-let seed4 = document.querySelector(".seed4");
+let seed1 = document.getElementById("seed1");
+let seed2 = document.getElementById("seed2");
+let seed3 = document.getElementById("seed3")
+let seed4 = document.getElementById("seed4");
 
-let carta1 = document.getElementById("carta1");
-let carta2 = document.getElementById("carta2");
-let carta3 = document.getElementById("carta3");
-let carta4 = document.getElementById("carta4");
+let carta1 = document.getElementById("empty1");
+let carta2 = document.getElementById("empty2");
+let carta3 = document.getElementById("empty3");
+let carta4 = document.getElementById("empty4");
 
 let baralho;
 
@@ -149,6 +153,7 @@ function colocarInfoNoWrap() {
       cargo: cargo.display,
       energia: energia.energiaTotal + integrante.emoji,
       energia2: energia.energiaTotal * criticoTag.multi + integrante.emoji,
+      energiaObj: energia.energiaTotal * criticoTag.multi,
       poder: 'hidden' ,
       seed: seedObj._seedString,
       
@@ -172,7 +177,8 @@ function colocarInfoNoWrap() {
         energiaColor: cargo.css.ataquePColor,
         energia2Color: cargo.css.epColor,
         energia2FontSize: cargo.css.epFontSize,
-        cartaBorder: cargo.css.cartaBorder
+        cartaBorder: cargo.css.cartaBorder,
+        energiaVisible: cargo.css.energiaVisible
       },
       cssVariante:{
         cartaColor: variante.css.cartaP_Color,
@@ -192,6 +198,7 @@ function colocarInfoNoWrap() {
       cargo: especial.descricao,
       energia: especial.energia + especial.emoji,
       energia2: especial.pontoEspecial + especial.emojiEsp,
+      energiaObj: especial.energia,
       poder: "visible",
       seed: seedObj._seedString,
 
@@ -214,7 +221,8 @@ function colocarInfoNoWrap() {
         energiaColor: especial.css.ataquePColor,
         energia2Color: especial.css.epColor,
         energia2FontSize: especial.css.epFontSize,
-        cartaBorder: especial.css.cartaBorder
+        cartaBorder: especial.css.cartaBorder,
+        energiaVisible: especial.css.energiaVisible
       },
       cssVariante:{
         cartaColor: '',
@@ -249,6 +257,8 @@ function colocarInfoNoWrap() {
     ataqueP.innerHTML = baralho.energia 
     ataqueP.style.color = baralho.cssCarta.energiaColor;
     ataqueP.style.fontSize = baralho.cssCarta.energiaFontSize;
+    // ataqueP.style.visibility = baralho.cssCarta.energiaVisible;
+    ataqueP.style.visibility = baralho.cssCarta.energiaVisible
 
     novoAtaqueP.innerHTML = baralho.energia2
     novoAtaqueP.style.color = baralho.cssCarta.energia2Color;
@@ -269,6 +279,7 @@ function colocarInfoNoWrap() {
     novoAtaqueP.style.fontSize = baralho.isCritico.criticoEnergia2FontSize;
     novoAtaqueP.className = baralho.isCritico.criticoEnergia2Critico;
     novoAtaqueP.className = baralho.isCritico.criticoEnergia2Critico;
+    
 
     //variante 
     cartaP.style.color = baralho.cssVariante.cartaColor
@@ -282,130 +293,91 @@ function colocarInfoNoWrap() {
   DEBUG && console.log("criticoTag: ", criticoTag);
 }
 
-let cloneBaralho;
-// let invEmpty
-// function limparDeck(){
+// let cloneBaralho;
+let invEmpty
+
+function limparDeck(){
 
 
-//  invEmpty =
-//   {
-//     cartaId: 'empty',
-//     nome: '',
-//     variante: '',
-//     cidade: '',
-//     retrato: '',
-//     cargo: '',
-//     energia: '',
-//     energia2: '',
-//     poder: '' ,
-//     seed: '',
+ invEmpty =
+  {
+    cartaId: 'empty',
+    nome: '',
+    variante: '',
+    cidade: '',
+    retrato: '',
+    cargo: '',
+    energia: '',
+    energia2: '',
+    poder: '' ,
+    seed: '',
     
 
-//     isCritico:{
-//       criticoNome: '',
-//       criticoVariante: '',
-//       criticoCidade: '',
-//       criticoCarta: '',
-//       criticoEnergia: '',
-//       criticoEnergia2: '',
-//       criticoEnergia2FontSize: '',
-//       criticoEnergia2Critico: ''
-//     },
-//     cssCarta:{
-//       cargoFontSize: '',
-//       cargoFontWeight: '',
-//       retratoBorder: '',
-//       energiaFontSize: '',
-//       retratoBGSize: '',
-//       energiaColor: '',
-//       energia2Color: '',
-//       energia2FontSize: '',
-//       cartaBorder: ''
-//     } 
-//   };
+    isCritico:{
+      criticoNome: '',
+      criticoVariante: '',
+      criticoCidade: '',
+      criticoCarta: '',
+      criticoEnergia: '',
+      criticoEnergia2: '',
+      criticoEnergia2FontSize: '',
+      criticoEnergia2Critico: ''
+    },
+    cssCarta:{
+      cargoFontSize: '',
+      cargoFontWeight: '',
+      retratoBorder: '',
+      energiaFontSize: '',
+      retratoBGSize: '',
+      energiaColor: '',
+      energia2Color: '',
+      energia2FontSize: '',
+      cartaBorder: ''
+    } 
+  };
 
     
-//     carta1.id = invEmpty.cartaId
-//     carta2.id = invEmpty.cartaId
-//     carta3.id = invEmpty.cartaId
-//     carta4.id = invEmpty.cartaId
-// }
-//     // carta4.style.border = invEmpty.cssCarta.cartaBorder
-
-//     // nome1.innerHTML = invEmpty.nome
-//     // nome2.innerHTML = invEmpty.nome
-//     // nome3.innerHTML = invEmpty.nome
-//     // nome4.innerHTML = invEmpty.nome
     
 
-//     // variante1.innerHTML = invEmpty.variante;
-//     // variante2.innerHTML = invEmpty.variante;
-//     // variante3.innerHTML = invEmpty.variante;
-//     // variante4.innerHTML = invEmpty.variante;
-
-//     // cidade1.innerHTML = invEmpty.cidade;
-//     // cidade2.innerHTML = invEmpty.cidade;
-//     // cidade3.innerHTML = invEmpty.cidade;
-//     // cidade4.innerHTML = invEmpty.cidade;
-
-//     // retrato1.style.backgroundImage = invEmpty.retrato;
-//     // retrato2.style.backgroundImage = invEmpty.retrato;
-//     // retrato3.style.backgroundImage = invEmpty.retrato;
-//     // retrato4.style.backgroundImage = invEmpty.retrato;
-
-//     // retrato1.style.border = invEmpty.cssCarta.retratoBorder;
-//     // retrato2.style.border = invEmpty.cssCarta.retratoBorder;
-//     // retrato3.style.border = invEmpty.cssCarta.retratoBorder;
-//     // retrato4.style.border = invEmpty.cssCarta.retratoBorder;
-
-//     // cargo1.innerHTML = invEmpty.cargo
-//     // cargo2.innerHTML = invEmpty.cargo
-//     // cargo3.innerHTML = invEmpty.cargo
-//     // cargo4.innerHTML = invEmpty.cargo
-
-//     // cargo1.style.fontSize = invEmpty.cssCarta.cargoFontSize;
-//     // cargo2.style.fontSize = invEmpty.cssCarta.cargoFontSize;
-//     // cargo3.style.fontSize = invEmpty.cssCarta.cargoFontSize;
-//     // cargo4.style.fontSize = invEmpty.cssCarta.cargoFontSize;
-
-//     // cargo1.style.fontWeight = invEmpty.cssCarta.cargoFontWeight;
-//     // cargo2.style.fontWeight = invEmpty.cssCarta.cargoFontWeight;
-//     // cargo3.style.fontWeight = invEmpty.cssCarta.cargoFontWeight;
-//     // cargo4.style.fontWeight = invEmpty.cssCarta.cargoFontWeight;
-
-//     // ataque1.innerHTML = invEmpty.energia 
-//     // ataque2.innerHTML = invEmpty.energia 
-//     // ataque3.innerHTML = invEmpty.energia 
-//     // ataque4.innerHTML = invEmpty.energia 
-
-
-//     // ataqueP.style.color = invEmpty.cssCarta.energiaColor;
-//     // ataqueP.style.fontSize = invEmpty.cssCarta.energiaFontSize;
-
-//     // novoAtaqueP.innerHTML = invEmpty.energia2
-//     // novoAtaqueP.style.color = invEmpty.cssCarta.energia2Color;
-
-//     // novoAtaqueP.style.fontSize = invEmpty.cssCarta.energia2FontSize;
-//     // seedP.innerHTML = invEmpty.seed
+}
 
 
 
-
-
+let cloneBaralho
 
 function criarInvOne() {
   cloneBaralho = Object.assign({isEmpty: false}, baralho);
+  DEBUG && console.log('cloneBaralho: ', cloneBaralho);
+
   // invTwo = Object.assign({isEmpty: true}, baralho);
   // invThree = Object.assign({isEmpty: true}, baralho);
   // invFour = Object.assign({isEmpty: true}, baralho);
 }
 
+// let cloneBaralho = {
+//   seed: 123
+// }
+// let seedCarta1 = []
+// let seedCarta2 = []
+// let seedCarta3 = []
+// let seedCarta4 = []
+
+// let caixa
+
+// let seedDiferente
+// function checkSeedIgual(){
+
+//   seedDiferente = seedCarta1.includes(cloneBaralho.seed) && seedCarta2.includes(cloneBaralho.seed) && seedCarta3.includes(cloneBaralho.seed) && seedCarta4.includes(cloneBaralho.seed)
+   
+// }
 
 
 
 function moverInvOne() {
+  
+  // blockInv();
 
-if(carta1.id == 'carta1'){
+if(carta1.id == 'empty1'){
 
   carta1.id = cloneBaralho.cartaId
   carta1.style.border = cloneBaralho.cssCarta.cartaBorder
@@ -424,6 +396,7 @@ if(carta1.id == 'carta1'){
   ataque1.innerHTML = cloneBaralho.energia 
   ataque1.style.color = cloneBaralho.cssCarta.energiaColor;
   ataque1.style.fontSize = cloneBaralho.cssCarta.energiaFontSize;
+  ataque1.style.visibility = cloneBaralho.cssCarta.energiaVisible
   
   novoAtaque1.innerHTML = cloneBaralho.energia2
   novoAtaque1.style.color = cloneBaralho.cssCarta.energia2Color;
@@ -440,14 +413,31 @@ if(carta1.id == 'carta1'){
     novoAtaque1.style.visibility = cloneBaralho.isCritico.criticoEnergia2;
     novoAtaque1.style.fontSize = cloneBaralho.isCritico.criticoEnergia2FontSize;
     novoAtaque1.className = cloneBaralho.isCritico.criticoEnergia2Critico;
-    // tudo()
-}
 
 
-}
-function moverInvTwo() {
+    //variante
+    carta1.style.color = cloneBaralho.cssVariante.cartaColor
+    carta1.style.backgroundImage = cloneBaralho.cssVariante.cartaBG
+    variante1.style.fontSize = cloneBaralho.cssVariante.varianteFontSize
+
     
-  if(carta2.id == 'carta2'){
+    objCarta1 = cloneBaralho
+    
+
+    tudo()
+}
+}
+
+
+
+
+function moverInvTwo() {
+
+  // blockInv();
+
+
+    
+  if(carta2.id == 'empty2'){
 
     carta2.id = cloneBaralho.cartaId
     carta2.style.border = cloneBaralho.cssCarta.cartaBorder
@@ -466,6 +456,7 @@ function moverInvTwo() {
     ataque2.innerHTML = cloneBaralho.energia 
     ataque2.style.color = cloneBaralho.cssCarta.energiaColor;
     ataque2.style.fontSize = cloneBaralho.cssCarta.energiaFontSize;
+    ataque2.style.visibility = cloneBaralho.cssCarta.energiaVisible
     
     novoAtaque2.innerHTML = cloneBaralho.energia2
     novoAtaque2.style.color = cloneBaralho.cssCarta.energia2Color;
@@ -482,12 +473,22 @@ function moverInvTwo() {
       novoAtaque2.style.visibility = cloneBaralho.isCritico.criticoEnergia2;
       novoAtaque2.style.fontSize = cloneBaralho.isCritico.criticoEnergia2FontSize;
       novoAtaque2.className = cloneBaralho.isCritico.criticoEnergia2Critico;
-      // tudo()
+
+      //variante
+    carta2.style.color = cloneBaralho.cssVariante.cartaColor
+    carta2.style.backgroundImage = cloneBaralho.cssVariante.cartaBG
+    variante2.style.fontSize = cloneBaralho.cssVariante.varianteFontSize
+
+    objCarta2 = cloneBaralho
+
+      tudo()
   }
 }
 function moverInvThree() {
+
+  // blockInv();
     
-  if(carta3.id == 'carta3'){3
+  if(carta3.id == 'empty3'){
     carta3.id = cloneBaralho.cartaId
     carta3.style.border = cloneBaralho.cssCarta.cartaBorder
     
@@ -505,6 +506,7 @@ function moverInvThree() {
     ataque3.innerHTML = cloneBaralho.energia 
     ataque3.style.color = cloneBaralho.cssCarta.energiaColor;
     ataque3.style.fontSize = cloneBaralho.cssCarta.energiaFontSize;
+    ataque3.style.visibility = cloneBaralho.cssCarta.energiaVisible
     
     novoAtaque3.innerHTML = cloneBaralho.energia2
     novoAtaque3.style.color = cloneBaralho.cssCarta.energia2Color;
@@ -521,12 +523,22 @@ function moverInvThree() {
       novoAtaque3.style.visibility = cloneBaralho.isCritico.criticoEnergia2;
       novoAtaque3.style.fontSize = cloneBaralho.isCritico.criticoEnergia2FontSize;
       novoAtaque3.className = cloneBaralho.isCritico.criticoEnergia2Critico;
-      // tudo()
+
+      //variante
+    carta3.style.color = cloneBaralho.cssVariante.cartaColor
+    carta3.style.backgroundImage = cloneBaralho.cssVariante.cartaBG
+    variante3.style.fontSize = cloneBaralho.cssVariante.varianteFontSize
+
+    objCarta3 = cloneBaralho
+
+      tudo()
   }
 }
 function moverInvFour() {
+
+  // blockInv();
     
-  if(carta4.id == 'carta4'){
+  if(carta4.id == 'empty4'){
 
     carta4.id = cloneBaralho.cartaId
     carta4.style.border = cloneBaralho.cssCarta.cartaBorder
@@ -545,6 +557,7 @@ function moverInvFour() {
     ataque4.innerHTML = cloneBaralho.energia 
     ataque4.style.color = cloneBaralho.cssCarta.energiaColor;
     ataque4.style.fontSize = cloneBaralho.cssCarta.energiaFontSize;
+    ataque4.style.visibility = cloneBaralho.cssCarta.energiaVisible
     
     novoAtaque4.innerHTML = cloneBaralho.energia2
     novoAtaque4.style.color = cloneBaralho.cssCarta.energia2Color;
@@ -561,275 +574,92 @@ function moverInvFour() {
       novoAtaque4.style.visibility = cloneBaralho.isCritico.criticoEnergia2;
       novoAtaque4.style.fontSize = cloneBaralho.isCritico.criticoEnergia2FontSize;
       novoAtaque4.className = cloneBaralho.isCritico.criticoEnergia2Critico;
-      // tudo()
+
+      //variante
+    carta4.style.color = cloneBaralho.cssVariante.cartaColor
+    carta4.style.backgroundImage = cloneBaralho.cssVariante.cartaBG
+    variante4.style.fontSize = cloneBaralho.cssVariante.varianteFontSize
+
+    objCarta4 = cloneBaralho
+
+      tudo()
   }
 }
 
-
-
-
-//*************************MOVER CARTA PARA O INVENTARIO */
-//****************************************************** */
-//*************************MOVER CARTA PARA O INVENTARIO */
-//****************************************************** */
-//*************************MOVER CARTA PARA O INVENTARIO */
-//****************************************************** */
-//*************************MOVER CARTA PARA O INVENTARIO */
-//****************************************************** */
-
-// function cardShrinker(cartaGrande){
-//     cartaGrande.style.height = '49%'
-//     cartaGrande.style.width = '38%'
-//     // cartaGrande.style.fontSize = '10px'
-//     // cartaGrande.children[1].style.backgroundSize = '139px 87px'
-
-// }
-
-/////
-
-// DECK DECK DECK
-
-let cartaParaMover = document.getElementById("pack").firstElementChild;
-let copyCard = "";
-
-function moverCarta() {
-  let seedCopyCard = cartaParaMover.children[4].textContent;
-  // DEBUG && console.log("em mover carta ", seedObj);
-
-  blockInv();
-
-  copyCard = cartaParaMover.cloneNode(true);
-  let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
-  let customOff = getSeed.className == "customOff";
-
-  let cartaNotMonark = copyCard.id == monark;
-
-  let PodeMover =
-    (!seedObj._isSeedReal && cartaNotEspecial) ||
-    (!seedObj._isSeedReal && cartaNotMonark) ||
-    (seedObj._isSeedReal && !seedObj._isPutByPlayer);
-
-  let naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
-
-  // copySeed = copy.getElementsByClassName('seed')
-  // cardShrinker(copyCard)
-  if (
-    // PodeMover &&
-
-    naoMoviAinda
-  ) {
-    if (inv.children[0].id != "empty") {
-      if (
-        inv.children[0].children[4].textContent !=
-        cartaParaMover.children[4].textContent
-      ) {
-        if (inv.children[1].id == "empty") {
-          if (
-            copyCard.children[0].children[1].textContent != "" ||
-            copyCard.children[0].children[3].textContent != ""
-          ) {
-            copyCard.children[3].children[2].style.visibility = "visible";
-          }
-          if (seedObj._isPutByPlayer) {
-            getSeed.className = "customOff";
-          }
-
-          inv.replaceChild(copyCard, inv.children[1]);
-
-          somaPontos();
-          tudo();
-        } else if (
-          inv.children[2].id == "empty" &&
-          seedCopyCard != inv.children[1].children[4].textContent
-        ) {
-          if (
-            copyCard.children[0].children[1].textContent != "" ||
-            copyCard.children[0].children[3].textContent != ""
-          ) {
-            copyCard.children[3].children[2].style.visibility = "visible";
-          }
-
-          if (seedObj._isPutByPlayer) {
-            getSeed.className = "customOff";
-          }
-
-          inv.replaceChild(copyCard, inv.children[2]);
-
-          somaPontos();
-          tudo();
-        } else if (
-          inv.children[3].id == "empty" &&
-          seedCopyCard != inv.children[2].children[4].textContent
-        ) {
-          if (
-            copyCard.children[0].children[1].textContent != "" ||
-            copyCard.children[0].children[3].textContent != ""
-          ) {
-            copyCard.children[3].children[2].style.visibility = "visible";
-          }
-          if (seedObj._isPutByPlayer) {
-            getSeed.className = "customOff";
-          }
-
-          inv.replaceChild(copyCard, inv.children[3]);
-
-          somaPontos();
-          tudo();
-        }
-      }
-    } else {
-      // if (cartaParaMover.children[0].children[1].textContent != ''){
-      //     copyCard.children[3].children[2].style.visibility = 'visible'
-      // }
-      if (
-        copyCard.children[0].children[1].textContent != "" ||
-        copyCard.children[0].children[3].textContent != ""
-      ) {
-        copyCard.children[3].children[2].style.visibility = "visible";
-      }
-
-      if (seedObj._isPutByPlayer) {
-        getSeed.className = "customOff";
-      }
-
-      inv.replaceChild(copyCard, inv.children[0]);
-
-      somaPontos();
-      tudo();
-    }
-    criarBtn();
-  } else {
-    false;
-    // getSeed.setAttribute('class', 'customOn')
-    DEBUG && console.log("NAO MOVI");
-  }
-
-  // if(jaPassouACarta){
-  //   false
-
-  // }
-}
 
 let copyCardSeed;
 let copyCardName;
 
-function moverCartaMonark() {
-  copyCard = cartaParaMover.cloneNode(true);
-  copyCardSeed = copyCard.children[4].textContent;
-  copyCardName = copyCard.children[0].children[0].textContent;
+// function moverCartaMonark() {
+//   // copyCard = cartaParaMover.cloneNode(true);
+//   // copyCardSeed = copyCard.children[4].textContent;
+//   // copyCardName = copyCard.children[0].children[0].textContent;
 
-  // DEBUG && console.log("no mvoer monark", seedObj);
+//   // DEBUG && console.log("no mvoer monark", seedObj);
 
-  if (seedObj._isPutByPlayer) {
-    false;
-  } else {
-    if (copyCard.id === monark) {
-      if (inv.children[0].id === "empty" && copyCard.id === monark) {
-        inv.replaceChild(copyCard, inv.children[0]);
-        somaPontos();
-      } else if (
-        inv.children[1].id === "empty" &&
-        copyCard.id === monark &&
-        copyCardSeed != inv.children[0].children[4].textContent
-      ) {
-        inv.replaceChild(copyCard, inv.children[1]);
-        somaPontos();
-      } else if (
-        inv.children[2].id === "empty" &&
-        copyCard.id === monark &&
-        copyCardSeed != inv.children[1].children[4].textContent
-      ) {
-        inv.replaceChild(copyCard, inv.children[2]);
-        somaPontos();
-      } else if (
-        inv.children[3].id === "empty" &&
-        copyCard.id === monark &&
-        copyCardSeed != inv.children[2].children[4].textContent
-      ) {
-        inv.replaceChild(copyCard, inv.children[3]);
-        somaPontos();
+//   if (seedObj._isPutByPlayer) {
+//     false;
+//   } else {
+//     if (copyCard.id === monark) {
+//       if (inv.children[0].id === "empty" && copyCard.id === monark) {
+//         inv.replaceChild(copyCard, inv.children[0]);
+//         somaPontos();
+//       } else if (
+//         inv.children[1].id === "empty" &&
+//         copyCard.id === monark &&
+//         copyCardSeed != inv.children[0].children[4].textContent
+//       ) {
+//         inv.replaceChild(copyCard, inv.children[1]);
+//         somaPontos();
+//       } else if (
+//         inv.children[2].id === "empty" &&
+//         copyCard.id === monark &&
+//         copyCardSeed != inv.children[1].children[4].textContent
+//       ) {
+//         inv.replaceChild(copyCard, inv.children[2]);
+//         somaPontos();
+//       } else if (
+//         inv.children[3].id === "empty" &&
+//         copyCard.id === monark &&
+//         copyCardSeed != inv.children[2].children[4].textContent
+//       ) {
+//         inv.replaceChild(copyCard, inv.children[3]);
+//         somaPontos();
 
-        //MONARK SUBSTITUI O HOMONIMO -------------------------
-      } else if (
-        copyCardName === inv.children[0].children[0].children[0].textContent &&
-        copyCard.id != inv.children[0].id
-      ) {
-        inv.replaceChild(copyCard, inv.children[0]);
-        somaPontos();
-      } else if (
-        copyCardName === inv.children[1].children[0].children[0].textContent &&
-        copyCard.id != inv.children[1].id
-      ) {
-        inv.replaceChild(copyCard, inv.children[1]);
-        somaPontos();
-      } else if (
-        copyCardName === inv.children[2].children[0].children[0].textContent &&
-        copyCard.id != inv.children[2].id
-      ) {
-        inv.replaceChild(copyCard, inv.children[2]);
-        somaPontos();
-      } else if (
-        copyCardName === inv.children[3].children[0].children[0].textContent &&
-        copyCard.id != inv.children[3].id
-      ) {
-        inv.replaceChild(copyCard, inv.children[3]);
-        somaPontos();
-      }
-      tudo();
-    }
-  }
-}
+//         //MONARK SUBSTITUI O HOMONIMO -------------------------
+//       } else if (
+//         copyCardName === inv.children[0].children[0].children[0].textContent &&
+//         copyCard.id != inv.children[0].id
+//       ) {
+//         inv.replaceChild(copyCard, inv.children[0]);
+//         somaPontos();
+//       } else if (
+//         copyCardName === inv.children[1].children[0].children[0].textContent &&
+//         copyCard.id != inv.children[1].id
+//       ) {
+//         inv.replaceChild(copyCard, inv.children[1]);
+//         somaPontos();
+//       } else if (
+//         copyCardName === inv.children[2].children[0].children[0].textContent &&
+//         copyCard.id != inv.children[2].id
+//       ) {
+//         inv.replaceChild(copyCard, inv.children[2]);
+//         somaPontos();
+//       } else if (
+//         copyCardName === inv.children[3].children[0].children[0].textContent &&
+//         copyCard.id != inv.children[3].id
+//       ) {
+//         inv.replaceChild(copyCard, inv.children[3]);
+//         somaPontos();
+//       }
+//       tudo();
+//     }
+//   }
+// }
 
-const cartaParaMoverNome = cartaParaMover.children[0].children[0].textContent;
-const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent;
 
-function critico() {
-  //nome
 
-  const cartaCritica = seedString[1] === seedString[2];
-  const cartaSuperCritica =
-    seedString[4] == 4 && seedString[5] == 9 && seedString[6] == 0;
 
-  let corDoNome = cartaParaMover.children[0].children[0];
-  let corDaCidade = cartaParaMover.children[0].children[2];
-
-  cartaParaMover.children[0].children[1].style.color = "";
-  //cidade
-  cartaParaMover.children[0].children[0].style.color = "";
-  //cidade negrito
-  cartaParaMover.children[0].children[1].style.fontWeight = "";
-  // cartaParaMover.classList.remove(criticoTag.css.);
-  // corDaCidade.classList.add(criticoTag.css.);
-  //PODER
-  let poderTremer = cartaParaMover.children[3].children[0];
-  let poderNovo = cartaParaMover.children[3].children[1];
-
-  //gandalf
-  if (
-    cartaParaMover.id != monark &&
-    cartaParaMover.id != speaker &&
-    cartaParaMover.children[0].children[3].textContent == ""
-  ) {
-    if (cartaCritica) {
-      // corDaCidade.classList.add(criticoTag.css.);
-      // corDoNome.classList.add(criticoTag.css.);
-      // cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      // poderTremer.style.textDecorationLine = "line-through";
-      // poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-
-      if (cartaSuperCritica) {
-        // cartaParaMover.classList.add(criticoTag.css.);
-        // varianteP.classList.add(criticoTag.css.);
-        // poderNovo.classList.add(criticoTag.css.);
-
-        // poderTremer.style.textDecorationLine = "line-through";
-        // poderNovo.textContent = parseInt(poderTremer.textContent) * 5 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-      }
-    }
-  }
-}
 // getSeed.setAttribute('class', 'customOff')
 
 // //////////////////////////////////////////////
@@ -1098,117 +928,181 @@ function criarBtn() {
   }
 }
 
-// if (inv.children[0].id != 'empty' && inv.children[1].id != 'empty' && inv.children[2].id != 'empty' && inv.children[3].id != 'empty') {
+export let objCarta1 = {energiaObj:0}
+export let objCarta2 = {energiaObj:0}
+export let objCarta3 = {energiaObj:0}
+export let objCarta4 = {energiaObj:0}
 
-//     DEBUG && console.log ('sem loop')
 
-// }
 
-/****************************************** */
-// TIRAR CARTA DO INVENTARIO
-// /******************************************** */
+let emptyDel
+let cartaDel
+let nomeDel
+let varianteDel
+let cidadeDel
+let retratoDel
+let cargoDel
+let ataqueDel
+let energia2Del
+let seedDel
+let inV
 
-let btnReset = document.getElementById("btnReset");
 
-function deletarDeck(e) {
-  // 1.0Se a carta nao for Monark
-  if (
-    e.target.id != monark &&
-    e.target.parentElement.id != monark &&
-    e.target.parentElement.parentElement.id != monark &&
-    e.target.id != "inv" &&
-    e.target.id != "empty" &&
-    e.target.className != "action" &&
-    e.target.className == "retrato"
-  ) {
-    //
+function deletarCarta(){
+    
 
-    // 1.1 se for a carta inteira
-    if (e.target.id != "inv" && e.target.childElementCount === 5) {
-      e.target.remove();
-      inv.appendChild(document.createElement("div")).id = "empty";
-      somaPontos();
+  
 
-      //1.2 se nao for a seed
-    } else if (
-      e.target.id != "inv" &&
-      e.target.childElementCount != 5 &&
-      e.target.className != "seed"
-    ) {
-      //
 
-      // 1.2.1 se for filho da carta
-      if (
-        e.target.parentElement.children[0].className ===
-          "nameAndCidadeWrapper" &&
-        e.target.id != "inv"
-      ) {
-        //
-        e.target.parentElement.remove();
-        inv.appendChild(document.createElement("div")).id = "empty";
-        somaPontos();
-      }
+    document.getElementById(inV).children[0].id = emptyDel
+    document.getElementById(inV).children[0].style.border = ''
+    
+    document.getElementById(nomeDel).innerHTML = ''
+    document.getElementById(varianteDel).innerHTML = ''
+    document.getElementById(cidadeDel).innerHTML = ''
 
-      // 1.2.2 se nao for nada disso, sera filho do filho
-      else {
-        //
-        e.target.parentElement.parentElement.remove();
-        inv.appendChild(document.createElement("div")).id = "empty";
-        somaPontos();
-      }
-    }
-  }
+    document.getElementById(retratoDel).style.backgroundImage = ''
+    document.getElementById(retratoDel).style.border = ''
+
+    document.getElementById(cargoDel).innerHTML = ''
+    document.getElementById(cargoDel).style.fontSize = ''
+    document.getElementById(cargoDel).style.fontWeight = ''
+
+    document.getElementById(ataqueDel).innerHTML = ''
+    document.getElementById(ataqueDel).style.color = ''
+    document.getElementById(ataqueDel).style.fontSize = ''
+
+    document.getElementById(energia2Del).innerHTML = ''
+    document.getElementById(energia2Del).style.color = ''
+
+    document.getElementById(seedDel).innerHTML = ''
+    
+    document.getElementById(inV).children[0].className = ''
+    document.getElementById(nomeDel).className = ''
+    document.getElementById(varianteDel).className = ''
+    document.getElementById(cidadeDel).className = ''
+
+    document.getElementById(ataqueDel).style.textDecorationLine = ''
+
+    document.getElementById(energia2Del).style.visibility = ''
+    document.getElementById(energia2Del).style.fontSize = ''
 }
 
+
+
+
+
+
+
+function deletarCarta1(){
+    cartaDel = 'carta1'
+     emptyDel = 'empty1'
+     nomeDel = 'nome1'
+     varianteDel = 'variante1'
+     cidadeDel = 'cidade1'
+     retratoDel = 'retrato1'
+     cargoDel = 'cargo1'
+    ataqueDel = 'ataque1'
+    energia2Del = 'novoAtaque1'
+    seedDel  =  'seed1'
+    inV = 'inv1'
+    
+    objCarta1 = {energiaObj:0}
+    somaPontos()
+    deletarCarta() 
+    
+}    
+
+function deletarCarta2(){
+     cartaDel = 'carta2'
+     emptyDel = 'empty2'
+     nomeDel = 'nome2'
+     varianteDel = 'variante2'
+     cidadeDel = 'cidade2'
+     retratoDel = 'retrato2'
+     cargoDel = 'cargo2'
+    ataqueDel = 'ataque2'
+    energia2Del = 'novoAtaque2'
+    seedDel  = 'seed2'
+    inV = 'inv2'
+    objCarta2 = {energiaObj:0}
+    somaPontos()
+    deletarCarta() 
+}    
+
+ function deletarCarta3(){
+     cartaDel = 'carta3'
+      emptyDel = 'empty3'
+      nomeDel = 'nome3'
+      varianteDel = 'variante3'
+      cidadeDel = 'cidade3'
+      retratoDel = 'retrato3'
+      cargoDel = 'cargo3'
+    ataqueDel = 'ataque3'
+    energia2Del = 'novoAtaque3'
+    seedDel    =  'seed3'
+    inV = 'inv3'
+    objCarta3 = {energiaObj:0}
+    somaPontos()
+    deletarCarta()  
+}    
+function deletarCarta4(){
+      cartaDel = 'carta4'
+       emptyDel = 'empty4'
+       nomeDel = 'nome4'
+       varianteDel = 'variante4'
+       cidadeDel = 'cidade4'
+       retratoDel = 'retrato4'
+       cargoDel = 'cargo4'
+    ataqueDel = 'ataque4'
+    energia2Del = 'novoAtaque4'
+    seedDel    =  'seed4'
+    inV = 'inv4'
+    objCarta4 = {energiaObj:0}
+    somaPontos()
+    deletarCarta()  
+}    
+
+
+
+
+
 function resetarDeck() {
-  getSeed.setAttribute("class", "");
+  // getSeed.setAttribute("class", "");
 
-  // let empty = document.createElement('div').id = "empty"
-  let empty0 = document.createElement("div");
-  let empty1 = document.createElement("div");
-  let empty2 = document.createElement("div");
-  let empty3 = document.createElement("div");
-  critico();
+  
 
-  for (let i = 0; i < 4; i++) {
-    inv.removeChild(inv.children[0]);
-    // inv.appendChild(empty)
-    // inv.replaceChild(inv.children[i], inv.appendChild(document.createElement('div')).id = "empty")
-  }
+  deletarCarta1()
+  deletarCarta2()
+  deletarCarta3()
+  deletarCarta4()
 
-  inv.appendChild(empty0).id = "empty";
-  inv.appendChild(empty1).id = "empty";
-  inv.appendChild(empty2).id = "empty";
-  inv.appendChild(empty3).id = "empty";
-
-  // inv.removeChild(inv.children[0])
-  // inv.appendChild(empty)
-  //
   totalClicks = 50;
   somaPontos();
   tudo();
+  totalPontos = 0
   // cartaCustom = input.length >= 3;
 
-  getSeed.className = "";
+  // getSeed.className = "";
 }
 
 /////// CRITICO
-let getSeed = document.getElementById("getseed");
-function blockInv() {
-  let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
-  let customOff = getSeed.className == "customOff";
-  let cartaNotMonark = copyCard.id == monark;
-  let PodeMover =
-    (!seedObj._isSeedReal && cartaNotEspecial) ||
-    (!seedObj._isSeedReal && cartaNotMonark) ||
-    (seedObj._isSeedReal && !seedObj._isPutByPlayer);
+// let getSeed = document.getElementById("getseed");
+// function blockInv() {
+//   // let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
+//   let customOff = getSeed.className == "customOff";
+//   // let cartaNotMonark = copyCard.id == monark;
+//   let PodeMover =
+//     (!seedObj._isSeedReal && cartaNotEspecial) ||
+//     (!seedObj._isSeedReal && cartaNotMonark) ||
+//     (seedObj._isSeedReal && !seedObj._isPutByPlayer);
 
-  if (!PodeMover || customOff) {
-    inv.style.border = "10px double red";
-  } else {
-    inv.style.border = "7px double green";
-  }
-}
+//   if (!PodeMover || customOff) {
+//     inv.style.border = "10px double red";
+//   } else {
+//     inv.style.border = "7px double green";
+//   }
+// }
 let totalClicks = 50;
 
 let seedString;
@@ -1257,17 +1151,25 @@ function tudo() {
 
     colocarInfoNoWrap();
     criarInvOne()
+    somaPontos()
 
     DEBUG && console.log("no tudo CRITICO-TAG", criticoTag);
     DEBUG && console.log("no tudo BARALHO", baralho);
     DEBUG && console.log("no tudo INVONE", cloneBaralho);
+    
+    DEBUG && console.log('objCarta1: ', objCarta1);
+    DEBUG && console.log('objCarta2: ', objCarta2);
+    DEBUG && console.log('objCarta3: ', objCarta3);
+    DEBUG && console.log('objCarta4: ', objCarta4);
+    
+    console.log('totalPontos: ', totalPontos);
     ;
     // moverInvTwo();
     // moverInvThree();
     // moverInvFour();
 
-    moverCartaMonark();
-    blockInv();
+    // moverCartaMonark();
+    // blockInv();
   } else {
     button.style.backgroundColor = "red";
     button.innerHTML = "0 CARTAS";
@@ -1285,85 +1187,35 @@ function clicks() {
 let totalPontos = 0;
 
 function somaPontos() {
-  let ponto0 = 0;
   let ponto1 = 0;
   let ponto2 = 0;
   let ponto3 = 0;
+  let ponto4 = 0;
 
-  // inv 0
-  if (
-    inv.children[0].id != "empty" &&
-    inv.children[0].children[0].children[3].textContent != bonusCartasMais
-  ) {
-    // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[0].children[3].children[1].textContent != "") {
-      ponto0 = parseInt(inv.children[0].children[3].children[1].textContent);
-      // se nao, pegue o poder velho
-    } else {
-      ponto0 = parseInt(inv.children[0].children[3].children[0].textContent);
-    }
-  }
 
-  // inv 1
-  if (
-    inv.children[1].id != "empty" &&
-    inv.children[1].children[0].children[3].textContent != bonusCartasMais
-  ) {
-    // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[1].children[3].children[1].textContent != "") {
-      ponto1 = parseInt(inv.children[1].children[3].children[1].textContent);
-      // se nao, pegue o poder velho
-    } else {
-      ponto1 = parseInt(inv.children[1].children[3].children[0].textContent);
-    }
-  }
+  ponto1 = objCarta1.energiaObj
+  console.log('ponto1: ', ponto1);
+  ponto2 = objCarta2.energiaObj
+  console.log('ponto2: ', ponto2);
+  ponto3 = objCarta3.energiaObj
+  console.log('ponto3: ', ponto3);
+  ponto4 = objCarta4.energiaObj
+  console.log('ponto4: ', ponto4);
 
-  // inv 2
-  if (
-    inv.children[2].id != "empty" &&
-    inv.children[2].children[0].children[3].textContent != bonusCartasMais
-  ) {
-    // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[2].children[3].children[1].textContent != "") {
-      ponto2 = parseInt(inv.children[2].children[3].children[1].textContent);
-      // se nao, pegue o poder velho
-    } else {
-      ponto2 = parseInt(inv.children[2].children[3].children[0].textContent);
-    }
-  }
-
-  // inv 3
-  if (
-    inv.children[3].id != "empty" &&
-    inv.children[3].children[0].children[3].textContent != bonusCartasMais
-  ) {
-    // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[3].children[3].children[1].textContent != "") {
-      ponto3 = parseInt(inv.children[3].children[3].children[1].textContent);
-      // se nao, pegue o poder velho
-    } else {
-      ponto3 = parseInt(inv.children[3].children[3].children[0].textContent);
-    }
-  }
-
-  totalPontos = ponto0 + ponto1 + ponto2 + ponto3;
+  
+  totalPontos = ponto1 + ponto2 + ponto3 + ponto4;
   placarP.innerHTML = totalPontos + " PONTOS";
-  //
-  //
-  //
-  //
-  //
-  //
+ 
 }
 
 button.addEventListener("click", tudo);
 
 // button.addEventListener("click", numeroDeCartasTeste());
 
-button.addEventListener("click", blockInv);
+// button.addEventListener("click", blockInv);
 
-cartaParaMover.addEventListener("click", moverCarta);
-inv.addEventListener("click", deletarDeck);
+// cartaParaMover.addEventListener("click", moverCarta);
+// inv.addEventListener("click", deletarDeck);
 
 // btnReset.addEventListener('click', moverCartaMonark)
 
@@ -1382,55 +1234,92 @@ let teclaMoverSlot2 = 'Digit2'
 let teclaMoverSlot3 = 'Digit3'
 let teclaMoverSlot4 = 'Digit4'
 
-cartaParaMover.addEventListener("click", moverCarta);
+// cartaParaMover.addEventListener("click", moverCarta);
 
 
 document.addEventListener("keydown", (event)=>{
-  if(copyCard){
+  
     if(event.code == teclaMoverSlot1){
       moverInvOne()
       ;
     }    
   }
   
-})
+)
 
 document.addEventListener("keydown", (event)=>{
-  if(copyCard){
+ 
     if(event.code == teclaMoverSlot2){
       moverInvTwo()
       ;
     }    
   }
   
-})
+)
 
 document.addEventListener("keydown", (event)=>{
-  if(copyCard){
+  
     if(event.code == teclaMoverSlot3){
       moverInvThree()
       ;
     }    
   }
   
-})
+)
 
 document.addEventListener("keydown", (event)=>{
-  if(copyCard){
+  
     if(event.code == teclaMoverSlot4){
       moverInvFour()
       ;
     }    
   }
   
-})
+)
 
 document.addEventListener("keydown", (event)=>{
-  if(copyCard){
-    if(event.code == 'KeyR'){
-      limparDeck()
+  
+    if(event.code == 'KeyX'){
+      deletarCarta1()
       ;
     }    
   }
   
-})
+)
+
+document.addEventListener("keydown", (event)=>{
+  
+    if(event.code == 'KeyX'){
+      deletarCarta1()
+      ;
+    }    
+  }
+)
+
+document.addEventListener("keydown", (event)=>{
+  
+    if(event.code == 'KeyC'){
+      deletarCarta2()
+      ;
+    }    
+  }
+)
+
+document.addEventListener("keydown", (event)=>{
+  
+    if(event.code == 'KeyV'){
+      deletarCarta3()
+      ;
+    }    
+  }
+)
+document.addEventListener("keydown", (event)=>{
+  
+    if(event.code == 'KeyB'){
+      deletarCarta4()
+      ;
+    }    
+  }
+)
+
+

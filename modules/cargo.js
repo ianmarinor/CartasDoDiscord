@@ -49,6 +49,7 @@ export let cargos = {
           ataquePColor: '',
           epColor: '',
           epFontSize: '',
+          energiaVisible: ''
         }
         ,
     },
@@ -69,6 +70,7 @@ export let cargos = {
           ataquePColor: '',
           epColor: '',
           epFontSize: '',
+          energiaVisible: ''
         }
     },
 
@@ -88,6 +90,7 @@ export let cargos = {
           ataquePColor: '',
           epColor: '',
           epFontSize: '',
+          energiaVisible: ''
         }
     },
 
@@ -106,7 +109,8 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
-        cartaBorder: ''
+        cartaBorder: '',
+        energiaVisible: ''
       }
     },
 
@@ -125,7 +129,8 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
-        cartaBorder: ''
+        cartaBorder: '',
+        energiaVisible: ''
       }
     },
 
@@ -144,7 +149,8 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
-        cartaBorder: ''      }
+        cartaBorder: '' ,
+        energiaVisible: ''     }
     },
 
     people: {
@@ -162,7 +168,8 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
-        cartaBorder: ''
+        cartaBorder: '',
+        energiaVisible: ''
       }
     },
 
@@ -181,7 +188,8 @@ export let cargos = {
         ataquePColor: '',
         epColor: '',
         epFontSize: '',
-        cartaBorder: ''
+        cartaBorder: '',
+        energiaVisible: ''
       }
     },
 
@@ -199,7 +207,8 @@ export let cargos = {
       ataquePColor: '',
       epColor: '',
       epFontSize: '',
-      cartaBorder: ''
+      cartaBorder: '',
+      energiaVisible: ''
       }       
     },
 }
