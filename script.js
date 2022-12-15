@@ -1881,7 +1881,7 @@ function deckPronto() {
   moverCarta();
   moverCarta();
   totalClicks += 5
-  // arenaP.innerHTML = totalClicks + " CARTAS";
+  arenaP.innerHTML = totalClicks + " CARTAS";
 }
 
 
