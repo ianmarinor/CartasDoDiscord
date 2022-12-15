@@ -31,5 +31,10 @@ let frasesAbelhaTuru = [
 ];
 
 export function frasesAbelha() {
-  return frasesAbelhaTuru[Math.floor(Math.random() * 9 + 1)];
+  return frasesAbelhaTuru[Math.floor(Math.random() * 9 + 0)];
+}
+
+let valoresComunista= [333,333,333,333,666,666,999]
+export function comunistaPE() {
+  return valoresComunista[Math.floor(Math.random() * 7 + 0)] 
 }

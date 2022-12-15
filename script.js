@@ -6,10 +6,11 @@ import {
   abelhaDecreaseComTuru,
   abelhaLowHp,
   frasesAbelha,
+  comunistaPE,
 } from "./modules/especial.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.3.14";
+let versao = "Alpha 1.3.15";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -292,7 +293,7 @@ function escolherEspecial() {
     seedString[7] == 7 &&
     seedString[8] >= 4
   ) {
-    return (especial = "");
+    return (especial = "comunista");
   } else if (seedString[5] == 8 && seedString[6] == 4 && seedString[7] == 2) {
     return (especial = "");
   } else if (seedString[5] == 8 && seedString[6] == 1) {
@@ -494,11 +495,14 @@ function colocarInfoNoWrap() {
   cartaP.style.backgroundImage = "";
   cartaP.style.border = "none";
   cartaP.style.color = "";
+  nomeP.style.fontFamily = "";
   actionP.style.visibility = "hidden";
   ataqueP.style.textDecorationLine = "";
+  ataqueP.style.fontFamily = "";
   ataqueP.id = "";
   novoAtaquerP.innerHTML = "";
   novoAtaquerP.style.fontSize = "";
+  novoAtaquerP.style.fontFamily = "";
   retratoP.style.backgroundSize = "";
   cargoP.style.fontSize = "";
   cargoP.style.color = "";
@@ -598,6 +602,9 @@ function colocarInfoNoWrap() {
     } else if (novaCarta._cargo === "abelha") {
       cargoP.innerHTML = "ABELHA";
       retratoP.style.border = "2px solid brown";
+    } else if (novaCarta._cargo === "comunista") {
+      cargoP.innerHTML = "CAMARADA BLACKAO";
+      retratoP.style.border = "2px solid RED";
     } else {
       true;
     }
@@ -667,6 +674,36 @@ function colocarInfoNoWrap() {
     // seedP.style.color = "yellow";
     cartaP.style.color = "#ffd11a";
     cartaP.style.border = "3px solid #4d1a00";
+  } else if (novaCarta._especial === "comunista") {
+    retratoP.style.backgroundImage =
+      "url('https://i.kym-cdn.com/photos/images/original/000/960/056/27b.gif')";
+    retratoP.style.backgroundSize = "";
+    retratoP.style.backgroundColor = "green";
+    nomeP.innerHTML = "CAMARADA BLACKAO <br> ★";
+    nomeP.style.fontFamily = "blackao";
+    cidadeP.innerHTML = "";
+    cidadeP.style = "";
+    especialP.style.visibility = "hidden";
+    cargoP.style.fontSize = "2.3em";
+    cargoP.style.fontFamily = "blackao";
+    cargoP.style.fontWeight = "bolder";
+    cargoP.innerHTML = "";
+    // cargoP.style.color = "black";
+    retratoP.style.border = "2px solid #ff0000";
+    // ataqueP.style.color = "black";
+    ataqueP.style.fontSize = "1.4em";
+    novoAtaquerP.style.fontSize = "1.4em";
+    novoAtaquerP.style.fontFamily = "blackao";
+    ataqueP.style.fontWeight = "bold";
+    ataqueP.style.fontFamily = "blackao";
+    // ataqueP.style.backgroundColor = "yellow";
+    // actionP.style.visibility = 'visible'
+    ataqueP.textContent = "";
+    novoAtaquerP.textContent = comunistaPE() + "☭";
+    // seedP.style.color = "yellow";
+    cartaP.style.color = "#990000";
+    cartaP.style.border = "2px solid red";
+    seedP.style.color = "black";
   }
 
   //CARTAS VARIANTES
@@ -737,6 +774,7 @@ function colocarInfoNoWrap() {
       varianteP.style.fontSize = "0.99em";
     } else if (novaCarta._variante === "quimico") {
       varianteP.innerHTML = "🛑 PARA DE FALAR 🛑";
+      varianteP.style.fontSize = "0.86em"
       cartaP.style.color = "white";
       cartaP.style.backgroundImage = 'url("pics/variantes/varianteJunks.gif")';
       cartaP.style.border = "3px  white   solid";
@@ -825,9 +863,8 @@ function moverCarta() {
           seedCopyCard != inv.children[1].children[4].textContent
         ) {
           if (
-            
-            (copyCard.children[0].children[3].textContent != "" &&
-              copyCard.id != "abelha")
+            copyCard.children[0].children[3].textContent != "" &&
+            copyCard.id != "abelha"
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
@@ -845,9 +882,8 @@ function moverCarta() {
           seedCopyCard != inv.children[2].children[4].textContent
         ) {
           if (
-            
-            (copyCard.children[0].children[3].textContent != "" &&
-              copyCard.id != "abelha")
+            copyCard.children[0].children[3].textContent != "" &&
+            copyCard.id != "abelha"
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
@@ -866,9 +902,8 @@ function moverCarta() {
       //     copyCard.children[3].children[2].style.visibility = 'visible'
       // }
       if (
-        
-        (copyCard.children[0].children[3].textContent != "" &&
-          copyCard.id != "abelha")
+        copyCard.children[0].children[3].textContent != "" &&
+        copyCard.id != "abelha"
       ) {
         copyCard.children[3].children[2].style.visibility = "visible";
       }
@@ -1364,8 +1399,97 @@ function criarBtn() {
           }
         }
         somaPontos();
+      } //COMUNISTA
+      if (
+        inv.children[i].id == "comunista" &&
+        inv.children[i].children[0].id != "foi"
+      ) {
+        inv.children[i].children[3].children[2].addEventListener(
+          "click",
+          camarada
+        );
+        inv.children[i].children[0].id = "foi";
       }
-      //ABELHA
+      function camarada(e) {
+        let comunista = e.target.offsetParent;
+        // comunista.children[3].children[2].style.visibility = "hidden";
+        for (let k = 0; k < 4; k++) {
+          if (inv.children[k].id == "carta-speaker") {
+            comunista.children[3].children[2].style.visibility = "hidden";
+            for (let j = 0; j < 4; j++) {
+              if (
+                inv.children[j].id != "especial-click" &&
+                inv.children[j].id != "empty" &&
+                inv.children[j].id != "especial-tenica" &&
+                inv.children[j].id != "abelha" &&
+                inv.children[j].id != "comunista" &&
+                inv.children[j].children[0].children[0].textContent !=
+                  "NEFESTO" &&
+                inv.children[j].id != "carta-monark"
+              ) {
+                console.log(j);
+
+                let pontoComunista = comunista.children[3].children[1];
+
+                let pontoEstatal = parseInt(pontoComunista.textContent) / 3;
+                console.log("pontoEstatal: ", pontoEstatal);
+
+                // se o poder novo for presente
+                if (inv.children[j].children[3].children[1].textContent != "") {
+                  //SE FOR BLACKAO, DUPLICA
+                  if (
+                    inv.children[j].children[0].children[0].textContent ==
+                    "BLACKAO"
+                  ) {
+                    inv.children[j].children[3].children[1].textContent =
+                      parseInt(
+                        inv.children[j].children[3].children[1].textContent
+                      ) +
+                      parseInt(pontoEstatal) * 2 +
+                      "☭";
+                      inv.children[j].children[3].children[1].style.color = 'red'
+
+
+                    somaPontos();
+                  } else {
+                    inv.children[j].children[3].children[1].textContent =
+                      parseInt(
+                        inv.children[j].children[3].children[1].textContent
+                      ) +
+                      parseInt(pontoEstatal) + "☭";
+                      
+                      inv.children[j].children[3].children[1].style.color = 'red'
+                    somaPontos();
+                  }
+                } else {
+                  //SE FOR BLACKAO, DUPLICA
+                  if (
+                    inv.children[j].children[0].children[0].textContent ==
+                    "BLACKAO"
+                  ) {
+                    inv.children[j].children[3].children[0].textContent =
+                      parseInt(
+                        inv.children[j].children[3].children[0].textContent
+                      ) +
+                      parseInt(pontoEstatal) * 2 + "☭";
+                      inv.children[j].children[3].children[0].style.color = 'red'
+                      
+
+                    somaPontos();
+                  } else
+                    inv.children[j].children[3].children[0].textContent =
+                      parseInt(
+                        inv.children[j].children[3].children[0].textContent
+                      ) +
+                      parseInt(pontoEstatal) + "☭";
+                      inv.children[j].children[3].children[0].style.color = 'red'
+                  somaPontos();
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -1373,11 +1497,9 @@ let temTuru;
 let ab = 3;
 
 function abelha() {
-  console.log("temTuru: ", temTuru);
   for (let i = 0; i < 4; i++) {
     if (inv.children[i].id != "empty") {
-      console.log(inv.children[i].children[0].children[0].textContent);
-      console.log("KKKKKKKKKKK");
+      // console.log(inv.children[i].children[0].children[0].textContent);
 
       if (inv.children[i].id == "abelha") {
         inv.children[i].className = "";
@@ -1424,7 +1546,6 @@ function abelha() {
                   abelhaDecreaseComTuru() +
                   "🐝";
                 somaPontos();
-                console.log("TEM TURUR E ABELHA");
               } else {
                 if (inv.children[i].id == "abelha") {
                   inv.children[i].children[1].style.backgroundImage =
@@ -1455,6 +1576,41 @@ function abelha() {
 // /******************************************** */
 
 let btnReset = document.getElementById("btnReset");
+
+
+
+
+
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Digit1") {
+    deleteInvOne(0);
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Digit2") {
+    deleteInvOne(1);
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Digit3") {
+    deleteInvOne(2);
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Digit4") {
+    deleteInvOne(3 );
+  }
+});
+
+function deleteInvOne(a){
+  if(inv.children[a].id!= 'carta-monark'){
+
+    inv.children[a].remove();
+    inv.appendChild(document.createElement("div")).id = "empty";
+    somaPontos();
+  }
+}
 
 function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
@@ -1507,7 +1663,7 @@ function deletarDeck(e) {
 }
 
 function resetarDeck() {
-  getSeed.setAttribute("class", "");
+  getSeed.setAttribute("class", "");1
 
   // let empty = document.createElement('div').id = "empty"
   let empty0 = document.createElement("div");
@@ -1575,7 +1731,7 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-    //
+    console.log(seedObj);
     clicks();
     console.log(aumentou);
     abelha();
@@ -1613,7 +1769,8 @@ function somaPontos() {
   // inv 0
   if (
     inv.children[0].id != "empty" &&
-    inv.children[0].children[0].children[3].textContent != "especial-click"
+    inv.children[0].children[0].children[3].textContent != "especial-click" &&
+    inv.children[0].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (inv.children[0].children[3].children[1].textContent != "") {
@@ -1627,7 +1784,8 @@ function somaPontos() {
   // inv 1
   if (
     inv.children[1].id != "empty" &&
-    inv.children[1].children[0].children[3].textContent != "especial-click"
+    inv.children[1].children[0].children[3].textContent != "especial-click" &&
+    inv.children[1].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (inv.children[1].children[3].children[1].textContent != "") {
@@ -1641,7 +1799,8 @@ function somaPontos() {
   // inv 2
   if (
     inv.children[2].id != "empty" &&
-    inv.children[2].children[0].children[3].textContent != "especial-click"
+    inv.children[2].children[0].children[3].textContent != "especial-click" &&
+    inv.children[2].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (inv.children[2].children[3].children[1].textContent != "") {
@@ -1655,7 +1814,8 @@ function somaPontos() {
   // inv 3
   if (
     inv.children[3].id != "empty" &&
-    inv.children[3].children[0].children[3].textContent != "especial-click"
+    inv.children[3].children[0].children[3].textContent != "especial-click" &&
+    inv.children[3].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (inv.children[3].children[3].children[1].textContent != "") {
@@ -1692,7 +1852,7 @@ cartaParaMover.addEventListener("click", moverCarta);
 document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
-      moverCarta()
+      moverCarta();
     }
   }
 });
@@ -1711,9 +1871,11 @@ function deckPronto() {
   moverCarta();
   moverCarta();
   moverCarta();
-  // totalClicks += 10
+  totalClicks += 5
   // arenaP.innerHTML = totalClicks + " CARTAS";
 }
+
+
 
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {
@@ -1759,3 +1921,8 @@ document.addEventListener("keydown", (event) => {
     resetarDeck();
   }
 });
+window.onload = (event) =>{
+  tudo()
+}
+
+// setInterval(()=>arenaP.innerHTML = totalClicks + " CARTAS", 100)

@@ -17,6 +17,10 @@
 
 }
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@700&display=swap');
+@font-face {
+    font-family: 'blackao';
+    src: url("/fonts/RedOctoberLight-3nd6.otf");
+}
 
 
 * {
@@ -71,6 +75,7 @@ li{
     font-size: 3em;
     color: wheat;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* font-family: blackao; */
 }
 .placar{
     
@@ -317,6 +322,29 @@ li{
     background-repeat: no-repeat;
     background-size: cover;
 }
+#comunista{
+    background:  linear-gradient(
+        rgba(125, 105, 4, 0.6), 
+        rgba(187, 151, 5, 0.6)
+      ),url(https://media.tenor.com/rH_kpMNuotUAAAAC/communism-communist.gif);
+
+      /* background: url(); */
+    
+    height: var(--tamanhoCartaHeight);
+    width: var(--tamanhoCartaWidth);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    border: 2px solid #4e2c00;
+    font-weight: 900;
+    /* color: rgb(181, 12, 175); */
+    background-repeat: no-repeat;
+    background-size: COVER;
+    font-family: blackao;
+}
 
 
 
@@ -410,6 +438,7 @@ li{
 /* VARIANTES */
 /* ---------------------------------------*/
 .action {
+    /* display: none; */
     visibility:hidden;
 }
 .variante {
