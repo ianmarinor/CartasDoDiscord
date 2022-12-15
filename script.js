@@ -353,27 +353,27 @@ let pontoPoderSemCargo = () =>
   Math.floor((parseInt(seedString[5]) + parseInt(seedString[0])) / 2 + 1); // 1 a 10
 
 let pontoPoderPeople = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[12])) / 2 + 11); // 11 a 20
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[12])) / 2 + 21); // 11 a 20
 
 let pontoPoderGentleman = () =>
-  Math.floor((parseInt(seedString[12]) + parseInt(seedString[0])) / 2 + 21); // 21 a 30
+  Math.floor((parseInt(seedString[12]) + parseInt(seedString[0])) / 2 + 41); // 21 a 30
 
 let pontoPoderMonark = () => Math.floor(Math.random() * 2);
 
 let pontoPoderNobre = () =>
-  Math.floor((parseInt(seedString[11]) + parseInt(seedString[10])) / 2 + 31); // 31 a 40
+  Math.floor((parseInt(seedString[11]) + parseInt(seedString[10])) / 2 + 61); // 31 a 40
 
 let pontoPoderLord = () =>
-  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 41); // 41 a 50
+  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 81); // 41 a 50
 
 let pontoPoderMinistro = () =>
-  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 51); //51 a 60
+  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 111); //51 a 60
 
 let pontoPoderPrimeMinister = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 71); // 70 a 80
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 130); // 70 a 80
 
 let pontoPoderRNGPremioMarino = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 121); // 121 a 130
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 170); // 121 a 130
 
 let pontoVarianteValor = 0;
 function pontoVariante() {
