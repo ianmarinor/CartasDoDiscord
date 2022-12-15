@@ -1,7 +1,8 @@
 import {seed} from './module.js'
+import {tenicaEnergia} from './modules/especial.js'
 
 let versaoHTML = document.getElementById('versao')
-let versao = 'Alpha 1.3.13'
+let versao = 'Alpha 1.4'
 versaoHTML.innerHTML = versao
 
 function showVersion() {
@@ -322,11 +323,11 @@ let especial = "";
 function escolherEspecial() {
   // 
   if (
-    seedString[5] == 8 &&
+    seedString[5] == 4 &&
     seedString[6] == 9 &&
     seedString[7] == 9 &&
     seedString[8] == 1 &&
-    seedString[9] >= 4
+    seedString[9] == 4
   ) {
     return (especial = "especial-tenica");
   } else if (
@@ -337,7 +338,7 @@ function escolherEspecial() {
   ) {
     return (especial = "");
   } else if (
-    seedString[5] == 8 &&
+    seedString[5] == 7 &&
     seedString[6] == 1 &&
     seedString[7] == 7 &&
     seedString[8] >= 4
@@ -345,8 +346,8 @@ function escolherEspecial() {
     return (especial = "");
   } else if (seedString[5] == 8 && seedString[6] == 4 && seedString[7] == 2) {
     return (especial = "");
-  } else if (seedString[5] == 8 && seedString[6] == 1 && seedString[7] <= 3) {
-    return (especial = "");
+  } else if (seedString[5] == 8 && seedString[6] == 1) {
+    return (especial = "abelha");
   } 
   
   // else if (seedString[5] >= 6) 
@@ -613,6 +614,8 @@ function colocarInfoNoWrap() {
       retratoP.style.backgroundImage = "";
     }
   }
+
+
   //colocar cargo
   if (novaCarta._especial == "") {
     if (novaCarta._cargo === "carta-semcargo") {
@@ -645,7 +648,11 @@ function colocarInfoNoWrap() {
     } else if (novaCarta._cargo === "carta-monark") {
       cargoP.innerHTML = "&nbsp;" + "monark" + "&#128169;";
       retratoP.style.border = "";
-    } else {
+    }else if (novaCarta._cargo === "abelha") {
+      cargoP.innerHTML = "bzzzzzzzz";
+      retratoP.style.border = "";
+    }
+     else {
       true;
     }
   }
@@ -671,7 +678,7 @@ function colocarInfoNoWrap() {
     cargoP.style.color = "black";
     retratoP.style.border = "2px double gold";
     ataqueP.style.color = "black";
-    ataqueP.innerHTML = parseInt(ataqueP.innerHTML) * 90 + "👑";
+    ataqueP.innerHTML = tenicaEnergia() + '👑'
     seedP.style.color = "black";
 
     ataqueP.style.fontSize = "1.5em";
