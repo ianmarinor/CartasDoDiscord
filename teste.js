@@ -1,4 +1,4 @@
-console.log(Math.floor(Math.random() *   2 + 2))
+// console.log(Math.floor(Math.random() *   2 + 2))
 // console.log(1000000000000000 + 9000000000000000)
 // console.log(parseInt('a').lenght > 1)
 // console.log(333338991011111 < 999999999999999);
@@ -36,3 +36,21 @@ console.log(Math.floor(Math.random() *   2 + 2))
     
     
 // }
+
+// let rodadas = 0
+// let aumentou = false
+
+// function Rodadas(){
+//     console.log('Rodadas: ', rodadas);
+//     rodadas++
+//     aumentou = true
+// }
+// Rodadas()
+
+// if (aumentou){
+//     console.log('SUBIU');
+// } else{
+//     console.log('deu no mesmo')
+// }
+
+console.log(Math.floor(Math.random() * 9 + 1));
