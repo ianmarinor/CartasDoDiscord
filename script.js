@@ -154,8 +154,10 @@ function colocarInfoNoWrap() {
       energia: energia.energiaTotal + integrante.emoji,
       energia2: energia.energiaTotal * criticoTag.multi + integrante.emoji,
       energiaObj: energia.energiaTotal * criticoTag.multi,
+      fullEnergia: energia,
       poder: 'hidden' ,
       seed: seedObj._seedString,
+      emoji: integrante.emoji,
       
 
       isCritico:{
@@ -198,17 +200,19 @@ function colocarInfoNoWrap() {
       cargo: especial.descricao,
       energia: especial.energia + especial.emoji,
       energia2: especial.pontoEspecial + especial.emojiEsp,
+      fullEnergia: {energiaTotal: especial.energia},
       energiaObj: especial.energia,
       poder: especial.poder,
+      acao: especial.acao,
       seed: seedObj._seedString,
-
+      emoji: especial.emoji,
       isCritico:{
         criticoNome: '',
         criticoVariante: '',
         criticoCidade:'',
         criticoCarta: '',
         criticoEnergia: '',
-        criticoEnergia2: '',
+        criticoEnergia2: especial.css.ataqueNovo,
         criticoEnergia2FontSize: especial.css.energia2,
         criticoEnergia2Critico: ''
       },
@@ -422,6 +426,10 @@ if(carta1.id == 'empty1' && seedDiferente || baralho.cartaId == 'monark'){
     variante1.style.fontSize = cloneBaralho.cssVariante.varianteFontSize
     if(cartaIsEspecial){
       action1.style.visibility = cloneBaralho.poder
+        if(cloneBaralho.acao == true){
+
+          action1.addEventListener('click', acaoTenica)
+        }
     
     }
     objCarta1 = cloneBaralho
@@ -655,6 +663,47 @@ function moverCartaMonar(){
 //
 //
 ////////////////////////////////////////////////
+
+
+function acaoTenica(){
+
+
+  if(objCarta1.cidade != '' && objCarta1.isEmpty == false){
+    objCarta1.energiaObj += baralho.energia
+    console.log('juj')
+  }
+
+  if(objCarta2.cidade != '' && objCarta2.isEmpty == false){
+    objCarta2.energiaObj += baralho.energia
+    console.log('juj')
+  }
+  if(objCarta3.cidade != '' && objCarta3.isEmpty == false){
+    objCarta3.energiaObj += baralho.energia
+    console.log('juj')
+  }
+  if(objCarta4.cidade != '' && objCarta4.isEmpty == false){
+    objCarta4.energiaObj += baralho.energia
+    console.log('juj')
+  }
+  console.log('juj')
+}
+
+
+function distruirPontos(){
+    ataque1.innerHTML = objCarta1.fullEnergia.energiaTotal +  objCarta1.emoji
+    novoAtaque1.innerHTML =  objCarta1.energiaObj  +  objCarta1.emoji
+
+    ataque2.innerHTML = objCarta2.fullEnergia.energiaTotal +  objCarta2.emoji
+    novoAtaque2.innerHTML =  objCarta2.energiaObj  +  objCarta2.emoji
+
+    ataque3.innerHTML = objCarta3.fullEnergia.energiaTotal +  objCarta3.emoji
+    novoAtaque3.innerHTML =  objCarta3.energiaObj  +  objCarta3.emoji
+
+    ataque4.innerHTML = objCarta4.fullEnergia.energiaTotal +  objCarta4.emoji
+    novoAtaque4.innerHTML =  objCarta4.energiaObj  +  objCarta4.emoj4
+
+  
+}
 
 function criarBtn() {
   //
@@ -916,10 +965,24 @@ function criarBtn() {
   }
 }
 
-export let objCarta1 = {isEmpty: true,energiaObj:0,seed:0}
-export let objCarta2 = {isEmpty: true,energiaObj:0,seed:0}
-export let objCarta3 = {isEmpty: true,energiaObj:0,seed:0}
-export let objCarta4 = {isEmpty: true,energiaObj:0,seed:0}
+
+let objCarta1 = {isEmpty: true,energiaObj:0,seed:0,cidade:'',energia:'', fullEnergia:{energiaTotal: ''}, emoji: ''}
+let objCarta2 = {isEmpty: true,energiaObj:0,seed:0,cidade:'',energia:'', fullEnergia:{energiaTotal: ''}, emoji: ''}
+let objCarta3 = {isEmpty: true,energiaObj:0,seed:0,cidade:'',energia:'', fullEnergia:{energiaTotal: ''}, emoji: ''}
+let objCarta4 = {isEmpty: true,energiaObj:0,seed:0,cidade:'',energia:'', fullEnergia:{energiaTotal: ''}, emoji: ''}
+
+let carta1NotSpec = objCarta1.cidade != '' 
+let carta2NotSpec = objCarta2.cidade != '' 
+let carta3NotSpec = objCarta3.cidade != '' 
+let carta4NotSpec = objCarta4.cidade != '' 
+
+// function acaoTenica(){
+//   if(carta1NotSpec){
+//     objCarta1.energiaTotal += 
+//   }
+// }
+
+
 
 
 
@@ -1151,7 +1214,9 @@ function tudo() {
 
     criarInvOne()
     moverCartaMonar()
+    distruirPontos()
     somaPontos()
+    // tenica.acaoTenica()
 
     DEBUG && console.log("no tudo CRITICO-TAG", criticoTag);
     DEBUG && console.log("no tudo BARALHO", baralho);

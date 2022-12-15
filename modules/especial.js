@@ -6,7 +6,10 @@ let seedString = seedObj._seedString;
 let seed2 = seedString[2]
 let seed3 = seedString[3]
 
-
+let objCarta1
+let objCarta2
+let objCarta3
+let objCarta4
 
 export let cartaNaoEspecial;
 
@@ -80,6 +83,9 @@ export let especiais = {
     emoji: "👑",
     emojiEsp: "",
     retrato: "url('pics/tenica.webp')",
+    isCritico: {
+      criticoEnergia2: 'hidden'
+    },
     
     css:{
       cargoPFontSize: '1.4em',
@@ -91,14 +97,14 @@ export let especiais = {
       epColor: '',
       epFontSize: '',
 
-      ataqueNovo: 'visible',
+      ataqueNovo: 'hidden',
       ataque: 'none',
       ataqueNovoFontSize: '',
       cartaBorder: '',
       energiaVisible: ''
-
-      
-    }
+    },
+    acao: true
+  
   },
 
   speaker: {
@@ -114,6 +120,9 @@ export let especiais = {
     emoji: "&#9889;",
     emojiEsp: "",
     retrato: "url('pics/SPEAKER.webp')",
+    isCritico: {
+      criticoEnergia2: 'hidden'
+    },
     css:{
       cargoPFontSize: '',
       cargoPFontWeight: "",
@@ -310,3 +319,6 @@ export function escolherEspecial(teste) {
   }
 
 
+function acaoTenica(){
+  console.log('DEU CERTO!!')
+}
