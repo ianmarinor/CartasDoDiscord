@@ -97,6 +97,9 @@ li{
 /* ************************* */
 /* CARTAS VARIACOES */
 /* ************************* */
+
+
+
 #carta{
     display: none;
     /* background-color: #ffffff; */
@@ -476,19 +479,7 @@ p{
   
 }
 
-#empty{
-        display: none;
-        /* background-color: #ffffff; */
-        height: var(--tamanhoCartaHeight);
-        width: var(--tamanhoCartaWidth);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        border-radius: 15px;
-        position: relative;
-        /* border: 1px solid #020101; */
-}
+
 
 .critico{
     animation: shake 1s;

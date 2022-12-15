@@ -7,6 +7,7 @@ import {
   abelhaLowHp,
   frasesAbelha,
   comunistaPE,
+  frasesComuna
 } from "./modules/especial.js";
 
 let versaoHTML = document.getElementById("versao");
@@ -1448,6 +1449,10 @@ function criarBtn() {
                       parseInt(pontoEstatal) * 2 +
                       "☭";
                       inv.children[j].children[3].children[1].style.color = 'red'
+                      inv.children[j].children[2].innerHTML = frasesComuna()
+                      inv.children[j].children[2].fontSize = '1em'
+                      inv.children[j].children[2].style.color = 'red'
+
 
 
                     somaPontos();
@@ -1458,7 +1463,7 @@ function criarBtn() {
                       ) +
                       parseInt(pontoEstatal) + "☭";
                       
-                      inv.children[j].children[3].children[1].style.color = 'red'
+                      
                     somaPontos();
                   }
                 } else {
@@ -1473,6 +1478,9 @@ function criarBtn() {
                       ) +
                       parseInt(pontoEstatal) * 2 + "☭";
                       inv.children[j].children[3].children[0].style.color = 'red'
+                      inv.children[j].children[2].innerHTML = frasesComuna()
+                      inv.children[j].children[2].fontSize = '1em'
+                      inv.children[j].children[2].style.color = 'red'
                       
 
                     somaPontos();
@@ -1482,7 +1490,7 @@ function criarBtn() {
                         inv.children[j].children[3].children[0].textContent
                       ) +
                       parseInt(pontoEstatal) + "☭";
-                      inv.children[j].children[3].children[0].style.color = 'red'
+                      
                   somaPontos();
                 }
               }
@@ -1578,28 +1586,29 @@ function abelha() {
 let btnReset = document.getElementById("btnReset");
 
 
-
+let empty = document.createElement("div")
+empty.id = 'empty'
 
 
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit1") {
-    deleteInvOne(0);
+    deleteInvOne(0)
   }
 });
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit2") {
-    deleteInvOne(1);
+    deleteInvOne(1)
   }
 });
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit3") {
-    deleteInvOne(2);
+    deleteInvOne(2)
   }
 });
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit4") {
-    deleteInvOne(3 );
+    deleteInvOne(3)
   }
 });
 
@@ -1926,3 +1935,4 @@ window.onload = (event) =>{
 }
 
 // setInterval(()=>arenaP.innerHTML = totalClicks + " CARTAS", 100)
+11
