@@ -1692,7 +1692,7 @@ cartaParaMover.addEventListener("click", moverCarta);
 document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
-      setTimeout(moverCarta, 200);
+      moverCarta()
     }
   }
 });
@@ -1704,7 +1704,7 @@ inv.addEventListener("click", deletarDeck);
 btnReset.addEventListener("click", resetarDeck);
 
 // DECK COMECA COM 4 CARTAS
-let teclaDeckPronto = "KeyQ";
+let teclaDeckPronto = "KeyG";
 function deckPronto() {
   resetarDeck();
   moverCarta();
