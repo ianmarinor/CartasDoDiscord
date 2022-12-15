@@ -372,10 +372,10 @@ let pontoPoderMinistro = () =>
   Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 111); //51 a 60
 
 let pontoPoderPrimeMinister = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 130); // 70 a 80
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 192); // 70 a 80
 
 let pontoPoderRNGPremioMarino = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 270); // 121 a 130
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 240); // 121 a 130
 
 let pontoVarianteValor = 0;
 function pontoVariante() {
@@ -825,12 +825,12 @@ function moverCarta() {
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   let customOff = getSeed.className == "customOff";
 
-  let cartaNotMonark = copyCard.id == "carta-monark";
+  let cartaNotMonark = copyCard.id != "carta-monark";
 
   let PodeMover =
-    (!seedObj._isSeedReal && cartaNotEspecial) ||
+    (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
     (!seedObj._isSeedReal && cartaNotMonark) ||
-    (seedObj._isSeedReal && !seedObj._isPutByPlayer);
+    (seedObj._isSeedReal && !seedObj._isPutByPlayer)
 
   let naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
 
@@ -1746,13 +1746,17 @@ function tudo() {
     abelha();
     blockInv();
     console.log("rodadas: ", rodadas);
+    // if(totalClicks == 1){button.style.backgroundColor = "red"  
+    // button.innerHTML = "0 CARTAS";}
   } else {
     showVersion();
+    button.style.backgroundColor = "red"  
+    button.innerHTML = "0 CARTAS";
 
-    button.style.backgroundColor = "red";
-    button.innerHTML = "0 CARTAS"; 
-  }
-}
+    
+   
+  
+  }}
 let aumentou = false;
 function clicks() {
   if (!seedObj._isPutByPlayer) {
