@@ -38,7 +38,6 @@ export function frasesAbelha() {
 let frasesComunista = [
   "PAZ, PAO E TERRA",
   "HASTA LA REVOLUCION!",
-  "OLAGUSTAVOMACHADOORIENTACAOMARXISTA",
   "UNI-VOS!",
   "PAZ ENTRE NOS, GUERRA AOS SENHORES",
   'ТОВАРИЩ!',

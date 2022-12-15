@@ -11,7 +11,7 @@ import {
 } from "./modules/especial.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.3.15";
+let versao = "Alpha 3.15.1";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -375,7 +375,7 @@ let pontoPoderPrimeMinister = () =>
   Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 130); // 70 a 80
 
 let pontoPoderRNGPremioMarino = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 170); // 121 a 130
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 270); // 121 a 130
 
 let pontoVarianteValor = 0;
 function pontoVariante() {
@@ -1750,7 +1750,7 @@ function tudo() {
     showVersion();
 
     button.style.backgroundColor = "red";
-    button.innerHTML = "0 CARTAS";
+    button.innerHTML = "0 CARTAS"; 
   }
 }
 let aumentou = false;
