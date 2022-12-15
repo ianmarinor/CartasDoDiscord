@@ -9,7 +9,7 @@ import {
 } from "./modules/especial.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.4";
+let versao = "Alpha 1.3.14";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -379,7 +379,7 @@ let pontoVarianteValor = 0;
 function pontoVariante() {
   if (variante != "") {
     return (pontoVarianteValor = Math.floor(
-      parseInt(seedString[0]) + parseInt(seedString[1]) + 10 * 5 // 50 a 140
+      parseInt(seedString[0]) + parseInt(seedString[1]) + 25 * 5 // 125 a 215
     ));
   } else {
     return (pontoVarianteValor = 0);
@@ -706,11 +706,7 @@ function colocarInfoNoWrap() {
       varianteP.style.fontSize = "0.86em";
       // varianteP.style.textShadow = '-2px 5px 5px #ffffff'
     } else if (novaCarta._variante === "ixqueiro") {
-      varianteP.innerHTML =
-        "&#127940;" +
-        "CHIQUEIRO, " +
-        novaCarta._variante.toUpperCase() +
-        "&#127940;";
+      varianteP.innerHTML = '🍲 NEFEIIXTUU 🍲'
       cartaP.style.color = " #d8fbb5";
       varianteP.style.fontSize = "1em";
 
@@ -740,7 +736,7 @@ function colocarInfoNoWrap() {
       cartaP.style.border = "3px  #27ebe2   solid";
       varianteP.style.fontSize = "0.99em";
     } else if (novaCarta._variante === "quimico") {
-      varianteP.innerHTML = "🐶 O PUGO 🐶";
+      varianteP.innerHTML = "🛑 PARA DE FALAR 🛑";
       cartaP.style.color = "white";
       cartaP.style.backgroundImage = 'url("pics/variantes/varianteJunks.gif")';
       cartaP.style.border = "3px  white   solid";
@@ -1407,6 +1403,16 @@ function criarBtn() {
       }
 
       function cartaTenica(e) {
+
+        function adicionarCLiquesTenica(){
+          if(totalClicks>50){
+            true
+          } else {
+            totalClicks = 50
+          }
+          arenaP.innerHTML = totalClicks + " CARTAS";
+        }
+
         let varianteTenica = e.target.offsetParent;
 
         varianteTenica.children[3].children[2].style.visibility = "hidden";
@@ -1423,16 +1429,19 @@ function criarBtn() {
             poderNovoCartaPack.textContent =
               parseInt(poderNovoCartaPack.textContent) +
               parseInt(varianteTenica.children[3].children[0].textContent) +
-              "👑";
+              "👑"
+              adicionarCLiquesTenica()
+              
           } else {
             poderCartaPack.textContent =
               parseInt(poderCartaPack.textContent) +
               parseInt(varianteTenica.children[3].children[0].textContent) +
-              "👑";
+              "👑"
+              adicionarCLiquesTenica()
           }
         }
 
-        for (j = 0; j < 4; j++) {
+        for (let j = 0; j < 4; j++) {
           if (
             inv.children[j].id != "especial-click" &&
             inv.children[j].id != "empty" &&
@@ -1443,12 +1452,14 @@ function criarBtn() {
               inv.children[j].children[3].children[1].textContent =
                 parseInt(inv.children[j].children[3].children[1].textContent) +
                 parseInt(varianteTenica.children[3].children[0].textContent) +
-                "👑";
+                "👑"
+                adicionarCLiquesTenica()
             } else {
               inv.children[j].children[3].children[0].textContent =
                 parseInt(inv.children[j].children[3].children[0].textContent) +
                 parseInt(varianteTenica.children[3].children[0].textContent) +
-                "👑";
+                "👑"
+                adicionarCLiquesTenica()
             }
           }
         }
