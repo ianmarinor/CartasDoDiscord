@@ -649,7 +649,7 @@ function colocarInfoNoWrap() {
       cargoP.innerHTML = "&nbsp;" + "monark" + "&#128169;";
       retratoP.style.border = "";
     }else if (novaCarta._cargo === "abelha") {
-      cargoP.innerHTML = "bzzzzzzzz";
+      cargoP.innerHTML = "ABELHA";
       retratoP.style.border = "";
     }
      else {
