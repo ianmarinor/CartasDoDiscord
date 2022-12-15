@@ -5,7 +5,7 @@ import {
   abelhaDecrease,
   abelhaDecreaseComTuru,
   abelhaLowHp,
-  frasesAbelha
+  frasesAbelha,
 } from "./modules/especial.js";
 
 let versaoHTML = document.getElementById("versao");
@@ -657,7 +657,7 @@ function colocarInfoNoWrap() {
     cargoP.style.fontWeight = "bolder";
     cargoP.innerHTML = "bzzzz....";
     // cargoP.style.color = "black";
-    retratoP.style.border = '2px solid #4d1a00'
+    retratoP.style.border = "2px solid #4d1a00";
     // ataqueP.style.color = "black";
     ataqueP.style.fontSize = "1.4em";
     ataqueP.style.fontWeight = "bold";
@@ -671,7 +671,7 @@ function colocarInfoNoWrap() {
 
   //CARTAS VARIANTES
   if (novaCarta._variante != "") {
-    // actionP.style.visibility = 'visible'
+    // actionP.style.visibility = 'hidden'
     varianteP.style.fontFamily = "Righteous";
     varianteP.style.textShadow = "-2px 5px 5px #010101";
     varianteP.style.fontSize = "1.1em";
@@ -706,7 +706,7 @@ function colocarInfoNoWrap() {
       varianteP.style.fontSize = "0.86em";
       // varianteP.style.textShadow = '-2px 5px 5px #ffffff'
     } else if (novaCarta._variante === "ixqueiro") {
-      varianteP.innerHTML = '🍲 NEFEIIXTUU 🍲'
+      varianteP.innerHTML = "🍲 NEFEIIXTUU 🍲";
       cartaP.style.color = " #d8fbb5";
       varianteP.style.fontSize = "1em";
 
@@ -807,10 +807,8 @@ function moverCarta() {
       ) {
         if (inv.children[1].id == "empty") {
           if (
-            (copyCard.children[0].children[1].textContent != "" &&
-              copyCard.id != "abelha") ||
-            (copyCard.children[0].children[3].textContent != "" &&
-              copyCard.id != "abelha")
+            copyCard.children[0].children[3].textContent != "" &&
+            copyCard.id != "abelha"
           ) {
             copyCard.children[3].children[2].style.visibility = "visible";
           }
@@ -827,8 +825,7 @@ function moverCarta() {
           seedCopyCard != inv.children[1].children[4].textContent
         ) {
           if (
-            (copyCard.children[0].children[1].textContent != "" &&
-              copyCard.id != "abelha") ||
+            
             (copyCard.children[0].children[3].textContent != "" &&
               copyCard.id != "abelha")
           ) {
@@ -848,8 +845,7 @@ function moverCarta() {
           seedCopyCard != inv.children[2].children[4].textContent
         ) {
           if (
-            (copyCard.children[0].children[1].textContent != "" &&
-              copyCard.id != "abelha") ||
+            
             (copyCard.children[0].children[3].textContent != "" &&
               copyCard.id != "abelha")
           ) {
@@ -870,8 +866,7 @@ function moverCarta() {
       //     copyCard.children[3].children[2].style.visibility = 'visible'
       // }
       if (
-        (copyCard.children[0].children[1].textContent != "" &&
-          copyCard.id != "abelha") ||
+        
         (copyCard.children[0].children[3].textContent != "" &&
           copyCard.id != "abelha")
       ) {
@@ -1206,99 +1201,6 @@ function criarBtn() {
       ) {
         //
 
-        // PODER VARIANTES
-        // se nao for especial
-        if (
-          inv.children[i].children[0].children[1].textContent != "" &&
-          inv.children[i].children[0].id != "foi"
-        ) {
-          inv.children[i].children[3].children[2].addEventListener(
-            "click",
-            testinho
-          );
-          inv.children[i].children[0].id = "foi";
-        }
-
-        // essa funçao se ativa quando clico no butao das cartas variante no deck
-        function testinho(e) {
-          let semBoost = cartaParaMover.children[3].children[0].id == "";
-          let boostar = (cartaParaMover.children[3].children[0].id = "boost");
-          let poderCartaPack = cartaParaMover.children[3].children[0];
-          let poderNovoCartaPack = cartaParaMover.children[3].children[1];
-          let cartaNaoEspecial =
-            cartaParaMover.children[0].children[3].textContent == "";
-          let cartaNaoVariante =
-            cartaParaMover.children[0].children[1].textContent == "";
-          let cartaNaoMonark = cartaParaMover.id != "carta-monark";
-          // let poderCartaInv = inv.children[i].children[3].children[2]
-
-          // se a carta para mover nao for especial
-          if (
-            cartaNaoEspecial &&
-            cartaNaoVariante &&
-            cartaNaoMonark &&
-            semBoost
-          ) {
-            let cartaVariante = e.target.offsetParent;
-            let emojiVariante = "🌟";
-            //
-
-            let cartaVariantePoderVelho = cartaVariante.children[3].children[0];
-            //
-
-            let cartaVariantePoderNovo = cartaVariante.children[3].children[1];
-            //
-
-            let varianteTemPoderNovo =
-              cartaVariante.children[3].children[1].textContent != "";
-            //
-
-            // a o butao fica invisivel quando clicado
-            e.target.style.visibility = "hidden";
-
-            //se nao CartaPMover NAO tiver poder novo
-            if (poderNovoCartaPack.textContent == "") {
-              if (varianteTemPoderNovo) {
-                // transforme poder velho da CartaPack em novo da inv
-                poderCartaPack.textContent =
-                  parseInt(cartaVariantePoderNovo.textContent) +
-                  parseInt(poderCartaPack.textContent) +
-                  emojiVariante;
-                boostar;
-
-                // se nao, transforme poder velho CartaPMover em poder velho inv
-              } else {
-                // transaforme o poder velho da CartaPack no poder velho da carta inv 0
-                poderCartaPack.textContent =
-                  parseInt(cartaVariantePoderVelho.textContent) +
-                  parseInt(poderCartaPack.textContent) +
-                  emojiVariante;
-                boostar;
-              }
-            }
-
-            // se carta para mover TIVER poder novo
-            else {
-              // e se a carta inv tiver poder novo
-              if (varianteTemPoderNovo) {
-                // transforme poder novo da CartaPack em novo da inv
-                poderNovoCartaPack.textContent =
-                  parseInt(cartaVariantePoderNovo.textContent) +
-                  parseInt(poderNovoCartaPack.textContent) +
-                  emojiVariante;
-                boostar;
-              } else {
-                // transforme o poder novo da CartaPack no poder velho da inv 0
-                poderNovoCartaPack.textContent =
-                  parseInt(cartaVariantePoderVelho.textContent) +
-                  parseInt(poderNovoCartaPack.textContent) +
-                  emojiVariante;
-                boostar;
-              }
-            }
-          }
-        }
-
         //   PODER speaker
         if (
           inv.children[i].id == "carta-speaker" &&
@@ -1403,12 +1305,11 @@ function criarBtn() {
       }
 
       function cartaTenica(e) {
-
-        function adicionarCLiquesTenica(){
-          if(totalClicks>50){
-            true
+        function adicionarCLiquesTenica() {
+          if (totalClicks > 50) {
+            true;
           } else {
-            totalClicks = 50
+            totalClicks = 50;
           }
           arenaP.innerHTML = totalClicks + " CARTAS";
         }
@@ -1429,15 +1330,14 @@ function criarBtn() {
             poderNovoCartaPack.textContent =
               parseInt(poderNovoCartaPack.textContent) +
               parseInt(varianteTenica.children[3].children[0].textContent) +
-              "👑"
-              adicionarCLiquesTenica()
-              
+              "👑";
+            adicionarCLiquesTenica();
           } else {
             poderCartaPack.textContent =
               parseInt(poderCartaPack.textContent) +
               parseInt(varianteTenica.children[3].children[0].textContent) +
-              "👑"
-              adicionarCLiquesTenica()
+              "👑";
+            adicionarCLiquesTenica();
           }
         }
 
@@ -1452,14 +1352,14 @@ function criarBtn() {
               inv.children[j].children[3].children[1].textContent =
                 parseInt(inv.children[j].children[3].children[1].textContent) +
                 parseInt(varianteTenica.children[3].children[0].textContent) +
-                "👑"
-                adicionarCLiquesTenica()
+                "👑";
+              adicionarCLiquesTenica();
             } else {
               inv.children[j].children[3].children[0].textContent =
                 parseInt(inv.children[j].children[3].children[0].textContent) +
                 parseInt(varianteTenica.children[3].children[0].textContent) +
-                "👑"
-                adicionarCLiquesTenica()
+                "👑";
+              adicionarCLiquesTenica();
             }
           }
         }
@@ -1476,22 +1376,19 @@ function abelha() {
   console.log("temTuru: ", temTuru);
   for (let i = 0; i < 4; i++) {
     if (inv.children[i].id != "empty") {
-        
       console.log(inv.children[i].children[0].children[0].textContent);
       console.log("KKKKKKKKKKK");
 
       if (inv.children[i].id == "abelha") {
-                inv.children[i].className = ''
-                inv.children[i].children[1].style.border = '2px solid #4d1a00'
-                inv.children[i].style.border = ''
-                inv.children[i].style.color = '#ffd11a'
-        
+        inv.children[i].className = "";
+        inv.children[i].children[1].style.border = "2px solid #4d1a00";
+        inv.children[i].style.border = "";
+        inv.children[i].style.color = "#ffd11a";
 
         let pontoAbelha = inv.children[i].children[3].children[0];
 
         if (parseInt(pontoAbelha.textContent) <= 0) {
-
-          inv.children[i].className = ''
+          inv.children[i].className = "";
 
           inv.children[i].remove();
           inv.appendChild(document.createElement("div")).id = "empty";
@@ -1501,43 +1398,44 @@ function abelha() {
           parseInt(pontoAbelha.textContent) > 15
         ) {
           pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) - abelhaLowHp() + '🐝'
-            somaPontos()
+            parseInt(pontoAbelha.textContent) - abelhaLowHp() + "🐝";
+          somaPontos();
         } else if (parseInt(pontoAbelha.textContent) <= 15) {
           pontoAbelha.textContent = parseInt(pontoAbelha.textContent) - 1;
         } else {
           pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) - abelhaDecrease() + '🐝'
-            somaPontos()
+            parseInt(pontoAbelha.textContent) - abelhaDecrease() + "🐝";
+          somaPontos();
         }
 
         for (let j = 0; j < 4; j++) {
           if (inv.children[j].id != "empty") {
             if (inv.children[j].children[0].children[0].textContent == "TURU") {
-
-              if(inv.children[i].id == 'abelha'){
-                inv.children[i].classList.add('critico')
-                inv.children[i].children[1].style.border = '1px solid red'
-                inv.children[i].style.border = '1px solid red'
-                inv.children[i].style.color = 'red'
+              if (inv.children[i].id == "abelha") {
+                inv.children[i].classList.add("critico");
+                inv.children[i].children[1].style.border = "1px solid red";
+                inv.children[i].style.border = "1px solid red";
+                inv.children[i].style.color = "red";
               }
 
-              if(parseInt(pontoAbelha.textContent) > 76){
+              if (parseInt(pontoAbelha.textContent) > 76) {
                 pontoAbelha.textContent =
-                parseInt(pontoAbelha.textContent) - abelhaDecreaseComTuru() + '🐝'
-                somaPontos()
+                  parseInt(pontoAbelha.textContent) -
+                  abelhaDecreaseComTuru() +
+                  "🐝";
+                somaPontos();
                 console.log("TEM TURUR E ABELHA");
               } else {
-                if(inv.children[i].id == 'abelha'){
-                  inv.children[i].children[1].style.backgroundImage = "url('pics/abelhaMorrendo.jpg')"
-                  inv.children[i].children[2].innerHTML = frasesAbelha()
-                  inv.children[i].children[2].style.fontSize = '1em'
+                if (inv.children[i].id == "abelha") {
+                  inv.children[i].children[1].style.backgroundImage =
+                    "url('pics/abelhaMorrendo.jpg')";
+                  inv.children[i].children[2].innerHTML = frasesAbelha();
+                  inv.children[i].children[2].style.fontSize = "1em";
                 }
-                pontoAbelha.textContent = 0 + '☠'
+                pontoAbelha.textContent = 0 + "☠";
 
-                somaPontos()
+                somaPontos();
               }
-              
             }
           }
         }
