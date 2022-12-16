@@ -35,7 +35,10 @@ body{
     flex-direction: column;
     background-color: #121212;
 }
-
+section{
+    display: none;
+    
+}
 main {
     display: grid;
     grid-template-areas: 
@@ -510,6 +513,8 @@ p{
 
   @media only screen and (max-width: 900px){
     
+
+  
     /* #pack{
         display: none;
     } */
@@ -754,7 +759,26 @@ p{
         align-self: end;
         /* grid-area: btn; */
     }
-  }
+  
 
+    @media (orientation: portrait){
+  main{
+    display: none;
+  }
+  section{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    margin-top: 50px;
+    font-size: 40px;
+    text-align: center;
+    color: #19ee11;
+
+
+}
+}
+
+}
 
 
