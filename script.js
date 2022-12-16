@@ -11,7 +11,7 @@ import {
 } from "./modules/especial.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 3.15.3";
+let versao = "Alpha 1.4";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
