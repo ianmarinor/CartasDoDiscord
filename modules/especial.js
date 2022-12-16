@@ -55,3 +55,7 @@ export function comunistaPE() {
 export function frasesComuna(){
  return frasesComunista[Math.floor(Math.random() * frasesComunista.length)]
 }
+let premioMonark
+export let efeitoPremioMonark = {
+  efeito: {status: true, css: {nome: 'Premio Monark', imagem:"url('/pics/retratoPremioMonark.gif')"}, rodadas:10,}
+}
