@@ -596,6 +596,7 @@ p{
     #pack > div{
         height: 100%;
         width: 100%;
+        border-radius: 8px;
     }
     
 
@@ -649,7 +650,7 @@ p{
 
     .cidade{
         /* background-color: #6637be; */
-        /* align-self: flex-end; */
+        justify-self: center;
         font-size: 80%;
         
     }
@@ -724,6 +725,13 @@ p{
     #inv > div{
         height: 100%;
         width: 100%;
+        border-radius: 8px;
+    }
+
+    #inv > div > * .cidade{
+        /* display: none; */
+        text-align: center;
+        font-size: 75%;
     }
 
     #G{
