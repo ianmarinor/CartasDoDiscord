@@ -1,4 +1,4 @@
-import { seed } from "./module.js";
+import { generateSeed } from "./modules/seedFabricator.js";
 import {
   tenicaEnergia,
   abelhaEnergia,
@@ -29,60 +29,6 @@ function seedRNG() {
 
 let input = "";
 
-// function seed(seed,isReal,seedFalsa,isPutByPlayer ) {
-//   return{
-//     _seed: seed,
-//     _seedString: seed.toString(),
-//     _isSeedReal: isReal,
-//     _seedFalsaInput: seedFalsa,
-//     _seedLength:  seed.toString().length,
-//     _isPutByPlayer: isPutByPlayer
-
-//   }
-// }
-
-function generateSeed(input) {
-  let seedReal =
-    parseInt(input) >= 10000000000000 && parseInt(input) <= 1000000000000000000;
-  //
-  //
-  //se for colocada um seed real
-  if (input.length > 9) {
-    if (seedReal) {
-      // return parseInt(input);
-
-      return seed(parseInt(input), true, "", true);
-
-      // se for colocada uma seed falsa
-    } else {
-      if (input.length >= 3 && input.length <= 25) {
-        let sum = 1;
-        for (let i = 0; i < input.length; i++) {
-          sum = sum + input[i].charCodeAt();
-        }
-        let constanteSeedFalsa = 516515615165159;
-        let calculoSeedFalsa = sum * constanteSeedFalsa;
-
-        return seed(calculoSeedFalsa, false, input, true);
-      } else {
-        return seed(seedRNG(), true, "", false);
-      }
-    }
-  } else {
-    if (input.length >= 3 && input.length <= 25) {
-      let sum = 1;
-      for (let i = 0; i < input.length; i++) {
-        sum = sum + input[i].charCodeAt();
-      }
-      let constanteSeedFalsa = 516515615165159;
-      let calculoSeedFalsa = sum * constanteSeedFalsa;
-
-      return seed(calculoSeedFalsa, false, input, true);
-    } else {
-      return seed(seedRNG(), true, "", false);
-    }
-  }
-}
 
 // ***********************
 // LINK SEED TO ELEMENT
@@ -463,12 +409,17 @@ let varianteP = document.querySelector(".variante");
 let actionP = document.querySelector(".action");
 let novoAtaquerP = document.querySelector(".novoAtaque");
 let placarP = document.querySelector(".placar");
+let efeito1P = document.getElementById('efeito1')
+let efeito2P = document.getElementById('efeito2')
+let efeito3P = document.getElementById('efeito3')
+let efeito4P = document.getElementById('efeito4')
 //div poder
 let ataqueP = document.querySelector(".ataque");
 let defesaP = document.querySelector(".defesa");
 let especialP = document.querySelector(".especial");
 
 let seedP = document.querySelector(".seed");
+let seloP = document.getElementById('selo')
 //carta
 let cartaP = document.getElementById("carta");
 // input da seed cliente
@@ -530,8 +481,19 @@ function colocarInfoNoWrap() {
   varianteP.innerHTML = novaCarta._variante;
   especialP.innerHTML = novaCarta._especial;
   seedP.innerHTML = "&nbsp;" + seedString;
-  arenaP.innerHTML = totalClicks + " CARTAS";
-  placarP.innerHTML = totalPontos + " PONTOS";
+  
+  if(seedObj._isMarket){
+    seloP.innerHTML = '💰'
+  } else if (seedObj._isPutByPlayer){
+    seloP.innerHTML = '💬'
+  } else {
+    seloP.innerHTML = '🎲'
+  }
+
+
+
+  arenaP.innerHTML = totalClicks + " RODADAS";
+  placarP.innerHTML = totalPontos + " ⚡";
 
   if (novaCarta._especial != "") {
     cartaP.id = novaCarta._especial;
@@ -619,7 +581,8 @@ function colocarInfoNoWrap() {
     cargoP.innerHTML = "MONARK BAN!";
     retratoP.style.border = "2px dotted green";
     especialP.style.visibility = "hidden";
-    ataqueP.innerHTML =
+    // ataqueP.innerHTML =
+    cartaP.style.border = '2px solid #18d742'
       Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
   } else if (novaCarta._especial === "especial-tenica") {
     cargoP.style.fontFamily = "Cormorant Upright";
@@ -829,8 +792,8 @@ function moverCarta() {
 
   let PodeMover =
     (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
-    (!seedObj._isSeedReal && cartaNotMonark) ||
-    (seedObj._isSeedReal && !seedObj._isPutByPlayer)
+    (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
+    (seedObj._isMarket)
 
   let naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
 
@@ -1323,7 +1286,7 @@ function criarBtn() {
         varianteClique.children[3].children[2].style.visibility = "hidden";
         button.style.backgroundColor = "";
         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-        arenaP.innerHTML = totalClicks + " CARTAS";
+        arenaP.innerHTML = totalClicks + " RODADAS";
         varianteClique.remove();
         inv.appendChild(document.createElement("div")).id = "empty";
       }
@@ -1347,7 +1310,7 @@ function criarBtn() {
           } else {
             totalClicks = 50;
           }
-          arenaP.innerHTML = totalClicks + " CARTAS";
+          arenaP.innerHTML = totalClicks + " RODADAS";
         }
 
         let varianteTenica = e.target.offsetParent;
@@ -1710,11 +1673,11 @@ let rodadas = 0;
 function blockInv() {
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   let customOff = getSeed.className == "customOff";
-  let cartaNotMonark = copyCard.id == "carta-monark";
+  let cartaNotMonark = copyCard.id != "carta-monark";
   let PodeMover =
-    (!seedObj._isSeedReal && cartaNotEspecial) ||
-    (!seedObj._isSeedReal && cartaNotMonark) ||
-    (seedObj._isSeedReal && !seedObj._isPutByPlayer);
+    (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
+    (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
+    (seedObj._isMarket)
 
   if (!PodeMover || customOff) {
     inv.style.border = "10px double red";
@@ -1764,7 +1727,7 @@ function clicks() {
     rodadas++;
     aumentou = true;
 
-    arenaP.innerHTML = totalClicks + " CARTAS";
+    arenaP.innerHTML = totalClicks + " RODADAS";
   } else {
     aumentou = false;
   }
