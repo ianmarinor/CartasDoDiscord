@@ -21,6 +21,8 @@ export function aplicarEfeitos(){
     for (const key in efeitos) {
         
         
+
+
         }
     }
 
