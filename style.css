@@ -584,7 +584,7 @@ p{
                          "text  btn"
                          ;
          grid-template-columns: 1fr  3.5fr;
-         grid-template-rows: 4.7fr 1fr; 
+         grid-template-rows: 4.9fr 1fr; 
         /* align-items: center;
         justify-items: center;
         flex-direction: column;
@@ -640,7 +640,7 @@ p{
         margin-left: 5%;
     }
     #btn{
-        
+        margin-right: 2%;
         justify-self: end;
         grid-area: btn;
     }
