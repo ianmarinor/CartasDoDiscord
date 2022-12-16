@@ -53,7 +53,7 @@ main {
 nav{
     background-color: rgb(136, 74, 195);
     width: 100%;
-    height: 50px;
+    height: 100%;
     
     grid-area: nav;
 }
@@ -479,6 +479,14 @@ p{
   
 }
 
+#G{
+    display: none;
+    grid-area: pack;
+    width: 80%;
+    height: 13%;
+    align-self: end;
+    margin-bottom: 10%;
+}
 
 
 .critico{
@@ -500,37 +508,245 @@ p{
     100% { transform: translate(1px, -2px) rotate(-1deg); }
   }
 
-/* @media only screen and (max-width: 480px){
+  @media only screen and (max-width: 900px){
     
-    body{
+    /* #pack{
+        display: none;
+    } */
+
+    nav{
+        display: display;
+        background-color: rgb(136, 74, 195);
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        overflow-x: hidden;
+        height: 5%;
+        
+        grid-area: nav;
     }
     
-    nav{
+    main{
+        width: 800px;
+        height: 720px;
+        display: grid;
+        gap: 0.7%;
+
+        grid-template-areas:    
+                        "pack  inv"
+                         "text  btn"
+                         ;
+         grid-template-columns: 1fr  3.5fr;
+         grid-template-rows: 1fr 1fr; 
+        /* align-items: center;
+        justify-items: center;
+        flex-direction: column;
+        background-color: #121212;
+        background: linear-gradient(360deg, rgb(20, 1, 26) 18%, rgb(12, 12, 12) 61%);
+        grid-template-columns: 1fr 3fr;
+        grid-template-rows: 0.8fr 3fr 1fr; */
+    }
+    #texto{
+        font-size: 50%;
+        grid-area: text;
+        align-self: start;
+    }
+    #descr{
         display: none;
         
     }
-    .btn{
-        display: none;
-        width: 100%;
-        background-image: none;
-        background-color: #121212;
+    .wrap{
+        height: 20%;
+        font-size: 45%;
+        grid-area: inv;
+        align-self: end;
+        justify-self: start;
+        margin-left: 5%;
     }
-    
-    
-    #inv{
-        width: 50%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        justify-items: center;
-        align-items: center;
-        gap: 0px;
-        overflow: visible;
+    #btn{
+        
+        justify-self: end;
+        grid-area: btn;
+    }
+    #getseed{
+        
+        grid-area: btn;
+        align-self: center;
+    }
+    #btnReset{
+        grid-area: inv;
+        align-self: end;
+        margin-bottom: 5%;
+        
+    }
 
+
+
+    #pack{
+
+        /* justify-self: start; */
+        margin-top: 8%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: start;
+        height: 70%;
+        width: 85%;
+        grid-area: pack;
+    
     }
-} */
+
+    #pack > div{
+        height: 100%;
+        width: 100%;
+    }
+    
+
+    #empty1, #empty, #empty3, #empty4{
+        
+        height: 100%;
+        width: 100%;
+        
+        
+    }
+    .nameAndCidadeWrapper{
+        /* display: none; */
+        width: 100%;
+        height: 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nameAndCidadeWrapper1,.nameAndCidadeWrapper2,.nameAndCidadeWrapper3,.nameAndCidadeWrapper4{
+        /* display: none; */
+        width: 100%;
+        height: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nome, #nome1,#nome2,#nome3,#nome4 {
+    
+        font-size: 100%;
+        font-weight: 500;
+        
+        
+    }
+
+    .variante,#variante1,#variante2,#variante3,#variante4 {
+
+        width: 100%;
+    
+        text-align: center;
+        font-size: 55% !important;
+        font-weight: bold;
+        font-family: 'Righteous';
+        text-shadow: -2px 5px 5px #010101;
+        
+    }
+    
+
+    .cidade{
+        /* background-color: #6637be; */
+        /* align-self: flex-end; */
+        font-size: 80%;
+        
+    }
+    .cidade1,.cidade2,.cidade3,.cidade4{
+        /* background-color: #6637be; */
+        /* align-self: flex-end; */
+        font-size: 80%;
+        
+    }
+
+    .retrato{
+        display: block;
+         width: 70%;
+         height: 40%; 
+    
+        /* width: 70px;
+        height: 45px; */
+    
+        background-color: #4b4747;
+        border-radius: 5px;
+        /* background-size: 210px 124px; */
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    
+        border: #020101 2px solid;
+    }
+    #retrato1,#retrato2,#retrato3,#retrato4{
+        display: block;
+         width: 70%;
+         height: 35%; 
+    
+        /* width: 70px;
+        height: 45px; */
+    
+        background-color: #4b4747;
+        border-radius: 5px;
+        /* background-size: 210px 124px; */
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    
+        border: #020101 2px solid;
+    }
+
+
+    .cargo{
+        /* display: none; */
+        height: 13%;
+        font-size: 108%;
+        transform: rotate(-10deg);
+        margin-top: 10%;
+        align-self: center;
+    }
+    #cargo1,#cargo2,#cargo3,#cargo4{
+        /* background-color: #37be49; */
+        height: 10%;
+        font-size: 100%;
+        transform: rotate(-10deg);
+        margin: 10%;
+    }
+
+    #inv{
+    
+        /* padding: 10%; */
+        margin-top: 2%;
+        height: 70%;
+        width: 100%;
+        align-items: start;
+        align-self: start;
+      
+    }
+    
+    #inv > div{
+        height: 100%;
+        width: 100%;
+    }
+
+    #G{
+        border: none;
+        border-radius: 10px;
+        display: block;
+        grid-area: pack;
+        width: 80%;
+        height: 13%;
+        align-self: end;
+        margin-bottom: 10%;
+        background-color: #599ac6;
+    }
+    
+    #btn{
+        padding: 5px;
+        grid-area: inv;
+        margin-bottom: 5%;
+        height: 15%;
+        align-self: end;
+        /* grid-area: btn; */
+    }
+  }
+
 
 
