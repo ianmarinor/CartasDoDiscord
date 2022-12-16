@@ -77,8 +77,13 @@ li{
     color: rgb(213, 187, 238);;
 }
 
-#efeitoContainer{
+#wrapAndInv{
+    display: flex;
     grid-area: inv;
+}
+
+#efeitoContainer{
+    /* grid-area: inv; */
     height: 280px;
     width: 100px;
     margin-left: 4%;
@@ -517,7 +522,7 @@ p{
     grid-template-rows: 1fr;
     gap: 10px;
     overflow: hidden;
-    grid-area: inv;
+    /* grid-area: inv; */
 
     
     
@@ -594,33 +599,7 @@ p{
         grid-template-rows: 0.8fr 3fr 1fr; */
     }
 
-    #efeitoContainer{
-        height: 30px;
-        width: 150px;
-        grid-area: inv;
-        background-color: #353436;
-        color: #e70000;
-        align-self: end;
-        justify-self: center;
-        margin-bottom: 8%;
-        margin-left: 0;
-        border-radius: 2px;
-        border-style: 1px black solid;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        /* justify-self: center; */
     
-    }
-    #efeitoContainer > *{
-        height: 24px;
-        width: 30px;
-        background-color: #1d1d1e;
-        border: 1px solid  #242424;
-        /* margin: 10px; */
-    
-    }
 
     #texto{
         font-size: 50%;
@@ -794,12 +773,51 @@ p{
         font-size: 0.8em;
     }
 
-    #inv{
+    #wrapAndInv{
+        display: flex;
+        flex-direction: column-reverse;
+        grid-area: inv;
+        align-self: start;
+        margin-top: 10px;
+    }
+
+    #efeitoContainer{
+        height: 30px;
+        width: 150px;
+        grid-area: inv;
+        background-color: #353436;
+        color: #e70000;
+        /* align-self: end; */
+        justify-self: center;
+        /* margin-bottom: 8%; */
+        margin-left: 0;
+        border-radius: 2px;
+        border-style: 1px black solid;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        /* justify-self: center; */
+    }
     
+
+    #efeitoContainer > *{
+    height: 24px;
+    width: 30px;
+    background-color: #1d1d1e;
+    border: 1px solid  #242424;
+    /* margin: 10px; */
+    
+
+    }
+
+
+    #inv{
+        
         /* padding: 10%; */
-        margin-top: 2%;
-        height: 70%;
-        width: 100%;
+        /* margin-top: 2%; */
+        height: 220px;
+        width: 600px;
         align-items: start;
         align-self: start;
       
