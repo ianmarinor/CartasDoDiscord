@@ -1934,6 +1934,9 @@ document.addEventListener("keydown", (event) => {
     resetarDeck();
   }
 });
+
+document.getElementById('G').addEventListener("click", deckPronto)
+
 window.onload = (event) =>{
   tudo()
 }
