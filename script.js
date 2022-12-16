@@ -11,7 +11,7 @@ import {
   efeitoPremioMonark,
 } from "./modules/especial.js";
 
-import {aplicarEfeitos} from './aplicarEfeito.js';
+import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
 let versao = "Alpha 1.4";
@@ -450,10 +450,16 @@ function colocarInfoNoWrap() {
   cartaP.style.border = "none";
   cartaP.style.color = "";
   nomeP.style.fontFamily = "";
+  nomeP.style.fontSize = "24px";
+  nomeP.style.color = "black";
+  nomeP.className = "";
+
   actionP.style.visibility = "hidden";
   ataqueP.style.textDecorationLine = "";
+  ataqueP.style.fontWeight = "";
   ataqueP.style.fontFamily = "";
-  ataqueP.id = "";
+  ataqueP.style.visibility = "";
+  ataqueP.innerHTML = "";
   novoAtaquerP.innerHTML = "";
   novoAtaquerP.style.fontSize = "";
   novoAtaquerP.style.fontFamily = "";
@@ -790,34 +796,25 @@ function colocarInfoNoWrap() {
   }
 }
 export let rodadas = 0;
-export let efeitos = {
-  efeito1: { status: false, css: { nome: "", imagem: "" }, rodadas: 0 },
-  efeito2: { status: false, css: { nome: "", imagem: "" }, rodadas: 0 },
-  efeito3: { status: false, css: { nome: "", imagem: "" }, rodadas: 0 },
-  efeito4: { status: false, css: { nome: "", imagem: "" }, rodadas: 0 },
-};
+export let  efeitos ={ status: false, css: { nome: "", imagem: "" }, rodadas: 0 }
 
-let efeitoVazio = { status: false, css: { nome: "", imagem: "" }, rodadas: 0 }
+
+let efeitoVazio = { status: false, css: { nome: "", imagem: "" }, rodadas: 0 };
 
 function colocarEfeito() {
-  efeito1P.style.backgroundImage = efeitos.efeito1.css.imagem;
-  efeito2P.style.backgroundImage = efeitos.efeito2.css.imagem;
-  efeito3P.style.backgroundImage = efeitos.efeito3.css.imagem;
-  efeito4P.style.backgroundImage = efeitos.efeito4.css.imagem;
+  console.log("efeitos no objeto efeito", efeitos);
+  efeito1P.style.backgroundImage = efeitos.css.imagem;
 
-  
-  if(efeitos.efeito1.rodadas>0){
-    console.log('eu rodo o efeito');
-    efeitos.efeito1.rodadas--
+  if ( efeitos.rodadas > 0) {
+    console.log("eu rodo o efeito1");
+    efeitos.rodadas--;
   } else {
-    efeitos.efeito1 = efeitoVazio
-    console.log('tirei o efeito');
+    efeitos = efeitoVazio;
+    console.log("tirei o efeito1");
   }
 
-  
-  console.log('efeitos.efeito1.rodadas: ', efeitos.efeito1.rodadas);
-  
-
+  console.log("efeitos no objeto efeito", efeitos);
+  aplicarEfeitos();
 }
 
 function colocarInput() {
@@ -1539,35 +1536,22 @@ function criarBtn() {
 
       function premiomonark(e) {
         let premioMonark = e.target.offsetParent;
-        
 
-        
-      
-        for (const key in efeitos) {
-          if (efeitos[key].status == false) {
-            //coloca efeito
-            efeitos[key] = efeitoPremioMonark.efeito;
-            //apaga a carta
-            inv.children[i].remove();
-            inv.appendChild(document.createElement("div")).id = "empty";
-            colocarEfeito();
-            console.log("PM adicionado aos efeitos");
-            console.log(efeitos);
-          
-            break;
-          }
+        if (efeitos.status == false && totalPontos <50) {
+          //coloca efeito
+          efeitos = efeitoPremioMonark;
+          //apaga a carta
+          totalClicks +=  10 
+          premioMonark.remove();
+          inv.appendChild(document.createElement("div")).id = "empty";
+          tudo();
+          console.log("PM adicionado aos efeitos");
+          console.log("no event listener", efeitos);
         }
-        
       }
-
-
-
-
     }
   }
 }
-
-
 
 let temTuru;
 let ab = 3;
@@ -1768,8 +1752,6 @@ function resetarDeck() {
   getSeed.className = "";
 }
 
-
-
 /////// CRITICO
 
 function blockInv() {
@@ -1809,8 +1791,8 @@ function tudo() {
     clicks();
     console.log(aumentou);
     abelha();
-    colocarEfeito()
-    aplicarEfeitos()
+    colocarEfeito();
+    // aplicarEfeitos();
     blockInv();
     console.log("rodadas: ", rodadas);
     // if(totalClicks == 1){button.style.backgroundColor = "red"
@@ -1837,7 +1819,7 @@ function clicks() {
 }
 let totalPontos = 0;
 
-function somaPontos() {
+export function somaPontos() {
   let ponto0 = 0;
   let ponto1 = 0;
   let ponto2 = 0;
@@ -1904,7 +1886,7 @@ function somaPontos() {
   }
 
   totalPontos = ponto0 + ponto1 + ponto2 + ponto3;
-  placarP.innerHTML = totalPontos + " PONTOS";
+  placarP.innerHTML = totalPontos + " ⚡";
   //
   //
   //

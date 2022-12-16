@@ -105,8 +105,14 @@ li {
   width: 70%;
   background-color: #1d1d1e;
   border: 2px solid #242424;
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   /* margin: 10px; */
 }
+
+
 
 .arena {
   margin: 0.1em;
@@ -553,6 +559,12 @@ p {
   animation: shake 1s;
   animation-iteration-count: infinite;
 }
+.vanish {
+  animation: vanish 11s;
+  animation-iteration-count: 1;
+}
+
+
 
 @keyframes shake {
   0% {
@@ -612,6 +624,17 @@ p {
   100% {
     transform: translatey(0px) rotate(0deg);
     color: #1d1d1e;
+  }
+}
+
+@keyframes vanish {
+  0% {
+
+  opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 
