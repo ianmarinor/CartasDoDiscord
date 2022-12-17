@@ -11,7 +11,7 @@ import {
 } from "./modules/especial.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 3.15.3";
+let versao = "Alpha 1.3.15.4";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -938,15 +938,20 @@ function moverCartaMonark() {
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
 
-  //
+  
 
   if (seedObj._isPutByPlayer) {
     false;
   } else {
     if (copyCard.id === "carta-monark") {
-      if (inv.children[0].id === "empty" && copyCard.id === "carta-monark") {
+      if (inv.children[0].id === "empty" && copyCard.id == "carta-monark") {
+
+
         inv.replaceChild(copyCard, inv.children[0]);
         somaPontos();
+        
+
+
       } else if (
         inv.children[1].id === "empty" &&
         copyCard.id === "carta-monark" &&
