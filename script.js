@@ -904,6 +904,7 @@ let efeitoVazio = { status: false, css: { nome: "", imagem: "" }, rodadas: 0 };
 function colocarEfeito() {
   console.log("efeitos no objeto efeito", efeitos);
   efeito1P.style.backgroundImage = efeitos.css.imagem;
+  efeito1P.innerHTML = efeitos.rodadas;
 
   if (efeitos.rodadas > 0) {
     console.log("eu rodo o efeito1");
