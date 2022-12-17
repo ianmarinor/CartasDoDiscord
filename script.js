@@ -9,6 +9,7 @@ import {
   comunistaPE,
   frasesComuna,
   efeitoPremioMonark,
+  pontoSpeaker
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
@@ -618,6 +619,7 @@ function colocarInfoNoWrap() {
   if (novaCarta._especial === "carta-speaker") {
     retratoP.style.backgroundImage = "url('pics/speaker.webp')";
     nomeP.innerHTML = "&nbsp; SPEAKER";
+    ataqueP.innerHTML = pontoSpeaker() +  '⚡'
     cidadeP.innerHTML = "";
     cargoP.innerHTML = "MONARK BAN!";
     retratoP.style.border = "2px dotted green";
@@ -964,7 +966,7 @@ function moverCarta() {
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
 
-  if (PodeMover && naoMoviAinda) {
+  if (PodeMover && naoMoviAinda && totalClicks >0) {
   // if (true) {
     if (inv.children[0].id != "empty") {
       if (
@@ -1566,6 +1568,8 @@ function criarBtn() {
       }
 
       function cartaTenica(e) {
+
+        
         function adicionarCLiquesTenica() {
           if (totalClicks > 50) {
             true;
@@ -1574,10 +1578,12 @@ function criarBtn() {
           }
           arenaP.innerHTML = totalClicks + " RODADAS";
         }
-
+        
         let varianteTenica = e.target.offsetParent;
-
+        
+        console.log('listener da tenica funcionando');
         varianteTenica.children[3].children[2].style.visibility = "hidden";
+        console.log('listener da tenica funcionando');
 
         let poderCartaPack = cartaParaMover.children[3].children[0];
         let poderNovoCartaPack = cartaParaMover.children[3].children[1];

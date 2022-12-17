@@ -60,3 +60,7 @@ function premioMonark(){
 }
 export let efeitoPremioMonark = {
   status: true, css: {nome: 'premioMonark', imagem:"url('/pics/retratoPremioMonark.gif')"}, rodadas:0, efeito: premioMonark()}
+
+export function pontoSpeaker(){
+  return Math.floor(Math.random()*4+1)
+}
