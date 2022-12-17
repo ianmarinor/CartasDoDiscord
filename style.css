@@ -337,6 +337,7 @@ li {
   background-color: #7878de;
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
+  /* font-size: 2em; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -358,6 +359,7 @@ li {
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
   display: flex;
+  font-size: 1em;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
@@ -423,7 +425,7 @@ li {
     url("/pics/fundoPremioMonark.gif");
 
   /* background: url(); */
-
+  font-size: 120%;
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
   display: flex;
@@ -439,6 +441,8 @@ li {
   background-size: COVER;
   font-family: premiomonark;
 }
+
+
 #spy {
   /* background:  url(/pics/fundoPremioMonark.gif); */
   
@@ -510,7 +514,7 @@ li {
 
 .cargo {
   /* background-color: #37be49; */
-  font-size: 1.5em;
+  font-size: 1em;
   transform: rotate(-10deg);
   margin: 10px;
 }
@@ -796,7 +800,7 @@ p {
   .nameAndCidadeWrapper {
     /* display: none; */
     width: 100%;
-    height: 20%;
+    height: 36%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -855,8 +859,8 @@ p {
 
   .retrato {
     display: block;
-    width: 70%;
-    height: 45%;
+    width: 78%;
+    height: 40%;
 
     /* width: 70px;
         height: 45px; */
@@ -874,7 +878,7 @@ p {
   #retrato3,
   #retrato4 {
     display: block;
-    width: 70%;
+    width: 80%;
     height: 35%;
 
     /* width: 70px;
@@ -891,7 +895,7 @@ p {
 
   .cargo {
     /* display: none; */
-    height: 13%;
+    height: 8%;
     font-size: 108%;
     transform: rotate(-10deg);
     margin-top: 10%;

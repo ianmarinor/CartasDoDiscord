@@ -238,6 +238,8 @@ function escolherEspecial() {
     seedString[9] == 4
   ) {
     return (especial = "especial-tenica");
+
+
   } else if (
     seedString[5] == 8 &&
     seedString[6] == 3 &&
@@ -245,6 +247,8 @@ function escolherEspecial() {
     seedString[8] <= 4
   ) {
     return (especial = "premiomonark");
+
+
   } else if (
     seedString[5] == 7 &&
     seedString[6] == 1 &&
@@ -643,7 +647,7 @@ function colocarInfoNoWrap() {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
     nomeP.innerHTML = " + CARTAS +";
-    nomeP.style.fontSize = "1.8em";
+    // nomeP.style.fontSize = "1.8em";
     nomeP.style.fontWeight = "bolder";
     nomeP.style.color = "red";
     cidadeP.innerHTML = "";
@@ -654,10 +658,11 @@ function colocarInfoNoWrap() {
     
     // retratoP.style.border = '2px double gold'
     ataqueP.style.color = "black";
-    ataqueP.style.fontSize = "1.5em";
+    // ataqueP.style.fontSize = "1.5em";
     // actionP.style.visibility = 'visible'
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
     seedP.style.color = "black";
+    seedP.style.fontSize = "0.6em";
 
 
 
@@ -665,7 +670,7 @@ function colocarInfoNoWrap() {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
     nomeP.innerHTML = " - CARTAS -";
-    nomeP.style.fontSize = "1.8em";
+    // nomeP.style.fontSize = "1.8em";
     nomeP.style.fontWeight = "bolder";
     nomeP.style.color = "red";
     cidadeP.innerHTML = "";
@@ -676,10 +681,11 @@ function colocarInfoNoWrap() {
     
     // retratoP.style.border = '2px double gold'
     ataqueP.style.color = "black";
-    ataqueP.style.fontSize = "1.5em";
+    // ataqueP.style.fontSize = "1.5em";
     // actionP.style.visibility = 'visible'
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
     seedP.style.color = "black";
+    seedP.style.fontSize = "0.6em";
 
 
 
@@ -737,14 +743,15 @@ function colocarInfoNoWrap() {
     cartaP.style.color = "#990000";
     cartaP.style.border = "2px solid red";
     seedP.style.color = "black";
+
   } else if (novaCarta._especial === "premiomonark") {
     retratoP.style.backgroundImage = 'url("/pics/retratoPremioMonark.gif")';
     retratoP.style.backgroundSize = "100% 100%";
     retratoP.style.backgroundColor = "#343436";
     nomeP.innerHTML = "PREMIO <br> MONARK";
     nomeP.style.fontFamily = "premiomonark";
-    nomeP.style.fontSize = "2.3em";
-    nomeP.className = "float";
+    // nomeP.style.fontSize = "200%";
+    nomeP.classList.add('float') 
     // nomeP.style.color = '#484340';
     cidadeP.innerHTML = "";
     cidadeP.style = "";
