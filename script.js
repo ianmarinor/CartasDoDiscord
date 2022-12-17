@@ -238,7 +238,7 @@ function escolherEspecial() {
     seedString[8] == 1 &&
     seedString[9] == 4
   ) {
-    return (especial = "especial-tenica");
+    return (especial = "");
 
 
   } else if (
@@ -966,8 +966,8 @@ function moverCarta() {
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
 
-  if (PodeMover && naoMoviAinda && totalClicks >0) {
-  // if (true) {
+  // if (PodeMover && naoMoviAinda && totalClicks >0) {
+  if (true) {
     if (inv.children[0].id != "empty") {
       if (
         inv.children[0].children[4].textContent !=
@@ -1649,7 +1649,6 @@ function criarBtn() {
         // comunista.children[3].children[2].style.visibility = "hidden";
         for (let k = 0; k < 4; k++) {
           if (inv.children[k].id == "carta-speaker") {
-            comunista.children[3].children[2].style.visibility = "hidden";
             for (let j = 0; j < 4; j++) {
               if (
                 inv.children[j].id != "spy" &&
@@ -1660,11 +1659,12 @@ function criarBtn() {
                 inv.children[j].id != "abelha" &&
                 inv.children[j].id != "comunista" &&
                 inv.children[j].children[0].children[0].textContent !=
-                  "NEFESTO" &&
+                "NEFESTO" &&
                 inv.children[j].id != "carta-monark"
-              ) {
-                console.log(j);
-
+                ) {
+                  console.log(j);
+                  
+                 comunista.children[3].children[2].style.visibility = "hidden";
                 let pontoComunista = comunista.children[3].children[1];
 
                 let pontoEstatal = parseInt(pontoComunista.textContent) / 3;
