@@ -1076,7 +1076,7 @@ function moverCartaMonark() {
   if (seedObj._isPutByPlayer) {
     false;
   } else {
-    if (copyCard.id === "carta-monark") {
+    if (copyCard.id === "carta-monark" ) {
       //
       if (
         inv.children[0].id == "spy" &&
@@ -1938,55 +1938,6 @@ function deleteInvOne(a) {
   }
 }
 
-// function deletarDeck(e) {
-//   // 1.0Se a carta nao for Monark
-//   if (
-//     e.target.id != "carta-monark" &&
-//     e.target.parentElement.id != "carta-monark" &&
-//     e.target.parentElement.parentElement.id != "carta-monark" &&
-//     e.target.id != "inv" &&
-//     e.target.id != "empty" &&
-//     e.target.className != "action" &&
-//     e.target.className == "retrato" || e.target.className == "retrato invis"
-//   ) {
-//     //
-
-//     // 1.1 se for a carta inteira
-//     if (e.target.id != "inv" && e.target.childElementCount === 5) {
-//       e.target.remove();
-//       inv.appendChild(document.createElement("div")).id = "empty";
-//       somaPontos();
-
-//       //1.2 se nao for a seed
-//     } else if (
-//       e.target.id != "inv" &&
-//       e.target.childElementCount != 5 &&
-//       e.target.className != "seed"
-//     ) {
-//       //
-
-//       // 1.2.1 se for filho da carta
-//       if (
-//         e.target.parentElement.children[0].className ===
-//           "nameAndCidadeWrapper" &&
-//         e.target.id != "inv"
-//       ) {
-//         //
-//         e.target.parentElement.remove();
-//         inv.appendChild(document.createElement("div")).id = "empty";
-//         somaPontos();
-//       }
-
-//       // 1.2.2 se nao for nada disso, sera filho do filho
-//       else {
-//         //
-//         e.target.parentElement.parentElement.remove();
-//         inv.appendChild(document.createElement("div")).id = "empty";
-//         somaPontos();
-//       }
-//     }
-//   }
-// }
 
 function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
@@ -1996,7 +1947,7 @@ function deletarDeck(e) {
   ) {
     //
 
-    if (e.target.offsetParent.id != "carta-monark") {
+    if (e.target.offsetParent.id != "carta-monark" || e.target.offsetParent.id  == "carta-monark"&& e.target.offsetParent.className == 'vanish') {
       e.target.offsetParent.remove();
       inv.appendChild(document.createElement("div")).id = "empty";
       somaPontos();
