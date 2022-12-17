@@ -254,7 +254,9 @@ function escolherEspecial() {
     return (especial = "comunista");
 
 
-  } else if (seedString[5] == 6 
+  } 
+  else if ( true == false
+    // seedString[5] == 6 
     // && seedString[6] == 9 
     // && seedString[7] < 3
     ) {
@@ -724,6 +726,7 @@ function colocarInfoNoWrap() {
     ataqueP.style.fontSize = "1.4em";
     novoAtaquerP.style.fontSize = "1.4em";
     novoAtaquerP.style.fontFamily = "blackao";
+    novoAtaquerP.style.visibility = "visible";
     ataqueP.style.fontWeight = "bold";
     ataqueP.style.fontFamily = "blackao";
     // ataqueP.style.backgroundColor = "yellow";
@@ -1657,10 +1660,10 @@ function criarBtn() {
                     "BLACKAO"
                   ) {
                     inv.children[j].children[3].children[1].textContent =
-                      parseInt(
+                      Math.floor(parseInt(
                         inv.children[j].children[3].children[1].textContent
                       ) +
-                      parseInt(pontoEstatal) * 2 +
+                      parseInt(pontoEstatal) * 1.5) +
                       "☭";
                     inv.children[j].children[3].children[1].style.color = "red";
                     inv.children[j].children[2].innerHTML = frasesComuna();
