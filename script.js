@@ -1079,7 +1079,7 @@ function moverCartaMonark() {
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
 
-  //
+  
 
   if (seedObj._isPutByPlayer) {
     false;
@@ -1118,6 +1118,9 @@ function moverCartaMonark() {
       ) {
         inv.replaceChild(copyCard, inv.children[0]);
         somaPontos();
+        
+
+
       } else if (
         inv.children[1].id === "empty" &&
         copyCard.id === "carta-monark" &&
