@@ -9,13 +9,13 @@ import {
   comunistaPE,
   frasesComuna,
   efeitoPremioMonark,
-  pontoSpeaker
+  pontoSpeaker,
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.4.3";
+let versao = "Alpha 1.4.4";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -81,13 +81,11 @@ function escolherIntegrante() {
   ) {
     return (integrante = "Sr. Antonio");
   } else if (
-
     seedString[1] == 6
     // &&
     // seedString[2] == 0
   ) {
     return (integrante = "Pedro");
-
   } else if (
     seedString[1] == 7
     // &&
@@ -201,25 +199,18 @@ function escolherCargo() {
   ) {
     return (cargo = "carta-primeminister");
   } else if (
-
-
     seedString[12] == 2 &&
     seedString[13] == 8 &&
     seedString[14] <= 4
   ) {
     return (cargo = "carta-ministro");
-
-
   } else if (seedString[13] == 4 && seedString[14] == 2) {
     return (cargo = "carta-lord");
   } else if (seedString[13] == 1 && seedString[14] >= 4) {
     return (cargo = "carta-nobre");
   } else if (seedString[13] == 9) {
     return (cargo = "carta-gentleman");
-  } else if (
-    seedString[13] == 7
-    && seedString[14] >= 4 && seedString[4] != 4
-  ) {
+  } else if (seedString[13] == 7 && seedString[14] >= 4 && seedString[4] != 4) {
     return (cargo = "carta-monark");
   } else if (seedString[14] >= 8) {
     return (cargo = "carta-people");
@@ -238,7 +229,7 @@ function escolherEspecial() {
     seedString[8] == 1 &&
     seedString[9] == 4
   ) {
-    return (especial = "");
+    return (especial = "especial-tenica");
 
 
   } else if (
@@ -248,8 +239,6 @@ function escolherEspecial() {
     seedString[8] <= 4
   ) {
     return (especial = "premiomonark");
-
-
   } else if (
     seedString[5] == 7 &&
     seedString[6] == 1 &&
@@ -257,32 +246,21 @@ function escolherEspecial() {
     seedString[8] >= 5
   ) {
     return (especial = "comunista");
-
-
-  } 
-  else if ( 
-    seedString[5] == 6 
-    && seedString[6] == 9 
-    && seedString[7] < 3
-    ) {
+  } else if (seedString[5] == 6 && seedString[6] == 9 && seedString[7] < 3) {
     return (especial = "spy");
-  } else if (seedString[5] == 6 && seedString[6] == 9 && seedString[7] > 2 && seedString[7] < 6 ) {
+  } else if (
+    seedString[5] == 6 &&
+    seedString[6] == 9 &&
+    seedString[7] > 2 &&
+    seedString[7] < 6
+  ) {
     return (especial = "abelha");
-  }
-  else if (seedString[5] == 6 && seedString[6] >= 9 && seedString[7] >5) {
+  } else if (seedString[5] == 6 && seedString[6] >= 9 && seedString[7] > 5) {
     return (especial = "carta-speaker");
-
-
-
-
   } else if (seedString[5] == 3 && seedString[6] <= 4) {
     return (especial = "especial-click");
-
-   } else if (seedString[5] == 3 && seedString[6] > 4) {
-      return (especial = "-click");
-
-
-
+  } else if (seedString[5] == 3 && seedString[6] > 4) {
+    return (especial = "-click");
   } else {
     return (especial = "");
   }
@@ -619,7 +597,7 @@ function colocarInfoNoWrap() {
   if (novaCarta._especial === "carta-speaker") {
     retratoP.style.backgroundImage = "url('pics/speaker.webp')";
     nomeP.innerHTML = "&nbsp; SPEAKER";
-    ataqueP.innerHTML = pontoSpeaker() +  '⚡'
+    ataqueP.innerHTML = pontoSpeaker() + "⚡";
     cidadeP.innerHTML = "";
     cargoP.innerHTML = "MONARK BAN!";
     retratoP.style.border = "2px dotted green";
@@ -644,7 +622,6 @@ function colocarInfoNoWrap() {
 
     ataqueP.style.fontSize = "1.5em";
     especialP.style.visibility = "hidden";
-
   } else if (novaCarta._especial === "especial-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
@@ -654,10 +631,9 @@ function colocarInfoNoWrap() {
     nomeP.style.color = "red";
     cidadeP.innerHTML = "";
     especialP.style.visibility = "hidden";
-    
-    
-    cargoP.innerHTML = ""
-    
+
+    cargoP.innerHTML = "";
+
     // retratoP.style.border = '2px double gold'
     ataqueP.style.color = "black";
     // ataqueP.style.fontSize = "1.5em";
@@ -665,9 +641,6 @@ function colocarInfoNoWrap() {
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
     seedP.style.color = "black";
     seedP.style.fontSize = "0.6em";
-
-
-
   } else if (novaCarta._especial === "-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
@@ -677,10 +650,9 @@ function colocarInfoNoWrap() {
     nomeP.style.color = "red";
     cidadeP.innerHTML = "";
     especialP.style.visibility = "hidden";
-    
-    
-    cargoP.innerHTML = ""
-    
+
+    cargoP.innerHTML = "";
+
     // retratoP.style.border = '2px double gold'
     ataqueP.style.color = "black";
     // ataqueP.style.fontSize = "1.5em";
@@ -688,12 +660,7 @@ function colocarInfoNoWrap() {
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
     seedP.style.color = "black";
     seedP.style.fontSize = "0.6em";
-
-
-
-  } 
-  
-  else if (novaCarta._especial === "abelha") {
+  } else if (novaCarta._especial === "abelha") {
     retratoP.style.backgroundImage = "url('pics/retratoAbelha.gif')";
     retratoP.style.backgroundSize = "";
     retratoP.style.backgroundColor = "green";
@@ -745,7 +712,6 @@ function colocarInfoNoWrap() {
     cartaP.style.color = "#990000";
     cartaP.style.border = "2px solid red";
     seedP.style.color = "black";
-
   } else if (novaCarta._especial === "premiomonark") {
     retratoP.style.backgroundImage = 'url("/pics/retratoPremioMonark.gif")';
     retratoP.style.backgroundSize = "100% 100%";
@@ -753,7 +719,7 @@ function colocarInfoNoWrap() {
     nomeP.innerHTML = "PREMIO <br> MONARK";
     nomeP.style.fontFamily = "premiomonark";
     // nomeP.style.fontSize = "200%";
-    nomeP.classList.add('float') 
+    nomeP.classList.add("float");
     // nomeP.style.color = '#484340';
     cidadeP.innerHTML = "";
     cidadeP.style = "";
@@ -796,7 +762,7 @@ function colocarInfoNoWrap() {
     cargoP.style.fontWeight = "";
     cargoP.innerHTML = "";
     retratoP.style.border = "2px solid #cf6a32";
-    
+
     ataqueP.style.fontSize = "1.4em";
     ataqueP.textContent = "1⚡";
     novoAtaquerP.style.fontSize = "1.4em";
@@ -1081,12 +1047,10 @@ function moverCartaMonark() {
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
 
-  
-
   if (seedObj._isPutByPlayer) {
     false;
   } else {
-    if (copyCard.id === "carta-monark" ) {
+    if (copyCard.id === "carta-monark") {
       //
       if (
         inv.children[0].id == "spy" &&
@@ -1120,9 +1084,6 @@ function moverCartaMonark() {
       ) {
         inv.replaceChild(copyCard, inv.children[0]);
         somaPontos();
-        
-
-
       } else if (
         inv.children[1].id === "empty" &&
         copyCard.id === "carta-monark" &&
@@ -1208,7 +1169,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "farmacêutico") {
         cartaParaMover.classList.add("critico");
@@ -1218,7 +1179,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
 
@@ -1230,7 +1191,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "bão") {
         cartaParaMover.classList.add("critico");
@@ -1240,7 +1201,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
     //nefesto
@@ -1251,7 +1212,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "apenas") {
         cartaParaMover.classList.add("critico");
@@ -1261,7 +1222,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
     //blackao
@@ -1272,7 +1233,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "fonte") {
         cartaParaMover.classList.add("critico");
@@ -1282,7 +1243,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
     //antonio
@@ -1293,7 +1254,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "ixqueiro") {
         cartaParaMover.classList.add("critico");
@@ -1303,7 +1264,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
     //pedro
@@ -1314,7 +1275,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "abalo") {
         cartaParaMover.classList.add("critico");
@@ -1324,7 +1285,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
     //curtas
@@ -1335,7 +1296,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "grito") {
         cartaParaMover.classList.add("critico");
@@ -1345,7 +1306,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
     //twelve
@@ -1356,7 +1317,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "dia") {
         cartaParaMover.classList.add("critico");
@@ -1366,7 +1327,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
     //junks
@@ -1377,7 +1338,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "quimico") {
         cartaParaMover.classList.add("critico");
@@ -1387,7 +1348,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
     //murilo
@@ -1398,7 +1359,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = 'visible'
+      poderNovo.style.visibility = "visible";
 
       if (variante == "pêra") {
         cartaParaMover.classList.add("critico");
@@ -1408,7 +1369,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = 'visible'
+        poderNovo.style.visibility = "visible";
       }
     }
   }
@@ -1539,21 +1500,24 @@ function criarBtn() {
       function cartaMenosclique(e) {
         let varianteMenosClique = e.target.offsetParent;
 
-        if(totalClicks>parseInt(varianteMenosClique.children[3].children[0].textContent)){
+        if (
+          totalClicks >
+          parseInt(varianteMenosClique.children[3].children[0].textContent)
+        ) {
+          totalClicks =
+            totalClicks -
+            parseInt(varianteMenosClique.children[3].children[0].textContent) +
+            1;
 
-        
-        totalClicks =
-          totalClicks -
-          parseInt(varianteMenosClique.children[3].children[0].textContent) +
-          1;
-        
-        varianteMenosClique.children[3].children[2].style.visibility = "hidden";
-        button.style.backgroundColor = "";
-        button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-        arenaP.innerHTML = totalClicks + " RODADAS";
-        varianteMenosClique.remove();
-        inv.appendChild(document.createElement("div")).id = "empty";
-      }}
+          varianteMenosClique.children[3].children[2].style.visibility =
+            "hidden";
+          button.style.backgroundColor = "";
+          button.innerHTML = "&#127381; NOVA CARTA &#127381;";
+          arenaP.innerHTML = totalClicks + " RODADAS";
+          varianteMenosClique.remove();
+          inv.appendChild(document.createElement("div")).id = "empty";
+        }
+      }
 
       // PODER TENICA
       if (
@@ -1568,8 +1532,6 @@ function criarBtn() {
       }
 
       function cartaTenica(e) {
-
-        
         function adicionarCLiquesTenica() {
           if (totalClicks > 50) {
             true;
@@ -1578,22 +1540,25 @@ function criarBtn() {
           }
           arenaP.innerHTML = totalClicks + " RODADAS";
         }
-        
-        let varianteTenica = e.target.offsetParent;
-        
-        console.log('listener da tenica funcionando');
-        varianteTenica.children[3].children[2].style.visibility = "hidden";
-        console.log('listener da tenica funcionando');
 
+        let varianteTenica = e.target.offsetParent;
+
+        console.log("listener da tenica funcionando");
+        console.log("listener da tenica funcionando");
+        
         let poderCartaPack = cartaParaMover.children[3].children[0];
         let poderNovoCartaPack = cartaParaMover.children[3].children[1];
         // tudo()
-
+        
         if (
           cartaParaMover.id != "especial-click" &&
-          inv.children[j].id != "-click" &&
-          cartaParaMover.id != "especial-tenica"
-        ) {
+          cartaParaMover.id != "-click" &&
+          cartaParaMover.id != "especial-tenica" &&
+          cartaParaMover.id != "spy" &&
+          cartaParaMover.id != "premiomonark" &&
+          cartaParaMover.id != "comunista"
+          ) {
+          varianteTenica.children[3].children[2].style.visibility = "hidden";
           if (poderNovoCartaPack.textContent != "") {
             poderNovoCartaPack.textContent =
               parseInt(poderNovoCartaPack.textContent) +
@@ -1614,7 +1579,11 @@ function criarBtn() {
             inv.children[j].id != "especial-click" &&
             inv.children[j].id != "-click" &&
             inv.children[j].id != "empty" &&
-            inv.children[j].id != "especial-tenica"
+            inv.children[j].id != "especial-tenica" &&
+            inv.children[j].id != "spy" &&
+            inv.children[j].id != "premiomonark" &&
+            inv.children[j].id != "comunista" 
+
           ) {
             // se o poder novo for presente
             if (inv.children[j].children[3].children[1].textContent != "") {
@@ -1678,11 +1647,12 @@ function criarBtn() {
                     "BLACKAO"
                   ) {
                     inv.children[j].children[3].children[1].textContent =
-                      Math.floor(parseInt(
-                        inv.children[j].children[3].children[1].textContent
-                      ) +
-                      parseInt(pontoEstatal) * 1.5) +
-                      "☭";
+                      Math.floor(
+                        parseInt(
+                          inv.children[j].children[3].children[1].textContent
+                        ) +
+                          parseInt(pontoEstatal) * 1.5
+                      ) + "☭";
                     inv.children[j].children[3].children[1].style.color = "red";
                     inv.children[j].children[2].innerHTML = frasesComuna();
                     inv.children[j].children[2].fontSize = "1em";
@@ -1811,25 +1781,25 @@ function criarBtn() {
             if (poderNovoSemcargo.textContent != "") {
               console.log("tem critico");
               poderSpy.textContent =
-              (parseInt(poderNovoSemcargo.textContent)* 5)  +
+                parseInt(poderNovoSemcargo.textContent) * 5 +
                 parseInt(poderSpy.textContent) +
                 "⚡";
               semcargo.remove();
               inv.appendChild(document.createElement("div")).id = "empty";
               spyWatch.style.visibility = "visible";
               retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
-              somaPontos()
+              somaPontos();
             } else {
               console.log("nao tem critico");
               poderSpy.textContent =
-              (parseInt(poderSemcargo.textContent)* 5)  +
+                parseInt(poderSemcargo.textContent) * 5 +
                 parseInt(poderSpy.textContent) +
                 "⚡";
               semcargo.remove();
               inv.appendChild(document.createElement("div")).id = "empty";
               spyWatch.style.visibility = "visible";
               retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
-              somaPontos()
+              somaPontos();
             }
 
             break;
@@ -1912,7 +1882,6 @@ function abelha() {
   }
 }
 
-
 // if (inv.children[0].id != 'empty' && inv.children[1].id != 'empty' && inv.children[2].id != 'empty' && inv.children[3].id != 'empty') {
 
 //     console.log ('sem loop')
@@ -1957,7 +1926,6 @@ function deleteInvOne(a) {
   }
 }
 
-
 function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
   if (
@@ -1966,7 +1934,11 @@ function deletarDeck(e) {
   ) {
     //
 
-    if (e.target.offsetParent.id != "carta-monark" || e.target.offsetParent.id  == "carta-monark"&& e.target.offsetParent.className == 'vanish') {
+    if (
+      e.target.offsetParent.id != "carta-monark" ||
+      (e.target.offsetParent.id == "carta-monark" &&
+        e.target.offsetParent.className == "vanish")
+    ) {
       e.target.offsetParent.remove();
       inv.appendChild(document.createElement("div")).id = "empty";
       somaPontos();
@@ -2091,7 +2063,10 @@ export function somaPontos() {
     inv.children[0].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[0].children[3].children[1].textContent != "" && inv.children[0].id != "spy") {
+    if (
+      inv.children[0].children[3].children[1].textContent != "" &&
+      inv.children[0].id != "spy"
+    ) {
       ponto0 = parseInt(inv.children[0].children[3].children[1].textContent);
       // se nao, pegue o poder velho
     } else {
@@ -2107,7 +2082,10 @@ export function somaPontos() {
     inv.children[1].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[1].children[3].children[1].textContent != "" && inv.children[1].id != "spy") {
+    if (
+      inv.children[1].children[3].children[1].textContent != "" &&
+      inv.children[1].id != "spy"
+    ) {
       ponto1 = parseInt(inv.children[1].children[3].children[1].textContent);
       // se nao, pegue o poder velho
     } else {
@@ -2123,7 +2101,10 @@ export function somaPontos() {
     inv.children[2].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[2].children[3].children[1].textContent != "" && inv.children[2].id != "spy") {
+    if (
+      inv.children[2].children[3].children[1].textContent != "" &&
+      inv.children[2].id != "spy"
+    ) {
       ponto2 = parseInt(inv.children[2].children[3].children[1].textContent);
       // se nao, pegue o poder velho
     } else {
@@ -2139,13 +2120,15 @@ export function somaPontos() {
     inv.children[3].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[3].children[3].children[1].textContent != "" && inv.children[3].id != "spy") {
+    if (
+      inv.children[3].children[3].children[1].textContent != "" &&
+      inv.children[3].id != "spy"
+    ) {
       ponto3 = parseInt(inv.children[3].children[3].children[1].textContent);
-      
+
       // se nao, pegue o poder velho
     } else {
       ponto3 = parseInt(inv.children[3].children[3].children[0].textContent);
-      
     }
   }
 
