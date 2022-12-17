@@ -1646,6 +1646,7 @@ function criarBtn() {
             comunista.children[3].children[2].style.visibility = "hidden";
             for (let j = 0; j < 4; j++) {
               if (
+                inv.children[j].id != "spy" &&
                 inv.children[j].id != "especial-click" &&
                 inv.children[j].id != "-click" &&
                 inv.children[j].id != "empty" &&
