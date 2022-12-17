@@ -209,8 +209,14 @@ function escolherCargo() {
     return (cargo = "carta-nobre");
   } else if (seedString[13] == 9) {
     return (cargo = "carta-gentleman");
-  } else if (seedString[13] == 7 && seedString[14] >= 4 && seedString[4] != 4) {
+
+
+  } else if (seedString[13] == 7 
+    // && seedString[14] >= 4 && seedString[4] != 4
+    ) 
+    {
     return (cargo = "carta-monark");
+
   } else if (seedString[14] >= 8) {
     return (cargo = "carta-people");
   } else {
@@ -230,10 +236,10 @@ function escolherEspecial() {
   ) {
     return (especial = "especial-tenica");
   } else if (
-    seedString[5] == 8 &&
-    seedString[6] == 3 &&
-    seedString[7] == 4 &&
-    seedString[8] <= 4
+    seedString[5] == 8 
+    // seedString[6] == 3 &&
+    // seedString[7] == 4 &&
+    // seedString[8] <= 4
   ) {
     return (especial = "premiomonark");
   } else if (
@@ -472,6 +478,8 @@ function colocarInfoNoWrap() {
   ataqueP.style.fontSize = "";
   ataqueP.textContent = "";
 
+  seedP.style.color = ''
+
   cartaParaMover.children[0].children[0].classList.remove("critico");
   cartaParaMover.children[0].children[2].classList.remove("critico");
   cartaParaMover.classList.remove("critico");
@@ -707,7 +715,7 @@ function colocarInfoNoWrap() {
     ataqueP.style.visibility = "hidden";
     novoAtaquerP.textContent = "";
     // seedP.style.color = "yellow";
-    cartaP.style.color = "#343436";
+    // cartaP.style.color = "#fff";
     cartaP.style.border = "2px solid black";
     seedP.style.color = "#343436";
   }
@@ -850,7 +858,7 @@ function moverCarta() {
   copyCard = cartaParaMover.cloneNode(true);
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   let customOff = getSeed.className == "customOff";
-
+  let copyCardBotao = copyCard.children[3].children[2]
   let cartaNotMonark = copyCard.id != "carta-monark";
 
   let PodeMover =
@@ -922,7 +930,36 @@ function moverCarta() {
 
           somaPontos();
           tudo();
+
+          //se tiver cheio tenta colocar premio monark
+        } else if (copyCard.id == 'premiomonark'){
+
+          for (let i = 0; i < 4; i++) {
+            
+            if(inv.children[i].id == 'carta-monark'){
+
+          
+
+
+              
+                inv.replaceChild(copyCard, inv.children[i]);
+                copyCardBotao.style.visibility = 'visible'
+                somaPontos();
+                tudo();
+                break
+
+        
+            }
+
+          }
+
+          console.log('copycard é PM e deck cheio')
         }
+        
+            
+          
+    
+        
       }
     } else {
       // if (cartaParaMover.children[0].children[1].textContent != ''){
@@ -946,7 +983,7 @@ function moverCarta() {
     }
     criarBtn();
   } else {
-    false;
+    false
     // getSeed.setAttribute('class', 'customOn')
   }
 
@@ -1536,14 +1573,23 @@ function criarBtn() {
 
       function premiomonark(e) {
         let premioMonark = e.target.offsetParent;
+        let premioMonarkBotao = premioMonark.children[3].children[2]
 
-        if (efeitos.status == false && totalPontos <50) {
+        if (efeitos.status == false && totalPontos <250) {
           //coloca efeito
+          efeitoPremioMonark.rodadas = 35
           efeitos = efeitoPremioMonark;
           //apaga a carta
-          totalClicks +=  10 
-          premioMonark.remove();
-          inv.appendChild(document.createElement("div")).id = "empty";
+          totalClicks +=  15 
+          premioMonark.classList.add('vanish')
+          premioMonarkBotao.style.visibility = 'hidden'
+          function eliminarPremioMonark(){
+            premioMonark.remove()
+            inv.appendChild(document.createElement("div")).id = "empty"
+          }
+
+          setTimeout(eliminarPremioMonark, 10000)
+
           tudo();
           console.log("PM adicionado aos efeitos");
           console.log("no event listener", efeitos);
@@ -1722,6 +1768,9 @@ function deletarDeck(e) {
 function resetarDeck() {
   getSeed.setAttribute("class", "");
   1;
+
+  efeitos = efeitoVazio
+
 
   // let empty = document.createElement('div').id = "empty"
   let empty0 = document.createElement("div");

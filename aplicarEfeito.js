@@ -30,7 +30,7 @@ function premioMonark() {
     if (inv.children[i].id != "empty" && inv.children[i].id == "carta-monark") {
       let monark = inv.children[i];
 
-      
+      function infectarMonark(){
       monark.children[0].className = "float";
       monark.style.backgroundColor = "black";
       monark.children[1].style.backgroundImage =
@@ -45,12 +45,23 @@ function premioMonark() {
       monark.children[2].className = "float";
       monark.children[3].children[0].style.visibility = 'hidden';
       monark.classList.add('vanish')
+
+      }
+      
+
+
       function eliminarMonark(){
         monark.remove()
         inv.appendChild(document.createElement("div")).id = "empty"
         somaPontos()
       }
-      setInterval(eliminarMonark, 10000)
+
+      
+
+      setTimeout(infectarMonark, Math.floor(Math.random() * 150 +  250))
+
+
+      setTimeout(eliminarMonark, 10000)
     }
   }
 }

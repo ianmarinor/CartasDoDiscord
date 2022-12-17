@@ -59,4 +59,4 @@ function premioMonark(){
 
 }
 export let efeitoPremioMonark = {
-  status: true, css: {nome: 'premioMonark', imagem:"url('/pics/retratoPremioMonark.gif')"}, rodadas:20, efeito: premioMonark()}
+  status: true, css: {nome: 'premioMonark', imagem:"url('/pics/retratoPremioMonark.gif')"}, rodadas:0, efeito: premioMonark()}

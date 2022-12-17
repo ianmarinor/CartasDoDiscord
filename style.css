@@ -51,6 +51,7 @@ main {
   justify-items: center;
   flex-direction: column;
   background-color: #210835;
+  /* background-color: #ffffff; */
   background: linear-gradient(180deg, rgb(27, 2, 29) 0%, rgb(10, 2, 8) 46%);
   grid-template-columns: 0.3fr 1fr;
   grid-template-rows: 0.1fr 1fr 0.5fr;
@@ -388,6 +389,7 @@ li {
 
 #premiomonark {
   /* background:  url(/pics/fundoPremioMonark.gif); */
+  
   background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 1) 30%,
@@ -605,25 +607,31 @@ p {
 @keyframes float {
   0% {
     transform: translatey(0px) rotate(0deg);
-    color: #1d1d1e;
+    color: #77777b;
+    text-shadow: 0px 2px 3px #77777b;
   }
 
   25% {
     transform: translatey(4px) rotate(0deg);
     color: #0a0a0b;
+    text-shadow: 0px 2px 3px #0a0a0b;
+
   }
 
   50% {
     transform: translatey(0px) rotate(0deg);
-    color: #2a2a2b;
+    color: #5a5a63;
+    text-shadow: 0px 2px 3px #5a5a63;
   }
   75% {
     transform: translatey(4px) rotate(0deg);
     color: #0f0f11;
+    text-shadow: 0px 2px 3px #0f0f11;
   }
   100% {
     transform: translatey(0px) rotate(0deg);
-    color: #1d1d1e;
+    color: #77777b;
+    text-shadow: 0px 2px 3px #77777b;
   }
 }
 
