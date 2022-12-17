@@ -239,10 +239,10 @@ function escolherEspecial() {
   ) {
     return (especial = "especial-tenica");
   } else if (
-    seedString[5] == 8
-    // seedString[6] == 3 &&
-    // seedString[7] == 8 &&
-    // seedString[8] <= 4
+    seedString[5] == 8 &&
+    seedString[6] == 3 &&
+    seedString[7] == 8 &&
+    seedString[8] <= 4
   ) {
     return (especial = "premiomonark");
   } else if (
@@ -255,10 +255,10 @@ function escolherEspecial() {
 
 
   } 
-  else if ( true == false
-    // seedString[5] == 6 
-    // && seedString[6] == 9 
-    // && seedString[7] < 3
+  else if ( 
+    seedString[5] == 6 
+    && seedString[6] == 9 
+    && seedString[7] < 3
     ) {
     return (especial = "spy");
   } else if (seedString[5] == 6 && seedString[6] == 9 && seedString[7] > 2 && seedString[7] < 6 ) {
