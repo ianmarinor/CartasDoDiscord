@@ -1894,6 +1894,7 @@ function abelha() {
   }
 }
 
+
 // if (inv.children[0].id != 'empty' && inv.children[1].id != 'empty' && inv.children[2].id != 'empty' && inv.children[3].id != 'empty') {
 
 //     console.log ('sem loop')
