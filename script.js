@@ -966,8 +966,8 @@ function moverCarta() {
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
 
-  // if (PodeMover && naoMoviAinda && totalClicks >0) {
-  if (true) {
+  if (PodeMover && naoMoviAinda && totalClicks >0) {
+  // if (true) {
     if (inv.children[0].id != "empty") {
       if (
         inv.children[0].children[4].textContent !=
