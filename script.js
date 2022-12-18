@@ -15,7 +15,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.4.5";
+let versao = "Alpha 1.5";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -230,8 +230,6 @@ function escolherEspecial() {
     seedString[9] == 4
   ) {
     return (especial = "especial-tenica");
-
-
   } else if (
     seedString[5] == 8 &&
     seedString[6] == 3 &&
@@ -912,14 +910,13 @@ let cartaParaMover = document.getElementById("pack").firstElementChild;
 let copyCard = "";
 
 function moverCarta() {
-  let seedCopyCard = cartaParaMover.children[4].textContent;
+  
 
   blockInv();
 
   copyCard = cartaParaMover.cloneNode(true);
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   let customOff = getSeed.className == "customOff";
-  let copyCardBotao = copyCard.children[3].children[2];
   let cartaNotMonark = copyCard.id != "carta-monark";
 
   let PodeMover =
@@ -929,105 +926,44 @@ function moverCarta() {
 
   let naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
 
-  // copySeed = copy.getElementsByClassName('seed')
-  // cardShrinker(copyCard)
+  
+// 
+  // if (PodeMover && naoMoviAinda && totalClicks > 0) {
+    if (true) {
 
-  if (PodeMover && naoMoviAinda && totalClicks >0) {
-  // if (true) {
-    if (inv.children[0].id != "empty") {
-      if (
-        inv.children[0].children[4].textContent !=
-        cartaParaMover.children[4].textContent
-      ) {
-        if (inv.children[1].id == "empty") {
-          if (
-            copyCard.children[0].children[3].textContent != "" &&
-            copyCard.id != "abelha"
-          ) {
-            copyCard.children[3].children[2].style.visibility = "visible";
-          }
-          if (seedObj._isPutByPlayer) {
-            getSeed.className = "customOff";
-          }
+    let cartasComBotao =
+      copyCard.children[0].children[3].textContent != "" &&
+      copyCard.id != "abelha";
+    let botao = copyCard.children[3].children[2];
+    let seedCopyCard = cartaParaMover.children[4]
 
-          inv.replaceChild(copyCard, inv.children[1]);
+    for (let i = 0; i < 4; i++) {
+      
+      //verifico se tem vaga
+      if (inv.children[i].id == "empty") {
+        //se tiver verifico se as outra vagas tem mesma seed
+          for(let j=0;j<4;j++){
+            let seedInv = inv.children[j].children[4]
+            console.log('seedInv: ', seedInv);
 
-          somaPontos();
-          tudo();
-        } else if (
-          inv.children[2].id == "empty" &&
-          seedCopyCard != inv.children[1].children[4].textContent
-        ) {
-          if (
-            copyCard.children[0].children[3].textContent != "" &&
-            copyCard.id != "abelha"
-          ) {
-            copyCard.children[3].children[2].style.visibility = "visible";
-          }
-
-          if (seedObj._isPutByPlayer) {
-            getSeed.className = "customOff";
-          }
-
-          inv.replaceChild(copyCard, inv.children[2]);
-
-          somaPontos();
-          tudo();
-        } else if (
-          inv.children[3].id == "empty" &&
-          seedCopyCard != inv.children[2].children[4].textContent
-        ) {
-          if (
-            copyCard.children[0].children[3].textContent != "" &&
-            copyCard.id != "abelha"
-          ) {
-            copyCard.children[3].children[2].style.visibility = "visible";
-          }
-          if (seedObj._isPutByPlayer) {
-            getSeed.className = "customOff";
-          }
-
-          inv.replaceChild(copyCard, inv.children[3]);
-
-          somaPontos();
-          tudo();
-
-          //se tiver cheio tenta colocar premio monark
-        } else if (copyCard.id == "premiomonark") {
-          for (let i = 0; i < 4; i++) {
-            if (inv.children[i].id == "carta-monark") {
+            if(seedInv.textContent != seedCopyCard.textContent){
+              if (cartasComBotao) {
+                botao.style.visibility = "visible";
+              }
+      
+              if (seedObj._isPutByPlayer) {
+                getSeed.className = "customOff";
+              }
+      
               inv.replaceChild(copyCard, inv.children[i]);
-              copyCardBotao.style.visibility = "visible";
+              criarBtn()
               somaPontos();
               tudo();
               break;
             }
-          }
-
-          console.log("copycard é PM e deck cheio");
-        }
       }
-    } else {
-      // if (cartaParaMover.children[0].children[1].textContent != ''){
-      //     copyCard.children[3].children[2].style.visibility = 'visible'
-      // }
-      if (
-        copyCard.children[0].children[3].textContent != "" &&
-        copyCard.id != "abelha"
-      ) {
-        copyCard.children[3].children[2].style.visibility = "visible";
       }
-
-      if (seedObj._isPutByPlayer) {
-        getSeed.className = "customOff";
-      }
-
-      inv.replaceChild(copyCard, inv.children[0]);
-
-      somaPontos();
-      tudo();
     }
-    criarBtn();
   } else {
     false;
     // getSeed.setAttribute('class', 'customOn')
@@ -1545,11 +1481,11 @@ function criarBtn() {
 
         console.log("listener da tenica funcionando");
         console.log("listener da tenica funcionando");
-        
+
         let poderCartaPack = cartaParaMover.children[3].children[0];
         let poderNovoCartaPack = cartaParaMover.children[3].children[1];
         // tudo()
-        
+
         if (
           cartaParaMover.id != "especial-click" &&
           cartaParaMover.id != "-click" &&
@@ -1557,7 +1493,7 @@ function criarBtn() {
           cartaParaMover.id != "spy" &&
           cartaParaMover.id != "premiomonark" &&
           cartaParaMover.id != "comunista"
-          ) {
+        ) {
           varianteTenica.children[3].children[2].style.visibility = "hidden";
           if (poderNovoCartaPack.textContent != "") {
             poderNovoCartaPack.textContent =
@@ -1582,8 +1518,7 @@ function criarBtn() {
             inv.children[j].id != "especial-tenica" &&
             inv.children[j].id != "spy" &&
             inv.children[j].id != "premiomonark" &&
-            inv.children[j].id != "comunista" 
-
+            inv.children[j].id != "comunista"
           ) {
             // se o poder novo for presente
             if (inv.children[j].children[3].children[1].textContent != "") {
@@ -1628,12 +1563,12 @@ function criarBtn() {
                 inv.children[j].id != "abelha" &&
                 inv.children[j].id != "comunista" &&
                 inv.children[j].children[0].children[0].textContent !=
-                "NEFESTO" &&
+                  "NEFESTO" &&
                 inv.children[j].id != "carta-monark"
-                ) {
-                  console.log(j);
-                  
-                 comunista.children[3].children[2].style.visibility = "hidden";
+              ) {
+                console.log(j);
+
+                comunista.children[3].children[2].style.visibility = "hidden";
                 let pontoComunista = comunista.children[3].children[1];
 
                 let pontoEstatal = parseInt(pontoComunista.textContent) / 3;
@@ -2000,6 +1935,9 @@ function blockInv() {
   }
 }
 let totalClicks = 50;
+function limparInput(){
+  getSeed.value = ''
+}
 
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
@@ -2007,6 +1945,7 @@ function tudo() {
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     colocarInput();
+    limparInput()
     escolherIntegrante();
     escolherCidade();
     escolherCargo();
@@ -2172,6 +2111,7 @@ btnReset.addEventListener("click", resetarDeck);
 // DECK COMECA COM 4 CARTAS
 let teclaDeckPronto = "KeyG";
 function deckPronto() {
+  tudo()
   resetarDeck();
   moverCarta();
   moverCarta();
@@ -2232,6 +2172,7 @@ document.getElementById("G").addEventListener("click", deckPronto);
 
 window.onload = (event) => {
   tudo();
+  resetarDeck()
 };
 
 // setInterval(()=>arenaP.innerHTML = totalClicks + " CARTAS", 100)
