@@ -910,8 +910,6 @@ let cartaParaMover = document.getElementById("pack").firstElementChild;
 let copyCard = "";
 
 function moverCarta() {
-  
-
   blockInv();
 
   copyCard = cartaParaMover.cloneNode(true);
@@ -926,44 +924,49 @@ function moverCarta() {
 
   let naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
 
-  
-// 
+  //
   // if (PodeMover && naoMoviAinda && totalClicks > 0) {
-    if (true) {
-
+  if (true) {
     let cartasComBotao =
       copyCard.children[0].children[3].textContent != "" &&
       copyCard.id != "abelha";
     let botao = copyCard.children[3].children[2];
-    let seedCopyCard = cartaParaMover.children[4]
+    let seedCopyCard = cartaParaMover.children[4];
 
-    for (let i = 0; i < 4; i++) {
-      
-      //verifico se tem vaga
-      if (inv.children[i].id == "empty") {
-        //se tiver verifico se as outra vagas tem mesma seed
-          for(let j=0;j<4;j++){
-            let seedInv = inv.children[j].children[4]
-            console.log('seedInv: ', seedInv);
-
-            if(seedInv.textContent != seedCopyCard.textContent){
-              if (cartasComBotao) {
-                botao.style.visibility = "visible";
-              }
-      
-              if (seedObj._isPutByPlayer) {
-                getSeed.className = "customOff";
-              }
-      
-              inv.replaceChild(copyCard, inv.children[i]);
-              criarBtn()
-              somaPontos();
-              tudo();
-              break;
-            }
+    if(inv.children[0].id == 'empty' ){
+      if(cartasComBotao){
+        botao.style.visibility = 'visible'
       }
+      inv.replaceChild(copyCard, inv.children[0]);
+      criarBtn();
+      somaPontos();
+      tudo();
+    } else if(inv.children[1].id=='empty'){
+      if(cartasComBotao){
+        botao.style.visibility = 'visible'
       }
+      inv.replaceChild(copyCard, inv.children[1]);
+      criarBtn();
+      somaPontos();
+      tudo();
+    } else if(inv.children[2].id=='empty'){
+      if(cartasComBotao){
+        botao.style.visibility = 'visible'
+      }
+      inv.replaceChild(copyCard, inv.children[2]);
+      criarBtn();
+      somaPontos();
+      tudo();
+    } else if(inv.children[3].id=='empty'){
+      if(cartasComBotao){
+        botao.style.visibility = 'visible'
+      }
+      inv.replaceChild(copyCard, inv.children[3]);
+      criarBtn();
+      somaPontos();
+      tudo();
     }
+
   } else {
     false;
     // getSeed.setAttribute('class', 'customOn')
@@ -1935,8 +1938,8 @@ function blockInv() {
   }
 }
 let totalClicks = 50;
-function limparInput(){
-  getSeed.value = ''
+function limparInput() {
+  getSeed.value = "";
 }
 
 function tudo() {
@@ -1945,7 +1948,7 @@ function tudo() {
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     colocarInput();
-    limparInput()
+    limparInput();
     escolherIntegrante();
     escolherCidade();
     escolherCargo();
@@ -2111,7 +2114,7 @@ btnReset.addEventListener("click", resetarDeck);
 // DECK COMECA COM 4 CARTAS
 let teclaDeckPronto = "KeyG";
 function deckPronto() {
-  tudo()
+  tudo();
   resetarDeck();
   moverCarta();
   moverCarta();
@@ -2172,7 +2175,7 @@ document.getElementById("G").addEventListener("click", deckPronto);
 
 window.onload = (event) => {
   tudo();
-  resetarDeck()
+  resetarDeck();
 };
 
 // setInterval(()=>arenaP.innerHTML = totalClicks + " CARTAS", 100)
