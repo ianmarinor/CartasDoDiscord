@@ -772,9 +772,9 @@ p {
   }
   #descr  {
     grid-area: text;
-    height: 10px;
+    height: 60px;
     font-size: 6px;
-    align-self: start;
+    align-self: center;
     text-align: center;
     color: wheat;
   }
@@ -784,24 +784,29 @@ p {
 
   
   .wrap {
-    /* height: 20%; */
+    height: 60px;
     font-size: 8px;
     grid-area: mao2;
+    text-align: center;
   }
   #btn {
-    margin: 0;
-    /* justify-self: end; */
+    /* padding: 5px; */
     grid-area: btn;
+    /* margin-bottom: 5%; */
+    height: 30px;
+    align-self: center;
+    justify-self: end;
   }
   #getseed {
     grid-area: btn;
-    align-self: center;
+    justify-self: start;
+    margin: 0;
   }
   #btnReset {
+    margin: 0;
     grid-area: btn;
-    align-self: end;
-    margin-bottom: 3%;
     justify-self: center;
+    align-self: center;
   }
 
   #pack {
@@ -1017,14 +1022,7 @@ p {
     font-size: 12px;
   }
 
-  #btn {
-    padding: 5px;
-    grid-area: inv;
-    margin-bottom: 5%;
-    height: 15%;
-    align-self: end;
-    /* grid-area: btn; */
-  }
+  
 
   @media (orientation: portrait) {
     main {
