@@ -733,7 +733,7 @@ p {
     display: display;
     background-color: rgb(136, 74, 195);
     width: 800px;
-    height: 5%;
+    height: 10px;
 
     grid-area: nav;
   }
@@ -741,7 +741,7 @@ p {
   main {
     width: 800px;
     /* width: 100vh; */
-    height: 720px;
+    height: 100vh;
     /* height: 100vh; */
     display: grid;
     gap: 0.7%;
