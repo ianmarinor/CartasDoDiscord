@@ -409,6 +409,7 @@ let mover = document.getElementById("mover");
 let inv = document.getElementById("inv");
 let arenaP = document.querySelector(".arena");
 let nomeP = document.querySelector(".nome");
+// let nomeP = document.className('nome')
 let cidadeP = document.querySelector(".cidade");
 let retratoP = document.querySelector(".retrato");
 let cargoP = document.querySelector(".cargo");
@@ -453,12 +454,13 @@ function colocarInfoNoWrap() {
   //LIMPAR A CARTA
   cartaP.removeAttribute("style");
   nomeP.removeAttribute("style");
+  nomeP.className = "";
   varianteP.removeAttribute("style");
   cidadeP.removeAttribute("style");
   retratoP.removeAttribute("style");
   //CARGO
   cargoP.removeAttribute("style");
-  cargoP.innerHTML = ''
+  cargoP.innerHTML = "";
 
   ataqueP.removeAttribute("style");
   novoAtaquerP.removeAttribute("style");
@@ -482,12 +484,12 @@ function colocarInfoNoWrap() {
 
   //DOM
   nomeP.innerHTML = novaCarta._integrante.toUpperCase();
-  if(novaCarta._especial == ""){
+  if (novaCarta._especial == "") {
     cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
   } else {
-    cidadeP.innerHTML = ''
+    cidadeP.innerHTML = "";
   }
-  
+
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
 
   especialP.innerHTML = novaCarta._especial;
@@ -591,9 +593,8 @@ function colocarInfoNoWrap() {
     nomeP.innerHTML = "SPEAKER";
     ataqueP.innerHTML = pontoSpeaker() + "⚡";
     cargoP.innerHTML = "MONARK BAN!";
-
-  } else if (novaCarta._especial === "especial-tenica") { 
-    nomeP.style.fontFamily =  "Cormorant Upright";
+  } else if (novaCarta._especial === "especial-tenica") {
+    nomeP.style.fontFamily = "Cormorant Upright";
     retratoP.style.backgroundImage = "url('pics/tenica.webp')";
     retratoP.style.backgroundSize = "100% 100%";
     nomeP.innerHTML = "TÉNICA";
@@ -604,157 +605,76 @@ function colocarInfoNoWrap() {
     ataqueP.style.fontSize = "150%";
   } else if (novaCarta._especial === "especial-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
-    retratoP.style.backgroundSize = "cover";
     nomeP.innerHTML = " + CARTAS +";
-    // nomeP.style.fontSize = "1.8em";
-    nomeP.style.fontWeight = "bolder";
-    nomeP.style.color = "red";
-    cidadeP.innerHTML = "";
-    especialP.style.visibility = "hidden";
 
-    cargoP.innerHTML = "";
-
-    // retratoP.style.border = '2px double gold'
-    ataqueP.style.color = "black";
-    // ataqueP.style.fontSize = "1.5em";
-    // actionP.style.visibility = 'visible'
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
-    seedP.style.color = "black";
-    seedP.style.fontSize = "0.6em";
   } else if (novaCarta._especial === "-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
-    retratoP.style.backgroundSize = "cover";
     nomeP.innerHTML = " - CARTAS -";
-    // nomeP.style.fontSize = "1.8em";
-    nomeP.style.fontWeight = "bolder";
-    nomeP.style.color = "red";
-    cidadeP.innerHTML = "";
-    especialP.style.visibility = "hidden";
 
-    cargoP.innerHTML = "";
-
-    // retratoP.style.border = '2px double gold'
-    ataqueP.style.color = "black";
-    // ataqueP.style.fontSize = "1.5em";
-    // actionP.style.visibility = 'visible'
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
-    seedP.style.color = "black";
-    seedP.style.fontSize = "0.6em";
   } else if (novaCarta._especial === "abelha") {
     retratoP.style.backgroundImage = "url('pics/retratoAbelha.gif')";
-    retratoP.style.backgroundSize = "";
-    retratoP.style.backgroundColor = "green";
     nomeP.innerHTML = "ABELHA";
-    cidadeP.innerHTML = "";
-    especialP.style.visibility = "hidden";
-    cargoP.style.fontSize = "2.3em";
-    cargoP.style.fontWeight = "bolder";
+    nomeP.style.fontFamily = "minecraft";
+    nomeP.style.fontSize = "180%";
+    nomeP.style.color = "#AAAAAA";
+
+    cargoP.style.fontSize = "170%";
+
     cargoP.innerHTML = "bzzzz....";
-    // cargoP.style.color = "black";
     retratoP.style.border = "2px solid #4d1a00";
-    // ataqueP.style.color = "black";
-    ataqueP.style.fontSize = "1.4em";
-    ataqueP.style.fontWeight = "bold";
-    // ataqueP.style.backgroundColor = "yellow";
-    // actionP.style.visibility = 'visible'
+
+    ataqueP.style.fontSize = "130%";
+
     ataqueP.textContent = abelhaEnergia() + "🐝";
-    // seedP.style.color = "yellow";
-    cartaP.style.color = "#ffd11a";
-    cartaP.style.border = "3px solid #4d1a00";
   } else if (novaCarta._especial === "comunista") {
-    retratoP.style.backgroundImage =
-      "url('https://i.kym-cdn.com/photos/images/original/000/960/056/27b.gif')";
-    retratoP.style.backgroundSize = "";
-    retratoP.style.backgroundColor = "green";
+    retratoP.style.backgroundImage = "url('pics/retratoCamarada.gif')";
+
     nomeP.innerHTML = "CAMARADA BLACKAO <br> ★";
     nomeP.style.fontFamily = "blackao";
-    cidadeP.innerHTML = "";
-    cidadeP.style = "";
-    especialP.style.visibility = "hidden";
-    cargoP.style.fontSize = "2.3em";
-    cargoP.style.fontFamily = "blackao";
-    cargoP.style.fontWeight = "bolder";
-    cargoP.innerHTML = "";
-    // cargoP.style.color = "black";
+
     retratoP.style.border = "2px solid #ff0000";
-    // ataqueP.style.color = "black";
+
     ataqueP.style.fontSize = "1.4em";
     novoAtaquerP.style.fontSize = "1.4em";
     novoAtaquerP.style.fontFamily = "blackao";
     novoAtaquerP.style.visibility = "visible";
-    ataqueP.style.fontWeight = "bold";
-    ataqueP.style.fontFamily = "blackao";
-    // ataqueP.style.backgroundColor = "yellow";
-    // actionP.style.visibility = 'visible'
+
     ataqueP.textContent = "";
     novoAtaquerP.textContent = comunistaPE() + "☭";
-    // seedP.style.color = "yellow";
-    cartaP.style.color = "#990000";
-    cartaP.style.border = "2px solid red";
+
     seedP.style.color = "black";
   } else if (novaCarta._especial === "premiomonark") {
     retratoP.style.backgroundImage = 'url("/pics/retratoPremioMonark.gif")';
-    retratoP.style.backgroundSize = "100% 100%";
-    retratoP.style.backgroundColor = "#343436";
+
     nomeP.innerHTML = "PREMIO <br> MONARK";
     nomeP.style.fontFamily = "premiomonark";
-    // nomeP.style.fontSize = "200%";
+
     nomeP.classList.add("float");
-    // nomeP.style.color = '#484340';
-    cidadeP.innerHTML = "";
-    cidadeP.style = "";
-    especialP.style.visibility = "hidden";
-    cargoP.style.fontSize = "";
-    cargoP.style.fontFamily = "";
-    cargoP.style.fontWeight = "";
-    cargoP.innerHTML = "";
-    // cargoP.style.color = "black";
-    retratoP.style.border = "2px solid black";
-    // ataqueP.style.color = "black";
-    ataqueP.style.fontSize = "1.4em";
-    novoAtaquerP.style.fontSize = "1.4em";
-    novoAtaquerP.style.fontFamily = "premiomonark";
-    ataqueP.style.fontWeight = "bold";
-    ataqueP.style.fontFamily = "premiomonark";
-    // ataqueP.style.backgroundColor = "yellow";
-    // actionP.style.visibility = 'visible'
+
+    retratoP.style.border = "4px solid black";
     ataqueP.textContent = 0;
     ataqueP.style.visibility = "hidden";
-    novoAtaquerP.textContent = "";
-    // seedP.style.color = "yellow";
-    // cartaP.style.color = "#fff";
-    cartaP.style.border = "2px solid black";
+
     seedP.style.color = "#343436";
   } else if (novaCarta._especial == "spy") {
-    cartaP.style.color = "#cf6a32";
     retratoP.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
     retratoP.style.backgroundSize = "100% 100%";
     retratoP.style.backgroundColor = "unset";
     nomeP.innerHTML = "SPY";
     nomeP.style.fontFamily = "tf2";
-    nomeP.style.fontSize = "2.3em";
-    nomeP.style.color = "white";
-    cidadeP.innerHTML = "";
-    cidadeP.style = "";
-    especialP.style.visibility = "hidden";
-    cargoP.style.fontSize = "";
-    cargoP.style.fontFamily = "";
-    cargoP.style.fontWeight = "";
-    cargoP.innerHTML = "";
+    nomeP.style.fontSize = "210%";
+
     retratoP.style.border = "2px solid #cf6a32";
 
-    ataqueP.style.fontSize = "1.4em";
+    ataqueP.style.fontSize = "140%";
     ataqueP.textContent = "1⚡";
-    novoAtaquerP.style.fontSize = "1.4em";
+    novoAtaquerP.style.fontSize = "140%";
     novoAtaquerP.style.visibility = "hidden";
     novoAtaquerP.textContent = "⌚";
-    ataqueP.style.fontWeight = "bold";
+
     ataqueP.style.fontFamily = "tf2";
-    // ataqueP.textContent = 0;
-    // ataqueP.style.visibility = "hidden";
-    // novoAtaquerP.textContent = "";
-    cartaP.style.border = "2px solid rgba(207, 106, 50, 1)";
-    // cartaP.className = "invis";
   }
 
   //CARTAS VARIANTES
@@ -1128,7 +1048,7 @@ function critico() {
 
   cartaParaMover.children[0].children[1].style.color = "";
   //cidade
-  cartaParaMover.children[0].children[0].style.color = "";
+  // cartaParaMover.children[0].children[0].style.color = "";
   //cidade negrito
   cartaParaMover.children[0].children[1].style.fontWeight = "";
   cartaParaMover.classList.remove("critico");

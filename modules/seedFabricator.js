@@ -41,7 +41,7 @@ export function seed(seed, isReal, seedFalsa, isPutByPlayer,isMarket ) {
 export function generateSeed(input) {
   let seedReal =
     parseInt(input) >= 1000000000000000 &&
-    parseInt(input) <= 1000000000000000000;
+    parseInt(input) <= 100000000000000000000;
   //
   //
   //se for colocada um seed real

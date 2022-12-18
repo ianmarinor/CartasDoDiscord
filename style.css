@@ -32,6 +32,10 @@
   font-family: "tf2";
   src: url("/fonts/tf2.ttf");
 }
+@font-face {
+  font-family: "minecraft";
+  src: url("/fonts/Minecraft.ttf");
+}
 
 * {
   box-sizing: border-box;
@@ -198,7 +202,7 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #020101;
+  border: 2px solid #9511a7;
   font-weight: 900;
   color: rgb(0, 0, 0);
   /* background-size: contain; */
@@ -284,7 +288,7 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #020101;
+  border: 1px solid #020101;
 }
 
 #carta-people {
@@ -298,7 +302,7 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #020101;
+  border: 1px solid #020101;
   font-size: 1em;
 }
 #carta-semcargo {
@@ -311,7 +315,7 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #020101;
+  border: 1px solid #020101;
   color: black;
 }
 
@@ -326,7 +330,7 @@ li {
   border-radius: 15px;
   position: relative;
   color: #b0b0b6;
-  border: 2px solid #020101;
+  
 }
 #carta-speaker {
   background-image: url(pics/cartaspeaker.webp);
@@ -378,7 +382,7 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #dde630;
+  border: 2px solid #2d2ddd;
   font-weight: 900;
   color: rgb(0, 0, 0);
   background-repeat: no-repeat;
@@ -399,7 +403,7 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #dde630;
+  border: 2px solid #dd4b41;
   font-weight: 900;
   color: rgb(0, 0, 0);
   background-repeat: no-repeat;
@@ -410,8 +414,8 @@ li {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(pics/fundoAbelha.gif);
 
-  /* background: url(pics/fundoAbelha.gif); */
-
+  
+  font-family: minecraft;
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
   display: flex;
@@ -420,15 +424,15 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #4e2c00;
+  border: 3px solid #4d1a00;
   font-weight: 900;
-  /* color: rgb(181, 12, 175); */
-  background-repeat: no-repeat;
-  background-size: cover;
+  color: #ffd11a;
+  
+  
 }
 #comunista {
   background: linear-gradient(rgba(125, 105, 4, 0.6), rgba(187, 151, 5, 0.6)),
-    url(https://media.tenor.com/rH_kpMNuotUAAAAC/communism-communist.gif);
+    url(pics/camaradaFundo.gif);
 
   /* background: url(); */
 
@@ -440,12 +444,13 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #4e2c00;
+  border: 2px solid red;
   font-weight: 900;
   /* color: rgb(181, 12, 175); */
   background-repeat: no-repeat;
   background-size: COVER;
   font-family: blackao;
+  color: #990000;
 }
 
 #premiomonark {
@@ -474,6 +479,7 @@ li {
   background-repeat: no-repeat;
   background-size: COVER;
   font-family: premiomonark;
+  border: 4px solid black;
 }
 
 #spy {
@@ -501,6 +507,8 @@ li {
   background-repeat: no-repeat;
   background-size: COVER;
   font-family: tf2;
+  color: #cf6a32;
+  border: 2px solid rgba(207, 106, 50, 1);
 }
 
 /* **************************************************** */
@@ -525,6 +533,7 @@ li {
   /* margin-bottom: 0.1em; */
   font-size: 1.5em;
   /* background-color: #6c4d4d; */
+  /* color: red; */
 }
 .cidade {
   /* background-color: #6637be; */
@@ -539,7 +548,7 @@ li {
   background-color: #4b4747;
   border-radius: 5px;
 
-  background-size: 210px 124px;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-size: cover;
 
