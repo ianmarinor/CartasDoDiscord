@@ -15,7 +15,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.4.5";
+let versao = "Alpha 1.5";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -230,8 +230,6 @@ function escolherEspecial() {
     seedString[9] == 4
   ) {
     return (especial = "especial-tenica");
-
-
   } else if (
     seedString[5] == 8 &&
     seedString[6] == 3 &&
@@ -453,33 +451,22 @@ function colocarInfoNoWrap() {
   );
 
   //LIMPAR A CARTA
-  cartaP.style.backgroundImage = "";
-  cartaP.style.border = "none";
-  cartaP.style.color = "";
-  nomeP.style.fontFamily = "";
-  nomeP.style.fontSize = "24px";
-  nomeP.style.color = "black";
-  nomeP.className = "nome";
-  nomeP.style.fontSize = "";
-  nomeP.style.fontWeight = "";
+  cartaP.removeAttribute("style");
+  nomeP.removeAttribute("style");
+  varianteP.removeAttribute("style");
+  cidadeP.removeAttribute("style");
+  retratoP.removeAttribute("style");
+  //CARGO
+  cargoP.removeAttribute("style");
+  cargoP.innerHTML = ''
 
-  actionP.style.visibility = "hidden";
-  ataqueP.style.textDecorationLine = "";
-  ataqueP.style.fontWeight = "";
-  ataqueP.style.fontFamily = "";
-  ataqueP.style.visibility = "";
+  ataqueP.removeAttribute("style");
+  novoAtaquerP.removeAttribute("style");
+  nomeP.removeAttribute("style");
+  seedP.removeAttribute("style");
+
   ataqueP.innerHTML = "";
   novoAtaquerP.innerHTML = "";
-  novoAtaquerP.style.fontSize = "";
-  novoAtaquerP.style.fontFamily = "";
-  retratoP.style.backgroundSize = "";
-  cargoP.style.fontSize = "";
-  cargoP.style.color = "";
-  cargoP.style.fontWeight = "";
-  cargoP.style.fontFamily = "";
-  ataqueP.style.color = "";
-  ataqueP.style.fontSize = "";
-  ataqueP.textContent = "";
 
   seedP.style.color = "";
 
@@ -495,9 +482,14 @@ function colocarInfoNoWrap() {
 
   //DOM
   nomeP.innerHTML = novaCarta._integrante.toUpperCase();
-  cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
+  if(novaCarta._especial == ""){
+    cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
+  } else {
+    cidadeP.innerHTML = ''
+  }
+  
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
-  varianteP.innerHTML = novaCarta._variante;
+
   especialP.innerHTML = novaCarta._especial;
   seedP.innerHTML = "&nbsp;" + seedString;
 
@@ -596,32 +588,20 @@ function colocarInfoNoWrap() {
   //CARTAS ESPECIAIS
   if (novaCarta._especial === "carta-speaker") {
     retratoP.style.backgroundImage = "url('pics/speaker.webp')";
-    nomeP.innerHTML = "&nbsp; SPEAKER";
+    nomeP.innerHTML = "SPEAKER";
     ataqueP.innerHTML = pontoSpeaker() + "⚡";
-    cidadeP.innerHTML = "";
     cargoP.innerHTML = "MONARK BAN!";
-    retratoP.style.border = "2px dotted green";
-    especialP.style.visibility = "hidden";
-    // ataqueP.innerHTML =
-    cartaP.style.border = "2px solid #18d742";
-    Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
-  } else if (novaCarta._especial === "especial-tenica") {
-    cargoP.style.fontFamily = "Cormorant Upright";
+
+  } else if (novaCarta._especial === "especial-tenica") { 
+    nomeP.style.fontFamily =  "Cormorant Upright";
     retratoP.style.backgroundImage = "url('pics/tenica.webp')";
-    retratoP.style.backgroundSize = "139px 150px";
-    nomeP.innerHTML = "";
-    cidadeP.innerHTML = "";
-    cargoP.style.fontSize = "2.5em";
-    cargoP.style.fontWeight = "bolder";
-    cargoP.innerHTML = "&nbsp; TÉNICA";
-    cargoP.style.color = "black";
+    retratoP.style.backgroundSize = "100% 100%";
+    nomeP.innerHTML = "TÉNICA";
     retratoP.style.border = "2px double gold";
     ataqueP.style.color = "black";
     ataqueP.innerHTML = tenicaEnergia() + "👑";
     seedP.style.color = "black";
-
-    ataqueP.style.fontSize = "1.5em";
-    especialP.style.visibility = "hidden";
+    ataqueP.style.fontSize = "150%";
   } else if (novaCarta._especial === "especial-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
@@ -932,8 +912,8 @@ function moverCarta() {
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
 
-  if (PodeMover && naoMoviAinda && totalClicks >0) {
-  // if (true) {
+  if (PodeMover && naoMoviAinda && totalClicks > 0) {
+    // if (true) {
     if (inv.children[0].id != "empty") {
       if (
         inv.children[0].children[4].textContent !=
@@ -1545,11 +1525,11 @@ function criarBtn() {
 
         console.log("listener da tenica funcionando");
         console.log("listener da tenica funcionando");
-        
+
         let poderCartaPack = cartaParaMover.children[3].children[0];
         let poderNovoCartaPack = cartaParaMover.children[3].children[1];
         // tudo()
-        
+
         if (
           cartaParaMover.id != "especial-click" &&
           cartaParaMover.id != "-click" &&
@@ -1557,7 +1537,7 @@ function criarBtn() {
           cartaParaMover.id != "spy" &&
           cartaParaMover.id != "premiomonark" &&
           cartaParaMover.id != "comunista"
-          ) {
+        ) {
           varianteTenica.children[3].children[2].style.visibility = "hidden";
           if (poderNovoCartaPack.textContent != "") {
             poderNovoCartaPack.textContent =
@@ -1582,8 +1562,7 @@ function criarBtn() {
             inv.children[j].id != "especial-tenica" &&
             inv.children[j].id != "spy" &&
             inv.children[j].id != "premiomonark" &&
-            inv.children[j].id != "comunista" 
-
+            inv.children[j].id != "comunista"
           ) {
             // se o poder novo for presente
             if (inv.children[j].children[3].children[1].textContent != "") {
@@ -1628,12 +1607,12 @@ function criarBtn() {
                 inv.children[j].id != "abelha" &&
                 inv.children[j].id != "comunista" &&
                 inv.children[j].children[0].children[0].textContent !=
-                "NEFESTO" &&
+                  "NEFESTO" &&
                 inv.children[j].id != "carta-monark"
-                ) {
-                  console.log(j);
-                  
-                 comunista.children[3].children[2].style.visibility = "hidden";
+              ) {
+                console.log(j);
+
+                comunista.children[3].children[2].style.visibility = "hidden";
                 let pontoComunista = comunista.children[3].children[1];
 
                 let pontoEstatal = parseInt(pontoComunista.textContent) / 3;

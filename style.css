@@ -128,7 +128,7 @@ li {
   background-size: 100% 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   /* margin: 10px; */
 }
 #mao {
@@ -208,8 +208,8 @@ li {
   background-color: var(--primeMinister);
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 1) 74%,
-    rgba(80, 78, 78, 1) 100%
+    rgba(0, 0, 0, 1) 100%,
+    rgba(80, 78, 78, 1) 74%
   );
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
@@ -358,9 +358,11 @@ li {
   position: relative;
   border: 2px solid #dde630;
   font-weight: 900;
-  color: rgb(255, 255, 255);
+  font-size: 126%;
+  color: rgb(0, 0, 0);
   background-repeat: no-repeat;
   background-size: 300px 300px;
+
 }
 #especial-click {
   /* font-family: 'verdana'; */
@@ -595,6 +597,9 @@ li {
   border-radius: 5px;
 }
 
+.especial{
+  visibility: hidden;
+}
 /* ---------------------------------------*/
 /* VARIANTES */
 /* ---------------------------------------*/
