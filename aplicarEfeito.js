@@ -1,0 +1,67 @@
+// import { efeitoPremioMonark } from './modules/especial';
+import { efeitos, rodadas,somaPontos } from "./script.js";
+
+
+let inv = document.getElementById("inv");
+let inv1 = document.getElementById("inv").firstChild;
+let inv2 = document.getElementById("inv").firstChild;
+let inv3 = document.getElementById("inv").firstChild;
+let inv4 = document.getElementById("inv").firstChild;
+let placarEnergia = document.querySelector(".placar");
+let placarRodadas = document.querySelector(".arena");
+// let placarRodadasNumero = parseInt(placarRodadas.textContent)
+
+let nome1 = inv1.firstChild;
+
+// let efeitos = {}
+
+export function aplicarEfeitos() {
+  // console.log(efeitos.efeito1.status);
+
+  if (efeitos.status == true) {
+    if (efeitos.css.nome == "premioMonark") {
+      premioMonark();
+    }
+  }
+}
+
+function premioMonark() {
+  for (let i = 0; i < 4; i++) {
+    if (inv.children[i].id != "empty" && inv.children[i].id == "carta-monark") {
+      let monark = inv.children[i];
+
+      function infectarMonark(){
+      monark.children[0].className = "float";
+      monark.style.backgroundColor = "black";
+      monark.children[1].style.backgroundImage =
+        'url("/pics/retratoPremioMonark.gif")';
+      monark.children[1].style.backgroundSize = "100% 100%";
+      monark.children[1].style.backgroundColor = "#343436";
+      monark.children[1].style.fontFamily = "premiomonark";
+      monark.children[1].style.border = "2px solid black";
+      monark.style.color = "#343436";
+      monark.style.border = "2px solid black";
+      monark.children[2].innerHTML = "ADEUS...";
+      monark.children[2].className = "float";
+      monark.children[3].children[0].style.visibility = 'hidden';
+      monark.classList.add('vanish')
+
+      }
+      
+
+
+      function eliminarMonark(){
+        monark.remove()
+        inv.appendChild(document.createElement("div")).id = "empty"
+        somaPontos()
+      }
+
+      
+
+      setTimeout(infectarMonark, Math.floor(Math.random() * 150 +  250))
+
+
+      setTimeout(eliminarMonark, 10000)
+    }
+  }
+}

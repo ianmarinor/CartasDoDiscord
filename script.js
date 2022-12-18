@@ -1,4 +1,4 @@
-import { seed } from "./module.js";
+import { generateSeed } from "./modules/seedFabricator.js";
 import {
   tenicaEnergia,
   abelhaEnergia,
@@ -7,11 +7,15 @@ import {
   abelhaLowHp,
   frasesAbelha,
   comunistaPE,
-  frasesComuna
+  frasesComuna,
+  efeitoPremioMonark,
+  pontoSpeaker,
 } from "./modules/especial.js";
 
+import { aplicarEfeitos } from "./aplicarEfeito.js";
+
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.3.15.4";
+let versao = "Alpha 1.4.4";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -28,61 +32,6 @@ function seedRNG() {
 // if a string, it'll be converted
 
 let input = "";
-
-// function seed(seed,isReal,seedFalsa,isPutByPlayer ) {
-//   return{
-//     _seed: seed,
-//     _seedString: seed.toString(),
-//     _isSeedReal: isReal,
-//     _seedFalsaInput: seedFalsa,
-//     _seedLength:  seed.toString().length,
-//     _isPutByPlayer: isPutByPlayer
-
-//   }
-// }
-
-function generateSeed(input) {
-  let seedReal =
-    parseInt(input) >= 10000000000000 && parseInt(input) <= 1000000000000000000;
-  //
-  //
-  //se for colocada um seed real
-  if (input.length > 9) {
-    if (seedReal) {
-      // return parseInt(input);
-
-      return seed(parseInt(input), true, "", true);
-
-      // se for colocada uma seed falsa
-    } else {
-      if (input.length >= 3 && input.length <= 25) {
-        let sum = 1;
-        for (let i = 0; i < input.length; i++) {
-          sum = sum + input[i].charCodeAt();
-        }
-        let constanteSeedFalsa = 516515615165159;
-        let calculoSeedFalsa = sum * constanteSeedFalsa;
-
-        return seed(calculoSeedFalsa, false, input, true);
-      } else {
-        return seed(seedRNG(), true, "", false);
-      }
-    }
-  } else {
-    if (input.length >= 3 && input.length <= 25) {
-      let sum = 1;
-      for (let i = 0; i < input.length; i++) {
-        sum = sum + input[i].charCodeAt();
-      }
-      let constanteSeedFalsa = 516515615165159;
-      let calculoSeedFalsa = sum * constanteSeedFalsa;
-
-      return seed(calculoSeedFalsa, false, input, true);
-    } else {
-      return seed(seedRNG(), true, "", false);
-    }
-  }
-}
 
 // ***********************
 // LINK SEED TO ELEMENT
@@ -274,38 +223,44 @@ let especial = "";
 function escolherEspecial() {
   //
   if (
-    seedString[5] == 4 &&
+    seedString[5] == 9 &&
     seedString[6] == 9 &&
     seedString[7] == 9 &&
     seedString[8] == 1 &&
     seedString[9] == 4
   ) {
     return (especial = "especial-tenica");
+
+
   } else if (
     seedString[5] == 8 &&
     seedString[6] == 3 &&
-    seedString[7] == 4 &&
-    seedString[8] == 4
+    seedString[7] == 8 &&
+    seedString[8] <= 4
   ) {
-    return (especial = "");
+    return (especial = "premiomonark");
   } else if (
     seedString[5] == 7 &&
     seedString[6] == 1 &&
     seedString[7] == 7 &&
-    seedString[8] >= 4
+    seedString[8] >= 5
   ) {
     return (especial = "comunista");
-  } else if (seedString[5] == 8 && seedString[6] == 4 && seedString[7] == 2) {
-    return (especial = "");
-  } else if (seedString[5] == 8 && seedString[6] == 1) {
+  } else if (seedString[5] == 6 && seedString[6] == 9 && seedString[7] < 3) {
+    return (especial = "spy");
+  } else if (
+    seedString[5] == 6 &&
+    seedString[6] == 9 &&
+    seedString[7] > 2 &&
+    seedString[7] < 6
+  ) {
     return (especial = "abelha");
-  }
-
-  // else if (seedString[5] >= 6)
-  else if (seedString[5] == 8 && seedString[6] >= 8) {
+  } else if (seedString[5] == 6 && seedString[6] >= 9 && seedString[7] > 5) {
     return (especial = "carta-speaker");
-  } else if (seedString[5] == 8 && seedString[6] <= 4) {
+  } else if (seedString[5] == 3 && seedString[6] <= 4) {
     return (especial = "especial-click");
+  } else if (seedString[5] == 3 && seedString[6] > 4) {
+    return (especial = "-click");
   } else {
     return (especial = "");
   }
@@ -463,12 +418,17 @@ let varianteP = document.querySelector(".variante");
 let actionP = document.querySelector(".action");
 let novoAtaquerP = document.querySelector(".novoAtaque");
 let placarP = document.querySelector(".placar");
+let efeito1P = document.getElementById("efeito1");
+let efeito2P = document.getElementById("efeito2");
+let efeito3P = document.getElementById("efeito3");
+let efeito4P = document.getElementById("efeito4");
 //div poder
 let ataqueP = document.querySelector(".ataque");
 let defesaP = document.querySelector(".defesa");
 let especialP = document.querySelector(".especial");
 
 let seedP = document.querySelector(".seed");
+let seloP = document.getElementById("selo");
 //carta
 let cartaP = document.getElementById("carta");
 // input da seed cliente
@@ -497,10 +457,18 @@ function colocarInfoNoWrap() {
   cartaP.style.border = "none";
   cartaP.style.color = "";
   nomeP.style.fontFamily = "";
+  nomeP.style.fontSize = "24px";
+  nomeP.style.color = "black";
+  nomeP.className = "nome";
+  nomeP.style.fontSize = "";
+  nomeP.style.fontWeight = "";
+
   actionP.style.visibility = "hidden";
   ataqueP.style.textDecorationLine = "";
+  ataqueP.style.fontWeight = "";
   ataqueP.style.fontFamily = "";
-  ataqueP.id = "";
+  ataqueP.style.visibility = "";
+  ataqueP.innerHTML = "";
   novoAtaquerP.innerHTML = "";
   novoAtaquerP.style.fontSize = "";
   novoAtaquerP.style.fontFamily = "";
@@ -512,6 +480,8 @@ function colocarInfoNoWrap() {
   ataqueP.style.color = "";
   ataqueP.style.fontSize = "";
   ataqueP.textContent = "";
+
+  seedP.style.color = "";
 
   cartaParaMover.children[0].children[0].classList.remove("critico");
   cartaParaMover.children[0].children[2].classList.remove("critico");
@@ -530,8 +500,17 @@ function colocarInfoNoWrap() {
   varianteP.innerHTML = novaCarta._variante;
   especialP.innerHTML = novaCarta._especial;
   seedP.innerHTML = "&nbsp;" + seedString;
-  arenaP.innerHTML = totalClicks + " CARTAS";
-  placarP.innerHTML = totalPontos + " PONTOS";
+
+  if (seedObj._isMarket) {
+    seloP.innerHTML = "💰";
+  } else if (seedObj._isPutByPlayer) {
+    seloP.innerHTML = "💬";
+  } else {
+    seloP.innerHTML = "🎲";
+  }
+
+  arenaP.innerHTML = totalClicks + " RODADAS";
+  placarP.innerHTML = totalPontos + " ⚡";
 
   if (novaCarta._especial != "") {
     cartaP.id = novaCarta._especial;
@@ -606,6 +585,9 @@ function colocarInfoNoWrap() {
     } else if (novaCarta._cargo === "comunista") {
       cargoP.innerHTML = "CAMARADA BLACKAO";
       retratoP.style.border = "2px solid RED";
+    } else if (novaCarta._cargo === "premiomonark") {
+      cargoP.innerHTML = "PREMIO MONARK";
+      retratoP.style.border = "2px solid black";
     } else {
       true;
     }
@@ -615,12 +597,14 @@ function colocarInfoNoWrap() {
   if (novaCarta._especial === "carta-speaker") {
     retratoP.style.backgroundImage = "url('pics/speaker.webp')";
     nomeP.innerHTML = "&nbsp; SPEAKER";
+    ataqueP.innerHTML = pontoSpeaker() + "⚡";
     cidadeP.innerHTML = "";
     cargoP.innerHTML = "MONARK BAN!";
     retratoP.style.border = "2px dotted green";
     especialP.style.visibility = "hidden";
-    ataqueP.innerHTML =
-      Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
+    // ataqueP.innerHTML =
+    cartaP.style.border = "2px solid #18d742";
+    Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
   } else if (novaCarta._especial === "especial-tenica") {
     cargoP.style.fontFamily = "Cormorant Upright";
     retratoP.style.backgroundImage = "url('pics/tenica.webp')";
@@ -641,19 +625,41 @@ function colocarInfoNoWrap() {
   } else if (novaCarta._especial === "especial-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
-    nomeP.innerHTML = "";
+    nomeP.innerHTML = " + CARTAS +";
+    // nomeP.style.fontSize = "1.8em";
+    nomeP.style.fontWeight = "bolder";
+    nomeP.style.color = "red";
     cidadeP.innerHTML = "";
     especialP.style.visibility = "hidden";
-    cargoP.style.fontSize = "2.3em";
-    cargoP.style.fontWeight = "bolder";
-    cargoP.innerHTML = "CLICKS";
-    cargoP.style.color = "gray";
+
+    cargoP.innerHTML = "";
+
     // retratoP.style.border = '2px double gold'
     ataqueP.style.color = "black";
-    ataqueP.style.fontSize = "1.5em";
+    // ataqueP.style.fontSize = "1.5em";
     // actionP.style.visibility = 'visible'
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
     seedP.style.color = "black";
+    seedP.style.fontSize = "0.6em";
+  } else if (novaCarta._especial === "-click") {
+    retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
+    retratoP.style.backgroundSize = "cover";
+    nomeP.innerHTML = " - CARTAS -";
+    // nomeP.style.fontSize = "1.8em";
+    nomeP.style.fontWeight = "bolder";
+    nomeP.style.color = "red";
+    cidadeP.innerHTML = "";
+    especialP.style.visibility = "hidden";
+
+    cargoP.innerHTML = "";
+
+    // retratoP.style.border = '2px double gold'
+    ataqueP.style.color = "black";
+    // ataqueP.style.fontSize = "1.5em";
+    // actionP.style.visibility = 'visible'
+    ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
+    seedP.style.color = "black";
+    seedP.style.fontSize = "0.6em";
   } else if (novaCarta._especial === "abelha") {
     retratoP.style.backgroundImage = "url('pics/retratoAbelha.gif')";
     retratoP.style.backgroundSize = "";
@@ -695,6 +701,7 @@ function colocarInfoNoWrap() {
     ataqueP.style.fontSize = "1.4em";
     novoAtaquerP.style.fontSize = "1.4em";
     novoAtaquerP.style.fontFamily = "blackao";
+    novoAtaquerP.style.visibility = "visible";
     ataqueP.style.fontWeight = "bold";
     ataqueP.style.fontFamily = "blackao";
     // ataqueP.style.backgroundColor = "yellow";
@@ -705,6 +712,69 @@ function colocarInfoNoWrap() {
     cartaP.style.color = "#990000";
     cartaP.style.border = "2px solid red";
     seedP.style.color = "black";
+  } else if (novaCarta._especial === "premiomonark") {
+    retratoP.style.backgroundImage = 'url("/pics/retratoPremioMonark.gif")';
+    retratoP.style.backgroundSize = "100% 100%";
+    retratoP.style.backgroundColor = "#343436";
+    nomeP.innerHTML = "PREMIO <br> MONARK";
+    nomeP.style.fontFamily = "premiomonark";
+    // nomeP.style.fontSize = "200%";
+    nomeP.classList.add("float");
+    // nomeP.style.color = '#484340';
+    cidadeP.innerHTML = "";
+    cidadeP.style = "";
+    especialP.style.visibility = "hidden";
+    cargoP.style.fontSize = "";
+    cargoP.style.fontFamily = "";
+    cargoP.style.fontWeight = "";
+    cargoP.innerHTML = "";
+    // cargoP.style.color = "black";
+    retratoP.style.border = "2px solid black";
+    // ataqueP.style.color = "black";
+    ataqueP.style.fontSize = "1.4em";
+    novoAtaquerP.style.fontSize = "1.4em";
+    novoAtaquerP.style.fontFamily = "premiomonark";
+    ataqueP.style.fontWeight = "bold";
+    ataqueP.style.fontFamily = "premiomonark";
+    // ataqueP.style.backgroundColor = "yellow";
+    // actionP.style.visibility = 'visible'
+    ataqueP.textContent = 0;
+    ataqueP.style.visibility = "hidden";
+    novoAtaquerP.textContent = "";
+    // seedP.style.color = "yellow";
+    // cartaP.style.color = "#fff";
+    cartaP.style.border = "2px solid black";
+    seedP.style.color = "#343436";
+  } else if (novaCarta._especial == "spy") {
+    cartaP.style.color = "#cf6a32";
+    retratoP.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
+    retratoP.style.backgroundSize = "100% 100%";
+    retratoP.style.backgroundColor = "unset";
+    nomeP.innerHTML = "SPY";
+    nomeP.style.fontFamily = "tf2";
+    nomeP.style.fontSize = "2.3em";
+    nomeP.style.color = "white";
+    cidadeP.innerHTML = "";
+    cidadeP.style = "";
+    especialP.style.visibility = "hidden";
+    cargoP.style.fontSize = "";
+    cargoP.style.fontFamily = "";
+    cargoP.style.fontWeight = "";
+    cargoP.innerHTML = "";
+    retratoP.style.border = "2px solid #cf6a32";
+
+    ataqueP.style.fontSize = "1.4em";
+    ataqueP.textContent = "1⚡";
+    novoAtaquerP.style.fontSize = "1.4em";
+    novoAtaquerP.style.visibility = "hidden";
+    novoAtaquerP.textContent = "⌚";
+    ataqueP.style.fontWeight = "bold";
+    ataqueP.style.fontFamily = "tf2";
+    // ataqueP.textContent = 0;
+    // ataqueP.style.visibility = "hidden";
+    // novoAtaquerP.textContent = "";
+    cartaP.style.border = "2px solid rgba(207, 106, 50, 1)";
+    // cartaP.className = "invis";
   }
 
   //CARTAS VARIANTES
@@ -775,7 +845,7 @@ function colocarInfoNoWrap() {
       varianteP.style.fontSize = "0.99em";
     } else if (novaCarta._variante === "quimico") {
       varianteP.innerHTML = "🛑 PARA DE FALAR 🛑";
-      varianteP.style.fontSize = "0.86em"
+      varianteP.style.fontSize = "0.86em";
       cartaP.style.color = "white";
       cartaP.style.backgroundImage = 'url("pics/variantes/varianteJunks.gif")';
       cartaP.style.border = "3px  white   solid";
@@ -789,6 +859,31 @@ function colocarInfoNoWrap() {
     } else {
     }
   }
+}
+export let rodadas = 0;
+export let efeitos = {
+  status: false,
+  css: { nome: "", imagem: "" },
+  rodadas: 0,
+};
+
+let efeitoVazio = { status: false, css: { nome: "", imagem: "" }, rodadas: 0 };
+
+function colocarEfeito() {
+  console.log("efeitos no objeto efeito", efeitos);
+  efeito1P.style.backgroundImage = efeitos.css.imagem;
+  efeito1P.innerHTML = efeitos.rodadas;
+
+  if (efeitos.rodadas > 0) {
+    console.log("eu rodo o efeito1");
+    efeitos.rodadas--;
+  } else {
+    efeitos = efeitoVazio;
+    console.log("tirei o efeito1");
+  }
+
+  console.log("efeitos no objeto efeito", efeitos);
+  aplicarEfeitos();
 }
 
 function colocarInput() {
@@ -824,20 +919,20 @@ function moverCarta() {
   copyCard = cartaParaMover.cloneNode(true);
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   let customOff = getSeed.className == "customOff";
-
+  let copyCardBotao = copyCard.children[3].children[2];
   let cartaNotMonark = copyCard.id != "carta-monark";
 
   let PodeMover =
     (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
-    (!seedObj._isSeedReal && cartaNotMonark) ||
-    (seedObj._isSeedReal && !seedObj._isPutByPlayer)
+    (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
+    seedObj._isMarket;
 
   let naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
 
   // copySeed = copy.getElementsByClassName('seed')
   // cardShrinker(copyCard)
 
-  if (PodeMover && naoMoviAinda) {
+  if (PodeMover && naoMoviAinda && totalClicks >0) {
   // if (true) {
     if (inv.children[0].id != "empty") {
       if (
@@ -896,6 +991,20 @@ function moverCarta() {
 
           somaPontos();
           tudo();
+
+          //se tiver cheio tenta colocar premio monark
+        } else if (copyCard.id == "premiomonark") {
+          for (let i = 0; i < 4; i++) {
+            if (inv.children[i].id == "carta-monark") {
+              inv.replaceChild(copyCard, inv.children[i]);
+              copyCardBotao.style.visibility = "visible";
+              somaPontos();
+              tudo();
+              break;
+            }
+          }
+
+          console.log("copycard é PM e deck cheio");
         }
       }
     } else {
@@ -938,20 +1047,43 @@ function moverCartaMonark() {
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
 
-  
-
   if (seedObj._isPutByPlayer) {
     false;
   } else {
     if (copyCard.id === "carta-monark") {
-      if (inv.children[0].id === "empty" && copyCard.id == "carta-monark") {
-
-
+      //
+      if (
+        inv.children[0].id == "spy" &&
+        inv.children[0].className != "invisi"
+      ) {
         inv.replaceChild(copyCard, inv.children[0]);
         somaPontos();
-        
+      } else if (
+        inv.children[1].id == "spy" &&
+        inv.children[1].className != "invisi"
+      ) {
+        inv.replaceChild(copyCard, inv.children[1]);
+        somaPontos();
+      } else if (
+        inv.children[2].id == "spy" &&
+        inv.children[2].className != "invisi"
+      ) {
+        inv.replaceChild(copyCard, inv.children[2]);
+        somaPontos();
+      } else if (
+        inv.children[3].id == "spy" &&
+        inv.children[3].className != "invisi"
+      ) {
+        inv.replaceChild(copyCard, inv.children[3]);
+        somaPontos();
 
-
+        //  INVENTARIO VAZIO
+      } else if (
+        inv.children[0].id === "empty" &&
+        copyCard.id === "carta-monark"
+      ) {
+        inv.replaceChild(copyCard, inv.children[0]);
+        somaPontos();
       } else if (
         inv.children[1].id === "empty" &&
         copyCard.id === "carta-monark" &&
@@ -1037,6 +1169,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "farmacêutico") {
         cartaParaMover.classList.add("critico");
@@ -1044,8 +1177,9 @@ function critico() {
         poderNovo.classList.add("critico");
 
         poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 5 + "⚡";
+        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
 
@@ -1057,6 +1191,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "bão") {
         cartaParaMover.classList.add("critico");
@@ -1066,6 +1201,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
     //nefesto
@@ -1076,6 +1212,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "apenas") {
         cartaParaMover.classList.add("critico");
@@ -1085,6 +1222,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
     //blackao
@@ -1095,6 +1233,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "fonte") {
         cartaParaMover.classList.add("critico");
@@ -1104,6 +1243,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
     //antonio
@@ -1114,6 +1254,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "ixqueiro") {
         cartaParaMover.classList.add("critico");
@@ -1123,6 +1264,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
     //pedro
@@ -1133,6 +1275,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "abalo") {
         cartaParaMover.classList.add("critico");
@@ -1142,6 +1285,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
     //curtas
@@ -1152,6 +1296,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "grito") {
         cartaParaMover.classList.add("critico");
@@ -1161,6 +1306,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
     //twelve
@@ -1171,6 +1317,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "dia") {
         cartaParaMover.classList.add("critico");
@@ -1180,6 +1327,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
     //junks
@@ -1190,6 +1338,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "quimico") {
         cartaParaMover.classList.add("critico");
@@ -1199,6 +1348,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
     //murilo
@@ -1209,6 +1359,7 @@ function critico() {
 
       poderTremer.style.textDecorationLine = "line-through";
       poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
+      poderNovo.style.visibility = "visible";
 
       if (variante == "pêra") {
         cartaParaMover.classList.add("critico");
@@ -1218,6 +1369,7 @@ function critico() {
         poderTremer.style.textDecorationLine = "line-through";
         poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
         poderNovo.style.fontSize = "1.5em";
+        poderNovo.style.visibility = "visible";
       }
     }
   }
@@ -1317,6 +1469,18 @@ function criarBtn() {
         //
       }
 
+      if (
+        inv.children[i].id == "-click" &&
+        inv.children[i].children[0].id != "foi"
+      ) {
+        inv.children[i].children[3].children[2].addEventListener(
+          "click",
+          cartaMenosclique
+        );
+        inv.children[i].children[0].id = "foi";
+        //
+      }
+
       function cartaClique(e) {
         let varianteClique = e.target.offsetParent;
 
@@ -1328,9 +1492,31 @@ function criarBtn() {
         varianteClique.children[3].children[2].style.visibility = "hidden";
         button.style.backgroundColor = "";
         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-        arenaP.innerHTML = totalClicks + " CARTAS";
+        arenaP.innerHTML = totalClicks + " RODADAS";
         varianteClique.remove();
         inv.appendChild(document.createElement("div")).id = "empty";
+      }
+
+      function cartaMenosclique(e) {
+        let varianteMenosClique = e.target.offsetParent;
+
+        if (
+          totalClicks >
+          parseInt(varianteMenosClique.children[3].children[0].textContent)
+        ) {
+          totalClicks =
+            totalClicks -
+            parseInt(varianteMenosClique.children[3].children[0].textContent) +
+            1;
+
+          varianteMenosClique.children[3].children[2].style.visibility =
+            "hidden";
+          button.style.backgroundColor = "";
+          button.innerHTML = "&#127381; NOVA CARTA &#127381;";
+          arenaP.innerHTML = totalClicks + " RODADAS";
+          varianteMenosClique.remove();
+          inv.appendChild(document.createElement("div")).id = "empty";
+        }
       }
 
       // PODER TENICA
@@ -1352,21 +1538,27 @@ function criarBtn() {
           } else {
             totalClicks = 50;
           }
-          arenaP.innerHTML = totalClicks + " CARTAS";
+          arenaP.innerHTML = totalClicks + " RODADAS";
         }
 
         let varianteTenica = e.target.offsetParent;
 
-        varianteTenica.children[3].children[2].style.visibility = "hidden";
-
+        console.log("listener da tenica funcionando");
+        console.log("listener da tenica funcionando");
+        
         let poderCartaPack = cartaParaMover.children[3].children[0];
         let poderNovoCartaPack = cartaParaMover.children[3].children[1];
         // tudo()
-
+        
         if (
           cartaParaMover.id != "especial-click" &&
-          cartaParaMover.id != "especial-tenica"
-        ) {
+          cartaParaMover.id != "-click" &&
+          cartaParaMover.id != "especial-tenica" &&
+          cartaParaMover.id != "spy" &&
+          cartaParaMover.id != "premiomonark" &&
+          cartaParaMover.id != "comunista"
+          ) {
+          varianteTenica.children[3].children[2].style.visibility = "hidden";
           if (poderNovoCartaPack.textContent != "") {
             poderNovoCartaPack.textContent =
               parseInt(poderNovoCartaPack.textContent) +
@@ -1385,8 +1577,13 @@ function criarBtn() {
         for (let j = 0; j < 4; j++) {
           if (
             inv.children[j].id != "especial-click" &&
+            inv.children[j].id != "-click" &&
             inv.children[j].id != "empty" &&
-            inv.children[j].id != "especial-tenica"
+            inv.children[j].id != "especial-tenica" &&
+            inv.children[j].id != "spy" &&
+            inv.children[j].id != "premiomonark" &&
+            inv.children[j].id != "comunista" 
+
           ) {
             // se o poder novo for presente
             if (inv.children[j].children[3].children[1].textContent != "") {
@@ -1421,20 +1618,22 @@ function criarBtn() {
         // comunista.children[3].children[2].style.visibility = "hidden";
         for (let k = 0; k < 4; k++) {
           if (inv.children[k].id == "carta-speaker") {
-            comunista.children[3].children[2].style.visibility = "hidden";
             for (let j = 0; j < 4; j++) {
               if (
+                inv.children[j].id != "spy" &&
                 inv.children[j].id != "especial-click" &&
+                inv.children[j].id != "-click" &&
                 inv.children[j].id != "empty" &&
                 inv.children[j].id != "especial-tenica" &&
                 inv.children[j].id != "abelha" &&
                 inv.children[j].id != "comunista" &&
                 inv.children[j].children[0].children[0].textContent !=
-                  "NEFESTO" &&
+                "NEFESTO" &&
                 inv.children[j].id != "carta-monark"
-              ) {
-                console.log(j);
-
+                ) {
+                  console.log(j);
+                  
+                 comunista.children[3].children[2].style.visibility = "hidden";
                 let pontoComunista = comunista.children[3].children[1];
 
                 let pontoEstatal = parseInt(pontoComunista.textContent) / 3;
@@ -1448,17 +1647,16 @@ function criarBtn() {
                     "BLACKAO"
                   ) {
                     inv.children[j].children[3].children[1].textContent =
-                      parseInt(
-                        inv.children[j].children[3].children[1].textContent
-                      ) +
-                      parseInt(pontoEstatal) * 2 +
-                      "☭";
-                      inv.children[j].children[3].children[1].style.color = 'red'
-                      inv.children[j].children[2].innerHTML = frasesComuna()
-                      inv.children[j].children[2].fontSize = '1em'
-                      inv.children[j].children[2].style.color = 'red'
-
-
+                      Math.floor(
+                        parseInt(
+                          inv.children[j].children[3].children[1].textContent
+                        ) +
+                          parseInt(pontoEstatal) * 1.5
+                      ) + "☭";
+                    inv.children[j].children[3].children[1].style.color = "red";
+                    inv.children[j].children[2].innerHTML = frasesComuna();
+                    inv.children[j].children[2].fontSize = "1em";
+                    inv.children[j].children[2].style.color = "red";
 
                     somaPontos();
                   } else {
@@ -1466,9 +1664,9 @@ function criarBtn() {
                       parseInt(
                         inv.children[j].children[3].children[1].textContent
                       ) +
-                      parseInt(pontoEstatal) + "☭";
-                      
-                      
+                      parseInt(pontoEstatal) +
+                      "☭";
+
                     somaPontos();
                   }
                 } else {
@@ -1481,12 +1679,12 @@ function criarBtn() {
                       parseInt(
                         inv.children[j].children[3].children[0].textContent
                       ) +
-                      parseInt(pontoEstatal) * 2 + "☭";
-                      inv.children[j].children[3].children[0].style.color = 'red'
-                      inv.children[j].children[2].innerHTML = frasesComuna()
-                      inv.children[j].children[2].fontSize = '1em'
-                      inv.children[j].children[2].style.color = 'red'
-                      
+                      parseInt(pontoEstatal) * 2 +
+                      "☭";
+                    inv.children[j].children[3].children[0].style.color = "red";
+                    inv.children[j].children[2].innerHTML = frasesComuna();
+                    inv.children[j].children[2].fontSize = "1em";
+                    inv.children[j].children[2].style.color = "red";
 
                     somaPontos();
                   } else
@@ -1494,18 +1692,124 @@ function criarBtn() {
                       parseInt(
                         inv.children[j].children[3].children[0].textContent
                       ) +
-                      parseInt(pontoEstatal) + "☭";
-                      
+                      parseInt(pontoEstatal) +
+                      "☭";
+
                   somaPontos();
                 }
               }
             }
           }
         }
+      } // premio monark
+      if (
+        inv.children[i].id == "premiomonark" &&
+        inv.children[i].children[0].id != "foi"
+      ) {
+        inv.children[i].children[3].children[2].addEventListener(
+          "click",
+          premiomonark
+        );
+        inv.children[i].children[0].id = "foi";
+      }
+
+      function premiomonark(e) {
+        let premioMonark = e.target.offsetParent;
+        let premioMonarkBotao = premioMonark.children[3].children[2];
+
+        if (efeitos.status == false && totalPontos < 250) {
+          //coloca efeito
+          efeitoPremioMonark.rodadas = 35;
+          efeitos = efeitoPremioMonark;
+          //apaga a carta
+          totalClicks += 15;
+          premioMonark.classList.add("vanish");
+          premioMonarkBotao.style.visibility = "hidden";
+          function eliminarPremioMonark() {
+            premioMonark.remove();
+            inv.appendChild(document.createElement("div")).id = "empty";
+          }
+
+          setTimeout(eliminarPremioMonark, 10000);
+
+          tudo();
+          console.log("PM adicionado aos efeitos");
+          console.log("no event listener", efeitos);
+        }
+      }
+      //PODER SPY
+      if (
+        inv.children[i].id == "spy" &&
+        inv.children[i].children[0].id != "foi"
+      ) {
+        inv.children[i].children[3].children[2].addEventListener("click", spy);
+        inv.children[i].children[0].id = "foi";
+      }
+      function spy(e) {
+        let spy = e.target.offsetParent;
+        let spyPoder = spy.children[3].children[0];
+        let spyWatch = spy.children[3].children[1];
+        let botao = spy.children[3].children[2];
+        let retrato = spy.children[1];
+        console.log("spywatch", spyWatch);
+
+        spyWatch.addEventListener("click", invis);
+        function invis() {
+          let bateria = 3;
+          let atual = rodadas;
+          let final;
+          console.log("atual: ", atual);
+          console.log("to invisivel");
+          spy.className = "invisi";
+          retrato.classList.add("invis");
+          spy.children[0].className = "invis";
+
+          spyWatch.style.visibility = "hidden";
+          botao.style.visibility = "hidden";
+          retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
+        }
+
+        for (let i = 0; i < 4; i++) {
+          if (inv.children[i].id == "carta-semcargo") {
+            console.log("tem semcargo");
+            let semcargo = inv.children[i];
+            let poderSemcargo = semcargo.children[3].children[0];
+            let poderNovoSemcargo = semcargo.children[3].children[1];
+            let poderSpy = spy.children[3].children[0];
+
+            //roubar o poder
+            if (poderNovoSemcargo.textContent != "") {
+              console.log("tem critico");
+              poderSpy.textContent =
+                parseInt(poderNovoSemcargo.textContent) * 5 +
+                parseInt(poderSpy.textContent) +
+                "⚡";
+              semcargo.remove();
+              inv.appendChild(document.createElement("div")).id = "empty";
+              spyWatch.style.visibility = "visible";
+              retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
+              somaPontos();
+            } else {
+              console.log("nao tem critico");
+              poderSpy.textContent =
+                parseInt(poderSemcargo.textContent) * 5 +
+                parseInt(poderSpy.textContent) +
+                "⚡";
+              semcargo.remove();
+              inv.appendChild(document.createElement("div")).id = "empty";
+              spyWatch.style.visibility = "visible";
+              retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
+              somaPontos();
+            }
+
+            break;
+          }
+        }
       }
     }
   }
 }
+
 let temTuru;
 let ab = 3;
 
@@ -1590,36 +1894,32 @@ function abelha() {
 
 let btnReset = document.getElementById("btnReset");
 
-
-let empty = document.createElement("div")
-empty.id = 'empty'
-
-
+let empty = document.createElement("div");
+empty.id = "empty";
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit1") {
-    deleteInvOne(0)
+    deleteInvOne(0);
   }
 });
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit2") {
-    deleteInvOne(1)
+    deleteInvOne(1);
   }
 });
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit3") {
-    deleteInvOne(2)
+    deleteInvOne(2);
   }
 });
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit4") {
-    deleteInvOne(3)
+    deleteInvOne(3);
   }
 });
 
-function deleteInvOne(a){
-  if(inv.children[a].id!= 'carta-monark'){
-
+function deleteInvOne(a) {
+  if (inv.children[a].id != "carta-monark") {
     inv.children[a].remove();
     inv.appendChild(document.createElement("div")).id = "empty";
     somaPontos();
@@ -1629,61 +1929,35 @@ function deleteInvOne(a){
 function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
   if (
-    e.target.id != "carta-monark" &&
-    e.target.parentElement.id != "carta-monark" &&
-    e.target.parentElement.parentElement.id != "carta-monark" &&
-    e.target.id != "inv" &&
-    e.target.id != "empty" &&
-    e.target.className != "action" &&
-    e.target.className == "retrato"
+    e.target.className == "retrato" ||
+    e.target.className == "retrato invis"
   ) {
     //
 
-    // 1.1 se for a carta inteira
-    if (e.target.id != "inv" && e.target.childElementCount === 5) {
-      e.target.remove();
+    if (
+      e.target.offsetParent.id != "carta-monark" ||
+      (e.target.offsetParent.id == "carta-monark" &&
+        e.target.offsetParent.className == "vanish")
+    ) {
+      e.target.offsetParent.remove();
       inv.appendChild(document.createElement("div")).id = "empty";
       somaPontos();
-
-      //1.2 se nao for a seed
-    } else if (
-      e.target.id != "inv" &&
-      e.target.childElementCount != 5 &&
-      e.target.className != "seed"
-    ) {
-      //
-
-      // 1.2.1 se for filho da carta
-      if (
-        e.target.parentElement.children[0].className ===
-          "nameAndCidadeWrapper" &&
-        e.target.id != "inv"
-      ) {
-        //
-        e.target.parentElement.remove();
-        inv.appendChild(document.createElement("div")).id = "empty";
-        somaPontos();
-      }
-
-      // 1.2.2 se nao for nada disso, sera filho do filho
-      else {
-        //
-        e.target.parentElement.parentElement.remove();
-        inv.appendChild(document.createElement("div")).id = "empty";
-        somaPontos();
-      }
     }
   }
 }
 
 function resetarDeck() {
-  getSeed.setAttribute("class", "");1
+  getSeed.setAttribute("class", "");
+  1;
+
+  efeitos = efeitoVazio;
 
   // let empty = document.createElement('div').id = "empty"
   let empty0 = document.createElement("div");
   let empty1 = document.createElement("div");
   let empty2 = document.createElement("div");
   let empty3 = document.createElement("div");
+  rodadas = 0;
   critico();
 
   for (let i = 0; i < 4; i++) {
@@ -1708,18 +1982,16 @@ function resetarDeck() {
   getSeed.className = "";
 }
 
-let rodadas = 0;
-
 /////// CRITICO
 
 function blockInv() {
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   let customOff = getSeed.className == "customOff";
-  let cartaNotMonark = copyCard.id == "carta-monark";
+  let cartaNotMonark = copyCard.id != "carta-monark";
   let PodeMover =
-    (!seedObj._isSeedReal && cartaNotEspecial) ||
-    (!seedObj._isSeedReal && cartaNotMonark) ||
-    (seedObj._isSeedReal && !seedObj._isPutByPlayer);
+    (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
+    (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
+    seedObj._isMarket;
 
   if (!PodeMover || customOff) {
     inv.style.border = "10px double red";
@@ -1749,19 +2021,18 @@ function tudo() {
     clicks();
     console.log(aumentou);
     abelha();
+    colocarEfeito();
+    // aplicarEfeitos();
     blockInv();
     console.log("rodadas: ", rodadas);
-    // if(totalClicks == 1){button.style.backgroundColor = "red"  
+    // if(totalClicks == 1){button.style.backgroundColor = "red"
     // button.innerHTML = "0 CARTAS";}
   } else {
     showVersion();
-    button.style.backgroundColor = "red"  
+    button.style.backgroundColor = "red";
     button.innerHTML = "0 CARTAS";
-
-    
-   
-  
-  }}
+  }
+}
 let aumentou = false;
 function clicks() {
   if (!seedObj._isPutByPlayer) {
@@ -1769,7 +2040,7 @@ function clicks() {
     rodadas++;
     aumentou = true;
 
-    arenaP.innerHTML = totalClicks + " CARTAS";
+    arenaP.innerHTML = totalClicks + " RODADAS";
   } else {
     aumentou = false;
   }
@@ -1778,7 +2049,7 @@ function clicks() {
 }
 let totalPontos = 0;
 
-function somaPontos() {
+export function somaPontos() {
   let ponto0 = 0;
   let ponto1 = 0;
   let ponto2 = 0;
@@ -1788,10 +2059,14 @@ function somaPontos() {
   if (
     inv.children[0].id != "empty" &&
     inv.children[0].children[0].children[3].textContent != "especial-click" &&
+    inv.children[0].children[0].children[3].textContent != "-click" &&
     inv.children[0].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[0].children[3].children[1].textContent != "") {
+    if (
+      inv.children[0].children[3].children[1].textContent != "" &&
+      inv.children[0].id != "spy"
+    ) {
       ponto0 = parseInt(inv.children[0].children[3].children[1].textContent);
       // se nao, pegue o poder velho
     } else {
@@ -1803,10 +2078,14 @@ function somaPontos() {
   if (
     inv.children[1].id != "empty" &&
     inv.children[1].children[0].children[3].textContent != "especial-click" &&
+    inv.children[1].children[0].children[3].textContent != "-click" &&
     inv.children[1].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[1].children[3].children[1].textContent != "") {
+    if (
+      inv.children[1].children[3].children[1].textContent != "" &&
+      inv.children[1].id != "spy"
+    ) {
       ponto1 = parseInt(inv.children[1].children[3].children[1].textContent);
       // se nao, pegue o poder velho
     } else {
@@ -1818,10 +2097,14 @@ function somaPontos() {
   if (
     inv.children[2].id != "empty" &&
     inv.children[2].children[0].children[3].textContent != "especial-click" &&
+    inv.children[2].children[0].children[3].textContent != "-click" &&
     inv.children[2].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[2].children[3].children[1].textContent != "") {
+    if (
+      inv.children[2].children[3].children[1].textContent != "" &&
+      inv.children[2].id != "spy"
+    ) {
       ponto2 = parseInt(inv.children[2].children[3].children[1].textContent);
       // se nao, pegue o poder velho
     } else {
@@ -1833,11 +2116,16 @@ function somaPontos() {
   if (
     inv.children[3].id != "empty" &&
     inv.children[3].children[0].children[3].textContent != "especial-click" &&
+    inv.children[3].children[0].children[3].textContent != "-click" &&
     inv.children[3].id != "comunista"
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (inv.children[3].children[3].children[1].textContent != "") {
+    if (
+      inv.children[3].children[3].children[1].textContent != "" &&
+      inv.children[3].id != "spy"
+    ) {
       ponto3 = parseInt(inv.children[3].children[3].children[1].textContent);
+
       // se nao, pegue o poder velho
     } else {
       ponto3 = parseInt(inv.children[3].children[3].children[0].textContent);
@@ -1845,7 +2133,7 @@ function somaPontos() {
   }
 
   totalPontos = ponto0 + ponto1 + ponto2 + ponto3;
-  placarP.innerHTML = totalPontos + " PONTOS";
+  placarP.innerHTML = totalPontos + " ⚡";
   //
   //
   //
@@ -1889,11 +2177,11 @@ function deckPronto() {
   moverCarta();
   moverCarta();
   moverCarta();
-  totalClicks += 5
+  totalClicks += 5;
+  rodadas = 0;
+  console.log("rodadas: ", rodadas);
   arenaP.innerHTML = totalClicks + " CARTAS";
 }
-
-
 
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {
@@ -1940,11 +2228,11 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-document.getElementById('G').addEventListener("click", deckPronto)
+document.getElementById("G").addEventListener("click", deckPronto);
 
-window.onload = (event) =>{
-  tudo()
-}
+window.onload = (event) => {
+  tudo();
+};
 
 // setInterval(()=>arenaP.innerHTML = totalClicks + " CARTAS", 100)
-11
+11;
