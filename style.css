@@ -724,7 +724,7 @@ p {
   }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 900px){
   /* #pack{
         display: none;
     } */
@@ -732,7 +732,7 @@ p {
   nav {
     display: display;
     background-color: rgb(136, 74, 195);
-    width: 100%;
+    width: 800px;
     height: 5%;
 
     grid-area: nav;
@@ -740,7 +740,9 @@ p {
 
   main {
     width: 800px;
+    /* width: 100vh; */
     height: 720px;
+    /* height: 100vh; */
     display: grid;
     gap: 0.7%;
 
@@ -787,8 +789,8 @@ p {
     grid-area: mao2;
   }
   #btn {
-    margin-right: 2%;
-    justify-self: end;
+    margin: 0;
+    /* justify-self: end; */
     grid-area: btn;
   }
   #getseed {
