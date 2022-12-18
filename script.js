@@ -2031,7 +2031,6 @@ function tudo() {
     showVersion();
     button.style.backgroundColor = "red";
     button.innerHTML = "0 CARTAS";
-    // document.getElementById('pack').children[0].id = 'carta'
   }
 }
 let aumentou = false;
