@@ -814,6 +814,7 @@ p {
   #getseed {
     grid-area: btn;
     justify-self: start;
+    align-self: center;
     margin: 0;
   }
   #btnReset {
@@ -1017,7 +1018,7 @@ p {
     align-self: end;
     margin-bottom: 7px;
     background-color: #599ac6;
-    font-size: 12px;
+    font-size: 10px;
   }
 
   @media (orientation: portrait) {
