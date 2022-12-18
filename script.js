@@ -15,7 +15,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.4.5";
+let versao = "Alpha 1.4.6";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -454,8 +454,10 @@ function colocarInfoNoWrap() {
   //LIMPAR A CARTA
   cartaP.removeAttribute("style");
   nomeP.removeAttribute("style");
-  nomeP.className = "";
+  nomeP.className = "nome";
   varianteP.removeAttribute("style");
+  varianteP.innerHTML = '';
+  
   cidadeP.removeAttribute("style");
   retratoP.removeAttribute("style");
   //CARGO
@@ -464,7 +466,7 @@ function colocarInfoNoWrap() {
 
   ataqueP.removeAttribute("style");
   novoAtaquerP.removeAttribute("style");
-  nomeP.removeAttribute("style");
+  
   seedP.removeAttribute("style");
 
   ataqueP.innerHTML = "";
