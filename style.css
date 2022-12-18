@@ -13,9 +13,11 @@
 
   --tamanhoCartaWidth: 190px;
   --tamanhoCartaHeight: 295px;
+  /* CELULAR */
 
   --cartaWidthCelular: 110px;
   --cartaHeigthCelular: 185px;
+  --cargoCelularFontSize: 15px;
 }
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@700&display=swap");
 @font-face {
@@ -57,8 +59,11 @@ main {
   align-items: center;
   justify-items: center;
   flex-direction: column;
+
+  
+
+
   background-color: #11446d;
-  /* background-color: #ffffff; */
   background: linear-gradient(180deg, rgb(6, 6, 148) 0%, rgb(11, 51, 101) 27%);
   grid-template-columns: 0.3fr 0.2fr 1fr;
   grid-template-rows: 0.1fr 1fr 0.5fr;
@@ -83,7 +88,14 @@ li {
   font-size: 1.25em;
   color: rgb(213, 187, 238);
 }
-
+#descr{
+    grid-area: descr;
+    height: 60px;
+    font-size: 0.6em;
+    align-self: center;
+    text-align: center;
+    color: wheat;
+}
 #wrapAndInv {
   display: flex;
   grid-area: inv;
@@ -570,8 +582,9 @@ li {
   border: 1px black solid;
 }
 #getseed {
-  margin-top: 50px;
+  
   grid-area: btn;
+  align-self: end;
 }
 #btnReset {
   grid-area: btnReset;
@@ -620,12 +633,18 @@ p {
 }
 
 #G {
-  display: none;
-  grid-area: pack;
+  
+  grid-area: btn;
   width: 80%;
   height: 13%;
-  align-self: end;
-  margin-bottom: 10%;
+  align-self: center;
+  padding: 5px;
+  background-color: #42116d;
+  border-radius: 5px;
+  height: 60px;
+  border: 1px black solid;
+  font-weight: bold;
+  /* margin-bottom: 10%; */
 }
 
 .float {
@@ -724,11 +743,7 @@ p {
   }
 }
 
-@media only screen and (max-width: 900px){
-  /* #pack{
-        display: none;
-    } */
-
+@media only screen and (max-width: 900px) {
   nav {
     display: display;
     background-color: rgb(136, 74, 195);
@@ -770,7 +785,7 @@ p {
     grid-area: text;
     align-self: start;
   }
-  #descr  {
+  #descr {
     grid-area: text;
     height: 60px;
     font-size: 6px;
@@ -778,11 +793,10 @@ p {
     text-align: center;
     color: wheat;
   }
- #versao{
-  font-style: italic;
- }
+  #versao {
+    font-style: italic;
+  }
 
-  
   .wrap {
     height: 60px;
     font-size: 8px;
@@ -898,43 +912,24 @@ p {
   .retrato {
     display: block;
     width: 78%;
-    height: 40%;
-
-    /* width: 70px;
-        height: 45px; */
+    height: 50%;
 
     background-color: #4b4747;
     border-radius: 5px;
-    /* background-size: 210px 124px; */
+
     background-repeat: no-repeat;
     background-size: 100% 100%;
 
     border: #020101 2px solid;
   }
-  #retrato1,
-  #retrato2,
-  #retrato3,
-  #retrato4 {
-    display: block;
-    width: 80%;
-    height: 35%;
-
-    /* width: 70px;
-        height: 45px; */
-
-    background-color: #4b4747;
-    border-radius: 5px;
-    /* background-size: 210px 124px; */
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-
-    border: #020101 2px solid;
+  .seed{
+    font-size: 8px;
   }
 
   .cargo {
     /* display: none; */
     height: 8%;
-    font-size: 108%;
+    font-size: var(--cargoCelularFontSize);
     transform: rotate(-10deg);
     margin-top: 10%;
     align-self: center;
@@ -950,6 +945,9 @@ p {
     margin: 10%;
   }
   .ataque {
+    font-size: 12px;
+  }
+  .novoAtaque {
     font-size: 0.8em;
   }
 
@@ -1021,8 +1019,6 @@ p {
     background-color: #599ac6;
     font-size: 12px;
   }
-
-  
 
   @media (orientation: portrait) {
     main {
