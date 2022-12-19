@@ -424,6 +424,7 @@ let efeito1P = document.getElementById("efeito1");
 let efeito2P = document.getElementById("efeito2");
 let efeito3P = document.getElementById("efeito3");
 let efeito4P = document.getElementById("efeito4");
+let mao = document.getElementById("mao")
 //div poder
 let ataqueP = document.querySelector(".ataque");
 let defesaP = document.querySelector(".defesa");
@@ -593,7 +594,7 @@ function colocarInfoNoWrap() {
     } else {
       true;
     }
-    console.log(novaCarta);
+    
   }
 
   //CARTAS ESPECIAIS
@@ -873,19 +874,19 @@ export let efeitos = {
 let efeitoVazio = { status: false, css: { nome: "", imagem: "" }, rodadas: 0 };
 
 function colocarEfeito() {
-  console.log("efeitos no objeto efeito", efeitos);
+  
   efeito1P.style.backgroundImage = efeitos.css.imagem;
   efeito1P.innerHTML = efeitos.rodadas;
 
   if (efeitos.rodadas > 0) {
-    console.log("eu rodo o efeito1");
+    
     efeitos.rodadas--;
   } else {
     efeitos = efeitoVazio;
-    console.log("tirei o efeito1");
+    
   }
 
-  console.log("efeitos no objeto efeito", efeitos);
+  
   aplicarEfeitos();
 }
 
@@ -929,8 +930,8 @@ function getSeedChecked() {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit1") {
-    console.log("getSeedChecked: ", getSeedChecked());
-    console.log(document.activeElement);
+    
+    
     if (!getSeedChecked()) {
       moverOne();
     }
@@ -959,7 +960,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 let cartaParaMover = document.getElementById("pack").firstElementChild;
-let copyCard;
+let copyCard = cartaParaMover.cloneNode(true);
 let seedCopyCard;
 let cartaNotEspecial;
 let customOff;
@@ -978,7 +979,7 @@ let botao;
 function verificarCartaParaMover() {
   seedCopyCard = cartaParaMover.children[4];
 
-  copyCard = cartaParaMover.cloneNode(true);
+   
   customOff = getSeed.className == "customOff";
   cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   cartaNotMonark = copyCard.id != "carta-monark";
@@ -1004,7 +1005,7 @@ function verificarCartaParaMover() {
     seedCopyCard.textContent != seed4.textContent;
 }
 function moverOne() {
-  console.log("chamei a moverOne");
+  
   if (inv.children[0].id == "empty1" 
     // && seedDiferente
     // && taTudoOk
@@ -1013,13 +1014,13 @@ function moverOne() {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
     }
-    console.log(" moverOne condicao ok");
+    
     inv.replaceChild(copyCard, inv.children[0]);
     criarBtn();
     somaPontos();
     tudo();
 
-    // console.log(verSeed());
+    // 
   }
   // moverOne()
 }
@@ -1035,7 +1036,7 @@ function moverTwo() {
     somaPontos();
     tudo();
 
-    console.log(verSeed());
+    
   }
 }
 function moverThree() {
@@ -1051,7 +1052,7 @@ function moverThree() {
     tudo();
     3;
 
-    console.log(verSeed());
+    
   }
 }
 
@@ -1067,8 +1068,52 @@ function moverFour() {
     somaPontos();
     tudo();
 
-    console.log(verSeed());
+    
   }
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyB") {
+    
+    
+    if (!getSeedChecked()) {
+      moverToCartaMao()
+    }
+  }
+});
+
+function moverToCartaMao(){
+  mao.replaceChild(copyCard, mao.children[0]);
+  tudo()
+}
+
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyH") {
+    
+    
+    if (!getSeedChecked()) {
+      moverToInvMao()
+    }
+  }
+});
+
+function moverToInvMao(){
+  if(inv.children[0].id == 'empty1'){
+    inv.replaceChild(mao.children[0],inv.children[0]);
+    mao.appendChild(cartaMao)
+
+  } else if(inv.children[1].id == 'empty2'){
+    inv.replaceChild(mao.children[0],inv.children[1]);
+    mao.appendChild(cartaMao)
+  } else if(inv.children[2].id == 'empty3'){
+    inv.replaceChild(mao.children[0],inv.children[2]);
+    mao.appendChild(cartaMao)
+  } else if(inv.children[3].id == 'empty4'){
+    inv.replaceChild(mao.children[0],inv.children[3]);
+    mao.appendChild(cartaMao)
+  }
+  
 }
 
 function moverCarta() {
@@ -1487,8 +1532,19 @@ function criarBtn() {
                 pontoSpeaker.textContent =
                   parseInt(pontoSpeaker.textContent) * multiplicador + " 😡";
 
-                inv.children[j].remove();
-                inv.appendChild(document.createElement("div")).id = "empty";
+                  if(inv.children[0] == inv.children[j]){
+
+                    inv.replaceChild(empty1, inv.children[0]) ;
+                  } else if(inv.children[1] == inv.children[j]){
+                    inv.replaceChild(empty2, inv.children[1]) ;
+
+                  } else if(inv.children[2] == inv.children[j]){
+                    inv.replaceChild(empty3, inv.children[2]) ;
+
+                  } else if(inv.children[3] == inv.children[j]){
+                    inv.replaceChild(empty4, inv.children[3]) ;
+
+                  }
 
                 // pontoSpeaker = Math.trunc(parseInt(pontoSpeaker) * 2) + '😡'
 
@@ -1545,8 +1601,20 @@ function criarBtn() {
         button.style.backgroundColor = "";
         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
         arenaP.innerHTML = totalClicks + " RODADAS";
-        varianteClique.remove();
-        inv.appendChild(document.createElement("div")).id = "empty";
+
+        if(varianteClique == inv.children[0]){
+          inv.replaceChild(empty1,varianteClique);
+
+        } else if(varianteClique == inv.children[1]){
+          inv.replaceChild(empty2,varianteClique);
+
+        } else if(varianteClique == inv.children[2]){
+          inv.replaceChild(empty3,varianteClique);
+
+        } else if(varianteClique == inv.children[3]){
+          inv.replaceChild(empty4,varianteClique);
+        }
+        
       }
 
       function cartaMenosclique(e) {
@@ -1566,8 +1634,20 @@ function criarBtn() {
           button.style.backgroundColor = "";
           button.innerHTML = "&#127381; NOVA CARTA &#127381;";
           arenaP.innerHTML = totalClicks + " RODADAS";
-          varianteMenosClique.remove();
-          inv.appendChild(document.createElement("div")).id = "empty";
+
+
+          if(varianteMenosClique == inv.children[0]){
+          inv.replaceChild(empty1,varianteMenosClique);
+
+        } else if(varianteMenosClique == inv.children[1]){
+          inv.replaceChild(empty2,varianteMenosClique);
+
+        } else if(varianteMenosClique == inv.children[2]){
+          inv.replaceChild(empty3,varianteMenosClique);
+
+        } else if(varianteMenosClique == inv.children[3]){
+          inv.replaceChild(empty4,varianteMenosClique);
+        }
         }
       }
 
@@ -1595,20 +1675,21 @@ function criarBtn() {
 
         let varianteTenica = e.target.offsetParent;
 
-        console.log("listener da tenica funcionando");
-        console.log("listener da tenica funcionando");
+        let cartasQueATenicaNaoGostaBaralho = cartaParaMover.id != "especial-click" &&
+        cartaParaMover.id != "-click" &&
+        cartaParaMover.id != "especial-tenica" &&
+        cartaParaMover.id != "spy" &&
+        cartaParaMover.id != "premiomonark" &&
+        cartaParaMover.id != "comunista"
+
+        
 
         let poderCartaPack = cartaParaMover.children[3].children[0];
         let poderNovoCartaPack = cartaParaMover.children[3].children[1];
         // tudo()
 
         if (
-          cartaParaMover.id != "especial-click" &&
-          cartaParaMover.id != "-click" &&
-          cartaParaMover.id != "especial-tenica" &&
-          cartaParaMover.id != "spy" &&
-          cartaParaMover.id != "premiomonark" &&
-          cartaParaMover.id != "comunista"
+          cartasQueATenicaNaoGostaBaralho
         ) {
           varianteTenica.children[3].children[2].style.visibility = "hidden";
           if (poderNovoCartaPack.textContent != "") {
@@ -1626,16 +1707,11 @@ function criarBtn() {
           }
         }
 
+
+        let cartasQueATenicaNaoGosta = ["especial-click","-click","empty1","empty2","empty3","empty4","especial-tenica","spy","premiomonark","comunista"]
+
         for (let j = 0; j < 4; j++) {
-          if (
-            inv.children[j].id != "especial-click" &&
-            inv.children[j].id != "-click" &&
-            inv.children[j].id != "empty" &&
-            inv.children[j].id != "especial-tenica" &&
-            inv.children[j].id != "spy" &&
-            inv.children[j].id != "premiomonark" &&
-            inv.children[j].id != "comunista"
-          ) {
+          if (!cartasQueATenicaNaoGosta.some(el=>inv.children[0].id.includes)) {
             // se o poder novo for presente
             if (inv.children[j].children[3].children[1].textContent != "") {
               inv.children[j].children[3].children[1].textContent =
@@ -1682,13 +1758,13 @@ function criarBtn() {
                   "NEFESTO" &&
                 inv.children[j].id != "carta-monark"
               ) {
-                console.log(j);
+                
 
                 comunista.children[3].children[2].style.visibility = "hidden";
                 let pontoComunista = comunista.children[3].children[1];
 
                 let pontoEstatal = parseInt(pontoComunista.textContent) / 3;
-                console.log("pontoEstatal: ", pontoEstatal);
+                
 
                 // se o poder novo for presente
                 if (inv.children[j].children[3].children[1].textContent != "") {
@@ -1768,7 +1844,7 @@ function criarBtn() {
         let premioMonark = e.target.offsetParent;
         let premioMonarkBotao = premioMonark.children[3].children[2];
 
-        if (efeitos.status == false && totalPontos < 250) {
+        if (efeitos.status == false) {
           //coloca efeito
           efeitoPremioMonark.rodadas = 35;
           efeitos = efeitoPremioMonark;
@@ -1777,15 +1853,27 @@ function criarBtn() {
           premioMonark.classList.add("vanish");
           premioMonarkBotao.style.visibility = "hidden";
           function eliminarPremioMonark() {
-            premioMonark.remove();
-            inv.appendChild(document.createElement("div")).id = "empty";
+            // premioMonark.remove();
+
+            if(premioMonark == inv.children[0]){
+              inv.replaceChild(empty1,premioMonark);
+    
+            } else if(premioMonark == inv.children[1]){
+              inv.replaceChild(empty2,premioMonark);
+    
+            } else if(premioMonark == inv.children[2]){
+              inv.replaceChild(empty3,premioMonark);
+    
+            } else if(premioMonark == inv.children[3]){
+              inv.replaceChild(empty4,premioMonark);
+            }
           }
 
           setTimeout(eliminarPremioMonark, 10000);
 
           tudo();
-          console.log("PM adicionado aos efeitos");
-          console.log("no event listener", efeitos);
+          
+          
         }
       }
       //PODER SPY
@@ -1796,21 +1884,20 @@ function criarBtn() {
         inv.children[i].children[3].children[2].addEventListener("click", spy);
         inv.children[i].children[0].id = "foi";
       }
+
       function spy(e) {
         let spy = e.target.offsetParent;
         let spyPoder = spy.children[3].children[0];
         let spyWatch = spy.children[3].children[1];
         let botao = spy.children[3].children[2];
         let retrato = spy.children[1];
-        console.log("spywatch", spyWatch);
+        
 
         spyWatch.addEventListener("click", invis);
         function invis() {
-          let bateria = 3;
-          let atual = rodadas;
-          let final;
-          console.log("atual: ", atual);
-          console.log("to invisivel");
+          
+          
+          
           spy.className = "invisi";
           retrato.classList.add("invis");
           spy.children[0].className = "invis";
@@ -1822,7 +1909,7 @@ function criarBtn() {
 
         for (let i = 0; i < 4; i++) {
           if (inv.children[i].id == "carta-semcargo") {
-            console.log("tem semcargo");
+            
             let semcargo = inv.children[i];
             let poderSemcargo = semcargo.children[3].children[0];
             let poderNovoSemcargo = semcargo.children[3].children[1];
@@ -1830,24 +1917,53 @@ function criarBtn() {
 
             //roubar o poder
             if (poderNovoSemcargo.textContent != "") {
-              console.log("tem critico");
+              
               poderSpy.textContent =
                 parseInt(poderNovoSemcargo.textContent) * 5 +
                 parseInt(poderSpy.textContent) +
                 "⚡";
-              semcargo.remove();
-              inv.appendChild(document.createElement("div")).id = "empty";
+
+
+                if(semcargo == inv.children[0]){
+                  inv.replaceChild(empty1,semcargo);
+        
+                } else if(semcargo == inv.children[1]){
+                  inv.replaceChild(empty2,semcargo);
+        
+                } else if(semcargo == inv.children[2]){
+                  inv.replaceChild(empty3,semcargo);
+        
+                } else if(semcargo == inv.children[3]){
+                  inv.replaceChild(empty4,semcargo);
+                }
+
+
               spyWatch.style.visibility = "visible";
               retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
               somaPontos();
+
+
             } else {
-              console.log("nao tem critico");
+              
               poderSpy.textContent =
                 parseInt(poderSemcargo.textContent) * 5 +
                 parseInt(poderSpy.textContent) +
                 "⚡";
-              semcargo.remove();
-              inv.appendChild(document.createElement("div")).id = "empty";
+
+              if(semcargo == inv.children[0]){
+          inv.replaceChild(empty1,semcargo);
+
+        } else if(semcargo == inv.children[1]){
+          inv.replaceChild(empty2,semcargo);
+
+        } else if(semcargo == inv.children[2]){
+          inv.replaceChild(empty3,semcargo);
+
+        } else if(semcargo == inv.children[3]){
+          inv.replaceChild(empty4,semcargo);
+        }
+
+
               spyWatch.style.visibility = "visible";
               retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
               somaPontos();
@@ -1867,7 +1983,7 @@ let ab = 3;
 function abelha() {
   for (let i = 0; i < 4; i++) {
     if (inv.children[i].id != "empty") {
-      // console.log(inv.children[i].children[0].children[0].textContent);
+      // 
 
       if (inv.children[i].id == "abelha") {
         inv.children[i].className = "";
@@ -1948,39 +2064,15 @@ let btnReset = document.getElementById("btnReset");
 let empty = document.createElement("div");
 empty.id = "empty";
 
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "Digit1") {
-//     deleteInvOne(0);
-//   }
-// });
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "Digit2") {
-//     deleteInvOne(1);
-//   }
-// });
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "Digit3") {
-//     deleteInvOne(2);
-//   }
-// });
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "Digit4") {
-//     deleteInvOne(3);
-//   }
-// });
+
 
 let empty1 = inv.children[0];
 let empty2 = inv.children[1];
 let empty3 = inv.children[2];
 let empty4 = inv.children[3];
+let cartaMao = mao.children[0]
 
-// function deleteInvOne(a) {
-//   if (inv.children[a].id != "carta-monark") {
-//     inv.children[a].remove();
-//     inv.replaceChild(empty1, e.target.offsetParent);
-//     somaPontos();
-//   }
-// }
+
 
 function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
@@ -2020,6 +2112,8 @@ function resetarDeck() {
 
   rodadas = 0;
   critico();
+  
+  mao.replaceChild(cartaMao, mao.children[0]);
   inv.replaceChild(empty1, inv.children[0]);
   inv.replaceChild(empty2, inv.children[1]);
   inv.replaceChild(empty3, inv.children[2]);
@@ -2071,15 +2165,15 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-    console.log(seedObj);
+    
     clicks();
-    console.log(aumentou);
+    
     abelha();
     colocarEfeito();
     // aplicarEfeitos();
     verificarCartaParaMover();
     blockInv();
-    console.log("rodadas: ", rodadas);
+    
     // if(totalClicks == 1){button.style.backgroundColor = "red"
     // button.innerHTML = "0 CARTAS";}
   } else {
@@ -2133,12 +2227,12 @@ export function somaPontos() {
       !cartasComEnergiaSemCritico.some(el=>inv.children[0].id.includes(el))
     ) {
       ponto0 = parseInt(inv.children[0].children[3].children[1].textContent);
-      // console.log('ponto0: ', ponto0);
+      // 
 
       // se nao, pegue o poder velho
     } else {
       ponto0 = parseInt(inv.children[0].children[3].children[0].textContent);
-      // console.log('ponto0 velho: ', ponto0);
+      // 
     }
   }
 
@@ -2153,12 +2247,12 @@ export function somaPontos() {
       !cartasComEnergiaSemCritico.some(el=>inv.children[1].id.includes(el))
     ) {
       ponto1 = parseInt(inv.children[1].children[3].children[1].textContent);
-      // console.log('ponto1: ', ponto1);
+      // 
 
       // se nao, pegue o poder velho
     } else {
       ponto1 = parseInt(inv.children[1].children[3].children[0].textContent);
-      // console.log('ponto1 velho: ', ponto1);
+      // 
     }
   }
 
@@ -2173,12 +2267,12 @@ export function somaPontos() {
       !cartasComEnergiaSemCritico.some(el=>inv.children[2].id.includes(el))
     ) {
       ponto2 = parseInt(inv.children[2].children[3].children[1].textContent);
-      // console.log('ponto1: ', ponto1);
+      // 
 
       // se nao, pegue o poder velho
     } else {
       ponto2 = parseInt(inv.children[2].children[3].children[0].textContent);
-      // console.log('ponto2 velho: ', ponto2);
+      // 
     }
   }
 
@@ -2193,12 +2287,12 @@ export function somaPontos() {
       !cartasComEnergiaSemCritico.some(el=>inv.children[3].id.includes(el))
     ) {
       ponto2 = parseInt(inv.children[3].children[3].children[1].textContent);
-      // console.log('ponto3: ', ponto3);
+      // 
 
       // se nao, pegue o poder velho
     } else {
       ponto3 = parseInt(inv.children[3].children[3].children[0].textContent);
-      // console.log('ponto3 velho: ', ponto3);
+      // 
     }
   }
 
@@ -2250,7 +2344,7 @@ function deckPronto() {
   moverCarta();
   totalClicks += 5;
   rodadas = 0;
-  console.log("rodadas: ", rodadas);
+  
   arenaP.innerHTML = totalClicks + " CARTAS";
 }
 
