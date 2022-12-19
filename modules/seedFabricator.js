@@ -62,7 +62,7 @@ if(seedComprada.includes(input)){
         for (let i = 0; i < input.length; i++) {
           sum = sum + input[i].charCodeAt();
         }
-        let constanteSeedFalsa = 516515615165159;
+        let constanteSeedFalsa = 716035615875159;
         let calculoSeedFalsa = sum * constanteSeedFalsa;
 
         return seed(calculoSeedFalsa, false, input, true,false);
