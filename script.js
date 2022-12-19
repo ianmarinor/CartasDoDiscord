@@ -2310,9 +2310,10 @@ button.addEventListener("click", tudo);
 button.addEventListener("click", blockInv);
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyW") {
+    if (!getSeedChecked()) {
     tudo();
     blockInv();
-  }
+  }}
 });
 
 // BIND MOVER COM TECLA
@@ -2322,8 +2323,9 @@ cartaParaMover.addEventListener("click", moverCarta);
 document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
+      if (!getSeedChecked()) {
       moverCarta();
-    }
+    }}
   }
 });
 
@@ -2350,55 +2352,22 @@ function deckPronto() {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {
-    // setTimeout(deckPronto, 600)
+    if (!getSeedChecked()) {
     deckPronto();
-  }
+  }}
 });
 
-// começa so com 2 cartas
-
-// document.addEventListener("keydown", (event)=>{
-
-//   if(event.code == 'KeyQ'){
-
-//     resetarDeck()
-//     moverCarta()
-//     moverCarta()
-
-//     arenaP.innerHTML = totalClicks + " CARTAS";
-
-// }
-// })
-
-// q adiciona todas as cartas
-
-// document.addEventListener("keydown", (event)=>{
-
-//   if(event.code == 'KeyQ'){
-
-//     resetarDeck()
-//     moverCarta()
-//     moverCarta()
-//     moverCarta()
-//     moverCarta()
-//     getSeed.className = 'customOff'
-//     blockInv()
-
-// }
-// })
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyR") {
-    resetarDeck();
-  }
+    if (!getSeedChecked()) {resetarDeck();
+  }}
 });
 
 document.getElementById("G").addEventListener("click", deckPronto);
 
-// window.onload = (event) => {
-//   tudo();
-//   resetarDeck();
-// };
+window.onload = (event) => {
+  tudo();
+  resetarDeck();
+};
 
-// setInterval(()=>arenaP.innerHTML = totalClicks + " CARTAS", 100)
-11;
