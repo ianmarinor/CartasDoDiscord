@@ -15,7 +15,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5";
+let versao = "Pre-Alpha 1.5.0";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
