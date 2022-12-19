@@ -909,9 +909,21 @@ function colocarInput() {
 let cartaParaMover = document.getElementById("pack").firstElementChild;
 let copyCard = "";
 
+// let caixaDeSeeds = [0,0,0,0]
+
+function verSeed(){
+  for(let i =0;i<4;i++){
+    if(inv.children[i].id != 'empty'){
+      // return caixaDeSeeds.splice(i,1,inv.children[i].children[4].textContent)
+      let caixaDeSeeds = [0,0,0,0]
+      caixaDeSeeds.splice(i,1,inv.children[i].children[4].textContent)
+      return caixaDeSeeds
+  }
+}}
 function moverCarta() {
   blockInv();
-
+  
+  
   copyCard = cartaParaMover.cloneNode(true);
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   let customOff = getSeed.className == "customOff";
@@ -941,6 +953,8 @@ function moverCarta() {
       criarBtn();
       somaPontos();
       tudo();
+      verSeed()
+      console.log(verSeed());
     } else if(inv.children[1].id=='empty'){
       if(cartasComBotao){
         botao.style.visibility = 'visible'
@@ -949,6 +963,8 @@ function moverCarta() {
       criarBtn();
       somaPontos();
       tudo();
+      verSeed()
+      console.log(verSeed());
     } else if(inv.children[2].id=='empty'){
       if(cartasComBotao){
         botao.style.visibility = 'visible'
@@ -957,6 +973,8 @@ function moverCarta() {
       criarBtn();
       somaPontos();
       tudo();
+      verSeed()
+      console.log(verSeed());
     } else if(inv.children[3].id=='empty'){
       if(cartasComBotao){
         botao.style.visibility = 'visible'
@@ -965,6 +983,8 @@ function moverCarta() {
       criarBtn();
       somaPontos();
       tudo();
+      verSeed()
+      console.log(verSeed());
     }
 
   } else {
