@@ -212,8 +212,8 @@ function escolherCargo() {
   } else if (seedString[13] == 9) {
     return (cargo = "carta-gentleman");
   } else if (seedString[13] == 7 
-    // && seedString[14] >= 4 
-    // && seedString[4] != 4
+    && seedString[14] >= 4 
+    && seedString[4] != 4
     ) {
     return (cargo = "carta-monark");
   } else if (seedString[14] >= 8) {
@@ -1007,8 +1007,8 @@ function verificarCartaParaMover() {
 function moverOne() {
   
   if (inv.children[0].id == "empty1" 
-    // && seedDiferente
-    // && taTudoOk
+    && seedDiferente
+    && taTudoOk
 ) {
     // if (true) {
     if (cartasComBotao) {
@@ -1026,7 +1026,7 @@ function moverOne() {
 }
 function moverTwo() {
   if (inv.children[1].id == "empty2" 
-  // && seedDiferente && taTudoOk
+  && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1041,7 +1041,7 @@ function moverTwo() {
 }
 function moverThree() {
   if (inv.children[2].id == "empty3" 
-  // && seedDiferente && taTudoOk
+  && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1058,7 +1058,7 @@ function moverThree() {
 
 function moverFour() {
   if (inv.children[3].id == "empty4" 
-  // && seedDiferente && taTudoOk
+  && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
