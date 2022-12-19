@@ -631,6 +631,16 @@ p {
   text-align: center;
   border-radius: 10px;
 }
+#empty1, #empty2,#empty3, #empty4 {
+
+display: block;
+
+}
+#action1, #action2,#action3,#action4{
+
+  visibility: hidden;
+
+}
 
 #G {
   
