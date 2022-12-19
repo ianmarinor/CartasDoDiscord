@@ -993,6 +993,7 @@ function verificarCartaParaMover() {
   cartasComBotao =
     copyCard.children[0].children[3].textContent != "" &&
     copyCard.id != "abelha";
+    
   botao = copyCard.children[3].children[2];
   seed1 = inv.children[0].children[4];
   seed2 = inv.children[1].children[4];
@@ -1056,6 +1057,7 @@ function moverThree() {
   }
 }
 
+
 function moverFour() {
   if (inv.children[3].id == "empty4" 
   // && seedDiferente && taTudoOk
@@ -1078,27 +1080,25 @@ document.addEventListener("keydown", (event) => {
     
     if (!getSeedChecked()) {
       moverToCartaMao()
+      
     }
   }
 });
 
-function moverToCartaMao(){
-  mao.replaceChild(copyCard, mao.children[0]);
-  tudo()
-}
 
-
-document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyH") {
-    
-    
-    if (!getSeedChecked()) {
-      moverToInvMao()
-    }
-  }
-});
 
 function moverToInvMao(){
+  
+  let botaoMao = mao.children[0].children[3].children[2];
+  cartasComBotao =
+    mao.children[0].children[0].children[3].textContent != "" &&
+    mao.children[0].id != "abelha";
+
+  if (cartasComBotao) {
+    botaoMao.style.visibility = "visible";
+  }
+
+
   if(inv.children[0].id == 'empty1'){
     inv.replaceChild(mao.children[0],inv.children[0]);
     mao.appendChild(cartaMao)
@@ -1113,8 +1113,27 @@ function moverToInvMao(){
     inv.replaceChild(mao.children[0],inv.children[3]);
     mao.appendChild(cartaMao)
   }
-  
+  criarBtn()
 }
+function moverToCartaMao(){
+  mao.replaceChild(copyCard, mao.children[0]);
+  tudo()
+}
+
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyH") {
+    
+    
+    
+    if (!getSeedChecked()) {
+      
+      moverToInvMao()
+      
+    }
+  }
+});
+
 
 function moverCarta() {
   blockInv();
