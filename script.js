@@ -39,9 +39,10 @@ let input = "";
 
 //integrante
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
+let totalClicks = 50;
 let integrante;
 let cartaCustom;
-let seedObj;
+let seedObj = 0;
 let seedString = "";
 let cartaComSeedParaAdicionar;
 function escolherIntegrante() {
@@ -906,96 +907,173 @@ function colocarInput() {
 
 // }
 
-let cartaParaMover = document.getElementById("pack").firstElementChild;
-let copyCard = "";
-
 // let caixaDeSeeds = [0,0,0,0]
 
-function verSeed(){
-  for(let i =0;i<4;i++){
-    if(inv.children[i].id != 'empty'){
+function verSeed() {
+  for (let i = 0; i < 4; i++) {
+    if (inv.children[i].id != "empty") {
       // return caixaDeSeeds.splice(i,1,inv.children[i].children[4].textContent)
-      let caixaDeSeeds = [0,0,0,0]
-      caixaDeSeeds.splice(i,1,inv.children[i].children[4].textContent)
-      return caixaDeSeeds
+      let caixaDeSeeds = [0, 0, 0, 0];
+      caixaDeSeeds.splice(i, 1, inv.children[i].children[4].textContent);
+      return caixaDeSeeds;
+    }
   }
-}}
-function moverCarta() {
-  blockInv();
-  
-  
-  copyCard = cartaParaMover.cloneNode(true);
-  let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
-  let customOff = getSeed.className == "customOff";
-  let cartaNotMonark = copyCard.id != "carta-monark";
+}
+function getSeedChecked() {
+  return document.activeElement.id == "getseed";
+}
 
-  let PodeMover =
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Digit1") {
+    console.log("getSeedChecked: ", getSeedChecked());
+    console.log(document.activeElement);
+    if (!getSeedChecked()) {
+      moverOne();
+    }
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Digit2") {
+    if (!getSeedChecked()) {
+      moverTwo();
+    }
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Digit3") {
+    if (!getSeedChecked()) {
+      moverThree();
+    }
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Digit4") {
+    if (!getSeedChecked()) {
+      moverFour();
+    }
+  }
+});
+
+let cartaParaMover = document.getElementById("pack").firstElementChild;
+let copyCard;
+let seedCopyCard;
+let cartaNotEspecial;
+let customOff;
+let cartaNotMonark;
+let PodeMover;
+let naoMoviAinda;
+let taTudoOk;
+let cartasComBotao;
+let seed1;
+let seed2;
+let seed3;
+let seed4;
+let seedDiferente;
+let botao;
+
+function verificarCartaParaMover() {
+  seedCopyCard = cartaParaMover.children[4];
+
+  copyCard = cartaParaMover.cloneNode(true);
+  customOff = getSeed.className == "customOff";
+  cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
+  cartaNotMonark = copyCard.id != "carta-monark";
+  PodeMover =
     (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
     (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
     seedObj._isMarket;
 
-  let naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
-
-  //
-  // if (PodeMover && naoMoviAinda && totalClicks > 0) {
-  if (true) {
-    let cartasComBotao =
-      copyCard.children[0].children[3].textContent != "" &&
-      copyCard.id != "abelha";
-    let botao = copyCard.children[3].children[2];
-    let seedCopyCard = cartaParaMover.children[4];
-
-    if(inv.children[0].id == 'empty' ){
-      if(cartasComBotao){
-        botao.style.visibility = 'visible'
-      }
-      inv.replaceChild(copyCard, inv.children[0]);
-      criarBtn();
-      somaPontos();
-      tudo();
-      verSeed()
-      console.log(verSeed());
-    } else if(inv.children[1].id=='empty'){
-      if(cartasComBotao){
-        botao.style.visibility = 'visible'
-      }
-      inv.replaceChild(copyCard, inv.children[1]);
-      criarBtn();
-      somaPontos();
-      tudo();
-      verSeed()
-      console.log(verSeed());
-    } else if(inv.children[2].id=='empty'){
-      if(cartasComBotao){
-        botao.style.visibility = 'visible'
-      }
-      inv.replaceChild(copyCard, inv.children[2]);
-      criarBtn();
-      somaPontos();
-      tudo();
-      verSeed()
-      console.log(verSeed());
-    } else if(inv.children[3].id=='empty'){
-      if(cartasComBotao){
-        botao.style.visibility = 'visible'
-      }
-      inv.replaceChild(copyCard, inv.children[3]);
-      criarBtn();
-      somaPontos();
-      tudo();
-      verSeed()
-      console.log(verSeed());
+  naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
+  taTudoOk = PodeMover && naoMoviAinda && totalClicks > 0;
+  cartasComBotao =
+    copyCard.children[0].children[3].textContent != "" &&
+    copyCard.id != "abelha";
+  botao = copyCard.children[3].children[2];
+  seed1 = inv.children[0].children[4];
+  seed2 = inv.children[1].children[4];
+  seed3 = inv.children[2].children[4];
+  seed4 = inv.children[3].children[4];
+  seedDiferente =
+    seedCopyCard.textContent != seed1.textContent &&
+    seedCopyCard.textContent != seed2.textContent &&
+    seedCopyCard.textContent != seed3.textContent &&
+    seedCopyCard.textContent != seed4.textContent;
+}
+function moverOne() {
+  console.log("chamei a moverOne");
+  if (
+    inv.children[0].id == "empty1" &&
+    // && seedDiferente
+    taTudoOk
+  ) {
+    // if (true) {
+    if (cartasComBotao) {
+      botao.style.visibility = "visible";
     }
+    console.log(" moverOne condicao ok");
+    inv.replaceChild(copyCard, inv.children[0]);
+    criarBtn();
+    somaPontos();
+    tudo();
 
-  } else {
-    false;
-    // getSeed.setAttribute('class', 'customOn')
+    // console.log(verSeed());
   }
+  // moverOne()
+}
+function moverTwo() {
+  if (inv.children[1].id == "empty2" && seedDiferente && taTudoOk) {
+    if (cartasComBotao) {
+      botao.style.visibility = "visible";
+    }
+    inv.replaceChild(copyCard, inv.children[1]);
+    criarBtn();
+    somaPontos();
+    tudo();
 
-  // if(jaPassouACarta){
-  //   false
+    console.log(verSeed());
+  }
+}
+function moverThree() {
+  if (inv.children[2].id == "empty3" && seedDiferente && taTudoOk) {
+    if (cartasComBotao) {
+      botao.style.visibility = "visible";
+    }
+    inv.replaceChild(copyCard, inv.children[2]);
+    criarBtn();
+    somaPontos();
+    tudo();
+    3;
 
-  // }
+    console.log(verSeed());
+  }
+}
+
+function moverFour() {
+  if (inv.children[3].id == "empty4" && seedDiferente && taTudoOk) {
+    if (cartasComBotao) {
+      botao.style.visibility = "visible";
+    }
+    inv.replaceChild(copyCard, inv.children[3]);
+    criarBtn();
+    somaPontos();
+    tudo();
+
+    console.log(verSeed());
+  }
+}
+
+function moverCarta() {
+  blockInv();
+
+  if (inv.children[0].id == "empty1") {
+    moverOne();
+  } else if (inv.children[1].id == "empty2") {
+    moverTwo();
+  } else if (inv.children[2].id == "empty3") {
+    moverThree();
+  } else if (inv.children[3].id == "empty4") {
+    moverFour();
+  }
 }
 
 let copyCardSeed;
@@ -1855,26 +1933,31 @@ let btnReset = document.getElementById("btnReset");
 let empty = document.createElement("div");
 empty.id = "empty";
 
-document.addEventListener("keydown", (event) => {
-  if (event.code == "Digit1") {
-    deleteInvOne(0);
-  }
-});
-document.addEventListener("keydown", (event) => {
-  if (event.code == "Digit2") {
-    deleteInvOne(1);
-  }
-});
-document.addEventListener("keydown", (event) => {
-  if (event.code == "Digit3") {
-    deleteInvOne(2);
-  }
-});
-document.addEventListener("keydown", (event) => {
-  if (event.code == "Digit4") {
-    deleteInvOne(3);
-  }
-});
+// document.addEventListener("keydown", (event) => {
+//   if (event.code == "Digit1") {
+//     deleteInvOne(0);
+//   }
+// });
+// document.addEventListener("keydown", (event) => {
+//   if (event.code == "Digit2") {
+//     deleteInvOne(1);
+//   }
+// });
+// document.addEventListener("keydown", (event) => {
+//   if (event.code == "Digit3") {
+//     deleteInvOne(2);
+//   }
+// });
+// document.addEventListener("keydown", (event) => {
+//   if (event.code == "Digit4") {
+//     deleteInvOne(3);
+//   }
+// });
+
+let empty1 = inv.children[0];
+let empty2 = inv.children[1];
+let empty3 = inv.children[2];
+let empty4 = inv.children[3];
 
 function deleteInvOne(a) {
   if (inv.children[a].id != "carta-monark") {
@@ -1897,9 +1980,19 @@ function deletarDeck(e) {
       (e.target.offsetParent.id == "carta-monark" &&
         e.target.offsetParent.className == "vanish")
     ) {
-      e.target.offsetParent.remove();
-      inv.appendChild(document.createElement("div")).id = "empty";
-      somaPontos();
+      if (e.target.offsetParent == inv.children[0]) {
+        inv.replaceChild(empty1, e.target.offsetParent);
+        somaPontos();
+      } else if (e.target.offsetParent == inv.children[1]) {
+        inv.replaceChild(empty2, e.target.offsetParent);
+        somaPontos();
+      } else if (e.target.offsetParent == inv.children[2]) {
+        inv.replaceChild(empty3, e.target.offsetParent);
+        somaPontos();
+      } else if (e.target.offsetParent == inv.children[3]) {
+        inv.replaceChild(empty4, e.target.offsetParent);
+        somaPontos();
+      }
     }
   }
 }
@@ -1957,7 +2050,7 @@ function blockInv() {
     inv.style.border = "7px double green";
   }
 }
-let totalClicks = 50;
+
 function limparInput() {
   getSeed.value = "";
 }
@@ -1985,6 +2078,7 @@ function tudo() {
     abelha();
     colocarEfeito();
     // aplicarEfeitos();
+    verificarCartaParaMover();
     blockInv();
     console.log("rodadas: ", rodadas);
     // if(totalClicks == 1){button.style.backgroundColor = "red"
@@ -2193,10 +2287,10 @@ document.addEventListener("keydown", (event) => {
 
 document.getElementById("G").addEventListener("click", deckPronto);
 
-window.onload = (event) => {
-  tudo();
-  resetarDeck();
-};
+// window.onload = (event) => {
+//   tudo();
+//   resetarDeck();
+// };
 
 // setInterval(()=>arenaP.innerHTML = totalClicks + " CARTAS", 100)
 11;
