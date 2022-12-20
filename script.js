@@ -1075,8 +1075,7 @@ function moverCartaMonark() {
     false;
    
     
-    cartaParaMover.classList.add('voar')
-    setTimeout(tudo, 100)
+    
 
 
   } else if(efeitos.css.nome == "estoico" && copyCard.id == "carta-monark"){
