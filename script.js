@@ -12,7 +12,7 @@ import {
   pontoSpeaker,
   escolherEspecial,
   especial,
-  bonusCartasPE
+  bonusCartasPE,
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
@@ -45,7 +45,7 @@ let input = "";
 let totalClicks = 50;
 let integrante;
 let cartaCustom;
-// let seedObj 
+// let seedObj
 let seedString = "";
 let cartaComSeedParaAdicionar;
 function escolherIntegrante() {
@@ -214,10 +214,7 @@ function escolherCargo() {
     return (cargo = "carta-nobre");
   } else if (seedString[13] == 9) {
     return (cargo = "carta-gentleman");
-  } else if (seedString[13] == 7 
-    && seedString[14] >= 4 
-    && seedString[4] != 4
-    ) {
+  } else if (seedString[13] == 7 && seedString[14] >= 4 && seedString[4] != 4) {
     return (cargo = "carta-monark");
   } else if (seedString[14] >= 8) {
     return (cargo = "carta-people");
@@ -225,7 +222,6 @@ function escolherCargo() {
     return (cargo = "carta-semcargo");
   }
 }
-
 
 let variante = "";
 
@@ -305,8 +301,7 @@ let pontoVarianteValor = 0;
 // }
 function pontoVariante() {
   if (variante != "") {
-    return pontoVarianteValor = 100
-      
+    return (pontoVarianteValor = 100);
   } else {
     return (pontoVarianteValor = 0);
   }
@@ -356,7 +351,15 @@ function escolherPoder() {
 
 //************************************************ */
 
-function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial,seedObj) {
+function fabricaDeCarta(
+  integrante,
+  cidade,
+  cargo,
+  poder,
+  variante,
+  especial,
+  seedObj
+) {
   return {
     _integrante: integrante,
     _cidade: cidade,
@@ -364,7 +367,7 @@ function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial,see
     _poder: poder,
     _variante: variante,
     _especial: especial,
-    _seedobj: seedObj
+    _seedobj: seedObj,
   };
 }
 
@@ -393,7 +396,7 @@ let efeito1P = document.getElementById("efeito1");
 let efeito2P = document.getElementById("efeito2");
 let efeito3P = document.getElementById("efeito3");
 let efeito4P = document.getElementById("efeito4");
-let mao = document.getElementById("mao")
+let mao = document.getElementById("mao");
 //div poder
 let ataqueP = document.querySelector(".ataque");
 let defesaP = document.querySelector(".defesa");
@@ -413,9 +416,9 @@ let getSeed = document.getElementById("getseed");
 let seedCheckInput = document.getElementById("seedcheckinput");
 let seedCheckBtn = document.getElementById("seedcheckbtn");
 let seedCheckPage = document.getElementById("seedcheck");
-let novaCarta
+let novaCarta;
 function colocarInfoNoWrap() {
-   novaCarta = fabricaDeCarta(
+  novaCarta = fabricaDeCarta(
     integrante,
     cidade,
     cargo,
@@ -430,8 +433,8 @@ function colocarInfoNoWrap() {
   nomeP.removeAttribute("style");
   nomeP.className = "nome";
   varianteP.removeAttribute("style");
-  varianteP.innerHTML = '';
-  
+  varianteP.innerHTML = "";
+
   cidadeP.removeAttribute("style");
   retratoP.removeAttribute("style");
   //CARGO
@@ -440,7 +443,7 @@ function colocarInfoNoWrap() {
 
   ataqueP.removeAttribute("style");
   novoAtaquerP.removeAttribute("style");
-  
+
   seedP.removeAttribute("style");
 
   ataqueP.innerHTML = "";
@@ -459,9 +462,9 @@ function colocarInfoNoWrap() {
   cartaParaMover.children[0].children[1].style.fontWeight = "";
 
   //DOM
- 
+
   nomeP.innerHTML = novaCarta._integrante.toUpperCase();
-  if (novaCarta._especial == "") {
+  if (novaCarta._especial.nome == "") {
     cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
   } else {
     cidadeP.innerHTML = "";
@@ -485,12 +488,13 @@ function colocarInfoNoWrap() {
 
   if (novaCarta._especial.nome != "") {
     cartaP.id = novaCarta._especial.cartaId;
-    cidadeP.innerHTML = ''
-    cargoP.innerHTML = ''
-    } else {
+    cidadeP.innerHTML = "";
+    cargoP.innerHTML = "";
+    nomeP.innerHTML = "";
+  } else {
     cartaP.id = novaCarta._cargo;
   }
-console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
+  console.log("***NOVA CARTA ESPECIAL**", novaCarta._especial);
   retratoP.style.display = "block";
 
   //colocar retrato
@@ -554,7 +558,6 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
       retratoP.style.border = "";
     } else if (novaCarta._cargo === "abelha") {
       cargoP.innerHTML = "ABELHA";
-      retratoP.style.border = "2px solid brown";
     } else if (novaCarta._cargo === "comunista") {
       cargoP.innerHTML = "CAMARADA BLACKAO";
       retratoP.style.border = "2px solid RED";
@@ -564,7 +567,6 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     } else {
       true;
     }
-    
   }
 
   //CARTAS ESPECIAIS
@@ -573,7 +575,7 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     nomeP.innerHTML = "SPEAKER";
     ataqueP.innerHTML = pontoSpeaker() + "⚡";
     cargoP.innerHTML = "MONARK BAN!";
-  } else if (novaCarta._especial === "especial-tenica") {
+  } else if (novaCarta._especial.cartaId === "especial-tenica") {
     nomeP.style.fontFamily = "Cormorant Upright";
     retratoP.style.backgroundImage = "url('pics/tenica.webp')";
     retratoP.style.backgroundSize = "100% 100%";
@@ -583,7 +585,7 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     ataqueP.innerHTML = tenicaEnergia() + "👑";
     seedP.style.color = "black";
     ataqueP.style.fontSize = "150%";
-  } else if (novaCarta._especial === "especial-click") {
+  } else if (novaCarta._especial.cartaId === "especial-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     nomeP.innerHTML = " + CARTAS +";
 
@@ -623,12 +625,12 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     cargoP.style.fontSize = "170%";
 
     cargoP.innerHTML = "bzzzz....";
-    retratoP.style.border = "2px solid #4d1a00";
+    retratoP.style.border = "2px solid #545251";
 
     ataqueP.style.fontSize = "130%";
 
     ataqueP.textContent = abelhaEnergia() + "🐝";
-  } else if (novaCarta._especial === "comunista") {
+  } else if (novaCarta._especial.cartaId === "comunista") {
     retratoP.style.backgroundImage = "url('pics/retratoCamarada.gif')";
 
     nomeP.innerHTML = "CAMARADA BLACKAO <br> ★";
@@ -660,7 +662,7 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     ataqueP.style.visibility = "hidden";
 
     seedP.style.color = "#343436";
-  } else if (novaCarta._especial == "spy") {
+  } else if (novaCarta._especial.cartaId == "spy") {
     retratoP.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
     retratoP.style.backgroundSize = "100% 100%";
     retratoP.style.backgroundColor = "unset";
@@ -684,13 +686,13 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     // cartaP.className = "invis";
   } else if (novaCarta._especial.cartaId == "estoico") {
     cartaP.style.color = "#cf6a32";
-    retratoP.style.backgroundImage = especial.retrato
+    retratoP.style.backgroundImage = especial.retrato;
     retratoP.style.backgroundSize = "100% 100%";
     retratoP.style.backgroundColor = "unset";
-    nomeP.innerHTML = especial.nome
+    nomeP.innerHTML = especial.nome;
     nomeP.style.fontFamily = "estoico";
     nomeP.style.fontSize = "290%";
-    
+
     cidadeP.innerHTML = "";
     cidadeP.style = "";
     especialP.style.visibility = "hidden";
@@ -791,8 +793,8 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     } else {
     }
   }
-  console.log('**NOVA CARTA**', novaCarta);
-  
+  console.log("**NOVA CARTA**", novaCarta);
+
   // console.log('especial', especial.cartaId);
 }
 export let rodadas = 0;
@@ -805,19 +807,15 @@ export let efeitos = {
 let efeitoVazio = { status: false, css: { nome: "", imagem: "" }, rodadas: 0 };
 
 function colocarEfeito() {
-  
   efeito1P.style.backgroundImage = efeitos.css.imagem;
   efeito1P.innerHTML = efeitos.rodadas;
 
   if (efeitos.rodadas > 0) {
-    
     efeitos.rodadas--;
   } else {
     efeitos = efeitoVazio;
-    
   }
 
-  
   aplicarEfeitos();
 }
 
@@ -845,15 +843,12 @@ function colocarInput() {
 
 // let caixaDeSeeds = [0,0,0,0]
 
-
 function getSeedChecked() {
   return document.activeElement.id == "getseed";
 }
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "Digit1") {
-    
-    
     if (!getSeedChecked()) {
       moverOne();
     }
@@ -901,7 +896,6 @@ let botao;
 function verificarCartaParaMover() {
   seedCopyCard = cartaParaMover.children[4];
 
-   
   customOff = getSeed.className == "customOff";
   cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
   cartaNotMonark = copyCard.id != "carta-monark";
@@ -912,7 +906,7 @@ function verificarCartaParaMover() {
 
   naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
   taTudoOk = PodeMover && naoMoviAinda && totalClicks > 0;
-  cartasComBotao = especial.poder == true
+  cartasComBotao = especial.poder == true;
   botao = copyCard.children[3].children[2];
   seed1 = inv.children[0].children[4];
   seed2 = inv.children[1].children[4];
@@ -925,28 +919,29 @@ function verificarCartaParaMover() {
     seedCopyCard.textContent != seed4.textContent;
 }
 function moverOne() {
-  
-  if (inv.children[0].id == "empty1" 
+  if (
+    inv.children[0].id == "empty1"
     // && seedDiferente
     // && taTudoOk
-) {
+  ) {
     // if (true) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
     }
-    
+
     inv.replaceChild(copyCard, inv.children[0]);
     criarBtn();
     somaPontos();
     tudo();
 
-    // 
+    //
   }
   // moverOne()
 }
 function moverTwo() {
-  if (inv.children[1].id == "empty2" 
-  // && seedDiferente && taTudoOk
+  if (
+    inv.children[1].id == "empty2"
+    // && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -955,13 +950,12 @@ function moverTwo() {
     criarBtn();
     somaPontos();
     tudo();
-
-    
   }
 }
 function moverThree() {
-  if (inv.children[2].id == "empty3" 
-  // && seedDiferente && taTudoOk
+  if (
+    inv.children[2].id == "empty3"
+    // && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -971,15 +965,13 @@ function moverThree() {
     somaPontos();
     tudo();
     3;
-
-    
   }
 }
 
-
 function moverFour() {
-  if (inv.children[3].id == "empty4" 
-  // && seedDiferente && taTudoOkg
+  if (
+    inv.children[3].id == "empty4"
+    // && seedDiferente && taTudoOkg
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -988,73 +980,55 @@ function moverFour() {
     criarBtn();
     somaPontos();
     tudo();
-
-    
   }
 }
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyB") {
-    
-    
     if (!getSeedChecked()) {
-      moverToCartaMao()
-      
+      moverToCartaMao();
     }
   }
 });
 
-
-
-function moverToInvMao(){
-  
+function moverToInvMao() {
   let botaoMao = mao.children[0].children[3].children[2];
-  let cartasComBotao = objCartaMao._especial.poder == true
-  
+  let cartasComBotao = objCartaMao._especial.poder == true;
 
   if (cartasComBotao) {
     botaoMao.style.visibility = "visible";
   }
 
-
-  if(inv.children[0].id == 'empty1'){
-    inv.replaceChild(mao.children[0],inv.children[0]);
-    mao.appendChild(cartaMao)
-
-  } else if(inv.children[1].id == 'empty2'){
-    inv.replaceChild(mao.children[0],inv.children[1]);
-    mao.appendChild(cartaMao)
-  } else if(inv.children[2].id == 'empty3'){
-    inv.replaceChild(mao.children[0],inv.children[2]);
-    mao.appendChild(cartaMao)
-  } else if(inv.children[3].id == 'empty4'){
-    inv.replaceChild(mao.children[0],inv.children[3]);
-    mao.appendChild(cartaMao)
+  if (inv.children[0].id == "empty1") {
+    inv.replaceChild(mao.children[0], inv.children[0]);
+    mao.appendChild(cartaMao);
+  } else if (inv.children[1].id == "empty2") {
+    inv.replaceChild(mao.children[0], inv.children[1]);
+    mao.appendChild(cartaMao);
+  } else if (inv.children[2].id == "empty3") {
+    inv.replaceChild(mao.children[0], inv.children[2]);
+    mao.appendChild(cartaMao);
+  } else if (inv.children[3].id == "empty4") {
+    inv.replaceChild(mao.children[0], inv.children[3]);
+    mao.appendChild(cartaMao);
   }
-  criarBtn()
+  criarBtn();
 }
-let objCartaMao
-function moverToCartaMao(){
-  objCartaMao = novaCarta
-  console.log('objCartaMao: ', objCartaMao);
+let objCartaMao;
+function moverToCartaMao() {
+  objCartaMao = novaCarta;
+  console.log("objCartaMao: ", objCartaMao);
   mao.replaceChild(copyCard, mao.children[0]);
-  tudo()
+  tudo();
 }
-
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyH") {
-    
-    
-    
     if (!getSeedChecked()) {
-      
-      moverToInvMao()
-      
+      moverToInvMao();
     }
   }
 });
-
 
 function moverCarta() {
   blockInv();
@@ -1080,15 +1054,14 @@ function moverCartaMonark() {
 
   if (seedObj._isPutByPlayer) {
     false;
-  } else if (totalClicks>0){
-
+  } else if (totalClicks > 0) {
     if (copyCard.id === "carta-monark") {
       // SE CARTA FOR SPY
       if (
         inv.children[0].id == "spy" &&
         inv.children[0].className != "invisi"
       ) {
-        inv.replaceChild(copyCard, inv.children[0])
+        inv.replaceChild(copyCard, inv.children[0]);
         somaPontos();
       } else if (
         inv.children[1].id == "spy" &&
@@ -1108,8 +1081,6 @@ function moverCartaMonark() {
       ) {
         inv.replaceChild(copyCard, inv.children[3]);
         somaPontos();
-
-
 
         //  INVENTARIO VAZIO
       } else if (
@@ -1140,8 +1111,6 @@ function moverCartaMonark() {
         inv.replaceChild(copyCard, inv.children[3]);
         somaPontos();
 
-
-    
         //MONARK SUBSTITUI O HOMONIMO -------------------------
       } else if (
         copyCardName === inv.children[0].children[0].children[0].textContent &&
@@ -1168,7 +1137,7 @@ function moverCartaMonark() {
         inv.replaceChild(copyCard, inv.children[3]);
         somaPontos();
       }
-      
+
       tudo();
     }
   }
@@ -1197,7 +1166,7 @@ function critico() {
   if (
     cartaParaMover.id != "carta-monark" &&
     cartaParaMover.id != "carta-speaker" &&
-    especial.nome == ''
+    especial.nome == ""
   ) {
     if (seedString[1] == "1" && seedString[3] == "0") {
       corDaCidade.classList.add("critico");
@@ -1472,19 +1441,15 @@ function criarBtn() {
                 pontoSpeaker.textContent =
                   parseInt(pontoSpeaker.textContent) * multiplicador + " 😡";
 
-                  if(inv.children[0] == inv.children[j]){
-
-                    inv.replaceChild(empty1, inv.children[0]) ;
-                  } else if(inv.children[1] == inv.children[j]){
-                    inv.replaceChild(empty2, inv.children[1]) ;
-
-                  } else if(inv.children[2] == inv.children[j]){
-                    inv.replaceChild(empty3, inv.children[2]) ;
-
-                  } else if(inv.children[3] == inv.children[j]){
-                    inv.replaceChild(empty4, inv.children[3]) ;
-
-                  }
+                if (inv.children[0] == inv.children[j]) {
+                  inv.replaceChild(empty1, inv.children[0]);
+                } else if (inv.children[1] == inv.children[j]) {
+                  inv.replaceChild(empty2, inv.children[1]);
+                } else if (inv.children[2] == inv.children[j]) {
+                  inv.replaceChild(empty3, inv.children[2]);
+                } else if (inv.children[3] == inv.children[j]) {
+                  inv.replaceChild(empty4, inv.children[3]);
+                }
 
                 // pontoSpeaker = Math.trunc(parseInt(pontoSpeaker) * 2) + '😡'
 
@@ -1542,19 +1507,15 @@ function criarBtn() {
         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
         arenaP.innerHTML = totalClicks + " RODADAS";
 
-        if(varianteClique == inv.children[0]){
-          inv.replaceChild(empty1,varianteClique);
-
-        } else if(varianteClique == inv.children[1]){
-          inv.replaceChild(empty2,varianteClique);
-
-        } else if(varianteClique == inv.children[2]){
-          inv.replaceChild(empty3,varianteClique);
-
-        } else if(varianteClique == inv.children[3]){
-          inv.replaceChild(empty4,varianteClique);
+        if (varianteClique == inv.children[0]) {
+          inv.replaceChild(empty1, varianteClique);
+        } else if (varianteClique == inv.children[1]) {
+          inv.replaceChild(empty2, varianteClique);
+        } else if (varianteClique == inv.children[2]) {
+          inv.replaceChild(empty3, varianteClique);
+        } else if (varianteClique == inv.children[3]) {
+          inv.replaceChild(empty4, varianteClique);
         }
-        
       }
 
       function cartaMenosclique(e) {
@@ -1575,19 +1536,15 @@ function criarBtn() {
           button.innerHTML = "&#127381; NOVA CARTA &#127381;";
           arenaP.innerHTML = totalClicks + " RODADAS";
 
-
-          if(varianteMenosClique == inv.children[0]){
-          inv.replaceChild(empty1,varianteMenosClique);
-
-        } else if(varianteMenosClique == inv.children[1]){
-          inv.replaceChild(empty2,varianteMenosClique);
-
-        } else if(varianteMenosClique == inv.children[2]){
-          inv.replaceChild(empty3,varianteMenosClique);
-
-        } else if(varianteMenosClique == inv.children[3]){
-          inv.replaceChild(empty4,varianteMenosClique);
-        }
+          if (varianteMenosClique == inv.children[0]) {
+            inv.replaceChild(empty1, varianteMenosClique);
+          } else if (varianteMenosClique == inv.children[1]) {
+            inv.replaceChild(empty2, varianteMenosClique);
+          } else if (varianteMenosClique == inv.children[2]) {
+            inv.replaceChild(empty3, varianteMenosClique);
+          } else if (varianteMenosClique == inv.children[3]) {
+            inv.replaceChild(empty4, varianteMenosClique);
+          }
         }
       }
 
@@ -1615,22 +1572,19 @@ function criarBtn() {
 
         let varianteTenica = e.target.offsetParent;
 
-        let cartasQueATenicaNaoGostaBaralho = cartaParaMover.id != "especial-click" &&
-        cartaParaMover.id != "-click" &&
-        cartaParaMover.id != "especial-tenica" &&
-        cartaParaMover.id != "spy" &&
-        cartaParaMover.id != "premiomonark" &&
-        cartaParaMover.id != "comunista"
-
-        
+        let cartasQueATenicaNaoGostaBaralho =
+          cartaParaMover.id != "especial-click" &&
+          cartaParaMover.id != "-click" &&
+          cartaParaMover.id != "especial-tenica" &&
+          cartaParaMover.id != "spy" &&
+          cartaParaMover.id != "premiomonark" &&
+          cartaParaMover.id != "comunista";
 
         let poderCartaPack = cartaParaMover.children[3].children[0];
         let poderNovoCartaPack = cartaParaMover.children[3].children[1];
         // tudo()
 
-        if (
-          cartasQueATenicaNaoGostaBaralho
-        ) {
+        if (cartasQueATenicaNaoGostaBaralho) {
           varianteTenica.children[3].children[2].style.visibility = "hidden";
           if (poderNovoCartaPack.textContent != "") {
             poderNovoCartaPack.textContent =
@@ -1647,11 +1601,28 @@ function criarBtn() {
           }
         }
 
-
-        let cartasQueATenicaNaoGosta = ["especial-click","-click","empty1","empty2","empty3","empty4","especial-tenica","spy","premiomonark","comunista"]
+        let cartasQueATenicaNaoGosta = [
+          "especial-click",
+          "-click",
+          "empty1",
+          "empty2",
+          "empty3",
+          "empty4",
+          "especial-tenica",
+          "spy",
+          "premiomonark",
+          "comunista",
+          "abelha", 
+          "estoico",
+        ];
 
         for (let j = 0; j < 4; j++) {
-          if (!cartasQueATenicaNaoGosta.some(el=>inv.children[0].id.includes)) {
+          if (
+            !cartasQueATenicaNaoGosta.some((el) =>
+              inv.children[j].id.includes(el)
+            )
+            // true
+          ) {
             // se o poder novo for presente
             if (inv.children[j].children[3].children[1].textContent != "") {
               inv.children[j].children[3].children[1].textContent =
@@ -1669,7 +1640,7 @@ function criarBtn() {
           }
         }
         somaPontos();
-      } //COMUNISTA
+      } // poder COMUNISTA
       if (
         inv.children[i].id == "comunista" &&
         inv.children[i].children[0].id != "foi"
@@ -1701,13 +1672,10 @@ function criarBtn() {
                   "NEFESTO" &&
                 inv.children[j].id != "carta-monark"
               ) {
-                
-
                 comunista.children[3].children[2].style.visibility = "hidden";
                 let pontoComunista = comunista.children[3].children[1];
 
                 let pontoEstatal = parseInt(pontoComunista.textContent) / 3;
-                
 
                 // se o poder novo for presente
                 if (inv.children[j].children[3].children[1].textContent != "") {
@@ -1771,7 +1739,7 @@ function criarBtn() {
             }
           }
         }
-      } // premio monark
+      } // poder premiomonark
       if (
         inv.children[i].id == "premiomonark" &&
         inv.children[i].children[0].id != "foi"
@@ -1798,25 +1766,20 @@ function criarBtn() {
           function eliminarPremioMonark() {
             // premioMonark.remove();
 
-            if(premioMonark == inv.children[0]){
-              inv.replaceChild(empty1,premioMonark);
-    
-            } else if(premioMonark == inv.children[1]){
-              inv.replaceChild(empty2,premioMonark);
-    
-            } else if(premioMonark == inv.children[2]){
-              inv.replaceChild(empty3,premioMonark);
-    
-            } else if(premioMonark == inv.children[3]){
-              inv.replaceChild(empty4,premioMonark);
+            if (premioMonark == inv.children[0]) {
+              inv.replaceChild(empty1, premioMonark);
+            } else if (premioMonark == inv.children[1]) {
+              inv.replaceChild(empty2, premioMonark);
+            } else if (premioMonark == inv.children[2]) {
+              inv.replaceChild(empty3, premioMonark);
+            } else if (premioMonark == inv.children[3]) {
+              inv.replaceChild(empty4, premioMonark);
             }
           }
 
           setTimeout(eliminarPremioMonark, 10000);
 
           tudo();
-          
-          
         }
       }
       //PODER SPY
@@ -1834,13 +1797,9 @@ function criarBtn() {
         let spyWatch = spy.children[3].children[1];
         let botao = spy.children[3].children[2];
         let retrato = spy.children[1];
-        
 
         spyWatch.addEventListener("click", invis);
         function invis() {
-          
-          
-          
           spy.className = "invisi";
           retrato.classList.add("invis");
           spy.children[0].className = "invis";
@@ -1852,7 +1811,6 @@ function criarBtn() {
 
         for (let i = 0; i < 4; i++) {
           if (inv.children[i].id == "carta-semcargo") {
-            
             let semcargo = inv.children[i];
             let poderSemcargo = semcargo.children[3].children[0];
             let poderNovoSemcargo = semcargo.children[3].children[1];
@@ -1860,52 +1818,39 @@ function criarBtn() {
 
             //roubar o poder
             if (poderNovoSemcargo.textContent != "") {
-              
               poderSpy.textContent =
                 parseInt(poderNovoSemcargo.textContent) * 5 +
                 parseInt(poderSpy.textContent) +
                 "⚡";
 
-
-                if(semcargo == inv.children[0]){
-                  inv.replaceChild(empty1,semcargo);
-        
-                } else if(semcargo == inv.children[1]){
-                  inv.replaceChild(empty2,semcargo);
-        
-                } else if(semcargo == inv.children[2]){
-                  inv.replaceChild(empty3,semcargo);
-        
-                } else if(semcargo == inv.children[3]){
-                  inv.replaceChild(empty4,semcargo);
-                }
-
+              if (semcargo == inv.children[0]) {
+                inv.replaceChild(empty1, semcargo);
+              } else if (semcargo == inv.children[1]) {
+                inv.replaceChild(empty2, semcargo);
+              } else if (semcargo == inv.children[2]) {
+                inv.replaceChild(empty3, semcargo);
+              } else if (semcargo == inv.children[3]) {
+                inv.replaceChild(empty4, semcargo);
+              }
 
               spyWatch.style.visibility = "visible";
               retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
               somaPontos();
-
-
             } else {
-              
               poderSpy.textContent =
                 parseInt(poderSemcargo.textContent) * 5 +
                 parseInt(poderSpy.textContent) +
                 "⚡";
 
-              if(semcargo == inv.children[0]){
-          inv.replaceChild(empty1,semcargo);
-
-        } else if(semcargo == inv.children[1]){
-          inv.replaceChild(empty2,semcargo);
-
-        } else if(semcargo == inv.children[2]){
-          inv.replaceChild(empty3,semcargo);
-
-        } else if(semcargo == inv.children[3]){
-          inv.replaceChild(empty4,semcargo);
-        }
-
+              if (semcargo == inv.children[0]) {
+                inv.replaceChild(empty1, semcargo);
+              } else if (semcargo == inv.children[1]) {
+                inv.replaceChild(empty2, semcargo);
+              } else if (semcargo == inv.children[2]) {
+                inv.replaceChild(empty3, semcargo);
+              } else if (semcargo == inv.children[3]) {
+                inv.replaceChild(empty4, semcargo);
+              }
 
               spyWatch.style.visibility = "visible";
               retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
@@ -1925,35 +1870,32 @@ let ab = 3;
 
 function abelha() {
   for (let i = 0; i < 4; i++) {
-    if (inv.children[i].id != "empty" ) {
-      // 
+    if (inv.children[i].id != "empty") {
+      //
 
       if (inv.children[i].id == "abelha") {
         inv.children[i].className = "";
-        inv.children[i].children[1].style.border = "2px solid #4d1a00";
+        inv.children[i].children[1].style.border = "2px solid #545251";
+        1;
         inv.children[i].style.border = "";
         inv.children[i].style.color = "#ffd11a";
 
         let pontoAbelha = inv.children[i].children[3].children[0];
 
         if (parseInt(pontoAbelha.textContent) <= 0) {
-          let abelha = inv.children[i]
+          let abelha = inv.children[i];
           abelha.className = "";
 
-          if(abelha == inv.children[0]){
-            inv.replaceChild(empty1,abelha);
-  
-          } else if(abelha == inv.children[1]){
-            inv.replaceChild(empty2,abelha);
-  
-          } else if(abelha == inv.children[2]){
-            inv.replaceChild(empty3,abelha);
-  
-          } else if(abelha == inv.children[3]){
-            inv.replaceChild(empty4,abelha);
+          if (abelha == inv.children[0]) {
+            inv.replaceChild(empty1, abelha);
+          } else if (abelha == inv.children[1]) {
+            inv.replaceChild(empty2, abelha);
+          } else if (abelha == inv.children[2]) {
+            inv.replaceChild(empty3, abelha);
+          } else if (abelha == inv.children[3]) {
+            inv.replaceChild(empty4, abelha);
           }
 
-    
           somaPontos();
         } else if (
           parseInt(pontoAbelha.textContent) <= 60 &&
@@ -2020,15 +1962,11 @@ let btnReset = document.getElementById("btnReset");
 let empty = document.createElement("div");
 empty.id = "empty";
 
-
-
 let empty1 = inv.children[0];
 let empty2 = inv.children[1];
 let empty3 = inv.children[2];
 let empty4 = inv.children[3];
-let cartaMao = mao.children[0]
-
-
+let cartaMao = mao.children[0];
 
 function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
@@ -2068,7 +2006,7 @@ function resetarDeck() {
 
   rodadas = 0;
   critico();
-  
+
   mao.replaceChild(cartaMao, mao.children[0]);
   inv.replaceChild(empty1, inv.children[0]);
   inv.replaceChild(empty2, inv.children[1]);
@@ -2109,7 +2047,7 @@ function tudo() {
   if (totalClicks > 0) {
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-    start()
+    start();
     // limparInput();
     escolherIntegrante();
     escolherCidade();
@@ -2121,15 +2059,15 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-    
+
     clicks();
-    
+
     abelha();
     colocarEfeito();
     // aplicarEfeitos();
     verificarCartaParaMover();
     blockInv();
-    
+
     // if(totalClicks == 1){button.style.backgroundColor = "red"
     // button.innerHTML = "0 CARTAS";}
   } else {
@@ -2160,95 +2098,87 @@ export function somaPontos() {
   let ponto2 = 0;
   let ponto3 = 0;
 
-  
-
-  
-  let cartasSemEnergia =  ["comunista",   "especial-click", "-click"]
+  let cartasSemEnergia = ["comunista", "especial-click", "-click"];
   //cartas que tem Energia, mas o segundo ataque nao é energia
-  let cartasComEnergiaSemCritico =  ["spy"] 
+  let cartasComEnergiaSemCritico = ["spy"];
 
-
-    
-
-
-  
   // inv 0
   if (
     inv.children[0].id != "empty1" &&
-    !cartasSemEnergia.some(el=>inv.children[0].id.includes(el))
+    !cartasSemEnergia.some((el) => inv.children[0].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (
       inv.children[0].children[3].children[1].textContent != "" &&
-      !cartasComEnergiaSemCritico.some(el=>inv.children[0].id.includes(el))
+      !cartasComEnergiaSemCritico.some((el) => inv.children[0].id.includes(el))
     ) {
       ponto0 = parseInt(inv.children[0].children[3].children[1].textContent);
-      // 
+      //
 
       // se nao, pegue o poder velho
     } else {
       ponto0 = parseInt(inv.children[0].children[3].children[0].textContent);
-      // 
+      //
     }
   }
 
   // inv 1
   if (
     inv.children[1].id != "empty2" &&
-    !cartasSemEnergia.some(el=>inv.children[1].id.includes(el))
+    !cartasSemEnergia.some((el) => inv.children[1].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (
       inv.children[1].children[3].children[1].textContent != "" &&
-      !cartasComEnergiaSemCritico.some(el=>inv.children[1].id.includes(el))
+      !cartasComEnergiaSemCritico.some((el) => inv.children[1].id.includes(el))
     ) {
       ponto1 = parseInt(inv.children[1].children[3].children[1].textContent);
-      // 
+      //
 
       // se nao, pegue o poder velho
     } else {
       ponto1 = parseInt(inv.children[1].children[3].children[0].textContent);
-      // 
+      //
     }
   }
 
   // inv 2
   if (
     inv.children[2].id != "empty3" &&
-    !cartasSemEnergia.some(el=>inv.children[2].id.includes(el))
+    !cartasSemEnergia.some((el) => inv.children[2].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (
       inv.children[2].children[3].children[1].textContent != "" &&
-      !cartasComEnergiaSemCritico.some(el=>inv.children[2].id.includes(el))
+      !cartasComEnergiaSemCritico.some((el) => inv.children[2].id.includes(el))
     ) {
       ponto2 = parseInt(inv.children[2].children[3].children[1].textContent);
-      // 
+      //
 
       // se nao, pegue o poder velho
     } else {
       ponto2 = parseInt(inv.children[2].children[3].children[0].textContent);
-      // 
+      //
     }
   }
 
   // inv 3
   if (
     inv.children[3].id != "empty4" &&
-    !cartasSemEnergia.some(el=>inv.children[3].id.includes(el))
+    !cartasSemEnergia.some((el) => inv.children[3].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
     if (
       inv.children[3].children[3].children[1].textContent != "" &&
-      !cartasComEnergiaSemCritico.some(el=>inv.children[3].id.includes(el))
+      !cartasComEnergiaSemCritico.some((el) => inv.children[3].id.includes(el))
     ) {
       ponto2 = parseInt(inv.children[3].children[3].children[1].textContent);
-      // 
+      //
 
       // se nao, pegue o poder velho
     } else {
       ponto3 = parseInt(inv.children[3].children[3].children[0].textContent);
-      // 
+      //
     }
   }
 
@@ -2267,9 +2197,10 @@ button.addEventListener("click", blockInv);
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyW") {
     if (!getSeedChecked()) {
-    tudo();
-    blockInv();
-  }}
+      tudo();
+      blockInv();
+    }
+  }
 });
 
 // BIND MOVER COM TECLA
@@ -2280,8 +2211,9 @@ document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
       if (!getSeedChecked()) {
-      moverCarta();
-    }}
+        moverCarta();
+      }
+    }
   }
 });
 
@@ -2302,22 +2234,24 @@ function deckPronto() {
   moverCarta();
   totalClicks += 5;
   rodadas = 0;
-  
+
   arenaP.innerHTML = totalClicks + " CARTAS";
 }
 
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {
     if (!getSeedChecked()) {
-    deckPronto();
-  }}
+      deckPronto();
+    }
+  }
 });
-
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyR") {
-    if (!getSeedChecked()) {resetarDeck();
-  }}
+    if (!getSeedChecked()) {
+      resetarDeck();
+    }
+  }
 });
 
 document.getElementById("G").addEventListener("click", deckPronto);
@@ -2330,4 +2264,3 @@ window.onload = (event) => {
   tudo();
   resetarDeck();
 };
-

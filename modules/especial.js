@@ -380,9 +380,15 @@ let frasesComunista = [
   "TENHO NOJO DE BURGUES",
 ];
 
-let valoresComunista = [333, 333, 333, 333, 666, 666, 999];
+let valoresComunista = [333, 666, 999];
 export function comunistaPE() {
-  return valoresComunista[Math.floor(Math.random() * 7 + 0)];
+  if (seed2 <6){
+    return valoresComunista[0]
+  } else if (seed2 < 9){
+    return valoresComunista[1]
+  } else {
+    return valoresComunista[2]
+  }
 }
 export function frasesComuna() {
   return frasesComunista[Math.floor(Math.random() * frasesComunista.length)];
