@@ -20,7 +20,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5";
+let versao = "Alpha 1.5.1";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -923,7 +923,7 @@ function verificarCartaParaMover() {
   cartaNotMonark = copyCard.id != "carta-monark";
 
 
-  
+
   PodeMover =
     (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
     (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
