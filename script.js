@@ -235,7 +235,7 @@ function escolherVariante() {
     cargo != "carta-people";
   variante = "";
   if (cartasQueNaoTemVariante) {
-    if (seedString[4] == 4) {
+    if (seedString[14] == 4) {
       if (seedString[5] == 9 && seedString[6] == 0) {
         return (variante = "farmacêutico");
       } else if (seedString[5] == 9 && seedString[6] == 1) {
@@ -1018,18 +1018,22 @@ function moverToInvMao() {
     inv.replaceChild(mao.children[0], inv.children[0]);
     mao.appendChild(cartaMao);
     colocarBotao()
+    somaPontos()
   } else if (inv.children[1].id == "empty2") {
     inv.replaceChild(mao.children[0], inv.children[1]);
     mao.appendChild(cartaMao);
     colocarBotao()
+    somaPontos()
   } else if (inv.children[2].id == "empty3") {
     inv.replaceChild(mao.children[0], inv.children[2]);
     mao.appendChild(cartaMao);
     colocarBotao()
+    somaPontos()
   } else if (inv.children[3].id == "empty4") {
     inv.replaceChild(mao.children[0], inv.children[3]);
     mao.appendChild(cartaMao);
     colocarBotao()
+    somaPontos()
   }
   criarBtn();
 }

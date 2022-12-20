@@ -203,7 +203,7 @@ export let especiais = {
         energia: 0,
         poder: true,
         efeito: "",
-        familia: "",
+        familia: "overwatch",
         descricao: "",
         emojiEsp: "",
         emoji: "🐸",
