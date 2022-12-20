@@ -711,6 +711,29 @@ function colocarInfoNoWrap() {
     // novoAtaquerP.style.visibility = "hidden";
     // novoAtaquerP.textContent = "⌚";
     // ataqueP.style.fontFamily = "tf2";
+  }  else if (novaCarta._especial.cartaId == "estoico") {
+    // cartaP.style.color = "#cf6a32";
+    retratoP.style.backgroundImage = especial.retrato;
+    retratoP.style.backgroundSize = "100% 100%";
+    retratoP.style.backgroundColor = "unset";
+    nomeP.innerHTML = especial.nome;
+    // nomeP.style.fontFamily = "estoico";
+    nomeP.style.fontSize = "250%";
+    nomeP.style.fontFamily = "estoico";
+    ataqueP.style.fontFamily = "estoico";
+
+    retratoP.style.border = "2px solid #cde2e0";
+
+    ataqueP.style.fontSize = "170%";
+    ataqueP.textContent = "";
+
+    novoAtaquerP.style.fontSize = "140%";
+    novoAtaquerP.style.fontFamily = "estoico";
+    novoAtaquerP.textContent = estoicoPE() + especial.emoji;
+    seloP.style.right = "30px";
+    // novoAtaquerP.style.visibility = "hidden";
+    // novoAtaquerP.textContent = "⌚";
+    // ataqueP.style.fontFamily = "tf2";
   }
 
   //CARTAS VARIANTES
