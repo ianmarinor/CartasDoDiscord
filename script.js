@@ -10,6 +10,8 @@ import {
   frasesComuna,
   efeitoPremioMonark,
   pontoSpeaker,
+  escolherEspecial,
+  especial
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
@@ -223,50 +225,50 @@ function escolherCargo() {
   }
 }
 
-let especial = "";
-function escolherEspecial() {
-  //
-  if (
-    seedString[5] == 9 &&
-    seedString[6] == 9 &&
-    seedString[7] == 9 &&
-    seedString[8] == 1 &&
-    seedString[9] == 4
-  ) {
-    return (especial = "especial-tenica");
-  } else if (
-    seedString[5] == 8 &&
-    seedString[6] == 3 &&
-    seedString[7] == 8 &&
-    seedString[8] <= 4
-  ) {
-    return (especial = "premiomonark");
-  } else if (
-    seedString[5] == 7 &&
-    seedString[6] == 1 &&
-    seedString[7] == 7 &&
-    seedString[8] >= 5
-  ) {
-    return (especial = "comunista");
-  } else if (seedString[5] == 6 && seedString[6] == 9 && seedString[7] < 3) {
-    return (especial = "spy");
-  } else if (
-    seedString[5] == 6 &&
-    seedString[6] == 9 &&
-    seedString[7] > 2 &&
-    seedString[7] < 6
-  ) {
-    return (especial = "abelha");
-  } else if (seedString[5] == 6 && seedString[6] >= 9 && seedString[7] > 5) {
-    return (especial = "carta-speaker");
-  } else if (seedString[5] == 3 && seedString[6] <= 4) {
-    return (especial = "especial-click");
-  } else if (seedString[5] == 3 && seedString[6] > 4) {
-    return (especial = "-click");
-  } else {
-    return (especial = "");
-  }
-}
+// let especial = "";
+// function escolherEspecial() {
+//   //
+//   if (
+//     seedString[5] == 9 &&
+//     seedString[6] == 9 &&
+//     seedString[7] == 9 &&
+//     seedString[8] == 1 &&
+//     seedString[9] == 4
+//   ) {
+//     return (especial = "especial-tenica");
+//   } else if (
+//     seedString[5] == 8 &&
+//     seedString[6] == 3 &&
+//     seedString[7] == 8 &&
+//     seedString[8] <= 4
+//   ) {
+//     return (especial = "premiomonark");
+//   } else if (
+//     seedString[5] == 7 &&
+//     seedString[6] == 1 &&
+//     seedString[7] == 7 &&
+//     seedString[8] >= 5
+//   ) {
+//     return (especial = "comunista");
+//   } else if (seedString[5] == 6 && seedString[6] == 9 && seedString[7] < 3) {
+//     return (especial = "spy");
+//   } else if (
+//     seedString[5] == 6 &&
+//     seedString[6] == 9 &&
+//     seedString[7] > 2 &&
+//     seedString[7] < 6
+//   ) {
+//     return (especial = "abelha");
+//   } else if (seedString[5] == 6 && seedString[6] >= 9 && seedString[7] > 5) {
+//     return (especial = "carta-speaker");
+//   } else if (seedString[5] == 3 && seedString[6] <= 4) {
+//     return (especial = "especial-click");
+//   } else if (seedString[5] == 3 && seedString[6] > 4) {
+//     return (especial = "-click");
+//   } else {
+//     return (especial = "");
+//   }
+// }
 
 let variante = "";
 
@@ -501,7 +503,7 @@ function colocarInfoNoWrap() {
   cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
   varianteP.innerHTML = novaCarta._variante;
-  especialP.innerHTML = novaCarta._especial;
+  // especialP.innerHTML = novaCarta._especial;
   seedP.innerHTML = "&nbsp;" + seedString;
 
   if (seedObj._isMarket) {
@@ -515,8 +517,8 @@ function colocarInfoNoWrap() {
   arenaP.innerHTML = totalClicks + " RODADAS";
   placarP.innerHTML = totalPontos + " ⚡";
 
-  if (novaCarta._especial != "") {
-    cartaP.id = novaCarta._especial;
+  if (novaCarta._especial.nome != "") {
+    cartaP.id = novaCarta._especial.cartaId;
   } else {
     cartaP.id = novaCarta._cargo;
   }
@@ -524,7 +526,7 @@ function colocarInfoNoWrap() {
   retratoP.style.display = "block";
 
   //colocar retrato
-  if (novaCarta._especial == "") {
+  if (novaCarta._especial.nome == "") {
     if (novaCarta._integrante === "Turu") {
       retratoP.style.backgroundImage = "url('pics/turu.webp')";
     } else if (novaCarta._integrante === "Blackao") {
@@ -551,7 +553,7 @@ function colocarInfoNoWrap() {
   }
 
   //colocar cargo
-  if (novaCarta._especial == "") {
+  if (novaCarta._especial.nome == "") {
     if (novaCarta._cargo === "carta-semcargo") {
       cargoP.innerHTML = "&nbsp;" + "sem cargo".toUpperCase();
       retratoP.style.border = "";
@@ -598,7 +600,7 @@ function colocarInfoNoWrap() {
   }
 
   //CARTAS ESPECIAIS
-  if (novaCarta._especial === "carta-speaker") {
+  if (novaCarta._especial.cartaId === "carta-speaker") {
     retratoP.style.backgroundImage = "url('pics/speaker.webp')";
     nomeP.innerHTML = "&nbsp; SPEAKER";
     ataqueP.innerHTML = pontoSpeaker() + "⚡";
@@ -609,7 +611,7 @@ function colocarInfoNoWrap() {
     // ataqueP.innerHTML =
     cartaP.style.border = "2px solid #18d742";
     Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
-  } else if (novaCarta._especial === "especial-tenica") {
+  } else if (novaCarta._especial.cartaId === "especial-tenica") {
     cargoP.style.fontFamily = "Cormorant Upright";
     retratoP.style.backgroundImage = "url('pics/tenica.webp')";
     retratoP.style.backgroundSize = "139px 150px";
@@ -626,7 +628,7 @@ function colocarInfoNoWrap() {
 
     ataqueP.style.fontSize = "1.5em";
     especialP.style.visibility = "hidden";
-  } else if (novaCarta._especial === "especial-click") {
+  } else if (novaCarta._especial.cartaId === "especial-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
     nomeP.innerHTML = " + CARTAS +";
@@ -645,7 +647,7 @@ function colocarInfoNoWrap() {
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
     seedP.style.color = "black";
     seedP.style.fontSize = "0.6em";
-  } else if (novaCarta._especial === "-click") {
+  } else if (novaCarta._especial.cartaId === "-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
     nomeP.innerHTML = " - CARTAS -";
@@ -664,7 +666,7 @@ function colocarInfoNoWrap() {
     ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
     seedP.style.color = "black";
     seedP.style.fontSize = "0.6em";
-  } else if (novaCarta._especial === "abelha") {
+  } else if (novaCarta._especial.cartaId === "abelha") {
     retratoP.style.backgroundImage = "url('pics/retratoAbelha.gif')";
     retratoP.style.backgroundSize = "";
     retratoP.style.backgroundColor = "green";
@@ -685,7 +687,7 @@ function colocarInfoNoWrap() {
     // seedP.style.color = "yellow";
     cartaP.style.color = "#ffd11a";
     cartaP.style.border = "3px solid #4d1a00";
-  } else if (novaCarta._especial === "comunista") {
+  } else if (novaCarta._especial.cartaId === "comunista") {
     retratoP.style.backgroundImage =
       "url('https://i.kym-cdn.com/photos/images/original/000/960/056/27b.gif')";
     retratoP.style.backgroundSize = "";
@@ -716,7 +718,7 @@ function colocarInfoNoWrap() {
     cartaP.style.color = "#990000";
     cartaP.style.border = "2px solid red";
     seedP.style.color = "black";
-  } else if (novaCarta._especial === "premiomonark") {
+  } else if (novaCarta._especial.cartaId === "premiomonark") {
     retratoP.style.backgroundImage = 'url("/pics/retratoPremioMonark.gif")';
     retratoP.style.backgroundSize = "100% 100%";
     retratoP.style.backgroundColor = "#343436";
@@ -749,7 +751,7 @@ function colocarInfoNoWrap() {
     // cartaP.style.color = "#fff";
     cartaP.style.border = "2px solid black";
     seedP.style.color = "#343436";
-  } else if (novaCarta._especial == "spy") {
+  } else if (novaCarta._especial.cartaId == "spy") {
     cartaP.style.color = "#cf6a32";
     retratoP.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
     retratoP.style.backgroundSize = "100% 100%";
@@ -863,6 +865,9 @@ function colocarInfoNoWrap() {
     } else {
     }
   }
+  console.log(novaCarta);+
+  console.log(novaCarta._especial);+
+  console.log('especial', especial.cartaId);
 }
 export let rodadas = 0;
 export let efeitos = {
