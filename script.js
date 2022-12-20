@@ -20,7 +20,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5.2";
+let versao = "Alpha 1.5.3";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -437,6 +437,7 @@ function colocarInfoNoWrap() {
   varianteP.removeAttribute("style");
   seloP.removeAttribute("style");
   varianteP.innerHTML = "";
+  cartaParaMover.classList.remove('voar')
 
   cidadeP.removeAttribute("style");
   retratoP.removeAttribute("style");
@@ -1070,9 +1071,19 @@ function moverCartaMonark() {
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
 
-  if (seedObj._isPutByPlayer || efeitos.css.nome == "estoico") {
+  if (seedObj._isPutByPlayer ) {
     false;
+   
+    
+    cartaParaMover.classList.add('voar')
+    setTimeout(tudo, 100)
+
+
+  } else if(efeitos.css.nome == "estoico" && copyCard.id == "carta-monark"){
     console.log("****NAO VOU MOVER TEM TURU****");
+    cartaParaMover.classList.add('voar')
+    setTimeout(tudo, 250)
+
   } else if (totalClicks > 0) {
     if (copyCard.id === "carta-monark") {
       // SE CARTA FOR SPY
@@ -1907,10 +1918,23 @@ function criarBtn() {
               " de Itapira" &&
             inv.children[i].id != "carta-monark"
           ) {
+
+           let itapira = inv.children[i] 
+
             efeitoEstoico.rodadas = parseInt(poderEstoico.textContent);
             efeitos = efeitoEstoico;
 
             butao.style.visibility = "hidden";
+
+            if (itapira == inv.children[0]) {
+              inv.replaceChild(empty1, itapira);
+            } else if (itapira == inv.children[1]) {
+              inv.replaceChild(empty2, itapira);
+            } else if (itapira == inv.children[2]) {
+              inv.replaceChild(empty3, itapira);
+            } else if (itapira == inv.children[3]) {
+              inv.replaceChild(empty4, itapira);
+            }
 
             if (estoico == inv.children[0]) {
               inv.replaceChild(empty1, estoico);
@@ -1921,6 +1945,8 @@ function criarBtn() {
             } else if (estoico == inv.children[3]) {
               inv.replaceChild(empty4, estoico);
             }
+
+
 
             tudo();
             break;

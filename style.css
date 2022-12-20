@@ -703,6 +703,11 @@ p {
   /* margin-bottom: 10%; */
 }
 
+.voar{
+  animation: voar 1s;
+  animation-iteration-count: 1;
+}
+
 .float {
   animation: float 10s;
   animation-iteration-count: infinite;
@@ -721,6 +726,20 @@ p {
   animation: vanish 4s;
   animation-iteration-count: 1;
   opacity: 0.1;
+}
+
+@keyframes voar {
+  
+  0% {
+
+    bottom: 0px;
+  }
+
+
+  100% {
+    /* right: -2500px;ads */
+    bottom: -2000px;
+  }
 }
 
 @keyframes shake {
