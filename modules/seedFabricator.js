@@ -10,6 +10,18 @@ console.log(new Date().toUTCString());
 console.log(versao);
 
 
+
+export let seedObj = {
+  _seed: 0,
+  _seedString: '',
+  _isSeedReal: false,
+  _seedFalsaInput: '',
+  _seedLength: 0,
+  _isPutByPlayer: false,
+};
+
+
+
 let getSeed = document.getElementById("getseed");
 // let button = document.getElementById("btn");
 
@@ -62,7 +74,7 @@ if(seedComprada.includes(input)){
         for (let i = 0; i < input.length; i++) {
           sum = sum + input[i].charCodeAt();
         }
-        let constanteSeedFalsa = 516515615165159;
+        let constanteSeedFalsa = 716035615875159;
         let calculoSeedFalsa = sum * constanteSeedFalsa;
 
         return seed(calculoSeedFalsa, false, input, true,false);
@@ -92,7 +104,8 @@ export function start() {
    seedObj = generateSeed(input);
 }
 
-
+seedObj = generateSeed(input);
+console.log('seedObj: ', seedObj);
 
   // console.log(numeroDeCartas);
 
@@ -102,13 +115,4 @@ export function start() {
 //   start()
 // }
 
-export let seedObj = {
-  _seed: 0,
-  _seedString: '',
-  _isSeedReal: false,
-  _seedFalsaInput: '',
-  _seedLength: 0,
-  _isPutByPlayer: false,
-};
-DEBUG && console.log('seedObj: ', seedObj);
 
