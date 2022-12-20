@@ -195,6 +195,22 @@ export let especiais = {
         emoji: "🛡️",
         retrato: "url('pics/estoicoRetrato.jpg')",
       },
+      lucio: {
+        cartaId: "lucio",
+        nome: "LÚCIO",
+        raridade: raridades.sangueAzul,
+        pontoEspecial: 0,
+        energia: 0,
+        poder: true,
+        efeito: "",
+        familia: "",
+        descricao: "",
+        emojiEsp: "",
+        emoji: "🐸",
+        retrato: "url('pics/retratoLucio.jpg')",
+      },
+
+
     }
 
 console.log('ESPECAIISMAISCARTAS', especiais.menosCartas);
@@ -238,8 +254,12 @@ export function escolherEspecial() {
     } else if (raridades.sangueAzul.rng()) {
       raridade = raridades.sangueAzul;
       
-      if (seedString[12]> 4) {
+      if (seedString[12]< 3) {
+          especial = especiais.lucio
+
+      } else if (seedString[12]< 6){
         especial = especiais.premioMonark
+
       } else {
         especial = especiais.blackaoCamarada
 
