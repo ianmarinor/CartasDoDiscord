@@ -225,50 +225,6 @@ function escolherCargo() {
   }
 }
 
-// let especial = "";
-// function escolherEspecial() {
-//   //
-//   if (
-//     seedString[5] == 9 &&
-//     seedString[6] == 9 &&
-//     seedString[7] == 9 &&
-//     seedString[8] == 1 &&
-//     seedString[9] == 4
-//   ) {
-//     return (especial = "especial-tenica");
-//   } else if (
-//     seedString[5] == 8 &&
-//     seedString[6] == 3 &&
-//     seedString[7] == 8 &&
-//     seedString[8] <= 4
-//   ) {
-//     return (especial = "premiomonark");
-//   } else if (
-//     seedString[5] == 7 &&
-//     seedString[6] == 1 &&
-//     seedString[7] == 7 &&
-//     seedString[8] >= 5
-//   ) {
-//     return (especial = "comunista");
-//   } else if (seedString[5] == 6 && seedString[6] == 9 && seedString[7] < 3) {
-//     return (especial = "spy");
-//   } else if (
-//     seedString[5] == 6 &&
-//     seedString[6] == 9 &&
-//     seedString[7] > 2 &&
-//     seedString[7] < 6
-//   ) {
-//     return (especial = "abelha");
-//   } else if (seedString[5] == 6 && seedString[6] >= 9 && seedString[7] > 5) {
-//     return (especial = "carta-speaker");
-//   } else if (seedString[5] == 3 && seedString[6] <= 4) {
-//     return (especial = "especial-click");
-//   } else if (seedString[5] == 3 && seedString[6] > 4) {
-//     return (especial = "-click");
-//   } else {
-//     return (especial = "");
-//   }
-// }
 
 let variante = "";
 
