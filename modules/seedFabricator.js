@@ -102,10 +102,11 @@ if(seedComprada.includes(input)){
 export function start() {
   colocarInput();
    seedObj = generateSeed(input);
+   console.log('seedObj: ', seedObj)
 }
 
 seedObj = generateSeed(input);
-console.log('seedObj: ', seedObj);
+;
 
   // console.log(numeroDeCartas);
 

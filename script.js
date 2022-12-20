@@ -899,19 +899,39 @@ let seed4;
 let seedDiferente;
 let botao;
 
+let jaMovi = false
+
+
+function isJaMovi(){
+
+  if(seedObj._isPutByPlayer && !jaMovi){
+    jaMovi = true
+    return false
+  } else if (seedObj._isPutByPlayer && jaMovi){
+    return true
+  } else if(!seedObj._isPutByPlayer){
+    return false
+  }
+
+}
+
 function verificarCartaParaMover() {
   seedCopyCard = cartaParaMover.children[4];
 
-  customOff = getSeed.className == "customOff";
-  cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
+
+  cartaNotEspecial = especial.nome == "";
   cartaNotMonark = copyCard.id != "carta-monark";
+
+
+  
   PodeMover =
     (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
     (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
     seedObj._isMarket;
 
-  naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
-  taTudoOk = PodeMover && naoMoviAinda && totalClicks > 0;
+  
+
+  taTudoOk = PodeMover && !isJaMovi() && totalClicks > 0;
   cartasComBotao = especial.poder == true;
   botao = copyCard.children[3].children[2];
   seed1 = inv.children[0].children[4];
@@ -938,6 +958,7 @@ function moverOne() {
     inv.replaceChild(copyCard, inv.children[0]);
     criarBtn();
     somaPontos();
+    
     tudo();
 
     //
@@ -955,6 +976,7 @@ function moverTwo() {
     inv.replaceChild(copyCard, inv.children[1]);
     criarBtn();
     somaPontos();
+    
     tudo();
   }
 }
@@ -969,6 +991,7 @@ function moverThree() {
     inv.replaceChild(copyCard, inv.children[2]);
     criarBtn();
     somaPontos();
+    
     tudo();
     3;
   }
@@ -985,6 +1008,7 @@ function moverFour() {
     inv.replaceChild(copyCard, inv.children[3]);
     criarBtn();
     somaPontos();
+    
     tudo();
   }
 }
@@ -2056,7 +2080,7 @@ function deletarDeck(e) {
 
 function resetarDeck() {
   getSeed.setAttribute("class", "");
-  1;
+  
 
   efeitos = efeitoVazio;
 
@@ -2071,6 +2095,9 @@ function resetarDeck() {
   totalClicks = 50;
   somaPontos();
   tudo();
+  jaMovi = false
+  
+  blockInv()
   cartaCustom = input.length >= 3;
 
   getSeed.className = "";
@@ -2087,7 +2114,7 @@ function blockInv() {
     (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
     seedObj._isMarket;
 
-  if (!PodeMover || customOff) {
+  if (!PodeMover || jaMovi) {
     inv.style.border = "10px double red";
   } else {
     inv.style.border = "7px double green";
@@ -2291,6 +2318,7 @@ function deckPronto() {
   moverCarta();
   totalClicks += 5;
   rodadas = 0;
+
 
   arenaP.innerHTML = totalClicks + " CARTAS";
 }
