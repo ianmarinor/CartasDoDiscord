@@ -1,4 +1,4 @@
-import { generateSeed } from "./modules/seedFabricator.js";
+import { seedObj, start } from "./modules/seedFabricator.js";
 import {
   tenicaEnergia,
   abelhaEnergia,
@@ -44,11 +44,11 @@ let input = "";
 let totalClicks = 50;
 let integrante;
 let cartaCustom;
-let seedObj = 0;
+// let seedObj 
 let seedString = "";
 let cartaComSeedParaAdicionar;
 function escolherIntegrante() {
-  seedObj = generateSeed(input);
+  // seedObj = generateSeed(input);
   seedString = seedObj._seedString;
 
   //
@@ -391,7 +391,7 @@ function escolherPoder() {
 
 //************************************************ */
 
-function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial) {
+function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial,seedObj) {
   return {
     _integrante: integrante,
     _cidade: cidade,
@@ -399,6 +399,7 @@ function fabricaDeCarta(integrante, cidade, cargo, poder, variante, especial) {
     _poder: poder,
     _variante: variante,
     _especial: especial,
+    _seedobj: seedObj
   };
 }
 
@@ -454,7 +455,8 @@ function colocarInfoNoWrap() {
     cargo,
     poder,
     variante,
-    especial
+    especial,
+    seedObj
   );
 
   //LIMPAR A CARTA
@@ -499,6 +501,7 @@ function colocarInfoNoWrap() {
   cartaParaMover.children[0].children[1].style.fontWeight = "";
 
   //DOM
+ 
   nomeP.innerHTML = novaCarta._integrante.toUpperCase();
   cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
@@ -522,7 +525,7 @@ function colocarInfoNoWrap() {
   } else {
     cartaP.id = novaCarta._cargo;
   }
-
+console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
   retratoP.style.display = "block";
 
   //colocar retrato
@@ -865,9 +868,9 @@ function colocarInfoNoWrap() {
     } else {
     }
   }
-  console.log(novaCarta);+
-  console.log(novaCarta._especial);+
-  console.log('especial', especial.cartaId);
+  console.log('**NOVA CARTA**', novaCarta);
+  
+  // console.log('especial', especial.cartaId);
 }
 export let rodadas = 0;
 export let efeitos = {
@@ -919,16 +922,7 @@ function colocarInput() {
 
 // let caixaDeSeeds = [0,0,0,0]
 
-function verSeed() {
-  for (let i = 0; i < 4; i++) {
-    if (inv.children[i].id != "empty") {
-      // return caixaDeSeeds.splice(i,1,inv.children[i].children[4].textContent)
-      let caixaDeSeeds = [0, 0, 0, 0];
-      caixaDeSeeds.splice(i, 1, inv.children[i].children[4].textContent);
-      return caixaDeSeeds;
-    }
-  }
-}
+
 function getSeedChecked() {
   return document.activeElement.id == "getseed";
 }
@@ -995,9 +989,7 @@ function verificarCartaParaMover() {
 
   naoMoviAinda = !customOff || (customOff && !seedObj._isPutByPlayer);
   taTudoOk = PodeMover && naoMoviAinda && totalClicks > 0;
-  cartasComBotao =
-    copyCard.children[0].children[3].textContent != "" &&
-    copyCard.id != "abelha";
+  cartasComBotao = especial.poder == true
   botao = copyCard.children[3].children[2];
   seed1 = inv.children[0].children[4];
   seed2 = inv.children[1].children[4];
@@ -1012,8 +1004,8 @@ function verificarCartaParaMover() {
 function moverOne() {
   
   if (inv.children[0].id == "empty1" 
-    && seedDiferente
-    && taTudoOk
+    // && seedDiferente
+    // && taTudoOk
 ) {
     // if (true) {
     if (cartasComBotao) {
@@ -1031,7 +1023,7 @@ function moverOne() {
 }
 function moverTwo() {
   if (inv.children[1].id == "empty2" 
-  && seedDiferente && taTudoOk
+  // && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1046,7 +1038,7 @@ function moverTwo() {
 }
 function moverThree() {
   if (inv.children[2].id == "empty3" 
-  && seedDiferente && taTudoOk
+  // && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1063,7 +1055,7 @@ function moverThree() {
 
 function moverFour() {
   if (inv.children[3].id == "empty4" 
-  && seedDiferente && taTudoOk
+  // && seedDiferente && taTudoOkg
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1262,7 +1254,7 @@ function critico() {
   if (
     cartaParaMover.id != "carta-monark" &&
     cartaParaMover.id != "carta-speaker" &&
-    cartaParaMover.children[0].children[3].textContent == ""
+    especial.nome == ''
   ) {
     if (seedString[1] == "1" && seedString[3] == "0") {
       corDaCidade.classList.add("critico");
@@ -1755,7 +1747,10 @@ function criarBtn() {
                 inv.children[j].id != "spy" &&
                 inv.children[j].id != "especial-click" &&
                 inv.children[j].id != "-click" &&
-                inv.children[j].id != "empty" &&
+                inv.children[j].id != "empty1" &&
+                inv.children[j].id != "empty2" &&
+                inv.children[j].id != "empty3" &&
+                inv.children[j].id != "empty4" &&
                 inv.children[j].id != "especial-tenica" &&
                 inv.children[j].id != "abelha" &&
                 inv.children[j].id != "comunista" &&
@@ -1987,7 +1982,7 @@ let ab = 3;
 
 function abelha() {
   for (let i = 0; i < 4; i++) {
-    if (inv.children[i].id != "empty") {
+    if (inv.children[i].id != "empty" ) {
       // 
 
       if (inv.children[i].id == "abelha") {
@@ -1999,10 +1994,23 @@ function abelha() {
         let pontoAbelha = inv.children[i].children[3].children[0];
 
         if (parseInt(pontoAbelha.textContent) <= 0) {
-          inv.children[i].className = "";
+          let abelha = inv.children[i]
+          abelha.className = "";
 
-          inv.children[i].remove();
-          inv.appendChild(document.createElement("div")).id = "empty";
+          if(abelha == inv.children[0]){
+            inv.replaceChild(empty1,abelha);
+  
+          } else if(abelha == inv.children[1]){
+            inv.replaceChild(empty2,abelha);
+  
+          } else if(abelha == inv.children[2]){
+            inv.replaceChild(empty3,abelha);
+  
+          } else if(abelha == inv.children[3]){
+            inv.replaceChild(empty4,abelha);
+          }
+
+    
           somaPontos();
         } else if (
           parseInt(pontoAbelha.textContent) <= 60 &&
@@ -2158,7 +2166,7 @@ function tudo() {
   if (totalClicks > 0) {
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-    colocarInput();
+    start()
     limparInput();
     escolherIntegrante();
     escolherCidade();
@@ -2400,10 +2408,10 @@ document.addEventListener("keydown", (event) => {
 
 document.getElementById("G").addEventListener("click", deckPronto);
 
-// window.onload = (event) => {
-//   tudo();
-//   resetarDeck();
-// };
+window.onload = (event) => {
+  tudo();
+  resetarDeck();
+};
 
 // setInterval(()=>arenaP.innerHTML = totalClicks + " CARTAS", 100)
 11;

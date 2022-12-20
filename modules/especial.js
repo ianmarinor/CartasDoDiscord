@@ -47,7 +47,7 @@ export let raridades = {
   },
 };
 
-// export let especiais = ['tenica', 'speaker', 'bonusCartasMais', 'abelha']
+// export let especiais = ['tenica', 'speaker', 'maisCartas', 'abelha']
 
 export let especiais = {
   notSpecial: {
@@ -56,7 +56,7 @@ export let especiais = {
     raridade: "false",
     pontoEspecial: 0,
     energia: 0,
-    poder: "",
+    poder: false,
     efeito: "",
     familia: "",
     descricao: "",
@@ -70,41 +70,38 @@ export let especiais = {
     raridade: raridades.rainha,
     pontoEspecial: "",
     energia: 0,
-    poder: "visible",
+    poder: true,
     efeito: "",
     familia: "",
     descricao: "Prazer, <br> sou a Ténica",
     emoji: "👑",
     emojiEsp: "",
     retrato: "url('pics/tenica.webp')",
-    isCritico: {
-      criticoEnergia2: "hidden",
-    },
-
+    
+      
+  },
     speaker: {
-      cartaId: "especial-speaker",
+      cartaId: "carta-speaker",
       nome: "SPEAKER",
       raridade: raridades.cavaleiro,
       pontoEspecial: "",
       energia: 0,
-      poder: "visible",
+      poder: true,
       efeito: "",
       familia: "",
       descricao: "MONARK BAN!",
       emoji: "&#9889;",
       emojiEsp: "",
       retrato: "url('pics/SPEAKER.webp')",
-      isCritico: {
-        criticoEnergia2: "hidden",
-      },
-
+      
+    },
       maisCartas: {
-        cartaId: "especial-clicks",
+        cartaId: "especial-click",
         nome: "+ CARTAS +",
         raridade: raridades.campones,
         pontoEspecial: 0,
         energia: 0,
-        poder: "visible",
+        poder: true,
         efeito: "",
         familia: "",
         descricao: "BONUS?",
@@ -119,7 +116,7 @@ export let especiais = {
         raridade: raridades.campones,
         pontoEspecial: 0,
         energia: 0,
-        poder: "visible",
+        poder: true,
         efeito: "",
         familia: "",
         descricao: "BONUS?",
@@ -134,7 +131,7 @@ export let especiais = {
         raridade: raridades.campones,
         pontoEspecial: "",
         energia: 0,
-        poder: "hidden",
+        poder: false,
         efeito: "",
         familia: "minecraft",
         descricao: "VOU MORRER!!!",
@@ -149,7 +146,7 @@ export let especiais = {
         raridade: raridades.sangueAzul,
         pontoEspecial: "",
         energia: 0,
-        poder: "hidden",
+        poder: true,
         efeito: "",
         familia: "",
         descricao: '',
@@ -159,12 +156,12 @@ export let especiais = {
         retrato2: "",
       },
       premioMonark: {
-        cartaId: "premioMonark",
+        cartaId: "premiomonark",
         nome: "PREMIO MONARK",
         raridade: raridades.sangueAzul,
         pontoEspecial: "",
         energia: 0,
-        poder: "hidden",
+        poder: true,
         efeito: "",
         familia: "",
         descricao: "",
@@ -179,7 +176,7 @@ export let especiais = {
         raridade: raridades.cavaleiro,
         pontoEspecial: "",
         energia: 0,
-        poder: "hidden",
+        poder: true,
         efeito: "",
         familia: "",
         descricao: "",
@@ -188,9 +185,10 @@ export let especiais = {
         retrato: "",
         retrato2: "",
       },
-    },
-  },
-};
+    }
+
+console.log('ESPECAIISMAISCARTAS', especiais.menosCartas);
+console.log('RARIDADES', raridades.campones);
 
 export let especial = "";
 let raridade = "";
@@ -202,50 +200,66 @@ export function escolherEspecial() {
   //   seedString = teste;
   // }
 
-  seedString = seedObj
+  seedString = seedObj._seedString
 
-console.log(seedString);
+console.log('**SEEDSTRING NO MODULO**',seedString);
 
   seed2 = seedString[2];
+  console.log('seed2: ', seed2);
   seed3 = seedString[3];
 
     // seedObj
-    console.log('seedObj: ', seedObj);
+    // console.log('seedObj: ', seedObj);
 
 
-  DEBUG && console.log("seedString no especial", seedString);
-  DEBUG && console.log("seedString no especial", seedString[14]);
-  DEBUG && console.log("seed3: ", seed3);
+  // DEBUG && console.log("seedString no especial", seedString);
+  // DEBUG && console.log("seedString no especial", seedString[14]);
+  // DEBUG && console.log("seed3: ", seed3);
 
   if (!raridades.semRaridade.rng()) {
+    //RAINHA
     if (raridades.rainha.rng()) {
       raridade = raridades.rainha;
-
       if (true) {
         tenicaEnergia();
         especial = especiais.tenica;
       }
+
+
+      //SANGUE AZUL
     } else if (raridades.sangueAzul.rng()) {
       raridade = raridades.sangueAzul;
+      
+      if (seedString[12]> 4) {
+        especial = especiais.premioMonark
+      } else {
+        especial = especiais.blackaoCamarada
 
-      if (true) {
-        abelhaEnergia();
-        especial = especiais.abelha;
       }
+
+      // CAVALEIROS
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
       DEBUG && console.log(raridades.cavaleiro.rng());
-
-      if (true) {
-        speakerEnergia();
+      if (seedString[12]> 2) {
         especial = especiais.speaker;
+      } else {
+        especial = especiais.spy;
       }
+
+
+
     } else {
       raridade = raridades.campones;
 
-      if (true) {
-        bonusCartasPE();
-        especial = especiais.bonusCartasMais;
+      //CAMPONESES
+      if (seedString[12] < 4) {
+        especial = especiais.menosCartas;
+      } else if (seedString[12] > 5){
+        especial = especiais.maisCartas;
+      } else {
+        especial = especiais.abelha;
+
       }
     }
   } else {
@@ -253,7 +267,7 @@ console.log(seedString);
     especial = especiais.notSpecial;
   }
 
-  DEBUG && console.log("TAMANHO SEED", seedObj._seedLength);
+  // DEBUG && console.log("TAMANHO SEED", seedObj._seedLength);
   DEBUG && console.log("raridade modulo", raridade);
   DEBUG && console.log("especial modulo", especial);
 }
@@ -263,10 +277,10 @@ function constrEspecial() {}
 // ENERGIAS
 
 export function tenicaEnergia() {
-  return (especiais.tenica.energia = parseInt(seed2) + parseInt(seed3) + 475);
+  return (especiais.tenica.energia = parseInt(seed2) + parseInt(seed3) + 375);
 }
 
-function speakerEnergia() {
+export function pontoSpeaker() {
   if (parseInt(seed2) <= 3) {
     return (especiais.speaker.energia = 1);
   }
@@ -292,29 +306,29 @@ export function abelhaEnergia() {
 
 // PONTOS ESPECIAIS
 
-function bonusCartasPE() {
-  if (parseInt(seed2) == 0) {
-    return (especiais.bonusCartasMais.pontoEspecial = parseInt(seed3) + 90);
-  }
-  if (parseInt(seed2) == 1) {
-    return (especiais.bonusCartasMais.pontoEspecial = parseInt(seed3) + 77);
-  }
-  if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return (especiais.bonusCartasMais.pontoEspecial = parseInt(seed3) + 52);
-  }
-  if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return (especiais.bonusCartasMais.pontoEspecial = parseInt(seed3) + 35);
-  }
-  if (parseInt(seed2) == 7) {
-    return (especiais.bonusCartasMais.pontoEspecial = parseInt(seed3) + 23);
-  }
-  if (parseInt(seed2) == 8) {
-    return (especiais.bonusCartasMais.pontoEspecial = parseInt(seed3) + 15);
-  }
-  if (parseInt(seed2) == 9) {
-    return (especiais.bonusCartasMais.pontoEspecial = parseInt(seed3) + 4);
-  }
-}
+// function bonusCartasPE() {
+//   if (parseInt(seed2) == 0) {
+//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 90);
+//   }
+//   if (parseInt(seed2) == 1) {
+//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 77);
+//   }
+//   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
+//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 52);
+//   }
+//   if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
+//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 35);
+//   }
+//   if (parseInt(seed2) == 7) {
+//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 23);
+//   }
+//   if (parseInt(seed2) == 8) {
+//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 15);
+//   }
+//   if (parseInt(seed2) == 9) {
+//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 4);
+//   }
+// }
 
 
 export function abelhaDecrease() {
@@ -372,6 +386,6 @@ export let efeitoPremioMonark = {
   efeito: premioMonark(),
 };
 
-export function pontoSpeaker() {
-  return Math.floor(Math.random() * 4 + 1);
-}
+// export function pontoSpeaker() {
+//   return Math.floor(Math.random() * 4 + 1);
+// }
