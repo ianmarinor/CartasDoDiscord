@@ -64,3 +64,4 @@ export let efeitoPremioMonark = {
 export function pontoSpeaker(){
   return Math.floor(Math.random()*4+1)
 }
+
