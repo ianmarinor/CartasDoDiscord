@@ -63,8 +63,8 @@ main {
   
 
 
-  background-color: #210835;
-  background: linear-gradient(180deg, rgb(27, 2, 29) 0%, rgb(10, 2, 8) 46%);
+  background-color: #083535;
+  background: linear-gradient(180deg, rgb(7, 84, 102) 0%, rgb(13, 19, 65) 46%);
   grid-template-columns: 0.3fr 0.2fr 1fr;
   grid-template-rows: 0.1fr 1fr 0.5fr;
 }

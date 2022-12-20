@@ -11,13 +11,14 @@ import {
   efeitoPremioMonark,
   pontoSpeaker,
   escolherEspecial,
-  especial
+  especial,
+  bonusCartasPE
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Pre-Alpha 1.5.1b";
+let versao = "Alpha 1.5";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -270,34 +271,42 @@ let pontoPoderSemCargo = () =>
   Math.floor((parseInt(seedString[5]) + parseInt(seedString[0])) / 2 + 1); // 1 a 10
 
 let pontoPoderPeople = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[12])) / 2 + 21); // 11 a 20
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[12])) / 2 + 11); // 11 a 20
 
 let pontoPoderGentleman = () =>
-  Math.floor((parseInt(seedString[12]) + parseInt(seedString[0])) / 2 + 41); // 21 a 30
+  Math.floor((parseInt(seedString[12]) + parseInt(seedString[0])) / 2 + 21); // 21 a 30
 
 let pontoPoderMonark = () => Math.floor(Math.random() * 2);
 
 let pontoPoderNobre = () =>
-  Math.floor((parseInt(seedString[11]) + parseInt(seedString[10])) / 2 + 61); // 31 a 40
+  Math.floor((parseInt(seedString[11]) + parseInt(seedString[10])) / 2 + 31); // 31 a 40
 
 let pontoPoderLord = () =>
-  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 81); // 41 a 50
+  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 51); // 51 a 60
 
 let pontoPoderMinistro = () =>
-  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 111); //51 a 60
+  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 61); //61 a 70
 
 let pontoPoderPrimeMinister = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 192); // 70 a 80
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 81); // 81 a 90
 
 let pontoPoderRNGPremioMarino = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 240); // 121 a 130
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 121); // 121 a 130
 
 let pontoVarianteValor = 0;
+// function pontoVariante() {
+//   if (variante != "") {
+//     return (pontoVarianteValor = Math.floor(
+//       parseInt(seedString[0]) + parseInt(seedString[1]) + 25 * 5 // 125 a 215
+//     ));
+//   } else {
+//     return (pontoVarianteValor = 0);
+//   }
+// }
 function pontoVariante() {
   if (variante != "") {
-    return (pontoVarianteValor = Math.floor(
-      parseInt(seedString[0]) + parseInt(seedString[1]) + 25 * 5 // 125 a 215
-    ));
+    return pontoVarianteValor = 100
+      
   } else {
     return (pontoVarianteValor = 0);
   }
@@ -403,9 +412,9 @@ let getSeed = document.getElementById("getseed");
 let seedCheckInput = document.getElementById("seedcheckinput");
 let seedCheckBtn = document.getElementById("seedcheckbtn");
 let seedCheckPage = document.getElementById("seedcheck");
-
+let novaCarta
 function colocarInfoNoWrap() {
-  const novaCarta = fabricaDeCarta(
+   novaCarta = fabricaDeCarta(
     integrante,
     cidade,
     cargo,
@@ -570,6 +579,8 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     // ataqueP.innerHTML =
     cartaP.style.border = "2px solid #18d742";
     Math.trunc(parseInt(ataqueP.innerHTML) / 3 + 1) + "&#9889;";
+
+    //TENICA-----------------------------------
   } else if (novaCarta._especial.cartaId === "especial-tenica") {
     cargoP.style.fontFamily = "Cormorant Upright";
     retratoP.style.backgroundImage = "url('pics/tenica.webp')";
@@ -587,6 +598,8 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
 
     ataqueP.style.fontSize = "1.5em";
     especialP.style.visibility = "hidden";
+
+    // MAIS CARTAS ------------------------
   } else if (novaCarta._especial.cartaId === "especial-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
@@ -603,9 +616,11 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     ataqueP.style.color = "black";
     // ataqueP.style.fontSize = "1.5em";
     // actionP.style.visibility = 'visible'
-    ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
+    ataqueP.textContent = bonusCartasPE() + especial.emoji;
     seedP.style.color = "black";
     seedP.style.fontSize = "0.6em";
+
+    // MENOS CARTAS --------------------
   } else if (novaCarta._especial.cartaId === "-click") {
     retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
     retratoP.style.backgroundSize = "cover";
@@ -622,9 +637,11 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     ataqueP.style.color = "black";
     // ataqueP.style.fontSize = "1.5em";
     // actionP.style.visibility = 'visible'
-    ataqueP.textContent = parseInt(ataqueP.textContent) * 2 + 2 + "🔄";
+    ataqueP.textContent = bonusCartasPE() + especial.emoji;
     seedP.style.color = "black";
     seedP.style.fontSize = "0.6em";
+
+    //ABELHA ------------------
   } else if (novaCarta._especial.cartaId === "abelha") {
     retratoP.style.backgroundImage = "url('pics/retratoAbelha.gif')";
     retratoP.style.backgroundSize = "";
@@ -646,6 +663,8 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     // seedP.style.color = "yellow";
     cartaP.style.color = "#ffd11a";
     cartaP.style.border = "3px solid #4d1a00";
+
+    //CAMARADA BLACKAO -------------------------
   } else if (novaCarta._especial.cartaId === "comunista") {
     retratoP.style.backgroundImage =
       "url('https://i.kym-cdn.com/photos/images/original/000/960/056/27b.gif')";
@@ -677,6 +696,8 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     cartaP.style.color = "#990000";
     cartaP.style.border = "2px solid red";
     seedP.style.color = "black";
+
+    //PREMIO MONARK ----------------
   } else if (novaCarta._especial.cartaId === "premiomonark") {
     retratoP.style.backgroundImage = 'url("/pics/retratoPremioMonark.gif")';
     retratoP.style.backgroundSize = "100% 100%";
@@ -710,6 +731,9 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     // cartaP.style.color = "#fff";
     cartaP.style.border = "2px solid black";
     seedP.style.color = "#343436";
+
+
+    // SPY ------------
   } else if (novaCarta._especial.cartaId == "spy") {
     cartaP.style.color = "#cf6a32";
     retratoP.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
@@ -1042,9 +1066,8 @@ document.addEventListener("keydown", (event) => {
 function moverToInvMao(){
   
   let botaoMao = mao.children[0].children[3].children[2];
-  cartasComBotao =
-    mao.children[0].children[0].children[3].textContent != "" &&
-    mao.children[0].id != "abelha";
+  let cartasComBotao = objCartaMao._especial.poder == true
+  
 
   if (cartasComBotao) {
     botaoMao.style.visibility = "visible";
@@ -1067,7 +1090,10 @@ function moverToInvMao(){
   }
   criarBtn()
 }
+let objCartaMao
 function moverToCartaMao(){
+  objCartaMao = novaCarta
+  console.log('objCartaMao: ', objCartaMao);
   mao.replaceChild(copyCard, mao.children[0]);
   tudo()
 }

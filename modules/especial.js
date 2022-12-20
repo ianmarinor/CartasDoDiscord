@@ -5,10 +5,6 @@ let seedString = seedObj._seedString;
 let seed2 = seedString[2];
 let seed3 = seedString[3];
 
-let objCarta1;
-let objCarta2;
-let objCarta3;
-let objCarta4;
 
 export let cartaNaoEspecial;
 
@@ -21,29 +17,29 @@ export let raridades = {
   rainha: {
     nome: "rainha",
     rng: () =>
-      seedString[8] == 1 &&
-      seedString[9] == 6 &&
-      seedString[10] == 1 &&
-      seedString[11] == 0,
+      seedString[8] == 0 &&
+      seedString[9] == 0 &&
+      seedString[10] == 0 &&
+      seedString[11] == 0 
+      
   },
 
   sangueAzul: {
     nome: "sangue azul",
-    rng: () => seedString[9] == 1,
-    // seedString[10] == 0
+    rng: () => seedString[9] == 1 &&
+    seedString[10] == 1
   },
 
   cavaleiro: {
     nome: "cavaleiro",
-    rng: () => seedString[9] >= 7,
-    // rng: ()=>seedString[14] == 1
+    rng: () => seedString[9] == 2,
+    
   },
 
   campones: {
     nome: "campones",
-    rng: () => seedString[11] > 2,
-    // && seedString[8] >=3
-    // rng: ()=>seedString[8] == 3 && seedString[9] == 3 && seedString[14] == 1
+    rng: () => seedString[11] > 4,
+    
   },
 };
 
@@ -105,8 +101,8 @@ export let especiais = {
         efeito: "",
         familia: "",
         descricao: "BONUS?",
-        emojiEsp: "🃏",
-        emoji: "",
+        emojiEsp: "",
+        emoji: "🃏",
         retrato: "url('pics/clickretrato.webp')",
       },
 
@@ -120,8 +116,8 @@ export let especiais = {
         efeito: "",
         familia: "",
         descricao: "BONUS?",
-        emojiEsp: "🃏",
-        emoji: "",
+        emojiEsp: "",
+        emoji: "🃏",
         retrato: "url('pics/clickretrato.webp')",
       },
 
@@ -202,14 +198,12 @@ export function escolherEspecial() {
 
   seedString = seedObj._seedString
 
-console.log('**SEEDSTRING NO MODULO**',seedString);
+ console.log('**SEEDSTRING NO MODULO**',seedString);
 
   seed2 = seedString[2];
-  console.log('seed2: ', seed2);
   seed3 = seedString[3];
 
-    // seedObj
-    // console.log('seedObj: ', seedObj);
+  
 
 
   // DEBUG && console.log("seedString no especial", seedString);
@@ -306,29 +300,29 @@ export function abelhaEnergia() {
 
 // PONTOS ESPECIAIS
 
-// function bonusCartasPE() {
-//   if (parseInt(seed2) == 0) {
-//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 90);
-//   }
-//   if (parseInt(seed2) == 1) {
-//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 77);
-//   }
-//   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 52);
-//   }
-//   if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 35);
-//   }
-//   if (parseInt(seed2) == 7) {
-//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 23);
-//   }
-//   if (parseInt(seed2) == 8) {
-//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 15);
-//   }
-//   if (parseInt(seed2) == 9) {
-//     return (especiais.maisCartas.pontoEspecial = parseInt(seed3) + 4);
-//   }
-// }
+export function bonusCartasPE() {
+  if (parseInt(seed2) == 0) {
+    return parseInt(seed3) + 90
+  }
+  if (parseInt(seed2) == 1) {
+    return parseInt(seed3) + 77
+  }
+  if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
+    return parseInt(seed3) + 52;
+  }
+  if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
+    return parseInt(seed3) + 35;
+  }
+  if (parseInt(seed2) == 7) {
+    return parseInt(seed3) + 23;
+  }
+  if (parseInt(seed2) == 8) {
+    return parseInt(seed3) + 15;
+  }
+  if (parseInt(seed2) == 9) {
+    return parseInt(seed3) + 4;
+  }
+}
 
 
 export function abelhaDecrease() {
