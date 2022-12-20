@@ -1061,6 +1061,8 @@ function moverCartaMonark() {
  
 
   if (seedObj._isPutByPlayer || efeitos.css.nome == 'estoico') {
+
+
     false;
     console.log('****NAO VOU MOVER TEM TURU****')
   } else if (totalClicks > 0) {
@@ -1887,26 +1889,33 @@ function criarBtn() {
         let butao = estoico.children[3].children[2];
         let poderEstoico = estoico.children[3].children[1];
 
-        if (efeitos.status == false) {
-          
-          efeitoEstoico.rodadas = parseInt(poderEstoico.textContent)
-          efeitos = efeitoEstoico;
-          
-          butao.style.visibility = 'hidden'
-          
+        for(let i=0;i<4;i++){
 
-          if (estoico == inv.children[0]) {
-            inv.replaceChild(empty1, estoico);
-          } else if (estoico == inv.children[1]) {
-            inv.replaceChild(empty2, estoico);
-          } else if (estoico == inv.children[2]) {
-            inv.replaceChild(empty3, estoico);
-          } else if (estoico == inv.children[3]) {
-            inv.replaceChild(empty4, estoico);
+          if (efeitos.status == false && inv.children[i].children[0].children[2].textContent == ' de Itapira' && inv.children[i].id!='carta-monark') {
+          
+            efeitoEstoico.rodadas = parseInt(poderEstoico.textContent)
+            efeitos = efeitoEstoico;
+            
+            butao.style.visibility = 'hidden'
+            
+  
+            if (estoico == inv.children[0]) {
+              inv.replaceChild(empty1, estoico);
+            } else if (estoico == inv.children[1]) {
+              inv.replaceChild(empty2, estoico);
+            } else if (estoico == inv.children[2]) {
+              inv.replaceChild(empty3, estoico);
+            } else if (estoico == inv.children[3]) {
+              inv.replaceChild(empty4, estoico);
+            }
+  
+            tudo();
+            break;
           }
 
-          tudo();
+
         }
+        
       }
 
 
