@@ -9,10 +9,12 @@ import {
   comunistaPE,
   frasesComuna,
   efeitoPremioMonark,
+  efeitoEstoico,
   pontoSpeaker,
   escolherEspecial,
   especial,
   bonusCartasPE,
+  estoicoPE,
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
@@ -433,6 +435,7 @@ function colocarInfoNoWrap() {
   nomeP.removeAttribute("style");
   nomeP.className = "nome";
   varianteP.removeAttribute("style");
+  seloP.removeAttribute("style");
   varianteP.innerHTML = "";
 
   cidadeP.removeAttribute("style");
@@ -685,30 +688,29 @@ function colocarInfoNoWrap() {
     cartaP.style.border = "2px solid rgba(207, 106, 50, 1)";
     // cartaP.className = "invis";
   } else if (novaCarta._especial.cartaId == "estoico") {
-    cartaP.style.color = "#cf6a32";
+
+    // cartaP.style.color = "#cf6a32";
     retratoP.style.backgroundImage = especial.retrato;
     retratoP.style.backgroundSize = "100% 100%";
     retratoP.style.backgroundColor = "unset";
     nomeP.innerHTML = especial.nome;
-    nomeP.style.fontFamily = "estoico";
-    nomeP.style.fontSize = "290%";
+    // nomeP.style.fontFamily = "estoico";
+    nomeP.style.fontSize = "250%";
+    nomeP.style.fontFamily = 'estoico'
+    ataqueP.style.fontFamily = 'estoico'
+  
+    retratoP.style.border = "2px solid #cde2e0";
 
-    cidadeP.innerHTML = "";
-    cidadeP.style = "";
-    especialP.style.visibility = "hidden";
-    cargoP.style.fontSize = "";
-    cargoP.style.fontFamily = "";
-    cargoP.style.fontWeight = "";
-    cargoP.innerHTML = "";
-    retratoP.style.border = "2px solid #cf6a32";
-
-    ataqueP.style.fontSize = "140%";
-    ataqueP.textContent = "1⚡";
+    ataqueP.style.fontSize = "170%";
+    ataqueP.textContent = ''
+   
     novoAtaquerP.style.fontSize = "140%";
-    novoAtaquerP.style.visibility = "hidden";
-    novoAtaquerP.textContent = "⌚";
-
-    ataqueP.style.fontFamily = "tf2";
+    novoAtaquerP.style.fontFamily = "estoico";
+    novoAtaquerP.textContent = estoicoPE() + especial.emoji;;
+    seloP.style.right = '30px'
+    // novoAtaquerP.style.visibility = "hidden";
+    // novoAtaquerP.textContent = "⌚";
+    // ataqueP.style.fontFamily = "tf2";
   }
 
   //CARTAS VARIANTES
@@ -809,6 +811,10 @@ let efeitoVazio = { status: false, css: { nome: "", imagem: "" }, rodadas: 0 };
 function colocarEfeito() {
   efeito1P.style.backgroundImage = efeitos.css.imagem;
   efeito1P.innerHTML = efeitos.rodadas;
+  
+
+    
+  
 
   if (efeitos.rodadas > 0) {
     efeitos.rodadas--;
@@ -817,8 +823,8 @@ function colocarEfeito() {
   }
 
   aplicarEfeitos();
-}
 
+}
 function colocarInput() {
   input = getSeed.value;
   // input = 13315754569994
@@ -1052,8 +1058,11 @@ function moverCartaMonark() {
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
 
-  if (seedObj._isPutByPlayer) {
+ 
+
+  if (seedObj._isPutByPlayer || efeitos.css.nome == 'estoico') {
     false;
+    console.log('****NAO VOU MOVER TEM TURU****')
   } else if (totalClicks > 0) {
     if (copyCard.id === "carta-monark") {
       // SE CARTA FOR SPY
@@ -1578,7 +1587,8 @@ function criarBtn() {
           cartaParaMover.id != "especial-tenica" &&
           cartaParaMover.id != "spy" &&
           cartaParaMover.id != "premiomonark" &&
-          cartaParaMover.id != "comunista";
+          cartaParaMover.id != "comunista" &&
+          cartaParaMover.id != "estoico" 
 
         let poderCartaPack = cartaParaMover.children[3].children[0];
         let poderNovoCartaPack = cartaParaMover.children[3].children[1];
@@ -1670,7 +1680,8 @@ function criarBtn() {
                 inv.children[j].id != "comunista" &&
                 inv.children[j].children[0].children[0].textContent !=
                   "NEFESTO" &&
-                inv.children[j].id != "carta-monark"
+                inv.children[j].id != "carta-monark" &&
+                inv.children[j].id != "estoico"
               ) {
                 comunista.children[3].children[2].style.visibility = "hidden";
                 let pontoComunista = comunista.children[3].children[1];
@@ -1861,12 +1872,48 @@ function criarBtn() {
           }
         }
       }
+
+      // PODER ESTOICO
+      if (
+        inv.children[i].id == "estoico" &&
+        inv.children[i].children[0].id != "foi"
+      ) {
+        inv.children[i].children[3].children[2].addEventListener("click", estoico);
+        inv.children[i].children[0].id = "foi";
+      }
+      
+      function estoico(e){
+        let estoico = e.target.offsetParent;
+        let butao = estoico.children[3].children[2];
+        let poderEstoico = estoico.children[3].children[1];
+
+        if (efeitos.status == false) {
+          
+          efeitoEstoico.rodadas = parseInt(poderEstoico.textContent)
+          efeitos = efeitoEstoico;
+          
+          butao.style.visibility = 'hidden'
+          
+
+          if (estoico == inv.children[0]) {
+            inv.replaceChild(empty1, estoico);
+          } else if (estoico == inv.children[1]) {
+            inv.replaceChild(empty2, estoico);
+          } else if (estoico == inv.children[2]) {
+            inv.replaceChild(empty3, estoico);
+          } else if (estoico == inv.children[3]) {
+            inv.replaceChild(empty4, estoico);
+          }
+
+          tudo();
+        }
+      }
+
+
     }
   }
 }
 
-let temTuru;
-let ab = 3;
 
 function abelha() {
   for (let i = 0; i < 4; i++) {
@@ -2064,6 +2111,7 @@ function tudo() {
 
     abelha();
     colocarEfeito();
+    console.log('efeitos',efeitos);
     // aplicarEfeitos();
     verificarCartaParaMover();
     blockInv();

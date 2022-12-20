@@ -401,6 +401,39 @@ export let efeitoPremioMonark = {
   efeito: premioMonark(),
 };
 
+export let efeitoEstoico ={
+  status: true,
+  css: { nome: "estoico", imagem: "url('/pics/estoicoRetrato.jpg')" },
+  rodadas: 0,
+  efeito: estoico(),
+}
+function estoico() {}
+
+
+export function estoicoPE(){
+  if (parseInt(seed2) == 0) {
+    return parseInt(seed3) + 7
+  }
+  if (parseInt(seed2) == 1) {
+    return parseInt(seed3) + 6
+  }
+  if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
+    return parseInt(seed3) + 5;
+  }
+  if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
+    return parseInt(seed3) + 4;
+  }
+  if (parseInt(seed2) == 7) {
+    return parseInt(seed3) + 3;
+  }
+  if (parseInt(seed2) == 8) {
+    return parseInt(seed3) + 2;
+  }
+  if (parseInt(seed2) == 9) {
+    return parseInt(seed3) + 1;
+  }
+}
+
 // export function pontoSpeaker() {
 //   return Math.floor(Math.random() * 4 + 1);
 // }

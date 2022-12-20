@@ -139,6 +139,12 @@ li {
   align-items: flex-end;
   /* margin: 10px; */
 }
+#efeito1{
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  font-weight: bold;
+}
 #mao {
   grid-area: mao;
   border: 15px double rgba(30, 178, 183, 0.226);
@@ -434,7 +440,7 @@ li {
   position: relative;
   border: 3px solid #545251;
   font-weight: 900;
-  color: #ffd11a;
+  color: #ffec1a;
   
   
 }
@@ -506,12 +512,14 @@ li {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border-radius: 15px;
+  border-radius: 55px;
   position: relative;
   font-weight: 900;
   background-repeat: no-repeat;
   background-size: COVER;
-  font-family: tf2;
+  font-family: estoico;
+  color: #cde2e0;
+  border: 5px solid #cde2e0;
 }
 #spy {
   /* background:  url(/pics/fundoPremioMonark.gif); */

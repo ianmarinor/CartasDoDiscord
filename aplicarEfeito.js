@@ -12,10 +12,7 @@ let placarRodadas = document.querySelector(".arena");
 // let placarRodadasNumero = parseInt(placarRodadas.textContent)
 
 let nome1 = inv1.firstChild;
-let empty1 = inv.children[0];
-let empty2 = inv.children[1];
-let empty3 = inv.children[2];
-let empty4 = inv.children[3];
+
 
 // let efeitos = {}
 
@@ -25,6 +22,8 @@ export function aplicarEfeitos() {
   if (efeitos.status == true) {
     if (efeitos.css.nome == "premioMonark") {
       premioMonark();
+    } else if (efeitos.css.nome == "estoico"){
+      estoico()
     }
   }
 }
@@ -81,4 +80,8 @@ function premioMonark() {
       setTimeout(eliminarMonark, 10000)
     }
   }
+}
+
+function estoico(){
+  console.log('EFEITO ESTOICO ATIVADO');
 }
