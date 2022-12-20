@@ -12,6 +12,10 @@ let placarRodadas = document.querySelector(".arena");
 // let placarRodadasNumero = parseInt(placarRodadas.textContent)
 
 let nome1 = inv1.firstChild;
+let empty1 = inv.children[0];
+let empty2 = inv.children[1];
+let empty3 = inv.children[2];
+let empty4 = inv.children[3];
 
 // let efeitos = {}
 
@@ -51,8 +55,21 @@ function premioMonark() {
 
 
       function eliminarMonark(){
-        monark.remove()
-        inv.appendChild(document.createElement("div")).id = "empty"
+
+        if(monark == inv.children[0]){
+          inv.replaceChild(empty1,monark);
+
+        } else if(monark == inv.children[1]){
+          inv.replaceChild(empty2,monark);
+
+        } else if(monark == inv.children[2]){
+          inv.replaceChild(empty3,monark);
+
+        } else if(monark == inv.children[3]){
+          inv.replaceChild(empty4,monark);
+        }
+
+        
         somaPontos()
       }
 
