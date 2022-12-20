@@ -17,7 +17,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5";
+let versao = "Pre-Alpha 1.5.1b";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -1009,6 +1009,7 @@ function moverThree() {
   }
 }
 
+
 function moverFour() {
   if (inv.children[3].id == "empty4" 
   // && seedDiferente && taTudoOkg
@@ -1031,27 +1032,25 @@ document.addEventListener("keydown", (event) => {
     
     if (!getSeedChecked()) {
       moverToCartaMao()
+      
     }
   }
 });
 
-function moverToCartaMao(){
-  mao.replaceChild(copyCard, mao.children[0]);
-  tudo()
-}
 
-
-document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyH") {
-    
-    
-    if (!getSeedChecked()) {
-      moverToInvMao()
-    }
-  }
-});
 
 function moverToInvMao(){
+  
+  let botaoMao = mao.children[0].children[3].children[2];
+  cartasComBotao =
+    mao.children[0].children[0].children[3].textContent != "" &&
+    mao.children[0].id != "abelha";
+
+  if (cartasComBotao) {
+    botaoMao.style.visibility = "visible";
+  }
+
+
   if(inv.children[0].id == 'empty1'){
     inv.replaceChild(mao.children[0],inv.children[0]);
     mao.appendChild(cartaMao)
@@ -1066,8 +1065,27 @@ function moverToInvMao(){
     inv.replaceChild(mao.children[0],inv.children[3]);
     mao.appendChild(cartaMao)
   }
-  
+  criarBtn()
 }
+function moverToCartaMao(){
+  mao.replaceChild(copyCard, mao.children[0]);
+  tudo()
+}
+
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyH") {
+    
+    
+    
+    if (!getSeedChecked()) {
+      
+      moverToInvMao()
+      
+    }
+  }
+});
+
 
 function moverCarta() {
   blockInv();
@@ -2279,9 +2297,10 @@ button.addEventListener("click", tudo);
 button.addEventListener("click", blockInv);
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyW") {
+    if (!getSeedChecked()) {
     tudo();
     blockInv();
-  }
+  }}
 });
 
 // BIND MOVER COM TECLA
@@ -2291,8 +2310,9 @@ cartaParaMover.addEventListener("click", moverCarta);
 document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
+      if (!getSeedChecked()) {
       moverCarta();
-    }
+    }}
   }
 });
 
@@ -2319,47 +2339,16 @@ function deckPronto() {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {
-    // setTimeout(deckPronto, 600)
+    if (!getSeedChecked()) {
     deckPronto();
-  }
+  }}
 });
 
-// começa so com 2 cartas
-
-// document.addEventListener("keydown", (event)=>{
-
-//   if(event.code == 'KeyQ'){
-
-//     resetarDeck()
-//     moverCarta()
-//     moverCarta()
-
-//     arenaP.innerHTML = totalClicks + " CARTAS";
-
-// }
-// })
-
-// q adiciona todas as cartas
-
-// document.addEventListener("keydown", (event)=>{
-
-//   if(event.code == 'KeyQ'){
-
-//     resetarDeck()
-//     moverCarta()
-//     moverCarta()
-//     moverCarta()
-//     moverCarta()
-//     getSeed.className = 'customOff'
-//     blockInv()
-
-// }
-// })
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyR") {
-    resetarDeck();
-  }
+    if (!getSeedChecked()) {resetarDeck();
+  }}
 });
 
 document.getElementById("G").addEventListener("click", deckPronto);
@@ -2368,6 +2357,8 @@ window.onload = (event) => {
   tudo();
   resetarDeck();
 };
+window.onload = (event) => {
+  tudo();
+  resetarDeck();
+};
 
-// setInterval(()=>arenaP.innerHTML = totalClicks + " CARTAS", 100)
-11;
