@@ -20,7 +20,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5.1";
+let versao = "Alpha 1.5.2";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
