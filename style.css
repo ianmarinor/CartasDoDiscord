@@ -68,9 +68,6 @@ main {
   justify-items: center;
   flex-direction: column;
 
-  
-
-
   background-color: #083535;
   background: linear-gradient(180deg, rgb(7, 84, 102) 0%, rgb(13, 19, 65) 46%);
   grid-template-columns: 0.3fr 0.2fr 1fr;
@@ -96,13 +93,13 @@ li {
   font-size: 1.25em;
   color: rgb(213, 187, 238);
 }
-#descr{
-    grid-area: descr;
-    height: 60px;
-    font-size: 0.6em;
-    align-self: center;
-    text-align: center;
-    color: wheat;
+#descr {
+  grid-area: descr;
+  height: 60px;
+  font-size: 0.6em;
+  align-self: center;
+  text-align: center;
+  color: wheat;
 }
 #wrapAndInv {
   display: flex;
@@ -139,7 +136,7 @@ li {
   align-items: flex-end;
   /* margin: 10px; */
 }
-#efeito1{
+#efeito1 {
   display: flex;
   justify-content: start;
   align-items: flex-start;
@@ -166,7 +163,6 @@ li {
   /* border: 2px solid rgb(0, 0, 0, 0.4); */
   font-weight: 900;
   color: rgb(0, 0, 0, 0.4);
-  
 }
 
 .arena {
@@ -344,7 +340,6 @@ li {
   border-radius: 15px;
   position: relative;
   color: #b0b0b6;
-  
 }
 #carta-speaker {
   background-image: url(pics/cartaspeaker.webp);
@@ -380,7 +375,6 @@ li {
   color: rgb(0, 0, 0);
   background-repeat: no-repeat;
   background-size: 300px 300px;
-
 }
 #especial-click {
   /* font-family: 'verdana'; */
@@ -428,7 +422,6 @@ li {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(pics/fundoAbelha.gif);
 
-  
   font-family: minecraft;
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
@@ -441,8 +434,6 @@ li {
   border: 3px solid #545251;
   font-weight: 900;
   color: #ffec1a;
-  
-  
 }
 #comunista {
   background: linear-gradient(rgba(125, 105, 4, 0.6), rgba(187, 151, 5, 0.6)),
@@ -497,9 +488,7 @@ li {
 }
 
 #estoico {
-  
-  background-image: 
-  linear-gradient(
+  background-image: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0.8),
       rgba(12, 3, 30, 0.8)
@@ -632,7 +621,6 @@ li {
   border: 1px black solid;
 }
 #getseed {
-  
   grid-area: btn;
   align-self: end;
 }
@@ -645,7 +633,7 @@ li {
   border-radius: 5px;
 }
 
-.especial{
+.especial {
   visibility: hidden;
 }
 /* ---------------------------------------*/
@@ -684,19 +672,24 @@ p {
   text-align: center;
   border-radius: 10px;
 }
-#empty1, #empty2,#empty3, #empty4 {
-
-display: block;
-
+#empty1,
+#empty2,
+#empty3,
+#empty4 {
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+  background-color: #090909;
+  display: block;
 }
-#action1, #action2,#action3,#action4{
-
+#action1,
+#action2,
+#action3,
+#action4 {
   visibility: hidden;
-
 }
 
 #G {
-  
   grid-area: btn;
   width: 80%;
   height: 13%;
@@ -835,12 +828,11 @@ display: block;
     align-self: start;
     justify-self: center;
   }
-  #mao > div{
+  #mao > div {
     height: var(--cartaHeigthCelular);
     width: var(--cartaWidthCelular);
     border-radius: 8px;
     /* border: 2px solid rgb(0, 0, 0, 0.3); */
-    
   }
   #cartaMao {
     height: var(--cartaHeigthCelular);
@@ -849,7 +841,6 @@ display: block;
     color: rgb(0, 0, 0, 0.3);
     align-self: center;
   }
-  
 
   #texto {
     font-size: 50%;
@@ -914,13 +905,6 @@ display: block;
     border-radius: 8px;
   }
 
-  #empty1,
-  #empty,
-  #empty3,
-  #empty4 {
-    height: 100%;
-    width: 100%;
-  }
   .nameAndCidadeWrapper {
     /* display: none; */
     width: 100%;
@@ -931,15 +915,12 @@ display: block;
     justify-content: center;
   }
 
-  
-
-  .nome{
+  .nome {
     font-size: 100% !important;
     font-weight: 500;
-  
   }
 
-  .variante{
+  .variante {
     width: 100%;
 
     text-align: center;
@@ -955,8 +936,7 @@ display: block;
     font-size: 10px;
     text-align: center;
   }
-  
-  
+
   .retrato {
     display: block;
     width: 78%;
@@ -970,7 +950,7 @@ display: block;
 
     border: #020101 2px solid;
   }
-  .seed{
+  .seed {
     font-size: 8px;
   }
 
@@ -983,18 +963,16 @@ display: block;
     align-self: center;
   }
 
-.poder{
-  margin: 0;
-}
-.action{
-  font-size: 5px;
-}
-
+  .poder {
+    margin: 0;
+  }
+  .action {
+    font-size: 5px;
+  }
 
   .ataque {
-     font-size: 9px !important; 
+    font-size: 9px !important;
     width: 25px;
-    
   }
   .novoAtaque {
     font-size: 11px !important;
@@ -1049,12 +1027,15 @@ display: block;
     border-radius: 8px;
     align-self: center;
   }
-  
-  #estoico {
-  border-radius: 50px !important;
-  
+  #inv >[id^='empty'] {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
   }
 
+  #estoico {
+    border-radius: 50px !important;
+  }
 
   #G {
     border: none;
@@ -1068,7 +1049,6 @@ display: block;
     background-color: #599ac6;
     font-size: 10px;
   }
-  
 
   @media (orientation: portrait) {
     main {
