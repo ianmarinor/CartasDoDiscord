@@ -17,7 +17,7 @@
 
   --cartaWidthCelular: 110px;
   --cartaHeigthCelular: 185px;
-  --cargoCelularFontSize: 15px;
+  --cargoCelularFontSize: 9px;
 }
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@700&display=swap");
 @font-face {
@@ -832,16 +832,24 @@ display: block;
   }
 
   #mao {
-    margin-top: 17px;
     align-self: start;
     justify-self: center;
+  }
+  #mao > div{
+    height: var(--cartaHeigthCelular);
+    width: var(--cartaWidthCelular);
+    border-radius: 8px;
+    /* border: 2px solid rgb(0, 0, 0, 0.3); */
+    
   }
   #cartaMao {
     height: var(--cartaHeigthCelular);
     width: var(--cartaWidthCelular);
-    border: 2px solid rgb(0, 0, 0, 0.3);
+    /* border: 2px solid rgb(0, 0, 0, 0.3); */
     color: rgb(0, 0, 0, 0.3);
+    align-self: center;
   }
+  
 
   #texto {
     font-size: 50%;
@@ -916,19 +924,6 @@ display: block;
   .nameAndCidadeWrapper {
     /* display: none; */
     width: 100%;
-    height: 36%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .nameAndCidadeWrapper1,
-  .nameAndCidadeWrapper2,
-  .nameAndCidadeWrapper3,
-  .nameAndCidadeWrapper4 {
-    /* display: none; */
-    width: 100%;
     height: 25%;
     display: flex;
     flex-direction: column;
@@ -936,20 +931,15 @@ display: block;
     justify-content: center;
   }
 
-  .nome,
-  #nome1,
-  #nome2,
-  #nome3,
-  #nome4 {
-    font-size: 100%;
+  
+
+  .nome{
+    font-size: 100% !important;
     font-weight: 500;
+  
   }
 
-  .variante,
-  #variante1,
-  #variante2,
-  #variante3,
-  #variante4 {
+  .variante{
     width: 100%;
 
     text-align: center;
@@ -962,21 +952,15 @@ display: block;
   .cidade {
     /* background-color: #6637be; */
     justify-self: center;
-    font-size: 80%;
+    font-size: 10px;
+    text-align: center;
   }
-  .cidade1,
-  .cidade2,
-  .cidade3,
-  .cidade4 {
-    /* background-color: #6637be; */
-    /* align-self: flex-end; */
-    font-size: 80%;
-  }
-
+  
+  
   .retrato {
     display: block;
     width: 78%;
-    height: 50%;
+    height: 40%;
 
     background-color: #4b4747;
     border-radius: 5px;
@@ -993,26 +977,27 @@ display: block;
   .cargo {
     /* display: none; */
     height: 8%;
-    font-size: var(--cargoCelularFontSize);
+    font-size: 11px !important;
     transform: rotate(-10deg);
     margin-top: 10%;
     align-self: center;
   }
-  #cargo1,
-  #cargo2,
-  #cargo3,
-  #cargo4 {
-    /* background-color: #37be49; */
-    height: 10%;
-    font-size: 100%;
-    transform: rotate(-10deg);
-    margin: 10%;
-  }
+
+.poder{
+  margin: 0;
+}
+.action{
+  font-size: 5px;
+}
+
+
   .ataque {
-    font-size: 12px;
+     font-size: 9px !important; 
+    width: 25px;
+    
   }
   .novoAtaque {
-    font-size: 0.8em;
+    font-size: 11px !important;
   }
 
   #wrapAndInv {
@@ -1064,12 +1049,12 @@ display: block;
     border-radius: 8px;
     align-self: center;
   }
-
-  #inv > div > * .cidade {
-    /* display: none; */
-    text-align: center;
-    font-size: 75%;
+  
+  #estoico {
+  border-radius: 50px !important;
+  
   }
+
 
   #G {
     border: none;
@@ -1083,6 +1068,7 @@ display: block;
     background-color: #599ac6;
     font-size: 10px;
   }
+  
 
   @media (orientation: portrait) {
     main {
