@@ -487,7 +487,9 @@ function colocarInfoNoWrap() {
 
   if (novaCarta._especial.nome != "") {
     cartaP.id = novaCarta._especial.cartaId;
-  } else {
+    cidadeP.innerHTML = ''
+    cargoP.innerHTML = ''
+    } else {
     cartaP.id = novaCarta._cargo;
   }
 console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
@@ -743,6 +745,36 @@ console.log('***NOVA CARTA ESPECIAL**',novaCarta._especial);
     nomeP.style.fontFamily = "tf2";
     nomeP.style.fontSize = "2.3em";
     nomeP.style.color = "white";
+    cidadeP.innerHTML = "";
+    cidadeP.style = "";
+    especialP.style.visibility = "hidden";
+    cargoP.style.fontSize = "";
+    cargoP.style.fontFamily = "";
+    cargoP.style.fontWeight = "";
+    cargoP.innerHTML = "";
+    retratoP.style.border = "2px solid #cf6a32";
+
+    ataqueP.style.fontSize = "1.4em";
+    ataqueP.textContent = "1⚡";
+    novoAtaquerP.style.fontSize = "1.4em";
+    novoAtaquerP.style.visibility = "hidden";
+    novoAtaquerP.textContent = "⌚";
+    ataqueP.style.fontWeight = "bold";
+    ataqueP.style.fontFamily = "tf2";
+    // ataqueP.textContent = 0;
+    // ataqueP.style.visibility = "hidden";
+    // novoAtaquerP.textContent = "";
+    cartaP.style.border = "2px solid rgba(207, 106, 50, 1)";
+    // cartaP.className = "invis";
+  } else if (novaCarta._especial.cartaId == "estoico") {
+    cartaP.style.color = "#cf6a32";
+    retratoP.style.backgroundImage = especial.retrato
+    retratoP.style.backgroundSize = "100% 100%";
+    retratoP.style.backgroundColor = "unset";
+    nomeP.innerHTML = especial.nome
+    nomeP.style.fontFamily = "estoico";
+    nomeP.style.fontSize = "290%";
+    
     cidadeP.innerHTML = "";
     cidadeP.style = "";
     especialP.style.visibility = "hidden";
@@ -2167,7 +2199,7 @@ function tudo() {
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     start()
-    limparInput();
+    // limparInput();
     escolherIntegrante();
     escolherCidade();
     escolherCargo();

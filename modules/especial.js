@@ -181,6 +181,20 @@ export let especiais = {
         retrato: "",
         retrato2: "",
       },
+      estoicoTuru: {
+        cartaId: "estoico",
+        nome: "ESTOICO <br> TURU",
+        raridade: raridades.campones,
+        pontoEspecial: 0,
+        energia: 0,
+        poder: true,
+        efeito: "",
+        familia: "",
+        descricao: "",
+        emojiEsp: "",
+        emoji: "🛡️",
+        retrato: "url('pics/estoicoRetrato.jpg')",
+      },
     }
 
 console.log('ESPECAIISMAISCARTAS', especiais.menosCartas);
@@ -251,9 +265,10 @@ export function escolherEspecial() {
         especial = especiais.menosCartas;
       } else if (seedString[12] > 5){
         especial = especiais.maisCartas;
-      } else {
+      } else if (seedString[12] == 4){
         especial = especiais.abelha;
-
+      } else {
+        especial = especiais.estoicoTuru;
       }
     }
   } else {
