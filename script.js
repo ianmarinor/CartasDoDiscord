@@ -727,7 +727,7 @@ function colocarInfoNoWrap() {
 
     cargoP.style.transform = "rotate(0deg);";
     cargoP.style.fontFamily = "overwatch";
-    cargoP.innerHTML = "100%";
+    cargoP.innerHTML = "0%";
     cargoP.style.fontSize = "250%";
 
     retratoP.style.border = "2px solid #15b871";
@@ -738,7 +738,7 @@ function colocarInfoNoWrap() {
     novoAtaquerP.style.fontSize = "120%";
     novoAtaquerP.style.fontFamily = "overwatch";
     novoAtaquerP.textContent = lucioPE() + especial.emoji;
-    seloP.style.right = "30px";
+    
   }
 
   //CARTAS VARIANTES
@@ -2106,6 +2106,7 @@ function criarBtn() {
             ];
             totalClicks += 25;
             arenaP.innerHTML = totalClicks + " RODADAS";
+            ulti.textContent = '0%'
             for (let k = 0; k < 4; k++) {
               if (
                 !cartasQueOLucioNaoGosta.some((el) =>
