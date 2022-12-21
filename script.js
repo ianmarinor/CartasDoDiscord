@@ -22,7 +22,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "VERSAO LUCIO 1.0";
+let versao = "Alpha 1.5.4";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
