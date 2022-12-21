@@ -22,7 +22,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5.3";
+let versao = "VERSAO LUCIO";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -218,12 +218,10 @@ function escolherCargo() {
     return (cargo = "carta-nobre");
   } else if (seedString[13] == 9) {
     return (cargo = "carta-gentleman");
-
-  } else if (
-    seedString[14] >= 4 ) 
-    // seedString[13] == 7 && 
-    // seedString[4] != 4
-    {
+  } else if (seedString[14] >= 4 
+    &&
+    seedString[13] == 7 &&
+    seedString[4] != 4){
     return (cargo = "carta-monark");
   } else if (seedString[14] >= 8) {
     return (cargo = "carta-people");
@@ -445,6 +443,7 @@ function colocarInfoNoWrap() {
   seloP.removeAttribute("style");
   varianteP.innerHTML = "";
   cartaParaMover.classList.remove("voar");
+  cartaParaMover.classList.remove("monark");
 
   cidadeP.removeAttribute("style");
   retratoP.removeAttribute("style");
@@ -731,7 +730,7 @@ function colocarInfoNoWrap() {
 
     cargoP.style.transform = "rotate(0deg);";
     cargoP.style.fontFamily = "overwatch";
-    cargoP.innerHTML = "100%";
+    cargoP.innerHTML = "0%";
     cargoP.style.fontSize = "250%";
 
     retratoP.style.border = "2px solid #15b871";
@@ -1012,7 +1011,7 @@ function moverThree() {
     somaPontos();
 
     tudo();
-    3;
+    
   }
 }
 
@@ -1119,31 +1118,57 @@ function moverCartaMonark() {
     setTimeout(tudo, 250);
   } else if (totalClicks > 0) {
     if (copyCard.id === "carta-monark") {
-      
-
       for (let i = 0; i < 4; i++) {
         let energia = inv.children[i].children[3].children[0];
         let energiaNova = inv.children[i].children[3].children[1];
 
+
+        let danoMonarkEscudo = 1.3
+        let minimoEscudo = 75
+
+        // SE NO DECK TEM ESCUDO
         if (
           energiaNova.textContent.includes("🐸") ||
           energia.textContent.includes("🐸")
         ) {
+          // SE O ESCUDO ESTA NA ENERGIA NOVA ------
           if (energiaNova.textContent.includes("🐸")) {
-            energiaNova.textContent =
-              Math.floor(parseInt(energiaNova.textContent) / 1.5) + "🐸";
-            console.log("***TIREI NOVO****");
+            // SE O ESCUDO é MAIO QUE 10
+            if (parseInt(energiaNova.textContent) > minimoEscudo) {
+              // DIMINUA DE 1.5
+              energiaNova.textContent =
+                Math.floor(parseInt(energiaNova.textContent) / danoMonarkEscudo) + "🐸";
+              console.log("***TIREI NOVO****");
+              copyCard.classList.add("monark");
+              //SE FOR MENOR QUE 10, MUDE O EMOJI - menos se for lucio
+            } else if (inv.children[i].id != 'lucio'){
+              energiaNova.textContent =
+                parseInt(energiaNova.textContent) + "⚡";
+                copyCard.classList.add("monark");
+            }
+
+            // SE O ESCUDO ESTA NA ENERGIA VELHA -------------
           } else if (energia.textContent.includes("🐸")) {
-            energia.textContent =
-              Math.floor(parseInt(energia.textContent) / 1.5) + "🐸";
-            console.log("*****TIREI VELHA************");
+            // SE O ESCUDO é MAIO QUE 10
+            if (parseInt(energia.textContent) > minimoEscudo) {
+              // DIMINUA DE 1.5
+              energia.textContent =
+                Math.floor(parseInt(energia.textContent) / danoMonarkEscudo) + "🐸";
+                copyCard.classList.add("monark");
+              console.log("***TIREI NOVO****");
+              //SE FOR MENOR QUE 10, MUDE O EMOJI
+            } else {
+              energia.textContent = parseInt(energia.textContent) + "⚡";
+              copyCard.classList.add("monark");
+            }
           }
 
           //SE TIVER SPY
         } else if (
           inv.children[i].id == "spy" &&
           inv.children[i].className != "invisi" &&
-          !energia.textContent.includes("🐸")
+          (!energia.textContent.includes("🐸") ||
+            !energiaNova.textContent.includes("🐸"))
         ) {
           inv.replaceChild(copyCard, inv.children[i]);
           console.log("*****MATEI SPY********");
@@ -1152,9 +1177,10 @@ function moverCartaMonark() {
           //SE DECK VAZIO
         } else if (
           (inv.children[i].id == "empty1" ||
-          inv.children[i].id == "empty2" ||
-          inv.children[i].id == "empty3" ||
-          inv.children[i].id == "empty4") && copyCard.id === "carta-monark"
+            inv.children[i].id == "empty2" ||
+            inv.children[i].id == "empty3" ||
+            inv.children[i].id == "empty4") &&
+          copyCard.id == "carta-monark"
         ) {
           inv.replaceChild(copyCard, inv.children[i]);
           console.log("*****DECK VAZIO********");
@@ -1162,17 +1188,20 @@ function moverCartaMonark() {
 
           // SUBSTITUI O HOMONIMO
         } else if (
-
-        cartaParaMover.children[0].children[0].textContent == inv.children[i].children[0].children[0].textContent && inv.children[i].id != 'carta-monark'
-         &&
+          cartaParaMover.children[0].children[0].textContent ==
+            inv.children[i].children[0].children[0].textContent &&
+          inv.children[i].id != "carta-monark" &&
           (!energia.textContent.includes("🐸") ||
-          !energiaNova.textContent.includes("🐸"))
+            !energiaNova.textContent.includes("🐸"))
         ) {
           console.log("*****MESMO NOME********");
-          console.log('cpm', cartaParaMover.children[0].children[0].textContent);
+          console.log(
+            "cpm",
+            cartaParaMover.children[0].children[0].textContent
+          );
           console.log(inv.children[i].children[0].children[0].textContent);
-          console.log(!energia.textContent.includes("🐸") );
-          console.log(!energiaNova.textContent.includes("🐸") );
+          console.log(!energia.textContent.includes("🐸"));
+          console.log(!energiaNova.textContent.includes("🐸"));
           inv.replaceChild(copyCard, inv.children[i]);
 
           break;
@@ -1180,8 +1209,9 @@ function moverCartaMonark() {
       }
 
       somaPontos();
-
-      tudo();
+      copyCard.classList.add("monark");
+      tudo()
+      
     }
   }
 }
@@ -1962,7 +1992,7 @@ function criarBtn() {
           }
         }
       }
-
+      // PODER LUCIO
       if (
         inv.children[i].id == "lucio" &&
         inv.children[i].children[0].id != "foi"
@@ -1973,6 +2003,7 @@ function criarBtn() {
         );
         inv.children[i].children[0].id = "foi";
       }
+
       function lucio(e) {
         let lucio = e.target.offsetParent;
         let lucioEnergia = lucio.children[3].children[0];
@@ -2047,16 +2078,16 @@ function criarBtn() {
               "comunista",
               "abelha",
               "estoico",
-              "lucio",
             ];
-
+            totalClicks += 25;
+            arenaP.innerHTML = totalClicks + " RODADAS";
             for (let k = 0; k < 4; k++) {
               if (
                 !cartasQueOLucioNaoGosta.some((el) =>
                   inv.children[k].id.includes(el)
                 )
               ) {
-                lucioEnergia.textContent = barreira.textContent;
+                // lucioEnergia.textContent = barreira.textContent;
                 let energia = inv.children[k].children[3].children[0];
                 let energiaNova = inv.children[k].children[3].children[1];
                 butao.style.visibility = "hidden";
@@ -2076,9 +2107,10 @@ function criarBtn() {
                     "🐸";
                   console.log("barreira: ", barreira);
                 }
-                barreira.textContent = "";
               }
+              somaPontos();
             }
+            barreira.textContent = "";
 
             break;
           }
@@ -2286,7 +2318,7 @@ function tudo() {
     // lucio();
     abelha();
     colocarEfeito();
-    
+
     // aplicarEfeitos();
     verificarCartaParaMover();
     blockInv();
@@ -2449,7 +2481,7 @@ btnReset.addEventListener("click", resetarDeck);
 // DECK COMECA COM 4 CARTAS
 let teclaDeckPronto = "KeyG";
 function deckPronto() {
-  tudo();
+  tudo()  
   resetarDeck();
   moverCarta();
   moverCarta();
