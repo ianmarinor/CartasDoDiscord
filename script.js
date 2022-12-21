@@ -2302,7 +2302,7 @@ function tudo() {
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     start();
-    // limparInput();
+    limparInput();
     escolherIntegrante();
     escolherCidade();
     escolherCargo();
