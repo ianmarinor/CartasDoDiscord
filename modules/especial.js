@@ -467,25 +467,25 @@ export function estoicoPE(){
 
 export function lucioPE(){
   if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 287
+    return parseInt(seed3) + 489
   }
   if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 215
+    return parseInt(seed3) + 430
   }
   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return parseInt(seed3) + 118;
+    return parseInt(seed3) + 236;
   }
   if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return parseInt(seed3) + 117;
+    return parseInt(seed3) + 234;
   }
   if (parseInt(seed2) == 7) {
-    return parseInt(seed3) + 91;
+    return parseInt(seed3) + 180;
   }
   if (parseInt(seed2) == 8) {
-    return parseInt(seed3) + 84;
+    return parseInt(seed3) + 160;
   }
   if (parseInt(seed2) == 9) {
-    return parseInt(seed3) + 75;
+    return parseInt(seed3) + 150;
   }
 }
 
