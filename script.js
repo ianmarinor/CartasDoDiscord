@@ -962,8 +962,8 @@ function verificarCartaParaMover() {
 function moverOne() {
   if (
     inv.children[0].id == "empty1"
-    // && seedDiferente
-    // && taTudoOk
+    && seedDiferente
+    && taTudoOk
   ) {
     // if (true) {
     if (cartasComBotao) {
@@ -983,7 +983,7 @@ function moverOne() {
 function moverTwo() {
   if (
     inv.children[1].id == "empty2"
-    // && seedDiferente && taTudoOk
+    && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -998,7 +998,7 @@ function moverTwo() {
 function moverThree() {
   if (
     inv.children[2].id == "empty3"
-    // && seedDiferente && taTudoOk
+    && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1014,7 +1014,7 @@ function moverThree() {
 function moverFour() {
   if (
     inv.children[3].id == "empty4"
-    // && seedDiferente && taTudoOk
+    && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
