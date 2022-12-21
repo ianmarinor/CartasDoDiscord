@@ -1,4 +1,4 @@
-let DEBUG = true;
+let DEBUG = false;
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 
@@ -213,8 +213,8 @@ export let especiais = {
 
     }
 
-console.log('ESPECAIISMAISCARTAS', especiais.menosCartas);
-console.log('RARIDADES', raridades.campones);
+DEBUG && console.log('ESPECAIISMAISCARTAS', especiais.menosCartas);
+DEBUG && console.log('RARIDADES', raridades.campones);
 
 export let especial = "";
 let raridade = "";
@@ -228,7 +228,7 @@ export function escolherEspecial() {
 
   seedString = seedObj._seedString
 
- console.log('**SEEDSTRING NO MODULO**',seedString);
+  DEBUG && console.log('**SEEDSTRING NO MODULO**',seedString);
 
   seed2 = seedString[2];
   seed3 = seedString[3];
@@ -427,7 +427,18 @@ export let efeitoEstoico ={
   rodadas: 0,
   efeito: estoico(),
 }
+
+export let lucioEfeito ={
+  status: true,
+  css: { nome: "lucio", imagem: "url('/pics/retratoLucio.jpg')" },
+  rodadas: 0,
+  efeito: lucio(),
+}
+
+
+
 function estoico() {}
+function lucio() {}
 
 
 export function estoicoPE(){
@@ -451,6 +462,30 @@ export function estoicoPE(){
   }
   if (parseInt(seed2) == 9) {
     return parseInt(seed3) + 1;
+  }
+}
+
+export function lucioPE(){
+  if (parseInt(seed2) == 0) {
+    return parseInt(seed3) + 287
+  }
+  if (parseInt(seed2) == 1) {
+    return parseInt(seed3) + 215
+  }
+  if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
+    return parseInt(seed3) + 118;
+  }
+  if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
+    return parseInt(seed3) + 117;
+  }
+  if (parseInt(seed2) == 7) {
+    return parseInt(seed3) + 91;
+  }
+  if (parseInt(seed2) == 8) {
+    return parseInt(seed3) + 84;
+  }
+  if (parseInt(seed2) == 9) {
+    return parseInt(seed3) + 75;
   }
 }
 
