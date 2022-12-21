@@ -24,7 +24,8 @@ export function aplicarEfeitos() {
       premioMonark();
     } else if (efeitos.css.nome == "estoico"){
       estoico()
-    }
+    } else if (efeitos.css.nome == "lucio")
+    lucio()
   }
 }
 
@@ -82,6 +83,7 @@ function premioMonark() {
   }
 }
 
-function estoico(){
-  console.log('EFEITO ESTOICO ATIVADO');
+function lucio(){
+  
+  
 }

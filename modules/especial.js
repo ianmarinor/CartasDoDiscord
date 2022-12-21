@@ -1,4 +1,4 @@
-let DEBUG = true;
+let DEBUG = false;
 import { seedObj } from "./seedFabricator.js";
 let seedString = seedObj._seedString;
 
@@ -195,10 +195,26 @@ export let especiais = {
         emoji: "🛡️",
         retrato: "url('pics/estoicoRetrato.jpg')",
       },
+      lucio: {
+        cartaId: "lucio",
+        nome: "LÚCIO",
+        raridade: raridades.sangueAzul,
+        pontoEspecial: 0,
+        energia: 0,
+        poder: true,
+        efeito: "",
+        familia: "overwatch",
+        descricao: "",
+        emojiEsp: "",
+        emoji: "🐸",
+        retrato: "url('pics/retratoLucio.jpg')",
+      },
+
+
     }
 
-console.log('ESPECAIISMAISCARTAS', especiais.menosCartas);
-console.log('RARIDADES', raridades.campones);
+DEBUG && console.log('ESPECAIISMAISCARTAS', especiais.menosCartas);
+DEBUG && console.log('RARIDADES', raridades.campones);
 
 export let especial = "";
 let raridade = "";
@@ -212,7 +228,7 @@ export function escolherEspecial() {
 
   seedString = seedObj._seedString
 
- console.log('**SEEDSTRING NO MODULO**',seedString);
+  DEBUG && console.log('**SEEDSTRING NO MODULO**',seedString);
 
   seed2 = seedString[2];
   seed3 = seedString[3];
@@ -238,8 +254,12 @@ export function escolherEspecial() {
     } else if (raridades.sangueAzul.rng()) {
       raridade = raridades.sangueAzul;
       
-      if (seedString[12]> 4) {
+      if (seedString[12]< 3) {
+          especial = especiais.lucio
+
+      } else if (seedString[12]< 6){
         especial = especiais.premioMonark
+
       } else {
         especial = especiais.blackaoCamarada
 
@@ -407,7 +427,18 @@ export let efeitoEstoico ={
   rodadas: 0,
   efeito: estoico(),
 }
+
+export let lucioEfeito ={
+  status: true,
+  css: { nome: "lucio", imagem: "url('/pics/retratoLucio.jpg')" },
+  rodadas: 0,
+  efeito: lucio(),
+}
+
+
+
 function estoico() {}
+function lucio() {}
 
 
 export function estoicoPE(){
@@ -431,6 +462,30 @@ export function estoicoPE(){
   }
   if (parseInt(seed2) == 9) {
     return parseInt(seed3) + 1;
+  }
+}
+
+export function lucioPE(){
+  if (parseInt(seed2) == 0) {
+    return parseInt(seed3) + 489
+  }
+  if (parseInt(seed2) == 1) {
+    return parseInt(seed3) + 430
+  }
+  if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
+    return parseInt(seed3) + 236;
+  }
+  if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
+    return parseInt(seed3) + 234;
+  }
+  if (parseInt(seed2) == 7) {
+    return parseInt(seed3) + 180;
+  }
+  if (parseInt(seed2) == 8) {
+    return parseInt(seed3) + 160;
+  }
+  if (parseInt(seed2) == 9) {
+    return parseInt(seed3) + 150;
   }
 }
 
