@@ -2380,7 +2380,7 @@ export function somaPontos() {
 
   let cartasSemEnergia = ["comunista", "especial-click", "-click", "estoico"];
   //cartas que tem Energia, mas o segundo ataque nao é energia
-  let cartasComEnergiaSemCritico = ["spy"];
+  let cartasComEnergiaSemCritico = ["spy", "lucio"];
 
   // inv 0
   if (
