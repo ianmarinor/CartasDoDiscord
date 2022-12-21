@@ -22,7 +22,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5.4";
+let versao = "Alpha 1.5.5";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -2103,6 +2103,7 @@ function criarBtn() {
               "comunista",
               "abelha",
               "estoico",
+              "spy"
             ];
             totalClicks += 25;
             arenaP.innerHTML = totalClicks + " RODADAS";

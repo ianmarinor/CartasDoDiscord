@@ -337,22 +337,22 @@ export function abelhaEnergia() {
 
 export function bonusCartasPE() {
   if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 90
+    return parseInt(seed3) + 35
   }
   if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 77
+    return parseInt(seed3) + 27
   }
   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return parseInt(seed3) + 52;
+    return parseInt(seed3) + 21;
   }
   if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return parseInt(seed3) + 35;
+    return parseInt(seed3) + 17;
   }
   if (parseInt(seed2) == 7) {
-    return parseInt(seed3) + 23;
+    return parseInt(seed3) + 16;
   }
   if (parseInt(seed2) == 8) {
-    return parseInt(seed3) + 15;
+    return parseInt(seed3) + 8;
   }
   if (parseInt(seed2) == 9) {
     return parseInt(seed3) + 4;
