@@ -400,7 +400,7 @@ let frasesComunista = [
   "TENHO NOJO DE BURGUES",
 ];
 
-let valoresComunista = [333, 666, 999];
+let valoresComunista = [111,222,333];
 export function comunistaPE() {
   if (seed2 <6){
     return valoresComunista[0]
@@ -443,34 +443,34 @@ function lucio() {}
 
 export function estoicoPE(){
   if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 2
+    return parseInt(seed3) + 5
   }
   if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 2
+    return parseInt(seed3) + 5
   }
   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 4;
   }
   if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 4;
   }
   if (parseInt(seed2) == 7) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 3;
   }
   if (parseInt(seed2) == 8) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 3;
   }
   if (parseInt(seed2) == 9) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 3;
   }
 }
 
 export function lucioPE(){
   if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 489
+    return parseInt(seed3) + 251
   }
   if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 430
+    return parseInt(seed3) + 249
   }
   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
     return parseInt(seed3) + 236;

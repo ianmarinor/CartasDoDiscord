@@ -22,7 +22,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5.9";
+let versao = "Alpha 1.5.10";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -1858,7 +1858,7 @@ function criarBtn() {
                         parseInt(
                           inv.children[j].children[3].children[1].textContent
                         ) +
-                          parseInt(pontoEstatal) * 1.5
+                          parseInt(pontoEstatal) * 1.2
                       ) + "☭";
                     inv.children[j].children[3].children[1].style.color = "red";
                     inv.children[j].children[2].innerHTML = frasesComuna();
@@ -1886,7 +1886,7 @@ function criarBtn() {
                       parseInt(
                         inv.children[j].children[3].children[0].textContent
                       ) +
-                      parseInt(pontoEstatal) * 2 +
+                      parseInt(pontoEstatal) * 1.2 +
                       "☭";
                     inv.children[j].children[3].children[0].style.color = "red";
                     inv.children[j].children[2].innerHTML = frasesComuna();
@@ -1989,7 +1989,7 @@ function criarBtn() {
             //roubar o poder
             if (poderNovoSemcargo.textContent != "") {
               poderSpy.textContent =
-                parseInt(poderNovoSemcargo.textContent) * 5 +
+                parseInt(poderNovoSemcargo.textContent) * 3 +
                 parseInt(poderSpy.textContent) +
                 "⚡";
 
