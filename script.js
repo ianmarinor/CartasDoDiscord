@@ -1206,7 +1206,7 @@ function moverCartaMonark() {
       function hasBarrier() {
         for (let j = 0; j < 4; j++) {
           let danoMonarkEscudo = 1.3;
-          let minimoEscudo = 75;
+          let minimoEscudo = 65;
           let energia = inv.children[j].children[3].children[0];
           let energiaNova = inv.children[j].children[3].children[1];
           if (
