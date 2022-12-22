@@ -97,6 +97,8 @@ li {
   font-size: 1.25em;
   color: rgb(213, 187, 238);
 }
+
+
 #descr {
   grid-area: descr;
   height: 60px;
@@ -171,11 +173,14 @@ li {
 
 .arena {
   margin: 0.1em;
-  font-size: 2em;
+  font-size: 150%;
   color: wheat;
   text-align: center;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   /* font-family: blackao; */
+  grid-area: pack;
+  align-self: end;
+  margin-bottom: 30px;
 }
 .placar {
   text-align: center;
@@ -192,17 +197,18 @@ li {
 /* ************************* */
 
 #carta {
-  display: none;
+  /* display: none; */
   /* background-color: #ffffff; */
-  height: 70%;
-  width: 57%;
+  height: var(--tamanhoCartaHeight);
+  width: var(--tamanhoCartaWidth);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  /* border: 1px solid #020101; */
+  /* border: 2px solid #262626; */
+  /* background-color: #55515957; */
 }
 #carta-premiomarino {
   background-image: url(pics/wrapPremioMarino.webp);
@@ -688,6 +694,8 @@ p {
 
 #pack {
   grid-area: pack;
+  border: 5px double rgba(0, 0, 0, 0.578);
+  background-color: #2a29295e;
 }
 
 #inv {
@@ -897,6 +905,16 @@ p {
       "text mao2 btn";
     grid-template-columns: 1fr 1fr 2fr;
     grid-template-rows: 3.3fr 1fr;
+  }
+
+  .arena {
+    /* margin: 0.1em; */
+    font-size: 20px;
+    align-self: start;
+    justify-self: center;
+    grid-area: btn;
+    /* margin-top: 5px; */
+    /* margin-right: 5px; */
   }
 
   #mao {

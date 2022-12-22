@@ -22,7 +22,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5.6";
+let versao = "Alpha 1.5.7";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -383,7 +383,23 @@ function fabricaDeCarta(
 
 ////D O M
 let packP = document.getElementById("pack")
-// const semCarta = packP.children[0]
+const semCarta = '<div id="carta">' +
+'<div class="nameAndCidadeWrapper">' +
+  '<p class="nome"></p>' +
+  '<div class="variante"></div>' +
+  '<p class="cidade"></p>' +
+  '<div class="especial"></div>' +
+'</div>' +
+'<div class="retrato"></div>' +
+'<p class="cargo"></p>' +
+'<div class="poder">' +
+  '<p class="ataque"></p>' +
+  '<p class="novoAtaque"></p>' +
+  '<button class="action">PRESS</button>' +
+'</div>'
+
+
+
 let button = document.getElementById("btn");
 let h1 = document.getElementsByTagName("h1")[0];
 let mover = document.getElementById("mover");
@@ -411,7 +427,8 @@ let especialP = document.querySelector(".especial");
 let seedP = document.querySelector(".seed");
 let seloP = document.getElementById("selo");
 //carta
-let cartaP = document.getElementById("carta");
+// let cartaP = document.getElementById("carta");
+let cartaP = packP.children[0];
 // input da seed cliente
 // let coloqueSuaSeed = document.getElementById('seed').value
 //wrap
@@ -424,6 +441,7 @@ let seedCheckBtn = document.getElementById("seedcheckbtn");
 let seedCheckPage = document.getElementById("seedcheck");
 let novaCarta;
 function colocarInfoNoWrap() {
+  console.log(cartaP);
   novaCarta = fabricaDeCarta(
     integrante,
     cidade,
@@ -492,7 +510,7 @@ function colocarInfoNoWrap() {
     seloP.innerHTML = "🎲";
   }
 
-  arenaP.innerHTML = totalClicks + " RODADAS";
+  arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " ⚡";
 
   if (novaCarta._especial.nome != "") {
@@ -825,6 +843,7 @@ function colocarInfoNoWrap() {
     } else {
     }
   }
+  packP.replaceChild(cartaP, packP.children[0])
   console.log("**NOVA CARTA**", novaCarta);
 
   // console.log('especial', especial.cartaId);
@@ -948,7 +967,7 @@ function verificarCartaParaMover() {
     (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
     seedObj._isMarket;
 
-  taTudoOk = PodeMover && !isJaMovi() && totalClicks > 0;
+  taTudoOk = PodeMover && !isJaMovi() && copyCard.id != 'semCarta' ;
   cartasComBotao = especial.poder == true;
   botao = copyCard.children[3].children[2];
   seed1 = inv.children[0].children[4];
@@ -972,11 +991,21 @@ function moverOne() {
       botao.style.visibility = "visible";
     }
 
+    
+
+    if(totalClicks <=0 && packP.children[0].id != 'carta'){
+
+      inv.replaceChild(copyCard, inv.children[0]);
+      packP.innerHTML = semCarta
+      console.log(packP.children[0]);
+
+    } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[0]);
     criarBtn();
     somaPontos();
 
     tudo();
+    }
 
     //
   }
@@ -990,11 +1019,19 @@ function moverTwo() {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
     }
+    if(totalClicks <=0 && packP.children[0].id != 'carta'){
+
+      inv.replaceChild(copyCard, inv.children[1]);
+      packP.innerHTML = semCarta
+      console.log(packP.children[0]);
+
+    } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[1]);
     criarBtn();
     somaPontos();
 
     tudo();
+    }
   }
 }
 function moverThree() {
@@ -1005,11 +1042,19 @@ function moverThree() {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
     }
+    if(totalClicks <=0 && packP.children[0].id != 'carta'){
+
+      inv.replaceChild(copyCard, inv.children[2]);
+      packP.innerHTML = semCarta
+      console.log(packP.children[0]);
+
+    } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[2]);
     criarBtn();
     somaPontos();
 
     tudo();
+    }
   }
 }
 
@@ -1021,11 +1066,22 @@ function moverFour() {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
     }
+
+
+    if(totalClicks <=0 && packP.children[0].id != 'carta'){
+
+      inv.replaceChild(copyCard, inv.children[3]);
+      packP.innerHTML = semCarta
+      console.log(packP.children[0]);
+
+    } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[3]);
     criarBtn();
     somaPontos();
 
     tudo();
+    }
+    
   }
 }
 
@@ -1603,8 +1659,8 @@ function criarBtn() {
 
         varianteClique.children[3].children[2].style.visibility = "hidden";
         button.style.backgroundColor = "";
-        button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-        arenaP.innerHTML = totalClicks + " RODADAS";
+        button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
+        arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 
         clicks()
 
@@ -1634,8 +1690,8 @@ function criarBtn() {
           varianteMenosClique.children[3].children[2].style.visibility =
             "hidden";
           button.style.backgroundColor = "";
-          button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-          arenaP.innerHTML = totalClicks + " RODADAS";
+          button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
+          arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 
           if (varianteMenosClique == inv.children[0]) {
             inv.replaceChild(empty1, varianteMenosClique);
@@ -1668,7 +1724,7 @@ function criarBtn() {
           } else {
             totalClicks = 50;
           }
-          arenaP.innerHTML = totalClicks + " RODADAS";
+          arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
         }
 
         let varianteTenica = e.target.offsetParent;
@@ -2111,7 +2167,7 @@ function criarBtn() {
               "spy"
             ];
             totalClicks += 25;
-            arenaP.innerHTML = totalClicks + " RODADAS";
+            arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
             ulti.textContent = '0%'
             for (let k = 0; k < 4; k++) {
               if (
@@ -2330,10 +2386,21 @@ function limparInput() {
 
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
+
+  
+
   if (totalClicks > 0) {
-    packP.children[0].style.visibility = 'visible'
-    button.style.backgroundColor = "";
-    button.innerHTML = "&#127381; NOVA CARTA &#127381;";
+
+    if(totalClicks == 1 ){
+      showVersion();
+      button.style.backgroundColor = "red";
+      button.innerHTML = "0 CARTAS";
+    } else {
+      button.style.backgroundColor = "";
+    button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
+    }
+
+    
     start();
     limparInput();
     escolherIntegrante();
@@ -2359,12 +2426,10 @@ function tudo() {
     // if(totalClicks == 1){button.style.backgroundColor = "red"
     // button.innerHTML = "0 CARTAS";}
   } else {
-    showVersion();
-    button.style.backgroundColor = "red";
-    button.innerHTML = "0 CARTAS";
+    false
     
-
-      // packP.children[0].style.visibility = 'hidden'
+    // console.log(packP.children[0].style.visibility);
+    //   packP.children[0].style.visibility = 'hidden'
       
   }
 }
@@ -2376,7 +2441,7 @@ function clicks() {
     rodadas++;
     aumentou = true;
 
-    arenaP.innerHTML = totalClicks + " RODADAS";
+    arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
   } else {
     aumentou = false;
   }
@@ -2528,7 +2593,9 @@ function deckPronto() {
   totalClicks += 5;
   rodadas = 0;
 
-  arenaP.innerHTML = totalClicks + " CARTAS";
+  arenaP.innerHTML = 'VOCÊ TEM ' +  totalClicks + ' CARTAS'
+ 
+  
 }
 
 document.addEventListener("keydown", (event) => {
@@ -2563,10 +2630,10 @@ window.onload = (event) => {
   tudo();
   resetarDeck();
 };
-window.onload = (event) => {
-  tudo();
-  resetarDeck();
-};
+// window.onload = (event) => {
+//   tudo();
+//   resetarDeck();
+// };
 
 document.getElementById("empty1").addEventListener("click", moverOne);
 document.getElementById("empty2").addEventListener("click", moverTwo);
