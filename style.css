@@ -183,6 +183,13 @@ li {
   color: wheat;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
+#pontoQuest{
+  text-align: center;
+  font-size: 1.4em;
+  color: rgba(255, 157, 72, 0.622);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+} 
+
 
 .wrap {
   grid-area: wrap;

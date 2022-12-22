@@ -22,7 +22,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5.5";
+let versao = "Alpha 1.6";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -401,6 +401,7 @@ let efeito2P = document.getElementById("efeito2");
 let efeito3P = document.getElementById("efeito3");
 let efeito4P = document.getElementById("efeito4");
 let mao = document.getElementById("mao");
+let pontoQuest = document.getElementById("pontoQuest");
 //div poder
 let ataqueP = document.querySelector(".ataque");
 let defesaP = document.querySelector(".defesa");
