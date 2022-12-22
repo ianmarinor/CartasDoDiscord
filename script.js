@@ -22,7 +22,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5.8";
+let versao = "Alpha 1.5.9";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -998,6 +998,10 @@ function moverOne() {
       inv.replaceChild(copyCard, inv.children[0]);
       packP.innerHTML = semCarta
       console.log(packP.children[0]);
+      criarBtn();
+      somaPontos();
+
+      
 
     } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[0]);
@@ -1024,6 +1028,8 @@ function moverTwo() {
       inv.replaceChild(copyCard, inv.children[1]);
       packP.innerHTML = semCarta
       console.log(packP.children[0]);
+      criarBtn();
+      somaPontos();
 
     } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[1]);
@@ -1047,6 +1053,8 @@ function moverThree() {
       inv.replaceChild(copyCard, inv.children[2]);
       packP.innerHTML = semCarta
       console.log(packP.children[0]);
+      criarBtn();
+      somaPontos();
 
     } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[2]);
@@ -1073,6 +1081,8 @@ function moverFour() {
       inv.replaceChild(copyCard, inv.children[3]);
       packP.innerHTML = semCarta
       console.log(packP.children[0]);
+      criarBtn();
+      somaPontos();
 
     } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[3]);
@@ -2427,7 +2437,7 @@ function tudo() {
     // if(totalClicks == 1){button.style.backgroundColor = "red"
     // button.innerHTML = "0 CARTAS";}
   } else {
-    false
+    // criarBtn()
     
     // console.log(packP.children[0].style.visibility);
     //   packP.children[0].style.visibility = 'hidden'
