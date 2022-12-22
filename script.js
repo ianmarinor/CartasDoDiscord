@@ -382,6 +382,8 @@ function fabricaDeCarta(
 // escolherPoder()
 
 ////D O M
+let packP = document.getElementById("pack")
+// const semCarta = packP.children[0]
 let button = document.getElementById("btn");
 let h1 = document.getElementsByTagName("h1")[0];
 let mover = document.getElementById("mover");
@@ -962,8 +964,8 @@ function verificarCartaParaMover() {
 function moverOne() {
   if (
     inv.children[0].id == "empty1"
-    && seedDiferente
-    && taTudoOk
+    // && seedDiferente
+    // && taTudoOk
   ) {
     // if (true) {
     if (cartasComBotao) {
@@ -983,7 +985,7 @@ function moverOne() {
 function moverTwo() {
   if (
     inv.children[1].id == "empty2"
-    && seedDiferente && taTudoOk
+    // && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -998,7 +1000,7 @@ function moverTwo() {
 function moverThree() {
   if (
     inv.children[2].id == "empty3"
-    && seedDiferente && taTudoOk
+    // && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1014,7 +1016,7 @@ function moverThree() {
 function moverFour() {
   if (
     inv.children[3].id == "empty4"
-    && seedDiferente && taTudoOk
+    // && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1604,6 +1606,8 @@ function criarBtn() {
         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
         arenaP.innerHTML = totalClicks + " RODADAS";
 
+        clicks()
+
         if (varianteClique == inv.children[0]) {
           inv.replaceChild(empty1, varianteClique);
         } else if (varianteClique == inv.children[1]) {
@@ -1626,7 +1630,7 @@ function criarBtn() {
             totalClicks -
             parseInt(varianteMenosClique.children[3].children[0].textContent) +
             1;
-
+            clicks()
           varianteMenosClique.children[3].children[2].style.visibility =
             "hidden";
           button.style.backgroundColor = "";
@@ -1837,6 +1841,7 @@ function criarBtn() {
               }
             }
           }
+          break
         }
       } // poder premiomonark
       if (
@@ -2326,6 +2331,7 @@ function limparInput() {
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
   if (totalClicks > 0) {
+    packP.children[0].style.visibility = 'visible'
     button.style.backgroundColor = "";
     button.innerHTML = "&#127381; NOVA CARTA &#127381;";
     start();
@@ -2356,12 +2362,17 @@ function tudo() {
     showVersion();
     button.style.backgroundColor = "red";
     button.innerHTML = "0 CARTAS";
+    
+
+      // packP.children[0].style.visibility = 'hidden'
+      
   }
 }
 let aumentou = false;
 function clicks() {
   if (!seedObj._isPutByPlayer) {
     totalClicks--;
+    console.log('totalClicks: ', totalClicks);
     rodadas++;
     aumentou = true;
 
