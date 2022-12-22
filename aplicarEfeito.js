@@ -33,6 +33,8 @@ export function aplicarEfeitos() {
     lucio()
   }
 }
+function estoico(){}
+
 
 function premioMonark() {
   for (let i = 0; i < 4; i++) {

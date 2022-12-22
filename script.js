@@ -1986,10 +1986,12 @@ function criarBtn() {
             let poderNovoSemcargo = semcargo.children[3].children[1];
             let poderSpy = spy.children[3].children[0];
 
+            let multiplicadorSpy = 2
+
             //roubar o poder
             if (poderNovoSemcargo.textContent != "") {
               poderSpy.textContent =
-                parseInt(poderNovoSemcargo.textContent) * 3 +
+                parseInt(poderNovoSemcargo.textContent) * multiplicadorSpy +
                 parseInt(poderSpy.textContent) +
                 "⚡";
 
@@ -2008,7 +2010,7 @@ function criarBtn() {
               somaPontos();
             } else {
               poderSpy.textContent =
-                parseInt(poderSemcargo.textContent) * 5 +
+                parseInt(poderSemcargo.textContent) * multiplicadorSpy +
                 parseInt(poderSpy.textContent) +
                 "⚡";
 
