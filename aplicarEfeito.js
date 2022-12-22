@@ -2,7 +2,12 @@
 import { efeitos, rodadas,somaPontos } from "./script.js";
 
 
+
 let inv = document.getElementById("inv");
+let empty1 = inv.children[0];
+let empty2 = inv.children[1];
+let empty3 = inv.children[2];
+let empty4 = inv.children[3];
 let inv1 = document.getElementById("inv").firstChild;
 let inv2 = document.getElementById("inv").firstChild;
 let inv3 = document.getElementById("inv").firstChild;

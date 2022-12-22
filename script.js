@@ -22,7 +22,7 @@ import {
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.5.5";
+let versao = "Alpha 1.5.6";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -964,8 +964,8 @@ function verificarCartaParaMover() {
 function moverOne() {
   if (
     inv.children[0].id == "empty1"
-    // && seedDiferente
-    // && taTudoOk
+    && seedDiferente
+    && taTudoOk
   ) {
     // if (true) {
     if (cartasComBotao) {
@@ -985,7 +985,7 @@ function moverOne() {
 function moverTwo() {
   if (
     inv.children[1].id == "empty2"
-    // && seedDiferente && taTudoOk
+    && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1000,7 +1000,7 @@ function moverTwo() {
 function moverThree() {
   if (
     inv.children[2].id == "empty3"
-    // && seedDiferente && taTudoOk
+    && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -1016,7 +1016,7 @@ function moverThree() {
 function moverFour() {
   if (
     inv.children[3].id == "empty4"
-    // && seedDiferente && taTudoOk
+    && seedDiferente && taTudoOk
   ) {
     if (cartasComBotao) {
       botao.style.visibility = "visible";
@@ -2263,7 +2263,7 @@ function deletarDeck(e) {
     if (
       e.target.offsetParent.id != "carta-monark" ||
       (e.target.offsetParent.id == "carta-monark" &&
-        e.target.offsetParent.className == "vanish")
+        e.target.offsetParent.className == "monark vanish")
     ) {
       if (e.target.offsetParent == inv.children[0]) {
         inv.replaceChild(empty1, e.target.offsetParent);
