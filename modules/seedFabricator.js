@@ -4,7 +4,7 @@ import {seedComprada} from './seedsCompradas.js'
 let DEBUG = true
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.4";
+let versao = "Alpha 1.6";
 versaoHTML.innerHTML = versao;
 console.log(new Date().toUTCString());
 console.log(versao);
