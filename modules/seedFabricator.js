@@ -32,7 +32,7 @@ function colocarInput() {
 }
 
 const totalNumOfSeeds = 90000000000000000 + 2000000000000000000;
-function seedRNG() {
+export function seedRNG() {
   return Math.floor(Math.random() * totalNumOfSeeds);
 }
 

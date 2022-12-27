@@ -472,11 +472,11 @@ function colocarInfoNoWrap() {
   //DOM
 
   nomeP.innerHTML = novaCarta._integrante.toUpperCase();
-  // if (novaCarta._especial.nome == "") {
-  //   cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
-  // } else {
+  if (novaCarta._especial.nome == "") {
+    cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
+  } else {
     cidadeP.innerHTML = "";
-  // }
+  }
 
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
   varianteP.innerHTML = novaCarta._variante;
@@ -494,14 +494,14 @@ function colocarInfoNoWrap() {
   arenaP.innerHTML = totalClicks + " RODADAS";
   placarP.innerHTML = totalPontos + " ⚡";
 
-  // if (novaCarta._especial.nome != "") {
-  //   cartaP.id = novaCarta._especial.cartaId;
-  //   cidadeP.innerHTML = "";
-  //   cargoP.innerHTML = "";
-  //   nomeP.innerHTML = "";
-  // } else {
+  if (novaCarta._especial.nome != "") {
+    cartaP.id = novaCarta._especial.cartaId;
+    cidadeP.innerHTML = "";
+    cargoP.innerHTML = "";
+    nomeP.innerHTML = "";
+  } else {
     cartaP.id = novaCarta._cargo;
-  // }
+  }
   // console.log("***NOVA CARTA ESPECIAL**", novaCarta._especial);
   retratoP.style.display = "block";
 

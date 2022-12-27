@@ -17,28 +17,29 @@ export let raridades = {
   rainha: {
     nome: "rainha",
     rng: () =>
-      seedString[8] == 0 &&
-      seedString[9] == 0 &&
-      seedString[10] == 0 &&
-      seedString[11] == 0 
+      // seedString[8] == 0 &&
+      // seedString[9] == 0 &&
+      // seedString[10] == 0 &&
+      seedString[8] == 3  && seedString[14] == 0
       
   },
 
   sangueAzul: {
     nome: "sangue azul",
-    rng: () => seedString[9] == 1 &&
-    seedString[10] == 1
+    rng: () => seedString[8] == 2
+    && seedString[14] == 0
+    
   },
 
   cavaleiro: {
     nome: "cavaleiro",
-    rng: () => seedString[9] == 2,
+    rng: () => seedString[8] == 1 && seedString[14] == 0
     
   },
 
   campones: {
     nome: "campones",
-    rng: () => seedString[11] > 4,
+    rng: () => seedString[8] == 0 && seedString[14] == 0
     
   },
 };
@@ -219,14 +220,14 @@ DEBUG && console.log('RARIDADES', raridades.campones);
 export let especial = "";
 let raridade = "";
 
-export function escolherEspecial() {
-  // if (!teste) {
-  //   seedString = seedObj._seedString;
-  // } else {
-  //   seedString = teste;
-  // }
+export function escolherEspecial(teste) {
+  if (!teste) {
+    seedString = seedObj._seedString;
+  } else {
+    seedString = teste;
+  }
 
-  seedString = seedObj._seedString
+  // seedString = seedObj._seedString
 
   DEBUG && console.log('**SEEDSTRING NO MODULO**',seedString);
 
@@ -255,13 +256,13 @@ export function escolherEspecial() {
       raridade = raridades.sangueAzul;
       
       if (seedString[12]< 3) {
-          especial = especiais.lucio
+        especial = especiais.lucio
 
       } else if (seedString[12]< 6){
-        especial = especiais.premioMonark
+         especial = especiais.premioMonark
 
       } else {
-        especial = especiais.blackaoCamarada
+          especial = especiais.blackaoCamarada
 
       }
 
@@ -270,7 +271,7 @@ export function escolherEspecial() {
       raridade = raridades.cavaleiro;
       DEBUG && console.log(raridades.cavaleiro.rng());
       if (seedString[12]> 2) {
-        especial = especiais.speaker;
+         especial = especiais.speaker;
       } else {
         especial = especiais.spy;
       }
@@ -284,9 +285,9 @@ export function escolherEspecial() {
       if (seedString[12] < 4) {
         especial = especiais.menosCartas;
       } else if (seedString[12] > 5){
-        especial = especiais.maisCartas;
+         especial = especiais.maisCartas;
       } else if (seedString[12] == 4){
-        especial = especiais.abelha;
+         especial = especiais.abelha;
       } else {
         especial = especiais.estoicoTuru;
       }
