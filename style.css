@@ -75,7 +75,7 @@ main {
   background-color: #083535;
   background: linear-gradient(180deg, rgb(7, 84, 102) 0%, rgb(13, 19, 65) 46%);
   grid-template-columns: 0.3fr 0.2fr 1fr;
-  grid-template-rows: 0.1fr 1fr 0.5fr;
+  grid-template-rows: 0.1fr 1fr 0.8fr;
 }
 
 nav {
@@ -97,6 +97,19 @@ li {
   font-size: 1.25em;
   color: rgb(213, 187, 238);
 }
+
+#slotEsp{
+  grid-area: btn2;
+  border: 15px double rgba(170, 183, 30, 0.226);
+  background-color: #1f350885;
+  align-self: start;
+}
+#slotEsp > div{
+  height: var(--cartaHeigthCelular);
+  width: var(--cartaWidthCelular);
+  border-radius: 8px;
+}
+
 #descr {
   grid-area: descr;
   height: 60px;
@@ -652,6 +665,7 @@ li {
   opacity: 0.6;
 }
 
+
 #btn {
   padding: 5px;
   background-color: #11446d;
@@ -730,7 +744,7 @@ p {
   visibility: hidden;
 }
 
-#G {
+#G,#btnEsp {
   grid-area: btn;
   width: 80%;
   height: 13%;
@@ -742,6 +756,12 @@ p {
   border: 1px black solid;
   font-weight: bold;
   /* margin-bottom: 10%; */
+}
+#btnEsp{
+  grid-area: btn2;
+  align-self: end;
+  width: 80%;
+   height: 13%; 
 }
 
 .voar{
@@ -916,8 +936,7 @@ p {
 
   #slotEsp{
     grid-area: esp2;
-    border: 15px double rgba(30, 178, 183, 0.226);
-    background-color: #08353585;
+    
   }
   #slotEsp > div{
     height: var(--cartaHeigthCelular);
