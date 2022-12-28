@@ -75,7 +75,7 @@ main {
   background-color: #083535;
   background: linear-gradient(180deg, rgb(7, 84, 102) 0%, rgb(13, 19, 65) 46%);
   grid-template-columns: 0.3fr 0.2fr 1fr;
-  grid-template-rows: 0.1fr 1fr 0.8fr;
+  grid-template-rows: 0.1fr 1fr 1fr;
 }
 
 nav {
@@ -98,17 +98,7 @@ li {
   color: rgb(213, 187, 238);
 }
 
-#slotEsp{
-  grid-area: btn2;
-  border: 15px double rgba(170, 183, 30, 0.226);
-  background-color: #1f350885;
-  align-self: start;
-}
-#slotEsp > div{
-  height: var(--cartaHeigthCelular);
-  width: var(--cartaWidthCelular);
-  border-radius: 8px;
-}
+
 
 #descr {
   grid-area: descr;
@@ -224,6 +214,19 @@ li {
   position: relative;
   /* border: 1px solid #020101; */
 }
+
+#slotEsp{
+  grid-area: btn2;
+  border: 15px double rgba(170, 183, 30, 0.226);
+  background-color: #1f350885;
+  align-self: start;
+}
+#slotEsp > div{
+  height: var(--tamanhoCartaHeight);
+  width: var(--tamanhoCartaWidth);
+  /* border-radius: 15px; */
+}
+
 #carta-premiomarino {
   background-image: url(pics/wrapPremioMarino.webp);
   /* background-color: var(--premioMarino); */
@@ -593,6 +596,7 @@ li {
 }
 
 
+
 /* **************************************************** */
 /* **************************************************** */
 /* **************************************************** */
@@ -610,7 +614,7 @@ li {
   /* transform: rotate(90deg); */
 }
 
-.nome {
+.nome, #nomeEsp {
   margin-top: 0.2em;
   /* margin-bottom: 0.1em; */
   font-size: 150%;
@@ -623,7 +627,7 @@ li {
   font-size: 0.95em;
 }
 
-.retrato {
+.retrato, #retratoEsp {
   display: none;
   width: 75%;
   height: 45%;
@@ -636,6 +640,10 @@ li {
 
   border: #020101 2px solid;
 }
+#retratoEsp {
+  display: inherit;
+}
+
 
 .cargo {
   /* background-color: #37be49; */
@@ -643,15 +651,20 @@ li {
   transform: rotate(-10deg);
   margin: 10px;
 }
-.poder {
-  width: 80%;
+.poder, #poderEsp {
+  height: 10%;
+  width: 85%;
   font-size: 0.98em;
-  /* background-color: #beac37; */
+  
   display: flex;
-  /* flex-direction: row-reverse; */
+  
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+}
+
+#ataqueEsp{
+  white-space: nowrap;
 }
 
 .seed {
@@ -694,7 +707,7 @@ li {
 /* ---------------------------------------*/
 /* VARIANTES */
 /* ---------------------------------------*/
-.action {
+.action, #actionEsp {
   /* display: none; */
   visibility: hidden;
 }
@@ -758,7 +771,7 @@ p {
   /* margin-bottom: 10%; */
 }
 #btnEsp{
-  grid-area: btn2;
+  grid-area: btnReset;
   align-self: end;
   width: 80%;
    height: 13%; 

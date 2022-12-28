@@ -2,28 +2,43 @@ import { seedObj, seedRNG } from "./modules/seedFabricator.js";
 import { escolherEspecial, especial }from "./modules/especial.js";
 
 
-let slotEsp = document.getElementById('cartaEsp')
+let slotEsp = document.getElementById('slotEsp')
 let btnEsp = document.getElementById('btnEsp')
+let nomeE = document.getElementById('nomeEsp')
+let varianteE = document.getElementById('varianteEsp')
+let cidadeE = document.getElementById('cidadeEsp')
+let retratoE = document.getElementById('retratoEsp')
+let cargoE = document.getElementById('cargoEsp')
+let poderE = document.getElementById('poderEsp')
+let ataqueE = document.getElementById('ataqueEsp')
+let novoAtaqueE = document.getElementById('novoAtaqueEsp')
+let actionE = document.getElementById('actionEsp')
 
 const cartaEsp = '<div id="cartaEsp">' +
-'<div class="nameAndCidadeWrapperEsp">' +
-  '<p class="nomeEsp"></p>' +
-  '<div class="varianteEsp"></div>' +
-  '<p class="cidadeEsp"></p>' +
-  '<div class="especialEsp"></div>' +
+'<div id="nameAndCidadeWrapperEsp">' +
+  '<p id="nomeEsp"></p>' +
+  '<div id="varianteEsp"></div>' +
+  '<p id="cidadeEsp"></p>' +
+  '<div id="especialEsp"></div>' +
 '</div>' +
-'<div class="retratoEsp"></div>' +
-'<p class="cargoEsp"></p>' +
-'<div class="poderEsp">' +
-  '<p class="ataqueEsp"></p>' +
-  '<p class="novoAtaqueEsp"></p>' +
-  '<button class="actionEsp">PRESS</button>' +
+'<div id="retratoEsp"></div>' +
+'<p id="cargoEsp"></p>' +
+'<div id="poderEsp">' +
+  '<p id="ataqueEsp"></p>' +
+  '<p id="novoAtaqueEsp"></p>' +
+  '<button id="actionEsp">PRESS</button>' +
 '</div>'
 
 
+let seedCampones 
+let seedmakeCavalheiro
+let seedmakeSangueAzul
+let seedmakeRainha
+export let stringSeed = seedRNG().toString()
+
 
 function makeCampones(){
-    let stringSeed = seedRNG().toString()
+     stringSeed = seedRNG().toString()
     let arrSeed = stringSeed.split('')
     console.log('arrSeedCampones',arrSeed)
     let specialSeed = arrSeed
@@ -34,7 +49,7 @@ function makeCampones(){
 
     console.log('specialSeedCampones',specialSeed)
     
-    let seedCampones = specialSeed.join('')
+     seedCampones = specialSeed.join('')
     console.log('seedCampones',seedCampones)
 
     return seedCampones
@@ -43,7 +58,7 @@ function makeCampones(){
 
 
 function makeCavalheiro(){
-    let stringSeed = seedRNG().toString()
+     stringSeed = seedRNG().toString()
     let arrSeed = stringSeed.split('')
     console.log('arrSeedmakeCavalheiro',arrSeed)
     let specialSeed = arrSeed
@@ -54,7 +69,7 @@ function makeCavalheiro(){
 
     console.log('specialSeedmakeCavalheiro',specialSeed)
     
-    let seedmakeCavalheiro = specialSeed.join('')
+    seedmakeCavalheiro = specialSeed.join('')
     console.log('seedmakeCavalheiro',seedmakeCavalheiro)
 
     return seedmakeCavalheiro
@@ -62,7 +77,7 @@ function makeCavalheiro(){
 
 
 function makeSangueAzul(){
-    let stringSeed = seedRNG().toString()
+     stringSeed = seedRNG().toString()
     let arrSeed = stringSeed.split('')
     console.log('arrSeedmakeSangueAzul',arrSeed)
     let specialSeed = arrSeed
@@ -73,14 +88,14 @@ function makeSangueAzul(){
 
     console.log('specialSeedmakeSangueAzull',specialSeed)
     
-    let seedmakeSangueAzul = specialSeed.join('')
+    seedmakeSangueAzul = specialSeed.join('')
     console.log('seedmakeSangueAzul',seedmakeSangueAzul)
 
     return seedmakeSangueAzul
 }
 
 function makeRainha(){
-    let stringSeed = seedRNG().toString()
+     stringSeed = seedRNG().toString()
     let arrSeed = stringSeed.split('')
     console.log('arrSeedmakeRainha',arrSeed)
     let specialSeed = arrSeed
@@ -91,7 +106,7 @@ function makeRainha(){
 
     console.log('specialSeedmakeRainha',specialSeed)
     
-    let seedmakeRainha = specialSeed.join('')
+    seedmakeRainha = specialSeed.join('')
     console.log('seedmakeRainha',seedmakeRainha)
 
     return seedmakeRainha
@@ -100,9 +115,57 @@ function makeRainha(){
 
 
 function colocarSlot(){
-    escolherEspecial(makeRainha())
+    escolherEspecial(makeSangueAzul())
     console.log(especial)
+
+
+    nomeE.classList.remove("float")
+
+    slotEsp.children[0].id = especial.cartaId
+    
+    //NOME
+    nomeE.innerHTML = especial.nome
+    nomeE.classList.add(especial.nomeStyle.efeito);
+    nomeE.style.fontSize = especial.nomeStyle.fontSize
+    nomeE.style.fontFamily = especial.nomeStyle.fontFamily
+    nomeE.style.color = especial.nomeStyle.color
+
+    //RETRATO
+    retratoE.style.backgroundImage  = especial.retrato
+    retratoE.style.backgroundSize  = '100% 100%'
+    retratoE.style.border  = especial.retratoStyle.border
+
+    //CARGO
+    cargoE.innerHTML = especial.cargo
+    cargoE.style.fontFamily = especial.cargoStyle.fontFamily
+    cargoE.style.fontSize = especial.cargoStyle.fontSize
+
+    //ATAQUE
+    ataqueE.innerHTML = especial.ataqueE 
+    ataqueE.style.color = especial.ataqueStyle.color
+    ataqueE.style.fontSize = especial.ataqueStyle.fontSize
+    ataqueE.style.fontFamily =  especial.ataqueStyle.fontFamily
+    ataqueE.style.visibility =  especial.ataqueStyle.visibility
+
+    //ATAQUENOVO
+    novoAtaqueE.innerHTML = especial.novoAtaqueE + especial.emoji
+    novoAtaqueE.style.color = especial.novoAtaqueStyle.color
+    novoAtaqueE.style.fontSize = especial.novoAtaqueStyle.fontSize
+    novoAtaqueE.style.fontFamily =  especial.novoAtaqueStyle.fontFamily
+    novoAtaqueE.style.visibility =  especial.novoAtaqueStyle.visibility
+
+    //BOTAO
+
+    //SEED
+
+    
+
+
+
+
 }
+
+
 
 btnEsp.addEventListener('click', colocarSlot)
 

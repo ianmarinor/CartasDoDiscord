@@ -1,9 +1,13 @@
 let DEBUG = false;
-import { seedObj } from "./seedFabricator.js";
-let seedString = seedObj._seedString;
+import { seedRNG } from "./seedFabricator.js";
+import { stringSeed } from "../slotEspecial.js";
+let seedString = seedRNG()
+
+
 
 let seed2 = seedString[2];
 let seed3 = seedString[3];
+
 
 
 export let cartaNaoEspecial;
@@ -46,6 +50,17 @@ export let raridades = {
 
 // export let especiais = ['tenica', 'speaker', 'maisCartas', 'abelha']
 
+let valoresComunista = [333, 666, 999];
+export function comunistaPE() {
+  if (seed2 <6){
+    return valoresComunista[0]
+  } else if (seed2 < 9){
+    return valoresComunista[1]
+  } else {
+    return valoresComunista[2]
+  }
+}
+
 export let especiais = {
   notSpecial: {
     cartaId: 'notSpecial',
@@ -74,6 +89,40 @@ export let especiais = {
     emoji: "👑",
     emojiEsp: "",
     retrato: "url('pics/tenica.webp')",
+    cargo: "",
+    // ataqueE:tenicaEnergia() + "👑"
+    ataqueE: 1,
+    novoAtaque: '',
+
+    nomeStyle:{
+      fontSize: "",
+      fontFamily: "Cormorant Upright",
+      color: "",
+     
+    },
+
+    retratoStyle:{
+      border: "2px double gold",
+      backgroundColor: ''
+    },
+    cargoStyle:{
+      fontFamily: '',
+      fontSize: ''
+    },
+    ataqueStyle:{
+      color: 'black',
+      fontSize: '',
+      fontFamily:'',
+      visibility: '',
+    },
+    novoAtaqueStyle:{
+      color: '',
+      fontSize: '',
+      fontFamily:'',
+      visibility: 'hidden',
+    }
+
+
     
       
   },
@@ -90,7 +139,42 @@ export let especiais = {
       emoji: "&#9889;",
       emojiEsp: "",
       retrato: "url('pics/SPEAKER.webp')",
+      cargo: "MONARK BAN!",
+      ataqueE: 1,
+      novoAtaque: '',
+
+      // ataqueE: pontoSpeaker() + "⚡"
       
+      nomeStyle:{
+        fontSize: "",
+        fontFamily: "",
+        color: "",
+      },
+
+      retratoStyle:{
+        border: '2px dotted #18d742',
+        backgroundColor: ''
+      },
+      
+      cargoStyle:{
+        fontFamily: '',
+        fontSize: ''
+      },
+      ataqueStyle:{
+        color: '',
+        fontSize: '',
+        fontFamily:'',
+        visibility: '',
+      },
+      novoAtaqueStyle:{
+        color: '',
+        fontSize: '',
+        fontFamily:'',
+        visibility: 'hidden',
+      }
+
+
+
     },
       maisCartas: {
         cartaId: "especial-click",
@@ -105,6 +189,36 @@ export let especiais = {
         emojiEsp: "",
         emoji: "🃏",
         retrato: "url('pics/clickretrato.webp')",
+        cargo: "",
+        ataqueE: 1,
+        novoAtaque: '',
+
+        // ataqueE: bonusCartasPE()
+        nomeStyle:{
+          fontSize: "",
+          fontFamily: "",
+          color: "",
+        },
+
+        retratoStyle:{
+          border: '',
+          backgroundColor: ''
+        },cargoStyle:{
+          fontFamily: '',
+          fontSize: ''
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: '',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: 'hidden',
+        }
       },
 
       menosCartas: {
@@ -120,6 +234,36 @@ export let especiais = {
         emojiEsp: "",
         emoji: "🃏",
         retrato: "url('pics/clickretrato.webp')",
+        cargo: "",
+        ataqueE: 1,
+        novoAtaque: '',
+
+        // ataqueE: bonusCartasPE()
+        nomeStyle:{
+          fontSize: "",
+          fontFamily: "",
+          color: "",
+        },
+
+        retratoStyle:{
+          border: '',
+          backgroundColor: ''
+        },cargoStyle:{
+          fontFamily: '',
+          fontSize: ''
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: '',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: 'hidden',
+        }
       },
 
       abelha: {
@@ -134,9 +278,41 @@ export let especiais = {
         descricao: "VOU MORRER!!!",
         emoji: "🐝",
         emojiEsp: "",
-        retrato: "url('pics/retratoAbelha.webp')",
+        retrato: "url('pics/retratoAbelha.gif')",
         retrato2: "url('pics/retratoAbelha.webp')",
+        cargo: "bzzzz....",
+        ataqueE: 1,
+        novoAtaque: '',
+
+        nomeStyle:{
+          fontSize: "180%",
+          fontFamily: "minecraft",
+          color: "#AAAAAA",
+        },
+
+        retratoStyle:{
+          border: "2px solid #545251",
+          backgroundColor: ''
+        },cargoStyle:{
+          fontFamily: '',
+          fontSize: '170%'
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: '',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: 'hidden',
+        }
+
+        // ataqueE: abelhaEnergia() + "🐝"
       },
+
       blackaoCamarada: {
         cartaId: "comunista",
         nome: "BLACKAO COMUNISTA",
@@ -149,8 +325,38 @@ export let especiais = {
         descricao: '',
         emoji: "☭",
         emojiEsp: "",
-        retrato: "",
+        retrato: "url('pics/retratoCamarada.gif')",
         retrato2: "",
+        cargo: "",
+        ataqueE: '',
+        novoAtaqueE: '',
+
+        // ataqueE: comunistaPE() + "☭"
+        nomeStyle:{
+          fontSize: "140%",
+          fontFamily: "blackao",
+          color: "",
+        },
+
+        retratoStyle:{
+          border: "2px solid #ff0000",
+          backgroundColor: ''
+        },cargoStyle:{
+          fontFamily: '',
+          fontSize: ''
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: 'hidden',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: 'visible',
+        }
       },
       premioMonark: {
         cartaId: "premiomonark",
@@ -164,8 +370,40 @@ export let especiais = {
         descricao: "",
         emoji: "",
         emojiEsp: "",
-        retrato: "",
+        retrato: 'url("/pics/retratoPremioMonark.gif")',
         retrato2: "",
+        cargo: "",
+        ataqueE: 1,
+        novoAtaque: '',
+
+
+        nomeStyle:{
+          fontSize: "",
+          fontFamily: "premiomonark",
+          color: "",
+          efeito: 'float'
+        },
+
+        retratoStyle:{
+          border: "4px solid black",
+          backgroundColor: ''
+        },cargoStyle:{
+          fontFamily: '',
+          fontSize: ''
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: 'hidden',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: 'hidden',
+        }
+
       },
       spy: {
         cartaId: "spy",
@@ -179,8 +417,39 @@ export let especiais = {
         descricao: "",
         emoji: "",
         emojiEsp: "",
-        retrato: "",
+        retrato: 'url("/pics/spyRetrato.webp")',
         retrato2: "",
+        cargo: "",
+        ataqueE: "1",
+        novoAtaqueE: '⌚',
+
+
+
+        nomeStyle:{
+          fontSize: "210%",
+          fontFamily: "tf2",
+          color: "",
+        },
+
+        retratoStyle:{
+          border: "2px solid #cf6a32",
+          backgroundColor: "unset"
+        },cargoStyle:{
+          fontFamily: '',
+          fontSize: ''
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '140%',
+          fontFamily:'tf2',
+          visibility: '',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: 'visible',
+        }
       },
       estoicoTuru: {
         cartaId: "estoico",
@@ -195,6 +464,39 @@ export let especiais = {
         emojiEsp: "",
         emoji: "🛡️",
         retrato: "url('pics/estoicoRetrato.jpg')",
+        cargo: "",
+
+        // ataqueE: estoicoPE()
+        ataqueE: '',
+        
+        novoAtaqueE: '',
+        nomeStyle:{
+          fontSize: "250%",
+          fontFamily: "estoico",
+          color: "",
+        },
+
+        retratoStyle:{
+          border: "2px solid #cde2e0",
+          backgroundColor: "unset"
+        },
+
+        cargoStyle:{
+          fontFamily: '',
+          fontSize: ''
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'',
+          visibility: 'hidden',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '150%',
+          fontFamily:'estoico',
+          visibility: 'visible',
+        }
       },
       lucio: {
         cartaId: "lucio",
@@ -208,7 +510,41 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "🐸",
+        cargo: '0%',
         retrato: "url('pics/retratoLucio.jpg')",
+
+        // ataqueE: lucioPE()
+        ataqueE: "1⚡",
+        novoAtaqueE: '1',
+
+        nomeStyle:{
+          fontSize: "250%",
+          fontFamily: "overwatch",
+          color: "",
+        },
+
+        retratoStyle:{
+          border: "2px solid #15b871",
+          backgroundColor: ''
+        }
+        ,
+
+        cargoStyle:{
+          fontFamily: 'overwatch',
+          fontSize: '250%'
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '100%',
+          fontFamily:'overwatch',
+          visibility: '',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '120%',
+          fontFamily:'overwatch',
+          visibility: 'visible',
+        }
       },
 
 
@@ -221,11 +557,9 @@ export let especial = "";
 let raridade = "";
 
 export function escolherEspecial(teste) {
-  if (!teste) {
-    seedString = seedObj._seedString;
-  } else {
+  
     seedString = teste;
-  }
+    console.log('seedString: ', seedString);
 
   // seedString = seedObj._seedString
 
@@ -246,8 +580,9 @@ export function escolherEspecial(teste) {
     if (raridades.rainha.rng()) {
       raridade = raridades.rainha;
       if (true) {
-        tenicaEnergia();
+        
         especial = especiais.tenica;
+        especial.ataqueE = tenicaEnergia() + '👑'
       }
 
 
@@ -257,12 +592,14 @@ export function escolherEspecial(teste) {
       
       if (seedString[12]< 3) {
         especial = especiais.lucio
+        especial.novoAtaqueE = lucioPE() 
 
       } else if (seedString[12]< 6){
          especial = especiais.premioMonark
 
       } else {
           especial = especiais.blackaoCamarada
+          especial.novoAtaqueE = comunistaPE()
 
       }
 
@@ -272,6 +609,8 @@ export function escolherEspecial(teste) {
       DEBUG && console.log(raridades.cavaleiro.rng());
       if (seedString[12]> 2) {
          especial = especiais.speaker;
+         especial.ataqueE = pontoSpeaker()
+         
       } else {
         especial = especiais.spy;
       }
@@ -284,12 +623,16 @@ export function escolherEspecial(teste) {
       //CAMPONESES
       if (seedString[12] < 4) {
         especial = especiais.menosCartas;
+        especial.ataqueE = bonusCartasPE() + '🃏'
       } else if (seedString[12] > 5){
          especial = especiais.maisCartas;
+         especial.ataqueE = bonusCartasPE() + '🃏'
       } else if (seedString[12] == 4){
          especial = especiais.abelha;
+         especial.ataqueE = abelhaEnergia() + '🐝'
       } else {
         especial = especiais.estoicoTuru;
+        especial.novoAtaqueE = estoicoPE()
       }
     }
   } else {
@@ -401,16 +744,7 @@ let frasesComunista = [
   "TENHO NOJO DE BURGUES",
 ];
 
-let valoresComunista = [333, 666, 999];
-export function comunistaPE() {
-  if (seed2 <6){
-    return valoresComunista[0]
-  } else if (seed2 < 9){
-    return valoresComunista[1]
-  } else {
-    return valoresComunista[2]
-  }
-}
+
 export function frasesComuna() {
   return frasesComunista[Math.floor(Math.random() * frasesComunista.length)];
 }
