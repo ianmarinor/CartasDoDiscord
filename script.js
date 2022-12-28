@@ -442,6 +442,7 @@ function colocarInfoNoWrap() {
   varianteP.innerHTML = "";
   cartaParaMover.classList.remove("voar");
   cartaParaMover.classList.remove("monark");
+  actionP.style.visibility = 'hidden'
 
   cidadeP.removeAttribute("style");
   retratoP.removeAttribute("style");
@@ -983,12 +984,12 @@ function moverOne() {
     && taTudoOk
   ) {
     // if (true) {
-    if (cartasComBotao) {
-      botao.style.visibility = "visible";
-    }
+    // if (cartasComBotao) {
+    //   botao.style.visibility = "visible";
+    // }
 
     inv.replaceChild(copyCard, inv.children[0]);
-    criarBtn();
+    // criarBtn();
     somaPontos();
 
     tudo();
@@ -1002,11 +1003,11 @@ function moverTwo() {
     inv.children[1].id == "empty2"
     && seedDiferente && taTudoOk
   ) {
-    if (cartasComBotao) {
-      botao.style.visibility = "visible";
-    }
+    // if (cartasComBotao) {
+    //   botao.style.visibility = "visible";
+    // }
     inv.replaceChild(copyCard, inv.children[1]);
-    criarBtn();
+    // criarBtn();
     somaPontos();
 
     tudo();
@@ -1017,11 +1018,11 @@ function moverThree() {
     inv.children[2].id == "empty3"
     && seedDiferente && taTudoOk
   ) {
-    if (cartasComBotao) {
-      botao.style.visibility = "visible";
-    }
+    // if (cartasComBotao) {
+    //   botao.style.visibility = "visible";
+    // }
     inv.replaceChild(copyCard, inv.children[2]);
-    criarBtn();
+    // criarBtn();
     somaPontos();
 
     tudo();
@@ -1033,11 +1034,11 @@ function moverFour() {
     inv.children[3].id == "empty4"
     && seedDiferente && taTudoOk
   ) {
-    if (cartasComBotao) {
-      botao.style.visibility = "visible";
-    }
+    // if (cartasComBotao) {
+    //   botao.style.visibility = "visible";
+    // }
     inv.replaceChild(copyCard, inv.children[3]);
-    criarBtn();
+    // criarBtn();
     somaPontos();
 
     tudo();
