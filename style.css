@@ -149,11 +149,7 @@ li {
   align-items: flex-start;
   font-weight: bold;
 }
-#mao {
-  grid-area: mao;
-  border: 15px double rgba(30, 178, 183, 0.226);
-  background-color: #08353585;
-}
+
 #cartaMao {
   /* display: none; */
   /* background-image: url(pics/wrapPremioMarino.webp); */
@@ -614,7 +610,7 @@ li {
   /* transform: rotate(90deg); */
 }
 
-.nome, #nomeEsp {
+.nome, .nomeEsp {
   margin-top: 0.2em;
   /* margin-bottom: 0.1em; */
   font-size: 150%;
@@ -627,7 +623,7 @@ li {
   font-size: 0.95em;
 }
 
-.retrato, #retratoEsp {
+.retrato, .retratoEsp {
   display: none;
   width: 75%;
   height: 45%;
@@ -640,8 +636,9 @@ li {
 
   border: #020101 2px solid;
 }
-#retratoEsp {
+.retratoEsp {
   display: inherit;
+  visibility: hidden;
 }
 
 
@@ -651,7 +648,7 @@ li {
   transform: rotate(-10deg);
   margin: 10px;
 }
-.poder, #poderEsp {
+.poder, .poderEsp {
   height: 10%;
   width: 85%;
   font-size: 0.98em;
@@ -663,7 +660,7 @@ li {
   margin-bottom: 12px;
 }
 
-#ataqueEsp{
+.ataqueEsp{
   white-space: nowrap;
 }
 
@@ -707,7 +704,7 @@ li {
 /* ---------------------------------------*/
 /* VARIANTES */
 /* ---------------------------------------*/
-.action, #actionEsp {
+.action, .actionEsp {
   /* display: none; */
   visibility: hidden;
 }
@@ -755,6 +752,11 @@ p {
 #action3,
 #action4 {
   visibility: hidden;
+}
+#mao {
+  grid-area: mao;
+  border: 15px double rgba(30, 178, 183, 0.226);
+  background-color: #08353585;
 }
 
 #G,#btnEsp {

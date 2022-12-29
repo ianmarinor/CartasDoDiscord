@@ -2,31 +2,21 @@ import { seedObj, seedRNG } from "./modules/seedFabricator.js";
 import { escolherEspecial, especial }from "./modules/especial.js";
 
 
-let slotEsp = document.getElementById('slotEsp')
-let btnEsp = document.getElementById('btnEsp')
-let nomeE = document.getElementById('nomeEsp')
-let varianteE = document.getElementById('varianteEsp')
-let cidadeE = document.getElementById('cidadeEsp')
-let retratoE = document.getElementById('retratoEsp')
-let cargoE = document.getElementById('cargoEsp')
-let poderE = document.getElementById('poderEsp')
-let ataqueE = document.getElementById('ataqueEsp')
-let novoAtaqueE = document.getElementById('novoAtaqueEsp')
-let actionE = document.getElementById('actionEsp')
 
-const cartaEsp = '<div id="cartaEsp">' +
-'<div id="nameAndCidadeWrapperEsp">' +
-  '<p id="nomeEsp"></p>' +
-  '<div id="varianteEsp"></div>' +
-  '<p id="cidadeEsp"></p>' +
-  '<div id="especialEsp"></div>' +
+
+const cartaEsp = '<div class="cartaEsp">' +
+'<div class="nameAndCidadeWrapperEsp">' +
+  '<p class="nomeEsp"></p>' +
+  '<div class="varianteEsp"></div>' +
+  '<p class="cidadeEsp"></p>' +
+  '<div class="especialEsp"></div>' +
 '</div>' +
-'<div id="retratoEsp"></div>' +
-'<p id="cargoEsp"></p>' +
-'<div id="poderEsp">' +
-  '<p id="ataqueEsp"></p>' +
-  '<p id="novoAtaqueEsp"></p>' +
-  '<button id="actionEsp">PRESS</button>' +
+'<div class="retratoEsp"></div>' +
+'<p class="cargoEsp"></p>' +
+'<div class="poderEsp">' +
+  '<p class="ataqueEsp"></p>' +
+  '<p class="novoAtaqueEsp"></p>' +
+  '<button class="actionEsp">PRESS</button>' +
 '</div>'
 
 
@@ -115,15 +105,35 @@ function makeRainha(){
 
 
 function colocarSlot(){
-    escolherEspecial(makeSangueAzul())
+
+    let slotEsp = document.querySelector('#slotEsp')
+let cartaE = slotEsp.querySelector('.cartaEsp')
+let btnEsp = document.getElementById('btnEsp')
+let nomeE = slotEsp.querySelector('.nomeEsp')
+// let nomeE = slotEsp.children[0].children[0]
+let retratoE = slotEsp.querySelector('.retratoEsp')
+let cargoE = slotEsp.querySelector('.cargoEsp')
+let poderE = slotEsp.querySelector('.poderEsp')
+let ataqueE = slotEsp.querySelector('.ataqueEsp')
+let novoAtaqueE = slotEsp.querySelector('.novoAtaqueEsp')
+let actionE = slotEsp.querySelector('.actionEsp')
+
+
+
+
+
+    escolherEspecial(makeCampones())
     console.log(especial)
 
 
     nomeE.classList.remove("float")
 
     slotEsp.children[0].id = especial.cartaId
-    
+
+    retratoE.style.visibility = 'visible'
+    console.log(slotEsp.querySelector('.nomeEsp'));
     //NOME
+    // nomeE.className = ''
     nomeE.innerHTML = especial.nome
     nomeE.classList.add(especial.nomeStyle.efeito);
     nomeE.style.fontSize = especial.nomeStyle.fontSize
@@ -168,4 +178,30 @@ function colocarSlot(){
 
 
 btnEsp.addEventListener('click', colocarSlot)
+// btnEsp.addEventListener('click', sorteio)
+
+let myInterval
+slotEsp.addEventListener('click', moverToCartaMao)
+let cartaEspecial
+
+function moverToCartaMao() {
+    
+    cartaEspecial = slotEsp.children[0]
+
+    mao.replaceChild(cartaEspecial, mao.children[0]);
+    slotEsp.innerHTML = cartaEsp
+
+  }
+
+
+function sorteio(){
+    if(!myInterval){
+        myInterval = setInterval(colocarSlot, 100)
+    } else{
+        clearInterval(myInterval)
+        myInterval = 0
+    }
+   
+    
+}
 
