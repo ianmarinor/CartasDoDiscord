@@ -1055,7 +1055,7 @@ document.addEventListener("keydown", (event) => {
 
 function moverToInvMao() {
   let botaoMao = mao.children[0].children[3].children[2];
-  let cartasComBotao = objCartaMao._especial.poder == true;
+  // let cartasComBotao = objCartaMao._especial.poder == true;
 
   function colocarBotao() {
     if (cartasComBotao) {
@@ -1063,28 +1063,32 @@ function moverToInvMao() {
     }
   }
 
-  if (inv.children[0].id == "empty1") {
-    inv.replaceChild(mao.children[0], inv.children[0]);
-    mao.appendChild(cartaMao);
-    colocarBotao();
-    somaPontos();
-  } else if (inv.children[1].id == "empty2") {
-    inv.replaceChild(mao.children[0], inv.children[1]);
-    mao.appendChild(cartaMao);
-    colocarBotao();
-    somaPontos();
-  } else if (inv.children[2].id == "empty3") {
-    inv.replaceChild(mao.children[0], inv.children[2]);
-    mao.appendChild(cartaMao);
-    colocarBotao();
-    somaPontos();
-  } else if (inv.children[3].id == "empty4") {
-    inv.replaceChild(mao.children[0], inv.children[3]);
-    mao.appendChild(cartaMao);
-    colocarBotao();
-    somaPontos();
+  if(mao.children[0].id != 'cartaMao' ){
+
+    if (inv.children[0].id == "empty1") {
+      inv.replaceChild(mao.children[0], inv.children[0]);
+      mao.appendChild(cartaMao);
+      colocarBotao();
+      somaPontos();
+    } else if (inv.children[1].id == "empty2") {
+      inv.replaceChild(mao.children[0], inv.children[1]);
+      mao.appendChild(cartaMao);
+      colocarBotao();
+      somaPontos();
+    } else if (inv.children[2].id == "empty3") {
+      inv.replaceChild(mao.children[0], inv.children[2]);
+      mao.appendChild(cartaMao);
+      colocarBotao();
+      somaPontos();
+    } else if (inv.children[3].id == "empty4") {
+      inv.replaceChild(mao.children[0], inv.children[3]);
+      mao.appendChild(cartaMao);
+      colocarBotao();
+      somaPontos();
+    }
+    criarBtn();
   }
-  criarBtn();
+
 }
 let objCartaMao;
 function moverToCartaMao() {

@@ -177,8 +177,8 @@ let actionE = slotEsp.querySelector('.actionEsp')
 
 
 
-btnEsp.addEventListener('click', colocarSlot)
-// btnEsp.addEventListener('click', sorteio)
+// btnEsp.addEventListener('click', colocarSlot)
+btnEsp.addEventListener('click', sorteio)
 
 let myInterval
 slotEsp.addEventListener('click', moverToCartaMao)
@@ -188,15 +188,18 @@ function moverToCartaMao() {
     
     cartaEspecial = slotEsp.children[0]
 
-    mao.replaceChild(cartaEspecial, mao.children[0]);
-    slotEsp.innerHTML = cartaEsp
+    if(cartaEspecial.id && !myInterval){
+
+        mao.replaceChild(cartaEspecial, mao.children[0]);
+        slotEsp.innerHTML = cartaEsp
+    }
 
   }
 
 
 function sorteio(){
     if(!myInterval){
-        myInterval = setInterval(colocarSlot, 100)
+        myInterval = setInterval(colocarSlot, 500)
     } else{
         clearInterval(myInterval)
         myInterval = 0
