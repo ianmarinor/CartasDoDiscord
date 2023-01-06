@@ -17,6 +17,8 @@ const cartaEsp = '<div class="cartaEsp">' +
   '<p class="ataqueEsp"></p>' +
   '<p class="novoAtaqueEsp"></p>' +
   '<button class="actionEsp">PRESS</button>' +
+  '<p class="seedEsp"></p>' +
+    '<p class="seloEsp"></p>' +
 '</div>'
 
 
@@ -24,6 +26,8 @@ let seedCampones
 let seedmakeCavalheiro
 let seedmakeSangueAzul
 let seedmakeRainha
+
+let seedEspecial
 export let stringSeed = seedRNG().toString()
 
 
@@ -40,6 +44,7 @@ function makeCampones(){
     console.log('specialSeedCampones',specialSeed)
     
      seedCampones = specialSeed.join('')
+     seedEspecial = seedCampones
     console.log('seedCampones',seedCampones)
 
     return seedCampones
@@ -60,6 +65,7 @@ function makeCavalheiro(){
     console.log('specialSeedmakeCavalheiro',specialSeed)
     
     seedmakeCavalheiro = specialSeed.join('')
+    seedEspecial = seedmakeCavalheiro
     console.log('seedmakeCavalheiro',seedmakeCavalheiro)
 
     return seedmakeCavalheiro
@@ -79,6 +85,7 @@ function makeSangueAzul(){
     console.log('specialSeedmakeSangueAzull',specialSeed)
     
     seedmakeSangueAzul = specialSeed.join('')
+    seedEspecial = seedmakeSangueAzul
     console.log('seedmakeSangueAzul',seedmakeSangueAzul)
 
     return seedmakeSangueAzul
@@ -97,6 +104,7 @@ function makeRainha(){
     console.log('specialSeedmakeRainha',specialSeed)
     
     seedmakeRainha = specialSeed.join('')
+    seedEspecial = seedmakeRainha
     console.log('seedmakeRainha',seedmakeRainha)
 
     return seedmakeRainha
@@ -104,9 +112,17 @@ function makeRainha(){
 
 
 
-function colocarSlot(){
+function colocarSlot(tipo){
 
-    let slotEsp = document.querySelector('#slotEsp')
+    console.log('chamou*********');
+
+let btnCampones = document.getElementById('btnCampones')
+let btnCavalheiro = document.getElementById('btnCavalheiro')
+let btnSangue = document.getElementById('btnSangue')
+let btnRainha = document.getElementById('btnRainha')
+
+
+
 let cartaE = slotEsp.querySelector('.cartaEsp')
 let btnEsp = document.getElementById('btnEsp')
 let nomeE = slotEsp.querySelector('.nomeEsp')
@@ -117,12 +133,13 @@ let poderE = slotEsp.querySelector('.poderEsp')
 let ataqueE = slotEsp.querySelector('.ataqueEsp')
 let novoAtaqueE = slotEsp.querySelector('.novoAtaqueEsp')
 let actionE = slotEsp.querySelector('.actionEsp')
+let seedEsp = slotEsp.querySelector('.seedEsp')
 
 
 
 
 
-    escolherEspecial(makeCampones())
+    escolherEspecial(tipo)
     console.log(especial)
 
 
@@ -146,7 +163,7 @@ let actionE = slotEsp.querySelector('.actionEsp')
     retratoE.style.border  = especial.retratoStyle.border
 
     //CARGO
-    cargoE.innerHTML = especial.cargo
+    cargoE.innerHTML = especial.cargo 
     cargoE.style.fontFamily = especial.cargoStyle.fontFamily
     cargoE.style.fontSize = especial.cargoStyle.fontSize
 
@@ -158,7 +175,7 @@ let actionE = slotEsp.querySelector('.actionEsp')
     ataqueE.style.visibility =  especial.ataqueStyle.visibility
 
     //ATAQUENOVO
-    novoAtaqueE.innerHTML = especial.novoAtaqueE + especial.emoji
+    novoAtaqueE.innerHTML = especial.novoAtaqueE 
     novoAtaqueE.style.color = especial.novoAtaqueStyle.color
     novoAtaqueE.style.fontSize = especial.novoAtaqueStyle.fontSize
     novoAtaqueE.style.fontFamily =  especial.novoAtaqueStyle.fontFamily
@@ -167,7 +184,7 @@ let actionE = slotEsp.querySelector('.actionEsp')
     //BOTAO
 
     //SEED
-
+    seedEsp.innerHTML = seedEspecial
     
 
 
@@ -177,8 +194,24 @@ let actionE = slotEsp.querySelector('.actionEsp')
 
 
 
-// btnEsp.addEventListener('click', colocarSlot)
-btnEsp.addEventListener('click', sorteio)
+btnCampones.addEventListener('click',function() {
+    sorteio(makeCampones,300);
+} )
+btnCavalheiro.addEventListener('click',function() {
+    sorteio(makeCavalheiro,250);
+} )
+btnSangue.addEventListener('click',function() {
+    sorteio(makeSangueAzul,200);
+} )
+btnRainha.addEventListener('click',function() {
+    sorteio(makeRainha,150);
+} )
+
+
+
+// btnEsp.addEventListener('click', sorteio)
+
+
 
 let myInterval
 slotEsp.addEventListener('click', moverToCartaMao)
@@ -197,9 +230,13 @@ function moverToCartaMao() {
   }
 
 
-function sorteio(){
+function sorteio(juj,tempo){
     if(!myInterval){
-        myInterval = setInterval(colocarSlot, 500)
+
+        colocarSlot(juj())
+        myInterval = setInterval(function() {
+            colocarSlot(juj());
+        }, tempo)
     } else{
         clearInterval(myInterval)
         myInterval = 0

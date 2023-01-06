@@ -53,11 +53,11 @@ export let raridades = {
 let valoresComunista = [333, 666, 999];
 export function comunistaPE() {
   if (seed2 <6){
-    return valoresComunista[0]
+    return valoresComunista[0] + "☭"
   } else if (seed2 < 9){
-    return valoresComunista[1]
+    return valoresComunista[1] + "☭"
   } else {
-    return valoresComunista[2]
+    return valoresComunista[2] + "☭"
   }
 }
 
@@ -92,7 +92,7 @@ export let especiais = {
     cargo: "",
     // ataqueE:tenicaEnergia() + "👑"
     ataqueE: 1,
-    novoAtaque: '',
+    novoAtaqueE: '0',
 
     nomeStyle:{
       fontSize: "",
@@ -420,7 +420,7 @@ export let especiais = {
         retrato: 'url("/pics/spyRetrato.webp")',
         retrato2: "",
         cargo: "",
-        ataqueE: "1",
+        ataqueE: "1⚡",
         novoAtaqueE: '⌚',
 
 
@@ -582,7 +582,7 @@ export function escolherEspecial(teste) {
       if (true) {
         
         especial = especiais.tenica;
-        especial.ataqueE = tenicaEnergia() + '👑'
+        especial.ataqueE = tenicaEnergia() 
       }
 
 
@@ -650,21 +650,21 @@ function constrEspecial() {}
 // ENERGIAS
 
 export function tenicaEnergia() {
-  return (especiais.tenica.energia = parseInt(seed2) + parseInt(seed3) + 375);
+  return (especiais.tenica.energia = parseInt(seed2) + parseInt(seed3) + 375 + "👑");
 }
 
 export function pontoSpeaker() {
   if (parseInt(seed2) <= 3) {
-    return (especiais.speaker.energia = 1);
+    return (especiais.speaker.energia = 1 + '⚡');
   }
   if (parseInt(seed2) > 3 && parseInt(seed2) <= 6) {
-    return (especiais.speaker.energia = 2);
+    return (especiais.speaker.energia = 2) + '⚡';
   }
   if (parseInt(seed2) > 6 && parseInt(seed2) < 9) {
-    return (especiais.speaker.energia = 3);
+    return (especiais.speaker.energia = 3 + '⚡');
   }
   if (parseInt(seed2) == 9) {
-    return (especiais.speaker.energia = 5);
+    return (especiais.speaker.energia = 5 + '⚡');
   }
 }
 
@@ -778,49 +778,49 @@ function lucio() {}
 
 export function estoicoPE(){
   if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 2
+    return parseInt(seed3) + 2 + '🛡️'
   }
   if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 2
+    return parseInt(seed3) + 2 + '🛡️'
   }
   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 1 + '🛡️';
   }
   if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 1 + '🛡️';
   }
   if (parseInt(seed2) == 7) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 1 + '🛡️';
   }
   if (parseInt(seed2) == 8) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 1 + '🛡️';
   }
   if (parseInt(seed2) == 9) {
-    return parseInt(seed3) + 1;
+    return parseInt(seed3) + 1 + '🛡️';
   }
 }
 
 export function lucioPE(){
   if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 489
+    return parseInt(seed3) + 489 + "🐸"
   }
   if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 430
+    return parseInt(seed3) + 430 + "🐸"
   }
   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return parseInt(seed3) + 236;
+    return parseInt(seed3) + 236 + "🐸";
   }
   if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return parseInt(seed3) + 234;
+    return parseInt(seed3) + 234 + "🐸";
   }
   if (parseInt(seed2) == 7) {
-    return parseInt(seed3) + 180;
+    return parseInt(seed3) + 180 + "🐸";
   }
   if (parseInt(seed2) == 8) {
-    return parseInt(seed3) + 160;
+    return parseInt(seed3) + 160 + "🐸";
   }
   if (parseInt(seed2) == 9) {
-    return parseInt(seed3) + 150;
+    return parseInt(seed3) + 150 + "🐸";
   }
 }
 

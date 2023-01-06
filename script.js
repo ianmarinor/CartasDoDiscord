@@ -442,7 +442,7 @@ function colocarInfoNoWrap() {
   varianteP.innerHTML = "";
   cartaParaMover.classList.remove("voar");
   cartaParaMover.classList.remove("monark");
-  actionP.style.visibility = 'hidden'
+  actionP.style.visibility = "hidden";
 
   cidadeP.removeAttribute("style");
   retratoP.removeAttribute("style");
@@ -474,9 +474,9 @@ function colocarInfoNoWrap() {
 
   nomeP.innerHTML = novaCarta._integrante.toUpperCase();
   // if (novaCarta._especial.nome == "") {
-    cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
+  cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
   // } else {
-    // cidadeP.innerHTML = "";
+  // cidadeP.innerHTML = "";
   // }
 
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
@@ -501,7 +501,7 @@ function colocarInfoNoWrap() {
   //   cargoP.innerHTML = "";
   //   nomeP.innerHTML = "";
   // } else {
-    cartaP.id = novaCarta._cargo;
+  cartaP.id = novaCarta._cargo;
   // }
   // console.log("***NOVA CARTA ESPECIAL**", novaCarta._especial);
   retratoP.style.display = "block";
@@ -565,9 +565,7 @@ function colocarInfoNoWrap() {
     } else if (novaCarta._cargo === "carta-monark") {
       cargoP.innerHTML = "&nbsp;" + "monark" + "&#128169;";
       retratoP.style.border = "";
-
-
-    } 
+    }
     // else if (novaCarta._cargo === "abelha") {
     //   cargoP.innerHTML = "ABELHA";
     // } else if (novaCarta._cargo === "comunista") {
@@ -580,184 +578,7 @@ function colocarInfoNoWrap() {
     //   true;
     // }
   }
-//-------------------------------------------------------------------
-  //CARTAS ESPECIAIS
-  // if (novaCarta._especial.cartaId === "carta-speaker") {
-  //   retratoP.style.backgroundImage = "url('pics/speaker.webp')";
-  //   nomeP.innerHTML = "SPEAKER";
-  //   ataqueP.innerHTML = pontoSpeaker() + "⚡";
-  //   cargoP.innerHTML = "MONARK BAN!";
-
-
-
-
-  // } else if (novaCarta._especial.cartaId === "especial-tenica") {
-  //   nomeP.style.fontFamily = "Cormorant Upright";
-  //   retratoP.style.backgroundImage = "url('pics/tenica.webp')";
-  //   retratoP.style.backgroundSize = "100% 100%";
-  //   nomeP.innerHTML = "TÉNICA";
-  //   retratoP.style.border = "2px double gold";
-  //   ataqueP.style.color = "black";
-  //   ataqueP.innerHTML = tenicaEnergia() + "👑";
-  //   seedP.style.color = "black";
-  //   ataqueP.style.fontSize = "150%";
-
-
-
-  // } else if (novaCarta._especial.cartaId === "especial-click") {
-  //   retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
-  //   nomeP.innerHTML = " + CARTAS +";
-
-  //   cargoP.innerHTML = "";
-
-  //   // retratoP.style.border = '2px double gold'
-  //   ataqueP.style.color = "black";
-  //   // ataqueP.style.fontSize = "1.5em";
-  //   // actionP.style.visibility = 'visible'
-  //   ataqueP.textContent = bonusCartasPE() + especial.emoji;
-  //   seedP.style.color = "black";
-  //   seedP.style.fontSize = "0.6em";
-
-  //   // MENOS CARTAS --------------------
-  // } else if (novaCarta._especial.cartaId === "-click") {
-  //   retratoP.style.backgroundImage = "url('pics/clickretrato.webp')";
-  //   nomeP.innerHTML = " - CARTAS -";
-
-  //   cargoP.innerHTML = "";
-
-  //   // retratoP.style.border = '2px double gold'
-  //   ataqueP.style.color = "black";
-  //   // ataqueP.style.fontSize = "1.5em";
-  //   // actionP.style.visibility = 'visible'
-  //   ataqueP.textContent = bonusCartasPE() + especial.emoji;
-  //   seedP.style.color = "black";
-  //   seedP.style.fontSize = "0.6em";
-
-  //   //ABELHA ------------------
-  // } else if (novaCarta._especial.cartaId === "abelha") {
-  //   retratoP.style.backgroundImage = "url('pics/retratoAbelha.gif')";
-
-  //   nomeP.innerHTML = "ABELHA";
-  //   nomeP.style.fontFamily = "minecraft";
-  //   nomeP.style.fontSize = "180%";
-  //   nomeP.style.color = "#AAAAAA";
-
-  //   cargoP.style.fontSize = "170%";
-
-  //   cargoP.innerHTML = "bzzzz....";
-  //   retratoP.style.border = "2px solid #545251";
-
-  //   ataqueP.style.fontSize = "130%";
-
-  //   ataqueP.textContent = abelhaEnergia() + "🐝";
-
-
-
-  // } else if (novaCarta._especial.cartaId === "comunista") {
-  //   retratoP.style.backgroundImage = "url('pics/retratoCamarada.gif')";
-
-  //   nomeP.innerHTML = "CAMARADA BLACKAO <br> ★";
-  //   nomeP.style.fontFamily = "blackao";
-
-  //   retratoP.style.border = "2px solid #ff0000";
-
-  //   ataqueP.style.fontSize = "1.4em";
-  //   novoAtaquerP.style.fontSize = "1.4em";
-  //   novoAtaquerP.style.fontFamily = "blackao";
-  //   novoAtaquerP.style.visibility = "visible";
-
-  //   ataqueP.textContent = "";
-  //   novoAtaquerP.textContent = comunistaPE() + "☭";
-
-  //   seedP.style.color = "black";
-
-  //   //PREMIO MONARK ----------------
-
-
-  // } else if (novaCarta._especial.cartaId === "premiomonark") {
-  //   retratoP.style.backgroundImage = 'url("/pics/retratoPremioMonark.gif")';
-
-  //   nomeP.innerHTML = "PREMIO <br> MONARK";
-  //   nomeP.style.fontFamily = "premiomonark";
-
-  //   nomeP.classList.add("float");
-
-  //   retratoP.style.border = "4px solid black";
-  //   ataqueP.textContent = 0;
-  //   ataqueP.style.visibility = "hidden";
-
-  //   seedP.style.color = "#343436";
-  // } else if (novaCarta._especial.cartaId == "spy") {
-  //   retratoP.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
-  //   retratoP.style.backgroundSize = "100% 100%";
-  //   retratoP.style.backgroundColor = "unset";
-  //   nomeP.innerHTML = "SPY";
-  //   nomeP.style.fontFamily = "tf2";
-  //   nomeP.style.fontSize = "210%";
-
-  //   retratoP.style.border = "2px solid #cf6a32";
-
-  //   ataqueP.style.fontSize = "140%";
-  //   ataqueP.textContent = "1⚡";
-  //   novoAtaquerP.style.fontSize = "140%";
-  //   novoAtaquerP.style.visibility = "hidden";
-  //   novoAtaquerP.textContent = "⌚";
-
-  //   ataqueP.style.fontFamily = "tf2";
-  //   // ataqueP.textContent = 0;
-  //   // ataqueP.style.visibility = "hidden";
-  //   // novoAtaquerP.textContent = "";
-  //   cartaP.style.border = "2px solid rgba(207, 106, 50, 1)";
-  //   // cartaP.className = "invis";
-  // } else if (novaCarta._especial.cartaId == "estoico") {
-  //   // cartaP.style.color = "#cf6a32";
-  //   retratoP.style.backgroundImage = especial.retrato;
-  //   retratoP.style.backgroundSize = "100% 100%";
-  //   retratoP.style.backgroundColor = "unset";
-  //   nomeP.innerHTML = especial.nome;
-  //   // nomeP.style.fontFamily = "estoico";
-  //   nomeP.style.fontSize = "250%";
-  //   nomeP.style.fontFamily = "estoico";
-  //   ataqueP.style.fontFamily = "estoico";
-
-  //   retratoP.style.border = "2px solid #cde2e0";
-
-  //   ataqueP.style.fontSize = "170%";
-  //   ataqueP.textContent = "";
-
-  //   novoAtaquerP.style.fontSize = "140%";
-  //   novoAtaquerP.style.fontFamily = "estoico";
-  //   novoAtaquerP.textContent = estoicoPE() + especial.emoji;
-  //   seloP.style.right = "30px";
-  //   // novoAtaquerP.style.visibility = "hidden";
-  //   // novoAtaquerP.textContent = "⌚";
-  //   // ataqueP.style.fontFamily = "tf2";
-  // } else if (novaCarta._especial.cartaId == "lucio") {
-  //   // cartaP.style.color = "#cf6a32";
-  //   retratoP.style.backgroundImage = especial.retrato;
-  //   retratoP.style.backgroundSize = "100% 100%";
-  //   retratoP.style.backgroundColor = "unset";
-  //   nomeP.innerHTML = especial.nome;
-
-  //   nomeP.style.fontSize = "250%";
-  //   nomeP.style.fontFamily = "overwatch";
-  //   ataqueP.style.fontFamily = "overwatch";
-
-  //   // cargoP.style.transform = "rotate(0deg);";
-  //   cargoP.style.fontFamily = "overwatch";
-  //   cargoP.innerHTML = "0%";
-  //   cargoP.style.fontSize = "250%";
-
-  //   retratoP.style.border = "2px solid #15b871";
-
-  //   ataqueP.style.fontSize = "100%";
-  //   ataqueP.textContent = "0⚡";
-
-  //   novoAtaquerP.style.fontSize = "120%";
-  //   novoAtaquerP.style.fontFamily = "overwatch";
-  //   novoAtaquerP.textContent = lucioPE() + especial.emoji;
-    
-  // }
+ 
 
   //CARTAS VARIANTES
   if (novaCarta._variante != "") {
@@ -932,7 +753,7 @@ let cartaNotMonark;
 let PodeMover;
 let naoMoviAinda;
 let taTudoOk;
-let cartasComBotao;
+
 let seed1;
 let seed2;
 let seed3;
@@ -964,25 +785,24 @@ function verificarCartaParaMover() {
     (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
     seedObj._isMarket;
 
-  taTudoOk = PodeMover && !isJaMovi() && totalClicks > 0;
-  cartasComBotao = especial.poder == true;
+  // taTudoOk = PodeMover && !isJaMovi() && totalClicks > 0;
+  taTudoOk = true
+
   botao = copyCard.children[3].children[2];
   seed1 = inv.children[0].children[4];
   seed2 = inv.children[1].children[4];
   seed3 = inv.children[2].children[4];
   seed4 = inv.children[3].children[4];
-  seedDiferente =
-    seedCopyCard.textContent != seed1.textContent &&
-    seedCopyCard.textContent != seed2.textContent &&
-    seedCopyCard.textContent != seed3.textContent &&
-    seedCopyCard.textContent != seed4.textContent;
+
+  seedDiferente = true
+  // seedDiferente =
+  //   seedCopyCard.textContent != seed1.textContent &&
+  //   seedCopyCard.textContent != seed2.textContent &&
+  //   seedCopyCard.textContent != seed3.textContent &&
+  //   seedCopyCard.textContent != seed4.textContent;
 }
 function moverOne() {
-  if (
-    inv.children[0].id == "empty1"
-    && seedDiferente
-    && taTudoOk
-  ) {
+  if (inv.children[0].id == "empty1" && seedDiferente && taTudoOk) {
     // if (true) {
     // if (cartasComBotao) {
     //   botao.style.visibility = "visible";
@@ -999,10 +819,7 @@ function moverOne() {
   // moverOne()
 }
 function moverTwo() {
-  if (
-    inv.children[1].id == "empty2"
-    && seedDiferente && taTudoOk
-  ) {
+  if (inv.children[1].id == "empty2" && seedDiferente && taTudoOk) {
     // if (cartasComBotao) {
     //   botao.style.visibility = "visible";
     // }
@@ -1014,10 +831,7 @@ function moverTwo() {
   }
 }
 function moverThree() {
-  if (
-    inv.children[2].id == "empty3"
-    && seedDiferente && taTudoOk
-  ) {
+  if (inv.children[2].id == "empty3" && seedDiferente && taTudoOk) {
     // if (cartasComBotao) {
     //   botao.style.visibility = "visible";
     // }
@@ -1030,10 +844,7 @@ function moverThree() {
 }
 
 function moverFour() {
-  if (
-    inv.children[3].id == "empty4"
-    && seedDiferente && taTudoOk
-  ) {
+  if (inv.children[3].id == "empty4" && seedDiferente && taTudoOk) {
     // if (cartasComBotao) {
     //   botao.style.visibility = "visible";
     // }
@@ -1053,42 +864,54 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+let cartasComBotao = [
+  "especial-tenica",
+  "carta-speaker",
+  "especial-click",
+  "-click",
+  "comunista",
+  "premiomonark",
+  "spy",
+  "estoico",
+  "lucio",
+];
+
 function moverToInvMao() {
   let botaoMao = mao.children[0].children[3].children[2];
   // let cartasComBotao = objCartaMao._especial.poder == true;
 
   function colocarBotao() {
-    if (cartasComBotao) {
+
+    if (cartasComBotao.some((el) => mao.children[0].id.includes(el))) {
       botaoMao.style.visibility = "visible";
     }
+
   }
 
-  if(mao.children[0].id != 'cartaMao' ){
-
+  if (mao.children[0].id != "cartaMao") {
     if (inv.children[0].id == "empty1") {
+      colocarBotao();
       inv.replaceChild(mao.children[0], inv.children[0]);
       mao.appendChild(cartaMao);
-      colocarBotao();
       somaPontos();
     } else if (inv.children[1].id == "empty2") {
+      colocarBotao();
       inv.replaceChild(mao.children[0], inv.children[1]);
       mao.appendChild(cartaMao);
-      colocarBotao();
       somaPontos();
     } else if (inv.children[2].id == "empty3") {
+      colocarBotao();
       inv.replaceChild(mao.children[0], inv.children[2]);
       mao.appendChild(cartaMao);
-      colocarBotao();
       somaPontos();
     } else if (inv.children[3].id == "empty4") {
+      colocarBotao();
       inv.replaceChild(mao.children[0], inv.children[3]);
       mao.appendChild(cartaMao);
-      colocarBotao();
       somaPontos();
     }
     criarBtn();
   }
-
 }
 let objCartaMao;
 function moverToCartaMao() {
@@ -1241,6 +1064,7 @@ function moverCartaMonark() {
           (!energia.textContent.includes("🐸") ||
             !energiaNova.textContent.includes("🐸"))
         ) {
+          
           console.log("*****MESMO NOME********");
           console.log(
             "cpm",
@@ -1900,7 +1724,7 @@ function criarBtn() {
 
           setTimeout(eliminarPremioMonark, 10000);
 
-          tudo();
+          colocarEfeito();
         }
       }
       //PODER SPY
@@ -2033,7 +1857,7 @@ function criarBtn() {
             } else if (estoico == inv.children[3]) {
               inv.replaceChild(empty4, estoico);
             }
-
+            somaPontos()
             tudo();
             break;
           }
@@ -2125,11 +1949,11 @@ function criarBtn() {
               "comunista",
               "abelha",
               "estoico",
-              "spy"
+              "spy",
             ];
             totalClicks += 25;
             arenaP.innerHTML = totalClicks + " RODADAS";
-            ulti.textContent = '0%'
+            ulti.textContent = "0%";
             for (let k = 0; k < 4; k++) {
               if (
                 !cartasQueOLucioNaoGosta.some((el) =>
@@ -2273,14 +2097,16 @@ function deletarDeck(e) {
   // 1.0Se a carta nao for Monark
   if (
     e.target.className == "retrato" ||
-    e.target.className == "retrato invis"
+    e.target.className == "retrato invis" ||
+    e.target.className == "retratoEsp" ||
+    e.target.className == "retratoEsp invis" 
   ) {
     //
 
     if (
       e.target.offsetParent.id != "carta-monark" ||
       (e.target.offsetParent.id == "carta-monark" &&
-        e.target.offsetParent.className == "vanish")
+        e.target.offsetParent.className == "monark vanish")
     ) {
       if (e.target.offsetParent == inv.children[0]) {
         inv.replaceChild(empty1, e.target.offsetParent);
@@ -2362,18 +2188,11 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-
     clicks();
-    // lucio();
     abelha();
     colocarEfeito();
-
-    // aplicarEfeitos();
     verificarCartaParaMover();
     blockInv();
-
-    // if(totalClicks == 1){button.style.backgroundColor = "red"
-    // button.innerHTML = "0 CARTAS";}
   } else {
     showVersion();
     button.style.backgroundColor = "red";
@@ -2402,9 +2221,9 @@ export function somaPontos() {
   let ponto2 = 0;
   let ponto3 = 0;
 
-  let cartasSemEnergia = ["comunista", "especial-click", "-click", "estoico"];
+  let cartasSemEnergia = ["comunista", "especial-click", "-click", "estoico", 'premiomonark'];
   //cartas que tem Energia, mas o segundo ataque nao é energia
-  let cartasComEnergiaSemCritico = ["spy", "lucio"];
+  let cartasComEnergiaSemCritico = ["spy", "lucio", 'abelha','speaker'];
 
   // inv 0
   if (

@@ -9,6 +9,10 @@ let inv3 = document.getElementById("inv").firstChild;
 let inv4 = document.getElementById("inv").firstChild;
 let placarEnergia = document.querySelector(".placar");
 let placarRodadas = document.querySelector(".arena");
+let empty1 = inv.children[0];
+let empty2 = inv.children[1];
+let empty3 = inv.children[2];
+let empty4 = inv.children[3];
 // let placarRodadasNumero = parseInt(placarRodadas.textContent)
 
 let nome1 = inv1.firstChild;
