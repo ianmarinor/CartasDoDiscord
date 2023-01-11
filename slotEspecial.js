@@ -195,16 +195,16 @@ let seedEsp = slotEsp.querySelector('.seedEsp')
 
 
 btnCampones.addEventListener('click',function() {
-    sorteio(makeCampones,300);
+    colocarSlot(makeCampones());
 } )
 btnCavalheiro.addEventListener('click',function() {
-    sorteio(makeCavalheiro,250);
+    colocarSlot(makeCavalheiro());
 } )
 btnSangue.addEventListener('click',function() {
-    sorteio(makeSangueAzul,200);
+    colocarSlot(makeSangueAzul()) ;
 } )
 btnRainha.addEventListener('click',function() {
-    sorteio(makeRainha,150);
+    colocarSlot(makeRainha());
 } )
 
 

@@ -462,6 +462,7 @@ function colocarInfoNoWrap() {
 
   cartaParaMover.children[0].children[0].classList.remove("critico");
   cartaParaMover.children[0].children[2].classList.remove("critico");
+  cartaParaMover.children[3].children[0].classList.remove("critico");
   cartaParaMover.classList.remove("critico");
   varianteP.classList.remove("critico");
   cartaParaMover.children[3].children[1].classList.remove("critico");
@@ -578,7 +579,6 @@ function colocarInfoNoWrap() {
     //   true;
     // }
   }
- 
 
   //CARTAS VARIANTES
   if (novaCarta._variante != "") {
@@ -776,7 +776,7 @@ function isJaMovi() {
 
 function verificarCartaParaMover() {
   seedCopyCard = cartaParaMover.children[4];
-
+  
   cartaNotEspecial = especial.nome == "";
   cartaNotMonark = copyCard.id != "carta-monark";
 
@@ -786,7 +786,7 @@ function verificarCartaParaMover() {
     seedObj._isMarket;
 
   // taTudoOk = PodeMover && !isJaMovi() && totalClicks > 0;
-  taTudoOk = true
+  taTudoOk = true;
 
   botao = copyCard.children[3].children[2];
   seed1 = inv.children[0].children[4];
@@ -794,7 +794,7 @@ function verificarCartaParaMover() {
   seed3 = inv.children[2].children[4];
   seed4 = inv.children[3].children[4];
 
-  seedDiferente = true
+  seedDiferente = true;
   // seedDiferente =
   //   seedCopyCard.textContent != seed1.textContent &&
   //   seedCopyCard.textContent != seed2.textContent &&
@@ -807,7 +807,7 @@ function moverOne() {
     // if (cartasComBotao) {
     //   botao.style.visibility = "visible";
     // }
-
+    copyCard = cartaParaMover.cloneNode(true);
     inv.replaceChild(copyCard, inv.children[0]);
     // criarBtn();
     somaPontos();
@@ -823,6 +823,7 @@ function moverTwo() {
     // if (cartasComBotao) {
     //   botao.style.visibility = "visible";
     // }
+    copyCard = cartaParaMover.cloneNode(true);
     inv.replaceChild(copyCard, inv.children[1]);
     // criarBtn();
     somaPontos();
@@ -835,6 +836,7 @@ function moverThree() {
     // if (cartasComBotao) {
     //   botao.style.visibility = "visible";
     // }
+    copyCard = cartaParaMover.cloneNode(true);
     inv.replaceChild(copyCard, inv.children[2]);
     // criarBtn();
     somaPontos();
@@ -848,6 +850,7 @@ function moverFour() {
     // if (cartasComBotao) {
     //   botao.style.visibility = "visible";
     // }
+    copyCard = cartaParaMover.cloneNode(true);
     inv.replaceChild(copyCard, inv.children[3]);
     // criarBtn();
     somaPontos();
@@ -881,11 +884,9 @@ function moverToInvMao() {
   // let cartasComBotao = objCartaMao._especial.poder == true;
 
   function colocarBotao() {
-
     if (cartasComBotao.some((el) => mao.children[0].id.includes(el))) {
       botaoMao.style.visibility = "visible";
     }
-
   }
 
   if (mao.children[0].id != "cartaMao") {
@@ -962,15 +963,13 @@ function moverCartaMonark() {
       function isSpy() {
         for (let j = 0; j < 4; j++) {
           let energia = inv.children[j].children[3].children[0];
-          let energiaNova = inv.children[j].children[3].children[1];
 
           if (
             inv.children[j].id == "spy" &&
-            inv.children[j].className != "invisi" &&
-            !energia.textContent.includes("🐸")
+            inv.children[j].className != "invisi"
           ) {
             console.log(energia);
-            console.log(energiaNova);
+
             return [true, j];
           }
         }
@@ -985,56 +984,29 @@ function moverCartaMonark() {
           let danoMonarkEscudo = 1.3;
           let minimoEscudo = 75;
           let energia = inv.children[j].children[3].children[0];
-          let energiaNova = inv.children[j].children[3].children[1];
-          if (
-            energiaNova.textContent.includes("🐸") ||
-            energia.textContent.includes("🐸")
-          ) {
-            // SE O ESCUDO ESTA NA ENERGIA NOVA ------
-            if (energiaNova.textContent.includes("🐸")) {
-              // SE O ESCUDO é MAIO QUE 10
-              if (parseInt(energiaNova.textContent) > minimoEscudo) {
-                // DIMINUA DE 1.5
 
-                energiaNova.textContent =
-                  Math.floor(
-                    parseInt(energiaNova.textContent) / danoMonarkEscudo
-                  ) + "🐸";
-                console.log("***TIREI NOVO****");
-                copyCard.classList.add("monark");
-                //SE FOR MENOR QUE 10, MUDE O EMOJI - menos se for lucio
-              } else if (inv.children[i].id != "lucio") {
-                energiaNova.textContent =
-                  parseInt(energiaNova.textContent) + "⚡";
-                copyCard.classList.add("monark");
-              }
-
-              // SE O ESCUDO ESTA NA ENERGIA VELHA -------------
-            } else if (energia.textContent.includes("🐸")) {
-              // SE O ESCUDO é MAIO QUE 10
-              if (parseInt(energia.textContent) > minimoEscudo) {
-                // DIMINUA DE 1.5
-                energia.textContent =
-                  Math.floor(parseInt(energia.textContent) / danoMonarkEscudo) +
-                  "🐸";
-                copyCard.classList.add("monark");
-                console.log("***TIREI NOVO****");
-                //SE FOR MENOR QUE 10, MUDE O EMOJI
-              } else {
-                energia.textContent = parseInt(energia.textContent) + "⚡";
-                copyCard.classList.add("monark");
-              }
+          if (energia.textContent.includes("🐸")) {
+            // SE O ESCUDO é MAIO QUE 10
+            if (parseInt(energia.textContent) > minimoEscudo) {
+              // DIMINUA DE 1.5
+              energia.textContent =
+                Math.floor(parseInt(energia.textContent) / danoMonarkEscudo) +
+                "🐸";
+              copyCard.classList.add("monark");
+              console.log("***TIREI NOVO****");
+              //SE FOR MENOR QUE 10, MUDE O EMOJI
+            } else {
+              energia.textContent = parseInt(energia.textContent) + "⚡";
+              copyCard.classList.add("monark");
             }
           }
         }
       }
+
       hasBarrier();
 
       for (let i = 0; i < 4; i++) {
         let energia = inv.children[i].children[3].children[0];
-        let energiaNova = inv.children[i].children[3].children[1];
-
-        // SE NO DECK TEM ESCUDO
 
         //SE TIVER SPY
         if (spyCheck[0]) {
@@ -1061,18 +1033,15 @@ function moverCartaMonark() {
           cartaParaMover.children[0].children[0].textContent ==
             inv.children[i].children[0].children[0].textContent &&
           inv.children[i].id != "carta-monark" &&
-          (!energia.textContent.includes("🐸") ||
-            !energiaNova.textContent.includes("🐸"))
+          !energia.textContent.includes("🐸")
         ) {
-          
           console.log("*****MESMO NOME********");
           console.log(
             "cpm",
             cartaParaMover.children[0].children[0].textContent
           );
           console.log(inv.children[i].children[0].children[0].textContent);
-          console.log(!energia.textContent.includes("🐸"));
-          console.log(!energiaNova.textContent.includes("🐸"));
+          console.log("conmtem barreira", energia.textContent.includes("🐸"));
           inv.replaceChild(copyCard, inv.children[i]);
 
           break;
@@ -1091,7 +1060,8 @@ const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent;
 
 function critico() {
   //nome
-
+  // seedString
+  console.log("seedString: ", seedString);
   let corDoNome = cartaParaMover.children[0].children[0];
   let corDaCidade = cartaParaMover.children[0].children[2];
 
@@ -1103,222 +1073,110 @@ function critico() {
   cartaParaMover.classList.remove("critico");
   //PODER
   let poderTremer = cartaParaMover.children[3].children[0];
-  let poderNovo = cartaParaMover.children[3].children[1];
+
+  function colocarCritico() {
+    corDaCidade.classList.add("critico");
+    corDoNome.classList.add("critico");
+    cartaParaMover.children[0].children[1].style.fontWeight = "bold";
+    poderTremer.classList.add("critico");
+    poderTremer.style.fontWeight = "bold";
+    poderTremer.innerHTML = parseInt(poderTremer.textContent) * 2 + "⚡";
+  }
+  function colocarUltraCritico() {
+    cartaParaMover.classList.add("critico");
+    varianteP.classList.add("critico");
+
+    poderTremer.classList.add("critico");
+    poderTremer.style.fontWeight = "bold";
+    poderTremer.innerHTML = parseInt(poderTremer.textContent) * 3 + "⚡";
+  }
 
   //gandalf
   if (
     cartaParaMover.id != "carta-monark" &&
-    cartaParaMover.id != "carta-speaker" &&
-    especial.nome == ""
+    cartaParaMover.id != "carta-speaker"
   ) {
     if (seedString[1] == "1" && seedString[3] == "0") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+      colocarCritico();
 
       if (variante == "farmacêutico") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
 
     //turu
     if (seedString[1] == "2" && seedString[3] == "1") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+      colocarCritico();
 
       if (variante == "bão") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
     //nefesto
     if (seedString[1] == "3" && seedString[3] == "2") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+      colocarCritico();
 
       if (variante == "apenas") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
     //blackao
     if (seedString[1] == "4" && seedString[3] == "3") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+      colocarCritico();
 
       if (variante == "fonte") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
     //antonio
     if (seedString[1] == "5" && seedString[3] == "4") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+      colocarCritico();
 
       if (variante == "ixqueiro") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
     //pedro
     if (seedString[1] == "6" && seedString[3] == "5") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+      colocarCritico();
 
       if (variante == "abalo") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
     //curtas
     if (seedString[1] == "7" && seedString[3] == "6") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+      colocarCritico();
 
       if (variante == "grito") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
     //twelve
     if (seedString[1] == "8" && seedString[3] == "7") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+      colocarCritico();
 
       if (variante == "dia") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
     //junks
-    if (seedString[1] == "9" && seedString[3] == "8") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
 
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+    console.log(seedString);
+
+    if (seedString[1] == "9" && seedString[3] == "8") {
+      colocarCritico();
 
       if (variante == "quimico") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
     //murilo
     if (seedString[1] == "0" && seedString[3] == "9") {
-      corDaCidade.classList.add("critico");
-      corDoNome.classList.add("critico");
-      cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-
-      poderTremer.style.textDecorationLine = "line-through";
-      poderNovo.textContent = parseInt(poderTremer.textContent) * 2 + "⚡";
-      poderNovo.style.visibility = "visible";
+      colocarCritico();
 
       if (variante == "pêra") {
-        cartaParaMover.classList.add("critico");
-        varianteP.classList.add("critico");
-        poderNovo.classList.add("critico");
-
-        poderTremer.style.textDecorationLine = "line-through";
-        poderNovo.textContent = parseInt(poderTremer.textContent) * 6 + "⚡";
-        poderNovo.style.fontSize = "1.5em";
-        poderNovo.style.visibility = "visible";
+        colocarUltraCritico();
       }
     }
   }
@@ -1524,25 +1382,20 @@ function criarBtn() {
           cartaParaMover.id != "comunista" &&
           cartaParaMover.id != "estoico";
 
-        let poderCartaPack = cartaParaMover.children[3].children[0];
-        let poderNovoCartaPack = cartaParaMover.children[3].children[1];
+        let poderCartaPack =  cartaParaMover.children[3].children[0];
+        
         // tudo()
 
+        //BOOST BARALHO
         if (cartasQueATenicaNaoGostaBaralho) {
           varianteTenica.children[3].children[2].style.visibility = "hidden";
-          if (poderNovoCartaPack.textContent != "") {
-            poderNovoCartaPack.textContent =
-              parseInt(poderNovoCartaPack.textContent) +
-              parseInt(varianteTenica.children[3].children[0].textContent) +
-              "👑";
-            adicionarCLiquesTenica();
-          } else {
-            poderCartaPack.textContent =
-              parseInt(poderCartaPack.textContent) +
-              parseInt(varianteTenica.children[3].children[0].textContent) +
-              "👑";
-            adicionarCLiquesTenica();
-          }
+          console.log(poderCartaPack);
+
+          poderCartaPack.innerHTML =
+            parseInt(poderCartaPack.textContent) +
+            parseInt(varianteTenica.children[3].children[0].textContent) +
+            "👑";
+          adicionarCLiquesTenica();
         }
 
         let cartasQueATenicaNaoGosta = [
@@ -1568,21 +1421,15 @@ function criarBtn() {
             // true
           ) {
             // se o poder novo for presente
-            if (inv.children[j].children[3].children[1].textContent != "") {
-              inv.children[j].children[3].children[1].textContent =
-                parseInt(inv.children[j].children[3].children[1].textContent) +
-                parseInt(varianteTenica.children[3].children[0].textContent) +
-                "👑";
-              adicionarCLiquesTenica();
-            } else {
-              inv.children[j].children[3].children[0].textContent =
-                parseInt(inv.children[j].children[3].children[0].textContent) +
-                parseInt(varianteTenica.children[3].children[0].textContent) +
-                "👑";
-              adicionarCLiquesTenica();
-            }
+
+            inv.children[j].children[3].children[0].textContent =
+              parseInt(inv.children[j].children[3].children[0].textContent) +
+              parseInt(varianteTenica.children[3].children[0].textContent) +
+              "👑";
+            adicionarCLiquesTenica();
           }
         }
+
         somaPontos();
       } // poder COMUNISTA
       if (
@@ -1857,7 +1704,7 @@ function criarBtn() {
             } else if (estoico == inv.children[3]) {
               inv.replaceChild(empty4, estoico);
             }
-            somaPontos()
+            somaPontos();
             tudo();
             break;
           }
@@ -2099,7 +1946,7 @@ function deletarDeck(e) {
     e.target.className == "retrato" ||
     e.target.className == "retrato invis" ||
     e.target.className == "retratoEsp" ||
-    e.target.className == "retratoEsp invis" 
+    e.target.className == "retratoEsp invis"
   ) {
     //
 
@@ -2221,9 +2068,15 @@ export function somaPontos() {
   let ponto2 = 0;
   let ponto3 = 0;
 
-  let cartasSemEnergia = ["comunista", "especial-click", "-click", "estoico", 'premiomonark'];
+  let cartasSemEnergia = [
+    "comunista",
+    "especial-click",
+    "-click",
+    "estoico",
+    "premiomonark",
+  ];
   //cartas que tem Energia, mas o segundo ataque nao é energia
-  let cartasComEnergiaSemCritico = ["spy", "lucio", 'abelha','speaker'];
+  let cartasComEnergiaSemCritico = ["spy", "lucio", "abelha", "speaker"];
 
   // inv 0
   if (
