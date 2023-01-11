@@ -19,10 +19,8 @@ import {
   lucioEfeito,
 } from "./modules/especial.js";
 
-
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 import { ativarBtn } from "./slotEspecial.js";
-
 
 let versaoHTML = document.getElementById("versao");
 let versao = "Alpha 1.6";
@@ -385,21 +383,22 @@ function fabricaDeCarta(
 // escolherPoder()
 
 ////D O M
-let packP = document.getElementById("pack")
-const semCarta = '<div id="carta">' +
-'<div class="nameAndCidadeWrapper">' +
+let packP = document.getElementById("pack");
+const semCarta =
+  '<div id="carta">' +
+  '<div class="nameAndCidadeWrapper">' +
   '<p class="nome"></p>' +
   '<div class="variante"></div>' +
   '<p class="cidade"></p>' +
   '<div class="especial"></div>' +
-'</div>' +
-'<div class="retrato"></div>' +
-'<p class="cargo"></p>' +
-'<div class="poder">' +
+  "</div>" +
+  '<div class="retrato"></div>' +
+  '<p class="cargo"></p>' +
+  '<div class="poder">' +
   '<p class="ataque"></p>' +
   '<p class="novoAtaque"></p>' +
   '<button class="action">PRESS</button>' +
-'</div>'
+  "</div>";
 
 let button = document.getElementById("btn");
 let h1 = document.getElementsByTagName("h1")[0];
@@ -517,7 +516,7 @@ function colocarInfoNoWrap() {
     seloP.innerHTML = "🎲";
   }
 
-  arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
+  arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " ⚡";
 
   // if (novaCarta._especial.nome != "") {
@@ -686,7 +685,7 @@ function colocarInfoNoWrap() {
     } else {
     }
   }
-  packP.replaceChild(cartaP, packP.children[0])
+  packP.replaceChild(cartaP, packP.children[0]);
   console.log("**NOVA CARTA**", novaCarta);
 
   // console.log('especial', especial.cartaId);
@@ -829,50 +828,38 @@ function verificarCartaParaMover() {
 function moverOne() {
   copyCard = cartaParaMover.cloneNode(true);
   if (inv.children[0].id == "empty1" && seedDiferente && taTudoOk) {
-   
-    
-    if(totalClicks <=0 && packP.children[0].id != 'carta'){
-
+    if (totalClicks <= 0 && packP.children[0].id != "carta") {
       inv.replaceChild(copyCard, inv.children[0]);
-      packP.innerHTML = semCarta
+      packP.innerHTML = semCarta;
       console.log(packP.children[0]);
       criarBtn();
       somaPontos();
+    } else if (packP.children[0].id != "carta") {
+      inv.replaceChild(copyCard, inv.children[0]);
+      criarBtn();
+      somaPontos();
 
-      
-
-    } else if (packP.children[0].id != 'carta'){
-    inv.replaceChild(copyCard, inv.children[0]);
-    criarBtn();
-    somaPontos();
-
-    tudo();
+      tudo();
     }
-
-    
   }
-  
 }
 
 function moverTwo() {
   copyCard = cartaParaMover.cloneNode(true);
 
   if (inv.children[1].id == "empty2" && seedDiferente && taTudoOk) {
-    
-    if(totalClicks <=0 && packP.children[0].id != 'carta'){
-
+    if (totalClicks <= 0 && packP.children[0].id != "carta") {
       inv.replaceChild(copyCard, inv.children[1]);
-      packP.innerHTML = semCarta
+      packP.innerHTML = semCarta;
       console.log(packP.children[0]);
       criarBtn();
       somaPontos();
+    } else if (packP.children[0].id != "carta") {
+      inv.replaceChild(copyCard, inv.children[1]);
+      criarBtn();
+      somaPontos();
 
-    } else if (packP.children[0].id != 'carta'){
-    inv.replaceChild(copyCard, inv.children[1]);
-    criarBtn();
-    somaPontos();
-
-    tudo();
+      tudo();
     }
   }
 }
@@ -880,20 +867,18 @@ function moverThree() {
   copyCard = cartaParaMover.cloneNode(true);
 
   if (inv.children[2].id == "empty3" && seedDiferente && taTudoOk) {
-    if(totalClicks <=0 && packP.children[0].id != 'carta'){
-
+    if (totalClicks <= 0 && packP.children[0].id != "carta") {
       inv.replaceChild(copyCard, inv.children[2]);
-      packP.innerHTML = semCarta
+      packP.innerHTML = semCarta;
       console.log(packP.children[0]);
       criarBtn();
       somaPontos();
+    } else if (packP.children[0].id != "carta") {
+      inv.replaceChild(copyCard, inv.children[2]);
+      criarBtn();
+      somaPontos();
 
-    } else if (packP.children[0].id != 'carta'){
-    inv.replaceChild(copyCard, inv.children[2]);
-    criarBtn();
-    somaPontos();
-
-    tudo();
+      tudo();
     }
   }
 }
@@ -901,20 +886,18 @@ function moverThree() {
 function moverFour() {
   copyCard = cartaParaMover.cloneNode(true);
   if (inv.children[3].id == "empty4" && seedDiferente && taTudoOk) {
-    if(totalClicks <=0 && packP.children[0].id != 'carta'){
-
+    if (totalClicks <= 0 && packP.children[0].id != "carta") {
       inv.replaceChild(copyCard, inv.children[3]);
-      packP.innerHTML = semCarta
+      packP.innerHTML = semCarta;
       console.log(packP.children[0]);
       criarBtn();
       somaPontos();
+    } else if (packP.children[0].id != "carta") {
+      inv.replaceChild(copyCard, inv.children[3]);
+      criarBtn();
+      somaPontos();
 
-    } else if (packP.children[0].id != 'carta'){
-    inv.replaceChild(copyCard, inv.children[3]);
-    criarBtn();
-    somaPontos();
-
-    tudo();
+      tudo();
     }
   }
 }
@@ -977,27 +960,14 @@ function moverToInvMao() {
 let objCartaMao;
 function moverToCartaMao() {
   objCartaMao = novaCarta;
-  
 
-
-  if(totalClicks <=0 && packP.children[0].id != 'carta'){
-
+  if (totalClicks <= 0 && packP.children[0].id != "carta") {
     mao.replaceChild(copyCard, mao.children[0]);
-    packP.innerHTML = semCarta
-   
-
-    
-
-  } else if (packP.children[0].id != 'carta'){
+    packP.innerHTML = semCarta;
+  } else if (packP.children[0].id != "carta") {
     mao.replaceChild(copyCard, mao.children[0]);
     tudo();
   }
-
-
-
-
-
-  
 }
 
 document.addEventListener("keydown", (event) => {
@@ -1081,6 +1051,22 @@ function moverCartaMonark() {
         }
       }
 
+      function deckVazio() {
+        for (let j = 0; j < 4; j++) {
+          if (
+            (inv.children[j].id == "empty1" ||
+              inv.children[j].id == "empty2" ||
+              inv.children[j].id == "empty3" ||
+              inv.children[j].id == "empty4") &&
+            copyCard.id == "carta-monark"
+          ) {
+            return [true, j];
+          }
+        }
+        return false;
+      }
+      let deckCheck = deckVazio();
+
       hasBarrier();
 
       for (let i = 0; i < 4; i++) {
@@ -1095,14 +1081,8 @@ function moverCartaMonark() {
           break;
 
           //SE DECK VAZIO
-        } else if (
-          (inv.children[i].id == "empty1" ||
-            inv.children[i].id == "empty2" ||
-            inv.children[i].id == "empty3" ||
-            inv.children[i].id == "empty4") &&
-          copyCard.id == "carta-monark"
-        ) {
-          inv.replaceChild(copyCard, inv.children[i]);
+        } else if (deckCheck[0]) {
+          inv.replaceChild(copyCard, inv.children[deckCheck[1]]);
           console.log("*****DECK VAZIO********");
           break;
 
@@ -1384,7 +1364,7 @@ function criarBtn() {
         varianteClique.children[3].children[2].style.visibility = "hidden";
         button.style.backgroundColor = "";
         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-        arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
+        arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 
         if (varianteClique == inv.children[0]) {
           inv.replaceChild(empty1, varianteClique);
@@ -1413,7 +1393,7 @@ function criarBtn() {
             "hidden";
           button.style.backgroundColor = "";
           button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-          arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
+          arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 
           if (varianteMenosClique == inv.children[0]) {
             inv.replaceChild(empty1, varianteMenosClique);
@@ -1446,7 +1426,7 @@ function criarBtn() {
           } else {
             totalClicks = 50;
           }
-          arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
+          arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
         }
 
         let varianteTenica = e.target.offsetParent;
@@ -1810,7 +1790,7 @@ function criarBtn() {
               "spy",
             ];
             totalClicks += 25;
-            arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
+            arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
             ulti.textContent = "0%";
             //colocar barreira
             for (let k = 0; k < 4; k++) {
@@ -1970,8 +1950,10 @@ function deletarDeck(e) {
         // "carta-primeminister",
         // "carta-premiomarino",
       ];
-      let isVendivel = cartasVendiveis.some((el) =>
-        e.target.offsetParent.id.includes(el)
+      let isVendivel = cartasVendiveis.some(
+        (el) =>
+          e.target.offsetParent.id.includes(el) &&
+          energia.innerHTML.includes("⚡")
       );
 
       function venderCarta() {
@@ -1985,22 +1967,22 @@ function deletarDeck(e) {
       if (e.target.offsetParent == inv.children[0]) {
         inv.replaceChild(empty1, e.target.offsetParent);
         venderCarta();
-        ativarBtn()
+        ativarBtn();
         somaPontos();
       } else if (e.target.offsetParent == inv.children[1]) {
         inv.replaceChild(empty2, e.target.offsetParent);
         venderCarta();
-        ativarBtn()
+        ativarBtn();
         somaPontos();
       } else if (e.target.offsetParent == inv.children[2]) {
         inv.replaceChild(empty3, e.target.offsetParent);
         venderCarta();
-        ativarBtn()
+        ativarBtn();
         somaPontos();
       } else if (e.target.offsetParent == inv.children[3]) {
         inv.replaceChild(empty4, e.target.offsetParent);
         venderCarta();
-        ativarBtn()
+        ativarBtn();
         somaPontos();
       }
     }
@@ -2057,22 +2039,16 @@ function limparInput() {
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
-  
-if (totalClicks > 0) {
-
-  if(totalClicks == 1 ){
-    showVersion();
-    button.style.backgroundColor = "red";
-    button.innerHTML = "0 CARTAS";
-  } else {
-    button.style.backgroundColor = "";
-    button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
+  if (totalClicks > 0) {
+    if (totalClicks == 1) {
+      showVersion();
+      button.style.backgroundColor = "red";
+      button.innerHTML = "0 CARTAS";
+    } else {
+      button.style.backgroundColor = "";
+      button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
     }
 
-
-
-  
-    
     start();
     limparInput();
     escolherIntegrante();
@@ -2089,11 +2065,8 @@ if (totalClicks > 0) {
     colocarEfeito();
     verificarCartaParaMover();
     blockInv();
-    ativarBtn()
-    
-
+    ativarBtn();
   } else {
-    
   }
 }
 let aumentou = false;
@@ -2103,7 +2076,7 @@ function clicks() {
     rodadas++;
     aumentou = true;
 
-    arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
+    arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
   } else {
     aumentou = false;
   }
@@ -2224,7 +2197,7 @@ function deckPronto() {
   moverCarta();
   rodadas = 0;
 
-  arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
+  arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 }
 
 document.addEventListener("keydown", (event) => {
