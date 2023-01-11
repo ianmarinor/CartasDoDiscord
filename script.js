@@ -2013,18 +2013,10 @@ export function somaPontos() {
     !cartasSemEnergia.some((el) => inv.children[0].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (
-      inv.children[0].children[3].children[1].textContent != "" &&
-      !cartasComEnergiaSemCritico.some((el) => inv.children[0].id.includes(el))
-    ) {
-      ponto0 = parseInt(inv.children[0].children[3].children[1].textContent);
-      //
-
-      // se nao, pegue o poder velho
-    } else {
+    
       ponto0 = parseInt(inv.children[0].children[3].children[0].textContent);
       //
-    }
+    
   }
 
   // inv 1
@@ -2033,18 +2025,10 @@ export function somaPontos() {
     !cartasSemEnergia.some((el) => inv.children[1].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (
-      inv.children[1].children[3].children[1].textContent != "" &&
-      !cartasComEnergiaSemCritico.some((el) => inv.children[1].id.includes(el))
-    ) {
-      ponto1 = parseInt(inv.children[1].children[3].children[1].textContent);
-      //
-
-      // se nao, pegue o poder velho
-    } else {
+    
       ponto1 = parseInt(inv.children[1].children[3].children[0].textContent);
       //
-    }
+    
   }
 
   // inv 2
@@ -2053,18 +2037,10 @@ export function somaPontos() {
     !cartasSemEnergia.some((el) => inv.children[2].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (
-      inv.children[2].children[3].children[1].textContent != "" &&
-      !cartasComEnergiaSemCritico.some((el) => inv.children[2].id.includes(el))
-    ) {
-      ponto2 = parseInt(inv.children[2].children[3].children[1].textContent);
-      //
-
-      // se nao, pegue o poder velho
-    } else {
+    
       ponto2 = parseInt(inv.children[2].children[3].children[0].textContent);
       //
-    }
+    
   }
 
   // inv 3
@@ -2073,18 +2049,10 @@ export function somaPontos() {
     !cartasSemEnergia.some((el) => inv.children[3].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    if (
-      inv.children[3].children[3].children[1].textContent != "" &&
-      !cartasComEnergiaSemCritico.some((el) => inv.children[3].id.includes(el))
-    ) {
-      ponto2 = parseInt(inv.children[3].children[3].children[1].textContent);
-      //
-
-      // se nao, pegue o poder velho
-    } else {
+    
       ponto3 = parseInt(inv.children[3].children[3].children[0].textContent);
       //
-    }
+    
   }
 
   totalPontos = ponto0 + ponto1 + ponto2 + ponto3;
