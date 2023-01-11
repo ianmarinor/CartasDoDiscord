@@ -169,13 +169,13 @@ li {
 
 .arena {
   margin: 0.1em;
-  font-size: 2em;
+  font-size: 1.5em;
   color: wheat;
   text-align: center;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   /* font-family: blackao; */
-  grid-area: pack;
-  align-self: end;
+  grid-area: btn;
+  align-self: start;
   margin-bottom: 30px;
 }
 
@@ -691,11 +691,16 @@ li {
   opacity: 0.6;
 }
 
+#btnContainer{
+  width: 200px;
+  grid-area: btn;
+  display: flex;
+  flex-direction: column;
+}
+
 #btn {
   padding: 5px;
   background-color: #11446d;
-  align-self: flex-start;
-  grid-area: btn;
   border-radius: 5px;
   height: 50px;
   border: 1px black solid;
@@ -793,7 +798,7 @@ p {
 }
 
 #btnEspecial {
-  height: 50%;
+  height: 70%;
   grid-area: btnReset;
   display: flex;
   flex-direction: column-reverse;
@@ -810,7 +815,7 @@ p {
   grid-area: btnReset;
   align-self: end;
   width: 90%;
-  height: 20%;
+  height: 50px;
 }
 
 .voar {

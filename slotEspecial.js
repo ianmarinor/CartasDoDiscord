@@ -3,6 +3,105 @@ import { escolherEspecial, especial }from "./modules/especial.js";
 
 
 
+let moneyP = document.getElementById('money')
+let btnCampones = document.getElementById('btnCampones')
+let btnCavalheiro = document.getElementById('btnCavalheiro')
+let btnSangue = document.getElementById('btnSangue')
+let btnRainha = document.getElementById('btnRainha')
+
+let precoCampones = 10
+let precoCavalheiro = 30
+let precoSangueAzul = 50
+let precoRainha = 100
+
+export function ativarBtn(){
+    console.log('*******ATIVAR BTN********');
+
+    // ATIVAR CAMPO
+    if(parseInt(moneyP.textContent) >= precoCampones){
+        btnCampones.disabled = false
+        
+        console.log('campones enable');
+        
+    } else{
+        btnCampones.disabled = true
+        console.log('campones disenable');
+    }
+
+
+    //ATIVAR CAVA
+    if(parseInt(moneyP.textContent) >= precoCavalheiro){
+        btnCavalheiro.disabled = false
+        
+        console.log('Cavalheiro enable');
+        
+    } else{
+        btnCavalheiro.disabled = true
+        console.log('Cavalheiro disenable');
+    }
+
+    //ATIVAR SA
+    if(parseInt(moneyP.textContent) >= precoSangueAzul){
+        btnSangue.disabled = false
+        
+        console.log('SA enable');
+        
+    } else{
+        btnSangue.disabled = true
+        console.log('SA disenable');
+    }
+
+    //ATIVAR RAINHA
+    if(parseInt(moneyP.textContent) >= precoRainha){
+        btnRainha.disabled = false
+        
+        console.log('SA enable');
+        
+    } else{
+        btnRainha.disabled = true
+        console.log('SA disenable');
+    }
+
+
+
+
+}
+
+
+function comprarCampones(){
+    if(parseInt(moneyP.textContent) >= precoCampones){
+        colocarSlot(makeCampones())
+        moneyP.textContent = parseInt(moneyP.textContent) - precoCampones
+        ativarBtn()
+    }
+}
+
+function comprarCavalheiro(){
+    if(parseInt(moneyP.textContent) >= precoCavalheiro){
+        colocarSlot(makeCavalheiro())
+        moneyP.textContent = parseInt(moneyP.textContent) - precoCavalheiro
+        ativarBtn()
+    }
+}
+function comprarSangue(){
+    if(parseInt(moneyP.textContent) >= precoSangueAzul){
+        colocarSlot(makeSangueAzul())
+        moneyP.textContent = parseInt(moneyP.textContent) - precoSangueAzul
+        ativarBtn()
+    }
+}
+function comprarRainha(){
+    if(parseInt(moneyP.textContent) >= precoRainha){
+        colocarSlot(makeRainha())
+        moneyP.textContent = parseInt(moneyP.textContent) - precoRainha
+        ativarBtn()
+    }
+}
+
+
+
+
+
 
 const cartaEsp = '<div class="cartaEsp">' +
 '<div class="nameAndCidadeWrapperEsp">' +
@@ -32,6 +131,9 @@ export let stringSeed = seedRNG().toString()
 
 
 function makeCampones(){
+    
+    
+
      stringSeed = seedRNG().toString()
     let arrSeed = stringSeed.split('')
     console.log('arrSeedCampones',arrSeed)
@@ -46,8 +148,9 @@ function makeCampones(){
      seedCampones = specialSeed.join('')
      seedEspecial = seedCampones
     console.log('seedCampones',seedCampones)
-
+    ativarBtn()
     return seedCampones
+    
 }
 
 
@@ -112,14 +215,16 @@ function makeRainha(){
 
 
 
+
+
 function colocarSlot(tipo){
 
     console.log('chamou*********');
 
-let btnCampones = document.getElementById('btnCampones')
-let btnCavalheiro = document.getElementById('btnCavalheiro')
-let btnSangue = document.getElementById('btnSangue')
-let btnRainha = document.getElementById('btnRainha')
+ btnCampones = document.getElementById('btnCampones')
+ btnCavalheiro = document.getElementById('btnCavalheiro')
+ btnSangue = document.getElementById('btnSangue')
+ btnRainha = document.getElementById('btnRainha')
 
 
 
@@ -134,6 +239,7 @@ let ataqueE = slotEsp.querySelector('.ataqueEsp')
 let novoAtaqueE = slotEsp.querySelector('.novoAtaqueEsp')
 let actionE = slotEsp.querySelector('.actionEsp')
 let seedEsp = slotEsp.querySelector('.seedEsp')
+
 
 
 
@@ -195,16 +301,16 @@ let seedEsp = slotEsp.querySelector('.seedEsp')
 
 
 btnCampones.addEventListener('click',function() {
-    colocarSlot(makeCampones());
+    comprarCampones();
 } )
 btnCavalheiro.addEventListener('click',function() {
-    colocarSlot(makeCavalheiro());
+    comprarCavalheiro();
 } )
 btnSangue.addEventListener('click',function() {
-    colocarSlot(makeSangueAzul()) ;
+     comprarSangue()
 } )
 btnRainha.addEventListener('click',function() {
-    colocarSlot(makeRainha());
+    comprarRainha()
 } )
 
 

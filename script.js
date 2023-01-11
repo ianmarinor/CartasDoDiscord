@@ -19,7 +19,10 @@ import {
   lucioEfeito,
 } from "./modules/especial.js";
 
+
 import { aplicarEfeitos } from "./aplicarEfeito.js";
+import { ativarBtn } from "./slotEspecial.js";
+
 
 let versaoHTML = document.getElementById("versao");
 let versao = "Alpha 1.6";
@@ -514,7 +517,7 @@ function colocarInfoNoWrap() {
     seloP.innerHTML = "🎲";
   }
 
-  arenaP.innerHTML = totalClicks + " RODADAS";
+  arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
   placarP.innerHTML = totalPontos + " ⚡";
 
   // if (novaCarta._especial.nome != "") {
@@ -1381,7 +1384,7 @@ function criarBtn() {
         varianteClique.children[3].children[2].style.visibility = "hidden";
         button.style.backgroundColor = "";
         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-        arenaP.innerHTML = totalClicks + " RODADAS";
+        arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
 
         if (varianteClique == inv.children[0]) {
           inv.replaceChild(empty1, varianteClique);
@@ -1410,7 +1413,7 @@ function criarBtn() {
             "hidden";
           button.style.backgroundColor = "";
           button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-          arenaP.innerHTML = totalClicks + " RODADAS";
+          arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
 
           if (varianteMenosClique == inv.children[0]) {
             inv.replaceChild(empty1, varianteMenosClique);
@@ -1443,7 +1446,7 @@ function criarBtn() {
           } else {
             totalClicks = 50;
           }
-          arenaP.innerHTML = totalClicks + " RODADAS";
+          arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
         }
 
         let varianteTenica = e.target.offsetParent;
@@ -1807,7 +1810,7 @@ function criarBtn() {
               "spy",
             ];
             totalClicks += 25;
-            arenaP.innerHTML = totalClicks + " RODADAS";
+            arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
             ulti.textContent = "0%";
             //colocar barreira
             for (let k = 0; k < 4; k++) {
@@ -1981,18 +1984,22 @@ function deletarDeck(e) {
       if (e.target.offsetParent == inv.children[0]) {
         inv.replaceChild(empty1, e.target.offsetParent);
         venderCarta();
+        ativarBtn()
         somaPontos();
       } else if (e.target.offsetParent == inv.children[1]) {
         inv.replaceChild(empty2, e.target.offsetParent);
         venderCarta();
+        ativarBtn()
         somaPontos();
       } else if (e.target.offsetParent == inv.children[2]) {
         inv.replaceChild(empty3, e.target.offsetParent);
         venderCarta();
+        ativarBtn()
         somaPontos();
       } else if (e.target.offsetParent == inv.children[3]) {
         inv.replaceChild(empty4, e.target.offsetParent);
         venderCarta();
+        ativarBtn()
         somaPontos();
       }
     }
@@ -2081,6 +2088,9 @@ if (totalClicks > 0) {
     colocarEfeito();
     verificarCartaParaMover();
     blockInv();
+    ativarBtn()
+    
+
   } else {
     
   }
@@ -2092,7 +2102,7 @@ function clicks() {
     rodadas++;
     aumentou = true;
 
-    arenaP.innerHTML = totalClicks + " RODADAS";
+    arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
   } else {
     aumentou = false;
   }
@@ -2211,10 +2221,9 @@ function deckPronto() {
   moverCarta();
   moverCarta();
   moverCarta();
-  totalClicks += 5;
   rodadas = 0;
 
-  arenaP.innerHTML = totalClicks + " CARTAS";
+  arenaP.innerHTML = 'VOCÊ TEM ' + totalClicks + ' CARTAS';
 }
 
 document.addEventListener("keydown", (event) => {
