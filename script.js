@@ -1960,14 +1960,15 @@ function deletarDeck(e) {
     ) {
       let energia = e.target.offsetParent.children[3].children[0];
       let cartasVendiveis = [
+        "carta-semcargo",
         "carta-people",
         "carta-monark",
         "carta-gentleman",
-        "carta-nobre",
-        "carta-ministro",
-        "carta-lord",
-        "carta-primeminister",
-        "carta-premiomarino",
+        // "carta-nobre",
+        // "carta-ministro",
+        // "carta-lord",
+        // "carta-primeminister",
+        // "carta-premiomarino",
       ];
       let isVendivel = cartasVendiveis.some((el) =>
         e.target.offsetParent.id.includes(el)
