@@ -174,12 +174,25 @@ li {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   /* font-family: blackao; */
 }
-.placar {
+
+#moneyWrap{
+  width: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.placar, #money {
   text-align: center;
   font-size: 3em;
   color: wheat;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
+#money {
+  
+  font-size: 1.5em;
+  
+}
+
 #pontoQuest {
   text-align: center;
   font-size: 1.4em;
@@ -189,6 +202,9 @@ li {
 
 .wrap {
   grid-area: wrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 /* ************************* */
 /* CARTAS VARIACOES */

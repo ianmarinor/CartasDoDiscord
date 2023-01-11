@@ -401,7 +401,12 @@ let efeito2P = document.getElementById("efeito2");
 let efeito3P = document.getElementById("efeito3");
 let efeito4P = document.getElementById("efeito4");
 let mao = document.getElementById("mao");
-let pontoQuest = document.getElementById("pontoQuest");
+let moneyP = document.getElementById("money");
+
+function zerarMoney() {
+  moneyP.textContent = 0;
+}
+zerarMoney();
 //div poder
 let ataqueP = document.querySelector(".ataque");
 let defesaP = document.querySelector(".defesa");
@@ -1563,7 +1568,7 @@ function criarBtn() {
 
       function spy(e) {
         let spy = e.target.offsetParent;
-       
+
         let spyWatch = spy.children[3].children[1];
         let botao = spy.children[3].children[2];
         let retrato = spy.children[1];
@@ -1581,7 +1586,6 @@ function criarBtn() {
 
         for (let i = 0; i < 4; i++) {
           if (inv.children[i].id == "carta-semcargo") {
-            
             let semcargo = inv.children[i];
             let poderSemcargo = semcargo.children[3].children[0];
 
@@ -1610,7 +1614,6 @@ function criarBtn() {
           }
         }
       }
-
 
       // PODER ESTOICO
       if (
@@ -1693,30 +1696,28 @@ function criarBtn() {
             if (inv.children[i].id == "carta-gentleman") {
               let gentleman = inv.children[i];
               let poderVelho = inv.children[i].children[3].children[0];
-              
 
               // se tiver pdoer novo, o adiquira e exclua a carta
-              
-                ulti =
-                  parseInt(ulti.textContent) + parseInt(poderVelho.textContent);
-                console.log("adquiri ulti");
 
-                if (ulti > 100) {
-                  lucio.children[2].textContent = 100 + "%";
-                } else {
-                  lucio.children[2].textContent = ulti + "%";
-                }
-                if (gentleman == inv.children[0]) {
-                  inv.replaceChild(empty1, gentleman);
-                } else if (gentleman == inv.children[1]) {
-                  inv.replaceChild(empty2, gentleman);
-                } else if (gentleman == inv.children[2]) {
-                  inv.replaceChild(empty3, gentleman);
-                } else if (gentleman == inv.children[3]) {
-                  inv.replaceChild(empty4, gentleman);
-                }
-                break;
-              
+              ulti =
+                parseInt(ulti.textContent) + parseInt(poderVelho.textContent);
+              console.log("adquiri ulti");
+
+              if (ulti > 100) {
+                lucio.children[2].textContent = 100 + "%";
+              } else {
+                lucio.children[2].textContent = ulti + "%";
+              }
+              if (gentleman == inv.children[0]) {
+                inv.replaceChild(empty1, gentleman);
+              } else if (gentleman == inv.children[1]) {
+                inv.replaceChild(empty2, gentleman);
+              } else if (gentleman == inv.children[2]) {
+                inv.replaceChild(empty3, gentleman);
+              } else if (gentleman == inv.children[3]) {
+                inv.replaceChild(empty4, gentleman);
+              }
+              break;
             }
             //se tiver ulti
           } else {
@@ -1747,20 +1748,20 @@ function criarBtn() {
               ) {
                 // lucioEnergia.textContent = barreira.textContent;
                 let energia = inv.children[k].children[3].children[0];
-                
+
                 butao.style.visibility = "hidden";
-                
-                  energia.textContent =
-                    parseInt(energia.textContent) +
-                    parseInt(barreira.textContent) +
-                    "🐸";
-                  console.log("barreira: ", barreira);
-                }
-              
+
+                energia.textContent =
+                  parseInt(energia.textContent) +
+                  parseInt(barreira.textContent) +
+                  "🐸";
+                console.log("barreira: ", barreira);
+              }
+
               somaPontos();
             }
             barreira.textContent = "";
- 
+
             break;
           }
         }
@@ -1884,17 +1885,44 @@ function deletarDeck(e) {
       (e.target.offsetParent.id == "carta-monark" &&
         e.target.offsetParent.className == "monark vanish")
     ) {
+      let energia = e.target.offsetParent.children[3].children[0];
+      let cartasVendiveis = [
+        "carta-people",
+        "carta-monark",
+        "carta-gentleman",
+        "carta-nobre",
+        "carta-ministro",
+        "carta-lord",
+        "carta-primeminister",
+        "carta-premiomarino",
+      ];
+      let isVendivel = cartasVendiveis.some((el) =>
+        e.target.offsetParent.id.includes(el)
+      );
+
+      function venderCarta() {
+        if (isVendivel) {
+          console.log("*******  vendi *************");
+          moneyP.textContent =
+            parseInt(moneyP.textContent) + parseInt(energia.textContent);
+        }
+      }
+
       if (e.target.offsetParent == inv.children[0]) {
         inv.replaceChild(empty1, e.target.offsetParent);
+        venderCarta();
         somaPontos();
       } else if (e.target.offsetParent == inv.children[1]) {
         inv.replaceChild(empty2, e.target.offsetParent);
+        venderCarta();
         somaPontos();
       } else if (e.target.offsetParent == inv.children[2]) {
         inv.replaceChild(empty3, e.target.offsetParent);
+        venderCarta();
         somaPontos();
       } else if (e.target.offsetParent == inv.children[3]) {
         inv.replaceChild(empty4, e.target.offsetParent);
+        venderCarta();
         somaPontos();
       }
     }
@@ -1923,6 +1951,7 @@ function resetarDeck() {
   cartaCustom = input.length >= 3;
 
   getSeed.className = "";
+  zerarMoney();
 }
 
 /////// CRITICO
@@ -2013,10 +2042,9 @@ export function somaPontos() {
     !cartasSemEnergia.some((el) => inv.children[0].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    
-      ponto0 = parseInt(inv.children[0].children[3].children[0].textContent);
-      //
-    
+
+    ponto0 = parseInt(inv.children[0].children[3].children[0].textContent);
+    //
   }
 
   // inv 1
@@ -2025,10 +2053,9 @@ export function somaPontos() {
     !cartasSemEnergia.some((el) => inv.children[1].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    
-      ponto1 = parseInt(inv.children[1].children[3].children[0].textContent);
-      //
-    
+
+    ponto1 = parseInt(inv.children[1].children[3].children[0].textContent);
+    //
   }
 
   // inv 2
@@ -2037,10 +2064,9 @@ export function somaPontos() {
     !cartasSemEnergia.some((el) => inv.children[2].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    
-      ponto2 = parseInt(inv.children[2].children[3].children[0].textContent);
-      //
-    
+
+    ponto2 = parseInt(inv.children[2].children[3].children[0].textContent);
+    //
   }
 
   // inv 3
@@ -2049,10 +2075,9 @@ export function somaPontos() {
     !cartasSemEnergia.some((el) => inv.children[3].id.includes(el))
   ) {
     // se poder novo da carta inv 0 for presente pegue seu numero
-    
-      ponto3 = parseInt(inv.children[3].children[3].children[0].textContent);
-      //
-    
+
+    ponto3 = parseInt(inv.children[3].children[3].children[0].textContent);
+    //
   }
 
   totalPontos = ponto0 + ponto1 + ponto2 + ponto3;
