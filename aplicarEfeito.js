@@ -13,6 +13,7 @@ let empty1 = inv.children[0];
 let empty2 = inv.children[1];
 let empty3 = inv.children[2];
 let empty4 = inv.children[3];
+let moneyP = document.getElementById('money')
 // let placarRodadasNumero = parseInt(placarRodadas.textContent)
 
 let nome1 = inv1.firstChild;
@@ -34,11 +35,20 @@ export function aplicarEfeitos() {
 }
 
 function premioMonark() {
+  let bonusMonark = 25
   for (let i = 0; i < 4; i++) {
     if (inv.children[i].id != "empty" && inv.children[i].id == "carta-monark") {
+
+      
       let monark = inv.children[i];
 
       function infectarMonark(){
+
+        if(monark.children[0].className != "float"){
+          moneyP.textContent = parseInt(moneyP.textContent) + bonusMonark
+        }
+      
+      
       monark.children[0].className = "float";
       monark.style.backgroundColor = "black";
       monark.children[1].style.backgroundImage =
@@ -53,12 +63,15 @@ function premioMonark() {
       monark.children[2].className = "float";
       monark.children[3].children[0].style.visibility = 'hidden';
       monark.classList.add('vanish')
+      
 
       }
       
 
 
       function eliminarMonark(){
+
+        
 
         if(monark == inv.children[0]){
           inv.replaceChild(empty1,monark);

@@ -20,7 +20,7 @@ import {
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
-import { ativarBtn } from "./slotEspecial.js";
+import { ativarBtn, limparEsp } from "./slotEspecial.js";
 
 let versaoHTML = document.getElementById("versao");
 let versao = "Alpha 1.6";
@@ -2012,6 +2012,7 @@ function resetarDeck() {
 
   getSeed.className = "";
   zerarMoney();
+  limparEsp()
 }
 
 /////// CRITICO

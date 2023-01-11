@@ -9,9 +9,9 @@ let btnCavalheiro = document.getElementById('btnCavalheiro')
 let btnSangue = document.getElementById('btnSangue')
 let btnRainha = document.getElementById('btnRainha')
 
-let precoCampones = 50
-let precoCavalheiro = 100
-let precoSangueAzul = 250
+let precoCampones = 5
+let precoCavalheiro = 10
+let precoSangueAzul = 25
 let precoRainha = 1000
 
 export function ativarBtn(){
@@ -330,24 +330,16 @@ function moverToCartaMao() {
     if(cartaEspecial.id && !myInterval){
 
         mao.replaceChild(cartaEspecial, mao.children[0]);
-        slotEsp.innerHTML = cartaEsp
+        limparEsp()
     }
 
   }
 
+  export function limparEsp(){
+    slotEsp.innerHTML = cartaEsp
+    ativarBtn()
+  }
 
-function sorteio(juj,tempo){
-    if(!myInterval){
 
-        colocarSlot(juj())
-        myInterval = setInterval(function() {
-            colocarSlot(juj());
-        }, tempo)
-    } else{
-        clearInterval(myInterval)
-        myInterval = 0
-    }
-   
-    
-}
+
 
