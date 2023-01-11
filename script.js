@@ -1480,14 +1480,14 @@ function criarBtn() {
                     ) +
                     parseInt(pontoEstatal) * 2 +
                     "☭";
-                    inv.children[j].children[2].innerHTML = frasesComuna();
-                    inv.children[j].children[2].fontSize = "1em";
-                    if(inv.children[j].id != 'carta-people'){
+                  inv.children[j].children[2].innerHTML = frasesComuna();
+                  inv.children[j].children[2].fontSize = "1em";
+                  if (inv.children[j].id != "carta-people") {
                     inv.children[j].children[3].children[0].style.color = "red";
-                  inv.children[j].children[2].style.color = "red";
-
+                    inv.children[j].children[2].style.color = "red";
                   }
-                  inv.children[j].children[3].children[0].style.fontWeight = "bold";
+                  inv.children[j].children[3].children[0].style.fontWeight =
+                    "bold";
 
                   somaPontos();
                   //SE NAO FOR BLACKAO
@@ -1498,13 +1498,11 @@ function criarBtn() {
                     ) +
                     parseInt(pontoEstatal) +
                     "☭";
-                    inv.children[j].children[3].children[0].style.fontWeight = "bold";
-                    if(inv.children[j].id != 'carta-people'){
-
-                      inv.children[j].children[3].children[0].style.color = "red";
-                    }
-
-
+                inv.children[j].children[3].children[0].style.fontWeight =
+                  "bold";
+                if (inv.children[j].id != "carta-people") {
+                  inv.children[j].children[3].children[0].style.color = "red";
+                }
 
                 somaPontos();
               }
@@ -1583,52 +1581,31 @@ function criarBtn() {
 
         for (let i = 0; i < 4; i++) {
           if (inv.children[i].id == "carta-semcargo") {
+            console.log("************STAB STAB");
             let semcargo = inv.children[i];
             let poderSemcargo = semcargo.children[3].children[0];
-            let poderNovoSemcargo = semcargo.children[3].children[1];
+
             let poderSpy = spy.children[3].children[0];
 
             //roubar o poder
-            if (poderNovoSemcargo.textContent != "") {
-              poderSpy.textContent =
-                parseInt(poderNovoSemcargo.textContent) * 5 +
-                parseInt(poderSpy.textContent) +
-                "⚡";
+            poderSpy.textContent =
+              parseInt(poderSemcargo.textContent) * 5 +
+              parseInt(poderSpy.textContent) +
+              "⚡";
 
-              if (semcargo == inv.children[0]) {
-                inv.replaceChild(empty1, semcargo);
-              } else if (semcargo == inv.children[1]) {
-                inv.replaceChild(empty2, semcargo);
-              } else if (semcargo == inv.children[2]) {
-                inv.replaceChild(empty3, semcargo);
-              } else if (semcargo == inv.children[3]) {
-                inv.replaceChild(empty4, semcargo);
-              }
-
-              spyWatch.style.visibility = "visible";
-              retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
-              somaPontos();
-            } else {
-              poderSpy.textContent =
-                parseInt(poderSemcargo.textContent) * 5 +
-                parseInt(poderSpy.textContent) +
-                "⚡";
-
-              if (semcargo == inv.children[0]) {
-                inv.replaceChild(empty1, semcargo);
-              } else if (semcargo == inv.children[1]) {
-                inv.replaceChild(empty2, semcargo);
-              } else if (semcargo == inv.children[2]) {
-                inv.replaceChild(empty3, semcargo);
-              } else if (semcargo == inv.children[3]) {
-                inv.replaceChild(empty4, semcargo);
-              }
-
-              spyWatch.style.visibility = "visible";
-              retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
-              somaPontos();
+            if (semcargo == inv.children[0]) {
+              inv.replaceChild(empty1, semcargo);
+            } else if (semcargo == inv.children[1]) {
+              inv.replaceChild(empty2, semcargo);
+            } else if (semcargo == inv.children[2]) {
+              inv.replaceChild(empty3, semcargo);
+            } else if (semcargo == inv.children[3]) {
+              inv.replaceChild(empty4, semcargo);
             }
 
+            spyWatch.style.visibility = "visible";
+            retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
+            somaPontos();
             break;
           }
         }
