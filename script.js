@@ -776,7 +776,7 @@ function isJaMovi() {
 
 function verificarCartaParaMover() {
   seedCopyCard = cartaParaMover.children[4];
-  
+
   cartaNotEspecial = especial.nome == "";
   cartaNotMonark = copyCard.id != "carta-monark";
 
@@ -1382,8 +1382,8 @@ function criarBtn() {
           cartaParaMover.id != "comunista" &&
           cartaParaMover.id != "estoico";
 
-        let poderCartaPack =  cartaParaMover.children[3].children[0];
-        
+        let poderCartaPack = cartaParaMover.children[3].children[0];
+
         // tudo()
 
         //BOOST BARALHO
@@ -1469,64 +1469,44 @@ function criarBtn() {
 
                 let pontoEstatal = parseInt(pontoComunista.textContent) / 3;
 
-                // se o poder novo for presente
-                if (inv.children[j].children[3].children[1].textContent != "") {
-                  //SE FOR BLACKAO, DUPLICA
-                  if (
-                    inv.children[j].children[0].children[0].textContent ==
-                    "BLACKAO"
-                  ) {
-                    inv.children[j].children[3].children[1].textContent =
-                      Math.floor(
-                        parseInt(
-                          inv.children[j].children[3].children[1].textContent
-                        ) +
-                          parseInt(pontoEstatal) * 1.5
-                      ) + "☭";
-                    inv.children[j].children[3].children[1].style.color = "red";
+                //SE FOR BLACKAO, DUPLICA
+                if (
+                  inv.children[j].children[0].children[0].textContent ==
+                  "BLACKAO"
+                ) {
+                  inv.children[j].children[3].children[0].textContent =
+                    parseInt(
+                      inv.children[j].children[3].children[0].textContent
+                    ) +
+                    parseInt(pontoEstatal) * 2 +
+                    "☭";
                     inv.children[j].children[2].innerHTML = frasesComuna();
                     inv.children[j].children[2].fontSize = "1em";
-                    inv.children[j].children[2].style.color = "red";
-
-                    somaPontos();
-                  } else {
-                    inv.children[j].children[3].children[1].textContent =
-                      parseInt(
-                        inv.children[j].children[3].children[1].textContent
-                      ) +
-                      parseInt(pontoEstatal) +
-                      "☭";
-
-                    somaPontos();
-                  }
-                } else {
-                  //SE FOR BLACKAO, DUPLICA
-                  if (
-                    inv.children[j].children[0].children[0].textContent ==
-                    "BLACKAO"
-                  ) {
-                    inv.children[j].children[3].children[0].textContent =
-                      parseInt(
-                        inv.children[j].children[3].children[0].textContent
-                      ) +
-                      parseInt(pontoEstatal) * 2 +
-                      "☭";
+                    if(inv.children[j].id != 'carta-people'){
                     inv.children[j].children[3].children[0].style.color = "red";
-                    inv.children[j].children[2].innerHTML = frasesComuna();
-                    inv.children[j].children[2].fontSize = "1em";
-                    inv.children[j].children[2].style.color = "red";
+                  inv.children[j].children[2].style.color = "red";
 
-                    somaPontos();
-                  } else
-                    inv.children[j].children[3].children[0].textContent =
-                      parseInt(
-                        inv.children[j].children[3].children[0].textContent
-                      ) +
-                      parseInt(pontoEstatal) +
-                      "☭";
+                  }
+                  inv.children[j].children[3].children[0].style.fontWeight = "bold";
 
                   somaPontos();
-                }
+                  //SE NAO FOR BLACKAO
+                } else
+                  inv.children[j].children[3].children[0].textContent =
+                    parseInt(
+                      inv.children[j].children[3].children[0].textContent
+                    ) +
+                    parseInt(pontoEstatal) +
+                    "☭";
+                    inv.children[j].children[3].children[0].style.fontWeight = "bold";
+                    if(inv.children[j].id != 'carta-people'){
+
+                      inv.children[j].children[3].children[0].style.color = "red";
+                    }
+
+
+
+                somaPontos();
               }
             }
           }
