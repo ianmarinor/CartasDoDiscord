@@ -382,6 +382,22 @@ function fabricaDeCarta(
 // escolherPoder()
 
 ////D O M
+let packP = document.getElementById("pack")
+const semCarta = '<div id="carta">' +
+'<div class="nameAndCidadeWrapper">' +
+  '<p class="nome"></p>' +
+  '<div class="variante"></div>' +
+  '<p class="cidade"></p>' +
+  '<div class="especial"></div>' +
+'</div>' +
+'<div class="retrato"></div>' +
+'<p class="cargo"></p>' +
+'<div class="poder">' +
+  '<p class="ataque"></p>' +
+  '<p class="novoAtaque"></p>' +
+  '<button class="action">PRESS</button>' +
+'</div>'
+
 let button = document.getElementById("btn");
 let h1 = document.getElementsByTagName("h1")[0];
 let mover = document.getElementById("mover");
@@ -415,7 +431,7 @@ let especialP = document.querySelector(".especial");
 let seedP = document.querySelector(".seed");
 let seloP = document.getElementById("selo");
 //carta
-let cartaP = document.getElementById("carta");
+let cartaP = packP.children[0];
 // input da seed cliente
 // let coloqueSuaSeed = document.getElementById('seed').value
 //wrap
@@ -667,6 +683,7 @@ function colocarInfoNoWrap() {
     } else {
     }
   }
+  packP.replaceChild(cartaP, packP.children[0])
   console.log("**NOVA CARTA**", novaCarta);
 
   // console.log('especial', especial.cartaId);
@@ -807,60 +824,95 @@ function verificarCartaParaMover() {
   //   seedCopyCard.textContent != seed4.textContent;
 }
 function moverOne() {
+  copyCard = cartaParaMover.cloneNode(true);
   if (inv.children[0].id == "empty1" && seedDiferente && taTudoOk) {
-    // if (true) {
-    // if (cartasComBotao) {
-    //   botao.style.visibility = "visible";
-    // }
-    copyCard = cartaParaMover.cloneNode(true);
+   
+    
+    if(totalClicks <=0 && packP.children[0].id != 'carta'){
+
+      inv.replaceChild(copyCard, inv.children[0]);
+      packP.innerHTML = semCarta
+      console.log(packP.children[0]);
+      criarBtn();
+      somaPontos();
+
+      
+
+    } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[0]);
-    // criarBtn();
+    criarBtn();
     somaPontos();
 
     tudo();
+    }
 
-    //
+    
   }
-  // moverOne()
+  
 }
+
 function moverTwo() {
+  copyCard = cartaParaMover.cloneNode(true);
+
   if (inv.children[1].id == "empty2" && seedDiferente && taTudoOk) {
-    // if (cartasComBotao) {
-    //   botao.style.visibility = "visible";
-    // }
-    copyCard = cartaParaMover.cloneNode(true);
+    
+    if(totalClicks <=0 && packP.children[0].id != 'carta'){
+
+      inv.replaceChild(copyCard, inv.children[1]);
+      packP.innerHTML = semCarta
+      console.log(packP.children[0]);
+      criarBtn();
+      somaPontos();
+
+    } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[1]);
-    // criarBtn();
+    criarBtn();
     somaPontos();
 
     tudo();
+    }
   }
 }
 function moverThree() {
+  copyCard = cartaParaMover.cloneNode(true);
+
   if (inv.children[2].id == "empty3" && seedDiferente && taTudoOk) {
-    // if (cartasComBotao) {
-    //   botao.style.visibility = "visible";
-    // }
-    copyCard = cartaParaMover.cloneNode(true);
+    if(totalClicks <=0 && packP.children[0].id != 'carta'){
+
+      inv.replaceChild(copyCard, inv.children[2]);
+      packP.innerHTML = semCarta
+      console.log(packP.children[0]);
+      criarBtn();
+      somaPontos();
+
+    } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[2]);
-    // criarBtn();
+    criarBtn();
     somaPontos();
 
     tudo();
+    }
   }
 }
 
 function moverFour() {
+  copyCard = cartaParaMover.cloneNode(true);
   if (inv.children[3].id == "empty4" && seedDiferente && taTudoOk) {
-    // if (cartasComBotao) {
-    //   botao.style.visibility = "visible";
-    // }
-    copyCard = cartaParaMover.cloneNode(true);
+    if(totalClicks <=0 && packP.children[0].id != 'carta'){
+
+      inv.replaceChild(copyCard, inv.children[3]);
+      packP.innerHTML = semCarta
+      console.log(packP.children[0]);
+      criarBtn();
+      somaPontos();
+
+    } else if (packP.children[0].id != 'carta'){
     inv.replaceChild(copyCard, inv.children[3]);
-    // criarBtn();
+    criarBtn();
     somaPontos();
 
     tudo();
+    }
   }
 }
 
@@ -922,9 +974,27 @@ function moverToInvMao() {
 let objCartaMao;
 function moverToCartaMao() {
   objCartaMao = novaCarta;
-  // console.log("objCartaMao: ", objCartaMao);
-  mao.replaceChild(copyCard, mao.children[0]);
-  tudo();
+  
+
+
+  if(totalClicks <=0 && packP.children[0].id != 'carta'){
+
+    mao.replaceChild(copyCard, mao.children[0]);
+    packP.innerHTML = semCarta
+   
+
+    
+
+  } else if (packP.children[0].id != 'carta'){
+    mao.replaceChild(copyCard, mao.children[0]);
+    tudo();
+  }
+
+
+
+
+
+  
 }
 
 document.addEventListener("keydown", (event) => {
@@ -1978,16 +2048,29 @@ function limparInput() {
 
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
-  if (totalClicks > 0) {
+
+  
+if (totalClicks > 0) {
+
+  if(totalClicks == 1 ){
+    showVersion();
+    button.style.backgroundColor = "red";
+    button.innerHTML = "0 CARTAS";
+  } else {
     button.style.backgroundColor = "";
-    button.innerHTML = "&#127381; NOVA CARTA &#127381;";
+    button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
+    }
+
+
+
+  
+    
     start();
     limparInput();
     escolherIntegrante();
     escolherCidade();
     escolherCargo();
     escolherVariante();
-    // escolherEspecial();
     pontoVariante();
     escolherPoder();
     colocarInfoNoWrap();
@@ -1999,9 +2082,7 @@ function tudo() {
     verificarCartaParaMover();
     blockInv();
   } else {
-    showVersion();
-    button.style.backgroundColor = "red";
-    button.innerHTML = "0 CARTAS";
+    
   }
 }
 let aumentou = false;

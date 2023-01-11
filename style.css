@@ -98,6 +98,7 @@ li {
   color: rgb(213, 187, 238);
 }
 
+
 #descr {
   grid-area: descr;
   height: 60px;
@@ -173,6 +174,9 @@ li {
   text-align: center;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   /* font-family: blackao; */
+  grid-area: pack;
+  align-self: end;
+  margin-bottom: 30px;
 }
 
 #moneyWrap{
@@ -212,22 +216,21 @@ li {
 
 #carta {
   display: none;
-  /* background-color: #ffffff; */
-  height: 70%;
-  width: 57%;
+  height: var(--tamanhoCartaHeight);
+  width: var(--tamanhoCartaWidth);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  /* border: 1px solid #020101; */
+  
 }
 
 #slotEsp {
   grid-area: btn2;
-  border: 15px double rgba(170, 183, 30, 0.226);
-  background-color: #1f350885;
+  border: 7px double rgba(170, 183, 30, 0.129);
+  background-color: #1f350853;
   align-self: start;
 }
 #slotEsp > div {
@@ -732,6 +735,8 @@ p {
 
 #pack {
   grid-area: pack;
+  border: 5px double rgba(80, 80, 98, 0.578);
+  background-color: #060e3c5e;
 }
 
 #inv {
@@ -768,8 +773,8 @@ p {
 }
 #mao {
   grid-area: mao;
-  border: 15px double rgba(30, 178, 183, 0.226);
-  background-color: #08353585;
+  border: 6px double rgba(30, 178, 183, 0.38);
+  background-color: #2f444465;
 }
 
 #G,
