@@ -1563,7 +1563,7 @@ function criarBtn() {
 
       function spy(e) {
         let spy = e.target.offsetParent;
-        let spyPoder = spy.children[3].children[0];
+       
         let spyWatch = spy.children[3].children[1];
         let botao = spy.children[3].children[2];
         let retrato = spy.children[1];
@@ -1581,7 +1581,7 @@ function criarBtn() {
 
         for (let i = 0; i < 4; i++) {
           if (inv.children[i].id == "carta-semcargo") {
-            console.log("************STAB STAB");
+            
             let semcargo = inv.children[i];
             let poderSemcargo = semcargo.children[3].children[0];
 
@@ -1610,6 +1610,7 @@ function criarBtn() {
           }
         }
       }
+
 
       // PODER ESTOICO
       if (
@@ -1692,31 +1693,10 @@ function criarBtn() {
             if (inv.children[i].id == "carta-gentleman") {
               let gentleman = inv.children[i];
               let poderVelho = inv.children[i].children[3].children[0];
-              let poderNovo = inv.children[i].children[3].children[1];
+              
 
               // se tiver pdoer novo, o adiquira e exclua a carta
-              if (poderNovo.textContent != "") {
-                ulti =
-                  parseInt(ulti.textContent) + parseInt(poderNovo.textContent);
-
-                if (ulti > 100) {
-                  lucio.children[2].textContent = 100 + "%";
-                } else {
-                  lucio.children[2].textContent = ulti + "%";
-                }
-                if (gentleman == inv.children[0]) {
-                  inv.replaceChild(empty1, gentleman);
-                } else if (gentleman == inv.children[1]) {
-                  inv.replaceChild(empty2, gentleman);
-                } else if (gentleman == inv.children[2]) {
-                  inv.replaceChild(empty3, gentleman);
-                } else if (gentleman == inv.children[3]) {
-                  inv.replaceChild(empty4, gentleman);
-                }
-
-                break;
-                // se poder velho, adquira e exclua
-              } else {
+              
                 ulti =
                   parseInt(ulti.textContent) + parseInt(poderVelho.textContent);
                 console.log("adquiri ulti");
@@ -1736,7 +1716,7 @@ function criarBtn() {
                   inv.replaceChild(empty4, gentleman);
                 }
                 break;
-              }
+              
             }
             //se tiver ulti
           } else {
@@ -1758,6 +1738,7 @@ function criarBtn() {
             totalClicks += 25;
             arenaP.innerHTML = totalClicks + " RODADAS";
             ulti.textContent = "0%";
+            //colocar barreira
             for (let k = 0; k < 4; k++) {
               if (
                 !cartasQueOLucioNaoGosta.some((el) =>
@@ -1766,29 +1747,20 @@ function criarBtn() {
               ) {
                 // lucioEnergia.textContent = barreira.textContent;
                 let energia = inv.children[k].children[3].children[0];
-                let energiaNova = inv.children[k].children[3].children[1];
+                
                 butao.style.visibility = "hidden";
-                if (
-                  energiaNova.textContent != "" &&
-                  inv.children[k].id != "lucio" &&
-                  inv.children[k].id != "spy"
-                ) {
-                  energiaNova.textContent =
-                    parseInt(energiaNova.textContent) +
-                    parseInt(barreira.textContent) +
-                    "🐸";
-                } else {
+                
                   energia.textContent =
                     parseInt(energia.textContent) +
                     parseInt(barreira.textContent) +
                     "🐸";
                   console.log("barreira: ", barreira);
                 }
-              }
+              
               somaPontos();
             }
             barreira.textContent = "";
-
+ 
             break;
           }
         }
