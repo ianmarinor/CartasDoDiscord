@@ -1031,13 +1031,13 @@ p {
     text-align: center;
   }
   #btn {
-    /* padding: 5px; */
+    padding: 0;
     grid-area: btn;
     /* margin-bottom: 5%; */
     height: 30px;
     align-self: center;
     justify-self: end;
-    width: 200px;
+    width: 150px;
   }
   #getseed {
     grid-area: btn;
