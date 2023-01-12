@@ -798,7 +798,7 @@ p {
 }
 
 #btnEspecial {
-  height: 70%;
+  /* height: 70%; */
   grid-area: btnReset;
   display: flex;
   flex-direction: column-reverse;
@@ -959,7 +959,7 @@ p {
     display: display;
     background-color: rgb(136, 74, 195);
     width: 800px;
-    height: 10px;
+    height: 5px;
 
     grid-area: nav;
   }
@@ -977,7 +977,7 @@ p {
       "text mao2 btn"
       "esp1 esp2 esp3";
     grid-template-columns: 1fr 1fr 2fr;
-    grid-template-rows: 0.75fr 0.35fr 1fr;
+    grid-template-rows: 0.75fr 0.2fr 1fr;
   }
 
   #slotEsp {
@@ -1037,18 +1037,19 @@ p {
     height: 30px;
     align-self: center;
     justify-self: end;
+    width: 200px;
   }
   #getseed {
     grid-area: btn;
     justify-self: start;
-    align-self: center;
+    align-self: end;
     margin: 0;
   }
   #btnReset {
     margin: 0;
     grid-area: btn;
     justify-self: center;
-    align-self: center;
+    align-self: end;
   }
 
   #pack {
@@ -1202,13 +1203,21 @@ p {
     border-radius: 50px !important;
   }
   #btnContainer{
+    flex-direction: column-reverse;
     width: 150px;
     justify-self: end;
+    align-self: end;
     grid-area: btn;
+    
     
   }
   #btnEspecial{
     grid-area: esp3;
+    align-self: start;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    justify-content: space-around;
+    width: 500px;
   }
 
   #G,
