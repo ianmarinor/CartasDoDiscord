@@ -546,7 +546,54 @@ export let especiais = {
           visibility: 'visible',
         }
       },
+      jhin: {
+        cartaId: "jhin",
+        nome: "JHIN",
+        raridade: raridades.cavaleiro,
+        pontoEspecial: 0,
+        energia: 4,
+        poder: true,
+        efeito: "",
+        familia: "League Of Legends",
+        descricao: "",
+        emojiEsp: "",
+        emoji: "",
+        cargo: '4',
+        retrato: "url('pics/retratoJhin.jpg')",
 
+        // ataqueE: lucioPE()
+        ataqueE: "4⚡",
+        novoAtaqueE: '',
+
+        nomeStyle:{
+          fontSize: "250%",
+          fontFamily: "lol",
+          color: "",
+        },
+
+        retratoStyle:{
+          border: "2px solid #FFBC42",
+          backgroundColor: ''
+        }
+        ,
+
+        cargoStyle:{
+          fontFamily: 'lol',
+          fontSize: '250%'
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '100%',
+          fontFamily:'lol',
+          visibility: '',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '120%',
+          fontFamily:'lol',
+          visibility: 'hidden',
+        }
+      },
 
     }
 
@@ -607,10 +654,13 @@ export function escolherEspecial(teste) {
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
       DEBUG && console.log(raridades.cavaleiro.rng());
-      if (seedString[12]> 2) {
+
+      if (seedString[12]< 4) {
          especial = especiais.speaker;
          especial.ataqueE = pontoSpeaker()
          
+      } else if (seedString[12] > 5) {
+        especial = especiais.jhin;
       } else {
         especial = especiais.spy;
       }

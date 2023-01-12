@@ -10,7 +10,7 @@ let btnSangue = document.getElementById('btnSangue')
 let btnRainha = document.getElementById('btnRainha')
 
 let precoCampones = 50
-let precoCavalheiro = 100
+let precoCavalheiro = 1
 let precoSangueAzul = 250
 let precoRainha = 1000
 

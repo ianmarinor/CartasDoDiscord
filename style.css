@@ -44,7 +44,10 @@
   font-family: "overwatch";
   src: url("/fonts/overwatch.ttf");
 }
-
+@font-face {
+  font-family: "lol";
+  src: url("/fonts/lol.ttf");
+}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -607,6 +610,34 @@ li {
   border: 2px solid #15b871;
 }
 
+
+#jhin {
+ 
+
+  background-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.481),
+      rgb(14, 2, 40)
+    ),
+    url(/pics/fundoJhin.gif);
+  
+  font-family: overwatch;
+  height: var(--tamanhoCartaHeight);
+  width: var(--tamanhoCartaWidth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  position: relative;
+  font-weight: 900;
+  background-repeat: no-repeat;
+  background-size: COVER;
+  font-family: tf2;
+  color: #FFBC42;
+  border: 2px solid #FFBC42;
+}
+
 /* **************************************************** */
 /* **************************************************** */
 /* **************************************************** */
@@ -1032,7 +1063,7 @@ p {
   }
   #btn {
     padding: 0;
-    grid-area: btn;
+    /* grid-area: pack; */
     /* margin-bottom: 5%; */
     height: 30px;
     align-self: center;
