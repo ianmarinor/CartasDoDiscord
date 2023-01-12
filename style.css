@@ -977,7 +977,7 @@ p {
       "text mao2 btn"
       "esp1 esp2 esp3";
     grid-template-columns: 1fr 1fr 2fr;
-    grid-template-rows: 0.75fr 0.2fr 1fr;
+    grid-template-rows: 0.75fr 0.35fr 1fr;
   }
 
   #slotEsp {
@@ -1200,6 +1200,15 @@ p {
 
   #estoico {
     border-radius: 50px !important;
+  }
+  #btnContainer{
+    width: 150px;
+    justify-self: end;
+    grid-area: btn;
+    
+  }
+  #btnEspecial{
+    grid-area: esp3;
   }
 
   #G,
