@@ -920,6 +920,7 @@ let cartasComBotao = [
   "spy",
   "estoico",
   "lucio",
+  "jhin",
 ];
 
 function moverToInvMao() {
@@ -1819,6 +1820,87 @@ function criarBtn() {
           }
         }
       }
+
+      if (
+        inv.children[i].id == "jhin" &&
+        inv.children[i].children[0].id != "foi"
+      ) {
+        inv.children[i].children[3].children[2].addEventListener("click", jhin);
+        inv.children[i].children[0].id = "foi";
+      }
+
+      function jhin(e) {
+        let jhin = e.target.offsetParent;
+        let tiros = parseInt(jhin.children[2].textContent);
+        let tirosString = jhin.children[2]
+
+        //ESCOLHER ATIRADOS
+        for (let j = 0; j < 4; j++) {
+          let nome = inv.children[j].children[0].children[0].textContent;
+          let atirador = inv.children[j];
+          let atiradorCargo = inv.children[j].id;
+          let baralhoCargo = copyCard.id;
+          let emojiAtirador = atirador.children[3].children[1];
+          let energiaJhinNum = parseInt(jhin.children[3].children[0].textContent);
+          let energiaJhin = jhin.children[3].children[0]
+          let energiaVitima = parseInt(copyCard.children[3].children[0].textContent)
+          let butao =  jhin.children[3].children[2]
+          function checkTiros() {
+            if (tiros >= 1) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+
+          if (atirador.id != 'carta-monark' && nome == "GANDALF" && checkTiros()) {
+            //se nao tiver atirador, escolha atirador
+            if (emojiAtirador.textContent == "") {
+              console.log("emojiAtirador: ", emojiAtirador.textContent);
+              emojiAtirador.textContent = "💢";
+              break;
+              //se tiver atirador
+            } else {
+
+              if (tiros == 1){
+                butao.style.visibility = 'hidden'
+                console.log(butao);
+                emojiAtirador.textContent = ""
+                
+                tirosString.classList.remove('critico')
+              }
+
+              console.log("atiradorCargo: ", atiradorCargo);
+              if (checkTiros() && atiradorCargo == baralhoCargo) {
+                console.log(energiaJhin);
+
+                if(tiros == 2){
+                  tirosString.classList.add('critico')
+                }
+                // TULTIMO TIRO MULTIPLICA POR 4
+                if(tiros == 1){
+                  console.log('***  multiplicquei por 4 ***');
+                  energiaJhin.textContent = energiaJhinNum + energiaVitima * 4 + '⚡'
+
+                } else{
+                  energiaJhin.textContent = energiaJhinNum + energiaVitima + 4 + '⚡'
+                }
+
+                if (tiros == 1){
+                  tirosString.textContent = ''
+                } else{
+                  tirosString.textContent = tiros - 1
+
+                }
+                tudo()
+                break;
+              }
+              
+            }
+            break;
+          }
+        }
+      }
     }
   }
 }
@@ -2012,7 +2094,7 @@ function resetarDeck() {
 
   getSeed.className = "";
   zerarMoney();
-  limparEsp()
+  limparEsp();
 }
 
 /////// CRITICO
