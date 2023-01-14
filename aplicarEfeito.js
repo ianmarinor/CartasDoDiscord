@@ -35,7 +35,7 @@ export function aplicarEfeitos() {
 }
 
 function premioMonark() {
-  let bonusMonark = 25
+  let bonusMonark = 50
   for (let i = 0; i < 4; i++) {
     if (inv.children[i].id != "empty" && inv.children[i].id == "carta-monark") {
 

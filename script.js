@@ -1469,7 +1469,6 @@ function criarBtn() {
           "especial-tenica",
           "premiomonark",
           "comunista",
-          
           "estoico",
         ];
 

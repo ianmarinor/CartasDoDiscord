@@ -9,10 +9,10 @@ let btnCavalheiro = document.getElementById('btnCavalheiro')
 let btnSangue = document.getElementById('btnSangue')
 let btnRainha = document.getElementById('btnRainha')
 
-let precoCampones = 1
-let precoCavalheiro = 1
-let precoSangueAzul = 2
-let precoRainha = 1
+let precoCampones = 50
+let precoCavalheiro = 100
+let precoSangueAzul = 250
+let precoRainha = 1000
 
 export function ativarBtn(){
     console.log('*******ATIVAR BTN********');
