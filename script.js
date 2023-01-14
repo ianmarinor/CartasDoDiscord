@@ -1003,10 +1003,12 @@ function moverCartaMonark() {
 
   if (seedObj._isPutByPlayer) {
     false;
+
   } else if (efeitos.css.nome == "estoico" && copyCard.id == "carta-monark") {
     console.log("****NAO VOU MOVER TEM TURU****");
     cartaParaMover.classList.add("voar");
     setTimeout(tudo, 250);
+
   } else if (totalClicks > 0) {
     if (copyCard.id === "carta-monark") {
       function isSpy() {
@@ -1436,7 +1438,7 @@ function criarBtn() {
           cartaParaMover.id != "especial-click" &&
           cartaParaMover.id != "-click" &&
           cartaParaMover.id != "especial-tenica" &&
-          cartaParaMover.id != "spy" &&
+          
           cartaParaMover.id != "premiomonark" &&
           cartaParaMover.id != "comunista" &&
           cartaParaMover.id != "estoico";
@@ -1465,10 +1467,9 @@ function criarBtn() {
           "empty3",
           "empty4",
           "especial-tenica",
-          "spy",
           "premiomonark",
           "comunista",
-          "abelha",
+          
           "estoico",
         ];
 
@@ -1502,26 +1503,34 @@ function criarBtn() {
         inv.children[i].children[0].id = "foi";
       }
       function camarada(e) {
+
+        let cartasQueOCamaradaNaoGosta = [
+          "especial-click",
+          "-click",
+          "empty1",
+          "empty2",
+          "empty3",
+          "empty4",
+          "especial-tenica",
+          "spy",
+          "premiomonark",
+          "comunista",
+          "abelha",
+          "estoico",
+          'carta-monark',
+          'jhin'
+        ];
+
         let comunista = e.target.offsetParent;
         // comunista.children[3].children[2].style.visibility = "hidden";
         for (let k = 0; k < 4; k++) {
           if (inv.children[k].id == "carta-speaker") {
             for (let j = 0; j < 4; j++) {
               if (
-                inv.children[j].id != "spy" &&
-                inv.children[j].id != "especial-click" &&
-                inv.children[j].id != "-click" &&
-                inv.children[j].id != "empty1" &&
-                inv.children[j].id != "empty2" &&
-                inv.children[j].id != "empty3" &&
-                inv.children[j].id != "empty4" &&
-                inv.children[j].id != "especial-tenica" &&
-                inv.children[j].id != "abelha" &&
-                inv.children[j].id != "comunista" &&
                 inv.children[j].children[0].children[0].textContent !=
-                  "NEFESTO" &&
-                inv.children[j].id != "carta-monark" &&
-                inv.children[j].id != "estoico"
+                  "NEFESTO" && !cartasQueOCamaradaNaoGosta.some((el) =>
+                  inv.children[j].id.includes(el))
+          
               ) {
                 comunista.children[3].children[2].style.visibility = "hidden";
                 let pontoComunista = comunista.children[3].children[1];
@@ -1639,13 +1648,16 @@ function criarBtn() {
         }
 
         for (let i = 0; i < 4; i++) {
-          if (inv.children[i].id == "carta-semcargo") {
+          if (inv.children[i].id == "carta-semcargo"
+            && inv.children[i].children[3].children[0].textContent.includes('⚡')
+          ) {
             let semcargo = inv.children[i];
             let poderSemcargo = semcargo.children[3].children[0];
 
             let poderSpy = spy.children[3].children[0];
 
             //roubar o poder
+
             poderSpy.textContent =
               parseInt(poderSemcargo.textContent) * 5 +
               parseInt(poderSpy.textContent) +
@@ -1789,6 +1801,7 @@ function criarBtn() {
               "abelha",
               "estoico",
               "spy",
+              'jhin'
             ];
             totalClicks += 25;
             arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
@@ -1855,14 +1868,31 @@ function criarBtn() {
 
           if (atirador.id != 'carta-monark' && nome == "GANDALF" && checkTiros()) {
             //se nao tiver atirador, escolha atirador
-            if (emojiAtirador.textContent == "") {
+
+            function naoTemAtirador(){
+
+              
+              if(
+              inv.children[0].children[3].children[1].textContent != '💢' &&
+              inv.children[1].children[3].children[1].textContent != '💢' &&
+              inv.children[2].children[3].children[1].textContent != '💢' &&
+              inv.children[3].children[3].children[1].textContent != '💢'
+              ){
+                return true
+              } else{
+                return false
+              }
+              
+            }
+
+            if (naoTemAtirador()) {
               console.log("emojiAtirador: ", emojiAtirador.textContent);
               emojiAtirador.textContent = "💢";
               break;
               //se tiver atirador
             } else {
 
-              if (tiros == 1){
+              if (tiros == 1 && atiradorCargo == baralhoCargo){
                 butao.style.visibility = 'hidden'
                 console.log(butao);
                 emojiAtirador.textContent = ""
@@ -1881,9 +1911,15 @@ function criarBtn() {
                 if(tiros == 1){
                   console.log('***  multiplicquei por 4 ***');
                   energiaJhin.textContent = energiaJhinNum + energiaVitima * 4 + '⚡'
+                  cartaParaMover.classList.add("voar");
+                  somaPontos()
+                  setTimeout(tudo, 250);
 
                 } else{
                   energiaJhin.textContent = energiaJhinNum + energiaVitima + 4 + '⚡'
+                  cartaParaMover.classList.add("voar");
+                  somaPontos()
+                  setTimeout(tudo, 250);
                 }
 
                 if (tiros == 1){
@@ -1892,7 +1928,7 @@ function criarBtn() {
                   tirosString.textContent = tiros - 1
 
                 }
-                tudo()
+                // tudo()
                 break;
               }
               
@@ -1942,7 +1978,7 @@ function abelha() {
             parseInt(pontoAbelha.textContent) - abelhaLowHp() + "🐝";
           somaPontos();
         } else if (parseInt(pontoAbelha.textContent) <= 15) {
-          pontoAbelha.textContent = parseInt(pontoAbelha.textContent) - 1;
+          pontoAbelha.textContent = parseInt(pontoAbelha.textContent) - 1 + "🐝";
         } else {
           pontoAbelha.textContent =
             parseInt(pontoAbelha.textContent) - abelhaDecrease() + "🐝";
@@ -2119,6 +2155,8 @@ function limparInput() {
   getSeed.value = "";
 }
 
+
+
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
@@ -2149,6 +2187,7 @@ function tudo() {
     verificarCartaParaMover();
     blockInv();
     ativarBtn();
+    
   } else {
   }
 }

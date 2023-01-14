@@ -700,7 +700,7 @@ function constrEspecial() {}
 // ENERGIAS
 
 export function tenicaEnergia() {
-  return (especiais.tenica.energia = parseInt(seed2) + parseInt(seed3) + 375 + "👑");
+  return (especiais.tenica.energia = parseInt(seed2) + parseInt(seed3) + 275 + "👑");
 }
 
 export function pontoSpeaker() {
@@ -731,25 +731,25 @@ export function abelhaEnergia() {
 
 export function bonusCartasPE() {
   if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 35
+    return parseInt(seed3) + 15
   }
   if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 27
+    return parseInt(seed3) + 12
   }
   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return parseInt(seed3) + 21;
+    return parseInt(seed3) + 10;
   }
   if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return parseInt(seed3) + 17;
+    return parseInt(seed3) + 9;
   }
   if (parseInt(seed2) == 7) {
-    return parseInt(seed3) + 16;
-  }
-  if (parseInt(seed2) == 8) {
     return parseInt(seed3) + 8;
   }
+  if (parseInt(seed2) == 8) {
+    return parseInt(seed3) + 7;
+  }
   if (parseInt(seed2) == 9) {
-    return parseInt(seed3) + 4;
+    return parseInt(seed3) + 6;
   }
 }
 
