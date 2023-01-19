@@ -510,7 +510,7 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "🐸",
-        cargo: '0%',
+        cargo: '100g%',
         retrato: "url('pics/retratoLucio.jpg')",
 
         // ataqueE: lucioPE()
@@ -562,8 +562,8 @@ export let especiais = {
         retrato: "url('pics/retratoJhin.jpg')",
 
         // ataqueE: lucioPE()
-        ataqueE: "4⚡",
-        novoAtaqueE: '',
+        ataqueE: "4🐸",
+        novoAtaqueE: '4💚',
 
         nomeStyle:{
           fontSize: "250%",
@@ -591,7 +591,57 @@ export let especiais = {
           color: '',
           fontSize: '120%',
           fontFamily:'lol',
-          visibility: 'hidden',
+          visibility: '',
+        }
+      },
+
+      dva: {
+        cartaId: "dva",
+        nome: "D.Va",
+        raridade: raridades.cavaleiro,
+        pontoEspecial: 0,
+        energia: 0,
+        poder: true,
+        efeito: "",
+        familia: "overwatch",
+        descricao: "",
+        emojiEsp: "",
+        emoji: "",
+        cargo: '100%',
+        retrato: "url('pics/dvaMecaRetrato.jpg')",
+
+        // ataqueE: lucioPE()
+        ataqueE: "1⚡",
+        novoAtaqueE: '',
+
+        nomeStyle:{
+          fontSize: "250%",
+          fontFamily: "overwatch",
+          color: "",
+        },
+
+        retratoStyle:{
+          border: "2px solid #ee4bb5",
+          backgroundColor: '',
+          backgroundSize: 'cover'
+        }
+        ,
+
+        cargoStyle:{
+          fontFamily: 'overwatch',
+          fontSize: '250%'
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '100%',
+          fontFamily:'overwatch',
+          visibility: '',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '120%',
+          fontFamily:'overwatch',
+          visibility: 'visible',
         }
       },
 
@@ -661,8 +711,10 @@ export function escolherEspecial(teste) {
          
       } else if (seedString[12] > 5) {
         especial = especiais.jhin;
-      } else {
+      } else if (seedString[12] == 4) {
         especial = especiais.spy;
+      } else if (seedString[12] == 5) {
+        especial = especiais.dva;
       }
 
 
