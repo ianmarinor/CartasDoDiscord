@@ -2019,6 +2019,7 @@ function criarBtn() {
         let barreira = dva.children[3].children[1];
         let ulti = dva.children[2];
         let retratoFoto = dva.children[1]
+        let hp = dva.children[3].children[1]
 
         for (let i = 0; i < 4; i++) {
           if (parseInt(ulti.textContent) < 100) {
@@ -2055,11 +2056,51 @@ function criarBtn() {
             }
             //se tiver ulti
           } else {
+
+            butao.style.visibility = 'hidden'
+
+
+            hp.textContent = "3💚"
+
             console.log('ultei');
             retratoFoto.style.backgroundImage = 'url("/pics/dva.webp")'
             dva.children[2].textContent = ''
+
+            let pontoDeTodos = 0
+
+            for (let j=0;j<4;j++){
+              let ponto = inv.children[j].children[3].children[0]
+              let cartaEspecial = inv.children[j].children[0].children[1] == ''
+
+              if(ponto.textContent != ''){
+
+                if(cartaEspecial){
+                  pontoDeTodos +=25
+
+                }else{
+
+                  pontoDeTodos = pontoDeTodos + Math.trunc(parseInt(ponto.textContent) * 1.2 )
+                  console.log(pontoDeTodos);
+                  console.log(ponto.textContent);
+                }
+              }
+              
+            }
+            dvaEnergia.textContent = pontoDeTodos + "⚡"
             
+                if (dva != inv.children[0]) {
+                  inv.replaceChild(empty1, inv.children[0]);}
+                if (dva != inv.children[1]) {
+                  inv.replaceChild(empty2, inv.children[1]);}
+                if (dva != inv.children[2]) {
+                  inv.replaceChild(empty3, inv.children[2]);}
+                if (dva != inv.children[3]) {
+                  inv.replaceChild(empty4, inv.children[3]);
+                }
+
             
+
+            break
           }
         }
       }
