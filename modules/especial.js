@@ -510,7 +510,7 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "🐸",
-        cargo: '100g%',
+        cargo: '100%',
         retrato: "url('pics/retratoLucio.jpg')",
 
         // ataqueE: lucioPE()
@@ -607,7 +607,7 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "",
-        cargo: '100%',
+        cargo: '0%',
         retrato: "url('pics/dvaMecaRetrato.jpg')",
 
         // ataqueE: lucioPE()
