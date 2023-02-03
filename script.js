@@ -1027,35 +1027,9 @@ function moverCartaMonark() {
       }
 
       let spyCheck = isSpy();
-      console.log("spyCheck: ", spyCheck);
+      // console.log("spyCheck: ", spyCheck);
 
-      function hasBarrier() {
-        for (let j = 0; j < 4; j++) {
-          let danoMonarkEscudo = 1.3;
-          let minimoEscudo = 75;
-          let energia = inv.children[j].children[3].children[0];
-
-          if (energia.textContent.includes("🐸")) {
-            // SE O ESCUDO é MAIO QUE 10
-            if (parseInt(energia.textContent) > minimoEscudo) {
-              // DIMINUA DE 1.5
-              energia.textContent =
-                Math.floor(parseInt(energia.textContent) / danoMonarkEscudo) +
-                "🐸";
-              efeitoDano(j);
-              copyCard.classList.add("monark");
-              console.log("***TIREI NOVO****");
-
-              //SE FOR MENOR QUE 10, MUDE O EMOJI
-            } else {
-              efeitoDano(j);
-              energia.textContent = parseInt(energia.textContent) + "⚡";
-              copyCard.classList.add("monark");
-            }
-          }
-        }
-      }
-
+    
       function efeitoDano(carta) {
         let retrato = inv.children[carta].children[1];
         let picOriginal = retrato.style.backgroundImage;
@@ -1078,15 +1052,14 @@ function moverCartaMonark() {
         for (let j = 0; j < 4; j++) {
           let cartaComHp = inv.children[j];
           let temHP =
-            inv.children[j].children[3].children[1].textContent.includes("💚");
+          cartaComHp.children[3].children[1].textContent.includes("💚");
+
           let HPNum = parseInt(
             inv.children[j].children[3].children[1].textContent
           );
           let HP = inv.children[j].children[3].children[1];
-          let hasBarrier =
-            inv.children[j].children[3].children[0].textContent.includes("🐸");
-
-          if (temHP && !hasBarrier) {
+          
+          if (temHP) {
             // console.log(inv.children[j],'TEM HP');
             // console.log(hasBarrier);
             // console.log('TEM BARREIRA',hasBarrier);
@@ -1095,7 +1068,7 @@ function moverCartaMonark() {
 
             if (HPNum >= 2) {
               HP.textContent = HPNum - 1 + "💚";
-              efeitoDano(j);
+              // efeitoDano(j);
             } else {
               if (cartaComHp == inv.children[0]) {
                 inv.replaceChild(empty1, cartaComHp);
@@ -1115,9 +1088,8 @@ function moverCartaMonark() {
           }
         }
       }
-
       damage();
-      hasBarrier();
+      
 
       function deckVazio() {
         for (let j = 0; j < 4; j++) {
@@ -1136,8 +1108,8 @@ function moverCartaMonark() {
       let deckCheck = deckVazio();
 
       for (let i = 0; i < 4; i++) {
-        let energia = inv.children[i].children[3].children[0];
 
+        let energia = inv.children[i].children[3].children[0];
         //SE TIVER SPY
         if (spyCheck[0]) {
           console.log("TEM SPY");
@@ -1156,8 +1128,7 @@ function moverCartaMonark() {
         } else if (
           cartaParaMover.children[0].children[0].textContent ==
             inv.children[i].children[0].children[0].textContent &&
-          inv.children[i].id != "carta-monark" &&
-          !energia.textContent.includes("🐸")
+          inv.children[i].id != "carta-monark" 
         ) {
           console.log("*****MESMO NOME********");
           console.log(
@@ -1165,7 +1136,6 @@ function moverCartaMonark() {
             cartaParaMover.children[0].children[0].textContent
           );
           console.log(inv.children[i].children[0].children[0].textContent);
-          console.log("conmtem barreira", energia.textContent.includes("🐸"));
           inv.replaceChild(copyCard, inv.children[i]);
 
           break;
@@ -1863,7 +1833,6 @@ function criarBtn() {
               "abelha",
               "estoico",
               "spy",
-              "jhin",
             ];
             totalClicks += 25;
             arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
@@ -1876,14 +1845,14 @@ function criarBtn() {
                 )
               ) {
                 // lucioEnergia.textContent = barreira.textContent;
-                let energia = inv.children[k].children[3].children[0];
+                let energia = inv.children[k].children[3].children[1];
 
                 butao.style.visibility = "hidden";
 
                 energia.textContent =
                   parseInt(energia.textContent) +
                   parseInt(barreira.textContent) +
-                  "🐸";
+                  "💚";
                 console.log("barreira: ", barreira);
               }
 

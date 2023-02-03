@@ -509,7 +509,7 @@ export let especiais = {
         familia: "overwatch",
         descricao: "",
         emojiEsp: "",
-        emoji: "🐸",
+        emoji: "💚",
         cargo: '100%',
         retrato: "url('pics/retratoLucio.jpg')",
 
@@ -562,7 +562,7 @@ export let especiais = {
         retrato: "url('pics/retratoJhin.jpg')",
 
         // ataqueE: lucioPE()
-        ataqueE: "4🐸",
+        ataqueE: "4⚡",
         novoAtaqueE: '4💚',
 
         nomeStyle:{
@@ -607,7 +607,7 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "",
-        cargo: '100%',
+        cargo: '0%',
         retrato: "url('pics/dvaMecaRetrato.jpg')",
 
         // ataqueE: lucioPE()
@@ -904,25 +904,25 @@ export function estoicoPE(){
 
 export function lucioPE(){
   if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 489 + "🐸"
+    return parseInt(seed3) + 489 + "💚"
   }
   if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 430 + "🐸"
+    return parseInt(seed3) + 430 + "💚"
   }
   if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return parseInt(seed3) + 236 + "🐸";
+    return parseInt(seed3) + 236 + "💚";
   }
   if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return parseInt(seed3) + 234 + "🐸";
+    return parseInt(seed3) + 234 + "💚";
   }
   if (parseInt(seed2) == 7) {
-    return parseInt(seed3) + 180 + "🐸";
+    return parseInt(seed3) + 180 + "💚";
   }
   if (parseInt(seed2) == 8) {
-    return parseInt(seed3) + 160 + "🐸";
+    return parseInt(seed3) + 160 + "💚";
   }
   if (parseInt(seed2) == 9) {
-    return parseInt(seed3) + 150 + "🐸";
+    return parseInt(seed3) + 150 + "💚";
   }
 }
 

@@ -1014,6 +1014,42 @@ p {
   }
 }
 
+@media only screen and (max-width: 1400px) {
+/* COMECO DO 1400************************************ */
+  main {
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+      
+      "pack mao inv"
+      "btn  btn2 btnReset";
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+  
+    background-color: #083535;
+    background: linear-gradient(360deg, rgba(28, 7, 102, 0.649) 0%, rgba(39, 13, 65, 0.649) 46%);
+    grid-template-columns: 0.3fr 0.2fr 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
+  }
+
+  #descr,.wrap {
+    grid-area: btnReset;
+  }
+  .wrap {
+    align-self: center;
+  }
+  #descr {
+    align-self: end;
+    font-size: 0.4em;
+  }
+
+
+/* FIM DO 1400************************************ */
+}
+
+
+
 @media only screen and (max-width: 900px) {
   body {
     height: 200vh;
