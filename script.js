@@ -100,7 +100,7 @@ function escolherIntegrante() {
     // &&
     // seedString[2] == 0
   ) {
-    return (integrante = "------");
+    return (integrante = "Diuks Bay");
   } else if (
     seedString[1] == 8
     // &&
@@ -170,7 +170,7 @@ function escolherCidade() {
     // seedString[4] == 0 &&
     seedString[3] == 6
   ) {
-    return (cidade = "de Itanhaém");
+    return (cidade = "Porto Alegre");
   } else if (
     // seedString[4] == 0 &&
     seedString[3] == 7
@@ -551,8 +551,11 @@ function colocarInfoNoWrap() {
       retratoP.style.backgroundImage = "url('pics/nefesto.png')";
     } else if (novaCarta._integrante === "Sr. Antonio") {
       retratoP.style.backgroundImage = "url('pics/antonio.png')";
-    } else if (novaCarta._integrante === "Curtas") {
-      retratoP.style.backgroundImage = "url('pics/curtas.png')";
+
+    } else if (novaCarta._integrante === "Diuks Bay") {
+      retratoP.style.backgroundImage = "url('pics/cesarino.png')";
+      retratoP.style.backgroundSize = "100% 100%";
+
     } else if (novaCarta._integrante === "Junks") {
       retratoP.style.backgroundImage = "url('pics/junks.jpeg')";
     } else if (novaCarta._integrante === "Twelve") {
@@ -610,6 +613,14 @@ function colocarInfoNoWrap() {
 
   //CARTAS VARIANTES
   if (novaCarta._variante != "") {
+
+    function fundoVariante(foto){
+
+      return "linear-gradient(\n      180deg,\n      rgba(0, 0, 0, 0.3),\n      rgba(12, 3, 30, 0.8)\n    ),\n"  + foto
+
+    }
+
+
     // actionP.style.visibility = 'hidden'
     varianteP.style.fontFamily = "Righteous";
     varianteP.style.textShadow = "-2px 5px 5px #010101";
@@ -619,72 +630,89 @@ function colocarInfoNoWrap() {
       varianteP.innerHTML = "💊" + novaCarta._variante.toUpperCase() + "💊";
       cartaP.style.color = "white";
       cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteGandalf.gif")';
+
+         fundoVariante('url("pics/variantes/varianteGandalf.gif")');
       cartaP.style.border = "3px white solid";
       varianteP.style.fontSize = "1em";
+
+
     } else if (novaCarta._variante === "bão") {
       varianteP.innerHTML =
         "👌 " + "AÔPA, " + novaCarta._variante.toUpperCase() + " 👌";
       cartaP.style.color = "orange";
-      cartaP.style.backgroundImage = 'url("pics/variantes/varianteTuru.gif")';
+
+      
+      cartaP.style.backgroundImage = fundoVariante('url("pics/variantes/varianteTuru.gif")');
       cartaP.style.border = "3px orange solid";
+
     } else if (novaCarta._variante === "apenas") {
       varianteP.innerHTML = "🤤 " + novaCarta._variante.toUpperCase() + " 🤤";
       cartaP.style.color = "wheat";
       cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteNefesto.gif")';
+      fundoVariante('url("pics/variantes/varianteNefesto.gif")');
       cartaP.style.border = "3px wheat solid";
+
     } else if (novaCarta._variante === "fonte") {
       varianteP.innerHTML =
         "😖" + "COMO MUDA A " + novaCarta._variante.toUpperCase() + "😖";
       cartaP.style.color = "  white";
 
       cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteBlackao.gif")';
+      fundoVariante('url("pics/variantes/varianteBlackao.gif")');
       cartaP.style.border = "3px white solid";
       varianteP.style.fontSize = "0.86em";
       // varianteP.style.textShadow = '-2px 5px 5px #ffffff'
+
     } else if (novaCarta._variante === "ixqueiro") {
       varianteP.innerHTML = "🍲 NEFEIIXTUU 🍲";
       cartaP.style.color = " #d8fbb5";
       varianteP.style.fontSize = "1em";
 
       cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteAntonio.gif")';
+      fundoVariante('url("pics/variantes/varianteAntonio.gif")');
       cartaP.style.border = "3px #d8fbb5 solid";
       varianteP.style.fontSize = "0.86em";
+
     } else if (novaCarta._variante === "abalo") {
       varianteP.innerHTML =
         "🎉" + "UM " + novaCarta._variante.toUpperCase() + "! 🎉";
       cartaP.style.color = "  #fbb5f2 ";
-
-      cartaP.style.backgroundImage = 'url("pics/variantes/variantePedro.gif")';
+      cartaP.style.backgroundImage =  fundoVariante('url("pics/variantes/variantePedro.gif")');
       cartaP.style.border = "3px #fbb5f2 solid";
+
     } else if (novaCarta._variante === "grito") {
-      varianteP.innerHTML = "📢AAAAAAAAAAHHH!!!!!📢";
+      varianteP.innerHTML = "👍É ISSO AÍ👍";
       cartaP.style.color = "   #42b028   ";
 
-      cartaP.style.backgroundImage = 'url("pics/variantes/varianteCurtas.gif")';
+      // cartaP.style.backgroundImage = 'url("pics/variantes/varianteCurtas.gif")'
+      cartaP.style.backgroundImage =  fundoVariante('url("pics/variantes/varianteCurtas.gif")')
       cartaP.style.border = "3px  #25a406  solid";
       varianteP.style.fontSize = "0.86em";
+
+
+
     } else if (novaCarta._variante === "dia") {
       varianteP.innerHTML = "⛪ TODO DIA ISSO ⛪";
       cartaP.style.color = "   #27ebe2     ";
 
-      cartaP.style.backgroundImage = 'url("pics/variantes/varianteTwelve.gif")';
+      cartaP.style.backgroundImage = fundoVariante('url("pics/variantes/varianteTwelve.gif")');
       cartaP.style.border = "3px  #27ebe2   solid";
       varianteP.style.fontSize = "0.99em";
+
+
     } else if (novaCarta._variante === "quimico") {
       varianteP.innerHTML = "🛑 PARA DE FALAR 🛑";
       varianteP.style.fontSize = "0.86em";
       cartaP.style.color = "white";
-      cartaP.style.backgroundImage = 'url("pics/variantes/varianteJunks.gif")';
+      cartaP.style.backgroundImage = fundoVariante('url("pics/variantes/varianteJunks.gif")');
       cartaP.style.border = "3px  white   solid";
+
+
     } else if (novaCarta._variante === "pêra") {
       varianteP.innerHTML = "🥛 LEITE COM PÊRA 🍐";
       cartaP.style.color = "white";
       cartaP.style.backgroundImage =
-        'url("pics/variantes/varianteMurillo.gif")';
+        fundoVariante('url("pics/variantes/varianteMurillo.gif")');
       cartaP.style.border = "3px  white   solid";
       varianteP.style.fontSize = "0.90em";
     } else {
@@ -1253,7 +1281,7 @@ function critico() {
         colocarUltraCritico();
       }
     }
-    //curtas
+    //cesarino
     if (seedString[1] == "7" && seedString[3] == "6") {
       colocarCritico();
 
@@ -1942,6 +1970,7 @@ function criarBtn() {
             if (naoTemAtirador()) {
               console.log("emojiAtirador: ", emojiAtirador.textContent);
               emojiAtirador.textContent = "💢";
+              emojiAtirador.style.visibility = "visible"
               break;
               //se tiver atirador
             } else {
