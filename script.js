@@ -23,7 +23,7 @@ import { aplicarEfeitos } from "./aplicarEfeito.js";
 import { ativarBtn, limparEsp } from "./slotEspecial.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.6";
+let versao = "Pre-Alpha 1.6";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -100,7 +100,7 @@ function escolherIntegrante() {
     // &&
     // seedString[2] == 0
   ) {
-    return (integrante = "Curtas");
+    return (integrante = "------");
   } else if (
     seedString[1] == 8
     // &&
@@ -2018,14 +2018,15 @@ function criarBtn() {
         let butao = dva.children[3].children[2];
         let barreira = dva.children[3].children[1];
         let ulti = dva.children[2];
-        let retratoFoto = dva.children[1]
-        let hp = dva.children[3].children[1]
+        let retratoFoto = dva.children[1];
+        let hp = dva.children[3].children[1];
 
         for (let i = 0; i < 4; i++) {
           if (parseInt(ulti.textContent) < 100) {
             // se a carta for gentleman
-            if (inv.children[i].id == "-click" ||
-            inv.children[i].id == "especial-click"
+            if (
+              inv.children[i].id == "-click" ||
+              inv.children[i].id == "especial-click"
             ) {
               let gentleman = inv.children[i];
               let poderVelho = inv.children[i].children[3].children[0];
@@ -2033,13 +2034,13 @@ function criarBtn() {
               // se tiver pdoer novo, o adiquira e exclua a carta
 
               ulti =
-                parseInt(ulti.textContent) + parseInt(poderVelho.textContent) * 2;
+                parseInt(ulti.textContent) +
+                parseInt(poderVelho.textContent) * 2;
               console.log("adquiri ulti");
 
               if (ulti > 100) {
                 dva.children[2].textContent = 100 + "%";
                 // dva.children[2].textContent = 100 + "";
-                
               } else {
                 dva.children[2].textContent = ulti + "%";
               }
@@ -2047,7 +2048,8 @@ function criarBtn() {
                 inv.replaceChild(empty1, gentleman);
               } else if (gentleman == inv.children[1]) {
                 inv.replaceChild(empty2, gentleman);
-              } else if (gentleman == inv.children[2]) {g
+              } else if (gentleman == inv.children[2]) {
+                g;
                 inv.replaceChild(empty3, gentleman);
               } else if (gentleman == inv.children[3]) {
                 inv.replaceChild(empty4, gentleman);
@@ -2056,51 +2058,55 @@ function criarBtn() {
             }
             //se tiver ulti
           } else {
+            // butao.style.visibility = 'hidden'
 
-            butao.style.visibility = 'hidden'
+            hp.textContent = "3💚";
+
+            console.log("ultei");
+            retratoFoto.style.backgroundImage = 'url("/pics/dva.webp")';
+            dva.children[2].textContent = "";
+
+            let pontoDeTodos = 0;
+            let pontoDeTodosEsp = 0;
 
 
-            hp.textContent = "3💚"
 
-            console.log('ultei');
-            retratoFoto.style.backgroundImage = 'url("/pics/dva.webp")'
-            dva.children[2].textContent = ''
+            for (let j = 0; j < 4; j++) {
+              let ponto = inv.children[j].children[3].children[0];
+              let cartaEspecial =
+                inv.children[j].className == "cartaEsp" &&
+                inv.children[j].id != "dva";
+              let cartaNormal = inv.children[j].children[0].children[2].textContent != ''
+              // if(ponto.textContent != ''){
 
-            let pontoDeTodos = 0
-
-            for (let j=0;j<4;j++){
-              let ponto = inv.children[j].children[3].children[0]
-              let cartaEspecial = inv.children[j].children[0].children[1] == ''
-
-              if(ponto.textContent != ''){
-
-                if(cartaEspecial){
-                  pontoDeTodos +=25
-
-                }else{
-
-                  pontoDeTodos = pontoDeTodos + Math.trunc(parseInt(ponto.textContent) * 1.2 )
-                  console.log(pontoDeTodos);
-                  console.log(ponto.textContent);
-                }
+              if (cartaEspecial) {
+                pontoDeTodosEsp = pontoDeTodosEsp + 50
+                console.log('pontoDeTodosEsp',pontoDeTodosEsp);
+              } else if (cartaNormal) {
+                pontoDeTodos = 
+                  pontoDeTodos 
+                  + Math.trunc(parseInt(ponto.textContent) * 1.2);
+                console.log(pontoDeTodos);
+                console.log(ponto.textContent);
               }
-              
             }
-            dvaEnergia.textContent = pontoDeTodos + "⚡"
-            
-                if (dva != inv.children[0]) {
-                  inv.replaceChild(empty1, inv.children[0]);}
-                if (dva != inv.children[1]) {
-                  inv.replaceChild(empty2, inv.children[1]);}
-                if (dva != inv.children[2]) {
-                  inv.replaceChild(empty3, inv.children[2]);}
-                if (dva != inv.children[3]) {
-                  inv.replaceChild(empty4, inv.children[3]);
-                }
+            dvaEnergia.textContent = 1 + pontoDeTodos + pontoDeTodosEsp + "⚡";
 
-            
+            if (dva != inv.children[0]) {
+              inv.replaceChild(empty1, inv.children[0]);
+            }
+            if (dva != inv.children[1]) {
+              inv.replaceChild(empty2, inv.children[1]);
+            }
+            if (dva != inv.children[2]) {
+              inv.replaceChild(empty3, inv.children[2]);
+            }
+            if (dva != inv.children[3]) {
+              inv.replaceChild(empty4, inv.children[3]);
+            }
 
-            break
+            somaPontos();
+            break;
           }
         }
       }

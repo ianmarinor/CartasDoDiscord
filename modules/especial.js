@@ -607,7 +607,7 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "",
-        cargo: '0%',
+        cargo: '100%',
         retrato: "url('pics/dvaMecaRetrato.jpg')",
 
         // ataqueE: lucioPE()

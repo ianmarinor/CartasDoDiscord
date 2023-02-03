@@ -10,7 +10,7 @@ let btnRainha = document.getElementById("btnRainha");
 let precoCampones = 1;
 let precoCavalheiro = 1;
 let precoSangueAzul = 1;
-let precoRainha = 1000;
+let precoRainha = 1;
 
 document.addEventListener("contextmenu", alerta);
 
