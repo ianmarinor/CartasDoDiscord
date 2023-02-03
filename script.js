@@ -35,6 +35,8 @@ function seedRNG() {
   return Math.floor(Math.random() * totalNumOfSeeds);
 }
 
+// AUDIO
+
 // This function generates a seed or takes a seed as input
 // the input will always be translated to the same seed if an integer
 // if a string, it'll be converted
@@ -615,9 +617,7 @@ function colocarInfoNoWrap() {
   if (novaCarta._variante != "") {
 
     function fundoVariante(foto){
-
       return "linear-gradient(\n      180deg,\n      rgba(0, 0, 0, 0.3),\n      rgba(12, 3, 30, 0.8)\n    ),\n"  + foto
-
     }
 
 
@@ -1031,6 +1031,8 @@ let copyCardSeed;
 let copyCardName;
 
 function moverCartaMonark() {
+  let hit = new Audio('audio/hit.mp3')
+  let morte = new Audio('audio/morte.mp3')
   copyCard = cartaParaMover.cloneNode(true);
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
@@ -1062,23 +1064,22 @@ function moverCartaMonark() {
       let spyCheck = isSpy();
       // console.log("spyCheck: ", spyCheck);
 
-    
-      function efeitoDano(carta) {
-        let retrato = inv.children[carta].children[1];
-        let picOriginal = retrato.style.backgroundImage;
-        let bordOrigianal = retrato.style.border;
+      
 
-        retrato.style.backgroundImage = 'url("pics/dano.png")';
-        retrato.style.border = "4px dotted #FE0101";
+      function efeitoDano(carta) {
+        let heart = inv.children[carta].children[3].children[1];
+        
+        heart.style.backgroundColor = 'red'
+        heart.style.border = '3px solid black'
+        hit.play()
 
         setTimeout(function () {
-          retrato.style.backgroundImage = picOriginal;
-          retrato.style.border = bordOrigianal;
+          heart.style.backgroundColor = ''
+          heart.style.border = ''
         }, 300);
 
-        // console.log(retrato);
-        // console.log(picOriginal);
-        console.log(bordOrigianal);
+
+
       }
 
       function damage() {
@@ -1102,8 +1103,10 @@ function moverCartaMonark() {
 
             if (HPNum >= 2) {
               HP.textContent = HPNum - 1 + "💚";
-              // efeitoDano(j);
+              efeitoDano(j);
             } else {
+              hit.play()
+              morte.play()
               if (cartaComHp == inv.children[0]) {
                 inv.replaceChild(empty1, cartaComHp);
               } else if (cartaComHp == inv.children[1]) {
