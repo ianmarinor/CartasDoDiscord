@@ -607,7 +607,7 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "",
-        cargo: '0%',
+        cargo: '100%',
         retrato: "url('pics/dvaMecaRetrato.jpg')",
 
         // ataqueE: lucioPE()
@@ -903,27 +903,16 @@ export function estoicoPE(){
 }
 
 export function lucioPE(){
-  if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 489 + "💚"
+  if (parseInt(seed3) < 2) {
+    return parseInt(seed3) + 4 + "💚"
+  } if (parseInt(seed3) > 7){
+
+    return parseInt(seed3)  -1 + "💚" 
   }
-  if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 430 + "💚"
+  else {
+    return parseInt(seed3) + 1 + "💚"
   }
-  if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return parseInt(seed3) + 236 + "💚";
-  }
-  if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return parseInt(seed3) + 234 + "💚";
-  }
-  if (parseInt(seed2) == 7) {
-    return parseInt(seed3) + 180 + "💚";
-  }
-  if (parseInt(seed2) == 8) {
-    return parseInt(seed3) + 160 + "💚";
-  }
-  if (parseInt(seed2) == 9) {
-    return parseInt(seed3) + 150 + "💚";
-  }
+  
 }
 
 // export function pontoSpeaker() {

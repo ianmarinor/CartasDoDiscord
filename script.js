@@ -480,6 +480,7 @@ function colocarInfoNoWrap() {
 
   ataqueP.innerHTML = "";
   novoAtaquerP.innerHTML = "";
+  novoAtaquerP.style.visibility = "hidden";
 
   seedP.style.color = "";
 
@@ -496,6 +497,8 @@ function colocarInfoNoWrap() {
 
   //DOM
 
+
+
   nomeP.innerHTML = novaCarta._integrante.toUpperCase();
   // if (novaCarta._especial.nome == "") {
   cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
@@ -504,6 +507,8 @@ function colocarInfoNoWrap() {
   // }
 
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
+  novoAtaquerP.innerHTML = 0;
+
   varianteP.innerHTML = novaCarta._variante;
   // especialP.innerHTML = novaCarta._especial;
   seedP.innerHTML = "&nbsp;" + seedString;
@@ -1058,8 +1063,9 @@ function moverCartaMonark() {
             inv.children[j].children[3].children[1].textContent
           );
           let HP = inv.children[j].children[3].children[1];
+          let especial = cartaComHp.dataset.card == 'especial'
           
-          if (temHP) {
+          if (temHP && especial) {
             // console.log(inv.children[j],'TEM HP');
             // console.log(hasBarrier);
             // console.log('TEM BARREIRA',hasBarrier);
@@ -1080,11 +1086,17 @@ function moverCartaMonark() {
                 inv.replaceChild(empty4, cartaComHp);
               }
             }
-          } else {
-            // console.log(inv.children[j] ,'NAO TEM HP OU TEM BARREIRA')
-            // console.log('TEM BARREIRA',hasBarrier);
-            // console.log('energia',inv.children[j].children[3].children[0].textContent);
-            // console.log('-----------------------------------------------------------G');
+          } else if (temHP && !especial) {
+
+            if (HPNum >= 2) {
+              HP.textContent = HPNum - 1 + "💚";
+              // efeitoDano(j);
+            } else {
+              HP.textContent = 0
+              HP.style.visibility = 'hidden'
+            }
+
+
           }
         }
       }
@@ -1107,6 +1119,8 @@ function moverCartaMonark() {
       }
       let deckCheck = deckVazio();
 
+
+      //  ACTION
       for (let i = 0; i < 4; i++) {
 
         let energia = inv.children[i].children[3].children[0];
@@ -1128,7 +1142,8 @@ function moverCartaMonark() {
         } else if (
           cartaParaMover.children[0].children[0].textContent ==
             inv.children[i].children[0].children[0].textContent &&
-          inv.children[i].id != "carta-monark" 
+          inv.children[i].id != "carta-monark" &&  !inv.children[i].children[3].children[1].textContent.includes("💚")
+
         ) {
           console.log("*****MESMO NOME********");
           console.log(
@@ -1819,46 +1834,49 @@ function criarBtn() {
             }
             //se tiver ulti
           } else {
-            let cartasQueOLucioNaoGosta = [
-              "especial-click",
-              "-click",
-              "empty1",
-              "empty2",
-              "empty3",
-              "empty4",
-              "especial-tenica",
-              "carta-monark",
-              "premiomonark",
-              "comunista",
-              "abelha",
-              "estoico",
-              "spy",
+            let cartasQueOLucioGosta = [
+    
+              "jhin",
+              "tank"
+              
             ];
+
+          
+
+
             totalClicks += 25;
             arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
             ulti.textContent = "0%";
+            
+
+            
             //colocar barreira
             for (let k = 0; k < 4; k++) {
               if (
-                !cartasQueOLucioNaoGosta.some((el) =>
-                  inv.children[k].id.includes(el)
+                cartasQueOLucioGosta.some((el) =>
+                  inv.children[k].id.includes(el) ||
+
+                  inv.children[k].id == 'dva' && inv.children[k].children[3].children[1].textContent.includes("💚")
+
+
                 )
               ) {
-                // lucioEnergia.textContent = barreira.textContent;
+                
                 let energia = inv.children[k].children[3].children[1];
 
-                butao.style.visibility = "hidden";
 
                 energia.textContent =
                   parseInt(energia.textContent) +
                   parseInt(barreira.textContent) +
                   "💚";
+
+                  energia.style.visibility = 'visible'
                 console.log("barreira: ", barreira);
               }
 
               somaPontos();
             }
-            barreira.textContent = "";
+            
 
             break;
           }
@@ -2013,12 +2031,12 @@ function criarBtn() {
               } else {
                 dva.children[2].textContent = ulti + "%";
               }
+
               if (gentleman == inv.children[0]) {
                 inv.replaceChild(empty1, gentleman);
               } else if (gentleman == inv.children[1]) {
                 inv.replaceChild(empty2, gentleman);
               } else if (gentleman == inv.children[2]) {
-                g;
                 inv.replaceChild(empty3, gentleman);
               } else if (gentleman == inv.children[3]) {
                 inv.replaceChild(empty4, gentleman);

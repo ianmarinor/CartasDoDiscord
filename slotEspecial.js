@@ -93,7 +93,7 @@ function comprarRainha() {
 }
 
 const cartaEsp =
-  '<div class="cartaEsp">' +
+  '<div class="cartaEsp" data-card="especial">' +
   '<div class="nameAndCidadeWrapperEsp">' +
   '<p class="nomeEsp"></p>' +
   '<div class="varianteEsp"></div>' +
