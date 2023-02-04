@@ -36,6 +36,31 @@ function seedRNG() {
 }
 
 // AUDIO
+let audioEnabled = true
+
+let speakerP = document.getElementById('speaker')
+
+function toggleSound(){
+
+  if(audioEnabled){
+    audioEnabled = false
+    speakerP.src = "/pics/mute.png"
+  } else{
+    audioEnabled = true
+    speakerP.src = "/pics/speaker.png"
+  }
+  console.log(audioEnabled);
+}
+
+speakerP.addEventListener('click', toggleSound)
+
+
+function snd(audio){
+
+  let audioEffect = new Audio('/audio/' + audio)
+
+  audioEnabled && audioEffect.play()
+}
 
 // This function generates a seed or takes a seed as input
 // the input will always be translated to the same seed if an integer
@@ -1031,8 +1056,8 @@ let copyCardSeed;
 let copyCardName;
 
 function moverCartaMonark() {
-  let hit = new Audio('audio/hit.mp3')
-  let morte = new Audio('audio/morte.mp3')
+  let hit = 'hit.mp3'
+  let morte = 'morte.mp3'
   copyCard = cartaParaMover.cloneNode(true);
   copyCardSeed = copyCard.children[4].textContent;
   copyCardName = copyCard.children[0].children[0].textContent;
@@ -1071,7 +1096,7 @@ function moverCartaMonark() {
         
         heart.style.backgroundColor = 'red'
         heart.style.border = '3px solid black'
-        hit.play()
+        snd(hit)
 
         setTimeout(function () {
           heart.style.backgroundColor = ''
@@ -1105,8 +1130,8 @@ function moverCartaMonark() {
               HP.textContent = HPNum - 1 + "💚";
               efeitoDano(j);
             } else {
-              hit.play()
-              morte.play()
+              snd(hit)
+              snd(morte)
               if (cartaComHp == inv.children[0]) {
                 inv.replaceChild(empty1, cartaComHp);
               } else if (cartaComHp == inv.children[1]) {
@@ -2271,6 +2296,10 @@ function deletarDeck(e) {
           console.log("*******  vendi *************");
           moneyP.textContent =
             parseInt(moneyP.textContent) + parseInt(energia.textContent);
+
+            let venda = 'venda.mp3'
+            snd(venda)
+
         }
       }
 
@@ -2498,8 +2527,22 @@ inv.addEventListener("click", deletarDeck);
 btnReset.addEventListener("click", resetarDeck);
 
 // DECK COMECA COM 4 CARTAS
+let deckProntoAu = 'deckPronto.mp3'
+let deckProntoAu2 = 'deckPronto.mp3'
+
 let teclaDeckPronto = "KeyG";
 function deckPronto() {
+
+  if(!deckProntoAu.paused){
+
+    snd(deckProntoAu2)
+    
+  } else {
+    snd(deckProntoAu)
+
+
+  }
+  
   tudo();
   resetarDeck();
   moverCarta();
@@ -2511,10 +2554,13 @@ function deckPronto() {
   arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 }
 
+
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {
     if (!getSeedChecked()) {
       deckPronto();
+
+      
     }
   }
 });

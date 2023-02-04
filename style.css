@@ -102,6 +102,20 @@ li {
   color: rgb(213, 187, 238);
 }
 
+#sound{
+  grid-area: btnReset;
+  height: 50px;
+  width: 50px;
+  align-self: end;
+  justify-self: end;
+  margin: 10px;
+  
+}
+#speaker{
+  height: 50px;
+  width: auto;
+}
+
 .dano{
   background-image: url(pics/dano.png);
 }
