@@ -12,6 +12,7 @@ let precoCampones = 1;
 let precoCavalheiro = 1;
 let precoSangueAzul = 1;
 let precoRainha = 1;
+let novaCarta = 'novaCarta.mp3'
 
 document.addEventListener("contextmenu", alerta);
 
@@ -295,6 +296,7 @@ function moverToCartaMao() {
   if (cartaEspecial.id && !myInterval) {
     mao.replaceChild(cartaEspecial, mao.children[0]);
     limparEsp();
+    snd(novaCarta)
   }
 }
 

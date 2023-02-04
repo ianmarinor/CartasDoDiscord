@@ -36,6 +36,7 @@ function seedRNG() {
 }
 
 // AUDIO
+let novaCartaAu = 'novaCarta.mp3'
 let audioEnabled = true
 
 let speakerP = document.getElementById('speaker')
@@ -993,6 +994,7 @@ function moverToInvMao() {
   }
 
   if (mao.children[0].id != "cartaMao") {
+      snd(novaCartaAu)
     if (inv.children[0].id == "empty1") {
       colocarBotao();
       inv.replaceChild(mao.children[0], inv.children[0]);
@@ -2387,7 +2389,7 @@ function limparInput() {
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
-  let novaCartaAu = 'novaCarta.mp3'
+  
 
 
   if (totalClicks > 0) {
