@@ -55,7 +55,7 @@ function toggleSound(){
 speakerP.addEventListener('click', toggleSound)
 
 
-function snd(audio){
+export function snd(audio){
 
   let audioEffect = new Audio('/audio/' + audio)
 
@@ -1177,6 +1177,7 @@ function moverCartaMonark() {
 
 
       //  ACTION
+      let monarkAu = 'monark.mp3'
       for (let i = 0; i < 4; i++) {
 
         let energia = inv.children[i].children[3].children[0];
@@ -1185,13 +1186,14 @@ function moverCartaMonark() {
           console.log("TEM SPY");
           inv.replaceChild(copyCard, inv.children[spyCheck[1]]);
           console.log("*****MATEI SPY********");
-
+          snd(monarkAu)
           break;
 
           //SE DECK VAZIO
         } else if (deckCheck[0]) {
           inv.replaceChild(copyCard, inv.children[deckCheck[1]]);
           console.log("*****DECK VAZIO********");
+          snd(monarkAu)
           break;
 
           // SUBSTITUI O HOMONIMO
@@ -1208,7 +1210,7 @@ function moverCartaMonark() {
           );
           console.log(inv.children[i].children[0].children[0].textContent);
           inv.replaceChild(copyCard, inv.children[i]);
-
+          snd(monarkAu)
           break;
         }
       }
@@ -2300,6 +2302,9 @@ function deletarDeck(e) {
             let venda = 'venda.mp3'
             snd(venda)
 
+        } else{
+          let deletarAu = 'deletar.mp3'
+          snd(deletarAu)
         }
       }
 
@@ -2324,6 +2329,9 @@ function deletarDeck(e) {
         ativarBtn();
         somaPontos();
       }
+    } else {
+      let naoAu = 'nao.mp3'
+          snd(naoAu)
     }
   }
 }
@@ -2379,6 +2387,9 @@ function limparInput() {
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
+  let novaCartaAu = 'novaCarta.mp3'
+
+
   if (totalClicks > 0) {
     if (totalClicks == 1) {
       showVersion();
@@ -2388,7 +2399,7 @@ function tudo() {
       button.style.backgroundColor = "";
       button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
     }
-
+    snd(novaCartaAu)
     start();
     limparInput();
     escolherIntegrante();
@@ -2528,20 +2539,14 @@ btnReset.addEventListener("click", resetarDeck);
 
 // DECK COMECA COM 4 CARTAS
 let deckProntoAu = 'deckPronto.mp3'
-let deckProntoAu2 = 'deckPronto.mp3'
+
 
 let teclaDeckPronto = "KeyG";
 function deckPronto() {
 
-  if(!deckProntoAu.paused){
-
-    snd(deckProntoAu2)
-    
-  } else {
-    snd(deckProntoAu)
+  // snd(deckProntoAu)
 
 
-  }
   
   tudo();
   resetarDeck();

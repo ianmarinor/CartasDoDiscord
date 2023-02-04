@@ -1,5 +1,6 @@
 import { seedObj, seedRNG } from "./modules/seedFabricator.js";
 import { escolherEspecial, especial } from "./modules/especial.js";
+import  {snd}  from "/script.js"
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
@@ -63,32 +64,40 @@ export function ativarBtn() {
 }
 
 function comprarCampones() {
+  let audio = 'campones.wav'
   if (parseInt(moneyP.textContent) >= precoCampones) {
     colocarSlot(makeCampones());
     moneyP.textContent = parseInt(moneyP.textContent) - precoCampones;
     ativarBtn();
+    snd(audio)
   }
 }
 
 function comprarCavalheiro() {
+  let audio = 'campones.wav'
   if (parseInt(moneyP.textContent) >= precoCavalheiro) {
     colocarSlot(makeCavalheiro());
     moneyP.textContent = parseInt(moneyP.textContent) - precoCavalheiro;
     ativarBtn();
+    snd(audio)
   }
 }
 function comprarSangue() {
+  let audio = 'campones.wav'
   if (parseInt(moneyP.textContent) >= precoSangueAzul) {
     colocarSlot(makeSangueAzul());
     moneyP.textContent = parseInt(moneyP.textContent) - precoSangueAzul;
     ativarBtn();
+    snd(audio)
   }
 }
 function comprarRainha() {
+  let audio = 'campones.wav'
   if (parseInt(moneyP.textContent) >= precoRainha) {
     colocarSlot(makeRainha());
     moneyP.textContent = parseInt(moneyP.textContent) - precoRainha;
     ativarBtn();
+    snd(audio)
   }
 }
 
