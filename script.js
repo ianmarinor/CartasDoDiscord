@@ -1203,7 +1203,7 @@ function moverCartaMonark() {
         //SE TIVER SPY
         if (spyCheck[0]) {
           console.log("TEM SPY");
-          inv.replaceChild(copyCard, inv.children[spyCheck[1]]);
+          // inv.replaceChild(copyCard, inv.children[spyCheck[1]]);
           console.log("*****MATEI SPY********");
           let deathSpyAu = ['deathSpy'    + gerarNumero(1,3) + '.mp3']
           snd(deathSpyAu);
@@ -1454,6 +1454,8 @@ function criarBtn() {
                   "durmi kkjk <br> &#128564; &#128564;";
                 varianteSpeaker.children[3].children[2].style.visibility =
                   "hidden";
+                  let speakerSleepAu = ['speakerSleep.mp3']
+                  snd(speakerSleepAu)
               }
             }
           }
@@ -1778,7 +1780,13 @@ function criarBtn() {
         let botao = spy.children[3].children[2];
         let retrato = spy.children[1];
 
-        spyWatch.addEventListener("click", invis);
+
+        if( spyWatch.id != 'foi'){
+
+          spyWatch.addEventListener("click", invis);
+          spyWatch.id = 'foi'
+        }
+
         function invis() {
           spy.className = "invisi";
           retrato.classList.add("invis");
@@ -1789,7 +1797,9 @@ function criarBtn() {
           retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
           let spyInvisAu = ['spyInvis.mp3']
+          let spyInvisLineAu = ['spyInvisLine.mp3']
           snd(spyInvisAu)
+          snd(spyInvisLineAu)
 
         }
 
@@ -1827,6 +1837,13 @@ function criarBtn() {
             // audio
             let stabAu = ['stab.mp3']
             snd(stabAu)
+
+            if(gerarNumero(1,3) == 2){
+
+              
+              let spyAu = ['spy' + gerarNumero(1,7) + '.mp3']
+              snd(spyAu) 
+            }
 
             break;
           }
