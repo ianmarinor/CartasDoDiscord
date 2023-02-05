@@ -1783,7 +1783,7 @@ function criarBtn() {
           setTimeout(eliminarPremioMonark, 10000);
 
           colocarEfeito();
-          let premioMonarkAu = ['premioMonark.mp3']
+          let premioMonarkAu = ['premioMonark.mp3', 0.3]
           let premioMonarkElimAu = ['premioMonarkElim.mp3']
 
 

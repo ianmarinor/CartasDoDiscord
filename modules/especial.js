@@ -607,7 +607,7 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "",
-        cargo: '0%',
+        cargo: '100%',
         retrato: "url('pics/dvaMecaRetrato.jpg')",
 
         // ataqueE: lucioPE()
@@ -801,7 +801,8 @@ function constrEspecial() {}
 // ENERGIAS
 
 export function tenicaEnergia() {
-  return (especiais.tenica.energia = parseInt(seed2) + parseInt(seed3) + 275 + "👑");
+  let num = seed2 + seed3
+  return (especiais.tenica.energia = parseInt(num )  + 275 + "👑");
 }
 
 export function pontoSpeaker() {
@@ -965,7 +966,10 @@ export function lucioPE(){
 }
 
 function tankCargo(emoji){
-  return parseInt(seed3) + parseInt(seed3) + 423 + emoji
+
+  let num = seed2 + seed3
+  console.log('***NUM*****',num);
+  return parseInt(num) + 487 + emoji
 }
 
 // export function pontoSpeaker() {
