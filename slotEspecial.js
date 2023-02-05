@@ -12,7 +12,7 @@ let precoCampones = 1;
 let precoCavalheiro = 1;
 let precoSangueAzul = 1;
 let precoRainha = 1;
-let novaCarta = 'novaCarta.mp3'
+let novaCarta = ['novaCarta.mp3']
 
 document.addEventListener("contextmenu", alerta);
 
@@ -65,7 +65,7 @@ export function ativarBtn() {
 }
 
 function comprarCampones() {
-  let audio = 'campones.wav'
+  let audio = ['campones.wav']
   if (parseInt(moneyP.textContent) >= precoCampones) {
     colocarSlot(makeCampones());
     moneyP.textContent = parseInt(moneyP.textContent) - precoCampones;
@@ -75,7 +75,7 @@ function comprarCampones() {
 }
 
 function comprarCavalheiro() {
-  let audio = 'campones.wav'
+  let audio = ['campones.wav']
   if (parseInt(moneyP.textContent) >= precoCavalheiro) {
     colocarSlot(makeCavalheiro());
     moneyP.textContent = parseInt(moneyP.textContent) - precoCavalheiro;
@@ -84,7 +84,7 @@ function comprarCavalheiro() {
   }
 }
 function comprarSangue() {
-  let audio = 'campones.wav'
+  let audio = ['campones.wav']
   if (parseInt(moneyP.textContent) >= precoSangueAzul) {
     colocarSlot(makeSangueAzul());
     moneyP.textContent = parseInt(moneyP.textContent) - precoSangueAzul;
@@ -93,7 +93,7 @@ function comprarSangue() {
   }
 }
 function comprarRainha() {
-  let audio = 'campones.wav'
+  let audio = ['campones.wav']
   if (parseInt(moneyP.textContent) >= precoRainha) {
     colocarSlot(makeRainha());
     moneyP.textContent = parseInt(moneyP.textContent) - precoRainha;
@@ -103,7 +103,7 @@ function comprarRainha() {
 }
 
 const cartaEsp =
-  '<div class="cartaEsp" data-card="especial">' +
+  '<div class="cartaEsp" data-card="especial" data-tankdead="false">' +
   '<div class="nameAndCidadeWrapperEsp">' +
   '<p class="nomeEsp"></p>' +
   '<div class="varianteEsp"></div>' +
@@ -227,6 +227,9 @@ function colocarSlot(tipo) {
 
   slotEsp.children[0].id = especial.cartaId;
 
+  //PERSONALIZADO
+  
+
   retratoE.style.visibility = "visible";
   console.log(slotEsp.querySelector(".nomeEsp"));
   //NOME
@@ -250,6 +253,9 @@ function colocarSlot(tipo) {
   cargoE.innerHTML = especial.cargo;
   cargoE.style.fontFamily = especial.cargoStyle.fontFamily;
   cargoE.style.fontSize = especial.cargoStyle.fontSize;
+  if (especial.cargoStyle.visibility) {
+    cargoE.style.visibility = especial.cargoStyle.visibility
+  }
 
   //ATAQUE
   ataqueE.innerHTML = especial.ataqueE;

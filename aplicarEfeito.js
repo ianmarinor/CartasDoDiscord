@@ -1,5 +1,5 @@
 // import { efeitoPremioMonark } from './modules/especial';
-import { efeitos, rodadas,somaPontos } from "./script.js";
+import { efeitos, rodadas,somaPontos, snd } from "./script.js";
 
 
 let inv = document.getElementById("inv");
@@ -46,6 +46,18 @@ function premioMonark() {
 
         if(monark.children[0].className != "float"){
           moneyP.textContent = parseInt(moneyP.textContent) + bonusMonark
+
+          let premioMonarkElimAu = ['premioMonarkElim.mp3']
+        setTimeout(function(){
+          snd(premioMonarkElimAu)
+        }, 1000)
+
+        let vendaAu = ['venda.mp3']
+        
+
+        setTimeout(function(){
+          snd(vendaAu)
+        }, 500)
         }
       
       
@@ -63,8 +75,8 @@ function premioMonark() {
       monark.children[2].className = "float";
       monark.children[3].children[0].style.visibility = 'hidden';
       monark.classList.add('vanish')
-      
-
+        
+        
       }
       
 
@@ -85,6 +97,7 @@ function premioMonark() {
         } else if(monark == inv.children[3]){
           inv.replaceChild(empty4,monark);
         }
+
 
         
         somaPontos()

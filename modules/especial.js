@@ -644,6 +644,52 @@ export let especiais = {
           visibility: 'visible',
         }
       },
+      tank: {
+        cartaId: "tank",
+        nome: "TANK",
+        raridade: raridades.campones,
+        pontoEspecial: "",
+        energia: 0,
+        poder: false,
+        efeito: "",
+        familia: "tf2",
+        descricao: "",
+        emoji: "💰",
+        emojiEsp: "",
+        retrato: 'url("/pics/tankRetrato.jpg")',
+        retrato2: "",
+        cargo: "",
+        ataqueE: "1⚡",
+        novoAtaqueE: '10000💚',
+
+        nomeStyle:{
+          fontSize: "210%",
+          fontFamily: "tf2",
+          color: "",
+        },
+
+        retratoStyle:{
+          border: "2px solid #cf6a32",
+          backgroundColor: "unset"
+        },
+        cargoStyle:{
+          fontFamily: 'tf2',
+          fontSize: '200%',
+          visibility: 'hidden'
+        },
+        ataqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'tf2',
+          visibility: '',
+        },
+        novoAtaqueStyle:{
+          color: '',
+          fontSize: '',
+          fontFamily:'tf2',
+          visibility: 'visible',
+        }
+      }
 
     }
 
@@ -726,13 +772,16 @@ export function escolherEspecial(teste) {
       if (seedString[12] < 4) {
         especial = especiais.menosCartas;
         especial.ataqueE = bonusCartasPE() + '🃏'
-      } else if (seedString[12] > 5){
+      } else if (seedString[12] > 6){
          especial = especiais.maisCartas;
          especial.ataqueE = bonusCartasPE() + '🃏'
       } else if (seedString[12] == 4){
          especial = especiais.abelha;
          especial.ataqueE = abelhaEnergia() + '🐝'
-      } else {
+      }  else if (seedString[12] == 5){
+        especial = especiais.tank; 
+        especial.cargo = tankCargo(especiais.tank.emoji)
+       } else {
         especial = especiais.estoicoTuru;
         especial.novoAtaqueE = estoicoPE()
       }
@@ -913,6 +962,10 @@ export function lucioPE(){
     return parseInt(seed3) + 1 + "💚"
   }
   
+}
+
+function tankCargo(emoji){
+  return parseInt(seed3) + parseInt(seed3) + 423 + emoji
 }
 
 // export function pontoSpeaker() {

@@ -599,6 +599,37 @@ li {
   border: 2px solid rgba(207, 106, 50, 1);
 }
 
+
+#tank, #tf2Money {
+  /* background:  url(/pics/fundoPremioMonark.gif); */
+
+  background-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.8),
+      rgba(12, 3, 30, 0.8)
+    ),
+    url(/pics/fundoSpy.gif);
+  /* background-image: url(/pics/fundoPremioMonark.gif); */
+
+  /* background: url(); */
+  font-family: estoico;
+  height: var(--tamanhoCartaHeight);
+  width: var(--tamanhoCartaWidth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  position: relative;
+  font-weight: 900;
+  background-repeat: no-repeat;
+  background-size: COVER;
+  font-family: tf2;
+  color: #cf6a32;
+  border: 2px solid rgba(207, 106, 50, 1);
+}
+
+
 #lucio {
   /* background:  url(/pics/fundoPremioMonark.gif); */
 
@@ -920,7 +951,7 @@ p {
 }
 
 .invis {
-  animation: vanish 4s;
+  animation: vanish 2s;
   animation-iteration-count: 1;
   opacity: 0.1;
 }
