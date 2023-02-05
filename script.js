@@ -1835,7 +1835,7 @@ function criarBtn() {
             somaPontos();
 
             // audio
-            let stabAu = ['stab.mp3']
+            let stabAu = ['stab.mp3', 0.5]
             snd(stabAu)
 
             if(gerarNumero(1,3) == 2){
