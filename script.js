@@ -61,11 +61,32 @@ function toggleSound() {
 
 speakerP.addEventListener("click", toggleSound);
 
+
+let audioEffect
+
+function hasStopped(song){
+  let test  = new Audio("/audio/" + song[0])
+
+
+  // console.log('test', test.src);
+  // console.log('audioEffect', audioEffect.src);
+
+  // console.log(test.src == audioEffect.src
+  //   );
+
+  if (audioEffect.src != test.src){
+    return true
+  } else {
+    return false
+  }
+ 
+}
+
 export function snd(audio) {
 
-  
+    
 
-    let audioEffect = new Audio("/audio/" + audio[0]);
+    audioEffect = new Audio("/audio/" + audio[0]);
   
 
   if(typeof audio[1] == 'number'){
@@ -76,6 +97,7 @@ export function snd(audio) {
   }
 
   audioEnabled && audioEffect.play();
+
 }
 
 // This function generates a seed or takes a seed as input
@@ -1656,6 +1678,8 @@ function criarBtn() {
 
         let comunista = e.target.offsetParent;
         // comunista.children[3].children[2].style.visibility = "hidden";
+        let comunistaAu = ['comuna.mp3', 0.6]
+
         for (let k = 0; k < 4; k++) {
           if (inv.children[k].id == "carta-speaker") {
             for (let j = 0; j < 4; j++) {
@@ -1691,6 +1715,8 @@ function criarBtn() {
                   inv.children[j].children[3].children[0].style.fontWeight =
                     "bold";
 
+                  
+                  
                   somaPontos();
                   //SE NAO FOR BLACKAO
                 } else
@@ -1705,8 +1731,12 @@ function criarBtn() {
                 if (inv.children[j].id != "carta-people") {
                   inv.children[j].children[3].children[0].style.color = "red";
                 }
-
+                
                 somaPontos();
+              }
+              if(hasStopped(comunistaAu) == true){
+
+                snd(comunistaAu)
               }
             }
           }
