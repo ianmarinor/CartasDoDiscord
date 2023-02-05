@@ -23,7 +23,7 @@ import { aplicarEfeitos } from "./aplicarEfeito.js";
 import { ativarBtn, limparEsp } from "./slotEspecial.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Pre-Alpha 1.6.3";
+let versao = "Pre-Alpha 1.6.4";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
