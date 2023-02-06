@@ -2420,21 +2420,99 @@ function deletarDeck(e) {
 
       function venderCarta() {
 
-        
+         
+
+        let totalMoney = parseInt(moneyP.textContent)
+        let cardValue = parseInt(energia.textContent)
+        let cargoMoney = parseInt(cargo.textContent)
+
+        function animateSell(start, plus ){
+
+          if (plus === 0) return 
+
+          let current = start;
+          let novo = start + plus
+          let range = Math.abs(start - plus)
+
+          let increment 
+
+          if(plus > 200){
+            increment = 5
+          } else {
+            increment = 1
+          }
+
+          var stepTime = Math.floor(500 / plus)
+          let x = 0
+
+          let trigger = false
+
+          let timer = setInterval(function() {
+            let coinAu = ['coin.mp3', 0.03]
+
+            if( plus - x  <20){
+
+              
+              x++
+              moneyP.textContent =  parseInt(moneyP.textContent) + 1;
+              snd(coinAu)
+              
+            } else{
+
+              x += increment
+              moneyP.textContent =  parseInt(moneyP.textContent) + increment;
+
+              if(trigger){
+
+                snd(coinAu)
+                trigger = false
+              } else {
+                trigger = true
+              }
+
+              
+              
+            }
+
+            
+
+            // current += increment;
+            
+            
+            console.log(x);
+
+            if (x >= plus) {
+              clearInterval(timer);
+          }
+
+          //   if (current == novo) {
+          //     clearInterval(timer);
+          // }
+
+        },stepTime)
+      }
         let venda = ["venda.mp3"];
+
+
 
         if (isVendivel) {
           console.log("*******  vendi *************");
           
 
             if(carta == 'tf2Money'){
-              moneyP.textContent =
-            parseInt(moneyP.textContent) + parseInt(cargo.textContent);
+             
             
 
+            animateSell(totalMoney, cargoMoney)
+
             } else{
-              moneyP.textContent =
-            parseInt(moneyP.textContent) + parseInt(energia.textContent);
+
+
+              animateSell(totalMoney, cardValue)
+
+
+            //   moneyP.textContent =
+            // parseInt(moneyP.textContent) + parseInt(energia.textContent);
             
             }    
             snd(venda);
@@ -2465,6 +2543,7 @@ function deletarDeck(e) {
         ativarBtn();
         somaPontos();
       }
+
     } else {
       let naoAu = ["nao.mp3"];
       snd(naoAu);

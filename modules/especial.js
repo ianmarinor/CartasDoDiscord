@@ -751,7 +751,12 @@ export function escolherEspecial(teste) {
       raridade = raridades.cavaleiro;
       DEBUG && console.log(raridades.cavaleiro.rng());
 
-      if (seedString[12]< 4) {
+
+      if(true){
+
+        especial = especiais.dva;
+
+      } else if (seedString[12]< 4) {
          especial = especiais.speaker;
          especial.ataqueE = pontoSpeaker()
          
@@ -759,7 +764,8 @@ export function escolherEspecial(teste) {
         especial = especiais.jhin;
       } else if (seedString[12] == 4) {
         especial = especiais.spy;
-      } else if (seedString[12] == 5) {
+      } else if (seedString[12] == 5
+        ) {
         especial = especiais.dva;
       }
 
@@ -769,7 +775,13 @@ export function escolherEspecial(teste) {
       raridade = raridades.campones;
 
       //CAMPONESES
-      if (seedString[12] < 4) {
+
+      if(true){
+        
+        especial = especiais.tank; 
+        especial.cargo = tankCargo(especiais.tank.emoji)
+
+      } else if (seedString[12] < 4) {
         especial = especiais.menosCartas;
         especial.ataqueE = bonusCartasPE() + '🃏'
       } else if (seedString[12] > 6){

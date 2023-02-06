@@ -65,7 +65,7 @@ export function ativarBtn() {
 }
 
 function comprarCampones() {
-  let audio = ['campones.wav']
+  let audio = ['campones.wav', 0.3]
   if (parseInt(moneyP.textContent) >= precoCampones) {
     colocarSlot(makeCampones());
     moneyP.textContent = parseInt(moneyP.textContent) - precoCampones;
@@ -75,7 +75,7 @@ function comprarCampones() {
 }
 
 function comprarCavalheiro() {
-  let audio = ['campones.wav']
+  let audio = ['campones.wav', 0.3]
   if (parseInt(moneyP.textContent) >= precoCavalheiro) {
     colocarSlot(makeCavalheiro());
     moneyP.textContent = parseInt(moneyP.textContent) - precoCavalheiro;
@@ -84,7 +84,7 @@ function comprarCavalheiro() {
   }
 }
 function comprarSangue() {
-  let audio = ['campones.wav']
+  let audio = ['campones.wav', 0.3]
   if (parseInt(moneyP.textContent) >= precoSangueAzul) {
     colocarSlot(makeSangueAzul());
     moneyP.textContent = parseInt(moneyP.textContent) - precoSangueAzul;
@@ -93,7 +93,7 @@ function comprarSangue() {
   }
 }
 function comprarRainha() {
-  let audio = ['campones.wav']
+  let audio = ['campones.wav', 0.3]
   if (parseInt(moneyP.textContent) >= precoRainha) {
     colocarSlot(makeRainha());
     moneyP.textContent = parseInt(moneyP.textContent) - precoRainha;
