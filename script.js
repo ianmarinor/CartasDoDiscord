@@ -780,6 +780,8 @@ export let efeitos = {
 
 let efeitoVazio = { status: false, css: { nome: "", imagem: "" }, rodadas: 0 };
 
+let efeitoAu = [];
+
 function colocarEfeito() {
   efeito1P.style.backgroundImage = efeitos.css.imagem;
   efeito1P.innerHTML = efeitos.rodadas;
@@ -1911,6 +1913,9 @@ function criarBtn() {
             }
             somaPontos();
             tudo();
+
+            let estoicoAu = ['estoico.mp3']
+            snd(estoicoAu)
             break;
           }
         }
@@ -2402,12 +2407,10 @@ function deletarDeck(e) {
           var stepTime = Math.floor(500 / plus);
           let x = 0;
 
-          let trigger = false;
-
           let timer = setInterval(function () {
             let coinAu = ["coin.mp3", 0.04];
 
-            if (plus - x < 20) {
+            if (plus - x < 40) {
               x++;
               moneyP.textContent = parseInt(moneyP.textContent) + 1;
               snd(coinAu);
@@ -2415,14 +2418,10 @@ function deletarDeck(e) {
               x += increment;
               moneyP.textContent = parseInt(moneyP.textContent) + increment;
 
-              if (trigger) {
+              if (gerarNumero(1, 3) == 1) {
                 snd(coinAu);
-                trigger = false;
-              } else {
-                trigger = true;
               }
             }
-
             // current += increment;
 
             console.log(x);
