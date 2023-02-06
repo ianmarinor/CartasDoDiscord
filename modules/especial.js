@@ -510,7 +510,7 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "💚",
-        cargo: '100%',
+        cargo: '0%',
         retrato: "url('pics/retratoLucio.jpg')",
 
         // ataqueE: lucioPE()
@@ -730,10 +730,16 @@ export function escolherEspecial(teste) {
 
 
       //SANGUE AZUL
+
     } else if (raridades.sangueAzul.rng()) {
       raridade = raridades.sangueAzul;
       
-      if (seedString[12]< 3) {
+      if(true){
+        especial = especiais.lucio
+        especial.novoAtaqueE = 200 + '💚'
+
+
+      } else if (seedString[12]< 3) {
         especial = especiais.lucio
         especial.novoAtaqueE = lucioPE() 
 

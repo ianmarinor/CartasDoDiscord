@@ -41,6 +41,8 @@ function gerarNumero(min, max) {
 }
 
 // AUDIO
+
+let morteAu = ["morte.mp3", 0.2];
 let novaCartaAu = ["novaCarta.mp3"];
 let audioEnabled = true;
 
@@ -62,7 +64,7 @@ speakerP.addEventListener("click", toggleSound);
 let audioEffect;
 // let audioEffectE = ['deletar.mp3']
 
-let  audioEffectE = new Audio("/audio/deletar.mp3")
+let audioEffectE = new Audio("/audio/deletar.mp3");
 
 function hasStopped(song) {
   let test = new Audio("/audio/" + song[0]);
@@ -80,11 +82,9 @@ function hasStopped(song) {
   }
 }
 
-
 export function sndEfeito(audio) {
   audioEffectE = new Audio("/audio/" + audio[0]);
 
- 
   if (typeof audio[1] == "number") {
     audioEffectE.volume = audio[1];
   } else {
@@ -92,7 +92,6 @@ export function sndEfeito(audio) {
   }
   audioEnabled && audioEffectE.play();
 }
-
 
 export function snd(audio) {
   audioEffect = new Audio("/audio/" + audio[0]);
@@ -807,7 +806,7 @@ function colocarEfeito() {
     efeitos.rodadas--;
   } else {
     efeitos = efeitoVazio;
-    audioEffectE.pause()
+    audioEffectE.pause();
   }
 
   aplicarEfeitos();
@@ -1932,8 +1931,8 @@ function criarBtn() {
             somaPontos();
             tudo();
 
-            let estoicoAu = ['estoico.mp3', 0.2]
-            sndEfeito(estoicoAu)
+            let estoicoAu = ["estoico.mp3", 0.2];
+            sndEfeito(estoicoAu);
             break;
           }
         }
@@ -1956,13 +1955,26 @@ function criarBtn() {
         let butao = lucio.children[3].children[2];
         let barreira = lucio.children[3].children[1];
         let ulti = lucio.children[2];
+        let ultiReadyAu = ["ultiReadyLucio1.mp3"];
 
         for (let i = 0; i < 4; i++) {
           if (parseInt(ulti.textContent) < 100) {
             // se a carta for gentleman
-            if (inv.children[i].id == "carta-gentleman") {
+            if (inv.children[i].id == "carta-semcargo") {
               let gentleman = inv.children[i];
               let poderVelho = inv.children[i].children[3].children[0];
+
+              function matarCarta() {
+                if (gentleman == inv.children[0]) {
+                  inv.replaceChild(empty1, gentleman);
+                } else if (gentleman == inv.children[1]) {
+                  inv.replaceChild(empty2, gentleman);
+                } else if (gentleman == inv.children[2]) {
+                  inv.replaceChild(empty3, gentleman);
+                } else if (gentleman == inv.children[3]) {
+                  inv.replaceChild(empty4, gentleman);
+                }
+              }
 
               // se tiver pdoer novo, o adiquira e exclua a carta
 
@@ -1970,24 +1982,35 @@ function criarBtn() {
                 parseInt(ulti.textContent) + parseInt(poderVelho.textContent);
               console.log("adquiri ulti");
 
-              if (ulti > 100) {
+              if (ulti >= 100) {
                 lucio.children[2].textContent = 100 + "%";
+                matarCarta();
+                snd(ultiReadyAu);
               } else {
                 lucio.children[2].textContent = ulti + "%";
+                let lucioAu = ["lucio" + gerarNumero(1, 8) + ".ogg"];
+                if (gerarNumero(1, 2) == 1) {
+                  setTimeout(function () {
+                    snd(lucioAu);
+                  }, 650);
+                }
               }
-              if (gentleman == inv.children[0]) {
-                inv.replaceChild(empty1, gentleman);
-              } else if (gentleman == inv.children[1]) {
-                inv.replaceChild(empty2, gentleman);
-              } else if (gentleman == inv.children[2]) {
-                inv.replaceChild(empty3, gentleman);
-              } else if (gentleman == inv.children[3]) {
-                inv.replaceChild(empty4, gentleman);
-              }
+
+              matarCarta();
+
+              let lucioGunAu = ["lucioGun" + gerarNumero(1, 2) + ".mp3"];
+
+              snd(lucioGunAu);
+
+              snd(morteAu);
+
               break;
             }
             //se tiver ulti
           } else {
+            let ultiLucioAu = ["ultiLucio.oga"];
+            snd(ultiLucioAu);
+
             let cartasQueOLucioGosta = ["jhin", "tank"];
 
             totalClicks += 25;
@@ -2442,16 +2465,13 @@ function deletarDeck(e) {
                 snd(coinAu);
               }
             }
-            
-            ativarBtn()
+
+            ativarBtn();
             console.log(x);
 
             if (x >= plus) {
               clearInterval(timer);
-            
             }
-
-            
           }, stepTime);
         }
         let venda = ["venda.mp3"];
