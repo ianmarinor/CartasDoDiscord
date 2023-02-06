@@ -60,6 +60,9 @@ function toggleSound() {
 speakerP.addEventListener("click", toggleSound);
 
 let audioEffect;
+// let audioEffectE = ['deletar.mp3']
+
+let  audioEffectE = new Audio("/audio/deletar.mp3")
 
 function hasStopped(song) {
   let test = new Audio("/audio/" + song[0]);
@@ -76,6 +79,20 @@ function hasStopped(song) {
     return false;
   }
 }
+
+
+export function sndEfeito(audio) {
+  audioEffectE = new Audio("/audio/" + audio[0]);
+
+ 
+  if (typeof audio[1] == "number") {
+    audioEffectE.volume = audio[1];
+  } else {
+    audioEffectE.volume = 1;
+  }
+  audioEnabled && audioEffectE.play();
+}
+
 
 export function snd(audio) {
   audioEffect = new Audio("/audio/" + audio[0]);
@@ -790,6 +807,7 @@ function colocarEfeito() {
     efeitos.rodadas--;
   } else {
     efeitos = efeitoVazio;
+    audioEffectE.pause()
   }
 
   aplicarEfeitos();
@@ -1914,8 +1932,8 @@ function criarBtn() {
             somaPontos();
             tudo();
 
-            let estoicoAu = ['estoico.mp3']
-            snd(estoicoAu)
+            let estoicoAu = ['estoico.mp3', 0.2]
+            sndEfeito(estoicoAu)
             break;
           }
         }
@@ -2414,25 +2432,26 @@ function deletarDeck(e) {
               x++;
               moneyP.textContent = parseInt(moneyP.textContent) + 1;
               snd(coinAu);
+              // ativarBtn()
             } else {
               x += increment;
               moneyP.textContent = parseInt(moneyP.textContent) + increment;
+              // ativarBtn()
 
               if (gerarNumero(1, 3) == 1) {
                 snd(coinAu);
               }
             }
-            // current += increment;
-
+            
+            ativarBtn()
             console.log(x);
 
             if (x >= plus) {
               clearInterval(timer);
+            
             }
 
-            //   if (current == novo) {
-            //     clearInterval(timer);
-            // }
+            
           }, stepTime);
         }
         let venda = ["venda.mp3"];

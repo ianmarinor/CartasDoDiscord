@@ -777,7 +777,7 @@ export function escolherEspecial(teste) {
 
       //CAMPONESES
 
-      if(true){
+      if(false){
         
         especial = especiais.tank; 
         especial.cargo = tankCargo(especiais.tank.emoji)

@@ -28,7 +28,7 @@ export function aplicarEfeitos() {
     if (efeitos.css.nome == "premioMonark") {
       premioMonark();
     } else if (efeitos.css.nome == "estoico"){
-      estoico()
+      // estoico()
     } else if (efeitos.css.nome == "lucio")
     lucio()
   }

@@ -8,10 +8,20 @@ let btnCavalheiro = document.getElementById("btnCavalheiro");
 let btnSangue = document.getElementById("btnSangue");
 let btnRainha = document.getElementById("btnRainha");
 
-let precoCampones = 1;
-let precoCavalheiro = 1;
-let precoSangueAzul = 1;
-let precoRainha = 1;
+let precoCampones = 50;
+let precoCavalheiro = 100;
+let precoSangueAzul = 250;
+let precoRainha = 1000;
+
+function debug(){
+   precoCampones = 1;
+   precoCavalheiro = 1;
+   precoSangueAzul = 1;
+   precoRainha = 1;
+}
+
+debug()
+
 let novaCarta = ['novaCarta.mp3']
 
 document.addEventListener("contextmenu", alerta);
@@ -20,8 +30,19 @@ function alerta() {
   return false;
 }
 
+
+
+// export function ativarBtn(){
+
+//   setInterval(ativarBtn2, 500)
+//   console.log(1);
+
+// }
+
+
+
 export function ativarBtn() {
-  // console.log('*******ATIVAR BTN********');
+  console.log('*******ATIVAR BTN********');
 
   // ATIVAR CAMPO
   if (parseInt(moneyP.textContent) >= precoCampones) {
