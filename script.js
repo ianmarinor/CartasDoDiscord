@@ -42,7 +42,21 @@ function gerarNumero(min, max) {
 
 // AUDIO
 
-let morteAu = ["morte.mp3", 0.2];
+let morteAu = ["morte.mp3", 0.4];
+
+function somDeath(time){
+
+  if(time){
+    setTimeout(function(){
+      snd(morteAu)
+    }, time)
+  } else{
+    snd(morteAu)
+  }
+
+  
+}
+
 let novaCartaAu = ["novaCarta.mp3"];
 let audioEnabled = true;
 
@@ -62,20 +76,21 @@ function toggleSound() {
 speakerP.addEventListener("click", toggleSound);
 
 let audioEffect;
+
 // let audioEffectE = ['deletar.mp3']
 
 let audioEffectE = new Audio("/audio/deletar.mp3");
 
-function hasStopped(song) {
+function hasStopped(song, channel) {
   let test = new Audio("/audio/" + song[0]);
-
+  
   // console.log('test', test.src);
   // console.log('audioEffect', audioEffect.src);
-
+  
   // console.log(test.src == audioEffect.src
   //   );
-
-  if (audioEffect.src != test.src) {
+  
+  if (channel.src != test.src) {
     return true;
   } else {
     return false;
@@ -84,7 +99,7 @@ function hasStopped(song) {
 
 export function sndEfeito(audio) {
   audioEffectE = new Audio("/audio/" + audio[0]);
-
+  
   if (typeof audio[1] == "number") {
     audioEffectE.volume = audio[1];
   } else {
@@ -95,15 +110,28 @@ export function sndEfeito(audio) {
 
 export function snd(audio) {
   audioEffect = new Audio("/audio/" + audio[0]);
-
+  
   if (typeof audio[1] == "number") {
     audioEffect.volume = audio[1];
   } else {
     audioEffect.volume = 1;
   }
-
+  
   audioEnabled && audioEffect.play();
 }
+
+// let audioEffectVoice = new Audio("/audio/deletar.mp3");
+// export function sndVoice(audio) {
+//   audioEffectVoice = new Audio("/audio/" + audio[0]);
+
+//   if (typeof audio[1] == "number") {
+//     audioEffectVoice.volume = audio[1];
+//   } else {
+//     audioEffectVoice.volume = 1;
+//   }
+
+//   audioEnabled && audioEffectVoice.play();
+// }
 
 // This function generates a seed or takes a seed as input
 // the input will always be translated to the same seed if an integer
@@ -1113,8 +1141,8 @@ function killTank(x) {
   money.style.visibility = "visible";
 }
 
+let hit = ["hit.mp3"];
 function moverCartaMonark() {
-  let hit = ["hit.mp3"];
   let morte = ["morte.mp3"];
   copyCard = cartaParaMover.cloneNode(true);
   copyCardSeed = copyCard.children[4].textContent;
@@ -1960,7 +1988,7 @@ function criarBtn() {
         for (let i = 0; i < 4; i++) {
           if (parseInt(ulti.textContent) < 100) {
             // se a carta for gentleman
-            if (inv.children[i].id == "carta-semcargo") {
+            if (inv.children[i].id == "carta-gentleman") {
               let gentleman = inv.children[i];
               let poderVelho = inv.children[i].children[3].children[0];
 
@@ -2056,6 +2084,9 @@ function criarBtn() {
         inv.children[i].children[0].id = "foi";
       }
 
+
+      //PODER JHIN
+
       function jhin(e) {
         let jhin = e.target.offsetParent;
         let tiros = parseInt(jhin.children[2].textContent);
@@ -2108,9 +2139,39 @@ function criarBtn() {
               console.log("emojiAtirador: ", emojiAtirador.textContent);
               emojiAtirador.textContent = "💢";
               emojiAtirador.style.visibility = "visible";
+
+              let jhinEscolhaAu = ['jhinEscolha.mp3', 0.7]
+              let ultiJhinAu = ['ultiJhin.mp3', 0.3]
+              
+              
+              
+
+
+                snd(jhinEscolhaAu)
+                snd(ultiJhinAu)
+
+
+              
+
+
+
               break;
               //se tiver atirador
             } else {
+
+
+              
+              function playJhinAu(n){
+                let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3"]
+                
+                if (gerarNumero(1, n) == 1) {
+                  setTimeout(function () {
+                    snd(jhinAu);
+                  }, 800);
+                }
+              }
+
+
               if (tiros == 1 && atiradorCargo == baralhoCargo) {
                 butao.style.visibility = "hidden";
                 console.log(butao);
@@ -2134,12 +2195,52 @@ function criarBtn() {
                   cartaParaMover.classList.add("voar");
                   somaPontos();
                   setTimeout(tudo, 250);
+
+                  let countAu = ['jhinConta4.mp3', 0.5]
+                    snd(countAu)
+                    snd(hit)
+                    somDeath(350)
+                    playJhinAu(1)
+
+
                 } else {
                   energiaJhin.textContent =
                     energiaJhinNum + energiaVitima + 4 + "⚡";
                   cartaParaMover.classList.add("voar");
                   somaPontos();
                   setTimeout(tudo, 250);
+
+                  
+
+                  if (tiros == 4){
+                    let countAu = ['jhinConta1.mp3', 0.5]
+                    snd(countAu)
+                    snd(hit)
+                    somDeath(350)
+                    playJhinAu(3)
+                    
+                  }
+
+                  if (tiros == 3){
+                    let countAu = ['jhinConta2.mp3', 0.5]
+                    snd(countAu)
+                    snd(hit)
+                    somDeath(350)
+                    
+                    
+                  }
+
+                  if (tiros == 2){
+                    let countAu = ['jhinConta3.mp3', 0.5]
+                    snd(countAu)
+                    snd(hit)
+                    somDeath(350)
+                    
+                    
+                  }
+
+
+
                 }
 
                 if (tiros == 1) {

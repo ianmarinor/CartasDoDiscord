@@ -760,7 +760,7 @@ export function escolherEspecial(teste) {
 
       if(true){
 
-        especial = especiais.dva;
+        especial = especiais.jhin
         
 
       } else if (seedString[12]< 4) {
@@ -769,6 +769,7 @@ export function escolherEspecial(teste) {
          
       } else if (seedString[12] > 5) {
         especial = especiais.jhin;
+
       } else if (seedString[12] == 4) {
         especial = especiais.spy;
       } else if (seedString[12] == 5
