@@ -35,12 +35,10 @@ function seedRNG() {
   return Math.floor(Math.random() * totalNumOfSeeds);
 }
 
-
-//NUMERO ALEATORIO 
-function gerarNumero(min, max) { 
-  return Math.floor(Math.random() * (max - min + 1) + min)
+//NUMERO ALEATORIO
+function gerarNumero(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
 
 // AUDIO
 let novaCartaAu = ["novaCarta.mp3"];
@@ -61,12 +59,10 @@ function toggleSound() {
 
 speakerP.addEventListener("click", toggleSound);
 
+let audioEffect;
 
-let audioEffect
-
-function hasStopped(song){
-  let test  = new Audio("/audio/" + song[0])
-
+function hasStopped(song) {
+  let test = new Audio("/audio/" + song[0]);
 
   // console.log('test', test.src);
   // console.log('audioEffect', audioEffect.src);
@@ -74,30 +70,23 @@ function hasStopped(song){
   // console.log(test.src == audioEffect.src
   //   );
 
-  if (audioEffect.src != test.src){
-    return true
+  if (audioEffect.src != test.src) {
+    return true;
   } else {
-    return false
+    return false;
   }
- 
 }
 
 export function snd(audio) {
+  audioEffect = new Audio("/audio/" + audio[0]);
 
-    
-
-    audioEffect = new Audio("/audio/" + audio[0]);
-  
-
-  if(typeof audio[1] == 'number'){
-
-    audioEffect.volume = audio[1]
-  } else{
-    audioEffect.volume = 1
+  if (typeof audio[1] == "number") {
+    audioEffect.volume = audio[1];
+  } else {
+    audioEffect.volume = 1;
   }
 
   audioEnabled && audioEffect.play();
-
 }
 
 // This function generates a seed or takes a seed as input
@@ -1097,7 +1086,7 @@ function killTank(x) {
   let money = tank.children[2];
   let HP = tank.children[3].children[1];
 
-  tank.id = 'tf2Money'
+  tank.id = "tf2Money";
   tank.dataset.tankdead = "true";
   retrato.style.backgroundImage = "url('pics/tankDeadRetrato.jpg')";
   nome.textContent = "MONEY";
@@ -1227,7 +1216,7 @@ function moverCartaMonark() {
           console.log("TEM SPY");
           // inv.replaceChild(copyCard, inv.children[spyCheck[1]]);
           console.log("*****MATEI SPY********");
-          let deathSpyAu = ['deathSpy'    + gerarNumero(1,3) + '.mp3']
+          let deathSpyAu = ["deathSpy" + gerarNumero(1, 3) + ".mp3"];
           snd(deathSpyAu);
           break;
 
@@ -1463,8 +1452,8 @@ function criarBtn() {
 
                 // pontoSpeaker = Math.trunc(parseInt(pontoSpeaker) * 2) + '😡'
 
-                let order = ['speaker' + gerarNumero(1,2) +'.mp3', 0.6]
-                snd(order)
+                let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.6];
+                snd(order);
 
                 somaPontos();
                 break;
@@ -1476,8 +1465,8 @@ function criarBtn() {
                   "durmi kkjk <br> &#128564; &#128564;";
                 varianteSpeaker.children[3].children[2].style.visibility =
                   "hidden";
-                  let speakerSleepAu = ['speakerSleep.mp3']
-                  snd(speakerSleepAu)
+                let speakerSleepAu = ["speakerSleep.mp3"];
+                snd(speakerSleepAu);
               }
             }
           }
@@ -1641,12 +1630,11 @@ function criarBtn() {
           }
         }
 
-        let tenicaAu = ['tenica.mp3']
-        snd(tenicaAu)
+        let tenicaAu = ["tenica.mp3"];
+        snd(tenicaAu);
         somaPontos();
+      }
 
-      } 
-      
       // poder COMUNISTA
       if (
         inv.children[i].id == "comunista" &&
@@ -1678,7 +1666,7 @@ function criarBtn() {
 
         let comunista = e.target.offsetParent;
         // comunista.children[3].children[2].style.visibility = "hidden";
-        let comunistaAu = ['comuna.mp3', 0.6]
+        let comunistaAu = ["comuna.mp3", 0.6];
 
         for (let k = 0; k < 4; k++) {
           if (inv.children[k].id == "carta-speaker") {
@@ -1715,8 +1703,6 @@ function criarBtn() {
                   inv.children[j].children[3].children[0].style.fontWeight =
                     "bold";
 
-                  
-                  
                   somaPontos();
                   //SE NAO FOR BLACKAO
                 } else
@@ -1731,17 +1717,16 @@ function criarBtn() {
                 if (inv.children[j].id != "carta-people") {
                   inv.children[j].children[3].children[0].style.color = "red";
                 }
-                
+
                 somaPontos();
               }
-              if(hasStopped(comunistaAu) == true){
-
-                snd(comunistaAu)
+              if (hasStopped(comunistaAu) == true) {
+                snd(comunistaAu);
               }
             }
           }
         }
-      } 
+      }
       // poder premiomonark
       if (
         inv.children[i].id == "premiomonark" &&
@@ -1783,15 +1768,14 @@ function criarBtn() {
           setTimeout(eliminarPremioMonark, 10000);
 
           colocarEfeito();
-          let premioMonarkAu = ['premioMonark.mp3', 0.3]
-          let premioMonarkElimAu = ['premioMonarkElim.mp3']
+          let premioMonarkAu = ["premioMonark.mp3", 0.3];
+          let premioMonarkElimAu = ["premioMonarkElim.mp3"];
 
+          setTimeout(function () {
+            snd(premioMonarkElimAu);
+          }, 5000);
 
-          setTimeout(function(){
-            snd(premioMonarkElimAu)
-          }, 5000)
-
-          snd(premioMonarkAu)
+          snd(premioMonarkAu);
         }
       }
       //PODER SPY
@@ -1810,11 +1794,9 @@ function criarBtn() {
         let botao = spy.children[3].children[2];
         let retrato = spy.children[1];
 
-
-        if( spyWatch.id != 'foi'){
-
+        if (spyWatch.id != "foi") {
           spyWatch.addEventListener("click", invis);
-          spyWatch.id = 'foi'
+          spyWatch.id = "foi";
         }
 
         function invis() {
@@ -1826,11 +1808,10 @@ function criarBtn() {
           botao.style.visibility = "hidden";
           retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
-          let spyInvisAu = ['spyInvis.mp3']
-          let spyInvisLineAu = ['spyInvisLine.mp3']
-          snd(spyInvisAu)
-          snd(spyInvisLineAu)
-
+          let spyInvisAu = ["spyInvis.mp3"];
+          let spyInvisLineAu = ["spyInvisLine.mp3"];
+          snd(spyInvisAu);
+          snd(spyInvisLineAu);
         }
 
         for (let i = 0; i < 4; i++) {
@@ -1865,14 +1846,12 @@ function criarBtn() {
             somaPontos();
 
             // audio
-            let stabAu = ['stab.mp3', 0.5]
-            snd(stabAu)
+            let stabAu = ["stab.mp3", 0.5];
+            snd(stabAu);
 
-            if(gerarNumero(1,3) == 2){
-
-              
-              let spyAu = ['spy' + gerarNumero(1,7) + '.mp3']
-              snd(spyAu) 
+            if (gerarNumero(1, 3) == 2) {
+              let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3"];
+              snd(spyAu);
             }
 
             break;
@@ -2218,44 +2197,32 @@ function criarBtn() {
             }
             dvaEnergia.textContent = 1 + pontoDeTodos + pontoDeTodosEsp + "⚡";
 
-
-            
-
-            function dvaSelfDestroy(){
-
-              
-
-              if (dva != inv.children[0] && inv.children[0].id != 'tank') {
+            function dvaSelfDestroy() {
+              if (dva != inv.children[0] && inv.children[0].id != "tank") {
                 inv.replaceChild(empty1, inv.children[0]);
               }
-              if (dva != inv.children[1] && inv.children[1].id != 'tank') {
+              if (dva != inv.children[1] && inv.children[1].id != "tank") {
                 inv.replaceChild(empty2, inv.children[1]);
               }
-              if (dva != inv.children[2] && inv.children[2].id != 'tank') {
+              if (dva != inv.children[2] && inv.children[2].id != "tank") {
                 inv.replaceChild(empty3, inv.children[2]);
               }
-              if (dva != inv.children[3] && inv.children[3].id != 'tank') {
+              if (dva != inv.children[3] && inv.children[3].id != "tank") {
                 inv.replaceChild(empty4, inv.children[3]);
               }
 
-              for (let j=0; j<4; j++ ){
-                let carta = inv.children[j]
-                let isTank = carta.id == 'tank'
-                let aliveTank = carta.dataset.tankdead == 'false'
+              for (let j = 0; j < 4; j++) {
+                let carta = inv.children[j];
+                let isTank = carta.id == "tank";
+                let aliveTank = carta.dataset.tankdead == "false";
 
-                if( isTank && aliveTank){
-                  killTank(j)
+                if (isTank && aliveTank) {
+                  killTank(j);
                 }
-
-                
               }
-
-
             }
 
-            dvaSelfDestroy()
-
-            
+            dvaSelfDestroy();
 
             somaPontos();
             break;
@@ -2266,10 +2233,7 @@ function criarBtn() {
   }
 }
 function abelha() {
-
-  let beeHitAu = ['hitAbelha.mp3', 0.1]
-  
-  
+  let beeHitAu = ["hitAbelha.mp3", 0.1];
 
   for (let i = 0; i < 4; i++) {
     if (inv.children[i].id != "empty") {
@@ -2298,8 +2262,8 @@ function abelha() {
             inv.replaceChild(empty4, abelha);
           }
 
-          let beeDeathAu = ['deathAbelha.mp3', 0.7]
-          snd(beeDeathAu)
+          let beeDeathAu = ["deathAbelha.mp3", 0.7];
+          snd(beeDeathAu);
 
           somaPontos();
         } else if (
@@ -2309,16 +2273,16 @@ function abelha() {
           pontoAbelha.textContent =
             parseInt(pontoAbelha.textContent) - abelhaLowHp() + "🐝";
           somaPontos();
-          snd(beeHitAu)
+          snd(beeHitAu);
         } else if (parseInt(pontoAbelha.textContent) <= 15) {
           pontoAbelha.textContent =
             parseInt(pontoAbelha.textContent) - 1 + "🐝";
-            snd(beeHitAu)
+          snd(beeHitAu);
         } else {
           pontoAbelha.textContent =
             parseInt(pontoAbelha.textContent) - abelhaDecrease() + "🐝";
           somaPontos();
-          snd(beeHitAu)
+          snd(beeHitAu);
         }
 
         for (let j = 0; j < 4; j++) {
@@ -2337,7 +2301,7 @@ function abelha() {
                   abelhaDecreaseComTuru() +
                   "🐝";
                 somaPontos();
-                snd(beeHitAu)
+                snd(beeHitAu);
               } else {
                 if (inv.children[i].id == "abelha") {
                   inv.children[i].children[1].style.backgroundImage =
@@ -2346,7 +2310,7 @@ function abelha() {
                   inv.children[i].children[2].style.fontSize = "1em";
                 }
                 pontoAbelha.textContent = 0 + "☠";
-                snd(beeHitAu)
+                snd(beeHitAu);
                 somaPontos();
               }
             }
@@ -2372,8 +2336,6 @@ let btnReset = document.getElementById("btnReset");
 let empty = document.createElement("div");
 empty.id = "empty";
 
-
-
 let empty1 = inv.children[0];
 let empty2 = inv.children[1];
 let empty3 = inv.children[2];
@@ -2381,9 +2343,8 @@ let empty4 = inv.children[3];
 let cartaMao = mao.children[0];
 
 function deletarDeck(e) {
-
-  let carta = e.target.offsetParent.id
-  let cargo =  e.target.offsetParent.children[2]
+  let carta = e.target.offsetParent.id;
+  let cargo = e.target.offsetParent.children[2];
 
   // 1.0Se a carta nao for Monark
   if (
@@ -2405,7 +2366,7 @@ function deletarDeck(e) {
         "carta-people",
         "carta-monark",
         "carta-gentleman",
-        "tf2Money"
+        "tf2Money",
         // "carta-nobre",
         // "carta-ministro",
         // "carta-lord",
@@ -2419,103 +2380,76 @@ function deletarDeck(e) {
       );
 
       function venderCarta() {
+        let totalMoney = parseInt(moneyP.textContent);
+        let cardValue = parseInt(energia.textContent);
+        let cargoMoney = parseInt(cargo.textContent);
 
-         
-
-        let totalMoney = parseInt(moneyP.textContent)
-        let cardValue = parseInt(energia.textContent)
-        let cargoMoney = parseInt(cargo.textContent)
-
-        function animateSell(start, plus ){
-
-          if (plus === 0) return 
+        function animateSell(start, plus) {
+          if (plus === 0) return;
 
           let current = start;
-          let novo = start + plus
-          let range = Math.abs(start - plus)
+          let novo = start + plus;
+          let range = Math.abs(start - plus);
 
-          let increment 
+          let increment;
 
-          if(plus > 200){
-            increment = 5
+          if (plus > 200) {
+            increment = 4;
           } else {
-            increment = 1
+            increment = 1;
           }
 
-          var stepTime = Math.floor(500 / plus)
-          let x = 0
+          var stepTime = Math.floor(500 / plus);
+          let x = 0;
 
-          let trigger = false
+          let trigger = false;
 
-          let timer = setInterval(function() {
-            let coinAu = ['coin.mp3', 0.03]
+          let timer = setInterval(function () {
+            let coinAu = ["coin.mp3", 0.04];
 
-            if( plus - x  <20){
+            if (plus - x < 20) {
+              x++;
+              moneyP.textContent = parseInt(moneyP.textContent) + 1;
+              snd(coinAu);
+            } else {
+              x += increment;
+              moneyP.textContent = parseInt(moneyP.textContent) + increment;
 
-              
-              x++
-              moneyP.textContent =  parseInt(moneyP.textContent) + 1;
-              snd(coinAu)
-              
-            } else{
-
-              x += increment
-              moneyP.textContent =  parseInt(moneyP.textContent) + increment;
-
-              if(trigger){
-
-                snd(coinAu)
-                trigger = false
+              if (trigger) {
+                snd(coinAu);
+                trigger = false;
               } else {
-                trigger = true
+                trigger = true;
               }
-
-              
-              
             }
 
-            
-
             // current += increment;
-            
-            
+
             console.log(x);
 
             if (x >= plus) {
               clearInterval(timer);
-          }
+            }
 
-          //   if (current == novo) {
-          //     clearInterval(timer);
-          // }
-
-        },stepTime)
-      }
+            //   if (current == novo) {
+            //     clearInterval(timer);
+            // }
+          }, stepTime);
+        }
         let venda = ["venda.mp3"];
-
-
 
         if (isVendivel) {
           console.log("*******  vendi *************");
-          
 
-            if(carta == 'tf2Money'){
-             
-            
-
-            animateSell(totalMoney, cargoMoney)
-
-            } else{
-
-
-              animateSell(totalMoney, cardValue)
-
+          if (carta == "tf2Money") {
+            animateSell(totalMoney, cargoMoney);
+          } else {
+            animateSell(totalMoney, cardValue);
 
             //   moneyP.textContent =
             // parseInt(moneyP.textContent) + parseInt(energia.textContent);
-            
-            }    
-            snd(venda);
+          }
+          snd(venda);
         } else {
           let deletarAu = ["deletar.mp3"];
           snd(deletarAu);
@@ -2543,7 +2477,6 @@ function deletarDeck(e) {
         ativarBtn();
         somaPontos();
       }
-
     } else {
       let naoAu = ["nao.mp3"];
       snd(naoAu);
@@ -2750,7 +2683,6 @@ inv.addEventListener("click", deletarDeck);
 btnReset.addEventListener("click", resetarDeck);
 
 // DECK COMECA COM 4 CARTAS
-
 
 let teclaDeckPronto = "KeyG";
 function deckPronto() {
