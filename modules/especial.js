@@ -754,8 +754,8 @@ export function escolherEspecial(teste) {
 
       if(true){
 
-        especial = especiais.speaker;
-        especial.ataqueE = pontoSpeaker()
+        especial = especiais.dva;
+        
 
       } else if (seedString[12]< 4) {
          especial = especiais.speaker;
