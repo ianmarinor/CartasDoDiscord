@@ -61,6 +61,7 @@ body {
   flex-direction: column;
   background-color: #121212;
   overflow-y: hidden;
+  user-select: none;
 }
 section {
   display: none;
@@ -69,17 +70,18 @@ main {
   height: 100%;
   display: grid;
   grid-template-areas:
-    "descr descr2 wrap"
-    "pack mao inv"
-    "btn  btn2 btnReset";
+    "c boss d"
+    "b inv texto "
+    "cartas  dicas dinheiro"
+    "baralho mao especial";
   align-items: center;
   justify-items: center;
   flex-direction: column;
 
   background-color: #083535;
   background: linear-gradient(360deg, rgba(28, 7, 102, 0.649) 0%, rgba(39, 13, 65, 0.649) 46%);
-  grid-template-columns: 0.3fr 0.2fr 1fr;
-  grid-template-rows: 0.1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1.8fr 1fr 0.2fr 1fr;
 }
 
 nav {
@@ -103,7 +105,7 @@ li {
 }
 
 #sound{
-  grid-area: btnReset;
+  grid-area: texto;
   height: 50px;
   width: 50px;
   align-self: end;
@@ -121,7 +123,7 @@ li {
 }
 
 #descr {
-  grid-area: descr;
+  grid-area: texto;
   height: 60px;
   font-size: 0.6em;
   align-self: center;
@@ -170,13 +172,13 @@ li {
   font-weight: bold;
 }
 
-#cartaMao {
+#mao0, #mao1, #mao2, #mao3, #mao4 , #mao5   {
   /* display: none; */
   /* background-image: url(pics/wrapPremioMarino.webp); */
   /* background-color: var(--premioMarino); */
   /* background: radial-gradient(circle, rgba(252,213,3,1) 40%, rgba(200,232,57,1) 87%); */
-  height: var(--tamanhoCartaHeight);
-  width: var(--tamanhoCartaWidth);
+  /* height: var(--tamanhoCartaHeight); */
+  /* width: var(--tamanhoCartaWidth); */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -186,6 +188,14 @@ li {
   /* border: 2px solid rgb(0, 0, 0, 0.4); */
   font-weight: 900;
   color: rgb(0, 0, 0, 0.4);
+
+
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+  background-color: #090909;
+  
+
 }
 
 .arena {
@@ -195,12 +205,13 @@ li {
   text-align: center;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   /* font-family: blackao; */
-  grid-area: btn;
-  align-self: start;
-  margin-bottom: 30px;
+  grid-area: cartas;
+  align-self: center;
+  
 }
 
 #moneyWrap{
+  grid-area: dinheiro;
   width: 100px;
   display: flex;
   justify-content: center;
@@ -225,8 +236,9 @@ li {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
+/* HP DO BOSS */
 .wrap {
-  grid-area: wrap;
+  grid-area: b;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -249,10 +261,10 @@ li {
 }
 
 #slotEsp {
-  grid-area: btn2;
+  grid-area: especial;
   border: 7px double rgba(170, 183, 30, 0.129);
   background-color: #1f350853;
-  align-self: start;
+  align-self: center;
 }
 #slotEsp > div {
   height: var(--tamanhoCartaHeight);
@@ -802,7 +814,7 @@ li {
 
 #btnContainer{
   width: 200px;
-  grid-area: btn;
+  grid-area: b;
   display: flex;
   flex-direction: column;
 }
@@ -815,11 +827,11 @@ li {
   border: 1px black solid;
 }
 #getseed {
-  grid-area: btn;
+  grid-area: b;
   align-self: end;
 }
 #btnReset {
-  grid-area: btnReset;
+  grid-area: b;
   padding: 5px;
   align-self: flex-start;
   background-color: red;
@@ -848,9 +860,10 @@ p {
 }
 
 #pack {
-  grid-area: pack;
+  grid-area: baralho;
   border: 5px double rgba(80, 80, 98, 0.578);
   background-color: #060e3c5e;
+  align-self: center;
 }
 
 #inv {
@@ -889,6 +902,19 @@ p {
   grid-area: mao;
   border: 6px double rgba(30, 178, 183, 0.38);
   background-color: #2f444465;
+  align-self: center;
+
+  
+  height: 320px;
+  width: 1200px;
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+
+  justify-items: center;
+  align-items: center;
+
 }
 
 #G,
@@ -908,7 +934,7 @@ p {
 
 #btnEspecial {
   /* height: 70%; */
-  grid-area: btnReset;
+  grid-area: especial;
   display: flex;
   flex-direction: column-reverse;
   justify-self: start;

@@ -44,17 +44,14 @@ function gerarNumero(min, max) {
 
 let morteAu = ["morte.mp3", 0.4];
 
-function somDeath(time){
-
-  if(time){
-    setTimeout(function(){
-      snd(morteAu)
-    }, time)
-  } else{
-    snd(morteAu)
+function somDeath(time) {
+  if (time) {
+    setTimeout(function () {
+      snd(morteAu);
+    }, time);
+  } else {
+    snd(morteAu);
   }
-
-  
 }
 
 let novaCartaAu = ["novaCarta.mp3"];
@@ -83,13 +80,13 @@ let audioEffectE = new Audio("/audio/deletar.mp3");
 
 function hasStopped(song, channel) {
   let test = new Audio("/audio/" + song[0]);
-  
+
   // console.log('test', test.src);
   // console.log('audioEffect', audioEffect.src);
-  
+
   // console.log(test.src == audioEffect.src
   //   );
-  
+
   if (channel.src != test.src) {
     return true;
   } else {
@@ -99,7 +96,7 @@ function hasStopped(song, channel) {
 
 export function sndEfeito(audio) {
   audioEffectE = new Audio("/audio/" + audio[0]);
-  
+
   if (typeof audio[1] == "number") {
     audioEffectE.volume = audio[1];
   } else {
@@ -110,13 +107,13 @@ export function sndEfeito(audio) {
 
 export function snd(audio) {
   audioEffect = new Audio("/audio/" + audio[0]);
-  
+
   if (typeof audio[1] == "number") {
     audioEffect.volume = audio[1];
   } else {
     audioEffect.volume = 1;
   }
-  
+
   audioEnabled && audioEffect.play();
 }
 
@@ -498,6 +495,9 @@ const semCarta =
   '<button class="action">PRESS</button>' +
   "</div>";
 
+
+
+
 let button = document.getElementById("btn");
 let h1 = document.getElementsByTagName("h1")[0];
 let mover = document.getElementById("mover");
@@ -518,6 +518,17 @@ let efeito3P = document.getElementById("efeito3");
 let efeito4P = document.getElementById("efeito4");
 let mao = document.getElementById("mao");
 let moneyP = document.getElementById("money");
+
+
+
+let mao0 = mao.children[0]
+let mao1 = mao.children[1]
+let mao2 = mao.children[2]
+let mao3 = mao.children[3]
+let mao4 = mao.children[4]
+let mao5 = mao.children[5]
+let mao6 = mao.children[6]
+
 
 function zerarMoney() {
   moneyP.textContent = 0;
@@ -1088,26 +1099,164 @@ function moverToInvMao() {
     criarBtn();
   }
 }
-let objCartaMao;
-function moverToCartaMao() {
-  objCartaMao = novaCarta;
 
+for (let m = 0; m < 6; m++) {
+  let slotMao = "mao" + m;
+  document.getElementById(slotMao).addEventListener("click", function () {
+    moveToMao(m);
+  });
+}
+
+function moveToMao(i) {
   if (totalClicks <= 0 && packP.children[0].id != "carta") {
-    mao.replaceChild(copyCard, mao.children[0]);
+    mao.replaceChild(copyCard, mao.children[i]);
     packP.innerHTML = semCarta;
   } else if (packP.children[0].id != "carta") {
-    mao.replaceChild(copyCard, mao.children[0]);
+    mao.replaceChild(copyCard, mao.children[i]);
     tudo();
+  }
+
+  selectHandCard();
+}
+
+function moverToCartaMao() {
+  for (let i = 0; i < 6; i++) {
+    if (mao.children[i].id == "mao" + i) {
+      console.log(i, "esta vazio");
+      moveToMao(i);
+      break;
+    } else {
+      console.log(i, "esta cheio");
+    }
+  }
+}
+let chosenCard = 0;
+function selectHandCard() {
+
+  for (let k = 0; k < 6; k++) {
+
+    let mao = ()=> document.getElementById("mao")
+    console.log(mao());
+    let slotMao = ()=> mao().children[k].id != "mao" + k;
+    let retrato = ()=> mao().children[k].children[1];
+    let carta = retrato().offsetParent;
+
+    
+    
+    
+    // reset()
+    
+    
+    console.log(retrato());
+    console.log(carta.dataset.inv);
+
+    if (slotMao()) {
+
+
+
+      retrato().addEventListener("click", function (e) {
+
+        function naoFoi(){
+          return carta.dataset.inv == undefined
+        }
+if(naoFoi())
+{
+        function sameCard(){
+          return e.target.offsetParent != chosenCard
+        }
+
+        function lowerCard(){
+
+
+
+          chosenCard.style.bottom = "0px";
+          // console.log("abaixei");
+        }
+        function raiseCard(){
+
+          // console.log(chosenCard);
+          // console.log("selecionei a carta");
+          chosenCard.style.bottom = "66px";
+        }
+
+
+  
+        if (chosenCard != 0) {
+          lowerCard()
+        }
+        chosenCard = retrato().offsetParent;
+        raiseCard()
+        
+        
+        }
+
+          // setTimeout(function(){
+          //   if(chosenCard !=0){
+          //     lowerCard()
+          //   }
+          // }, 10000)
+        
+      });
+    }
   }
 }
 
-document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyH") {
-    if (!getSeedChecked()) {
-      moverToInvMao();
+for(let d=1; d<5; d++){
+
+
+  let deck = 'empty' + d
+
+  document.getElementById(deck).addEventListener("click",  moverToDeck)
+
+
+}
+
+function moverToDeck(e){
+
+let slot = e.target
+
+console.log(slot);
+
+if(chosenCard != 0){
+
+
+  
+  if (chosenCard == mao.children[0]){
+    mao.replaceChild(mao0, chosenCard)
+  } else if (chosenCard == mao.children[1]){
+      mao.replaceChild(mao1, chosenCard)
+    }else if (chosenCard == mao.children[2]){
+      mao.replaceChild(mao2, chosenCard)
+    }else if (chosenCard == mao.children[3]){
+      mao.replaceChild(mao3, chosenCard)
+    }else if (chosenCard == mao.children[4]){
+      mao.replaceChild(mao4, chosenCard)
+    }else if (chosenCard == mao.children[5]){
+      mao.replaceChild(mao5, chosenCard)
     }
-  }
-});
+    
+    
+    
+    
+    
+  // inv.removeChild(slot)
+  chosenCard.dataset.inv = 'true'
+  inv.replaceChild(chosenCard, slot)
+    
+
+  
+  console.log('chosenCard.offsetParent: ', chosenCard.parentElement);
+
+  chosenCard.style.bottom = '0px'
+
+
+  chosenCard = 0
+}
+  
+}
+
+
+
 
 function moverCarta() {
   blockInv();
@@ -2084,7 +2233,6 @@ function criarBtn() {
         inv.children[i].children[0].id = "foi";
       }
 
-
       //PODER JHIN
 
       function jhin(e) {
@@ -2140,37 +2288,24 @@ function criarBtn() {
               emojiAtirador.textContent = "💢";
               emojiAtirador.style.visibility = "visible";
 
-              let jhinEscolhaAu = ['jhinEscolha.mp3', 0.7]
-              let ultiJhinAu = ['ultiJhin.mp3', 0.3]
-              
-              
-              
+              let jhinEscolhaAu = ["jhinEscolha.mp3", 0.7];
+              let ultiJhinAu = ["ultiJhin.mp3", 0.3];
 
-
-                snd(jhinEscolhaAu)
-                snd(ultiJhinAu)
-
-
-              
-
-
+              snd(jhinEscolhaAu);
+              snd(ultiJhinAu);
 
               break;
               //se tiver atirador
             } else {
+              function playJhinAu(n) {
+                let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3"];
 
-
-              
-              function playJhinAu(n){
-                let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3"]
-                
                 if (gerarNumero(1, n) == 1) {
                   setTimeout(function () {
                     snd(jhinAu);
                   }, 800);
                 }
               }
-
 
               if (tiros == 1 && atiradorCargo == baralhoCargo) {
                 butao.style.visibility = "hidden";
@@ -2196,13 +2331,11 @@ function criarBtn() {
                   somaPontos();
                   setTimeout(tudo, 250);
 
-                  let countAu = ['jhinConta4.mp3', 0.5]
-                    snd(countAu)
-                    snd(hit)
-                    somDeath(350)
-                    playJhinAu(1)
-
-
+                  let countAu = ["jhinConta4.mp3", 0.5];
+                  snd(countAu);
+                  snd(hit);
+                  somDeath(350);
+                  playJhinAu(1);
                 } else {
                   energiaJhin.textContent =
                     energiaJhinNum + energiaVitima + 4 + "⚡";
@@ -2210,37 +2343,27 @@ function criarBtn() {
                   somaPontos();
                   setTimeout(tudo, 250);
 
-                  
-
-                  if (tiros == 4){
-                    let countAu = ['jhinConta1.mp3', 0.5]
-                    snd(countAu)
-                    snd(hit)
-                    somDeath(350)
-                    playJhinAu(3)
-                    
+                  if (tiros == 4) {
+                    let countAu = ["jhinConta1.mp3", 0.5];
+                    snd(countAu);
+                    snd(hit);
+                    somDeath(350);
+                    playJhinAu(3);
                   }
 
-                  if (tiros == 3){
-                    let countAu = ['jhinConta2.mp3', 0.5]
-                    snd(countAu)
-                    snd(hit)
-                    somDeath(350)
-                    
-                    
+                  if (tiros == 3) {
+                    let countAu = ["jhinConta2.mp3", 0.5];
+                    snd(countAu);
+                    snd(hit);
+                    somDeath(350);
                   }
 
-                  if (tiros == 2){
-                    let countAu = ['jhinConta3.mp3', 0.5]
-                    snd(countAu)
-                    snd(hit)
-                    somDeath(350)
-                    
-                    
+                  if (tiros == 2) {
+                    let countAu = ["jhinConta3.mp3", 0.5];
+                    snd(countAu);
+                    snd(hit);
+                    somDeath(350);
                   }
-
-
-
                 }
 
                 if (tiros == 1) {
@@ -2804,18 +2927,25 @@ document.addEventListener("keydown", (event) => {
 // BIND MOVER COM TECLA
 let teclaMoverCarta = "Space";
 
-cartaParaMover.addEventListener("click", moverCarta);
+cartaParaMover.addEventListener("click", moverToCartaMao);
+
 document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
       if (!getSeedChecked()) {
-        moverCarta();
+        moverToCartaMao();
       }
     }
   }
 });
 
 inv.addEventListener("click", deletarDeck);
+
+
+for(let p=0; p<4;p++){
+  let slot = inv.children[p].children[1]
+  slot.addEventListener("click", deletarDeck)
+}
 
 // btnReset.addEventListener('click', moverCartaMonark)
 
@@ -2829,10 +2959,17 @@ function deckPronto() {
 
   tudo();
   resetarDeck();
-  moverCarta();
-  moverCarta();
-  moverCarta();
-  moverCarta();
+
+  mao.replaceChild(mao0, mao.children[0])
+  mao.replaceChild(mao1, mao.children[1])
+  mao.replaceChild(mao2, mao.children[2])
+  mao.replaceChild(mao3, mao.children[3])
+  mao.replaceChild(mao4, mao.children[4])
+  mao.replaceChild(mao5, mao.children[5])
+  
+  for(let i=0; i<6;i++){
+    moverToCartaMao()
+  }
   rodadas = 0;
 
   arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
@@ -2854,16 +2991,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-mao.addEventListener("click", maoCelular);
-
-function maoCelular() {
-  if (mao.children[0].id == "cartaMao") {
-    moverToCartaMao();
-  } else {
-    moverToInvMao();
-  }
-}
-
 document.getElementById("G").addEventListener("click", deckPronto);
 
 window.onload = (event) => {
@@ -2875,7 +3002,7 @@ window.onload = (event) => {
   resetarDeck();
 };
 
-document.getElementById("empty1").addEventListener("click", moverOne);
-document.getElementById("empty2").addEventListener("click", moverTwo);
-document.getElementById("empty3").addEventListener("click", moverThree);
-document.getElementById("empty4").addEventListener("click", moverFour);
+// document.getElementById("empty1").addEventListener("click", moverOne);
+// document.getElementById("empty2").addEventListener("click", moverTwo);
+// document.getElementById("empty3").addEventListener("click", moverThree);
+// document.getElementById("empty4").addEventListener("click", moverFour);

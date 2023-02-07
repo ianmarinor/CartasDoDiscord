@@ -176,6 +176,7 @@ export let especiais = {
 
 
     },
+
       maisCartas: {
         cartaId: "especial-click",
         nome: "+ CARTAS +",
@@ -220,6 +221,7 @@ export let especiais = {
           visibility: 'hidden',
         }
       },
+
 
       menosCartas: {
         cartaId: "-click",
@@ -313,6 +315,7 @@ export let especiais = {
         // ataqueE: abelhaEnergia() + "🐝"
       },
 
+
       blackaoCamarada: {
         cartaId: "comunista",
         nome: "BLACKAO COMUNISTA",
@@ -358,6 +361,8 @@ export let especiais = {
           visibility: 'visible',
         }
       },
+
+
       premioMonark: {
         cartaId: "premiomonark",
         nome: "PREMIO MONARK",
@@ -405,6 +410,8 @@ export let especiais = {
         }
 
       },
+
+
       spy: {
         cartaId: "spy",
         nome: "SPY",
@@ -451,6 +458,8 @@ export let especiais = {
           visibility: 'visible',
         }
       },
+
+
       estoicoTuru: {
         cartaId: "estoico",
         nome: "ESTOICO <br> TURU",
@@ -498,6 +507,8 @@ export let especiais = {
           visibility: 'visible',
         }
       },
+
+
       lucio: {
         cartaId: "lucio",
         nome: "LÚCIO",
@@ -546,6 +557,8 @@ export let especiais = {
           visibility: 'visible',
         }
       },
+
+
       jhin: {
         cartaId: "jhin",
         nome: "JHIN",
@@ -644,6 +657,8 @@ export let especiais = {
           visibility: 'visible',
         }
       },
+
+      
       tank: {
         cartaId: "tank",
         nome: "TANK",
