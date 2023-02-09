@@ -1,7 +1,12 @@
+import  {triggerChuvaMonark}  from "/script.js"
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
 let healthPointsP = document.getElementById("healthPoints");
+let bossRoomP = document.getElementById("bossRoom");
 let healthWrapP = document.querySelector(".bossHealthWrap");
+let bossP = ()=> bossRoomP.children[0]
+
+let cartaBossMonark = '<div id="cartaBossMonark" class="bossAnimation" data-card="boss"></div>'
 
 
 
@@ -9,7 +14,8 @@ let healthWrapP = document.querySelector(".bossHealthWrap");
 
 class Boss {
 
-    constructor(_health,_fullHealth){
+    constructor(_health,_fullHealth,_name){
+        this.name = _name
         this.health = _health
         this.fullHealth = _fullHealth
         this.dmgTaken = 0
@@ -51,25 +57,60 @@ class Boss {
         return (bossHealthP.max = this.fullHealth);
     }
 
+    stopAnimation(x){
+        if (x){
+
+            bossP().classList.remove('bossAnimation')
+        } else {
+            bossP().classList.add('bossAnimation')
+        }
+    }
+
+    treme(x){
+
+        if(x){
+            bossP().classList.remove('bossAnimation')
+            bossP().classList.add('critico')
+        } else {
+            bossP().classList.remove('critico')
+            bossP().classList.add('bossAnimation')
+        }
+
+    }
+
+
+    
+
     
 }
 
 // LISTA DE BOSSES 
 
-export let boss
+export let boss 
+
+let probMonark
+function probMonarkChuvaDeMonark(){
+    console.log('juj');
+}
 function createMonark(){
 
-    let bossClass = new Boss(90000,90000)
+    let bossClass = new Boss(3000,3000,'monark')
     
     let monark = {
-    
-        fun(){
-            console.log('fun');
+        
+        carta(){
+            bossRoomP.innerHTML = cartaBossMonark
+
         },
-        juj(){
-            console.log(7777777777);
+
+        chuvaDeMonark(x){
+            triggerChuvaMonark(x)
         }
+        
     }
+
+
+
     return  boss = Object.assign(bossClass, monark)
 }    
 
@@ -83,6 +124,9 @@ export function spawnBoss()
     createMonark()
     healthPointsP.textContent = boss.health    
     healthWrapP.classList.add('aparecer')
+    boss.carta()
+    console.log(boss);
+
     // healthWrapP.className = 'aparecer'
 
 }

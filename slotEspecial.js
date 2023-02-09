@@ -1,13 +1,13 @@
 import { seedObj, seedRNG } from "./modules/seedFabricator.js";
 import { escolherEspecial, especial } from "./modules/especial.js";
-import  {snd, selectHandCard, naoAu}  from "/script.js"
+import  {snd, selectHandCard, naoAu, empty1, empty2, empty3, empty4}  from "/script.js"
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
 let btnCavalheiro = document.getElementById("btnCavalheiro");
 let btnSangue = document.getElementById("btnSangue");
 let btnRainha = document.getElementById("btnRainha");
-
+let inv = document.getElementById("inv")
 let precoCampones = 50;
 let precoCavalheiro = 100;
 let precoSangueAzul = 250;
@@ -336,10 +336,34 @@ export function moveToMao() {
 
     for (let i = 0; i < 6; i++) {
       if (mao.children[i].id == "mao" + i) {
+
+
         
         mao.replaceChild(cartaEspecial, mao.children[i])
         limparEsp()
         snd(novaCarta)
+
+        if(cartaEspecial.id == 'premiomonark'){
+          for(let i=0; i<4; i++){
+            let isMonark = inv.children[i].id == 'carta-monark'
+            let monark = inv.children[i]
+
+            if(isMonark){
+              if (monark == inv.children[0]) {
+                inv.replaceChild(empty1, monark);
+              } else if (monark == inv.children[1]) {
+                inv.replaceChild(empty2, monark);
+              } else if (monark == inv.children[2]) {
+                inv.replaceChild(empty3, monark);
+              } else if (monark == inv.children[3]) {
+                inv.replaceChild(empty4, monark);
+              }
+              break
+            }
+
+          }
+        }
+
         break;
       } else {
         

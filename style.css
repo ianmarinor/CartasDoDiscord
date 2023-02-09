@@ -13,6 +13,9 @@
 
   --tamanhoCartaWidth: 190px;
   --tamanhoCartaHeight: 295px;
+
+  --heigthCartaBoss: 370px;
+  --widthCartaBoss: 240px;
   /* CELULAR */
 
   --cartaWidthCelular: 110px;
@@ -64,9 +67,13 @@ body {
   user-select: none;
 }
 
-/* #protector{
+#protector{
+display: none;
+height: 100%;
+width: 100%;
 
-} */
+background-color: #15b871;
+}
 
 section {
   display: none;
@@ -87,7 +94,7 @@ main {
   background-color: #083535;
   background: linear-gradient(360deg, rgba(28, 7, 102, 0.649) 0%, rgba(39, 13, 65, 0.649) 46%);
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: 0.3fr  1.3fr 1.1fr 0.2fr 1.1fr;
+  grid-template-rows: 0.3fr  1.3fr 1.1fr 0.1fr 1.1fr;
 
   background-image:
   linear-gradient(360deg, rgba(28, 7, 102, 1) 10%, 
@@ -95,7 +102,7 @@ main {
    url(https://cutewallpaper.org/21/1920-x-1080-gif/Wahoo-GIF-Find-Share-on-GIPHY.gif);
    background-size: cover;
 
-  
+  /* display: none; */
 }
 
 nav {
@@ -129,6 +136,24 @@ li {
     rgba(24, 23, 23, 0.2),
     rgba(46, 44, 49, 0.7)
   ), url(pics/bossBg.png);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+}
+
+#cartaBossMonark{
+  background-color: #3D2B1F;
+  height: 370px;
+  width: 240px;
+  border-radius: 20px;
+  border: 5px solid red;
+
+  background-image: url(pics/monark/1.PNG);
+  background-size: cover;
+  position: absolute;
 }
 
 .bossHealthWrap{
@@ -143,7 +168,7 @@ li {
 }
 #healthPoints, .healthPoints{
   color: red;
-  font-size: 30px;
+  font-size: 26px;
 }
 
 #healthPointsWrap{
@@ -170,6 +195,10 @@ justify-content: center;
   width: 100%;
 }
 
+#dicas{
+  grid-area: dicas;
+  color: wheat;
+}
 
 #sound{
   grid-area: texto;
@@ -298,12 +327,15 @@ justify-content: center;
 }
 
 #store{
-  grid-area: dinheiro;
+  grid-area: especial;
   width: 195px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  
+
+  justify-self: end;
 }
 #moneyWrap{
   display: flex;
@@ -363,6 +395,10 @@ justify-content: center;
   position: relative;
   
 }
+
+
+
+
 
 #slotEsp {
   grid-area: especial;
@@ -1116,6 +1152,35 @@ p {
   
 
 }
+
+.bossAnimation{
+  animation: boss 2s ;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  /* animation-timing-function: linear; */
+}
+
+@keyframes boss{
+  from {
+    border: 5px solid red;
+    width: var(--widthCartaBoss);
+    height: var(--heigthCartaBoss);
+    bottom: 0px;
+    background-size: cover;
+    
+    
+  }
+  to {
+    border: 10px solid rgb(132, 4, 155);
+    width: 180px;
+    height: 250px;
+    bottom: 20px;
+    background-size: cover;
+    
+   
+  }
+}
+
 
 @keyframes voar {
   0% {
