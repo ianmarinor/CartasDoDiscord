@@ -27,6 +27,8 @@ let versaoHTML = document.getElementById("versao");
 let versao = "Pre-Alpha 1.7";
 versaoHTML.innerHTML = versao;
 
+
+
 function showVersion() {}
 
 showVersion();
@@ -3191,7 +3193,7 @@ function deckPronto() {
   }
   rodadas = 0;
   resetBoss();
-  spawnBoss();
+  
   numCartas.set(50)
 
 
@@ -3222,6 +3224,7 @@ document.getElementById("G").addEventListener("click", deckPronto);
 window.onload = (event) => {
   tudo();
   deckPronto();;
+  spawnBoss();
 };
 
 

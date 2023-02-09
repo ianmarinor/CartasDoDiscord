@@ -1,4 +1,6 @@
 import  {triggerChuvaMonark}  from "/script.js"
+
+
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
 let healthPointsP = document.getElementById("healthPoints");
@@ -121,7 +123,15 @@ export function resetBoss(){
 
 export function spawnBoss() 
 { 
-    createMonark()
+    
+    if(chosenBoss == 'monark'){
+        createMonark()
+    } else {
+        return false
+    }
+
+
+
     healthPointsP.textContent = boss.health    
     healthWrapP.classList.add('aparecer')
     boss.carta()

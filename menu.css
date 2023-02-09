@@ -18,7 +18,7 @@ main{
     align-items: start;
     
 }
-#menu > a{
+a{
     /* background-color: black; */
     font-size: 100px;
     margin-left: 120px;
