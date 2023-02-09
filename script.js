@@ -1489,6 +1489,7 @@ function moverCartaMonark() {
 
           let deathSpyAu = ["deathSpy" + gerarNumero(1, 3) + ".mp3"];
           snd(deathSpyAu);
+          numCartas.add(1)
           break;
 
           //SE DECK VAZIO
@@ -1496,6 +1497,7 @@ function moverCartaMonark() {
           inv.replaceChild(copyCard, inv.children[deckCheck[1]]);
 
           snd(monarkAu);
+          numCartas.add(1)
           break;
 
           // SUBSTITUI O HOMONIMO
@@ -1512,6 +1514,7 @@ function moverCartaMonark() {
 
           inv.replaceChild(copyCard, inv.children[i]);
           snd(monarkAu);
+          numCartas.add(1)
           break;
         }
       }

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title></title>
+  </head>
+  <body>
+    <section>
+      <img src="/pics/gr.png" alt="gr" srcset="" />
+      <h1>
+        VIRA<br />
+        ESSE<br />
+        TELEFONE
+      </h1>
+    </section>
+
+    <div id="protector"></div>
+
+    <main>
+      <div id="sound">
+        <img id="speaker" src="/pics/speaker.png" alt="speaker" />
+      </div>
+      <div class="wrap">
+        <h2 class="placar"></h2>
+      </div>
+      <div id="bossRoom">
+
+        
+
+
+      </div>
+      <div class="bossHealthWrap">
+        <div id="hb" min="0">
+          <div id="progress"></div>
+        </div>
+        <div id="healthPointsWrap">
+          <h2 id="healthPoints"></h2>
+          <h2 class="healthPoints"></h2>
+        </div>
+      </div>
+
+      <div id="dicas">  <h4>APERTE "W" PARA PASSAR UMA CARTA</h4>  </div>
+
+      <div id="store">
+        <div id="moneyWrap">
+          <h2 id="money"></h2>
+          <h2>💰</h2>
+        </div>
+        <div id="moneyWrap">
+          <h3 id="vendas"></h3>
+          <h2 class="vendas">&nbsp; VENDAS</h2>
+        </div>
+      </div>
+      <div id="pack">
+        <div id="carta" data-card="normal">
+          <div class="nameAndCidadeWrapper">
+            <p class="nome"></p>
+            <div class="variante"></div>
+            <p class="cidade"></p>
+            <div class="especial"></div>
+          </div>
+          <div class="retrato"></div>
+          <p class="cargo"></p>
+          <div class="poder">
+            <p class="ataque"></p>
+            <p class="novoAtaque"></p>
+            <button class="action">PRESS</button>
+          </div>
+          <!-- <div class="especial">e</div> -->
+          <p class="seed"></p>
+          <p id="selo"></p>
+        </div>
+      </div>
+      <h1 class="arena"></h1>
+      <div id="wrapAndInv">
+        <div id="efeito1"></div>
+        <div id="inv">
+          <div id="empty1">
+            <div id="nameAndCidadeWrapper1">
+              <p id="nome1"></p>
+              <h1 class="nome1">1</h1>
+              <div id="variante1"></div>
+              <p id="cidade1"></p>
+              <div id="especial1"></div>
+            </div>
+            <div id="retrato1"></div>
+            <p id="cargo1"></p>
+            <div id="poder1">
+              <p id="ataque1"></p>
+              <p id="novoAtaque1"></p>
+              <button id="action1"></button>
+            </div>
+            <p class="seed1"></p>
+            <p id="selo1"></p>
+          </div>
+          <div id="empty2">
+            <div id="nameAndCidadeWrapper2">
+              <p id="nome2"></p>
+              <h1 class="nome2">2</h1>
+              <div id="variante2"></div>
+              <p id="cidade2"></p>
+              <div id="especial2"></div>
+            </div>
+            <div id="retrato2"></div>
+            <p id="cargo2"></p>
+            <div id="poder2">
+              <p id="ataque2"></p>
+              <p id="novoAtaque2"></p>
+              <button id="action2"></button>
+            </div>
+            <p class="seed2"></p>
+            <p id="selo2"></p>
+          </div>
+          <div id="empty3">
+            <div id="nameAndCidadeWrapper3">
+              <p id="nome3"></p>
+              <h1 class="nome3">3</h1>
+              <div id="variante3"></div>
+              <p id="cidade3"></p>
+              <div id="especial3"></div>
+            </div>
+            <div id="retrato3"></div>
+            <p id="cargo3"></p>
+            <div id="poder3">
+              <p id="ataque3"></p>
+              <p id="novoAtaque3"></p>
+              <button id="action3"></button>
+            </div>
+            <p class="seed3"></p>
+            <p id="selo3"></p>
+          </div>
+          <div id="empty4">
+            <div id="nameAndCidadeWrapper4">
+              <p id="nome4"></p>
+              <h1 class="nome4">4</h1>
+              <div id="variante4"></div>
+              <p id="cidade4"></p>
+              <div id="especial4"></div>
+            </div>
+            <div id="retrato4"></div>
+            <p id="cargo4"></p>
+            <div id="poder4">
+              <p id="ataque4"></p>
+              <p id="novoAtaque4"></p>
+              <button id="action4"></button>
+            </div>
+            <p class="seed4"></p>
+            <p id="selo4"></p>
+          </div>
+        </div>
+      </div>
+      <!-- CARTAS NO DECK -->
+      <div id="slotEsp">
+        <div class="cartaEsp" data-card="especial">
+          <div class="nameAndCidadeWrapperEsp">
+            <p class="nomeEsp"></p>
+            <div class="varianteEsp"></div>
+            <p class="cidadeEsp"></p>
+            <div class="especialEsp"></div>
+          </div>
+          <div class="retratoEsp"></div>
+          <p class="cargoEsp"></p>
+          <div class="poderEsp">
+            <p class=""></p>
+            <p class="novoAtaqueEsp"></p>
+            <button class="actionEsp">PRESS</button>
+          </div>
+          <p class="seedEsp"></p>
+          <p class="seloEsp"></p>
+        </div>
+      </div>
+      <div id="mao" oncontextmenu="return false;">
+        <div id="mao0">
+          <div id="nameAndCidadeWrapperMao">
+            <p id="nomeMao"></p>
+            <div id="varianteMao"></div>
+            <p id="cidadeMao"></p>
+            <div id="especialMao"></div>
+          </div>
+          <div id="retratoMao"></div>
+          <p id="cargoMao"></p>
+          <div id="poderMao">
+            <p id=""></p>
+            <p id="novoAtaqueMao"></p>
+            <!-- <button id="action"></button> -->
+          </div>
+        </div>
+        <div id="mao1">
+          <div id="nameAndCidadeWrapperMao">
+            <p id="nomeMao"></p>
+            <div id="varianteMao"></div>
+            <p id="cidadeMao"></p>
+            <div id="especialMao"></div>
+          </div>
+          <div id="retratoMao"></div>
+          <p id="cargoMao"></p>
+          <div id="poderMao">
+            <p id=""></p>
+            <p id="novoAtaqueMao"></p>
+            <!-- <button id="action"></button> -->
+          </div>
+        </div>
+        <div id="mao2">
+          <div id="nameAndCidadeWrapperMao">
+            <p id="nomeMao"></p>
+            <div id="varianteMao"></div>
+            <p id="cidadeMao"></p>
+            <div id="especialMao"></div>
+          </div>
+          <div id="retratoMao"></div>
+          <p id="cargoMao"></p>
+          <div id="poderMao">
+            <p id=""></p>
+            <p id="novoAtaqueMao"></p>
+            <!-- <button id="action"></button> -->
+          </div>
+        </div>
+        <div id="mao3">
+          <div id="nameAndCidadeWrapperMao">
+            <p id="nomeMao"></p>
+            <div id="varianteMao"></div>
+            <p id="cidadeMao"></p>
+            <div id="especialMao"></div>
+          </div>
+          <div id="retratoMao"></div>
+          <p id="cargoMao"></p>
+          <div id="poderMao">
+            <p id=""></p>
+            <p id="novoAtaqueMao"></p>
+            <!-- <button id="action"></button> -->
+          </div>
+        </div>
+        <div id="mao4">
+          <div id="nameAndCidadeWrapperMao">
+            <p id="nomeMao"></p>
+            <div id="varianteMao"></div>
+            <p id="cidadeMao"></p>
+            <div id="especialMao"></div>
+          </div>
+          <div id="retratoMao"></div>
+          <p id="cargoMao"></p>
+          <div id="poderMao">
+            <p id=""></p>
+            <p id="novoAtaqueMao"></p>
+            <!-- <button id="action"></button> -->
+          </div>
+        </div>
+        <div id="mao5">
+          <div id="nameAndCidadeWrapperMao">
+            <p id="nomeMao"></p>
+            <div id="varianteMao"></div>
+            <p id="cidadeMao"></p>
+            <div id="especialMao"></div>
+          </div>
+          <div id="retratoMao"></div>
+          <p id="cargoMao"></p>
+          <div id="poderMao">
+            <p id=""></p>
+            <p id="novoAtaqueMao"></p>
+            <!-- <button id="action"></button> -->
+          </div>
+        </div>
+      </div>
+      <div id="descr">
+        <h1 id="record">
+          ⭐ VERSAO ⭐<br />
+          TESTE <i>1512</i> ⚡
+        </h1>
+        <br />
+        <h1 id="versao"></h1>
+      </div>
+      <input type="text" id="getseed" class="" placeholder="COLOQUE UMA SEED" />
+      <div id="btnContainer">
+        <button id="btn">🆕 NOVA CARTA 🆕</button>
+        <button id="G">🆕 NOVO DECK 🆕</button>
+      </div>
+      <button id="btnReset">🔁 RESETAR JOGO 🔁</button>
+      <!-- CARTA ESPECIAL -->
+      <div id="btnEspecial">
+        <button id="btnCampones" disabled>
+          CAMPONES<br />
+          50
+        </button>
+        <button id="btnCavalheiro" disabled>
+          CAVALHEIRO<br />
+          100
+        </button>
+        <button id="btnSangue" disabled>
+          SANGUE AZUL<br />
+          250
+        </button>
+        <button id="btnRainha" disabled>
+          RAINHA<br />
+          1000
+        </button>
+      </div>
+    </main>
+    
+    <script type="module" src="script.js"></script>
+    <script type="module" src="aplicarEfeito.js" defer></script>
+    <script type="module" src="slotEspecial.js" defer></script>
+    <script type="module" src="boss.js" defer></script>
+  </body>
+</html>
