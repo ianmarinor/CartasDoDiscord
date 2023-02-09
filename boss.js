@@ -1,6 +1,7 @@
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
 let healthPointsP = document.getElementById("healthPoints");
+let healthWrapP = document.querySelector(".bossHealthWrap");
 
 
 
@@ -81,6 +82,8 @@ export function spawnBoss()
 { 
     createMonark()
     healthPointsP.textContent = boss.health    
+    healthWrapP.classList.add('aparecer')
+    // healthWrapP.className = 'aparecer'
 
 }
 

@@ -749,7 +749,7 @@ export function escolherEspecial(teste) {
     } else if (raridades.sangueAzul.rng()) {
       raridade = raridades.sangueAzul;
       
-      if(true){
+      if(false){
         especial = especiais.lucio
         especial.novoAtaqueE = 200 + '💚'
 
