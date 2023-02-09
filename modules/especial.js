@@ -1,6 +1,6 @@
 let DEBUG = false;
 import { seedRNG } from "./seedFabricator.js";
-import { stringSeed } from "../slotEspecial.js";
+// import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG()
 
 
@@ -624,7 +624,7 @@ export let especiais = {
         retrato: "url('pics/dvaMecaRetrato.jpg')",
 
         // ataqueE: lucioPE()
-        ataqueE: "1⚡",
+        ataqueE: "1000⚡",
         novoAtaqueE: '',
 
         nomeStyle:{
@@ -658,7 +658,7 @@ export let especiais = {
         }
       },
 
-      
+
       tank: {
         cartaId: "tank",
         nome: "TANK",
@@ -775,7 +775,7 @@ export function escolherEspecial(teste) {
 
       if(true){
 
-        especial = especiais.jhin
+        especial = especiais.dva
         
 
       } else if (seedString[12]< 4) {

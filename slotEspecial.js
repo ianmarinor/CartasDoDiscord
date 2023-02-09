@@ -1,6 +1,6 @@
 import { seedObj, seedRNG } from "./modules/seedFabricator.js";
 import { escolherEspecial, especial } from "./modules/especial.js";
-import  {snd}  from "/script.js"
+import  {snd, selectHandCard, naoAu}  from "/script.js"
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
@@ -35,53 +35,53 @@ function alerta() {
 // export function ativarBtn(){
 
 //   setInterval(ativarBtn2, 500)
-//   console.log(1);
+//   
 
 // }
 
 
 
 export function ativarBtn() {
-  console.log('*******ATIVAR BTN********');
+  // 
 
   // ATIVAR CAMPO
   if (parseInt(moneyP.textContent) >= precoCampones) {
     btnCampones.disabled = false;
 
-    // console.log('campones enable');
+    // 
   } else {
     btnCampones.disabled = true;
-    // console.log('campones disenable');
+    // 
   }
 
   //ATIVAR CAVA
   if (parseInt(moneyP.textContent) >= precoCavalheiro) {
     btnCavalheiro.disabled = false;
 
-    // console.log('Cavalheiro enable');
+    // 
   } else {
     btnCavalheiro.disabled = true;
-    // console.log('Cavalheiro disenable');
+    // 
   }
 
   //ATIVAR SA
   if (parseInt(moneyP.textContent) >= precoSangueAzul) {
     btnSangue.disabled = false;
 
-    // console.log('SA enable');
+    // 
   } else {
     btnSangue.disabled = true;
-    // console.log('SA disenable');
+    // 
   }
 
   //ATIVAR RAINHA
   if (parseInt(moneyP.textContent) >= precoRainha) {
     btnRainha.disabled = false;
 
-    // console.log('SA enable');
+    // 
   } else {
     btnRainha.disabled = true;
-    // console.log('SA disenable');
+    // 
   }
 }
 
@@ -152,17 +152,17 @@ export let stringSeed = seedRNG().toString();
 function makeCampones() {
   stringSeed = seedRNG().toString();
   let arrSeed = stringSeed.split("");
-  console.log("arrSeedCampones", arrSeed);
+  
   let specialSeed = arrSeed;
   specialSeed[0] = "1";
   specialSeed[8] = "0";
   specialSeed[14] = "0";
 
-  console.log("specialSeedCampones", specialSeed);
+  
 
   seedCampones = specialSeed.join("");
   seedEspecial = seedCampones;
-  console.log("seedCampones", seedCampones);
+  
   ativarBtn();
   return seedCampones;
 }
@@ -170,17 +170,17 @@ function makeCampones() {
 function makeCavalheiro() {
   stringSeed = seedRNG().toString();
   let arrSeed = stringSeed.split("");
-  console.log("arrSeedmakeCavalheiro", arrSeed);
+  
   let specialSeed = arrSeed;
   specialSeed[0] = "1";
   specialSeed[8] = "1";
   specialSeed[14] = "0";
 
-  console.log("specialSeedmakeCavalheiro", specialSeed);
+  
 
   seedmakeCavalheiro = specialSeed.join("");
   seedEspecial = seedmakeCavalheiro;
-  console.log("seedmakeCavalheiro", seedmakeCavalheiro);
+  
 
   return seedmakeCavalheiro;
 }
@@ -188,17 +188,17 @@ function makeCavalheiro() {
 function makeSangueAzul() {
   stringSeed = seedRNG().toString();
   let arrSeed = stringSeed.split("");
-  console.log("arrSeedmakeSangueAzul", arrSeed);
+  
   let specialSeed = arrSeed;
   specialSeed[0] = "1";
   specialSeed[8] = "2";
   specialSeed[14] = "0";
 
-  console.log("specialSeedmakeSangueAzull", specialSeed);
+  
 
   seedmakeSangueAzul = specialSeed.join("");
   seedEspecial = seedmakeSangueAzul;
-  console.log("seedmakeSangueAzul", seedmakeSangueAzul);
+  
 
   return seedmakeSangueAzul;
 }
@@ -206,23 +206,23 @@ function makeSangueAzul() {
 function makeRainha() {
   stringSeed = seedRNG().toString();
   let arrSeed = stringSeed.split("");
-  console.log("arrSeedmakeRainha", arrSeed);
+  
   let specialSeed = arrSeed;
   specialSeed[0] = "1";
   specialSeed[8] = "3";
   specialSeed[14] = "0";
 
-  console.log("specialSeedmakeRainha", specialSeed);
+  
 
   seedmakeRainha = specialSeed.join("");
   seedEspecial = seedmakeRainha;
-  console.log("seedmakeRainha", seedmakeRainha);
+  
 
   return seedmakeRainha;
 }
 
 function colocarSlot(tipo) {
-  console.log("chamou*********");
+  
 
   btnCampones = document.getElementById("btnCampones");
   btnCavalheiro = document.getElementById("btnCavalheiro");
@@ -242,7 +242,7 @@ function colocarSlot(tipo) {
   let seedEsp = slotEsp.querySelector(".seedEsp");
 
   escolherEspecial(tipo);
-  console.log(especial);
+  
 
   nomeE.classList.remove("float");
 
@@ -252,7 +252,7 @@ function colocarSlot(tipo) {
   
 
   retratoE.style.visibility = "visible";
-  console.log(slotEsp.querySelector(".nomeEsp"));
+  
   //NOME
   // nomeE.className = ''
   nomeE.innerHTML = especial.nome;
@@ -314,7 +314,7 @@ btnRainha.addEventListener("click", function () {
 // btnEsp.addEventListener('click', sorteio)
 
 let myInterval;
-slotEsp.addEventListener("click", moverToCartaMao);
+slotEsp.addEventListener("click", moveToMao);
 let cartaEspecial;
 
 function moverToCartaMao() {
@@ -326,6 +326,35 @@ function moverToCartaMao() {
     snd(novaCarta)
   }
 }
+
+export function moveToMao() {
+
+  cartaEspecial = slotEsp.children[0]
+
+  if (cartaEspecial.id && !myInterval){
+
+
+    for (let i = 0; i < 6; i++) {
+      if (mao.children[i].id == "mao" + i) {
+        
+        mao.replaceChild(cartaEspecial, mao.children[i])
+        limparEsp()
+        snd(novaCarta)
+        break;
+      } else {
+        
+        // snd(naoAu)
+      }
+    }
+
+    
+  }
+  
+  selectHandCard();
+}
+
+
+
 
 export function limparEsp() {
   slotEsp.innerHTML = cartaEsp;

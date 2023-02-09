@@ -40,22 +40,37 @@
       <h1>VIRA<br />ESSE<br />TELEFONE</h1>
     </section>
     <main>
-      <div id="sound"><img id='speaker' src="/pics/speaker.png" alt=""></div>
+      <div id="sound"><img id="speaker" src="/pics/speaker.png" alt="" /></div>
       <div class="wrap">
-        
         <h2 class="placar"></h2>
-
-        
-        
       </div>
 
-      <div id="moneyWrap">
-        <h2 id="money"></h2>
-        <h2>💰</h2> 
+      <div id="bossHealthWrap">
+      <div id="hb" min="0">
+        <div id="progress"></div>
+      </div>
+      <div id="healthPointsWrap">
+        <h2 id="healthPoints"></h2>
+        <h2 class="healthPoints" >❤️</h2>
+
+      </div>
+      </div>
+
+
+
+      <div id="store">
+        <div id="moneyWrap">
+          <h2 id="money"></h2>
+          <h2>💰</h2>
+        </div>
+
+        <div id="moneyWrap">
+        <h3 id="vendas"></h3> <h2 class="vendas"> &nbsp; VENDAS</h2>
+      </div>
       </div>
 
       <div id="pack">
-        <div id="carta" data-card="normal" >
+        <div id="carta" data-card="normal">
           <div class="nameAndCidadeWrapper">
             <p class="nome"></p>
             <div class="variante"></div>
@@ -75,6 +90,7 @@
           <p id="selo"></p>
         </div>
       </div>
+
       <h1 class="arena"></h1>
       <div id="wrapAndInv">
         <div id="efeitoContainer">
@@ -87,7 +103,7 @@
         <div id="inv">
           <div id="empty1">
             <div id="nameAndCidadeWrapper1">
-              <p id="nome1"></p>
+              <p id="nome1"><h1 class="nome1">1</h1></p>
               <div id="variante1"></div>
               <p id="cidade1"></p>
               <div id="especial1"></div>
@@ -105,7 +121,7 @@
 
           <div id="empty2">
             <div id="nameAndCidadeWrapper2">
-              <p id="nome2"></p>
+              <p id="nome2"><h1 class="nome2">2</h1></p>
               <div id="variante2"></div>
               <p id="cidade2"></p>
               <div id="especial2"></div>
@@ -123,7 +139,7 @@
 
           <div id="empty3">
             <div id="nameAndCidadeWrapper3">
-              <p id="nome3"></p>
+              <p id="nome3"><h1 class="nome3">3</h1></p>
               <div id="variante3"></div>
               <p id="cidade3"></p>
               <div id="especial3"></div>
@@ -141,7 +157,7 @@
 
           <div id="empty4">
             <div id="nameAndCidadeWrapper4">
-              <p id="nome4"></p>
+              <p id="nome4"><h1 class="nome4">4</h1></p>
               <div id="variante4"></div>
               <p id="cidade4"></p>
               <div id="especial4"></div>
@@ -181,8 +197,7 @@
         </div>
       </div>
 
-      <div id="mao">
-
+      <div id="mao" oncontextmenu="return false;">
         <div id="mao0">
           <div id="nameAndCidadeWrapperMao">
             <p id="nomeMao"></p>
@@ -278,9 +293,6 @@
             <!-- <button id="action"></button> -->
           </div>
         </div>
-
-        
-
       </div>
 
       <div id="descr">
@@ -296,23 +308,39 @@
       <div id="btnContainer">
         <button id="btn">&#127381; NOVA CARTA &#127381;</button>
         <button id="G">🆕 NOVO DECK 🆕</button>
+
       </div>
 
-      <button id="btnReset">🔁 RESETAR JOGO 🔁</button>
 
+
+      <button id="btnReset">🔁 RESETAR JOGO 🔁</button>
 
       <!-- CARTA ESPECIAL -->
 
       <div id="btnEspecial">
-        <button id="btnCampones" disabled> CAMPONES <br> 50</button>
-        <button id="btnCavalheiro" disabled> CAVALHEIRO<br> 100</button>
-        <button id="btnSangue" disabled> SANGUE AZUL<br> 250</button>
-        <button id="btnRainha" disabled> RAINHA<br> 1000</button>
-      </div>
 
+        <button id="btnCampones" disabled>
+          CAMPONES <br />
+          50
+        </button>
+
+        <button id="btnCavalheiro" disabled>
+          CAVALHEIRO<br />
+          100
+        </button>
+        <button id="btnSangue" disabled>
+          SANGUE AZUL<br />
+          250
+        </button>
+        <button id="btnRainha" disabled>
+          RAINHA<br />
+          1000
+        </button>
+      </div>
     </main>
   </body>
   <script type="module" src="script.js"></script>
   <script type="module" src="aplicarEfeito.js" defer></script>
   <script type="module" src="slotEspecial.js" defer></script>
+  <script type="module" src="boss.js" defer></script>
 </html>

@@ -1,56 +1,61 @@
-// console.log(Math.floor(Math.random() *   2 + 2))
-// console.log(1000000000000000 + 9000000000000000)
-// console.log(parseInt('a').lenght > 1)
-// console.log(333338991011111 < 999999999999999);
-
-// var palavra = 'ian'
-
-// console.log(palavra[0]);
-
-// let ponto = 26
-
-// let ans 
 
 
-// function juj() {
-//     ans = Math.floor(Math.random() * 11 + 25)
-// //    ans = 69
-// }
 
-
-// juj()
-// if (ponto > ans){
-//     console.log('ans: ', ans);
-//     console.log ('continua')
-// } else {
-//     console.log('para');
-//     console.log('ans: ', ans);
-// }
-
-// for (let j = 0; j < 4; j++) {
-//     console.log(j);
-//     if(j == 2){
-//         console.log(j)
-//         break;
-//     }
+class Boss {
+    constructor(_health,_fullHealth){
+        this.health = _health
+        this.fullHealth = _fullHealth
+    }
     
+
+    dmg(n){
+        this.health  -= n
+    }
+    heal(n){
+        this.health  += n
+    }
+
+}
+
+
+// let monarkBoss = new Boss(2000, 2000)
+
+// console.log('monarkBoss: ', monarkBoss);
+// monarkBoss.dmg(1000)
+// console.log('monarkBoss: ', monarkBoss);
+
+let monarkBoss
+function createMonark(){
+
+    let boss = new Boss(2000,2000)
     
-// }
+    let monark = {
+    
+        fun(){
+            console.log('fun');
+        },
+        juj(){
+            console.log(7777777777);
+        }
+    }
+    return  monarkBoss = Object.assign(boss, monark)
+}
 
-// let rodadas = 0
-// let aumentou = false
 
-// function Rodadas(){
-//     console.log('Rodadas: ', rodadas);
-//     rodadas++
-//     aumentou = true
-// }
-// Rodadas()
+function spawnBoss(boss){
 
-// if (aumentou){
-//     console.log('SUBIU');
-// } else{
-//     console.log('deu no mesmo')
-// }
+    console.log('vida', boss.health);
+    console.log('vida', boss.fullHealth);
 
-// console.log(Math.floor(Math.random() * 7 + 0));
+}
+
+
+
+
+createMonark()
+// console.log(monarkBoss);
+// console.log(spawnBoss(createMonark()));
+
+
+
+console.log(true);
