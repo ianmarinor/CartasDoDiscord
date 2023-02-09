@@ -78,7 +78,7 @@ body {
 }
 
 #protector{
-display: none;
+/* display: none; */
 height: 100%;
 width: 100%;
 
@@ -112,7 +112,17 @@ main {
    url(https://cutewallpaper.org/21/1920-x-1080-gif/Wahoo-GIF-Find-Share-on-GIPHY.gif);
    background-size: cover;
 
-  /* display: none; */
+  display: none;
+}
+
+a{
+  /* background-color: black; */
+  font-size: 100px;
+  margin-left: 120px;
+}
+a:last-of-type:hover, a:last-of-type{
+  color: rgba(15, 12, 182, 0.147);
+
 }
 
 nav {

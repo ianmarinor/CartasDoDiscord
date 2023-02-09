@@ -3168,16 +3168,26 @@ btnReset.addEventListener("click", resetarDeck);
 
 // DECK COMECA COM 4 CARTAS
 
-let teclaDeckPronto = "KeyG";
-function deckPronto() {
-  
-
-  
 
 
-  
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyR") {
+    if (!getSeedChecked()) {
+      resetarDeck();
+    }
+  }
+});
 
-    
+
+
+// window.onload = (event) => {
+//   tudo();
+//   deckPronto();;
+//   spawnBoss();
+// };
+
+export function startGame2(){
+
   resetarDeck();
 
   mao.replaceChild(mao0, mao.children[0]);
@@ -3192,40 +3202,11 @@ function deckPronto() {
     
   }
   rodadas = 0;
-  resetBoss();
+  // resetBoss();s
   
   numCartas.set(50)
 
-
-  
-  
-  
 }
-
-document.addEventListener("keydown", (event) => {
-  if (event.code == teclaDeckPronto) {
-    if (!getSeedChecked()) {
-      
-      location.reload()
-    }
-  }
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyR") {
-    if (!getSeedChecked()) {
-      resetarDeck();
-    }
-  }
-});
-
-document.getElementById("G").addEventListener("click", deckPronto);
-
-window.onload = (event) => {
-  tudo();
-  deckPronto();;
-  spawnBoss();
-};
 
 
 document.addEventListener("contextmenu", function () {
