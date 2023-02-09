@@ -2956,8 +2956,8 @@ function limparInput() {
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
-  if (totalClicks > 0) {
-    if (totalClicks == 1) {
+  if (numCartas.total > 0) {
+    if (numCartas.total == 1) {
       showVersion();
       button.style.backgroundColor = "red";
       button.innerHTML = "0 CARTAS";
@@ -2977,7 +2977,7 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-    clicks();
+    numCartas.remove(1)
     abelha();
     colocarEfeito();
     verificarCartaParaMover();
@@ -2989,7 +2989,7 @@ function tudo() {
 }
 
 // COOLDOWNS
-let chuvaCooldown = 10
+let chuvaCooldown = false
 
 function poderBoss() {
 
@@ -2998,23 +2998,47 @@ function poderBoss() {
     if (boss.name == "monark") {
       //CHUVA DE MONARK
       
-      chuvaCooldown--
       console.log(chuvaCooldown);
       if (gerarNumero(1, 10) == 1) {
-        if(chuvaCooldown <= 0){
+        if(chuvaCooldown == false){
 
           boss.chuvaDeMonark(true);
-          chuvaCooldown = 9
+          chuvaCooldown = true
+          setTimeout(()=> chuvaCooldown = false, 7000)
         }
       }
-
-
-
     }
   }
 }
 
 let aumentou = false;
+
+let numCartas= {
+
+  total: 50,
+
+  add(n){
+    this.total += n
+    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS"
+  },
+
+  remove(n){
+    this.total -= n
+
+    if(this.total <0){
+      this.total = 0
+    }
+    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS"
+  },
+
+  set(n){
+    this.total = n
+    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS"
+
+  }
+
+}
+
 function clicks() {
   if (!seedObj._isPutByPlayer) {
     totalClicks--;
@@ -3141,9 +3165,14 @@ btnReset.addEventListener("click", resetarDeck);
 
 let teclaDeckPronto = "KeyG";
 function deckPronto() {
-  // snd(deckProntoAu)
+  
 
-  tudo();
+  
+
+
+  
+
+    
   resetarDeck();
 
   mao.replaceChild(mao0, mao.children[0]);
@@ -3155,18 +3184,24 @@ function deckPronto() {
 
   for (let i = 0; i < 6; i++) {
     moverToCartaMao();
+    
   }
   rodadas = 0;
-
-  arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
   resetBoss();
   spawnBoss();
+  numCartas.set(50)
+
+
+  
+  
+  
 }
 
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {
     if (!getSeedChecked()) {
-      deckPronto();
+      
+      location.reload()
     }
   }
 });
@@ -3183,12 +3218,9 @@ document.getElementById("G").addEventListener("click", deckPronto);
 
 window.onload = (event) => {
   tudo();
-  resetarDeck();
+  deckPronto();;
 };
-window.onload = (event) => {
-  tudo();
-  resetarDeck();
-};
+
 
 document.addEventListener("contextmenu", function () {
   //
