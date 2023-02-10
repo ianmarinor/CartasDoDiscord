@@ -1,3 +1,5 @@
+var TICK = false;
+
 import { seedObj, start } from "./modules/seedFabricator.js";
 import {
   tenicaEnergia,
@@ -26,8 +28,6 @@ import { boss, spawnBoss, resetBoss } from "./boss.js";
 let versaoHTML = document.getElementById("versao");
 let versao = "Pre-Alpha 1.7";
 versaoHTML.innerHTML = versao;
-
-
 
 function showVersion() {}
 
@@ -289,8 +289,6 @@ function escolherCidade() {
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 
 export function triggerChuvaMonark(x) {
-  
-
   if (x) {
     boss.treme(true);
     console.log("CHUVA DE MONARK");
@@ -299,26 +297,22 @@ export function triggerChuvaMonark(x) {
 
     setTimeout(function () {
       snd(trovaoAu);
-      boss.treme(false)
+      boss.treme(false);
 
       probMonark = () => probMonarkChuvaDeMonark();
       tudo();
-      
+
       triggerChuvaMonark(false);
-
     }, gerarNumero(3000, 4000));
-
-    
   } else {
     probMonark = () => probMonarkNormal();
     console.log("CABOU A CHUVA");
-
   }
 }
 
 let probMonarkNormal = () =>
   seedString[14] >= 4 && seedString[13] == 7 && seedString[4] != 4;
-let probMonarkChuvaDeMonark = ()=> seedString[14] >= 1
+let probMonarkChuvaDeMonark = () => seedString[14] >= 1;
 // let probMonarkChuvaDeMonark = () => true;
 
 let probMonark;
@@ -1201,13 +1195,35 @@ export function selectHandCard() {
           }
 
           function lowerCard() {
+
+
+            let teclaMoverCarta = "Space";
+
+            
+
+            
+
+
             chosenCard.style.bottom = "0px";
             //
           }
           function raiseCard() {
             //
+
             //
+
             chosenCard.style.bottom = "66px";
+
+
+            
+
+            document.addEventListener("keydown", (event) => {
+              if (event.code == "Space") {
+                moverToDeckSpace()
+              }
+            });
+            
+
           }
 
           if (chosenCard != 0) {
@@ -1238,8 +1254,6 @@ for (let d = 1; d < 5; d++) {
   let deck = "empty" + d;
 
   document.getElementById(deck).addEventListener("click", moverToDeck);
-  
-
 }
 
 function moverToDeck(e) {
@@ -1256,9 +1270,12 @@ function moverToDeck(e) {
     slot.className == "nome3" ||
     slot.className == "nome4";
 
-    console.log(chosenCard);
+  console.log(chosenCard);
 
-  if ((chosenCard != 0 && (isEmpty || isEmpty2)) || (chosenCard != 0 && chosenCard.id == 'premiomonark')){
+  if (
+    (chosenCard != 0 && (isEmpty || isEmpty2)) ||
+    (chosenCard != 0 && chosenCard.id == "premiomonark")
+  ) {
     if (cartasComBotao.some((el) => chosenCard.id.includes(el))) {
       let botao = chosenCard.children[3].children[2];
       botao.style.visibility = "visible";
@@ -1353,6 +1370,60 @@ function moverToDeckNum(e) {
   }
 }
 
+
+
+
+function moverToDeckSpace() {
+  
+
+  for (let i = 0; i < 4; i++) {
+
+    
+    let cartaVazia = inv.children[i].dataset.card == 'empty'
+    let carta = inv.children[i]
+
+    
+    function emptyMao() {
+      if (chosenCard == mao.children[0]) {
+        mao.replaceChild(mao0, chosenCard);
+      } else if (chosenCard == mao.children[1]) {
+        mao.replaceChild(mao1, chosenCard);
+      } else if (chosenCard == mao.children[2]) {
+        mao.replaceChild(mao2, chosenCard);
+      } else if (chosenCard == mao.children[3]) {
+        mao.replaceChild(mao3, chosenCard);
+      } else if (chosenCard == mao.children[4]) {
+        mao.replaceChild(mao4, chosenCard);
+      } else if (chosenCard == mao.children[5]) {
+        mao.replaceChild(mao5, chosenCard);
+      }
+    }
+
+    if (chosenCard != 0 && cartaVazia) {
+    
+      
+      emptyMao()
+      inv.replaceChild(chosenCard, carta)
+      
+
+    
+
+      chosenCard.dataset.inv = "true";
+
+      if (cartasComBotao.some((el) => chosenCard.id.includes(el))) {
+        let botao = chosenCard.children[3].children[2];
+        botao.style.visibility = "visible";
+      }
+
+      criarBtn();
+
+      chosenCard.style.bottom = "0px";
+      
+      chosenCard = 0;
+    }
+  }
+}
+
 let copyCardSeed;
 let copyCardName;
 
@@ -1386,9 +1457,7 @@ function moverCartaMonark() {
     setTimeout(tudo, 250);
   } else if (totalClicks > 0) {
     if (copyCard.id === "carta-monark") {
-      copyCard.dataset.dmgboss = 'false'
-        
-
+      copyCard.dataset.dmgboss = "false";
 
       function isSpy() {
         for (let j = 0; j < 4; j++) {
@@ -1496,8 +1565,8 @@ function moverCartaMonark() {
 
           let deathSpyAu = ["deathSpy" + gerarNumero(1, 3) + ".mp3"];
           snd(deathSpyAu);
-          numCartas.add(1)
-          healMonarkBoss()
+          numCartas.add(1);
+          healMonarkBoss();
 
           break;
 
@@ -1506,8 +1575,8 @@ function moverCartaMonark() {
           inv.replaceChild(copyCard, inv.children[deckCheck[1]]);
 
           snd(monarkAu);
-          numCartas.add(1)
-          healMonarkBoss()
+          numCartas.add(1);
+          healMonarkBoss();
           break;
 
           // SUBSTITUI O HOMONIMO
@@ -1524,8 +1593,8 @@ function moverCartaMonark() {
 
           inv.replaceChild(copyCard, inv.children[i]);
           snd(monarkAu);
-          numCartas.add(1)
-          healMonarkBoss()
+          numCartas.add(1);
+          healMonarkBoss();
           break;
         }
       }
@@ -1672,9 +1741,6 @@ function critico() {
 ////////////////////////////////////////////////
 
 function criarBtn() {
-
-
-  
   //
 
   for (let i = 0; i < 4; i++) {
@@ -2066,11 +2132,7 @@ function criarBtn() {
               inv.replaceChild(mao4, premioMonark);
             } else if (premioMonark == mao.children[5]) {
               inv.replaceChild(mao5, premioMonark);
-            } 
-
-
-
-
+            }
           }
 
           setTimeout(eliminarPremioMonark, 10000);
@@ -2712,117 +2774,14 @@ export let empty3 = inv.children[2];
 export let empty4 = inv.children[3];
 let cartaMao = mao.children[0];
 
-// function deletarDeck(e) {
-
-//   if (
-//     e.target.className == "retrato" ||
-//     e.target.className == "retrato invis" ||
-//     e.target.className == "retratoEsp" ||
-//     e.target.className == "retratoEsp invis"
-//   ) {
-//     //
-
-//     let totalMoney = parseInt(moneyP.textContent);
-
-//     let cargoMoney = parseInt(e.target.offsetParent.children[2].textContent);
-
-//     function venderCartaDeck() {
-//       let cartasVendiveis = ["tf2Money"];
-
-//       let vendivelDeck = cartasVendiveis.some((el) =>
-//         e.target.offsetParent.id.includes(el)
-//       );
-
-//       if (vendivelDeck) {
-//         animateSell(totalMoney, cargoMoney);
-//       }
-//     }
-
-//     function dmgBoss() {
-//       let energia = parseInt(
-//         e.target.offsetParent.children[3].children[0].textContent
-//       );
-
-//       boss.dmg(energia);
-//     }
-
-//     if (
-//       (e.target.offsetParent.id != "carta-monark" ||
-//         (e.target.offsetParent.id == "carta-monark" &&
-//           e.target.offsetParent.className == "monark vanish")) &&
-//       chosenCard == 0
-//     ) {
-//       if (e.target.offsetParent == inv.children[0]) {
-//         dmgBoss();
-//         venderCartaDeck();
-//         inv.replaceChild(empty1, e.target.offsetParent);
-//         ativarBtn();
-//         somaPontos();
-//       } else if (e.target.offsetParent == inv.children[1]) {
-//         dmgBoss();
-//         venderCartaDeck();
-//         inv.replaceChild(empty2, e.target.offsetParent);
-//         somaPontos();
-//       } else if (e.target.offsetParent == inv.children[2]) {
-//         dmgBoss();
-//         venderCartaDeck();
-//         inv.replaceChild(empty3, e.target.offsetParent);
-//         ativarBtn();
-//         somaPontos();
-//       } else if (e.target.offsetParent == inv.children[3]) {
-//         dmgBoss();
-//         venderCartaDeck();
-//         inv.replaceChild(empty4, e.target.offsetParent);
-//         ativarBtn();
-//         somaPontos();
-//       }
-//     } else {
-//       let naoAu = ["nao.mp3"];
-//       snd(naoAu);
-//     }
-//   }
-// }
-
-
-let deckReadyNum = 0
-let usarDeckTrigg = false
-
-
-function deckFull(){
-
-  
-
-    if( inv.children[0].dataset.dmgboss == 'true' && 
-     inv.children[2].dataset.dmgboss == 'true' && 
-     inv.children[3].dataset.dmgboss == 'true' ){
-
-      console.log('DECK FULL');
-      usarDeckTrigg = true
-        return true
-     } else{
-      console.log('DECK NOT READY');
-      usarDeckTrigg = false
-      return false
-     }
-
-  
-}
-
-
-
-
-
-
 function deletarDeck(e) {
-  
   if (
     e.target.className == "retrato" ||
     e.target.className == "retrato invis" ||
     e.target.className == "retratoEsp" ||
     e.target.className == "retratoEsp invis"
   ) {
-    
-
+    //
 
     let totalMoney = parseInt(moneyP.textContent);
 
@@ -2851,8 +2810,8 @@ function deletarDeck(e) {
     if (
       (e.target.offsetParent.id != "carta-monark" ||
         (e.target.offsetParent.id == "carta-monark" &&
-          e.target.offsetParent.className == "monark vanish")) &&
-      chosenCard == 0
+          e.target.offsetParent.className == "monark vanish")) 
+          // && chosenCard == 0
     ) {
       if (e.target.offsetParent == inv.children[0]) {
         dmgBoss();
@@ -2885,7 +2844,72 @@ function deletarDeck(e) {
   }
 }
 
+let deckReadyNum = 0;
+let usarDeckTrigg = false;
 
+let tick = setInterval(function () {
+  // console.log('-');
+  deckFull();
+}, 200);
+
+function deckFull() {
+  let deckOnlyDmgBoss =
+    inv.children[0].dataset.dmgboss == "true" &&
+    inv.children[1].dataset.dmgboss == "true" &&
+    inv.children[2].dataset.dmgboss == "true" &&
+    inv.children[3].dataset.dmgboss == "true";
+
+  let deckFullAny =
+    inv.children[0].id != "empty1" &&
+    inv.children[1].id != "empty2" &&
+    inv.children[2].id != "empty3" &&
+    inv.children[3].id != "empty4";
+
+  if (deckOnlyDmgBoss) {
+    TICK && console.log("DECK CHEIO");
+    usarDeckTrigg = true;
+    return true;
+  } else {
+    TICK && console.log("DECK VAZIO");
+    usarDeckTrigg = false;
+    return false;
+  }
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyQ") {
+    dmgBoss();
+  }
+});
+
+function dmgBoss() {
+  if (deckFull()) {
+    console.log("USEI O DECK CONTRA O BOSS");
+
+    for (let i = 0; i < 4; i++) {
+      let carta = inv.children[i];
+
+      let energia = parseInt(carta.children[3].children[0].textContent);
+      boss.dmg(energia);
+
+      if (carta == inv.children[0]) {
+        inv.replaceChild(empty1, carta);
+        ativarBtn();
+        somaPontos();
+      } else if (carta == inv.children[1]) {
+        inv.replaceChild(empty2, carta);
+      } else if (carta == inv.children[2]) {
+        inv.replaceChild(empty3, carta);
+        ativarBtn();
+        somaPontos();
+      } else if (carta == inv.children[3]) {
+        inv.replaceChild(empty4, carta);
+        ativarBtn();
+        somaPontos();
+      }
+    }
+  }
+}
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyD") {
@@ -3075,8 +3099,6 @@ function limparInput() {
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
- 
-
   if (numCartas.total > 0) {
     if (numCartas.total == 1) {
       showVersion();
@@ -3098,91 +3120,74 @@ function tudo() {
     colocarInfoNoWrap();
     critico();
     moverCartaMonark();
-    numCartas.remove(1)
+    numCartas.remove(1);
     abelha();
     colocarEfeito();
     verificarCartaParaMover();
     blockInv();
     ativarBtn();
     poderBoss();
-    
   } else {
   }
 }
 
 // COOLDOWNS
 // PODER BOSSES
-let bossIsMonark
+let bossIsMonark;
 
-
-function healMonarkBoss(){
-
-
-  if (bossIsMonark){
-    boss.heal(10)
-    console.log('--------------------------------------------------');
+function healMonarkBoss() {
+  if (bossIsMonark) {
+    boss.heal(10);
   } else {
-    console.log('NAO É MONARK');
+    console.log("NAO É MONARK");
   }
-    
 }
 
-
-
-let chuvaCooldown = true
+let chuvaCooldown = true;
 
 function poderBoss() {
- bossIsMonark = boss.name = "monark"
+  bossIsMonark = boss.name = "monark";
 
   if (boss) {
     if (bossIsMonark) {
       //CHUVA DE MONARK
 
-      
-      
       console.log(chuvaCooldown);
       if (gerarNumero(1, 20) == 1) {
-        if(chuvaCooldown == false){
-
+        if (chuvaCooldown == false) {
           boss.chuvaDeMonark(true);
-          chuvaCooldown = true
-          setTimeout(()=> chuvaCooldown = false, 7000)
+          chuvaCooldown = true;
+          setTimeout(() => (chuvaCooldown = false), 7000);
         }
       }
     }
-
-
-
   }
 }
 
 let aumentou = false;
 
-let numCartas= {
-
+let numCartas = {
   total: 50,
 
-  add(n){
-    this.total += n
-    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS"
+  add(n) {
+    this.total += n;
+    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
   },
 
-  remove(n){
-    this.total -= n
+  remove(n) {
+    this.total -= n;
 
-    if(this.total <0){
-      this.total = 0
+    if (this.total < 0) {
+      this.total = 0;
     }
-    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS"
+    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
   },
 
-  set(n){
-    this.total = n
-    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS"
-
-  }
-
-}
+  set(n) {
+    this.total = n;
+    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
+  },
+};
 
 function clicks() {
   if (!seedObj._isPutByPlayer) {
@@ -3288,7 +3293,7 @@ cartaParaMover.addEventListener("click", moverToCartaMao);
 document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
-      if (!getSeedChecked()) {
+      if (!getSeedChecked() && chosenCard==0) {
         moverToCartaMao();
       }
     }
@@ -3308,8 +3313,6 @@ btnReset.addEventListener("click", resetarDeck);
 
 // DECK COMECA COM 4 CARTAS
 
-
-
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyR") {
     if (!getSeedChecked()) {
@@ -3318,16 +3321,13 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-
-
 // window.onload = (event) => {
 //   tudo();
 //   deckPronto();;
 //   spawnBoss();
 // };
 
-export function startGame2(){
-
+export function startGame2() {
   resetarDeck();
 
   mao.replaceChild(mao0, mao.children[0]);
@@ -3339,17 +3339,12 @@ export function startGame2(){
 
   for (let i = 0; i < 6; i++) {
     moverToCartaMao();
-    
   }
   rodadas = 0;
   // resetBoss();s
-  
 
-  numCartas.set(50)
-  
-
+  numCartas.set(50);
 }
-
 
 document.addEventListener("contextmenu", function () {
   //
