@@ -18,7 +18,14 @@ function snd(audio) {
 let theme = ['theme.mp3', 0.019]
 
 
+
+
 window.onload = (event) => {
+
+
+
+
+  
 
     setTimeout(function(){
         snd(theme)
@@ -27,4 +34,7 @@ window.onload = (event) => {
   };
 
 
-
+  document.addEventListener("contextmenu", function () {
+    //
+    return false;
+  });

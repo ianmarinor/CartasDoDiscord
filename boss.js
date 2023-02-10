@@ -44,7 +44,9 @@ class Boss {
     this.health += n;
     if (this.health > this.fullHealth) {
       this.health = this.fullHealth;
-    }
+    } 
+    bossHealPage()
+    console.log(this.health);
   }
 
   set(n) {
@@ -86,18 +88,22 @@ function probMonarkChuvaDeMonark() {
   console.log("juj");
 }
 function createMonark() {
-  let bossClass = new Boss(3000, 3000, "monark");
-
+  
+  let bossClass = new Boss(2000, 2000, "monark");
+  
   let monark = {
     carta() {
       bossRoomP.innerHTML = cartaBossMonark;
     },
-
+    
     chuvaDeMonark(x) {
       triggerChuvaMonark(x);
     },
+    
+    
   };
-
+  
+  
   return (boss = Object.assign(bossClass, monark));
 }
 
@@ -173,6 +179,10 @@ function animatebossHealth(plus) {
   //     }
 
   //   }, stepTime);
+}
+
+function bossHealPage(){
+  healthPointsP.textContent = boss.health;
 }
 
 let teclaDeckPronto = "KeyG";

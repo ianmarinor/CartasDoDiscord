@@ -93,6 +93,7 @@ export let especiais = {
     // ataqueE:tenicaEnergia() + "👑"
     ataqueE: 1,
     novoAtaqueE: '0',
+    dmgboss: 'true',
 
     nomeStyle:{
       fontSize: "",
@@ -142,6 +143,7 @@ export let especiais = {
       cargo: "MONARK BAN!",
       ataqueE: 1,
       novoAtaque: '',
+      dmgboss: 'true',
 
       // ataqueE: pontoSpeaker() + "⚡"
       
@@ -193,6 +195,7 @@ export let especiais = {
         cargo: "",
         ataqueE: 1,
         novoAtaque: '',
+        dmgboss: 'false',
 
         // ataqueE: bonusCartasPE()
         nomeStyle:{
@@ -239,6 +242,7 @@ export let especiais = {
         cargo: "",
         ataqueE: 1,
         novoAtaque: '',
+        dmgboss: 'false',
 
         // ataqueE: bonusCartasPE()
         nomeStyle:{
@@ -285,6 +289,7 @@ export let especiais = {
         cargo: "bzzzz....",
         ataqueE: 1,
         novoAtaque: '',
+        dmgboss: 'true',
 
         nomeStyle:{
           fontSize: "180%",
@@ -333,6 +338,7 @@ export let especiais = {
         cargo: "",
         ataqueE: '',
         novoAtaqueE: '',
+        dmgboss: 'false',
 
         // ataqueE: comunistaPE() + "☭"
         nomeStyle:{
@@ -380,6 +386,7 @@ export let especiais = {
         cargo: "",
         ataqueE: 1,
         novoAtaque: '',
+        dmgboss: 'false',
 
 
         nomeStyle:{
@@ -429,6 +436,7 @@ export let especiais = {
         cargo: "",
         ataqueE: "1⚡",
         novoAtaqueE: '⌚',
+        dmgboss: 'true',
 
 
 
@@ -474,6 +482,7 @@ export let especiais = {
         emoji: "🛡️",
         retrato: "url('pics/estoicoRetrato.jpg')",
         cargo: "",
+        dmgboss: 'false',
 
         // ataqueE: estoicoPE()
         ataqueE: '',
@@ -523,6 +532,7 @@ export let especiais = {
         emoji: "💚",
         cargo: '0%',
         retrato: "url('pics/retratoLucio.jpg')",
+        dmgboss: 'true',
 
         // ataqueE: lucioPE()
         ataqueE: "1⚡",
@@ -573,6 +583,7 @@ export let especiais = {
         emoji: "",
         cargo: '4',
         retrato: "url('pics/retratoJhin.jpg')",
+        dmgboss: 'true',
 
         // ataqueE: lucioPE()
         ataqueE: "4⚡",
@@ -622,6 +633,7 @@ export let especiais = {
         emoji: "",
         cargo: '100%',
         retrato: "url('pics/dvaMecaRetrato.jpg')",
+        dmgboss: 'true',
 
         // ataqueE: lucioPE()
         ataqueE: "1000⚡",
@@ -676,6 +688,7 @@ export let especiais = {
         cargo: "",
         ataqueE: "1⚡",
         novoAtaqueE: '10000💚',
+        dmgboss: 'true',
 
         nomeStyle:{
           fontSize: "210%",
@@ -773,7 +786,7 @@ export function escolherEspecial(teste) {
       DEBUG && console.log(raridades.cavaleiro.rng());
 
 
-      if(true){
+      if(false){
 
         especial = especiais.dva
         
@@ -804,7 +817,7 @@ export function escolherEspecial(teste) {
         especial = especiais.tank; 
         especial.cargo = tankCargo(especiais.tank.emoji)
 
-      } else if (seedString[12] < 4) {
+      } else if (false) {
         especial = especiais.menosCartas;
         especial.ataqueE = bonusCartasPE() + '🃏'
       } else if (seedString[12] > 6){

@@ -124,7 +124,7 @@ function comprarRainha() {
 }
 
 const cartaEsp =
-  '<div class="cartaEsp" data-card="especial" data-tankdead="false">' +
+  '<div class="cartaEsp" data-card="especial" data-tankdead="false" data-dmgboss="" > ' +
   '<div class="nameAndCidadeWrapperEsp">' +
   '<p class="nomeEsp"></p>' +
   '<div class="varianteEsp"></div>' +
@@ -229,6 +229,7 @@ function colocarSlot(tipo) {
   btnSangue = document.getElementById("btnSangue");
   btnRainha = document.getElementById("btnRainha");
 
+  let cartaEspecial = document.getElementById("slotEsp").children[0]
   let cartaE = slotEsp.querySelector(".cartaEsp");
   let btnEsp = document.getElementById("btnEsp");
   let nomeE = slotEsp.querySelector(".nomeEsp");
@@ -250,7 +251,7 @@ function colocarSlot(tipo) {
 
   //PERSONALIZADO
   
-
+  cartaEspecial.dataset.dmgboss = especial.dmgboss
   retratoE.style.visibility = "visible";
   
   //NOME
