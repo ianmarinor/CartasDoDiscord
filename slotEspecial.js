@@ -20,7 +20,7 @@ function debug(){
    precoRainha = 1;
 }
 
-debug()
+// debug()
 
 let novaCarta = ['novaCarta.mp3']
 

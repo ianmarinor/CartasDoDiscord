@@ -119,22 +119,7 @@ export function snd(audio) {
   audioEnabled && audioEffect.play();
 }
 
-// let audioEffectVoice = new Audio("/audio/deletar.mp3");
-// export function sndVoice(audio) {
-//   audioEffectVoice = new Audio("/audio/" + audio[0]);
 
-//   if (typeof audio[1] == "number") {
-//     audioEffectVoice.volume = audio[1];
-//   } else {
-//     audioEffectVoice.volume = 1;
-//   }
-
-//   audioEnabled && audioEffectVoice.play();
-// }
-
-// This function generates a seed or takes a seed as input
-// the input will always be translated to the same seed if an integer
-// if a string, it'll be converted
 
 let input = "";
 
@@ -144,7 +129,7 @@ let input = "";
 
 //integrante
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
-let totalClicks = 50;
+
 let integrante;
 let cartaCustom;
 // let seedObj
@@ -662,7 +647,7 @@ function colocarInfoNoWrap() {
     seloP.innerHTML = "🎲";
   }
 
-  arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
+  // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
   placarP.innerHTML = totalPontos + " ⚡";
 
   // if (novaCarta._especial.nome != "") {
@@ -1008,82 +993,9 @@ function verificarCartaParaMover() {
   //   seedCopyCard.textContent != seed3.textContent &&
   //   seedCopyCard.textContent != seed4.textContent;
 }
-function moverOne() {
-  copyCard = cartaParaMover.cloneNode(true);
-  if (inv.children[0].id == "empty1" && seedDiferente && taTudoOk) {
-    if (totalClicks <= 0 && packP.children[0].id != "carta") {
-      inv.replaceChild(copyCard, inv.children[0]);
-      packP.innerHTML = semCarta;
 
-      criarBtn();
-      somaPontos();
-    } else if (packP.children[0].id != "carta") {
-      inv.replaceChild(copyCard, inv.children[0]);
-      criarBtn();
-      somaPontos();
 
-      tudo();
-    }
-  }
-}
 
-function moverTwo() {
-  copyCard = cartaParaMover.cloneNode(true);
-
-  if (inv.children[1].id == "empty2" && seedDiferente && taTudoOk) {
-    if (totalClicks <= 0 && packP.children[0].id != "carta") {
-      inv.replaceChild(copyCard, inv.children[1]);
-      packP.innerHTML = semCarta;
-
-      criarBtn();
-      somaPontos();
-    } else if (packP.children[0].id != "carta") {
-      inv.replaceChild(copyCard, inv.children[1]);
-      criarBtn();
-      somaPontos();
-
-      tudo();
-    }
-  }
-}
-function moverThree() {
-  copyCard = cartaParaMover.cloneNode(true);
-
-  if (inv.children[2].id == "empty3" && seedDiferente && taTudoOk) {
-    if (totalClicks <= 0 && packP.children[0].id != "carta") {
-      inv.replaceChild(copyCard, inv.children[2]);
-      packP.innerHTML = semCarta;
-
-      criarBtn();
-      somaPontos();
-    } else if (packP.children[0].id != "carta") {
-      inv.replaceChild(copyCard, inv.children[2]);
-      criarBtn();
-      somaPontos();
-
-      tudo();
-    }
-  }
-}
-
-function moverFour() {
-  copyCard = cartaParaMover.cloneNode(true);
-  if (inv.children[3].id == "empty4" && seedDiferente && taTudoOk) {
-    if (totalClicks <= 0 && packP.children[0].id != "carta") {
-      inv.replaceChild(copyCard, inv.children[3]);
-      packP.innerHTML = semCarta;
-
-      criarBtn();
-      somaPontos();
-    } else if (packP.children[0].id != "carta") {
-      inv.replaceChild(copyCard, inv.children[3]);
-      criarBtn();
-      somaPontos();
-
-      tudo();
-    }
-  }
-}
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyB") {
@@ -1153,7 +1065,7 @@ for (let m = 0; m < 6; m++) {
 
 export function moveToMao(i) {
   if (copyCard.id != "carta-monark") {
-    if (totalClicks <= 0 && packP.children[0].id != "carta") {
+    if (numCartas.total <= 0 && packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
       packP.innerHTML = semCarta;
     } else if (packP.children[0].id != "carta") {
@@ -1455,7 +1367,7 @@ function moverCartaMonark() {
   } else if (efeitos.css.nome == "estoico" && copyCard.id == "carta-monark") {
     cartaParaMover.classList.add("voar");
     setTimeout(tudo, 250);
-  } else if (totalClicks > 0) {
+  } else if (numCartas.total > 0) {
     if (copyCard.id === "carta-monark") {
       copyCard.dataset.dmgboss = "false";
 
@@ -1854,10 +1766,12 @@ function criarBtn() {
       function cartaClique(e) {
         let varianteClique = e.target.offsetParent;
 
-        totalClicks =
-          totalClicks +
-          parseInt(varianteClique.children[3].children[0].textContent) +
-          1;
+
+        numCartas.add(parseInt(varianteClique.children[3].children[0].textContent) +
+        1)
+
+        
+          
 
         vendas.update(
           parseInt(varianteClique.children[3].children[0].textContent)
@@ -1866,7 +1780,7 @@ function criarBtn() {
         varianteClique.children[3].children[2].style.visibility = "hidden";
         button.style.backgroundColor = "";
         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-        arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
+        // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 
         if (varianteClique == inv.children[0]) {
           inv.replaceChild(empty1, varianteClique);
@@ -1883,19 +1797,18 @@ function criarBtn() {
         let varianteMenosClique = e.target.offsetParent;
 
         if (
-          totalClicks >
+          numCartas.total >
           parseInt(varianteMenosClique.children[3].children[0].textContent)
         ) {
-          totalClicks =
-            totalClicks -
-            parseInt(varianteMenosClique.children[3].children[0].textContent) +
-            1;
+          numCartas.add(parseInt(varianteMenosClique.children[3].children[0].textContent) +
+          1)
+            
 
           varianteMenosClique.children[3].children[2].style.visibility =
             "hidden";
           button.style.backgroundColor = "";
           button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-          arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
+          // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 
           if (varianteMenosClique == inv.children[0]) {
             inv.replaceChild(empty1, varianteMenosClique);
@@ -1923,12 +1836,12 @@ function criarBtn() {
 
       function cartaTenica(e) {
         function adicionarCLiquesTenica() {
-          if (totalClicks > 50) {
+          if (numCartas.total > 50) {
             true;
           } else {
-            totalClicks = 50;
+            numCartas.set(50)
           }
-          arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
+          // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
         }
 
         let varianteTenica = e.target.offsetParent;
@@ -2104,7 +2017,7 @@ function criarBtn() {
           efeitoPremioMonark.rodadas = 35;
           efeitos = efeitoPremioMonark;
           //apaga a carta
-          totalClicks += 15;
+          numCartas.add(15) 
           premioMonark.classList.add("vanish");
           premioMonarkBotao.style.visibility = "hidden";
           function eliminarPremioMonark() {
@@ -2363,8 +2276,9 @@ function criarBtn() {
 
             let cartasQueOLucioGosta = ["jhin", "tank"];
 
-            totalClicks += 25;
-            arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
+            
+            numCartas.add(25)
+            // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
             ulti.textContent = "0%";
 
             //colocar barreira
@@ -2882,7 +2796,11 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+
 function dmgBoss() {
+
+  let energiaTotal = 0
+
   if (deckFull()) {
     console.log("USEI O DECK CONTRA O BOSS");
 
@@ -2890,7 +2808,7 @@ function dmgBoss() {
       let carta = inv.children[i];
 
       let energia = parseInt(carta.children[3].children[0].textContent);
-      boss.dmg(energia);
+      
 
       if (carta == inv.children[0]) {
         inv.replaceChild(empty1, carta);
@@ -2907,12 +2825,18 @@ function dmgBoss() {
         ativarBtn();
         somaPontos();
       }
+
+      energiaTotal = energia + energiaTotal
+      console.log(energia);
     }
+    boss.dmg(energiaTotal * 2);
+    console.log('ENERIGA DECK TOTAL',energiaTotal);
+
   }
 }
 
 document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyD") {
+  if (event.code == "KeyE") {
     venderCarta();
   }
 });
@@ -3060,7 +2984,7 @@ function resetarDeck() {
   inv.replaceChild(empty2, inv.children[1]);
   inv.replaceChild(empty3, inv.children[2]);
   inv.replaceChild(empty4, inv.children[3]);
-  totalClicks = 50;
+  // totalClicks = 50;
   somaPontos();
   tudo();
   jaMovi = false;
@@ -3189,19 +3113,6 @@ let numCartas = {
   },
 };
 
-function clicks() {
-  if (!seedObj._isPutByPlayer) {
-    totalClicks--;
-    rodadas++;
-    aumentou = true;
-
-    arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
-  } else {
-    aumentou = false;
-  }
-
-  //
-}
 let totalPontos = 0;
 
 export function somaPontos() {
@@ -3286,7 +3197,8 @@ document.addEventListener("keydown", (event) => {
 });
 
 // BIND MOVER COM TECLA
-let teclaMoverCarta = "Space";
+let teclaMoverCarta = "KeyD";
+let teclaMoverVariasCartas = "KeyF";
 
 cartaParaMover.addEventListener("click", moverToCartaMao);
 
@@ -3294,11 +3206,38 @@ document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
       if (!getSeedChecked() && chosenCard==0) {
-        moverToCartaMao();
+
+        
+
+          moverToCartaMao();
+        
+
+
       }
     }
   }
 });
+
+document.addEventListener("keydown", (event) => {
+  if (copyCard) {
+    if (event.code == teclaMoverVariasCartas) {
+      if (!getSeedChecked() && chosenCard==0) {
+
+        for(let z=0;z<6;z++){
+
+          moverToCartaMao();
+          
+        }
+
+
+      }
+    }
+  }
+});
+
+
+
+
 
 inv.addEventListener("click", deletarDeck);
 
@@ -3321,11 +3260,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// window.onload = (event) => {
-//   tudo();
-//   deckPronto();;
-//   spawnBoss();
-// };
+
 
 export function startGame2() {
   resetarDeck();
@@ -3355,3 +3290,12 @@ document.addEventListener("contextmenu", function () {
 // document.getElementById("empty2").addEventListener("click", moverTwo);
 // document.getElementById("empty3").addEventListener("click", moverThree);
 // document.getElementById("empty4").addEventListener("click", moverFour);
+
+
+// LIST BINDS
+//  1, 2, 3, 4 ---> USAR CARTAS NO DECK
+//  Q --->  USAR DECK INTEIRO
+//  W --->  PASSAR CARTA
+//  E --->  VENDER CARTA
+//  D --->  MOVER VARIAS CARTAS N ODECK
+// SPACE ---> MOVER UMA CARTA PRO DECK
