@@ -29,7 +29,7 @@ export let raridades = {
   },
 
   sangueAzul: {
-    nome: "sangue azul",
+    nome: "sangueAzul",
     rng: () => seedString[8] == 2
     && seedString[14] == 0
     

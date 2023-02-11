@@ -286,6 +286,7 @@ export function triggerChuvaMonark(x) {
 
       probMonark = () => probMonarkChuvaDeMonark();
       tudo();
+      numCartas.add(1)
 
       triggerChuvaMonark(false);
     }, gerarNumero(3000, 4000));
@@ -1774,7 +1775,7 @@ function criarBtn() {
           
 
         vendas.update(
-          parseInt(varianteClique.children[3].children[0].textContent)
+          5
         );
 
         varianteClique.children[3].children[2].style.visibility = "hidden";
@@ -2718,14 +2719,18 @@ function deletarDeck(e) {
         e.target.offsetParent.children[3].children[0].textContent
       );
 
-      boss.dmg(energia);
+      if (e.target.offsetParent.dataset.dmgboss == 'true'){
+
+        boss.dmg(energia);
+      }
     }
 
     if (
       (e.target.offsetParent.id != "carta-monark" ||
         (e.target.offsetParent.id == "carta-monark" &&
           e.target.offsetParent.className == "monark vanish")) 
-          // && chosenCard == 0
+          
+          
     ) {
       if (e.target.offsetParent == inv.children[0]) {
         dmgBoss();
@@ -2917,6 +2922,23 @@ function venderCarta() {
     let cardValue = parseInt(energia.textContent);
     let cargoMoney = parseInt(cargo.textContent);
 
+
+    function deletar(){
+      if (chosenCard == mao.children[0]) {
+        mao.replaceChild(mao0, chosenCard);
+      } else if (chosenCard == mao.children[1]) {
+        mao.replaceChild(mao1, chosenCard);
+      } else if (chosenCard == mao.children[2]) {
+        mao.replaceChild(mao2, chosenCard);
+      } else if (chosenCard == mao.children[3]) {
+        mao.replaceChild(mao3, chosenCard);
+      } else if (chosenCard == mao.children[4]) {
+        mao.replaceChild(mao4, chosenCard);
+      } else if (chosenCard == mao.children[5]) {
+        mao.replaceChild(mao5, chosenCard);
+      }
+    }
+
     let cartasVendiveis = [
       "carta-semcargo",
       "carta-people",
@@ -2929,6 +2951,11 @@ function venderCarta() {
       "carta-primeminister",
       "carta-premiomarino",
     ];
+
+    
+
+
+
     let isVendivel = cartasVendiveis.some(
       (el) => carta.id.includes(el) && energia.innerHTML.includes("⚡")
     );
@@ -2946,26 +2973,40 @@ function venderCarta() {
       }
       snd(venda);
 
-      if (chosenCard == mao.children[0]) {
-        mao.replaceChild(mao0, chosenCard);
-      } else if (chosenCard == mao.children[1]) {
-        mao.replaceChild(mao1, chosenCard);
-      } else if (chosenCard == mao.children[2]) {
-        mao.replaceChild(mao2, chosenCard);
-      } else if (chosenCard == mao.children[3]) {
-        mao.replaceChild(mao3, chosenCard);
-      } else if (chosenCard == mao.children[4]) {
-        mao.replaceChild(mao4, chosenCard);
-      } else if (chosenCard == mao.children[5]) {
-        mao.replaceChild(mao5, chosenCard);
-      }
+       deletar()
 
       chosenCard = 0;
 
       vendas.update(-1);
     } else {
-      snd(naoAu);
-    }
+      
+      if(carta.dataset.tier == 'campones'){
+        animateSell(totalMoney, 15)
+        vendas.update(2);
+
+      } 
+      if(carta.dataset.tier == 'cavaleiro'){
+        animateSell(totalMoney, 30)
+        vendas.update(4);
+      } 
+      if(carta.dataset.tier == 'sangueAzul'){
+        animateSell(totalMoney, 75)
+        vendas.update(6);
+      } 
+      if(carta.dataset.tier == 'rainha'){
+        animateSell(totalMoney, 300)
+        vendas.update(8);
+      } 
+
+
+
+
+      deletar()
+      chosenCard = 0;
+
+     
+
+    } 
   } else {
     snd(naoAu);
   }
@@ -3024,7 +3065,7 @@ function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
   if (numCartas.total > 0) {
-    if (numCartas.total == 1) {
+    if (numCartas.total <= 1) {
       showVersion();
       button.style.backgroundColor = "red";
       button.innerHTML = "0 CARTAS";
@@ -3051,12 +3092,28 @@ function tudo() {
     blockInv();
     ativarBtn();
     poderBoss();
+    
   } else {
   }
 }
 
 // COOLDOWNS
 // PODER BOSSES
+
+function allMonark(){
+
+  let monark0 = inv.children[0].id == 'carta-monark'
+  let monark1 = inv.children[1].id == 'carta-monark'
+  let monark2 = inv.children[2].id == 'carta-monark'
+  let monark3 = inv.children[3].id == 'carta-monark'
+
+  let allMonarkInv = monark0 && monark1 && monark2 && monark3
+  console.log(' IS IT ALL MONARK?', allMonarkInv);
+
+  return  allMonarkInv
+
+}
+
 let bossIsMonark;
 
 function healMonarkBoss() {
@@ -3068,6 +3125,9 @@ function healMonarkBoss() {
 }
 
 let chuvaCooldown = true;
+setTimeout(()=>  chuvaCooldown = false, 15000)
+
+
 
 function poderBoss() {
   bossIsMonark = boss.name = "monark";
@@ -3078,7 +3138,7 @@ function poderBoss() {
 
       console.log(chuvaCooldown);
       if (gerarNumero(1, 20) == 1) {
-        if (chuvaCooldown == false) {
+        if (chuvaCooldown == false && !allMonark()) {
           boss.chuvaDeMonark(true);
           chuvaCooldown = true;
           setTimeout(() => (chuvaCooldown = false), 7000);
