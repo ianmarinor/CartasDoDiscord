@@ -1066,9 +1066,10 @@ for (let m = 0; m < 6; m++) {
 
 export function moveToMao(i) {
   if (copyCard.id != "carta-monark") {
-    if (numCartas.total <= 0 && packP.children[0].id != "carta") {
+    if (numCartas.total <= 1 && packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
       packP.innerHTML = semCarta;
+      numCartas.set(0)
     } else if (packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
       tudo();
@@ -1768,8 +1769,8 @@ function criarBtn() {
         let varianteClique = e.target.offsetParent;
 
 
-        numCartas.add(parseInt(varianteClique.children[3].children[0].textContent) +
-        1)
+        numCartas.add(parseInt(varianteClique.children[3].children[0].textContent) 
+        )
 
         
           
@@ -1777,6 +1778,10 @@ function criarBtn() {
         vendas.update(
           5
         );
+
+        if(packP.children[0].id == 'carta'){
+          tudo()
+        }
 
         varianteClique.children[3].children[2].style.visibility = "hidden";
         button.style.backgroundColor = "";
@@ -2401,7 +2406,7 @@ function criarBtn() {
                 tirosString.classList.remove("critico");
               }
 
-              if (checkTiros() && atiradorCargo == baralhoCargo) {
+              if (checkTiros() && atiradorCargo == baralhoCargo && numCartas.total >= 1) {
                 if (tiros == 2) {
                   tirosString.classList.add("critico");
                 }
@@ -2411,7 +2416,20 @@ function criarBtn() {
                     energiaJhinNum + energiaVitima * 4 + "⚡";
                   cartaParaMover.classList.add("voar");
                   somaPontos();
-                  setTimeout(tudo, 250);
+                  if(numCartas.total == 1){
+
+                    setTimeout(function(){
+
+
+                      packP.innerHTML = semCarta;
+                        numCartas.set(0)
+                    }, 250)
+
+
+                  } else{
+
+                    setTimeout(tudo, 250);
+                  }
 
                   let countAu = ["jhinConta4.mp3", 0.5];
                   snd(countAu);
@@ -2423,7 +2441,20 @@ function criarBtn() {
                     energiaJhinNum + energiaVitima + 4 + "⚡";
                   cartaParaMover.classList.add("voar");
                   somaPontos();
-                  setTimeout(tudo, 250);
+                  if(numCartas.total == 1){
+
+                    setTimeout(function(){
+
+
+                      packP.innerHTML = semCarta;
+                        numCartas.set(0)
+                    }, 250)
+
+
+                  } else{
+
+                    setTimeout(tudo, 250);
+                  }
 
                   if (tiros == 4) {
                     let countAu = ["jhinConta1.mp3", 0.5];
@@ -3036,7 +3067,7 @@ function resetarDeck() {
   getSeed.className = "";
   zerarMoney();
   limparEsp();
-  vendas.set(50);
+  
 }
 
 /////// CRITICO
@@ -3064,8 +3095,8 @@ function limparInput() {
 function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
-  if (numCartas.total > 0) {
-    if (numCartas.total <= 1) {
+  if (numCartas.total > 1) {
+    if (numCartas.total <= 0) {
       showVersion();
       button.style.backgroundColor = "red";
       button.innerHTML = "0 CARTAS";
@@ -3323,6 +3354,7 @@ document.addEventListener("keydown", (event) => {
 
 
 export function startGame2() {
+
   resetarDeck();
 
   mao.replaceChild(mao0, mao.children[0]);
@@ -3336,9 +3368,12 @@ export function startGame2() {
     moverToCartaMao();
   }
   rodadas = 0;
-  // resetBoss();s
+  // resetBoss();
 
-  numCartas.set(50);
+
+  numCartas.set(5);
+  vendas.set(25);
+
 }
 
 document.addEventListener("contextmenu", function () {
