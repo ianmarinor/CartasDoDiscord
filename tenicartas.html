@@ -36,10 +36,15 @@
     </section>
 
     <div id="protector">
-
+      
       <a id="pickMonark">MONARK</a>
-
+      
     </div>
+    <div id="end">
+    
+      <!-- <a id="pickMonark">MONARK</a> -->
+    </div>
+
 
     <main id="main">
       <div id="sound">
@@ -98,11 +103,13 @@
       </div>
 
 
+
       <h1 class="arena"></h1>
       <div id="wrapAndInv">
         <div id="efeito1"></div>
+
         <div id="inv">
-          <div id="empty1" data-card="empty">
+          <div id="empty1" data-card="empty" data-dmgboss="false">
             <div id="nameAndCidadeWrapper1">
               <p id="nome1"></p>
               <h1 class="nome1">1</h1>
@@ -176,6 +183,19 @@
           </div>
         </div>
       </div>
+
+      <div id="placarDanoWrap">
+        <h1 id="placarDano"></h1>  <h1 id="emojiPlacarDano">⚡</h1>
+        <h1 id="placarDanoCrit" class="critico"></h1>  <h1 id="emojiPlacarDanoCrit" class="critico">⚡</h1>
+      </div>
+
+
+      <div id="healthPlayerWrap">
+        <h2 id="healthPlayer"></h2> <h2>❤️</h2>
+      </div>
+
+
+
       <!-- CARTAS NO DECK -->
 
       <div id="slotEsp">
@@ -197,6 +217,7 @@
           <p class="seloEsp"></p>
         </div>
       </div>
+
       <div id="mao" oncontextmenu="return false;">
         <div id="mao0">
           <div id="nameAndCidadeWrapperMao">
@@ -273,6 +294,9 @@
             <!-- <button id="action"></button> -->
           </div>
         </div>
+
+                                            
+
         <div id="mao5">
           <div id="nameAndCidadeWrapperMao">
             <p id="nomeMao"></p>
@@ -289,6 +313,11 @@
           </div>
         </div>
       </div>
+
+
+
+
+
       <div id="descr">
         <h1 id="record">
           ⭐ VERSAO ⭐<br />
@@ -307,19 +336,19 @@
       <div id="btnEspecial">
         <button id="btnCampones" disabled>
           CAMPONES<br />
-          50
+          
         </button>
         <button id="btnCavalheiro" disabled>
           CAVALHEIRO<br />
-          100
+          
         </button>
         <button id="btnSangue" disabled>
           SANGUE AZUL<br />
-          250
+          
         </button>
         <button id="btnRainha" disabled>
           RAINHA<br />
-          1000
+          
         </button>
       </div>
     </main>

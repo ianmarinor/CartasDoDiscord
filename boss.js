@@ -1,4 +1,4 @@
-import { triggerChuvaMonark, startGame2 } from "/script.js";
+import { triggerChuvaMonark, startGame2, rodadas } from "/script.js";
 
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
@@ -112,12 +112,18 @@ export function resetBoss() {
 }
 
 let chosenBoss;
+let countDownSpawnBoss = 10
 
 function startGame() {
-  protector.style.display = "none";
-  main.style.display = "grid";
+  
+ 
   spawnBoss();
-  startGame2();
+
+  
+    protector.style.display = "none";
+    main.style.display = "grid";
+    startGame2();
+  
 }
 
 function chooseMonark() {
@@ -128,17 +134,23 @@ function chooseMonark() {
 pickMonark.addEventListener("click", chooseMonark);
 
 export function spawnBoss() {
-  if (chosenBoss == "monark") {
-    createMonark();
-  } else {
-    return false;
-  }
+
+  if(rodadas == 10){
+
+    if (chosenBoss == "monark") {
+      createMonark();
+    } else {
+      return false;
+    }
+
+  
+
 
   healthPointsP.textContent = boss.health;
   healthWrapP.classList.add("aparecer");
   boss.carta();
   console.log(boss);
-
+}
   // healthWrapP.className = 'aparecer'
 }
 

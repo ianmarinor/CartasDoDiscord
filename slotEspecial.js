@@ -8,10 +8,17 @@ let btnCavalheiro = document.getElementById("btnCavalheiro");
 let btnSangue = document.getElementById("btnSangue");
 let btnRainha = document.getElementById("btnRainha");
 let inv = document.getElementById("inv")
-let precoCampones = 50;
-let precoCavalheiro = 100;
-let precoSangueAzul = 250;
-let precoRainha = 1000;
+
+
+let precoCampones = 15;
+let precoCavalheiro = 35;
+let precoSangueAzul = 100;
+let precoRainha = 700;
+
+let precoCamponesP = btnCampones.innerHTML = 'CAMPONES <br />' + precoCampones
+let precoCavalheiroP = btnCavalheiro.innerHTML =  'CAVALHEIRO <br />' + precoCavalheiro
+let precoSangueAzulP = btnSangue.innerHTML =  'SANGUE AZUL <br />' + precoSangueAzul
+let precoRainhaP = btnRainha.innerHTML =  'RAINHA <br />' + precoRainha
 
 function debug(){
    precoCampones = 1;
@@ -194,6 +201,7 @@ function makeSangueAzul() {
   specialSeed[8] = "2";
   specialSeed[14] = "0";
 
+  
   
 
   seedmakeSangueAzul = specialSeed.join("");

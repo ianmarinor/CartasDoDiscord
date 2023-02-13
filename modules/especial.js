@@ -142,7 +142,7 @@ export let especiais = {
       retrato: "url('pics/SPEAKER.webp')",
       cargo: "MONARK BAN!",
       ataqueE: 1,
-      novoAtaque: '',
+      novoAtaque: '4💚',
       dmgboss: 'true',
 
       // ataqueE: pontoSpeaker() + "⚡"
@@ -487,7 +487,7 @@ export let especiais = {
         // ataqueE: estoicoPE()
         ataqueE: '',
         
-        novoAtaqueE: '',
+        novoAtaqueE: '4💚',
         nomeStyle:{
           fontSize: "250%",
           fontFamily: "estoico",
@@ -505,9 +505,9 @@ export let especiais = {
         },
         ataqueStyle:{
           color: '',
-          fontSize: '',
-          fontFamily:'',
-          visibility: 'hidden',
+          fontSize: '150%',
+          fontFamily:'estoico',
+          visibility: 'visible',
         },
         novoAtaqueStyle:{
           color: '',
@@ -637,7 +637,7 @@ export let especiais = {
 
         // ataqueE: lucioPE()
         ataqueE: "1000⚡",
-        novoAtaqueE: '',
+        novoAtaqueE: '4💚',
 
         nomeStyle:{
           fontSize: "250%",
@@ -831,7 +831,7 @@ export function escolherEspecial(teste) {
         especial.cargo = tankCargo(especiais.tank.emoji)
        } else {
         especial = especiais.estoicoTuru;
-        especial.novoAtaqueE = estoicoPE()
+        especial.ataqueE = estoicoPE()
       }
     }
   } else {
