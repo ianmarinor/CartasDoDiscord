@@ -3,6 +3,9 @@ import { seedRNG } from "./seedFabricator.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG()
 
+function gerarNumero(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 
 let seed2 = seedString[2];
@@ -93,7 +96,7 @@ export let especiais = {
     // ataqueE:tenicaEnergia() + "👑"
     ataqueE: 1,
     novoAtaqueE: '0',
-    dmgboss: 'true',
+    dmgboss: 'false',
 
     nomeStyle:{
       fontSize: "",
@@ -631,7 +634,7 @@ export let especiais = {
         descricao: "",
         emojiEsp: "",
         emoji: "",
-        cargo: '100%',
+        cargo: '0%',
         retrato: "url('pics/dvaMecaRetrato.jpg')",
         dmgboss: 'true',
 
@@ -849,8 +852,8 @@ function constrEspecial() {}
 // ENERGIAS
 
 export function tenicaEnergia() {
-  let num = seed2 + seed3
-  return (especiais.tenica.energia = parseInt(num )  + 275 + "👑");
+  
+  return (gerarNumero(55,90) + "👑");
 }
 
 export function pontoSpeaker() {

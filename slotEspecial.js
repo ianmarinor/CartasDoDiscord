@@ -202,7 +202,7 @@ function makeSangueAzul() {
   specialSeed[14] = "0";
 
   
-  
+
 
   seedmakeSangueAzul = specialSeed.join("");
   seedEspecial = seedmakeSangueAzul;

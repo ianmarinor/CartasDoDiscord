@@ -271,32 +271,31 @@ function escolherCidade() {
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 
 export function triggerChuvaMonark(x) {
-  if (x) {
-    boss.treme(true);
-    console.log("CHUVA DE MONARK");
+  boss.treme(true);
+  console.log("CHUVA DE MONARK");
 
-    let trovaoAu = ["trovao.mp3", 0.2];
+  let trovaoAu = ["trovao.mp3", 0.2];
 
-    setTimeout(function () {
-      snd(trovaoAu);
-      boss.treme(false);
+  setTimeout(function () {
+    snd(trovaoAu);
+    boss.treme(false);
 
-      probMonark = () => probMonarkChuvaDeMonark();
-      tudo();
-      numCartas.add(1);
-      hpPlayer.remove(10)
+    //novo
+    for (let i = 0; i < 4; i++) {
+      monarkGenerator();
+    }
 
-      triggerChuvaMonark(false);
-    }, gerarNumero(3000, 4000));
-  } else {
-    probMonark = () => probMonarkNormal();
-    console.log("CABOU A CHUVA");
-  }
+    for (let i = 0; i < 6; i++) {
+      if (gerarNumero(1, 2) == 1) {
+        monarkGenerator(mao, mao.children[i]);
+        hpPlayer.remove(3);
+      }
+    }
+    selectHandCard();
+  }, gerarNumero(900, 4000));
 }
 
 let probMonarkNormal = () => seedString[14] >= 3 && seedString[13] >= 7;
-let probMonarkChuvaDeMonark = () => true;
-// let probMonarkChuvaDeMonark = () => true;
 
 let probMonark;
 
@@ -389,7 +388,7 @@ let pontoPoderPeople = () =>
 let pontoPoderGentleman = () =>
   Math.floor((parseInt(seedString[12]) + parseInt(seedString[0])) / 2 + 21); // 21 a 30
 
-let pontoPoderMonark = () => Math.floor(Math.random() * 2);
+let pontoPoderMonark = () => 0;
 
 let pontoPoderNobre = () =>
   Math.floor((parseInt(seedString[11]) + parseInt(seedString[10])) / 2 + 31); // 31 a 40
@@ -441,7 +440,7 @@ function escolherPoder() {
     });
   } else if (cargo === "carta-monark") {
     return (poder = {
-      _ataque: 0,
+      _ataque: pontoPoderMonark(),
     });
   } else if (cargo === "carta-nobre") {
     return (poder = {
@@ -539,8 +538,8 @@ let moneyP = document.getElementById("money");
 let vendasP = document.getElementById("vendas");
 let healthWrapP = document.querySelector(".bossHealthWrap");
 let bossRoomP = document.getElementById("bossRoom");
-let hpPlayerP = document.getElementById("healthPlayer")
-let endP = document.getElementById("end")
+let hpPlayerP = document.getElementById("healthPlayer");
+let endP = document.getElementById("end");
 
 let bossP = () => bossRoomP.children[0];
 
@@ -577,18 +576,61 @@ let seedCheckBtn = document.getElementById("seedcheckbtn");
 let seedCheckPage = document.getElementById("seedcheck");
 let novaCarta;
 
-function colocarInfoNoWrap() {
-  novaCarta = fabricaDeCarta(
-    integrante,
-    cidade,
-    cargo,
-    poder,
-    variante,
-    especial,
-    seedObj
+let meuMonark;
+function monarkGenerator(father, slot) {
+  colocarInfoNoWrap(
+    fabricaDeCarta(
+      integrante,
+      cidade,
+      "carta-monark",
+      (poder = {
+        _ataque: pontoPoderMonark(),
+      }),
+      "",
+      "",
+      ""
+    )
   );
 
+  let meuMonark = packP.children[0].cloneNode(true);
+  meuMonark.dataset.dmgboss = "false";
+  console.log("meuMonark", meuMonark);
+
+  if (father && slot) {
+    father.replaceChild(meuMonark, slot);
+    rodadas--;
+    numCartas.add(1);
+  } else {
+    moverCartaMonark();
+  }
+
+  tudo();
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyL") {
+    monarkGenerator();
+  }
+});
+
+function colocarInfoNoWrap(a) {
+  if (a) {
+    novaCarta = a;
+    rodadas--;
+  } else {
+    novaCarta = fabricaDeCarta(
+      integrante,
+      cidade,
+      cargo,
+      poder,
+      variante,
+      especial,
+      seedObj
+    );
+  }
+
   //LIMPAR A CARTA
+
   cartaP.removeAttribute("style");
   nomeP.removeAttribute("style");
   nomeP.className = "nome";
@@ -630,13 +672,11 @@ function colocarInfoNoWrap() {
   //DOM
 
   nomeP.innerHTML = novaCarta._integrante.toUpperCase();
-  // if (novaCarta._especial.nome == "") {
+
   cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
-  // } else {
-  // cidadeP.innerHTML = "";
-  // }
 
   ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
+
   novoAtaquerP.innerHTML = 0;
 
   varianteP.innerHTML = novaCarta._variante;
@@ -651,18 +691,13 @@ function colocarInfoNoWrap() {
     seloP.innerHTML = "🎲";
   }
 
-  // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
-  // placarP.innerHTML = totalPontos + " ⚡";
-
-  // if (novaCarta._especial.nome != "") {
-  //   cartaP.id = novaCarta._especial.cartaId;
-  //   cidadeP.innerHTML = "";
-  //   cargoP.innerHTML = "";
-  //   nomeP.innerHTML = "";
-  // } else {
   cartaP.id = novaCarta._cargo;
-  // }
-  //
+  if (novaCarta._cargo == "carta-monark") {
+    cartaP.dataset.dmgboss = "false";
+  } else {
+    cartaP.dataset.dmgboss = "true";
+  }
+
   retratoP.style.display = "block";
 
   //colocar retrato
@@ -845,7 +880,7 @@ function colocarInfoNoWrap() {
     }
   }
   packP.replaceChild(cartaP, packP.children[0]);
-
+  console.log(novaCarta);
   //
 }
 export let rodadas = 0;
@@ -1173,7 +1208,7 @@ function moverToDeck(e) {
     slot.className == "nome3" ||
     slot.className == "nome4";
 
-  console.log(chosenCard);
+  // console.log(chosenCard);
 
   if (
     (chosenCard != 0 && (isEmpty || isEmpty2)) ||
@@ -1347,8 +1382,6 @@ function moverCartaMonark() {
     setTimeout(tudo, 250);
   } else if (numCartas.total > 0) {
     if (copyCard.id === "carta-monark") {
-      copyCard.dataset.dmgboss = "false";
-
       function isSpy() {
         for (let j = 0; j < 4; j++) {
           let energia = inv.children[j].children[3].children[0];
@@ -1457,7 +1490,7 @@ function moverCartaMonark() {
           snd(deathSpyAu);
           numCartas.add(1);
           healMonarkBoss();
-          hpPlayer.remove(3)
+          hpPlayer.remove(3);
 
           break;
 
@@ -1468,7 +1501,7 @@ function moverCartaMonark() {
             snd(monarkAu);
             numCartas.add(1);
             healMonarkBoss();
-            hpPlayer.remove(3)
+            hpPlayer.remove(3);
           }
 
           break;
@@ -1489,7 +1522,7 @@ function moverCartaMonark() {
           snd(monarkAu);
           numCartas.add(1);
           healMonarkBoss();
-          hpPlayer.remove(3)
+          hpPlayer.remove(3);
           break;
         }
       }
@@ -1497,7 +1530,6 @@ function moverCartaMonark() {
       somaPontos();
       copyCard.classList.add("monark");
       tudo();
-      
     }
   }
 }
@@ -1819,73 +1851,52 @@ function criarBtn() {
       }
 
       function cartaTenica(e) {
-        function adicionarCLiquesTenica() {
-          if (numCartas.total > 50) {
-            true;
-          } else {
-            numCartas.set(50);
-          }
-          // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
-        }
-
         let varianteTenica = e.target.offsetParent;
+        let botao = varianteTenica.children[3].children[2]
+        let energiaTenica = varianteTenica.children[3].children[0]
 
-        let cartasQueATenicaNaoGostaBaralho =
-          cartaParaMover.id != "especial-click" &&
-          cartaParaMover.id != "-click" &&
-          cartaParaMover.id != "especial-tenica" &&
-          cartaParaMover.id != "premiomonark" &&
-          cartaParaMover.id != "comunista" &&
-          cartaParaMover.id != "estoico";
-
-        let poderCartaPack = cartaParaMover.children[3].children[0];
-
-        // tudo()
-
-        //BOOST BARALHO
-        if (cartasQueATenicaNaoGostaBaralho) {
-          varianteTenica.children[3].children[2].style.visibility = "hidden";
-
-          poderCartaPack.innerHTML =
-            parseInt(poderCartaPack.textContent) +
-            parseInt(varianteTenica.children[3].children[0].textContent) +
-            "👑";
-          adicionarCLiquesTenica();
-        }
-
-        let cartasQueATenicaNaoGosta = [
-          "especial-click",
-          "-click",
-          "empty1",
-          "empty2",
-          "empty3",
-          "empty4",
-          "especial-tenica",
-          "premiomonark",
-          "comunista",
-          "estoico",
-        ];
+        
 
         for (let j = 0; j < 4; j++) {
-          if (
-            !cartasQueATenicaNaoGosta.some((el) =>
-              inv.children[j].id.includes(el)
-            )
-            // true
-          ) {
-            // se o poder novo for presente
+          let carta = inv.children[j];
+          let energiaCarta =  carta.children[3].children[0]
+          
 
-            inv.children[j].children[3].children[0].textContent =
-              parseInt(inv.children[j].children[3].children[0].textContent) +
-              parseInt(varianteTenica.children[3].children[0].textContent) +
-              "👑";
-            adicionarCLiquesTenica();
+          if ((carta.dataset.dmgboss == "true")) {
+            
+
+            energiaCarta.textContent =
+
+              parseInt(energiaCarta.textContent) +
+              parseInt(energiaTenica.textContent) +
+              "⚡";
+            
           }
         }
 
+        for (let j = 0; j < 6; j++) {
+          let cartaMao = mao.children[j];
+          let energiaCartaMao =  cartaMao.children[3].children[0]
+          let energiaTenica = varianteTenica.children[3].children[0]
+
+          if ((cartaMao.dataset.dmgboss == "true")) {
+            
+
+            energiaCartaMao.textContent =
+
+              parseInt(energiaCartaMao.textContent) +
+              parseInt(energiaTenica.textContent) +
+              "⚡";
+            
+          }
+        }
+
+        energiaTenica.textContent =  parseInt(energiaTenica.textContent)  + '⚡'
+        varianteTenica.dataset.dmgboss = 'true'
         let tenicaAu = ["tenica.mp3"];
         snd(tenicaAu);
         somaPontos();
+        botao.style.visibility = 'hidden'
       }
 
       // poder COMUNISTA
@@ -3081,8 +3092,6 @@ function tudo() {
     deckCheio();
     allMonark();
     specialInDeck();
-    console.log(specialInDeck());
-    // somaPontos();
   } else {
   }
 }
@@ -3093,7 +3102,7 @@ function allMonark() {
   let monark3 = inv.children[3].id == "carta-monark";
 
   let allMonarkInv = monark0 && monark1 && monark2 && monark3;
-  console.log(" IS IT ALL MONARK?", allMonarkInv);
+  // console.log(" IS IT ALL MONARK?", allMonarkInv);
 
   return allMonarkInv;
 }
@@ -3106,7 +3115,7 @@ function deckVazio() {
 
   let empty = empty1 && empty2 && empty3 && empty4;
 
-  console.log(" IS IT ALL vazio?", empty);
+  // console.log(" IS IT ALL vazio?", empty);
 
   return empty;
 }
@@ -3119,7 +3128,7 @@ function deckCheio() {
 
   let empty = !empty1 && !empty2 && !empty3 && !empty4;
 
-  console.log(" IS IT ALL CHEIO?", empty);
+  // console.log(" IS IT ALL CHEIO?", empty);
 
   return empty;
 }
@@ -3146,8 +3155,8 @@ function healMonarkBoss() {
   }
 }
 
-let chuvaCooldown = true;
-setTimeout(() => (chuvaCooldown = false), 15000);
+let chuvaCooldown = false;
+// setTimeout(() => (chuvaCooldown = false), 15000);
 
 //************************************************************************************* */
 //************************************************************************************* */
@@ -3160,9 +3169,27 @@ function poderBoss() {
 
     if (boss) {
       if (bossIsMonark) {
-        if (gerarNumero(1, 20) == 1) {
+        function probChuva() {
+          if (allMonark()) {
+            return false;
+          }
+          if (deckVazio()) {
+            return gerarNumero(1, 10) == 1;
+          }
+          if (deckCheio()) {
+            return gerarNumero(1, 8) == 1;
+          }
+          if (specialInDeck()) {
+            return gerarNumero(1, 6) == 1;
+          }
+
+          return gerarNumero(1, 15) == 1;
+        }
+
+        console.log("VAI TER CHUVA", probChuva());
+        if (probChuva()) {
           //CHUVA DE MONARK
-          if (chuvaCooldown == false && !allMonark()) {
+          if (chuvaCooldown == false) {
             boss.chuvaDeMonark(true);
             chuvaCooldown = true;
             setTimeout(() => (chuvaCooldown = false), 7000);
@@ -3202,15 +3229,12 @@ let numCartas = {
   },
 };
 
-
-
-
 let hpPlayer = {
   total: 100,
 
   add(n) {
     this.total += n;
-    hpPlayerP.textContent =  this.total 
+    hpPlayerP.textContent = this.total;
   },
 
   remove(n) {
@@ -3218,15 +3242,15 @@ let hpPlayer = {
 
     if (this.total < 0) {
       this.total = 0;
-      endP.style.display = 'flex'
-      main.style.display = "none"
+      endP.style.display = "flex";
+      main.style.display = "none";
     }
-    hpPlayerP.textContent =  this.total 
+    hpPlayerP.textContent = this.total;
   },
 
   set(n) {
     this.total = n;
-    hpPlayerP.textContent =  this.total 
+    hpPlayerP.textContent = this.total;
   },
 };
 
@@ -3254,17 +3278,14 @@ export function somaPontos() {
     placarCritP.style.visibility = "visible";
     placarCrit2P.style.visibility = "visible";
 
-    placarP.style.textDecoration = 'line-through'
-    placarP.style.textDecorationColor = 'red'
-
+    placarP.style.textDecoration = "line-through";
+    placarP.style.textDecorationColor = "red";
 
     placarCritP.innerHTML = danoTotal * 2;
   } else {
-
     placarCritP.style.visibility = "hidden";
     placarCrit2P.style.visibility = "hidden";
-    placarP.style.textDecoration = 'none'
-
+    placarP.style.textDecoration = "none";
   }
 
   placarP.innerHTML = danoTotal;
@@ -3349,7 +3370,7 @@ export function startGame2() {
 
   numCartas.set(50);
   vendas.set(50);
-  hpPlayer.set(10)
+  hpPlayer.set(100);
 }
 
 document.addEventListener("contextmenu", function () {
