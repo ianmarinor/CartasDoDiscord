@@ -59,3 +59,17 @@ createMonark()
 
 
 console.log(true);
+
+function gerarNumero(min, max, decimals) {
+
+    if(decimals){
+        return (Math.random() * (max - min ) + min).toFixed(decimals) ;
+
+    } else {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+
+    }
+
+  }
+
+console.log(gerarNumero(2.0, 2.5, 1));

@@ -39,8 +39,12 @@ function seedRNG() {
 }
 
 //NUMERO ALEATORIO
-function gerarNumero(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+function gerarNumero(min, max, decimals) {
+  if (decimals) {
+    return (Math.random() * (max - min) + min).toFixed(decimals);
+  } else {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 }
 
 // AUDIO
@@ -1699,18 +1703,20 @@ function criarBtn() {
           let retratoVariante = varianteSpeaker.children[1];
           let speakerDorminfo = 'url("pics/speakerDormindo.jpg")';
           let descriptionSpeaker = varianteSpeaker.children[2];
+          let hpSpeaker = varianteSpeaker.children[3].children[1];
+
           let multiplicador;
           let pontoParaDormir;
 
           function multiSpeaker() {
-            multiplicador = gerarNumero(2, 3);
+            multiplicador = gerarNumero(2.0, 2.7, 1);
           }
 
           multiSpeaker();
           multiSpeakerSono();
 
           function multiSpeakerSono() {
-            pontoParaDormir = gerarNumero(90, 310);
+            pontoParaDormir = gerarNumero(90, 103);
           }
 
           for (let j = 0; j < 4; j++) {
@@ -1719,7 +1725,9 @@ function criarBtn() {
             if (inv.children[j].id == "carta-monark") {
               if (parseInt(pontoSpeaker.textContent) < pontoParaDormir) {
                 pontoSpeaker.textContent =
-                  parseInt(pontoSpeaker.textContent) * multiplicador + " 😡";
+                  Math.trunc(
+                    parseInt(pontoSpeaker.textContent) * multiplicador
+                  ) + " ⚡";
 
                 if (inv.children[0] == inv.children[j]) {
                   inv.replaceChild(empty1, inv.children[0]);
@@ -1730,8 +1738,6 @@ function criarBtn() {
                 } else if (inv.children[3] == inv.children[j]) {
                   inv.replaceChild(empty4, inv.children[3]);
                 }
-
-                // pontoSpeaker = Math.trunc(parseInt(pontoSpeaker) * 2) + '😡'
 
                 let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.6];
                 snd(order);
@@ -1746,6 +1752,9 @@ function criarBtn() {
                   "durmi kkjk <br> &#128564; &#128564;";
                 varianteSpeaker.children[3].children[2].style.visibility =
                   "hidden";
+                hpSpeaker.textContent = "2💚";
+                hpSpeaker.style.visibility = "visible";
+
                 let speakerSleepAu = ["speakerSleep.mp3"];
                 snd(speakerSleepAu);
               }
@@ -1852,51 +1861,40 @@ function criarBtn() {
 
       function cartaTenica(e) {
         let varianteTenica = e.target.offsetParent;
-        let botao = varianteTenica.children[3].children[2]
-        let energiaTenica = varianteTenica.children[3].children[0]
-
-        
+        let botao = varianteTenica.children[3].children[2];
+        let energiaTenica = varianteTenica.children[3].children[0];
 
         for (let j = 0; j < 4; j++) {
           let carta = inv.children[j];
-          let energiaCarta =  carta.children[3].children[0]
-          
+          let energiaCarta = carta.children[3].children[0];
 
-          if ((carta.dataset.dmgboss == "true")) {
-            
-
+          if (carta.dataset.dmgboss == "true") {
             energiaCarta.textContent =
-
               parseInt(energiaCarta.textContent) +
               parseInt(energiaTenica.textContent) +
               "⚡";
-            
           }
         }
 
         for (let j = 0; j < 6; j++) {
           let cartaMao = mao.children[j];
-          let energiaCartaMao =  cartaMao.children[3].children[0]
-          let energiaTenica = varianteTenica.children[3].children[0]
+          let energiaCartaMao = cartaMao.children[3].children[0];
+          let energiaTenica = varianteTenica.children[3].children[0];
 
-          if ((cartaMao.dataset.dmgboss == "true")) {
-            
-
+          if (cartaMao.dataset.dmgboss == "true") {
             energiaCartaMao.textContent =
-
               parseInt(energiaCartaMao.textContent) +
               parseInt(energiaTenica.textContent) +
               "⚡";
-            
           }
         }
 
-        energiaTenica.textContent =  parseInt(energiaTenica.textContent)  + '⚡'
-        varianteTenica.dataset.dmgboss = 'true'
+        energiaTenica.textContent = parseInt(energiaTenica.textContent) + "⚡";
+        varianteTenica.dataset.dmgboss = "true";
         let tenicaAu = ["tenica.mp3"];
         snd(tenicaAu);
         somaPontos();
-        botao.style.visibility = 'hidden'
+        botao.style.visibility = "hidden";
       }
 
       // poder COMUNISTA
@@ -2278,14 +2276,9 @@ function criarBtn() {
             //colocar barreira
             for (let k = 0; k < 4; k++) {
               if (
-                cartasQueOLucioGosta.some(
-                  (el) =>
-                    inv.children[k].id.includes(el) ||
-                    (inv.children[k].id == "dva" &&
-                      inv.children[
-                        k
-                      ].children[3].children[1].textContent.includes("💚"))
-                )
+                inv.children[k].children[3].children[1].textContent.includes(
+                  "💚") && inv.children[k] != lucio
+                
               ) {
                 let energia = inv.children[k].children[3].children[1];
 
@@ -2492,22 +2485,19 @@ function criarBtn() {
         let hp = dva.children[3].children[1];
 
         for (let i = 0; i < 4; i++) {
-
-          let vitima = inv.children[i].dataset.card == 'especial' && inv.children[i].id != 'dva'
+          let vitima =
+            inv.children[i].dataset.card == "especial" &&
+            inv.children[i].id != "dva";
 
           if (parseInt(ulti.textContent) < 100) {
             // se a carta for gentleman
-            if (
-              vitima
-            ) {
+            if (vitima) {
               let gentleman = inv.children[i];
               let poderVelho = inv.children[i].children[3].children[0];
 
               // se tiver pdoer novo, o adiquira e exclua a carta
 
-              ulti =
-                parseInt(ulti.textContent) +
-                gerarNumero(15,20);
+              ulti = parseInt(ulti.textContent) + gerarNumero(15, 20);
 
               if (ulti > 100) {
                 dva.children[2].textContent = 100 + "%";
@@ -2529,7 +2519,7 @@ function criarBtn() {
             }
             //se tiver ulti
           } else {
-            butao.style.visibility = 'hidden'
+            butao.style.visibility = "hidden";
 
             hp.textContent = "4💚";
 
@@ -2541,10 +2531,8 @@ function criarBtn() {
 
             for (let j = 0; j < 4; j++) {
               let ponto = inv.children[j].children[3].children[0];
-              let cartaEspecial =
-                inv.children[j].dataset.dmgboss == 'false';
-              let cartaNormal =
-              inv.children[j].dataset.dmgboss == 'true';
+              let cartaEspecial = inv.children[j].dataset.dmgboss == "false";
+              let cartaNormal = inv.children[j].dataset.dmgboss == "true";
               // if(ponto.textContent != ''){
 
               if (cartaEspecial) {
