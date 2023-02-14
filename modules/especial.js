@@ -955,9 +955,9 @@ export function lucioPE() {
 }
 
 function tankCargo(emoji) {
-  let num = seed2 + seed3;
-  console.log("***NUM*****", num);
-  return parseInt(num) + 487 + emoji;
+  
+  
+  return gerarNumero(200, 350)+ emoji;
 }
 
 // export function pontoSpeaker() {

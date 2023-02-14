@@ -2241,6 +2241,9 @@ function criarBtn() {
 
               // se tiver pdoer novo, o adiquira e exclua a carta
 
+
+              lucioEnergia.textContent = parseInt(lucioEnergia.textContent) + parseInt(poderVelho.textContent) + '⚡'
+
               ulti =
                 parseInt(ulti.textContent) + parseInt(poderVelho.textContent);
 
