@@ -951,14 +951,7 @@ export function estoicoPE() {
 }
 
 export function lucioPE() {
-  if (parseInt(seed3) < 2) {
-    return parseInt(seed3) + 4 + "💚";
-  }
-  if (parseInt(seed3) > 7) {
-    return parseInt(seed3) - 1 + "💚";
-  } else {
-    return parseInt(seed3) + 1 + "💚";
-  }
+ return gerarNumero(12,20) + '💚'
 }
 
 function tankCargo(emoji) {

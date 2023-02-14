@@ -2272,10 +2272,11 @@ function criarBtn() {
           } else {
             let ultiLucioAu = ["ultiLucio.oga"];
             snd(ultiLucioAu);
+            hpPlayer.add(parseInt(barreira.textContent))
 
             let cartasQueOLucioGosta = ["jhin", "tank"];
 
-            numCartas.add(25);
+            
             // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
             ulti.textContent = "0%";
 
@@ -2299,6 +2300,7 @@ function criarBtn() {
 
               somaPontos();
             }
+
 
             break;
           }
@@ -3297,7 +3299,12 @@ export let hpPlayer = {
 
   add(n) {
     this.total += n;
+    if (this.total > 100) {
+      this.total =100;
+      
+    }
     hpPlayerP.textContent = this.total;
+
   },
 
   remove(n) {
