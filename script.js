@@ -296,6 +296,7 @@ export function triggerChuvaMonark(x) {
       }
     }
     selectHandCard();
+    tudo()
   }, gerarNumero(900, 4000));
 }
 
@@ -606,9 +607,13 @@ function monarkGenerator(father, slot) {
     numCartas.add(1);
   } else {
     moverCartaMonark();
+    if(efeitos.status){
+      efeitos.rodadas++
+    }
   }
 
-  tudo();
+  
+ 
 }
 
 document.addEventListener("keydown", (event) => {
@@ -910,7 +915,7 @@ function colocarEfeito() {
     audioEffectE.pause();
   }
 
-  aplicarEfeitos();
+  
 }
 function colocarInput() {
   input = getSeed.value;
@@ -1495,6 +1500,7 @@ function moverCartaMonark() {
           numCartas.add(1);
           healMonarkBoss();
           hpPlayer.remove(3);
+          
 
           break;
 
@@ -1506,6 +1512,7 @@ function moverCartaMonark() {
             numCartas.add(1);
             healMonarkBoss();
             hpPlayer.remove(3);
+            
           }
 
           break;
@@ -1527,6 +1534,7 @@ function moverCartaMonark() {
           numCartas.add(1);
           healMonarkBoss();
           hpPlayer.remove(3);
+          
           break;
         }
       }
@@ -2007,10 +2015,10 @@ function criarBtn() {
 
         if (efeitos.status == false) {
           //coloca efeito
-          efeitoPremioMonark.rodadas = 35;
+          efeitoPremioMonark.rodadas = gerarNumero(10,15);
           efeitos = efeitoPremioMonark;
           //apaga a carta
-          numCartas.add(15);
+          
           premioMonark.classList.add("vanish");
           premioMonarkBotao.style.visibility = "hidden";
           function eliminarPremioMonark() {
@@ -2727,7 +2735,7 @@ function deletarDeck(e) {
     if (
       e.target.offsetParent.id != "carta-monark" ||
       (e.target.offsetParent.id == "carta-monark" &&
-        e.target.offsetParent.className == "monark vanish")
+        (e.target.offsetParent.className == "monark vanish" || e.target.offsetParent.className == "vanish"))
     ) {
       if (e.target.offsetParent == inv.children[0]) {
         dmgBoss();
@@ -2767,6 +2775,7 @@ let tick = setInterval(function () {
   // console.log('-');
   deckFull();
   somaPontos();
+  aplicarEfeitos()
 }, 200);
 
 function deckFull() {
@@ -3218,7 +3227,7 @@ let numCartas = {
   },
 };
 
-let hpPlayer = {
+export let hpPlayer = {
   total: 100,
 
   add(n) {

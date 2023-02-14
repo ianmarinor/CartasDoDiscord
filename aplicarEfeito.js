@@ -1,5 +1,5 @@
 // import { efeitoPremioMonark } from './modules/especial';
-import { efeitos, rodadas,somaPontos, snd } from "./script.js";
+import { efeitos, rodadas,somaPontos, snd, hpPlayer } from "./script.js";
 
 
 let inv = document.getElementById("inv");
@@ -45,19 +45,20 @@ function premioMonark() {
       function infectarMonark(){
 
         if(monark.children[0].className != "float"){
-          moneyP.textContent = parseInt(moneyP.textContent) + bonusMonark
+          // moneyP.textContent = parseInt(moneyP.textContent) + bonusMonark
+          hpPlayer.add(1)
 
           let premioMonarkElimAu = ['premioMonarkElim.mp3']
         setTimeout(function(){
           snd(premioMonarkElimAu)
         }, 1000)
 
-        let vendaAu = ['venda.mp3']
+        // let vendaAu = ['venda.mp3']
         
 
-        setTimeout(function(){
-          snd(vendaAu)
-        }, 500)
+        // setTimeout(function(){
+        //   snd(vendaAu)
+        // }, 500)
         }
       
       
@@ -108,7 +109,7 @@ function premioMonark() {
       setTimeout(infectarMonark, Math.floor(Math.random() * 150 +  250))
 
 
-      setTimeout(eliminarMonark, 10000)
+      // setTimeout(eliminarMonark, 10000)
     }
   }
 }
