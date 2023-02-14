@@ -775,19 +775,23 @@ export function escolherEspecial(teste) {
       } else if (gerarNumero(1,4) == 1) {
         especial = especiais.lucio
         especial.novoAtaqueE = lucioPE() 
+        console.log('LUCIOOOOOOO');
 
       } else if (gerarNumero(1,4) == 1){
          especial = especiais.premioMonark
+         console.log('PREMIOMONARK');
 
       } else if (gerarNumero(1,4) == 1){
           especial = especiais.blackaoCamarada
           especial.novoAtaqueE = comunistaPE()
+          console.log('CAMARADA');
 
-      } else if (gerarNumero(1,4) == 1){
+      } else {
         
         especial = especiais.dva;
-
+        console.log('DVA');
     } 
+
       // CAVALEIROS
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;

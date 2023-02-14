@@ -258,6 +258,7 @@ function colocarSlot(tipo) {
   slotEsp.children[0].id = especial.cartaId;
 
   //PERSONALIZADO
+  console.log(cartaEspecial);
   cartaEspecial.dataset.tier = especial.raridade.nome
   cartaEspecial.dataset.dmgboss = especial.dmgboss
   retratoE.style.visibility = "visible";
