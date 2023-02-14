@@ -469,7 +469,7 @@ export let especiais = {
     dmgboss: "false",
 
     // ataqueE: estoicoPE()
-    ataqueE: "",
+    ataqueE: "🛡️",
 
     novoAtaqueE: "4💚",
     nomeStyle: {
@@ -787,7 +787,7 @@ export function escolherEspecial(teste) {
         especial.cargo = tankCargo(especiais.tank.emoji);
       } else {
         especial = especiais.estoicoTuru;
-        especial.ataqueE = estoicoPE();
+        // especial.ataqueE = estoicoPE();
       }
     }
   } else {
@@ -927,27 +927,10 @@ function estoico() {}
 function lucio() {}
 
 export function estoicoPE() {
-  if (parseInt(seed2) == 0) {
-    return parseInt(seed3) + 2 + "🛡️";
-  }
-  if (parseInt(seed2) == 1) {
-    return parseInt(seed3) + 2 + "🛡️";
-  }
-  if (parseInt(seed2) > 1 && parseInt(seed2) <= 3) {
-    return parseInt(seed3) + 1 + "🛡️";
-  }
-  if (parseInt(seed2) >= 4 && parseInt(seed2) <= 6) {
-    return parseInt(seed3) + 1 + "🛡️";
-  }
-  if (parseInt(seed2) == 7) {
-    return parseInt(seed3) + 1 + "🛡️";
-  }
-  if (parseInt(seed2) == 8) {
-    return parseInt(seed3) + 1 + "🛡️";
-  }
-  if (parseInt(seed2) == 9) {
-    return parseInt(seed3) + 1 + "🛡️";
-  }
+ 
+  return gerarNumero(5,15) + "🛡️"
+
+
 }
 
 export function lucioPE() {

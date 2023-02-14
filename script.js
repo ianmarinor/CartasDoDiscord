@@ -2166,9 +2166,12 @@ function criarBtn() {
             inv.children[i].id != "carta-monark"
           ) {
             let itapira = inv.children[i];
+            let itapiraEnergia = itapira.children[3].children[0]
 
-            efeitoEstoico.rodadas = parseInt(poderEstoico.textContent);
+            efeitoEstoico.rodadas = Math.trunc(parseInt(itapiraEnergia.textContent) );
             efeitos = efeitoEstoico;
+
+            hpPlayer.remove(Math.trunc(parseInt(itapiraEnergia.textContent)))
 
             butao.style.visibility = "hidden";
 
@@ -2192,7 +2195,7 @@ function criarBtn() {
               inv.replaceChild(empty4, estoico);
             }
             somaPontos();
-            tudo();
+            tudo()
 
             let estoicoAu = ["estoico.mp3", 0.2];
             sndEfeito(estoicoAu);
