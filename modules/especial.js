@@ -625,7 +625,7 @@ export let especiais = {
       dva: {
         cartaId: "dva",
         nome: "D.Va",
-        raridade: raridades.cavaleiro,
+        raridade: raridades.sangueAzul,
         pontoEspecial: 0,
         energia: 0,
         poder: true,
@@ -639,8 +639,8 @@ export let especiais = {
         dmgboss: 'true',
 
         // ataqueE: lucioPE()
-        ataqueE: "1000⚡",
-        novoAtaqueE: '4💚',
+        ataqueE: "1⚡",
+        novoAtaqueE: '40💚',
 
         nomeStyle:{
           fontSize: "250%",
@@ -661,7 +661,7 @@ export let especiais = {
         },
         ataqueStyle:{
           color: '',
-          fontSize: '100%',
+          fontSize: '130%',
           fontFamily:'overwatch',
           visibility: '',
         },
@@ -765,48 +765,52 @@ export function escolherEspecial(teste) {
     } else if (raridades.sangueAzul.rng()) {
       raridade = raridades.sangueAzul;
       
+      gerarNumero(1,4)
+
       if(false){
         especial = especiais.lucio
         especial.novoAtaqueE = 200 + '💚'
 
 
-      } else if (seedString[12]< 3) {
+      } else if (gerarNumero(1,4) == 1) {
         especial = especiais.lucio
         especial.novoAtaqueE = lucioPE() 
 
-      } else if (seedString[12]< 6){
+      } else if (gerarNumero(1,4) == 1){
          especial = especiais.premioMonark
 
-      } else {
+      } else if (gerarNumero(1,4) == 1){
           especial = especiais.blackaoCamarada
           especial.novoAtaqueE = comunistaPE()
 
-      }
+      } else if (gerarNumero(1,4) == 1){
+        
+        especial = especiais.dva;
 
+    } 
       // CAVALEIROS
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
       DEBUG && console.log(raridades.cavaleiro.rng());
 
 
+      gerarNumero(1,3)
+
       if(false){
 
         especial = especiais.dva
         
 
-      } else if (seedString[12]< 4) {
+      } else if (gerarNumero(1,3) == 1) {
          especial = especiais.speaker;
          especial.ataqueE = pontoSpeaker()
          
-      } else if (seedString[12] > 5) {
+      } else if (gerarNumero(1,3) == 1) {
         especial = especiais.jhin;
 
-      } else if (seedString[12] == 4) {
+      } else if (gerarNumero(1,3) == 1) {
         especial = especiais.spy;
-      } else if (seedString[12] == 5
-        ) {
-        especial = especiais.dva;
-      }
+      } 
 
 
 

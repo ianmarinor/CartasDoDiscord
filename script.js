@@ -2492,11 +2492,13 @@ function criarBtn() {
         let hp = dva.children[3].children[1];
 
         for (let i = 0; i < 4; i++) {
+
+          let vitima = inv.children[i].dataset.card == 'especial' && inv.children[i].id != 'dva'
+
           if (parseInt(ulti.textContent) < 100) {
             // se a carta for gentleman
             if (
-              inv.children[i].id == "-click" ||
-              inv.children[i].id == "especial-click"
+              vitima
             ) {
               let gentleman = inv.children[i];
               let poderVelho = inv.children[i].children[3].children[0];
@@ -2505,7 +2507,7 @@ function criarBtn() {
 
               ulti =
                 parseInt(ulti.textContent) +
-                parseInt(poderVelho.textContent) * 2;
+                gerarNumero(15,20);
 
               if (ulti > 100) {
                 dva.children[2].textContent = 100 + "%";
@@ -2527,9 +2529,9 @@ function criarBtn() {
             }
             //se tiver ulti
           } else {
-            // butao.style.visibility = 'hidden'
+            butao.style.visibility = 'hidden'
 
-            hp.textContent = "3💚";
+            hp.textContent = "4💚";
 
             retratoFoto.style.backgroundImage = 'url("/pics/dva.webp")';
             dva.children[2].textContent = "";
@@ -2540,17 +2542,16 @@ function criarBtn() {
             for (let j = 0; j < 4; j++) {
               let ponto = inv.children[j].children[3].children[0];
               let cartaEspecial =
-                inv.children[j].className == "cartaEsp" &&
-                inv.children[j].id != "dva";
+                inv.children[j].dataset.dmgboss == 'false';
               let cartaNormal =
-                inv.children[j].children[0].children[2].textContent != "";
+              inv.children[j].dataset.dmgboss == 'true';
               // if(ponto.textContent != ''){
 
               if (cartaEspecial) {
-                pontoDeTodosEsp = pontoDeTodosEsp + 50;
+                pontoDeTodosEsp = pontoDeTodosEsp + 25;
               } else if (cartaNormal) {
                 pontoDeTodos =
-                  pontoDeTodos + Math.trunc(parseInt(ponto.textContent) * 1.2);
+                  pontoDeTodos + Math.trunc(parseInt(ponto.textContent) * 1.5);
               }
             }
             dvaEnergia.textContent = 1 + pontoDeTodos + pontoDeTodosEsp + "⚡";
