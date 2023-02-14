@@ -758,8 +758,8 @@ export function escolherEspecial(teste) {
 
       gerarNumero(1, 3);
 
-      if (false) {
-        especial = especiais.dva;
+      if (true) {
+        especial = especiais.spy;
       } else if (gerarNumero(1, 4) == 1) {
         especial = especiais.speaker;
         especial.ataqueE = pontoSpeaker();

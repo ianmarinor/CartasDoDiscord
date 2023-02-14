@@ -1201,10 +1201,16 @@ p {
   animation-iteration-count: 1;
 }
 
-.invis {
+.invisible {
   animation: vanish 2s;
   animation-iteration-count: 1;
   opacity: 0.1;
+}
+
+.visible {
+  animation: appear 2s;
+  animation-iteration-count: 1;
+  opacity: 1;
 }
 
 .aparecer{
@@ -1374,6 +1380,17 @@ p {
     opacity: 0.1;
   }
 }
+
+@keyframes appear {
+  0% {
+    opacity: 0.1;
+  }
+  
+  100% {
+    opacity: 1;
+  }
+}
+
 
 
 @keyframes aparecer {

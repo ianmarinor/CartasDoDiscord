@@ -109,7 +109,7 @@ function premioMonark() {
       setTimeout(infectarMonark, Math.floor(Math.random() * 150 +  250))
 
 
-      // setTimeout(eliminarMonark, 10000)
+      setTimeout(eliminarMonark, 10000)
     }
   }
 }

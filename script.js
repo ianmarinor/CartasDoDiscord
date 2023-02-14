@@ -1237,7 +1237,7 @@ function moverToDeck(e) {
     } else if (chosenCard == mao.children[5]) {
       mao.replaceChild(mao5, chosenCard);
     }
-    abelha()
+    abelha();
     // inv.removeChild(slot)
     chosenCard.dataset.inv = "true";
 
@@ -1281,7 +1281,7 @@ function moverToDeckNum(e) {
       } else if (chosenCard == mao.children[5]) {
         mao.replaceChild(mao5, chosenCard);
       }
-      abelha()
+      abelha();
     }
 
     if (key1 && inv0.id == "empty1") {
@@ -1334,7 +1334,7 @@ function moverToDeckSpace() {
       } else if (chosenCard == mao.children[5]) {
         mao.replaceChild(mao5, chosenCard);
       }
-      abelha()
+      abelha();
     }
 
     if (chosenCard != 0 && cartaVazia) {
@@ -1355,7 +1355,6 @@ function moverToDeckSpace() {
       chosenCard = 0;
     }
   }
-  
 }
 
 let copyCardSeed;
@@ -1397,7 +1396,7 @@ function moverCartaMonark() {
 
           if (
             inv.children[j].id == "spy" &&
-            inv.children[j].className != "invisi"
+            inv.children[j].className != "invisible"
           ) {
             return [true, j];
           }
@@ -1493,7 +1492,7 @@ function moverCartaMonark() {
         let energia = inv.children[i].children[3].children[0];
         //SE TIVER SPY
         if (spyCheck[0]) {
-          // inv.replaceChild(copyCard, inv.children[spyCheck[1]]);
+          inv.replaceChild(copyCard, inv.children[spyCheck[1]]);
 
           let deathSpyAu = ["deathSpy" + gerarNumero(1, 3) + ".mp3"];
           snd(deathSpyAu);
@@ -2076,25 +2075,81 @@ function criarBtn() {
         let botao = spy.children[3].children[2];
         let retrato = spy.children[1];
 
-        if (spyWatch.id != "foi") {
-          spyWatch.addEventListener("click", invis);
-          spyWatch.id = "foi";
+
+        if(botao.id != 'foi'){
+
+          spyWatch.addEventListener("click", invisWatch);
+          botao.id = 'foi'
         }
 
-        function invis() {
-          spy.className = "invisi";
-          retrato.classList.add("invis");
-          spy.children[0].className = "invis";
 
-          spyWatch.style.visibility = "hidden";
-          botao.style.visibility = "hidden";
-          retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
-          let spyInvisAu = ["spyInvis.mp3"];
-          let spyInvisLineAu = ["spyInvisLine.mp3"];
-          snd(spyInvisAu);
-          snd(spyInvisLineAu);
+        function invisWatch() {
+
+          
+
+        
+
+          function invis() {
+
+            
+
+            spy.className = "invisible";
+            spyWatch.id = "invis";
+            retrato.classList.add("invis");
+            spy.children[0].className = "invis";
+
+            botao.style.visibility = "hidden";
+            retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
+
+            let spyInvisAu = ["spyInvis.mp3"];
+            let spyInvisLineAu = ["spyInvisLine.mp3"];
+            snd(spyInvisAu);
+            // snd(spyInvisLineAu);
+
+            // to()
+            setTimeout(vis, gerarNumero(800, 7000))
+            spyWatch.style.visibility = "hidden"
+
+          }
+
+          function vis() {
+            spy.className = "visible";
+            spyWatch.id = "vis"
+            retrato.classList.remove("invisible");
+            retrato.classList.add("visible");
+            spy.children[0].className = "vis";
+
+            botao.style.visibility = "visible";
+            retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
+
+            let spyInvisAu = ["spyInvis.mp3"];
+            let spyInvisLineAu = ["spyInvisLine.mp3"];
+            snd(spyInvisAu);
+            // snd(spyInvisLineAu);
+            // tudo()
+            
+            setTimeout(function(){
+              spyWatch.style.visibility = "visible"
+
+            }, gerarNumero(2400, 14000))
+
+            
+            
+          }
+
+
+          if(spyWatch.id != 'invis'){
+            invis()
+          } else {
+            // vis()
+          }
+
+
+
         }
+
+
 
         for (let i = 0; i < 4; i++) {
           if (
@@ -2140,7 +2195,6 @@ function criarBtn() {
           }
         }
       }
-
       // PODER ESTOICO
       if (
         inv.children[i].id == "estoico" &&
@@ -2166,12 +2220,14 @@ function criarBtn() {
             inv.children[i].id != "carta-monark"
           ) {
             let itapira = inv.children[i];
-            let itapiraEnergia = itapira.children[3].children[0]
+            let itapiraEnergia = itapira.children[3].children[0];
 
-            efeitoEstoico.rodadas = Math.trunc(parseInt(itapiraEnergia.textContent) );
+            efeitoEstoico.rodadas = Math.trunc(
+              parseInt(itapiraEnergia.textContent)
+            );
             efeitos = efeitoEstoico;
 
-            hpPlayer.remove(Math.trunc(parseInt(itapiraEnergia.textContent)))
+            hpPlayer.remove(Math.trunc(parseInt(itapiraEnergia.textContent)));
 
             butao.style.visibility = "hidden";
 
@@ -2195,7 +2251,7 @@ function criarBtn() {
               inv.replaceChild(empty4, estoico);
             }
             somaPontos();
-            tudo()
+            tudo();
 
             let estoicoAu = ["estoico.mp3", 0.2];
             sndEfeito(estoicoAu);
@@ -2244,8 +2300,10 @@ function criarBtn() {
 
               // se tiver pdoer novo, o adiquira e exclua a carta
 
-
-              lucioEnergia.textContent = parseInt(lucioEnergia.textContent) + parseInt(poderVelho.textContent) + '⚡'
+              lucioEnergia.textContent =
+                parseInt(lucioEnergia.textContent) +
+                parseInt(poderVelho.textContent) +
+                "⚡";
 
               ulti =
                 parseInt(ulti.textContent) + parseInt(poderVelho.textContent);
@@ -2278,11 +2336,10 @@ function criarBtn() {
           } else {
             let ultiLucioAu = ["ultiLucio.oga"];
             snd(ultiLucioAu);
-            hpPlayer.add(parseInt(barreira.textContent))
+            hpPlayer.add(parseInt(barreira.textContent));
 
             let cartasQueOLucioGosta = ["jhin", "tank"];
 
-            
             // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
             ulti.textContent = "0%";
 
@@ -2306,7 +2363,6 @@ function criarBtn() {
 
               somaPontos();
             }
-
 
             break;
           }
@@ -2594,6 +2650,11 @@ function criarBtn() {
     }
   }
 }
+
+
+
+
+
 function abelha() {
   let beeHitAu = ["hitAbelha.mp3", 0.1];
   let numOfBees = 0;
@@ -2634,35 +2695,25 @@ function abelha() {
           snd(beeDeathAu);
 
           somaPontos();
-
-
         } else if (numOfBees == 2) {
-          pontoAbelha.textContent = 
-            parseInt(pontoAbelha.textContent) / gerarNumero(2,3) + "🐝"
-          
+          pontoAbelha.textContent =
+            parseInt(pontoAbelha.textContent) / gerarNumero(2, 3) + "🐝";
+
           somaPontos();
           snd(beeHitAu);
-        } 
-        else if (numOfBees == 3) {
-          pontoAbelha.textContent = 
-            parseInt(pontoAbelha.textContent) / gerarNumero(3,4) + "🐝"
-          
+        } else if (numOfBees == 3) {
+          pontoAbelha.textContent =
+            parseInt(pontoAbelha.textContent) / gerarNumero(3, 4) + "🐝";
+
           somaPontos();
           snd(beeHitAu);
-        } 
-        else if (numOfBees == 4) {
-          pontoAbelha.textContent = 
-            parseInt(pontoAbelha.textContent) / gerarNumero(4,5) + "🐝"
-          
+        } else if (numOfBees == 4) {
+          pontoAbelha.textContent =
+            parseInt(pontoAbelha.textContent) / gerarNumero(4, 5) + "🐝";
+
           somaPontos();
           snd(beeHitAu);
-        } 
-        
-        
-        
-        
-        
-        else if (
+        } else if (
           parseInt(pontoAbelha.textContent) <= 60 &&
           parseInt(pontoAbelha.textContent) > 15
         ) {
@@ -3142,11 +3193,12 @@ function tudo() {
     blockInv();
     ativarBtn();
     poderBoss();
+    
     deckVazio();
     deckCheio();
     allMonark();
     specialInDeck();
-    console.log('ALL SPECIAL',allEspecial());
+    console.log("ALL SPECIAL", allEspecial());
   } else {
   }
 }
@@ -3197,12 +3249,11 @@ function specialInDeck() {
   return false;
 }
 
-
 function allEspecial() {
   let monark0 = inv.children[0].dataset.card == "especial";
-  let monark1 = inv.children[1].dataset.card == "especial"
-  let monark2 = inv.children[2].dataset.card == "especial"
-  let monark3 = inv.children[3].dataset.card == "especial"
+  let monark1 = inv.children[1].dataset.card == "especial";
+  let monark2 = inv.children[2].dataset.card == "especial";
+  let monark3 = inv.children[3].dataset.card == "especial";
 
   let allMonarkInv = monark0 && monark1 && monark2 && monark3;
   // console.log(" IS IT ALL MONARK?", allMonarkInv);
@@ -3250,7 +3301,7 @@ function poderBoss() {
           if (specialInDeck()) {
             return gerarNumero(1, 6) == 1;
           }
-          if(allEspecial()){
+          if (allEspecial()) {
             return gerarNumero(1, 3) == 1;
           }
 
@@ -3306,11 +3357,9 @@ export let hpPlayer = {
   add(n) {
     this.total += n;
     if (this.total > 100) {
-      this.total =100;
-      
+      this.total = 100;
     }
     hpPlayerP.textContent = this.total;
-
   },
 
   remove(n) {
