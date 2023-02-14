@@ -7,6 +7,7 @@ import {
   abelhaDecrease,
   abelhaDecreaseComTuru,
   abelhaLowHp,
+  abelhaHardDecrease,
   frasesAbelha,
   comunistaPE,
   frasesComuna,
@@ -296,7 +297,7 @@ export function triggerChuvaMonark(x) {
       }
     }
     selectHandCard();
-    tudo()
+    tudo();
   }, gerarNumero(900, 4000));
 }
 
@@ -607,13 +608,10 @@ function monarkGenerator(father, slot) {
     numCartas.add(1);
   } else {
     moverCartaMonark();
-    if(efeitos.status){
-      efeitos.rodadas++
+    if (efeitos.status) {
+      efeitos.rodadas++;
     }
   }
-
-  
- 
 }
 
 document.addEventListener("keydown", (event) => {
@@ -914,8 +912,6 @@ function colocarEfeito() {
     efeitos = efeitoVazio;
     audioEffectE.pause();
   }
-
-  
 }
 function colocarInput() {
   input = getSeed.value;
@@ -1241,6 +1237,7 @@ function moverToDeck(e) {
     } else if (chosenCard == mao.children[5]) {
       mao.replaceChild(mao5, chosenCard);
     }
+    abelha()
     // inv.removeChild(slot)
     chosenCard.dataset.inv = "true";
 
@@ -1284,6 +1281,7 @@ function moverToDeckNum(e) {
       } else if (chosenCard == mao.children[5]) {
         mao.replaceChild(mao5, chosenCard);
       }
+      abelha()
     }
 
     if (key1 && inv0.id == "empty1") {
@@ -1336,6 +1334,7 @@ function moverToDeckSpace() {
       } else if (chosenCard == mao.children[5]) {
         mao.replaceChild(mao5, chosenCard);
       }
+      abelha()
     }
 
     if (chosenCard != 0 && cartaVazia) {
@@ -1356,6 +1355,7 @@ function moverToDeckSpace() {
       chosenCard = 0;
     }
   }
+  
 }
 
 let copyCardSeed;
@@ -1500,7 +1500,6 @@ function moverCartaMonark() {
           numCartas.add(1);
           healMonarkBoss();
           hpPlayer.remove(3);
-          
 
           break;
 
@@ -1512,7 +1511,6 @@ function moverCartaMonark() {
             numCartas.add(1);
             healMonarkBoss();
             hpPlayer.remove(3);
-            
           }
 
           break;
@@ -1534,7 +1532,7 @@ function moverCartaMonark() {
           numCartas.add(1);
           healMonarkBoss();
           hpPlayer.remove(3);
-          
+
           break;
         }
       }
@@ -2015,10 +2013,10 @@ function criarBtn() {
 
         if (efeitos.status == false) {
           //coloca efeito
-          efeitoPremioMonark.rodadas = gerarNumero(10,15);
+          efeitoPremioMonark.rodadas = gerarNumero(10, 15);
           efeitos = efeitoPremioMonark;
           //apaga a carta
-          
+
           premioMonark.classList.add("vanish");
           premioMonarkBotao.style.visibility = "hidden";
           function eliminarPremioMonark() {
@@ -2285,8 +2283,9 @@ function criarBtn() {
             for (let k = 0; k < 4; k++) {
               if (
                 inv.children[k].children[3].children[1].textContent.includes(
-                  "💚") && inv.children[k] != lucio
-                
+                  "💚"
+                ) &&
+                inv.children[k] != lucio
               ) {
                 let energia = inv.children[k].children[3].children[1];
 
@@ -2589,11 +2588,17 @@ function criarBtn() {
 }
 function abelha() {
   let beeHitAu = ["hitAbelha.mp3", 0.1];
+  let numOfBees = 0;
+  for (let k = 0; k < 4; k++) {
+    let abelha = inv.children[k].id == "abelha";
+    if (abelha) {
+      numOfBees++;
+    }
+  }
+  console.log("NUMERO DE ABELHAS", numOfBees);
 
   for (let i = 0; i < 4; i++) {
     if (inv.children[i].id != "empty") {
-      //
-
       if (inv.children[i].id == "abelha") {
         inv.children[i].className = "";
         inv.children[i].children[1].style.border = "2px solid #545251";
@@ -2621,7 +2626,35 @@ function abelha() {
           snd(beeDeathAu);
 
           somaPontos();
-        } else if (
+
+
+        } else if (numOfBees == 2) {
+          pontoAbelha.textContent = 
+            parseInt(pontoAbelha.textContent) / gerarNumero(2,3) + "🐝"
+          
+          somaPontos();
+          snd(beeHitAu);
+        } 
+        else if (numOfBees == 3) {
+          pontoAbelha.textContent = 
+            parseInt(pontoAbelha.textContent) / gerarNumero(3,4) + "🐝"
+          
+          somaPontos();
+          snd(beeHitAu);
+        } 
+        else if (numOfBees == 4) {
+          pontoAbelha.textContent = 
+            parseInt(pontoAbelha.textContent) / gerarNumero(4,5) + "🐝"
+          
+          somaPontos();
+          snd(beeHitAu);
+        } 
+        
+        
+        
+        
+        
+        else if (
           parseInt(pontoAbelha.textContent) <= 60 &&
           parseInt(pontoAbelha.textContent) > 15
         ) {
@@ -2672,6 +2705,20 @@ function abelha() {
           }
         }
       }
+    }
+  }
+
+  for (let l = 0; l < 4; l++) {
+    let energiaAbelhas = inv.children[l].children[3].children[0];
+    let abelha = inv.children[l].id == "abelha";
+    console.log(abelha);
+    console.log(numOfBees != 0);
+    if (abelha && numOfBees > 1) {
+      energiaAbelhas.textContent =
+        parseInt(energiaAbelhas.textContent) * numOfBees + "⚡";
+      console.log("MULTIPLIQUEI");
+
+      inv.children[l].dataset.dmgboss = "true";
     }
   }
 }
@@ -2735,7 +2782,8 @@ function deletarDeck(e) {
     if (
       e.target.offsetParent.id != "carta-monark" ||
       (e.target.offsetParent.id == "carta-monark" &&
-        (e.target.offsetParent.className == "monark vanish" || e.target.offsetParent.className == "vanish"))
+        (e.target.offsetParent.className == "monark vanish" ||
+          e.target.offsetParent.className == "vanish"))
     ) {
       if (e.target.offsetParent == inv.children[0]) {
         dmgBoss();
@@ -2775,7 +2823,7 @@ let tick = setInterval(function () {
   // console.log('-');
   deckFull();
   somaPontos();
-  aplicarEfeitos()
+  aplicarEfeitos();
 }, 200);
 
 function deckFull() {
@@ -3090,6 +3138,7 @@ function tudo() {
     deckCheio();
     allMonark();
     specialInDeck();
+    console.log('ALL SPECIAL',allEspecial());
   } else {
   }
 }
@@ -3140,6 +3189,19 @@ function specialInDeck() {
   return false;
 }
 
+
+function allEspecial() {
+  let monark0 = inv.children[0].dataset.card == "especial";
+  let monark1 = inv.children[1].dataset.card == "especial"
+  let monark2 = inv.children[2].dataset.card == "especial"
+  let monark3 = inv.children[3].dataset.card == "especial"
+
+  let allMonarkInv = monark0 && monark1 && monark2 && monark3;
+  // console.log(" IS IT ALL MONARK?", allMonarkInv);
+
+  return allMonarkInv;
+}
+
 // COOLDOWNS
 // PODER BOSSES
 
@@ -3179,6 +3241,9 @@ function poderBoss() {
           }
           if (specialInDeck()) {
             return gerarNumero(1, 6) == 1;
+          }
+          if(allEspecial()){
+            return gerarNumero(1, 3) == 1;
           }
 
           return gerarNumero(1, 15) == 1;
