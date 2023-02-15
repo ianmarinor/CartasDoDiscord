@@ -1105,13 +1105,7 @@ export function selectHandCard() {
           function raiseCard() {
             
 
-            if(creeperCard){
-
-              if(creeperCard && !carta.dataset.exploding && gerarNumero(1,3) == 1){
-               return  creeper(true)
-              }
-              return false
-            }
+           
 
 
             chosenCard.style.bottom = "66px";
@@ -1123,10 +1117,21 @@ export function selectHandCard() {
             });
           }
 
+
+          
+
+            
+            
+          
+
+
           if (chosenCard != 0) {
             lowerCard();
           }
-          chosenCard = retrato().offsetParent;
+          
+
+            chosenCard = retrato().offsetParent;
+          
           raiseCard();
         }
 
@@ -2764,7 +2769,7 @@ function creeper(x) {
   let condition
 
   if(x){
-    condition = true
+    condition = true 
   } else {
     condition = gerarNumero(1,5) == 5
   }
@@ -2780,7 +2785,7 @@ function creeper(x) {
       
 
 
-      if (condition ) {
+      if (condition && !creeper.dataset.exploding) {
 
         creeper.dataset.exploding = 'true'
 
@@ -2813,6 +2818,7 @@ function creeper(x) {
 
 
 
+        
       }
     }
   }
@@ -2825,7 +2831,7 @@ function creeper(x) {
       let right = creeper.nextElementSibling;
       let left = creeper.previousElementSibling;
 
-      if (condition) {
+      if (condition && !creeper.dataset.exploding) {
         creeper.dataset.exploding = 'true'
         snd(creeperAu)
         creeper.className = 'piscar'
@@ -2870,7 +2876,7 @@ function creeper(x) {
           
 
         },2600)
-
+        
       }
     }
   }
