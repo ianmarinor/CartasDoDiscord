@@ -12,7 +12,7 @@ let inv = document.getElementById("inv")
 
 let precoCampones = 15;
 let precoCavalheiro = 35;
-let precoSangueAzul = 100;
+let precoSangueAzul = 75;
 let precoRainha = 700;
 
 let precoCamponesP = btnCampones.innerHTML = 'CAMPONES <br />' + precoCampones
@@ -27,7 +27,7 @@ function debug(){
    precoRainha = 1;
 }
 
-debug()
+// debug()
 
 let novaCarta = ['novaCarta.mp3']
 

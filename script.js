@@ -287,13 +287,16 @@ export function triggerChuvaMonark(x) {
 
     //novo
     for (let i = 0; i < 4; i++) {
-      monarkGenerator();
+      if (gerarNumero(1, 4) != 1) {
+        monarkGenerator();
+      }
     }
 
     for (let i = 0; i < 6; i++) {
       if (gerarNumero(1, 2) == 1) {
         monarkGenerator(mao, mao.children[i]);
         hpPlayer.remove(3);
+        healMonarkBoss(50)
       }
     }
     selectHandCard();
@@ -301,7 +304,7 @@ export function triggerChuvaMonark(x) {
   }, gerarNumero(900, 4000));
 }
 
-let probMonarkNormal = () => seedString[14] >= 3 && seedString[13] >= 7;
+let probMonarkNormal = () => seedString[14] >= 4 && seedString[13] == 7 ;
 
 let probMonark;
 
@@ -532,8 +535,8 @@ let varianteP = document.querySelector(".variante");
 let actionP = document.querySelector(".action");
 let novoAtaquerP = document.querySelector(".novoAtaque");
 let placarP = document.getElementById("placarDano");
-let placarCritP = document.getElementById("placarDanoCrit");
-let placarCrit2P = document.getElementById("emojiPlacarDanoCrit");
+let placarWrapP = document.getElementById("placarDanoWrap");
+
 
 let efeito1P = document.getElementById("efeito1");
 let efeito2P = document.getElementById("efeito2");
@@ -545,6 +548,8 @@ let vendasP = document.getElementById("vendas");
 let healthWrapP = document.querySelector(".bossHealthWrap");
 let bossRoomP = document.getElementById("bossRoom");
 let hpPlayerP = document.getElementById("healthPlayer");
+let hpPlayerEmojiP = document.getElementById("healthPlayerEmoji");
+let hpPlayerWrapP = document.getElementById("healthPlayerWrap");
 let endP = document.getElementById("end");
 
 let bossP = () => bossRoomP.children[0];
@@ -1494,21 +1499,21 @@ function moverCartaMonark() {
         if (spyCheck[0]) {
           inv.replaceChild(copyCard, inv.children[spyCheck[1]]);
 
-          let deathSpyAu = ["deathSpy" + gerarNumero(1, 3) + ".mp3"];
+          let deathSpyAu = ["deathSpy" + gerarNumero(1, 3) + ".mp3", 0.3];
           snd(deathSpyAu);
           numCartas.add(1);
-          healMonarkBoss();
+          healMonarkBoss(50);
           hpPlayer.remove(3);
 
           break;
 
           //SE DECK VAZIO
         } else if (deckCheck[0]) {
-          if (rodadas >= 3) {
+          if (rodadas > 5) {
             inv.replaceChild(copyCard, inv.children[deckCheck[1]]);
             snd(monarkAu);
             numCartas.add(1);
-            healMonarkBoss();
+            healMonarkBoss(50);
             hpPlayer.remove(3);
           }
 
@@ -1529,7 +1534,7 @@ function moverCartaMonark() {
           inv.replaceChild(copyCard, inv.children[i]);
           snd(monarkAu);
           numCartas.add(1);
-          healMonarkBoss();
+          healMonarkBoss(50);
           hpPlayer.remove(3);
 
           break;
@@ -1744,7 +1749,7 @@ function criarBtn() {
                   inv.replaceChild(empty4, inv.children[3]);
                 }
 
-                let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.6];
+                let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.3];
                 snd(order);
 
                 somaPontos();
@@ -1757,7 +1762,7 @@ function criarBtn() {
                   "durmi kkjk <br> &#128564; &#128564;";
                 varianteSpeaker.children[3].children[2].style.visibility =
                   "hidden";
-                hpSpeaker.textContent = "2💚";
+                hpSpeaker.textContent = "5💚";
                 hpSpeaker.style.visibility = "visible";
 
                 let speakerSleepAu = ["speakerSleep.mp3"];
@@ -2075,47 +2080,35 @@ function criarBtn() {
         let botao = spy.children[3].children[2];
         let retrato = spy.children[1];
 
-
-        if(botao.id != 'foi'){
-
+        if (botao.id != "foi") {
           spyWatch.addEventListener("click", invisWatch);
-          botao.id = 'foi'
+          botao.id = "foi";
         }
 
-
-
         function invisWatch() {
-
-          
-
-        
-
           function invis() {
-
-            
-
             spy.className = "invisible";
             spyWatch.id = "invis";
-            retrato.classList.add("invis");
+
+            retrato.classname = "invisible";
             spy.children[0].className = "invis";
 
             botao.style.visibility = "hidden";
             retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
-            let spyInvisAu = ["spyInvis.mp3"];
-            let spyInvisLineAu = ["spyInvisLine.mp3"];
+            let spyInvisAu = ["spyInvis.mp3", 0.2];
+            let spyInvisLineAu = ["spyInvisLine.mp3", 0.4];
             snd(spyInvisAu);
             // snd(spyInvisLineAu);
 
             // to()
-            setTimeout(vis, gerarNumero(800, 7000))
-            spyWatch.style.visibility = "hidden"
-
+            setTimeout(vis, gerarNumero(800, 7000));
+            spyWatch.style.visibility = "hidden";
           }
 
           function vis() {
             spy.className = "visible";
-            spyWatch.id = "vis"
+            spyWatch.id = "vis";
             retrato.classList.remove("invisible");
             retrato.classList.add("visible");
             spy.children[0].className = "vis";
@@ -2123,33 +2116,23 @@ function criarBtn() {
             botao.style.visibility = "visible";
             retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
 
-            let spyInvisAu = ["spyInvis.mp3"];
-            let spyInvisLineAu = ["spyInvisLine.mp3"];
+            let spyInvisAu = ["spyInvis.mp3", 0.3];
+            let spyInvisLineAu = ["spyInvisLine.mp3", 0.4];
             snd(spyInvisAu);
             // snd(spyInvisLineAu);
             // tudo()
-            
-            setTimeout(function(){
-              spyWatch.style.visibility = "visible"
 
-            }, gerarNumero(2400, 14000))
-
-            
-            
+            setTimeout(function () {
+              spyWatch.style.visibility = "visible";
+            }, gerarNumero(2400, 14000));
           }
 
-
-          if(spyWatch.id != 'invis'){
-            invis()
+          if (spyWatch.id != "invis") {
+            invis();
           } else {
             // vis()
           }
-
-
-
         }
-
-
 
         for (let i = 0; i < 4; i++) {
           if (
@@ -2183,11 +2166,11 @@ function criarBtn() {
             somaPontos();
 
             // audio
-            let stabAu = ["stab.mp3", 0.5];
+            let stabAu = ["stab.mp3", 0.3];
             snd(stabAu);
 
             if (gerarNumero(1, 3) == 2) {
-              let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3"];
+              let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3", 0.3];
               snd(spyAu);
             }
 
@@ -2282,7 +2265,7 @@ function criarBtn() {
         for (let i = 0; i < 4; i++) {
           if (parseInt(ulti.textContent) < 100) {
             // se a carta for gentleman
-            if (inv.children[i].id == "carta-gentleman") {
+            if (inv.children[i].id == "carta-people") {
               let gentleman = inv.children[i];
               let poderVelho = inv.children[i].children[3].children[0];
 
@@ -2306,7 +2289,7 @@ function criarBtn() {
                 "⚡";
 
               ulti =
-                parseInt(ulti.textContent) + parseInt(poderVelho.textContent);
+                parseInt(ulti.textContent) + parseInt(poderVelho.textContent) * 2;
 
               if (ulti >= 100) {
                 lucio.children[2].textContent = 100 + "%";
@@ -2441,7 +2424,7 @@ function criarBtn() {
               //se tiver atirador
             } else {
               function playJhinAu(n) {
-                let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3"];
+                let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.4];
 
                 if (gerarNumero(1, n) == 1) {
                   setTimeout(function () {
@@ -2469,7 +2452,7 @@ function criarBtn() {
                 // TULTIMO TIRO MULTIPLICA POR 4
                 if (tiros == 1) {
                   energiaJhin.textContent =
-                    energiaJhinNum + energiaVitima * 4 + "⚡";
+                    energiaJhinNum + energiaVitima * 8 + "⚡";
                   cartaParaMover.classList.add("voar");
                   somaPontos();
                   if (numCartas.total == 1) {
@@ -2488,7 +2471,7 @@ function criarBtn() {
                   playJhinAu(1);
                 } else {
                   energiaJhin.textContent =
-                    energiaJhinNum + energiaVitima + 4 + "⚡";
+                    energiaJhinNum + energiaVitima * 4 + "⚡";
                   cartaParaMover.classList.add("voar");
                   somaPontos();
                   if (numCartas.total == 1) {
@@ -2557,8 +2540,8 @@ function criarBtn() {
 
         for (let i = 0; i < 4; i++) {
           let vitima =
-            inv.children[i].dataset.card == "especial" &&
-            inv.children[i].id != "dva";
+            inv.children[i].dataset.dmgboss == "false" 
+            
 
           if (parseInt(ulti.textContent) < 100) {
             // se a carta for gentleman
@@ -2568,7 +2551,7 @@ function criarBtn() {
 
               // se tiver pdoer novo, o adiquira e exclua a carta
 
-              ulti = parseInt(ulti.textContent) + gerarNumero(15, 20);
+              ulti = parseInt(ulti.textContent) + gerarNumero(19, 26);
 
               if (ulti > 100) {
                 dva.children[2].textContent = 100 + "%";
@@ -2650,10 +2633,6 @@ function criarBtn() {
     }
   }
 }
-
-
-
-
 
 function abelha() {
   let beeHitAu = ["hitAbelha.mp3", 0.1];
@@ -2806,7 +2785,8 @@ let cartaMao = mao.children[0];
 function deletarDeck(e) {
   if (
     e.target.className == "retrato" ||
-    e.target.className == "retrato invis" ||
+    e.target.className == "retrato visible" ||
+    e.target.className == "retrato invisible" ||
     e.target.className == "retratoEsp" ||
     e.target.className == "retratoEsp invis"
   ) {
@@ -2911,8 +2891,10 @@ function deckFull() {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyQ") {
-    if (rodadas >= rodadaSpawnBoss) {
+    if (boss) {
       dmgBoss();
+    } else{
+      snd(naoAu)
     }
   }
 });
@@ -2934,6 +2916,8 @@ function dmgBoss() {
         somaPontos();
       } else if (carta == inv.children[1]) {
         inv.replaceChild(empty2, carta);
+        ativarBtn();
+          somaPontos();
       } else if (carta == inv.children[2]) {
         inv.replaceChild(empty3, carta);
         ativarBtn();
@@ -2949,6 +2933,34 @@ function dmgBoss() {
     }
     boss.dmg(energiaTotal * 2);
     console.log("ENERIGA DECK TOTAL", energiaTotal);
+
+  } else {
+    for (let i = 0; i < 4; i++) {
+      let carta = inv.children[i];
+      if (carta.dataset.dmgboss == "true") {
+        let energia = parseInt(carta.children[3].children[0].textContent);
+
+        if (carta == inv.children[0]) {
+          inv.replaceChild(empty1, carta);
+          ativarBtn();
+          somaPontos();
+        } else if (carta == inv.children[1]) {
+          inv.replaceChild(empty2, carta);
+          ativarBtn();
+          somaPontos();
+        } else if (carta == inv.children[2]) {
+          inv.replaceChild(empty3, carta);
+          ativarBtn();
+          somaPontos();
+        } else if (carta == inv.children[3]) {
+          inv.replaceChild(empty4, carta);
+          ativarBtn();
+          somaPontos();
+        }
+
+        boss.dmg(energia);
+      }
+    }
   }
 }
 
@@ -3193,7 +3205,7 @@ function tudo() {
     blockInv();
     ativarBtn();
     poderBoss();
-    
+
     deckVazio();
     deckCheio();
     allMonark();
@@ -3266,9 +3278,9 @@ function allEspecial() {
 
 let bossIsMonark;
 
-function healMonarkBoss() {
+function healMonarkBoss(x) {
   if (bossIsMonark) {
-    boss.heal(10);
+    boss.heal(x);
   } else {
     console.log("NAO É MONARK");
   }
@@ -3283,29 +3295,39 @@ let chuvaCooldown = false;
 //************************************************************************************* */
 //************************************************************************************* */
 function poderBoss() {
-  if (rodadas > 9) {
+  if (boss) {
     bossIsMonark = boss.name == "monark";
 
     if (boss) {
       if (bossIsMonark) {
         function probChuva() {
+
+
+          
           if (allMonark()) {
-            return false;
+            return gerarNumero(1, 66) == 1;
           }
           if (deckVazio()) {
-            return gerarNumero(1, 10) == 1;
+            return gerarNumero(1, 33) == 1;
           }
           if (deckCheio()) {
-            return gerarNumero(1, 8) == 1;
+            return gerarNumero(1, 27) == 1;
           }
           if (specialInDeck()) {
-            return gerarNumero(1, 6) == 1;
+            return gerarNumero(1, 21) == 1;
           }
           if (allEspecial()) {
+            return gerarNumero(1, 15) == 1;
+          }
+          if (boss.health < 1000) {
+            return gerarNumero(1, 12) == 1;
+          }
+          if (boss.health < 300) {
             return gerarNumero(1, 3) == 1;
           }
+          
 
-          return gerarNumero(1, 15) == 1;
+          return gerarNumero(1, 48) == 1;
         }
 
         console.log("VAI TER CHUVA", probChuva());
@@ -3359,7 +3381,7 @@ export let hpPlayer = {
     if (this.total > 100) {
       this.total = 100;
     }
-    hpPlayerP.textContent = this.total;
+    this.playerP(this.total)
   },
 
   remove(n) {
@@ -3370,13 +3392,28 @@ export let hpPlayer = {
       endP.style.display = "flex";
       main.style.display = "none";
     }
-    hpPlayerP.textContent = this.total;
+    this.playerP(this.total)
   },
 
   set(n) {
     this.total = n;
-    hpPlayerP.textContent = this.total;
+    this.playerP(this.total)
   },
+
+  playerP(n){
+    hpPlayerP.textContent = n
+
+    if(n > 25){
+      hpPlayerP.style.color = 'wheat'
+      hpPlayerEmojiP.innerHTML = '💚'
+      hpPlayerWrapP.className = ''
+
+    } else {   
+      hpPlayerP.style.color = 'red'
+      hpPlayerEmojiP.innerHTML = '💔'
+      hpPlayerWrapP.className = 'pulsar'
+    }
+  }
 };
 
 let totalPontos = 0;
@@ -3400,17 +3437,18 @@ export function somaPontos() {
   }
 
   if (deckCritico) {
-    placarCritP.style.visibility = "visible";
-    placarCrit2P.style.visibility = "visible";
+    
 
-    placarP.style.textDecoration = "line-through";
-    placarP.style.textDecorationColor = "red";
+    placarP.style.color = 'red'
+    placarWrapP.className = 'critico';
+    danoTotal = danoTotal * 2
 
-    placarCritP.innerHTML = danoTotal * 2;
+    
   } else {
-    placarCritP.style.visibility = "hidden";
-    placarCrit2P.style.visibility = "hidden";
-    placarP.style.textDecoration = "none";
+
+    placarP.style.color = 'wheat'
+    placarWrapP.className = ''
+    danoTotal = danoTotal
   }
 
   placarP.innerHTML = danoTotal;

@@ -89,7 +89,7 @@ function probMonarkChuvaDeMonark() {
 }
 function createMonark() {
   
-  let bossClass = new Boss(2000, 2000, "monark");
+  let bossClass = new Boss(5000, 5000, "monark");
   
   let monark = {
     carta() {
@@ -133,9 +133,11 @@ function chooseMonark() {
 
 pickMonark.addEventListener("click", chooseMonark);
 
+let hasSpawned = false
+
 export function spawnBoss() {
 
-  if(rodadas == 10){
+  if(rodadas >= 10 && !hasSpawned){
 
     if (chosenBoss == "monark") {
       createMonark();
@@ -150,6 +152,7 @@ export function spawnBoss() {
   healthWrapP.classList.add("aparecer");
   boss.carta();
   console.log(boss);
+  hasSpawned = true
 }
   // healthWrapP.className = 'aparecer'
 }

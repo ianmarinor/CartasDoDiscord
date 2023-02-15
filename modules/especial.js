@@ -567,7 +567,7 @@ export let especiais = {
 
     // ataqueE: lucioPE()
     ataqueE: "4⚡",
-    novoAtaqueE: "4💚",
+    novoAtaqueE: "10💚",
 
     nomeStyle: {
       fontSize: "250%",
@@ -615,7 +615,7 @@ export let especiais = {
 
     // ataqueE: lucioPE()
     ataqueE: "1⚡",
-    novoAtaqueE: "40💚",
+    novoAtaqueE: "50💚",
 
     nomeStyle: {
       fontSize: "250%",
@@ -729,63 +729,88 @@ export function escolherEspecial(teste) {
     } else if (raridades.sangueAzul.rng()) {
       raridade = raridades.sangueAzul;
 
-      gerarNumero(1, 4);
+
+      let num
+
+       num = gerarNumero(1, 5);
 
       if (false) {
         especial = especiais.lucio;
         especial.novoAtaqueE = 200 + "💚";
-      } else if (gerarNumero(1, 4) == 1) {
+
+      } else if (num == 1 ) {
         especial = especiais.lucio;
         especial.novoAtaqueE = lucioPE();
+        especial.cargo = preBuiltUltimate() + '%'
         console.log("LUCIOOOOOOO");
-      } else if (gerarNumero(1, 4) == 1) {
+
+      } else if (num == 2 ) {
         especial = especiais.premioMonark;
         console.log("PREMIOMONARK");
-      } else if (gerarNumero(1, 4) == 1) {
+
+      } else if (num == 3 ) {
         especial = especiais.blackaoCamarada;
         especial.novoAtaqueE = comunistaPE();
         console.log("CAMARADA");
-      } else if (gerarNumero(1, 4) == 1) {
+
+      } else if (num == 4 ) {
         especial = especiais.abelha;
         especial.ataqueE = abelhaEnergia() + "🐝";
-      } else {
+
+      } else if (num == 5 ) {
         especial = especiais.dva;
-        console.log("DVA");
+        especial.cargo = preBuiltUltimate() + '%'
+        
       }
+
+
+
+
+
+
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
       DEBUG && console.log(raridades.cavaleiro.rng());
 
-      gerarNumero(1, 3);
+      let num
 
-      if (true) {
+       num = gerarNumero(1, 3);
+
+
+      if (false) {
         especial = especiais.spy;
-      } else if (gerarNumero(1, 4) == 1) {
+      } else if (num == 1) {
         especial = especiais.speaker;
         especial.ataqueE = pontoSpeaker();
-      } else if (gerarNumero(1, 4) == 1) {
+      } else if (num == 2) {
         especial = especiais.jhin;
-      } else if (gerarNumero(1, 4) == 1) {
+      } else if (num == 3) {
         especial = especiais.spy;
       }
     } else {
       raridade = raridades.campones;
 
+
+      let num
+
+       num = gerarNumero(1, 3);
+
       //CAMPONESES
 
       if (false) {
-        especial = especiais.abelha;
-        especial.ataqueE = abelhaEnergia() + "🐝";
+        
+
       } else if (false) {
         especial = especiais.menosCartas;
         especial.ataqueE = bonusCartasPE() + "🃏";
-      } else if (seedString[12] > 6) {
+
+      } else if (num == 1) {
         especial = especiais.maisCartas;
         especial.ataqueE = bonusCartasPE() + "🃏";
-      } else if (seedString[12] == 5) {
+      } else if (num == 2) {
         especial = especiais.tank;
         especial.cargo = tankCargo(especiais.tank.emoji);
-      } else {
+      } else if (num == 3){
         especial = especiais.estoicoTuru;
         // especial.ataqueE = estoicoPE();
       }
@@ -870,6 +895,11 @@ export function abelhaDecreaseComTuru() {
   return Math.floor(Math.random() * 50 + 25);
 }
 
+
+function preBuiltUltimate(){
+  return gerarNumero(0,35)
+}
+
 let frasesAbelhaTuru = [
   "afff morri",
   " bane esse bosta",
@@ -934,7 +964,7 @@ export function estoicoPE() {
 }
 
 export function lucioPE() {
- return gerarNumero(12,20) + '💚'
+ return gerarNumero(20,35) + '💚'
 }
 
 function tankCargo(emoji) {

@@ -48,7 +48,7 @@ function premioMonark() {
           // moneyP.textContent = parseInt(moneyP.textContent) + bonusMonark
           hpPlayer.add(1)
 
-          let premioMonarkElimAu = ['premioMonarkElim.mp3']
+          let premioMonarkElimAu = ['premioMonarkElim.mp3', 0.5]
         setTimeout(function(){
           snd(premioMonarkElimAu)
         }, 1000)
