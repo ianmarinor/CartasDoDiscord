@@ -1082,9 +1082,12 @@ export function selectHandCard() {
   for (let k = 0; k < 6; k++) {
     let mao = () => document.getElementById("mao");
 
+    
+
     let slotMao = () => mao().children[k].id != "mao" + k;
     let retrato = () => mao().children[k].children[1];
     let carta = retrato().offsetParent;
+    let creeperCard =  carta.id == "creeper";
 
     // reset()
 
@@ -1100,9 +1103,16 @@ export function selectHandCard() {
           }
 
           function raiseCard() {
-            //
+            
 
-            //
+            if(creeperCard){
+
+              if(creeperCard && !carta.dataset.exploding && gerarNumero(1,3) == 1){
+               return  creeper(true)
+              }
+              return false
+            }
+
 
             chosenCard.style.bottom = "66px";
 
@@ -1133,6 +1143,8 @@ export function selectHandCard() {
           chosenCard = 0;
         }
       });
+    } else {
+      
     }
   }
 }
@@ -2770,7 +2782,7 @@ function creeper(x) {
 
       if (condition ) {
 
-        creeper.dataset.exploding == 'true'
+        creeper.dataset.exploding = 'true'
 
         snd(creeperAu)
         creeper.className = 'piscar'
@@ -2814,7 +2826,7 @@ function creeper(x) {
       let left = creeper.previousElementSibling;
 
       if (condition) {
-        creeper.dataset.exploding == 'true'
+        creeper.dataset.exploding = 'true'
         snd(creeperAu)
         creeper.className = 'piscar'
 
@@ -2844,8 +2856,7 @@ function creeper(x) {
             } else {
               elimCardInv(inv.children[cartaInv1]);
             }
-            hpPlayer.remove(gerarNumero(7,12))
-            tudo()
+            
           } else {
             if (dmgCard(gerarNumero(25,700), inv.children[cartaInv2])) {
             } else {
@@ -2855,6 +2866,7 @@ function creeper(x) {
   
           elimCardMao(creeper);
   
+          hpPlayer.remove(gerarNumero(7,12))
           
 
         },2600)
@@ -2949,7 +2961,7 @@ function deletarDeck(e) {
         somaPontos();
       }
     } else if (e.target.offsetParent.id == 'creeper' && !e.target.offsetParent.dataset.exploding ) {
-      e.target.offsetParent.dataset.exploding = 'true'
+      
       creeper(true)
     } else {
       let naoAu = ["nao.mp3"];

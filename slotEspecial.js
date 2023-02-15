@@ -402,4 +402,3 @@ export function limparEsp() {
   ativarBtn();
 }
 
-debug()
