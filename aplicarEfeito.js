@@ -44,6 +44,8 @@ function premioMonark() {
 
       function infectarMonark(){
 
+        monark.dataset.canbedeleted = "true"
+
         if(monark.children[0].className != "float"){
           // moneyP.textContent = parseInt(moneyP.textContent) + bonusMonark
           hpPlayer.add(1)

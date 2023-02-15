@@ -713,6 +713,7 @@ export let especiais = {
     ataqueE: '',
     novoAtaque: "",
     dmgboss: "false",
+    canbedeleted: 'false',
 
     nomeStyle: {
       fontSize: "180%",
@@ -851,7 +852,7 @@ export function escolherEspecial(teste) {
 
       //CAMPONESES
 
-      if (true) {
+      if (false) {
         especial = especiais.creeper
 
       } else if (false) {

@@ -1,5 +1,5 @@
 .piscar {
-    animation: piscar 150ms;
+    animation: piscar 110ms;
     animation-iteration-count: infinite;
     animation-direction: alternate;
     /* animation-timing-function: linear; */
@@ -8,7 +8,7 @@
   @keyframes piscar{
 
     0% {
-      opacity: 0.1;;
+      opacity: 0.3;;
     }
   
     100% {

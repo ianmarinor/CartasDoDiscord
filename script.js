@@ -1,4 +1,4 @@
-var TICK = false;
+var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
 import {
@@ -259,7 +259,6 @@ function escolherCidade() {
 
 export function triggerChuvaMonark() {
   boss.treme(true);
-  console.log("CHUVA DE MONARK");
 
   let trovaoAu = ["trovao.mp3", 0.2];
 
@@ -584,7 +583,6 @@ function monarkGenerator(father, slot) {
 
   let meuMonark = packP.children[0].cloneNode(true);
   meuMonark.dataset.dmgboss = "false";
-  console.log("meuMonark", meuMonark);
 
   if (father && slot) {
     father.replaceChild(meuMonark, slot);
@@ -685,8 +683,10 @@ function colocarInfoNoWrap(a) {
   cartaP.id = novaCarta._cargo;
   if (novaCarta._cargo == "carta-monark") {
     cartaP.dataset.dmgboss = "false";
+    cartaP.dataset.canbedeleted = "false";
   } else {
     cartaP.dataset.dmgboss = "true";
+    cartaP.dataset.canbedeleted = "true"
   }
 
   retratoP.style.display = "block";
@@ -871,7 +871,7 @@ function colocarInfoNoWrap(a) {
     }
   }
   packP.replaceChild(cartaP, packP.children[0]);
-  console.log(novaCarta);
+
   //
 }
 export let rodadas = 0;
@@ -1157,7 +1157,7 @@ function moverToDeck(e) {
     slot.className == "nome3" ||
     slot.className == "nome4";
 
-  // console.log(chosenCard);
+  //
 
   if (
     (chosenCard != 0 && (isEmpty || isEmpty2)) ||
@@ -1321,6 +1321,20 @@ function killTank(x) {
 
 let hit = ["hit.mp3"];
 
+
+function efeitoDano(carta) {
+        let heart = carta.children[3].children[1];
+
+        heart.style.backgroundColor = "red";
+        heart.style.border = "3px solid black";
+        snd(hit);
+
+        setTimeout(function () {
+          heart.style.backgroundColor = "";
+          heart.style.border = "";
+        }, 300);
+      }
+
 function moverCartaMonark() {
   let morte = ["morte.mp3"];
   copyCard = cartaParaMover.cloneNode(true);
@@ -1349,18 +1363,7 @@ function moverCartaMonark() {
       let spyCheck = isSpy();
       //
 
-      function efeitoDano(carta) {
-        let heart = inv.children[carta].children[3].children[1];
-
-        heart.style.backgroundColor = "red";
-        heart.style.border = "3px solid black";
-        snd(hit);
-
-        setTimeout(function () {
-          heart.style.backgroundColor = "";
-          heart.style.border = "";
-        }, 300);
-      }
+      
 
       function damage() {
         for (let j = 0; j < 4; j++) {
@@ -1383,7 +1386,7 @@ function moverCartaMonark() {
 
             if (HPNum >= 2) {
               HP.textContent = HPNum - 1 + "💚";
-              efeitoDano(j);
+              efeitoDano(cartaComHp);
             } else if (cartaComHp.id == "tank") {
               killTank(j);
             } else {
@@ -1402,7 +1405,7 @@ function moverCartaMonark() {
           } else if (temHP && !especial) {
             if (HPNum >= 2) {
               HP.textContent = HPNum - 1 + "💚";
-              // efeitoDano(j);
+              
             } else {
               HP.textContent = 0;
               HP.style.visibility = "hidden";
@@ -2564,6 +2567,11 @@ function criarBtn() {
   }
 }
 
+function poderesEspeciais() {
+  abelha();
+  creeper();
+}
+
 function abelha() {
   let beeHitAu = ["hitAbelha.mp3", 0.1];
   let numOfBees = 0;
@@ -2573,7 +2581,6 @@ function abelha() {
       numOfBees++;
     }
   }
-  console.log("NUMERO DE ABELHAS", numOfBees);
 
   for (let i = 0; i < 4; i++) {
     if (inv.children[i].id != "empty") {
@@ -2679,60 +2686,181 @@ function abelha() {
   for (let l = 0; l < 4; l++) {
     let energiaAbelhas = inv.children[l].children[3].children[0];
     let abelha = inv.children[l].id == "abelha";
-    console.log(abelha);
-    console.log(numOfBees != 0);
+
     if (abelha && numOfBees > 1) {
       energiaAbelhas.textContent =
         parseInt(energiaAbelhas.textContent) * numOfBees + "⚡";
-      console.log("MULTIPLIQUEI");
 
       inv.children[l].dataset.dmgboss = "true";
     }
   }
 }
 
-
-function elimCardInv(x){
+function elimCardInv(x) {
   if (x == inv.children[0]) {
     inv.replaceChild(empty1, x);
   } else if (x == inv.children[1]) {
     inv.replaceChild(empty2, x);
-  } else if (x== inv.children[2]) {
+  } else if (x == inv.children[2]) {
     inv.replaceChild(empty3, x);
   } else if (x == inv.children[3]) {
     inv.replaceChild(empty4, x);
   }
 }
 
-function creeper() {
-  for (let i = 0; i < 4; i++) {
-    if(inv.children[i].id == "creeper"){
-    let creeper = inv.children[i];
-    let right = creeper.nextElementSibling
-    let left = creeper.previousElementSibling
+function elimCardMao(x) {
+  if (x == mao.children[0]) {
+    mao.replaceChild(mao0, x);
+  } else if (x == mao.children[1]) {
+    mao.replaceChild(mao1, x);
+  } else if (x == mao.children[2]) {
+    mao.replaceChild(mao2, x);
+  } else if (x == mao.children[3]) {
+    mao.replaceChild(mao3, x);
+  } else if (x == mao.children[4]) {
+    mao.replaceChild(mao4, x);
+  } else if (x == mao.children[5]) {
+    mao.replaceChild(mao5, x);
+  }
+}
 
-      if(true){
+function dmgCard(dmg, card, place) {
+  if (card) {
+    let hp = card.children[3].children[1];
+    if (hp.textContent.includes("💚")) {
+      hp.textContent = parseInt(hp.textContent) - dmg + "💚";
 
-        
-        console.log(creeper);
-        console.log(right);
-        console.log(left);
-
-        elimCardInv(creeper)
-        if(right){
-          elimCardInv(right)
+      if (parseInt(hp.textContent) <= 0) {
+        if (place == "mao") {
+          elimCardMao(card);
+        } else {
+          elimCardInv(card);
         }
-        if(left){
-          elimCardInv(left)
-        }
-
-
-        
-
       }
 
+      efeitoDano(card)
 
+      return true;
+    } else {
+      return false;
+    }
   }
+}
+
+function creeper(x) {
+
+  let condition
+
+  if(x){
+    condition = true
+  } else {
+    condition = gerarNumero(1,5) == 5
+  }
+
+  let creeperAu = ['creeper.mp3', 0.5]
+  for (let i = 0; i < 4; i++) {
+    if (inv.children[i].id == "creeper") {
+
+      let creeper = inv.children[i];
+      let right = creeper.nextElementSibling;
+      let left = creeper.previousElementSibling;
+
+      
+
+
+      if (condition ) {
+
+        creeper.dataset.exploding == 'true'
+
+        snd(creeperAu)
+        creeper.className = 'piscar'
+        setTimeout(function(){
+
+          if (dmgCard(gerarNumero(170,220), right)) {
+            // condition already does the job ;)
+          } else {
+            
+            elimCardInv(right);
+          }
+  
+          if (dmgCard(gerarNumero(170,220), left)) {
+          } else {
+            elimCardInv(left);
+          }
+          elimCardInv(creeper);
+  
+          if (boss) {
+            boss.dmg(gerarNumero(100,250));
+          }
+
+
+          
+
+        },2600)
+
+
+
+
+      }
+    }
+  }
+
+  // comportamento na mao
+  for (let i = 0; i < 6; i++) {
+    if (mao.children[i].id == "creeper") {
+      
+      let creeper = mao.children[i];
+      let right = creeper.nextElementSibling;
+      let left = creeper.previousElementSibling;
+
+      if (condition) {
+        creeper.dataset.exploding == 'true'
+        snd(creeperAu)
+        creeper.className = 'piscar'
+
+        setTimeout(function(){
+
+
+
+
+
+
+          if (dmgCard(gerarNumero(170,220), right, "mao")) {
+            // condition already does the job ;)
+          } else {
+            elimCardMao(right);
+          }
+  
+          if (dmgCard(gerarNumero(170,220), left, "mao")) {
+          } else {
+            elimCardMao(left);
+          }
+  
+          let cartaInv1 = gerarNumero(0, 1);
+          let cartaInv2 = gerarNumero(2, 3);
+  
+          if (i < 3) {
+            if (dmgCard(gerarNumero(25,70), inv.children[cartaInv1])) {
+            } else {
+              elimCardInv(inv.children[cartaInv1]);
+            }
+            hpPlayer.remove(gerarNumero(7,12))
+            tudo()
+          } else {
+            if (dmgCard(gerarNumero(25,700), inv.children[cartaInv2])) {
+            } else {
+              elimCardInv(inv.children[cartaInv2]);
+            }
+          }
+  
+          elimCardMao(creeper);
+  
+          
+
+        },2600)
+
+      }
+    }
   }
 }
 
@@ -2794,10 +2922,7 @@ function deletarDeck(e) {
     }
 
     if (
-      e.target.offsetParent.id != "carta-monark" ||
-      (e.target.offsetParent.id == "carta-monark" &&
-        (e.target.offsetParent.className == "monark vanish" ||
-          e.target.offsetParent.className == "vanish"))
+      e.target.offsetParent.dataset.canbedeleted == "true" && boss
     ) {
       if (e.target.offsetParent == inv.children[0]) {
         dmgBoss();
@@ -2823,6 +2948,9 @@ function deletarDeck(e) {
         ativarBtn();
         somaPontos();
       }
+    } else if (e.target.offsetParent.id == 'creeper' && !e.target.offsetParent.dataset.exploding ) {
+      e.target.offsetParent.dataset.exploding = 'true'
+      creeper(true)
     } else {
       let naoAu = ["nao.mp3"];
       snd(naoAu);
@@ -2840,11 +2968,9 @@ function deckFull() {
     inv.children[3].dataset.dmgboss == "true";
 
   if (deckOnlyDmgBoss) {
-    TICK && console.log("DECK CHEIO");
     usarDeckTrigg = true;
     return true;
   } else {
-    TICK && console.log("DECK VAZIO");
     usarDeckTrigg = false;
     return false;
   }
@@ -2864,8 +2990,6 @@ function dmgBoss() {
   let energiaTotal = 0;
 
   if (deckFull()) {
-    console.log("USEI O DECK CONTRA O BOSS");
-
     for (let i = 0; i < 4; i++) {
       let carta = inv.children[i];
 
@@ -2890,10 +3014,8 @@ function dmgBoss() {
       }
 
       energiaTotal = energia + energiaTotal;
-      console.log(energia);
     }
     boss.dmg(energiaTotal * 2);
-    console.log("ENERIGA DECK TOTAL", energiaTotal);
   } else {
     for (let i = 0; i < 4; i++) {
       let carta = inv.children[i];
@@ -3131,7 +3253,7 @@ function tudo() {
 
   if (numCartas.total > 1) {
     rodadas++;
-    console.log("RODADA N°", rodadas);
+
     if (numCartas.total <= 0) {
       showVersion();
       button.style.backgroundColor = "red";
@@ -3154,20 +3276,25 @@ function tudo() {
     moverCartaMonark();
     numCartas.remove(1);
     spawnBoss();
-    abelha();
+    poderesEspeciais()
     colocarEfeito();
     verificarCartaParaMover();
     blockInv();
     ativarBtn();
     poderBoss();
-    creeper()
-    deckVazio();
-    deckCheio();
-    allMonark();
-    specialInDeck();
-    console.log("ALL SPECIAL", allEspecial());
   } else {
   }
+}
+
+function tick() {
+  setInterval(function () {
+    allMonark();
+    specialInDeck();
+    deckVazio();
+    deckCheio();
+    somaPontos();
+    aplicarEfeitos()
+  }, 100);
 }
 
 function allMonark() {
@@ -3177,7 +3304,7 @@ function allMonark() {
   let monark3 = inv.children[3].id == "carta-monark";
 
   let allMonarkInv = monark0 && monark1 && monark2 && monark3;
-  // console.log(" IS IT ALL MONARK?", allMonarkInv);
+  //
 
   return allMonarkInv;
 }
@@ -3190,7 +3317,7 @@ function deckVazio() {
 
   let empty = empty1 && empty2 && empty3 && empty4;
 
-  // console.log(" IS IT ALL vazio?", empty);
+  //
 
   return empty;
 }
@@ -3203,7 +3330,7 @@ function deckCheio() {
 
   let empty = !empty1 && !empty2 && !empty3 && !empty4;
 
-  // console.log(" IS IT ALL CHEIO?", empty);
+  //
 
   return empty;
 }
@@ -3224,7 +3351,7 @@ function allEspecial() {
   let monark3 = inv.children[3].dataset.card == "especial";
 
   let allMonarkInv = monark0 && monark1 && monark2 && monark3;
-  // console.log(" IS IT ALL MONARK?", allMonarkInv);
+  //
 
   return allMonarkInv;
 }
@@ -3238,7 +3365,6 @@ function healMonarkBoss(x) {
   if (bossIsMonark) {
     boss.heal(x);
   } else {
-    console.log("NAO É MONARK");
   }
 }
 
@@ -3282,7 +3408,6 @@ function poderBoss() {
           return gerarNumero(1, 48) == 1;
         }
 
-        console.log("VAI TER CHUVA", probChuva());
         if (probChuva()) {
           //CHUVA DE MONARK
           if (chuvaCooldown == false) {
@@ -3490,6 +3615,7 @@ export function startGame2() {
   numCartas.set(50);
   vendas.set(50);
   hpPlayer.set(100);
+  tick();
 }
 
 document.addEventListener("contextmenu", function () {

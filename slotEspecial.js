@@ -264,6 +264,11 @@ function colocarSlot(tipo) {
   cartaEspecial.dataset.tier = especial.raridade.nome
   cartaEspecial.dataset.dmgboss = especial.dmgboss
   retratoE.style.visibility = "visible";
+  if(especial.canbedeleted){
+    cartaEspecial.dataset.canbedeleted = especial.canbedeleted
+  } else {
+    cartaEspecial.dataset.canbedeleted = 'true'
+  }
   
   //NOME
   // nomeE.className = ''
