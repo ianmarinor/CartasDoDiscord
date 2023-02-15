@@ -35,9 +35,6 @@ function showVersion() {}
 showVersion();
 
 const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
-function seedRNG() {
-  return Math.floor(Math.random() * totalNumOfSeeds);
-}
 
 //NUMERO ALEATORIO
 function gerarNumero(min, max, decimals) {
@@ -85,22 +82,6 @@ let audioEffect;
 
 let audioEffectE = new Audio("/audio/deletar.mp3");
 
-function hasStopped(song, channel) {
-  let test = new Audio("/audio/" + song[0]);
-
-  //
-  //
-
-  // console.log(test.src == audioEffect.src
-  //   );
-
-  if (channel.src != test.src) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 export function sndEfeito(audio) {
   audioEffectE = new Audio("/audio/" + audio[0]);
 
@@ -136,7 +117,7 @@ let integrante;
 let cartaCustom;
 // let seedObj
 let seedString = "";
-let cartaComSeedParaAdicionar;
+
 function escolherIntegrante() {
   // seedObj = generateSeed(input);
   seedString = seedObj._seedString;
@@ -218,6 +199,7 @@ function escolherIntegrante() {
 // THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE AN USER
 // ******************************************************************
 let cidade = "";
+
 function escolherCidade() {
   //
   if (
@@ -275,7 +257,7 @@ function escolherCidade() {
 //CARGO
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
 
-export function triggerChuvaMonark(x) {
+export function triggerChuvaMonark() {
   boss.treme(true);
   console.log("CHUVA DE MONARK");
 
@@ -296,7 +278,7 @@ export function triggerChuvaMonark(x) {
       if (gerarNumero(1, 2) == 1) {
         monarkGenerator(mao, mao.children[i]);
         hpPlayer.remove(3);
-        healMonarkBoss(50)
+        healMonarkBoss(50);
       }
     }
     selectHandCard();
@@ -304,13 +286,14 @@ export function triggerChuvaMonark(x) {
   }, gerarNumero(900, 4000));
 }
 
-let probMonarkNormal = () => seedString[14] >= 4 && seedString[13] == 7 ;
+let probMonarkNormal = () => seedString[14] >= 4 && seedString[13] == 7;
 
 let probMonark;
 
 probMonark = () => probMonarkNormal();
 
 let cargo = "";
+
 function escolherCargo() {
   //
   if (
@@ -433,6 +416,7 @@ function pontoVariante() {
 }
 
 let poder = {};
+
 function escolherPoder() {
   //
   if (cargo === "carta-semcargo") {
@@ -522,8 +506,6 @@ const semCarta =
   "</div>";
 
 let button = document.getElementById("btn");
-let h1 = document.getElementsByTagName("h1")[0];
-let mover = document.getElementById("mover");
 let inv = document.getElementById("inv");
 let arenaP = document.querySelector(".arena");
 let nomeP = document.querySelector(".nome");
@@ -537,22 +519,15 @@ let novoAtaquerP = document.querySelector(".novoAtaque");
 let placarP = document.getElementById("placarDano");
 let placarWrapP = document.getElementById("placarDanoWrap");
 
-
 let efeito1P = document.getElementById("efeito1");
-let efeito2P = document.getElementById("efeito2");
-let efeito3P = document.getElementById("efeito3");
-let efeito4P = document.getElementById("efeito4");
 let mao = document.getElementById("mao");
 let moneyP = document.getElementById("money");
 let vendasP = document.getElementById("vendas");
-let healthWrapP = document.querySelector(".bossHealthWrap");
 let bossRoomP = document.getElementById("bossRoom");
 let hpPlayerP = document.getElementById("healthPlayer");
 let hpPlayerEmojiP = document.getElementById("healthPlayerEmoji");
 let hpPlayerWrapP = document.getElementById("healthPlayerWrap");
 let endP = document.getElementById("end");
-
-let bossP = () => bossRoomP.children[0];
 
 let mao0 = mao.children[0];
 let mao1 = mao.children[1];
@@ -560,32 +535,25 @@ let mao2 = mao.children[2];
 let mao3 = mao.children[3];
 let mao4 = mao.children[4];
 let mao5 = mao.children[5];
-let mao6 = mao.children[6];
 
 function zerarMoney() {
   moneyP.textContent = 0;
 }
 zerarMoney();
 
-function debug(){
-  moneyP.textContent = 9999
-  numCartas.set(9999)
-  
+function debug() {
+  moneyP.textContent = 9999;
+  numCartas.set(9999);
 }
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyM") {
-    debug()
+    debug();
   }
 });
 
-
-
-
 //div poder
 let ataqueP = document.querySelector(".ataque");
-let defesaP = document.querySelector(".defesa");
-let especialP = document.querySelector(".especial");
 
 let seedP = document.querySelector(".seed");
 let seloP = document.getElementById("selo");
@@ -594,16 +562,11 @@ let cartaP = packP.children[0];
 // input da seed cliente
 // let coloqueSuaSeed = document.getElementById('seed').value
 //wrap
-let wrap = document.getElementsByClassName("wrap")[0];
 //input
 let getSeed = document.getElementById("getseed");
 //pagin procura seed
-let seedCheckInput = document.getElementById("seedcheckinput");
-let seedCheckBtn = document.getElementById("seedcheckbtn");
-let seedCheckPage = document.getElementById("seedcheck");
 let novaCarta;
 
-let meuMonark;
 function monarkGenerator(father, slot) {
   colocarInfoNoWrap(
     fabricaDeCarta(
@@ -915,13 +878,21 @@ export let rodadas = 0;
 export let rodadaSpawnBoss = 10;
 export let efeitos = {
   status: false,
-  css: { nome: "", imagem: "" },
+  css: {
+    nome: "",
+    imagem: "",
+  },
   rodadas: 0,
 };
 
-let efeitoVazio = { status: false, css: { nome: "", imagem: "" }, rodadas: 0 };
-
-let efeitoAu = [];
+let efeitoVazio = {
+  status: false,
+  css: {
+    nome: "",
+    imagem: "",
+  },
+  rodadas: 0,
+};
 
 function colocarEfeito() {
   efeito1P.style.backgroundImage = efeitos.css.imagem;
@@ -933,10 +904,6 @@ function colocarEfeito() {
     efeitos = efeitoVazio;
     audioEffectE.pause();
   }
-}
-function colocarInput() {
-  input = getSeed.value;
-  // input = 13315754569994
 }
 
 //*************************MOVER CARTA PARA O INVENTARIO */
@@ -1006,10 +973,8 @@ let cartaParaMover = document.getElementById("pack").firstElementChild;
 let copyCard = cartaParaMover.cloneNode(true);
 let seedCopyCard;
 let cartaNotEspecial;
-let customOff;
 let cartaNotMonark;
 let PodeMover;
-let naoMoviAinda;
 let taTudoOk;
 
 let seed1;
@@ -1082,43 +1047,6 @@ let cartasComBotao = [
   "dva",
 ];
 
-function moverToInvMao() {
-  let botaoMao = mao.children[0].children[3].children[2];
-  // let cartasComBotao = objCartaMao._especial.poder == true;
-
-  function colocarBotao() {
-    if (cartasComBotao.some((el) => mao.children[0].id.includes(el))) {
-      botaoMao.style.visibility = "visible";
-    }
-  }
-
-  if (mao.children[0].id != "cartaMao") {
-    snd(novaCartaAu);
-    if (inv.children[0].id == "empty1") {
-      colocarBotao();
-      inv.replaceChild(mao.children[0], inv.children[0]);
-      mao.appendChild(cartaMao);
-      somaPontos();
-    } else if (inv.children[1].id == "empty2") {
-      colocarBotao();
-      inv.replaceChild(mao.children[0], inv.children[1]);
-      mao.appendChild(cartaMao);
-      somaPontos();
-    } else if (inv.children[2].id == "empty3") {
-      colocarBotao();
-      inv.replaceChild(mao.children[0], inv.children[2]);
-      mao.appendChild(cartaMao);
-      somaPontos();
-    } else if (inv.children[3].id == "empty4") {
-      colocarBotao();
-      inv.replaceChild(mao.children[0], inv.children[3]);
-      mao.appendChild(cartaMao);
-      somaPontos();
-    }
-    criarBtn();
-  }
-}
-
 for (let m = 0; m < 6; m++) {
   let slotMao = "mao" + m;
   document.getElementById(slotMao).addEventListener("click", function () {
@@ -1166,16 +1094,11 @@ export function selectHandCard() {
           return carta.dataset.inv == undefined;
         }
         if (naoFoi()) {
-          function sameCard() {
-            return e.target.offsetParent != chosenCard;
-          }
-
           function lowerCard() {
-            let teclaMoverCarta = "Space";
-
             chosenCard.style.bottom = "0px";
             //
           }
+
           function raiseCard() {
             //
 
@@ -1204,7 +1127,7 @@ export function selectHandCard() {
         // }, 10000)
       });
 
-      retrato().addEventListener("contextmenu", function (e) {
+      retrato().addEventListener("contextmenu", function () {
         if (chosenCard != 0) {
           chosenCard.style.bottom = "0px";
           chosenCard = 0;
@@ -1413,8 +1336,6 @@ function moverCartaMonark() {
     if (copyCard.id === "carta-monark") {
       function isSpy() {
         for (let j = 0; j < 4; j++) {
-          let energia = inv.children[j].children[3].children[0];
-
           if (
             inv.children[j].id == "spy" &&
             inv.children[j].className != "invisible"
@@ -1510,7 +1431,6 @@ function moverCartaMonark() {
       //  ACTION
       let monarkAu = ["monark.mp3"];
       for (let i = 0; i < 4; i++) {
-        let energia = inv.children[i].children[3].children[0];
         //SE TIVER SPY
         if (spyCheck[0]) {
           inv.replaceChild(copyCard, inv.children[spyCheck[1]]);
@@ -1564,9 +1484,6 @@ function moverCartaMonark() {
   }
 }
 
-const cartaParaMoverNome = cartaParaMover.children[0].children[0].textContent;
-const cartaParaMoverCidade = cartaParaMover.children[0].children[1].textContent;
-
 function critico() {
   //nome
   // seedString
@@ -1591,6 +1508,7 @@ function critico() {
     poderTremer.style.fontWeight = "bold";
     poderTremer.innerHTML = parseInt(poderTremer.textContent) * 2 + "⚡";
   }
+
   function colocarUltraCritico() {
     cartaParaMover.classList.add("critico");
     varianteP.classList.add("critico");
@@ -1934,6 +1852,7 @@ function criarBtn() {
         );
         inv.children[i].children[0].id = "foi";
       }
+
       function camarada(e) {
         let cartasQueOCamaradaNaoGosta = [
           "especial-click",
@@ -2039,6 +1958,7 @@ function criarBtn() {
 
           premioMonark.classList.add("vanish");
           premioMonarkBotao.style.visibility = "hidden";
+
           function eliminarPremioMonark() {
             // premioMonark.remove();
 
@@ -2113,7 +2033,6 @@ function criarBtn() {
             retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
             let spyInvisAu = ["spyInvis.mp3", 0.2];
-            let spyInvisLineAu = ["spyInvisLine.mp3", 0.4];
             snd(spyInvisAu);
             // snd(spyInvisLineAu);
 
@@ -2133,7 +2052,6 @@ function criarBtn() {
             retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
 
             let spyInvisAu = ["spyInvis.mp3", 0.3];
-            let spyInvisLineAu = ["spyInvisLine.mp3", 0.4];
             snd(spyInvisAu);
             // snd(spyInvisLineAu);
             // tudo()
@@ -2209,7 +2127,6 @@ function criarBtn() {
       function estoico(e) {
         let estoico = e.target.offsetParent;
         let butao = estoico.children[3].children[2];
-        let poderEstoico = estoico.children[3].children[1];
 
         for (let i = 0; i < 4; i++) {
           if (
@@ -2273,7 +2190,6 @@ function criarBtn() {
       function lucio(e) {
         let lucio = e.target.offsetParent;
         let lucioEnergia = lucio.children[3].children[0];
-        let butao = lucio.children[3].children[2];
         let barreira = lucio.children[3].children[1];
         let ulti = lucio.children[2];
         let ultiReadyAu = ["ultiReadyLucio1.mp3"];
@@ -2305,7 +2221,8 @@ function criarBtn() {
                 "⚡";
 
               ulti =
-                parseInt(ulti.textContent) + parseInt(poderVelho.textContent) * 2;
+                parseInt(ulti.textContent) +
+                parseInt(poderVelho.textContent) * 2;
 
               if (ulti >= 100) {
                 lucio.children[2].textContent = 100 + "%";
@@ -2336,8 +2253,6 @@ function criarBtn() {
             let ultiLucioAu = ["ultiLucio.oga"];
             snd(ultiLucioAu);
             hpPlayer.add(parseInt(barreira.textContent));
-
-            let cartasQueOLucioGosta = ["jhin", "tank"];
 
             // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
             ulti.textContent = "0%";
@@ -2398,6 +2313,7 @@ function criarBtn() {
             copyCard.children[3].children[0].textContent
           );
           let butao = jhin.children[3].children[2];
+
           function checkTiros() {
             if (tiros >= 1) {
               return true;
@@ -2549,21 +2465,19 @@ function criarBtn() {
         let dva = e.target.offsetParent;
         let dvaEnergia = dva.children[3].children[0];
         let butao = dva.children[3].children[2];
-        let barreira = dva.children[3].children[1];
         let ulti = dva.children[2];
         let retratoFoto = dva.children[1];
         let hp = dva.children[3].children[1];
 
         for (let i = 0; i < 4; i++) {
           let vitima =
-            inv.children[i].dataset.dmgboss == "false" && inv.children[i].dataset.card == "especial"
-            
+            inv.children[i].dataset.dmgboss == "false" &&
+            inv.children[i].dataset.card == "especial";
 
           if (parseInt(ulti.textContent) < 100) {
             // se a carta for gentleman
             if (vitima) {
               let gentleman = inv.children[i];
-              let poderVelho = inv.children[i].children[3].children[0];
 
               // se tiver pdoer novo, o adiquira e exclua a carta
 
@@ -2777,6 +2691,51 @@ function abelha() {
   }
 }
 
+
+function elimCardInv(x){
+  if (x == inv.children[0]) {
+    inv.replaceChild(empty1, x);
+  } else if (x == inv.children[1]) {
+    inv.replaceChild(empty2, x);
+  } else if (x== inv.children[2]) {
+    inv.replaceChild(empty3, x);
+  } else if (x == inv.children[3]) {
+    inv.replaceChild(empty4, x);
+  }
+}
+
+function creeper() {
+  for (let i = 0; i < 4; i++) {
+    if(inv.children[i].id == "creeper"){
+    let creeper = inv.children[i];
+    let right = creeper.nextElementSibling
+    let left = creeper.previousElementSibling
+
+      if(true){
+
+        
+        console.log(creeper);
+        console.log(right);
+        console.log(left);
+
+        elimCardInv(creeper)
+        if(right){
+          elimCardInv(right)
+        }
+        if(left){
+          elimCardInv(left)
+        }
+
+
+        
+
+      }
+
+
+  }
+  }
+}
+
 // if (inv.children[0].id != 'empty' && inv.children[1].id != 'empty' && inv.children[2].id != 'empty' && inv.children[3].id != 'empty') {
 
 //     console.log ('sem loop')
@@ -2871,15 +2830,7 @@ function deletarDeck(e) {
   }
 }
 
-let deckReadyNum = 0;
 let usarDeckTrigg = false;
-
-let tick = setInterval(function () {
-  // console.log('-');
-  deckFull();
-  somaPontos();
-  aplicarEfeitos();
-}, 200);
 
 function deckFull() {
   let deckOnlyDmgBoss =
@@ -2887,12 +2838,6 @@ function deckFull() {
     inv.children[1].dataset.dmgboss == "true" &&
     inv.children[2].dataset.dmgboss == "true" &&
     inv.children[3].dataset.dmgboss == "true";
-
-  let deckFullAny =
-    inv.children[0].id != "empty1" &&
-    inv.children[1].id != "empty2" &&
-    inv.children[2].id != "empty3" &&
-    inv.children[3].id != "empty4";
 
   if (deckOnlyDmgBoss) {
     TICK && console.log("DECK CHEIO");
@@ -2909,8 +2854,8 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyQ") {
     if (boss) {
       dmgBoss();
-    } else{
-      snd(naoAu)
+    } else {
+      snd(naoAu);
     }
   }
 });
@@ -2933,7 +2878,7 @@ function dmgBoss() {
       } else if (carta == inv.children[1]) {
         inv.replaceChild(empty2, carta);
         ativarBtn();
-          somaPontos();
+        somaPontos();
       } else if (carta == inv.children[2]) {
         inv.replaceChild(empty3, carta);
         ativarBtn();
@@ -2949,7 +2894,6 @@ function dmgBoss() {
     }
     boss.dmg(energiaTotal * 2);
     console.log("ENERIGA DECK TOTAL", energiaTotal);
-
   } else {
     for (let i = 0; i < 4; i++) {
       let carta = inv.children[i];
@@ -3009,10 +2953,6 @@ let vendas = {
 
 function animateSell(start, plus) {
   if (plus === 0) return;
-
-  let current = start;
-  let novo = start + plus;
-  let range = Math.abs(start - plus);
 
   let increment;
 
@@ -3169,7 +3109,6 @@ function resetarDeck() {
 
 function blockInv() {
   let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
-  let customOff = getSeed.className == "customOff";
   let cartaNotMonark = copyCard.id != "carta-monark";
   let PodeMover =
     (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
@@ -3221,7 +3160,7 @@ function tudo() {
     blockInv();
     ativarBtn();
     poderBoss();
-
+    creeper()
     deckVazio();
     deckCheio();
     allMonark();
@@ -3230,6 +3169,7 @@ function tudo() {
   } else {
   }
 }
+
 function allMonark() {
   let monark0 = inv.children[0].id == "carta-monark";
   let monark1 = inv.children[1].id == "carta-monark";
@@ -3317,9 +3257,6 @@ function poderBoss() {
     if (boss) {
       if (bossIsMonark) {
         function probChuva() {
-
-
-          
           if (allMonark()) {
             return gerarNumero(1, 66) == 1;
           }
@@ -3341,7 +3278,6 @@ function poderBoss() {
           if (boss.health < 300) {
             return gerarNumero(1, 3) == 1;
           }
-          
 
           return gerarNumero(1, 48) == 1;
         }
@@ -3363,8 +3299,6 @@ function poderBoss() {
     }
   }
 }
-
-let aumentou = false;
 
 let numCartas = {
   total: 50,
@@ -3398,61 +3332,52 @@ export let hpPlayer = {
     if (this.total > 100) {
       this.total = 100;
     }
-    this.playerP(this.total)
+    this.playerP(this.total);
   },
 
   remove(n) {
     this.total -= n;
-    this.dmgTaken += n
+    this.dmgTaken += n;
 
     if (this.total < 0) {
       this.total = 0;
-      playerDead()
+      playerDead();
     }
-    this.playerP(this.total)
+    this.playerP(this.total);
   },
 
   set(n) {
     this.total = n;
-    this.playerP(this.total)
+    this.playerP(this.total);
   },
 
-  playerP(n){
-    hpPlayerP.textContent = n
+  playerP(n) {
+    hpPlayerP.textContent = n;
 
-    if(n > 25){
-      hpPlayerP.style.color = 'wheat'
-      hpPlayerEmojiP.innerHTML = '💚'
-      hpPlayerWrapP.className = ''
-
-    } else {   
-      hpPlayerP.style.color = 'red'
-      hpPlayerEmojiP.innerHTML = '💔'
-      hpPlayerWrapP.className = 'pulsar'
+    if (n > 25) {
+      hpPlayerP.style.color = "wheat";
+      hpPlayerEmojiP.innerHTML = "💚";
+      hpPlayerWrapP.className = "";
+    } else {
+      hpPlayerP.style.color = "red";
+      hpPlayerEmojiP.innerHTML = "💔";
+      hpPlayerWrapP.className = "pulsar";
     }
-  }
+  },
 };
 
-
-function playerDead(){
-
-  let rodadasStats = document.getElementById('rodadasStats')
-  let bossDmgTakenStats = document.getElementById('bossDmgTakenStats')
-  let playerDmgTakenStats = document.getElementById('playerDmgTakenStats')
-
+function playerDead() {
+  let rodadasStats = document.getElementById("rodadasStats");
+  let bossDmgTakenStats = document.getElementById("bossDmgTakenStats");
+  let playerDmgTakenStats = document.getElementById("playerDmgTakenStats");
 
   endP.style.display = "flex";
   main.style.display = "none";
 
-  rodadasStats.innerHTML = 'RODADAS: ' + rodadas
-  bossDmgTakenStats.innerHTML =  'DANO BOSS RECEBIDO ' + boss.dmgTaken
-  playerDmgTakenStats.innerHTML =  'DANO JOGADOR RECEBIDO '  + hpPlayer.dmgTaken
-  
-
+  rodadasStats.innerHTML = "RODADAS: " + rodadas;
+  bossDmgTakenStats.innerHTML = "DANO BOSS RECEBIDO " + boss.dmgTaken;
+  playerDmgTakenStats.innerHTML = "DANO JOGADOR RECEBIDO " + hpPlayer.dmgTaken;
 }
-
-
-let totalPontos = 0;
 
 export function somaPontos() {
   let danoTotal = 0;
@@ -3473,18 +3398,13 @@ export function somaPontos() {
   }
 
   if (deckCritico) {
-    
-
-    placarP.style.color = 'red'
-    placarWrapP.className = 'critico';
-    danoTotal = danoTotal * 2
-
-    
+    placarP.style.color = "red";
+    placarWrapP.className = "critico";
+    danoTotal = danoTotal * 2;
   } else {
-
-    placarP.style.color = 'wheat'
-    placarWrapP.className = ''
-    danoTotal = danoTotal
+    placarP.style.color = "wheat";
+    placarWrapP.className = "";
+    danoTotal = danoTotal;
   }
 
   placarP.innerHTML = danoTotal;
@@ -3576,11 +3496,6 @@ document.addEventListener("contextmenu", function () {
   //
   return false;
 });
-
-// document.getElementById("empty1").addEventListener("click", moverOne);
-// document.getElementById("empty2").addEventListener("click", moverTwo);
-// document.getElementById("empty3").addEventListener("click", moverThree);
-// document.getElementById("empty4").addEventListener("click", moverFour);
 
 // LIST BINDS
 //  1, 2, 3, 4 ---> USAR CARTAS NO DECK
