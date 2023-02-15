@@ -45,9 +45,9 @@ export let raridades = {
 
 // export let especiais = ['tenica', 'speaker', 'maisCartas', 'abelha']
 
-let valoresComunista = [333, 666, 999];
+let valoresComunista = [111, 333, 666];
 export function comunistaPE() {
-  if (seed2 < 6) {
+  if (seed2 < 7) {
     return valoresComunista[0] + "☭";
   } else if (seed2 < 9) {
     return valoresComunista[1] + "☭";
@@ -693,6 +693,60 @@ export let especiais = {
       visibility: "visible",
     },
   },
+
+
+  creeper: {
+    cartaId: "creeper",
+    nome: "CREEPER",
+    raridade: raridades.campones,
+    pontoEspecial: "",
+    energia: 0,
+    poder: false,
+    efeito: "",
+    familia: "minecraft",
+    descricao: "",
+    emoji: "",
+    emojiEsp: "",
+    retrato: "url('pics/retratoCreeper.png')",
+    retrato2: "",
+    cargo: "",
+    ataqueE: '',
+    novoAtaque: "",
+    dmgboss: "false",
+
+    nomeStyle: {
+      fontSize: "180%",
+      fontFamily: "minecraft",
+      color: "#555555",
+    },
+
+    retratoStyle: {
+      border: "2px solid #164d0d",
+      backgroundColor: "",
+    },
+    cargoStyle: {
+      fontFamily: "",
+      fontSize: "170%",
+    },
+    ataqueStyle: {
+      color: "",
+      fontSize: "",
+      fontFamily: "",
+      visibility: "",
+    },
+    novoAtaqueStyle: {
+      color: "",
+      fontSize: "",
+      fontFamily: "",
+      visibility: "hidden",
+    },
+
+    // ataqueE: abelhaEnergia() + "🐝"
+  },
+
+
+
+
 };
 
 DEBUG && console.log("ESPECAIISMAISCARTAS", especiais.menosCartas);
@@ -793,12 +847,12 @@ export function escolherEspecial(teste) {
 
       let num
 
-       num = gerarNumero(1, 3);
+       num = gerarNumero(1, 4);
 
       //CAMPONESES
 
-      if (false) {
-        
+      if (true) {
+        especial = especiais.creeper
 
       } else if (false) {
         especial = especiais.menosCartas;
@@ -812,8 +866,10 @@ export function escolherEspecial(teste) {
         especial.cargo = tankCargo(especiais.tank.emoji);
       } else if (num == 3){
         especial = especiais.estoicoTuru;
-        // especial.ataqueE = estoicoPE();
-      }
+      } else if (num == 4){
+        especial = especiais.creeper
+        
+      } 
     }
   } else {
     raridade = raridades.semRaridade;

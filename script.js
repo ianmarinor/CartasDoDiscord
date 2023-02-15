@@ -566,6 +566,22 @@ function zerarMoney() {
   moneyP.textContent = 0;
 }
 zerarMoney();
+
+function debug(){
+  moneyP.textContent = 9999
+  numCartas.set(9999)
+  
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyM") {
+    debug()
+  }
+});
+
+
+
+
 //div poder
 let ataqueP = document.querySelector(".ataque");
 let defesaP = document.querySelector(".defesa");
@@ -2540,7 +2556,7 @@ function criarBtn() {
 
         for (let i = 0; i < 4; i++) {
           let vitima =
-            inv.children[i].dataset.dmgboss == "false" 
+            inv.children[i].dataset.dmgboss == "false" && inv.children[i].dataset.card == "especial"
             
 
           if (parseInt(ulti.textContent) < 100) {
@@ -3375,6 +3391,7 @@ let numCartas = {
 
 export let hpPlayer = {
   total: 100,
+  dmgTaken: 0,
 
   add(n) {
     this.total += n;
@@ -3386,11 +3403,11 @@ export let hpPlayer = {
 
   remove(n) {
     this.total -= n;
+    this.dmgTaken += n
 
     if (this.total < 0) {
       this.total = 0;
-      endP.style.display = "flex";
-      main.style.display = "none";
+      playerDead()
     }
     this.playerP(this.total)
   },
@@ -3415,6 +3432,25 @@ export let hpPlayer = {
     }
   }
 };
+
+
+function playerDead(){
+
+  let rodadasStats = document.getElementById('rodadasStats')
+  let bossDmgTakenStats = document.getElementById('bossDmgTakenStats')
+  let playerDmgTakenStats = document.getElementById('playerDmgTakenStats')
+
+
+  endP.style.display = "flex";
+  main.style.display = "none";
+
+  rodadasStats.innerHTML = 'RODADAS: ' + rodadas
+  bossDmgTakenStats.innerHTML =  'DANO BOSS RECEBIDO ' + boss.dmgTaken
+  playerDmgTakenStats.innerHTML =  'DANO JOGADOR RECEBIDO '  + hpPlayer.dmgTaken
+  
+
+}
+
 
 let totalPontos = 0;
 

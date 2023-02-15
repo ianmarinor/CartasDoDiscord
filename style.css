@@ -78,13 +78,52 @@ body {
 }
 
 #protector, #end{
-/* display: none; */
+display: flex;
+flex-direction: column;
 height: 100%;
 width: 100%;
-
-background-color: #15b871;
+align-items: center;
+justify-content: space-around;
+background-color: #0b663f;
 
 }
+
+
+
+
+#pickMonark, #pickVelha, #pick{
+
+margin: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 600px;
+  height: 200px;
+
+  border-radius: 20px;
+
+background-color: rgba(255, 255, 255, 0.735);
+}
+
+#pickMonark > *, #pickVelha > *, #pick > * {
+
+  width: 500px;
+
+font-size: 1em;
+  color: #010101d1;
+  text-align: center;
+  /* background-color: rgba(186, 5, 5, 0.735); */
+
+}
+
+#pickMonark:hover{
+  background-color: rgba(181, 181, 181, 0.735);
+  
+}
+
 
 #end{
   display: none;
@@ -92,7 +131,35 @@ background-color: #15b871;
   height: 100%;
   width: 100%;
   background-color: #b81515;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
+
+#deathMessage{
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: #59565694;
+  width: 1000px;
+  height: 400px;
+}
+
+#deathMessage > *{
+  text-align: center;
+  font-size: 5em;
+}
+
+
+
+#stats{
+  width: 1500px;
+  height: 900px;
+  background-color: #43385994;
+}
+
 
 section {
   display: none;
@@ -698,6 +765,25 @@ justify-content: center;
   font-weight: 900;
   color: #ffec1a;
 }
+
+#creeper {
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7)),
+    url(pics/fundoCreeper.png);
+    
+  font-family: minecraft;
+  height: var(--tamanhoCartaHeight);
+  width: var(--tamanhoCartaWidth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  position: relative;
+  border: 3px solid #164d0d;
+  font-weight: 900;
+  color: #ffec1a;
+}
+
 #comunista {
   background: linear-gradient(rgba(125, 105, 4, 0.6), rgba(187, 151, 5, 0.6)),
     url(pics/camaradaFundo.gif);

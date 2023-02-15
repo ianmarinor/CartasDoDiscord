@@ -25,9 +25,11 @@ function debug(){
    precoCavalheiro = 1;
    precoSangueAzul = 1;
    precoRainha = 1;
+  
+   
 }
 
-// debug()
+
 
 let novaCarta = ['novaCarta.mp3']
 
@@ -394,3 +396,5 @@ export function limparEsp() {
   slotEsp.innerHTML = cartaEsp;
   ativarBtn();
 }
+
+debug()
