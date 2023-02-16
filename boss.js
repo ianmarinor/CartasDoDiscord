@@ -9,6 +9,7 @@ let bossP = () => bossRoomP.children[0];
 let pickMonark = document.getElementById("pickMonark");
 let protector = document.getElementById("protector");
 let main = document.getElementById("main");
+let testP = document.getElementById("test");
 
 let cartaBossMonark =
   '<div id="cartaBossMonark" class="bossAnimation" data-card="boss"></div>';
@@ -122,6 +123,7 @@ function startGame() {
   
     protector.style.display = "none";
     main.style.display = "grid";
+    testP.style.display = "block";
     startGame2();
   
 }

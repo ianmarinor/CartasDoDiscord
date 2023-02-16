@@ -145,7 +145,7 @@ const cartaEsp =
   '<div class="poderEsp">' +
   '<p class="ataqueEsp"></p>' +
   '<p class="novoAtaqueEsp"></p>' +
-  '<button class="actionEsp">PRESS</button>' +
+  '<div class="action">🔘</div>' +
   '<p class="seedEsp"></p>' +
   '<p class="seloEsp"></p>' +
   "</div>";
@@ -264,10 +264,18 @@ function colocarSlot(tipo) {
   cartaEspecial.dataset.tier = especial.raridade.nome
   cartaEspecial.dataset.dmgboss = especial.dmgboss
   retratoE.style.visibility = "visible";
+
+
   if(especial.canbedeleted){
     cartaEspecial.dataset.canbedeleted = especial.canbedeleted
   } else {
     cartaEspecial.dataset.canbedeleted = 'true'
+  }
+
+  if(especial.hashp){
+    cartaEspecial.dataset.hashp = especial.hashp
+  } else {
+    cartaEspecial.dataset.hashp = 'true'
   }
   
   //NOME

@@ -88,9 +88,7 @@ background-color: #0b663f;
 
 }
 
-#test{
-  /* display: none; */
-}
+
 
 
 #pickMonark, #pickVelha, #pick{
@@ -172,7 +170,7 @@ main {
   grid-template-areas:
     "hb hb hb"
     "c boss d"
-    "b inv texto "
+    "b inv texto"
     "cartas  dicas dinheiro"
     "baralho mao especial";
   align-items: center;
@@ -193,6 +191,9 @@ main {
    background-size: cover;
 
   display: none;
+
+  
+
 }
 
 a{
@@ -503,7 +504,7 @@ justify-content: center;
 /* CARTAS VARIACOES */
 /* ************************* */
 
-#carta {
+#carta, #test {
   display: none;
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
@@ -516,7 +517,13 @@ justify-content: center;
   
 }
 
-
+#test {
+  
+  display: none;
+  top: -2200px;
+  position: absolute;
+  left: 46%
+}
 
 
 
@@ -1077,7 +1084,7 @@ justify-content: center;
 .poder,
 .poderEsp {
   height: 10%;
-  width: 85%;
+  width: 94%;
   font-size: 0.98em;
 
   display: flex;
@@ -1085,11 +1092,32 @@ justify-content: center;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+
+  /* background-color: #010101; */
 }
 
-.ataqueEsp {
+.ataqueEsp,.ataque {
+  width: 35%;
   white-space: nowrap;
+  /* background-color: pink; */
 }
+.novoAtaque, .novoAtaqueEsp {
+  width: 35%;
+  white-space: nowrap;
+  /* background-color: rgb(190, 14, 43); */
+}
+
+.action,
+.actionEsp {
+  /* display: none; */
+  visibility: hidden;
+  margin: 0;
+  /* background-color: #11446d; */
+  width: 30%;
+  font-size: 1.5em;
+  
+}
+
 
 .seed, .seedEsp {
   /* background-color: #7e7a7a; */
@@ -1141,11 +1169,7 @@ justify-content: center;
 /* ---------------------------------------*/
 /* VARIANTES */
 /* ---------------------------------------*/
-.action,
-.actionEsp {
-  /* display: none; */
-  visibility: hidden;
-}
+
 .variante {
   text-align: center;
 }
@@ -1256,7 +1280,7 @@ p {
 }
 
 .voar {
-  animation: voar 1s;
+  animation: voar 2s;
   animation-iteration-count: 1;
 }
 .monark {
@@ -1353,12 +1377,12 @@ p {
 
 @keyframes voar {
   0% {
-    bottom: 0px;
+    bottom: -900px;
   }
 
   100% {
     /* right: -2500px;ads */
-    bottom: -2000px;
+    bottom: -4000px;
   }
 }
 

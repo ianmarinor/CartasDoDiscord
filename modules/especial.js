@@ -87,8 +87,9 @@ export let especiais = {
     cargo: "",
     // ataqueE:tenicaEnergia() + "👑"
     ataqueE: 1,
-    novoAtaqueE: "0",
+    novoAtaqueE: "700💚",
     dmgboss: "false",
+  
 
     nomeStyle: {
       fontSize: "",
@@ -114,7 +115,7 @@ export let especiais = {
       color: "",
       fontSize: "",
       fontFamily: "",
-      visibility: "hidden",
+      visibility: "visible",
     },
   },
   speaker: {
@@ -132,7 +133,7 @@ export let especiais = {
     retrato: "url('pics/SPEAKER.webp')",
     cargo: "MONARK BAN!",
     ataqueE: 1,
-    novoAtaque: "4💚",
+    novoAtaqueE: "50💚",
     dmgboss: "true",
 
     // ataqueE: pontoSpeaker() + "⚡"
@@ -162,7 +163,7 @@ export let especiais = {
       color: "",
       fontSize: "",
       fontFamily: "",
-      visibility: "hidden",
+      visibility: "visible",
     },
   },
 
@@ -181,7 +182,7 @@ export let especiais = {
     retrato: "url('pics/clickretrato.webp')",
     cargo: "",
     ataqueE: 1,
-    novoAtaque: "",
+    novoAtaqueE: "10💚",
     dmgboss: "false",
 
     // ataqueE: bonusCartasPE()
@@ -209,7 +210,7 @@ export let especiais = {
       color: "",
       fontSize: "",
       fontFamily: "",
-      visibility: "hidden",
+      visibility: "visible",
     },
   },
 
@@ -276,8 +277,10 @@ export let especiais = {
     retrato2: "url('pics/retratoAbelha.webp')",
     cargo: "bzzzz....",
     ataqueE: 1,
-    novoAtaque: "",
+    novoAtaqueE: "",
     dmgboss: "false",
+    hashp: "false",
+
 
     nomeStyle: {
       fontSize: "180%",
@@ -325,7 +328,7 @@ export let especiais = {
     retrato2: "",
     cargo: "",
     ataqueE: "",
-    novoAtaqueE: "",
+    novoAtaqueE: "50💚",
     dmgboss: "false",
 
     // ataqueE: comunistaPE() + "☭"
@@ -373,7 +376,7 @@ export let especiais = {
     retrato2: "",
     cargo: "",
     ataqueE: 1,
-    novoAtaque: "",
+    novoAtaqueE: "50💚",
     dmgboss: "false",
 
     nomeStyle: {
@@ -398,10 +401,10 @@ export let especiais = {
       visibility: "hidden",
     },
     novoAtaqueStyle: {
-      color: "",
+      color: "#77777b",
       fontSize: "",
       fontFamily: "",
-      visibility: "hidden",
+      visibility: "visible",
     },
   },
 
@@ -423,6 +426,7 @@ export let especiais = {
     ataqueE: "1⚡",
     novoAtaqueE: "⌚",
     dmgboss: "true",
+    hashp: 'false',
 
     nomeStyle: {
       fontSize: "210%",
@@ -471,7 +475,7 @@ export let especiais = {
     // ataqueE: estoicoPE()
     ataqueE: "🛡️",
 
-    novoAtaqueE: "4💚",
+    novoAtaqueE: "10💚",
     nomeStyle: {
       fontSize: "250%",
       fontFamily: "estoico",
@@ -714,6 +718,7 @@ export let especiais = {
     novoAtaque: "",
     dmgboss: "false",
     canbedeleted: 'false',
+    hashp: 'custom',
 
     nomeStyle: {
       fontSize: "180%",

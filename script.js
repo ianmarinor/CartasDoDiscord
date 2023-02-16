@@ -267,10 +267,10 @@ export function triggerChuvaMonark() {
     boss.treme(false);
 
     //novo
-    for (let i = 0; i < 4; i++) {
-      if (gerarNumero(1, 4) != 1) {
-        monarkGenerator();
-      }
+    for (let i = 0; i < 8; i++) {
+      
+        moverCartaMonark();
+      
     }
 
     for (let i = 0; i < 6; i++) {
@@ -321,7 +321,7 @@ function escolherCargo() {
     return (cargo = "carta-nobre");
   } else if (seedString[13] == 9) {
     return (cargo = "carta-gentleman");
-  } else if (probMonark()) {
+  } else if (false) {
     return (cargo = "carta-monark");
   } else if (seedString[14] >= 8) {
     return (cargo = "carta-people");
@@ -1056,7 +1056,7 @@ for (let m = 0; m < 6; m++) {
 }
 
 export function moveToMao(i) {
-  if (copyCard.id != "carta-monark") {
+  if (copyCard.id != "carta-monark" && copyCard.id != "carta") {
     if (numCartas.total <= 1 && packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
       packP.innerHTML = semCarta;
@@ -1079,6 +1079,7 @@ function moverToCartaMao() {
   }
 }
 let chosenCard = 0;
+
 export function selectHandCard() {
   for (let k = 0; k < 6; k++) {
     let mao = () => document.getElementById("mao");
@@ -1335,183 +1336,122 @@ function efeitoDano(carta) {
   }, 300);
 }
 
-// function moverCartaMonark() {
-//   let monark =
-//     '<div id="carta-monark" data-card="normal" data-dmgboss="false" data-canbedeleted="false">' +
-//     '<div class="nameAndCidadeWrapper">' +
-//     '<p class="nome">SR. ANTONIO</p>' +
-//     '<div class="variante"></div>' +
-//     '<p class="cidade">&nbsp;do Rio de Janeiro</p>' +
-//     '<div class="especial"></div>' +
-//     "</div>" +
-//     '<div class="retrato" style="display: block; background-image: url(&quot;pics/antonio.png&quot;);"></div>' +
-//     '<p class="cargo">&nbsp;monark💩</p>' +
-//     '<div class="poder">' +
-//     '<p class="ataque">0⚡</p>' +
-//     '<p class="novoAtaque" style="visibility: hidden;">0</p>' +
-//     '<button class="action" style="visibility: hidden;">PRESS</button>' +
-//     "</div>" +
-//     '<p class="seed">&nbsp;1564342530951794700</p>' +
-//     '<p id="selo">🎲</p>' +
-//     "</div>";
+function moverCartaMonark(x) {
 
-//   teste.innerHTML = monark;
+  if(x){
 
-//   inv.replaceChild(teste, inv.children[0]);
-// }
-
-
-
-
-function moverCartaMonark() {
-  let morte = ["morte.mp3"];
-  copyCard = cartaParaMover.cloneNode(true);
-  copyCardSeed = copyCard.children[4].textContent;
-  copyCardName = copyCard.children[0].children[0].textContent;
-
-  if (seedObj._isPutByPlayer) {
-    false;
-  } else if (efeitos.css.nome == "estoico" && copyCard.id == "carta-monark") {
-    cartaParaMover.classList.add("voar");
-    setTimeout(tudo, 250);
-  } else if (numCartas.total > 0) {
-    if (copyCard.id === "carta-monark") {
-      function isSpy() {
-        for (let j = 0; j < 4; j++) {
-          if (
-            inv.children[j].id == "spy" &&
-            inv.children[j].className != "invisible"
-          ) {
-            return [true, j];
-          }
-        }
-        return false;
-      }
-
-      let spyCheck = isSpy();
-      //
-
-      function damage() {
-        for (let j = 0; j < 4; j++) {
-          let cartaComHp = inv.children[j];
-          let temHP =
-            cartaComHp.children[3].children[1].textContent.includes("💚");
-
-          let HPNum = parseInt(
-            inv.children[j].children[3].children[1].textContent
-          );
-          let HP = inv.children[j].children[3].children[1];
-          let especial = cartaComHp.dataset.card == "especial";
-
-          if (temHP && especial) {
-            //
-            //
-            //
-            //
-            //
-
-            if (HPNum >= 2) {
-              HP.textContent = HPNum - 1 + "💚";
-              efeitoDano(cartaComHp);
-            } else if (cartaComHp.id == "tank") {
-              killTank(j);
-            } else {
-              snd(hit);
-              snd(morte);
-              if (cartaComHp == inv.children[0]) {
-                inv.replaceChild(empty1, cartaComHp);
-              } else if (cartaComHp == inv.children[1]) {
-                inv.replaceChild(empty2, cartaComHp);
-              } else if (cartaComHp == inv.children[2]) {
-                inv.replaceChild(empty3, cartaComHp);
-              } else if (cartaComHp == inv.children[3]) {
-                inv.replaceChild(empty4, cartaComHp);
-              }
-            }
-          } else if (temHP && !especial) {
-            if (HPNum >= 2) {
-              HP.textContent = HPNum - 1 + "💚";
-
-            } else {
-              HP.textContent = 0;
-              HP.style.visibility = "hidden";
-            }
-          }
-        }
-      }
-      damage();
-
-      function deckVazio() {
-        for (let j = 0; j < 4; j++) {
-          if (
-            (inv.children[j].id == "empty1" ||
-              inv.children[j].id == "empty2" ||
-              inv.children[j].id == "empty3" ||
-              inv.children[j].id == "empty4") &&
-            copyCard.id == "carta-monark"
-          ) {
-            return [true, j];
-          }
-        }
-        return false;
-      }
-      let deckCheck = deckVazio();
-
-      //  ACTION
-      let monarkAu = ["monark.mp3"];
-      for (let i = 0; i < 4; i++) {
-        //SE TIVER SPY
-        if (spyCheck[0]) {
-          inv.replaceChild(copyCard, inv.children[spyCheck[1]]);
-
-          let deathSpyAu = ["deathSpy" + gerarNumero(1, 3) + ".mp3", 0.3];
-          snd(deathSpyAu);
-          numCartas.add(1);
-          healMonarkBoss(50);
-          hpPlayer.remove(3);
-
-          break;
-
-          //SE DECK VAZIO
-        } else if (deckCheck[0]) {
-          if (rodadas > 5) {
-            inv.replaceChild(copyCard, inv.children[deckCheck[1]]);
-            snd(monarkAu);
-            numCartas.add(1);
-            healMonarkBoss(50);
-            hpPlayer.remove(3);
-          }
-
-          break;
-
-          // SUBSTITUI O HOMONIMO
-        } else if (
-          cartaParaMover.children[0].children[0].textContent ==
-            inv.children[i].children[0].children[0].textContent &&
-          inv.children[i].id != "carta-monark" &&
-          !inv.children[i].children[3].children[1].textContent.includes("💚")
-        ) {
-          console.log(
-            "cpm",
-            cartaParaMover.children[0].children[0].textContent
-          );
-
-          inv.replaceChild(copyCard, inv.children[i]);
-          snd(monarkAu);
-          numCartas.add(1);
-          healMonarkBoss(50);
-          hpPlayer.remove(3);
-
-          break;
-        }
-      }
-
-      somaPontos();
-      copyCard.classList.add("monark");
-      tudo();
+    if( gerarNumero(1,x) != 1 ){
+      console.log('dropei');
+      return false 
     }
   }
+
+  if (!boss) {
+    return false;
+  }
+
+  start();
+
+  let monarkBluePrint =
+    '<div id="carta-monark" data-card="normal" data-dmgboss="false" data-canbedeleted="false" data-hashp="uber"  class="monark">' +
+    '<div class="nameAndCidadeWrapper">' +
+    '<p class="nome">' +
+    escolherIntegrante() +
+    "</p>" +
+    '<div class="variante"></div>' +
+    '<p class="cidade">' +
+    escolherCidade() +
+    "</p>" +
+    '<div class="especial"></div>' +
+    "</div>" +
+    '<div class="retrato" style="display: block; background-image: url(&quot;pics/antonio.png&quot;);"></div>' +
+    '<p class="cargo">&nbsp;monark💩</p>' +
+    '<div class="poder">' +
+    '<p class="ataque">0⚡</p>' +
+    '<p class="novoAtaque" style="visibility: hidden;">0</p>' +
+    '<button class="action" style="visibility: hidden;">PRESS</button>' +
+    "</div>" +
+    '<p class="seed"></p>' +
+    "</div>";
+
+  teste.innerHTML = monarkBluePrint;
+
+  // let slotEscolhido
+  let slotEscolhido;
+  let left;
+  let right;
+  let num;
+
+  // FUNCAO QUE ESCOLHE QUAL SLOT DO INVENTARIO IRA ATACAR
+  escolherSlot();
+
+  function escolherSlot() {
+    num = gerarNumero(0, 3);
+    slotEscolhido = inv.children[num];
+    left = slotEscolhido.previousElementSibling;
+    right = slotEscolhido.nextElementSibling;
+
+    return num;
+  }
+
+  // SE TIVER ESTOICO
+  if (efeitos.css.nome == "estoico") {
+    snd(monarkAu);
+    console.log("E ESTOICO NAO VOU MOVER");
+    teste.children[0].className = "voar";
+
+    //SE A CARTA TEM HP
+  } else if (slotEscolhido.dataset.hashp == "true") {
+    snd(monarkAu);
+    let hp = slotEscolhido.children[3].children[1];
+
+    dmgCard(1, slotEscolhido);
+
+    if (parseInt(hp.textContent) <= 0) {
+      inv.replaceChild(teste.children[0], inv.children[num]);
+    }
+
+    hpPlayer.remove(3);
+
+    //INTERACOES PERSONALIZADAS COM CARTA
+  } else if (slotEscolhido.dataset.hashp == "custom") {
+    snd(monarkAu);
+    if (slotEscolhido.id == "creeper") {
+      creeper(true);
+      console.log("ativei o creeper");
+    }
+
+    hpPlayer.remove(3);
+  } else if (slotEscolhido.dataset.hashp == "uber") {
+    console.log("555555555555555555");
+    return false;
+  } else {
+    healMonarkBoss(50);
+    hpPlayer.remove(3);
+
+    snd(monarkAu);
+
+    if (slotEscolhido.id == "spy") {
+      let deathSpyAu = ["deathSpy" + gerarNumero(1, 3) + ".mp3", 0.3];
+      snd(deathSpyAu);
+    }
+
+    //atacar cartas hp do lado
+    if (left) {
+      dmgCard(1, left);
+    }
+    if (right) {
+      dmgCard(1, right);
+    }
+
+    inv.replaceChild(teste.children[0], slotEscolhido);
+  }
 }
+
+let morte = ["morte.mp3"];
+let monarkAu = ["monark.mp3"];
+
+
 
 function critico() {
   //nome
@@ -2068,9 +2008,12 @@ function criarBtn() {
             // to()
             setTimeout(vis, gerarNumero(800, 7000));
             spyWatch.style.visibility = "hidden";
+
+            spy.dataset.hashp = "uber";
           }
 
           function vis() {
+            spy.dataset.hashp = "false";
             spy.className = "visible";
             spyWatch.id = "vis";
             retrato.classList.remove("invisible");
@@ -2753,14 +2696,16 @@ function elimCardMao(x) {
 function dmgCard(dmg, card, place) {
   if (card) {
     let hp = card.children[3].children[1];
-    if (hp.textContent.includes("💚")) {
+    if (card.dataset.hashp == "true") {
       hp.textContent = parseInt(hp.textContent) - dmg + "💚";
 
       if (parseInt(hp.textContent) <= 0) {
         if (place == "mao") {
           elimCardMao(card);
+          snd(morte);
         } else {
           elimCardInv(card);
+          snd(morte);
         }
       }
 
@@ -3272,7 +3217,8 @@ function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark();
+    moverCartaMonark(8);
+    copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();
     poderesEspeciais();
@@ -3281,6 +3227,7 @@ function tudo() {
     blockInv();
     ativarBtn();
     poderBoss();
+    // console.log(copyCard);
   } else {
   }
 }
@@ -3463,7 +3410,7 @@ export let hpPlayer = {
     this.total -= n;
     this.dmgTaken += n;
 
-    if (this.total < 0) {
+    if (this.total <= 0) {
       this.total = 0;
       playerDead();
     }
