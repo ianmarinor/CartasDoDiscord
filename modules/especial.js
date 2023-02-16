@@ -852,7 +852,7 @@ export function escolherEspecial(teste) {
 
       //CAMPONESES
 
-      if (true) {
+      if (false) {
         especial = especiais.creeper
 
       } else if (false) {

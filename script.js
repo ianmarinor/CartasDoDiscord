@@ -487,6 +487,7 @@ function fabricaDeCarta(
 
 ////D O M
 let main = document.getElementById("main");
+let teste = document.getElementById("test");
 let packP = document.getElementById("pack");
 const semCarta =
   '<div id="carta">' +
@@ -686,7 +687,7 @@ function colocarInfoNoWrap(a) {
     cartaP.dataset.canbedeleted = "false";
   } else {
     cartaP.dataset.dmgboss = "true";
-    cartaP.dataset.canbedeleted = "true"
+    cartaP.dataset.canbedeleted = "true";
   }
 
   retratoP.style.display = "block";
@@ -1082,12 +1083,10 @@ export function selectHandCard() {
   for (let k = 0; k < 6; k++) {
     let mao = () => document.getElementById("mao");
 
-    
-
     let slotMao = () => mao().children[k].id != "mao" + k;
     let retrato = () => mao().children[k].children[1];
     let carta = retrato().offsetParent;
-    let creeperCard =  carta.id == "creeper";
+    let creeperCard = carta.id == "creeper";
 
     // reset()
 
@@ -1103,11 +1102,6 @@ export function selectHandCard() {
           }
 
           function raiseCard() {
-            
-
-           
-
-
             chosenCard.style.bottom = "66px";
 
             document.addEventListener("keydown", (event) => {
@@ -1117,21 +1111,12 @@ export function selectHandCard() {
             });
           }
 
-
-          
-
-            
-            
-          
-
-
           if (chosenCard != 0) {
             lowerCard();
           }
-          
 
-            chosenCard = retrato().offsetParent;
-          
+          chosenCard = retrato().offsetParent;
+
           raiseCard();
         }
 
@@ -1149,7 +1134,6 @@ export function selectHandCard() {
         }
       });
     } else {
-      
     }
   }
 }
@@ -1338,19 +1322,46 @@ function killTank(x) {
 
 let hit = ["hit.mp3"];
 
-
 function efeitoDano(carta) {
-        let heart = carta.children[3].children[1];
+  let heart = carta.children[3].children[1];
 
-        heart.style.backgroundColor = "red";
-        heart.style.border = "3px solid black";
-        snd(hit);
+  heart.style.backgroundColor = "red";
+  heart.style.border = "3px solid black";
+  snd(hit);
 
-        setTimeout(function () {
-          heart.style.backgroundColor = "";
-          heart.style.border = "";
-        }, 300);
-      }
+  setTimeout(function () {
+    heart.style.backgroundColor = "";
+    heart.style.border = "";
+  }, 300);
+}
+
+// function moverCartaMonark() {
+//   let monark =
+//     '<div id="carta-monark" data-card="normal" data-dmgboss="false" data-canbedeleted="false">' +
+//     '<div class="nameAndCidadeWrapper">' +
+//     '<p class="nome">SR. ANTONIO</p>' +
+//     '<div class="variante"></div>' +
+//     '<p class="cidade">&nbsp;do Rio de Janeiro</p>' +
+//     '<div class="especial"></div>' +
+//     "</div>" +
+//     '<div class="retrato" style="display: block; background-image: url(&quot;pics/antonio.png&quot;);"></div>' +
+//     '<p class="cargo">&nbsp;monark💩</p>' +
+//     '<div class="poder">' +
+//     '<p class="ataque">0⚡</p>' +
+//     '<p class="novoAtaque" style="visibility: hidden;">0</p>' +
+//     '<button class="action" style="visibility: hidden;">PRESS</button>' +
+//     "</div>" +
+//     '<p class="seed">&nbsp;1564342530951794700</p>' +
+//     '<p id="selo">🎲</p>' +
+//     "</div>";
+
+//   teste.innerHTML = monark;
+
+//   inv.replaceChild(teste, inv.children[0]);
+// }
+
+
+
 
 function moverCartaMonark() {
   let morte = ["morte.mp3"];
@@ -1379,8 +1390,6 @@ function moverCartaMonark() {
 
       let spyCheck = isSpy();
       //
-
-      
 
       function damage() {
         for (let j = 0; j < 4; j++) {
@@ -1422,7 +1431,7 @@ function moverCartaMonark() {
           } else if (temHP && !especial) {
             if (HPNum >= 2) {
               HP.textContent = HPNum - 1 + "💚";
-              
+
             } else {
               HP.textContent = 0;
               HP.style.visibility = "hidden";
@@ -2755,7 +2764,7 @@ function dmgCard(dmg, card, place) {
         }
       }
 
-      efeitoDano(card)
+      efeitoDano(card);
 
       return true;
     } else {
@@ -2765,60 +2774,43 @@ function dmgCard(dmg, card, place) {
 }
 
 function creeper(x) {
+  let condition;
 
-  let condition
-
-  if(x){
-    condition = true 
+  if (x) {
+    condition = true;
   } else {
-    condition = gerarNumero(1,5) == 5
+    condition = gerarNumero(1, 5) == 5;
   }
 
-  let creeperAu = ['creeper.mp3', 0.5]
+  let creeperAu = ["creeper.mp3", 0.5];
   for (let i = 0; i < 4; i++) {
     if (inv.children[i].id == "creeper") {
-
       let creeper = inv.children[i];
       let right = creeper.nextElementSibling;
       let left = creeper.previousElementSibling;
 
-      
-
-
       if (condition && !creeper.dataset.exploding) {
+        creeper.dataset.exploding = "true";
 
-        creeper.dataset.exploding = 'true'
-
-        snd(creeperAu)
-        creeper.className = 'piscar'
-        setTimeout(function(){
-
-          if (dmgCard(gerarNumero(170,220), right)) {
+        snd(creeperAu);
+        creeper.className = "piscar";
+        setTimeout(function () {
+          if (dmgCard(gerarNumero(170, 220), right)) {
             // condition already does the job ;)
           } else {
-            
             elimCardInv(right);
           }
-  
-          if (dmgCard(gerarNumero(170,220), left)) {
+
+          if (dmgCard(gerarNumero(170, 220), left)) {
           } else {
             elimCardInv(left);
           }
           elimCardInv(creeper);
-  
+
           if (boss) {
-            boss.dmg(gerarNumero(100,250));
+            boss.dmg(gerarNumero(100, 250));
           }
-
-
-          
-
-        },2600)
-
-
-
-
-        
+        }, 2600);
       }
     }
   }
@@ -2826,57 +2818,46 @@ function creeper(x) {
   // comportamento na mao
   for (let i = 0; i < 6; i++) {
     if (mao.children[i].id == "creeper") {
-      
       let creeper = mao.children[i];
       let right = creeper.nextElementSibling;
       let left = creeper.previousElementSibling;
 
       if (condition && !creeper.dataset.exploding) {
-        creeper.dataset.exploding = 'true'
-        snd(creeperAu)
-        creeper.className = 'piscar'
+        creeper.dataset.exploding = "true";
+        snd(creeperAu);
+        creeper.className = "piscar";
 
-        setTimeout(function(){
-
-
-
-
-
-
-          if (dmgCard(gerarNumero(170,220), right, "mao")) {
+        setTimeout(function () {
+          if (dmgCard(gerarNumero(170, 220), right, "mao")) {
             // condition already does the job ;)
           } else {
             elimCardMao(right);
           }
-  
-          if (dmgCard(gerarNumero(170,220), left, "mao")) {
+
+          if (dmgCard(gerarNumero(170, 220), left, "mao")) {
           } else {
             elimCardMao(left);
           }
-  
+
           let cartaInv1 = gerarNumero(0, 1);
           let cartaInv2 = gerarNumero(2, 3);
-  
+
           if (i < 3) {
-            if (dmgCard(gerarNumero(25,70), inv.children[cartaInv1])) {
+            if (dmgCard(gerarNumero(25, 70), inv.children[cartaInv1])) {
             } else {
               elimCardInv(inv.children[cartaInv1]);
             }
-            
           } else {
-            if (dmgCard(gerarNumero(25,700), inv.children[cartaInv2])) {
+            if (dmgCard(gerarNumero(25, 700), inv.children[cartaInv2])) {
             } else {
               elimCardInv(inv.children[cartaInv2]);
             }
           }
-  
-          elimCardMao(creeper);
-  
-          hpPlayer.remove(gerarNumero(7,12))
-          
 
-        },2600)
-        
+          elimCardMao(creeper);
+
+          hpPlayer.remove(gerarNumero(7, 12));
+        }, 2600);
       }
     }
   }
@@ -2939,9 +2920,7 @@ function deletarDeck(e) {
       }
     }
 
-    if (
-      e.target.offsetParent.dataset.canbedeleted == "true" && boss
-    ) {
+    if (e.target.offsetParent.dataset.canbedeleted == "true" && boss) {
       if (e.target.offsetParent == inv.children[0]) {
         dmgBoss();
         venderCartaDeck();
@@ -2966,9 +2945,11 @@ function deletarDeck(e) {
         ativarBtn();
         somaPontos();
       }
-    } else if (e.target.offsetParent.id == 'creeper' && !e.target.offsetParent.dataset.exploding ) {
-      
-      creeper(true)
+    } else if (
+      e.target.offsetParent.id == "creeper" &&
+      !e.target.offsetParent.dataset.exploding
+    ) {
+      creeper(true);
     } else {
       let naoAu = ["nao.mp3"];
       snd(naoAu);
@@ -3294,7 +3275,7 @@ function tudo() {
     moverCartaMonark();
     numCartas.remove(1);
     spawnBoss();
-    poderesEspeciais()
+    poderesEspeciais();
     colocarEfeito();
     verificarCartaParaMover();
     blockInv();
@@ -3311,7 +3292,7 @@ function tick() {
     deckVazio();
     deckCheio();
     somaPontos();
-    aplicarEfeitos()
+    aplicarEfeitos();
   }, 100);
 }
 

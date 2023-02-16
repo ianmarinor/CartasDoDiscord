@@ -88,7 +88,9 @@ background-color: #0b663f;
 
 }
 
-
+#test{
+  /* display: none; */
+}
 
 
 #pickMonark, #pickVelha, #pick{

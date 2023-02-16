@@ -1,63 +1,83 @@
-
-main{
-    display: grid;
-    grid-template-areas:
-    "menu b";
-    grid-template-columns: 1fr  1fr;
-  
+main {
+  display: grid;
+  grid-template-areas: "menu b";
+  grid-template-columns: 1fr 1fr;
 }
 
 #menu {
-    grid-area: menu;
-    /* background-color: aliceblue; */
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-    
+  grid-area: menu;
+  /* background-color: aliceblue; */
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
 }
-a{
-    /* background-color: black; */
-    font-size: 100px;
-    margin-left: 120px;
+a {
+  /* background-color: black; */
+  font-size: 100px;
+  margin-left: 120px;
 }
-a:last-of-type:hover, a:last-of-type{
-    color: rgba(140, 144, 141, 0.147);
-
+a:last-of-type:hover,
+a:last-of-type {
+  color: rgba(140, 144, 141, 0.147);
 }
 
 #especial-tenica {
-    /* font-family: 'verdana'; */
-  
-    background-image: url(pics/fundoTenica.gif);
-    height:  calc(var(--tamanhoCartaHeight) * 3) ;
-    width: calc(var(--tamanhoCartaWidth) * 3);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 15px;
-    position: relative;
-    border: 2px solid #dde630;
-    font-weight: 900;
-    font-size: 126%;
-    color: rgb(0, 0, 0);
-    background-repeat: no-repeat;
-    background-size: cover;
+  /* font-family: 'verdana'; */
 
-    transform: rotate(8deg);
-  }
+  background-image: url(pics/fundoTenica.gif);
+  height: calc(var(--tamanhoCartaHeight) * 3);
+  width: calc(var(--tamanhoCartaWidth) * 3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  position: relative;
+  border: 2px solid #dde630;
+  font-weight: 900;
+  font-size: 126%;
+  color: rgb(0, 0, 0);
+  background-repeat: no-repeat;
+  background-size: cover;
 
-  .nomeEsp
- {
+  transform: rotate(8deg);
+}
+
+.nomeEsp {
+    /* display: none; */
   margin-top: 0.2em;
-  
-  font-size: calc( 150% *3) ;
-  
+  font-size: calc(150% * 3);
 }
 
 .ataqueEsp {
-    font-size: 3em;
-  }
+  font-size: 3em;
+}
+
+#creeper {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2)),
+    url(pics/fundoCreeper.png);
+
+  font-family: minecraft;
+  height: calc(var(--tamanhoCartaHeight) * 3);
+  width: calc(var(--tamanhoCartaWidth) * 3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  position: relative;
+  border: 3px solid #164d0d;
+  font-weight: 900;
+  color: #164d0d;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: rotate(8deg);
+}
+
+#creeper > .nomeEsp{
+    display: none;
+    font-size: 10em 
+}
