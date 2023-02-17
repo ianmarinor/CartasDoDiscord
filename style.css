@@ -561,8 +561,8 @@ justify-content: center;
   background-color: var(--primeMinister);
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 1) 100%,
-    rgba(80, 78, 78, 1) 74%
+    rgba(0, 0, 0, 1) 70%,
+    rgb(127, 125, 125) 
   );
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
@@ -572,8 +572,8 @@ justify-content: center;
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  color: wheat;
-  border: 2px solid #020101;
+  color: #afacac;
+  border: 2px solid #afacac;
 }
 
 #carta-ministro {

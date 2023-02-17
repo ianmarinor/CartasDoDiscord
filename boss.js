@@ -48,7 +48,7 @@ class Boss {
       animatebossHealth()
     } 
     animatebossHealth()
-    console.log(this.health);
+    
   }
 
   set(n) {
@@ -87,7 +87,7 @@ export let boss;
 
 let probMonark;
 function probMonarkChuvaDeMonark() {
-  console.log("juj");
+  
 }
 function createMonark() {
   
@@ -154,7 +154,7 @@ export function spawnBoss() {
   healthPointsP.textContent = boss.health;
   healthWrapP.classList.add("aparecer");
   boss.carta();
-  console.log(boss);
+  
   hasSpawned = true
 }
   // healthWrapP.className = 'aparecer'
