@@ -298,32 +298,34 @@ function escolherCargo() {
   if (
     seedString[11] == 2 &&
     seedString[12] == 3 &&
-    seedString[13] == 4 &&
-    seedString[14] == 4
+    seedString[13] == 4 
+    
   ) {
     return (cargo = "carta-premiomarino");
   } else if (
     seedString[11] == 5 &&
     seedString[12] == 3 &&
-    seedString[13] == 4 &&
-    seedString[14] <= 4
+    seedString[13] >= 8 
+    
   ) {
     return (cargo = "carta-primeminister");
   } else if (
     seedString[12] == 2 &&
     seedString[13] == 8 &&
-    seedString[14] <= 4
+    seedString[14] <= 6
   ) {
     return (cargo = "carta-ministro");
-  } else if (seedString[13] == 4 && seedString[14] == 2) {
+
+
+  } else if (seedString[13] == 4 && seedString[14] <= 2) {
     return (cargo = "carta-lord");
-  } else if (seedString[13] == 1 && seedString[14] >= 4) {
+  } else if (seedString[13] == 1 && seedString[14] >= 3) {
     return (cargo = "carta-nobre");
   } else if (seedString[13] == 9) {
     return (cargo = "carta-gentleman");
   } else if (false) {
     return (cargo = "carta-monark");
-  } else if (seedString[14] >= 8) {
+  } else if (seedString[14] >= 5) {
     return (cargo = "carta-people");
   } else {
     return (cargo = "carta-semcargo");
@@ -544,6 +546,7 @@ zerarMoney();
 function debug() {
   moneyP.textContent = 9999;
   numCartas.set(9999);
+  hpPlayer.set(100)
 }
 
 document.addEventListener("keydown", (event) => {
@@ -2159,12 +2162,15 @@ function criarBtn() {
         inv.children[i].children[0].id = "foi";
       }
 
+      let ultiReadyAu = ["ultiReadyLucio1.mp3"];
       function lucio(e) {
         let lucio = e.target.offsetParent;
         let lucioEnergia = lucio.children[3].children[0];
         let barreira = lucio.children[3].children[1];
         let ulti = lucio.children[2];
-        let ultiReadyAu = ["ultiReadyLucio1.mp3"];
+
+        
+
 
         for (let i = 0; i < 4; i++) {
           if (parseInt(ulti.textContent) < 100) {
@@ -2194,7 +2200,7 @@ function criarBtn() {
 
               ulti =
                 parseInt(ulti.textContent) +
-                parseInt(poderVelho.textContent) * 2;
+                parseInt(poderVelho.textContent);
 
               if (ulti >= 100) {
                 lucio.children[2].textContent = 100 + "%";
@@ -2235,7 +2241,7 @@ function criarBtn() {
                 inv.children[k].children[3].children[1].textContent.includes(
                   "💚"
                 ) &&
-                inv.children[k] != lucio
+                inv.children[k].id != lucio
               ) {
                 let energia = inv.children[k].children[3].children[1];
 
@@ -2536,9 +2542,58 @@ function criarBtn() {
   }
 }
 
-function poderesEspeciais() {
+function poderesEspeciais(x) {
+
+  if(x){
+    x()
+  }
+
   abelha();
   creeper();
+  lucio()
+}
+
+
+function lucio(){
+console.log(88888888888);
+  for(let i=0;i<4;i++){
+
+    let isLucio = inv.children[i].id == 'lucio'
+    let lucio = inv.children[i] 
+    let ulti = lucio.children[2]
+    if(isLucio){
+
+      console.log('tem lucio');
+
+      for(let j =0;j<4;j++){
+
+        if(inv.children[j].id != 'lucio' && inv.children[j].dataset.hashp == "true" && gerarNumero(1,2) == 1) {
+
+          if (ulti >= 100) {
+            ulti.textContent = 100 + '%'
+            snd(ultiReadyAu);
+          } else {
+          ulti.textContent =  parseInt(ulti.textContent) + 1 + '%'
+          healCard(1,inv.children[j])
+          hpPlayer.add(1)
+
+          if(gerarNumero(1,2) == 1){
+            healCard(1,lucio)
+            }
+          }
+
+
+
+
+        }
+
+      }
+      
+
+  }
+
+
+  }
 }
 
 function abelha() {
@@ -2717,6 +2772,21 @@ function dmgCard(dmg, card, place) {
     }
   }
 }
+
+
+function healCard(heal, card) {
+  if (card) {
+    let hp = card.children[3].children[1];
+    if (card.dataset.hashp == "true") {
+      hp.textContent = parseInt(hp.textContent) + heal + "💚";
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 
 function creeper(x) {
   let condition;
@@ -3122,19 +3192,19 @@ function venderCarta() {
     } else {
       if (carta.dataset.tier == "campones") {
         animateSell(totalMoney, 5);
-        vendas.update(2);
+        
       }
       if (carta.dataset.tier == "cavaleiro") {
         animateSell(totalMoney, 10);
-        vendas.update(4);
+        
       }
       if (carta.dataset.tier == "sangueAzul") {
         animateSell(totalMoney, 30);
-        vendas.update(6);
+        
       }
       if (carta.dataset.tier == "rainha") {
         animateSell(totalMoney, 60);
-        vendas.update(8);
+        
       }
 
       deletar();
@@ -3206,6 +3276,7 @@ function tudo() {
       button.style.backgroundColor = "";
       button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
     }
+    vendas.update(+1)
     snd(novaCartaAu);
     start();
     limparInput();
@@ -3217,7 +3288,7 @@ function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(8);
+    moverCartaMonark(800);
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();

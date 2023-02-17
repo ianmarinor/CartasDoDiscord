@@ -45,8 +45,9 @@ class Boss {
     this.health += n;
     if (this.health > this.fullHealth) {
       this.health = this.fullHealth;
+      animatebossHealth()
     } 
-    bossHealPage()
+    animatebossHealth()
     console.log(this.health);
   }
 
@@ -163,44 +164,23 @@ export function spawnBoss() {
 
 function bossDead() {}
 
-function animatebossHealth(plus) {
-  if (plus === 0) return;
+function animatebossHealth() {
+  
 
-  let dano = Math.abs(plus);
-  var stepTime = 10;
 
-  let increment = 1;
+
+  let style = boss.health / boss.fullHealth * 100 + '%'
 
   healthPointsP.textContent = boss.health;
 
-  let x = 0;
-  console.log(boss.dmgTaken);
 
-  let style = Math.abs((boss.dmgTaken / boss.fullHealth) * 100 - 100) + "%";
-
-  console.log(boss);
-
-  console.log(style);
   progressP.style.width = style;
-  console.log(window.getComputedStyle(progressP).width);
+  
 
-  //   let timer = setInterval(function () {
-
-  //       x++
-
-  //       if (x >= dano) {
-  //
-  //       clearInterval(timer);
-  //       console.log(x);
-  //       console.log(dano);
-  //     }
-
-  //   }, stepTime);
+  
 }
 
-function bossHealPage(){
-  healthPointsP.textContent = boss.health;
-}
+
 
 let teclaDeckPronto = "KeyG";
 

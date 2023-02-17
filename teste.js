@@ -1,21 +1,14 @@
+function pod(x){
 
-let turu = true
-
-function gerarNumero(){
-
-   if(!turu){
-    return false
-}
-
-    return Math.random()
-
-  
-    
-    
-    
+   
+    x()
 
 
 }
 
-console.log(gerarNumero());
+function con(){
 
+    console.log(555555555555555);
+}
+
+console.log(pod());

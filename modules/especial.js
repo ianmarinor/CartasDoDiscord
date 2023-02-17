@@ -517,7 +517,7 @@ export let especiais = {
     descricao: "",
     emojiEsp: "",
     emoji: "💚",
-    cargo: "100%",
+    cargo: "0%",
     retrato: "url('pics/retratoLucio.jpg')",
     dmgboss: "true",
 
@@ -801,8 +801,7 @@ export function escolherEspecial(teste) {
       } else if (num == 1 ) {
         especial = especiais.lucio;
         especial.novoAtaqueE = lucioPE();
-        especial.cargo = preBuiltUltimate() + '%'
-        console.log("LUCIOOOOOOO");
+        
 
       } else if (num == 2 ) {
         especial = especiais.premioMonark;
