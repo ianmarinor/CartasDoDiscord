@@ -962,6 +962,8 @@ let seed1;
 let seed2;
 let seed3;
 let seed4;
+let seed5;
+let seed6;
 let seedDiferente;
 let botao;
 
@@ -997,6 +999,8 @@ function verificarCartaParaMover() {
   seed2 = inv.children[1].children[4];
   seed3 = inv.children[2].children[4];
   seed4 = inv.children[3].children[4];
+  seed5 = inv.children[4].children[4];
+  seed6 = inv.children[5].children[4];
 
   seedDiferente = true;
   // seedDiferente =
@@ -1044,7 +1048,7 @@ export function moveToMao(i) {
       packP.innerHTML = semCarta;
       numCartas.set(0);
 
-      
+
 
 
     } else if (packP.children[0].id != "carta") {
@@ -1125,7 +1129,7 @@ export function selectHandCard() {
   }
 }
 
-for (let d = 1; d < 5; d++) {
+for (let d = 1; d < 7; d++) {
   let deck = "empty" + d;
 
   document.getElementById(deck).addEventListener("click", moverToDeck);
@@ -1138,12 +1142,16 @@ function moverToDeck(e) {
     slot.id == "empty1" ||
     slot.id == "empty2" ||
     slot.id == "empty3" ||
-    slot.id == "empty4";
+    slot.id == "empty4" ||
+    slot.id == "empty5" ||
+    slot.id == "empty6";
   let isEmpty2 =
     slot.className == "nome1" ||
     slot.className == "nome2" ||
     slot.className == "nome3" ||
-    slot.className == "nome4";
+    slot.className == "nome4" ||
+    slot.className == "nome5" ||
+    slot.className == "nome6";
 
   //
 
@@ -1156,19 +1164,9 @@ function moverToDeck(e) {
       botao.style.visibility = "visible";
     }
 
-    if (chosenCard == mao.children[0]) {
-      mao.replaceChild(mao0, chosenCard);
-    } else if (chosenCard == mao.children[1]) {
-      mao.replaceChild(mao1, chosenCard);
-    } else if (chosenCard == mao.children[2]) {
-      mao.replaceChild(mao2, chosenCard);
-    } else if (chosenCard == mao.children[3]) {
-      mao.replaceChild(mao3, chosenCard);
-    } else if (chosenCard == mao.children[4]) {
-      mao.replaceChild(mao4, chosenCard);
-    } else if (chosenCard == mao.children[5]) {
-      mao.replaceChild(mao5, chosenCard);
-    }
+    elimCardMao(chosenCard)
+
+
     abelha();
     // inv.removeChild(slot)
     chosenCard.dataset.inv = "true";
@@ -1197,9 +1195,12 @@ function moverToDeckNum(e) {
   let inv1 = inv.children[1];
   let inv2 = inv.children[2];
   let inv3 = inv.children[3];
+  let inv4 = inv.children[4];
+  let inv5 = inv.children[5];
 
   if (chosenCard != 0) {
     function emptyMao() {
+
       if (chosenCard == mao.children[0]) {
         mao.replaceChild(mao0, chosenCard);
       } else if (chosenCard == mao.children[1]) {
@@ -1213,6 +1214,8 @@ function moverToDeckNum(e) {
       } else if (chosenCard == mao.children[5]) {
         mao.replaceChild(mao5, chosenCard);
       }
+
+
       abelha();
     }
 
@@ -1248,24 +1251,29 @@ function moverToDeckNum(e) {
 }
 
 function moverToDeckSpace() {
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     let cartaVazia = inv.children[i].dataset.card == "empty";
     let carta = inv.children[i];
 
     function emptyMao() {
-      if (chosenCard == mao.children[0]) {
-        mao.replaceChild(mao0, chosenCard);
-      } else if (chosenCard == mao.children[1]) {
-        mao.replaceChild(mao1, chosenCard);
-      } else if (chosenCard == mao.children[2]) {
-        mao.replaceChild(mao2, chosenCard);
-      } else if (chosenCard == mao.children[3]) {
-        mao.replaceChild(mao3, chosenCard);
-      } else if (chosenCard == mao.children[4]) {
-        mao.replaceChild(mao4, chosenCard);
-      } else if (chosenCard == mao.children[5]) {
-        mao.replaceChild(mao5, chosenCard);
-      }
+
+
+      elimCardMao(chosenCard)
+
+      // if (chosenCard == mao.children[0]) {
+      //   mao.replaceChild(mao0, chosenCard);
+      // } else if (chosenCard == mao.children[1]) {
+      //   mao.replaceChild(mao1, chosenCard);
+      // } else if (chosenCard == mao.children[2]) {
+      //   mao.replaceChild(mao2, chosenCard);
+      // } else if (chosenCard == mao.children[3]) {
+      //   mao.replaceChild(mao3, chosenCard);
+      // } else if (chosenCard == mao.children[4]) {
+      //   mao.replaceChild(mao4, chosenCard);
+      // } else if (chosenCard == mao.children[5]) {
+      //   mao.replaceChild(mao5, chosenCard);
+      // }
+      
       abelha();
     }
 
@@ -1405,7 +1413,7 @@ function moverCartaMonark(x,place) {
 
     if(place == inv){
 
-      num = gerarNumero(0, 3);
+      num = gerarNumero(0, 5);
     } else {
       num = gerarNumero(0, 5)
     }
@@ -1608,7 +1616,7 @@ function critico() {
 function criarBtn() {
   //
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     //se i nao for vazio
     if (inv.children[i].id != "empty") {
       // e se tiver botao na carta
@@ -1652,7 +1660,7 @@ function criarBtn() {
             pontoParaDormir = gerarNumero(90, 103);
           }
 
-          for (let j = 0; j < 4; j++) {
+          for (let j = 0; j < 6; j++) {
             //
 
             if (inv.children[j].id == "carta-monark") {
@@ -1662,15 +1670,7 @@ function criarBtn() {
                     parseInt(pontoSpeaker.textContent) * multiplicador
                   ) + " ⚡";
 
-                if (inv.children[0] == inv.children[j]) {
-                  inv.replaceChild(empty1, inv.children[0]);
-                } else if (inv.children[1] == inv.children[j]) {
-                  inv.replaceChild(empty2, inv.children[1]);
-                } else if (inv.children[2] == inv.children[j]) {
-                  inv.replaceChild(empty3, inv.children[2]);
-                } else if (inv.children[3] == inv.children[j]) {
-                  inv.replaceChild(empty4, inv.children[3]);
-                }
+                  elimCardInv(inv.children[j])
 
                 let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.3];
                 snd(order);
@@ -1739,15 +1739,20 @@ function criarBtn() {
         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
         // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 
-        if (varianteClique == inv.children[0]) {
-          inv.replaceChild(empty1, varianteClique);
-        } else if (varianteClique == inv.children[1]) {
-          inv.replaceChild(empty2, varianteClique);
-        } else if (varianteClique == inv.children[2]) {
-          inv.replaceChild(empty3, varianteClique);
-        } else if (varianteClique == inv.children[3]) {
-          inv.replaceChild(empty4, varianteClique);
-        }
+
+        elimCardInv(varianteClique)
+
+
+        // if (varianteClique == inv.children[0]) {
+        //   inv.replaceChild(empty1, varianteClique);
+        // } else if (varianteClique == inv.children[1]) {
+        //   inv.replaceChild(empty2, varianteClique);
+        // } else if (varianteClique == inv.children[2]) {
+        //   inv.replaceChild(empty3, varianteClique);
+        // } else if (varianteClique == inv.children[3]) {
+        //   inv.replaceChild(empty4, varianteClique);
+        // }
+
       }
 
       function cartaMenosclique(e) {
@@ -1768,15 +1773,20 @@ function criarBtn() {
           button.innerHTML = "&#127381; NOVA CARTA &#127381;";
           // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 
-          if (varianteMenosClique == inv.children[0]) {
-            inv.replaceChild(empty1, varianteMenosClique);
-          } else if (varianteMenosClique == inv.children[1]) {
-            inv.replaceChild(empty2, varianteMenosClique);
-          } else if (varianteMenosClique == inv.children[2]) {
-            inv.replaceChild(empty3, varianteMenosClique);
-          } else if (varianteMenosClique == inv.children[3]) {
-            inv.replaceChild(empty4, varianteMenosClique);
-          }
+
+          elimCardInv(varianteMenosClique)
+
+
+          // if (varianteMenosClique == inv.children[0]) {
+          //   inv.replaceChild(empty1, varianteMenosClique);
+          // } else if (varianteMenosClique == inv.children[1]) {
+          //   inv.replaceChild(empty2, varianteMenosClique);
+          // } else if (varianteMenosClique == inv.children[2]) {
+          //   inv.replaceChild(empty3, varianteMenosClique);
+          // } else if (varianteMenosClique == inv.children[3]) {
+          //   inv.replaceChild(empty4, varianteMenosClique);
+          // }
+
         }
       }
 
@@ -1797,7 +1807,7 @@ function criarBtn() {
         let botao = varianteTenica.children[3].children[2];
         let energiaTenica = varianteTenica.children[3].children[0];
 
-        for (let j = 0; j < 4; j++) {
+        for (let j = 0; j < 6; j++) {
           let carta = inv.children[j];
           let energiaCarta = carta.children[3].children[0];
 
@@ -1850,6 +1860,8 @@ function criarBtn() {
           "empty2",
           "empty3",
           "empty4",
+          "empty5",
+          "empty6",
           "especial-tenica",
           "spy",
           "premiomonark",
@@ -1864,9 +1876,9 @@ function criarBtn() {
         // comunista.children[3].children[2].style.visibility = "hidden";
         let comunistaAu = ["comuna.mp3", 0.6];
 
-        for (let k = 0; k < 4; k++) {
+        for (let k = 0; k < 6; k++) {
           if (inv.children[k].id == "carta-speaker") {
-            for (let j = 0; j < 4; j++) {
+            for (let j = 0; j < 6; j++) {
               if (
                 inv.children[j].children[0].children[0].textContent !=
                   "NEFESTO" &&
@@ -1953,29 +1965,38 @@ function criarBtn() {
           function eliminarPremioMonark() {
             // premioMonark.remove();
 
-            if (premioMonark == inv.children[0]) {
-              inv.replaceChild(empty1, premioMonark);
-            } else if (premioMonark == inv.children[1]) {
-              inv.replaceChild(empty2, premioMonark);
-            } else if (premioMonark == inv.children[2]) {
-              inv.replaceChild(empty3, premioMonark);
-            } else if (premioMonark == inv.children[3]) {
-              inv.replaceChild(empty4, premioMonark);
-            }
 
-            if (premioMonark == mao.children[0]) {
-              inv.replaceChild(mao0, premioMonark);
-            } else if (premioMonark == mao.children[1]) {
-              inv.replaceChild(mao1, premioMonark);
-            } else if (premioMonark == mao.children[2]) {
-              inv.replaceChild(mao2, premioMonark);
-            } else if (premioMonark == mao.children[3]) {
-              inv.replaceChild(mao3, premioMonark);
-            } else if (premioMonark == mao.children[4]) {
-              inv.replaceChild(mao4, premioMonark);
-            } else if (premioMonark == mao.children[5]) {
-              inv.replaceChild(mao5, premioMonark);
-            }
+            elimCardInv(premioMonark)
+
+
+            // if (premioMonark == inv.children[0]) {
+            //   inv.replaceChild(empty1, premioMonark);
+            // } else if (premioMonark == inv.children[1]) {
+            //   inv.replaceChild(empty2, premioMonark);
+            // } else if (premioMonark == inv.children[2]) {
+            //   inv.replaceChild(empty3, premioMonark);
+            // } else if (premioMonark == inv.children[3]) {
+            //   inv.replaceChild(empty4, premioMonark);
+            // }
+
+
+            elimCardMao(premioMonark)
+
+            // if (premioMonark == mao.children[0]) {
+            //   inv.replaceChild(mao0, premioMonark);
+            // } else if (premioMonark == mao.children[1]) {
+            //   inv.replaceChild(mao1, premioMonark);
+            // } else if (premioMonark == mao.children[2]) {
+            //   inv.replaceChild(mao2, premioMonark);
+            // } else if (premioMonark == mao.children[3]) {
+            //   inv.replaceChild(mao3, premioMonark);
+            // } else if (premioMonark == mao.children[4]) {
+            //   inv.replaceChild(mao4, premioMonark);
+            // } else if (premioMonark == mao.children[5]) {
+            //   inv.replaceChild(mao5, premioMonark);
+            // }
+
+
           }
 
           setTimeout(eliminarPremioMonark, 10000);
@@ -2062,7 +2083,7 @@ function criarBtn() {
           }
         }
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 6; i++) {
           if (
             inv.children[i].id == "carta-semcargo" &&
             inv.children[i].children[3].children[0].textContent.includes("⚡")
@@ -2079,15 +2100,9 @@ function criarBtn() {
               parseInt(poderSpy.textContent) +
               "⚡";
 
-            if (semcargo == inv.children[0]) {
-              inv.replaceChild(empty1, semcargo);
-            } else if (semcargo == inv.children[1]) {
-              inv.replaceChild(empty2, semcargo);
-            } else if (semcargo == inv.children[2]) {
-              inv.replaceChild(empty3, semcargo);
-            } else if (semcargo == inv.children[3]) {
-              inv.replaceChild(empty4, semcargo);
-            }
+              elimCardInv(semcargo)
+
+            
 
             spyWatch.style.visibility = "visible";
             retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
@@ -2122,7 +2137,7 @@ function criarBtn() {
         let estoico = e.target.offsetParent;
         let butao = estoico.children[3].children[2];
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 6; i++) {
           if (
             efeitos.status == false &&
             inv.children[i].children[0].children[2].textContent ==
@@ -2141,25 +2156,14 @@ function criarBtn() {
 
             butao.style.visibility = "hidden";
 
-            if (itapira == inv.children[0]) {
-              inv.replaceChild(empty1, itapira);
-            } else if (itapira == inv.children[1]) {
-              inv.replaceChild(empty2, itapira);
-            } else if (itapira == inv.children[2]) {
-              inv.replaceChild(empty3, itapira);
-            } else if (itapira == inv.children[3]) {
-              inv.replaceChild(empty4, itapira);
-            }
 
-            if (estoico == inv.children[0]) {
-              inv.replaceChild(empty1, estoico);
-            } else if (estoico == inv.children[1]) {
-              inv.replaceChild(empty2, estoico);
-            } else if (estoico == inv.children[2]) {
-              inv.replaceChild(empty3, estoico);
-            } else if (estoico == inv.children[3]) {
-              inv.replaceChild(empty4, estoico);
-            }
+            elimCardInv(itapira)
+            elimCardInv(estoico)
+
+
+
+
+
             somaPontos();
             tudo();
 
@@ -2188,25 +2192,14 @@ function criarBtn() {
         let barreira = lucio.children[3].children[1];
         let ulti = lucio.children[2];
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 6; i++) {
           if (parseInt(ulti.textContent) < 100) {
             // se a carta for gentleman
             if (inv.children[i].id == "carta-people") {
               let gentleman = inv.children[i];
               let poderVelho = inv.children[i].children[3].children[0];
 
-              function matarCarta() {
-                if (gentleman == inv.children[0]) {
-                  inv.replaceChild(empty1, gentleman);
-                } else if (gentleman == inv.children[1]) {
-                  inv.replaceChild(empty2, gentleman);
-                } else if (gentleman == inv.children[2]) {
-                  inv.replaceChild(empty3, gentleman);
-                } else if (gentleman == inv.children[3]) {
-                  inv.replaceChild(empty4, gentleman);
-                }
-              }
-
+              
               // se tiver pdoer novo, o adiquira e exclua a carta
 
               lucioEnergia.textContent =
@@ -2219,7 +2212,7 @@ function criarBtn() {
 
               if (ulti >= 100) {
                 lucio.children[2].textContent = 100 + "%";
-                matarCarta();
+                elimCardInv(gentleman);
                 snd(ultiReadyAu);
               } else {
                 lucio.children[2].textContent = ulti + "%";
@@ -2231,7 +2224,7 @@ function criarBtn() {
                 }
               }
 
-              matarCarta();
+              elimCardInv(gentleman);
 
               let lucioGunAu = ["lucioGun" + gerarNumero(1, 2) + ".mp3"];
 
@@ -2251,7 +2244,7 @@ function criarBtn() {
             ulti.textContent = "0%";
 
             //colocar barreira
-            for (let k = 0; k < 4; k++) {
+            for (let k = 0; k < 6; k++) {
               if (
                 inv.children[k].children[3].children[1].textContent.includes(
                   "💚"
@@ -2292,7 +2285,7 @@ function criarBtn() {
         let tirosString = jhin.children[2];
 
         //ESCOLHER ATIRADOS
-        for (let j = 0; j < 4; j++) {
+        for (let j = 0; j < 6; j++) {
           let nome = inv.children[j].children[0].children[0].textContent;
           let atirador = inv.children[j];
           let atiradorCargo = inv.children[j].id;
@@ -2327,7 +2320,9 @@ function criarBtn() {
                 inv.children[0].children[3].children[1].textContent != "💢" &&
                 inv.children[1].children[3].children[1].textContent != "💢" &&
                 inv.children[2].children[3].children[1].textContent != "💢" &&
-                inv.children[3].children[3].children[1].textContent != "💢"
+                inv.children[3].children[3].children[1].textContent != "💢" &&
+                inv.children[4].children[3].children[1].textContent != "💢" &&
+                inv.children[5].children[3].children[1].textContent != "💢"
               ) {
                 return true;
               } else {
@@ -2462,7 +2457,7 @@ function criarBtn() {
         let retratoFoto = dva.children[1];
         let hp = dva.children[3].children[1];
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 6; i++) {
           let vitima =
             inv.children[i].dataset.dmgboss == "false" &&
             inv.children[i].dataset.card == "especial";
@@ -2483,15 +2478,7 @@ function criarBtn() {
                 dva.children[2].textContent = ulti + "%";
               }
 
-              if (gentleman == inv.children[0]) {
-                inv.replaceChild(empty1, gentleman);
-              } else if (gentleman == inv.children[1]) {
-                inv.replaceChild(empty2, gentleman);
-              } else if (gentleman == inv.children[2]) {
-                inv.replaceChild(empty3, gentleman);
-              } else if (gentleman == inv.children[3]) {
-                inv.replaceChild(empty4, gentleman);
-              }
+              elimCardInv(gentleman)
               break;
             }
             //se tiver ulti
@@ -2506,7 +2493,7 @@ function criarBtn() {
             let pontoDeTodos = 0;
             let pontoDeTodosEsp = 0;
 
-            for (let j = 0; j < 4; j++) {
+            for (let j = 0; j < 6; j++) {
               let ponto = inv.children[j].children[3].children[0];
               let cartaEspecial = inv.children[j].dataset.dmgboss == "false";
               let cartaNormal = inv.children[j].dataset.dmgboss == "true";
@@ -2522,20 +2509,19 @@ function criarBtn() {
             dvaEnergia.textContent = 1 + pontoDeTodos + pontoDeTodosEsp + "⚡";
 
             function dvaSelfDestroy() {
-              if (dva != inv.children[0] && inv.children[0].id != "tank") {
-                inv.replaceChild(empty1, inv.children[0]);
-              }
-              if (dva != inv.children[1] && inv.children[1].id != "tank") {
-                inv.replaceChild(empty2, inv.children[1]);
-              }
-              if (dva != inv.children[2] && inv.children[2].id != "tank") {
-                inv.replaceChild(empty3, inv.children[2]);
-              }
-              if (dva != inv.children[3] && inv.children[3].id != "tank") {
-                inv.replaceChild(empty4, inv.children[3]);
-              }
+              for(let k=0; k<6;k++){
 
-              for (let j = 0; j < 4; j++) {
+
+
+                if (dva != inv.children[k] && inv.children[k].id != "tank") {
+
+                  elimCardInv(inv.children[k])
+                }
+
+              }
+              
+
+              for (let j = 0; j < 6; j++) {
                 let carta = inv.children[j];
                 let isTank = carta.id == "tank";
                 let aliveTank = carta.dataset.tankdead == "false";
@@ -2569,14 +2555,14 @@ function poderesEspeciais(x) {
 
 function lucio() {
   
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     let isLucio = inv.children[i].id == "lucio";
     let lucio = inv.children[i];
     let ulti = lucio.children[2];
     if (isLucio) {
       
 
-      for (let j = 0; j < 4; j++) {
+      for (let j = 0; j < 6; j++) {
         if (
           inv.children[j].id != "lucio" &&
           inv.children[j].dataset.hashp == "true" &&
@@ -2603,14 +2589,14 @@ function lucio() {
 function abelha() {
   let beeHitAu = ["hitAbelha.mp3", 0.1];
   let numOfBees = 0;
-  for (let k = 0; k < 4; k++) {
+  for (let k = 0; k < 6; k++) {
     let abelha = inv.children[k].id == "abelha";
     if (abelha) {
       numOfBees++;
     }
   }
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     if (inv.children[i].id != "empty") {
       if (inv.children[i].id == "abelha") {
         inv.children[i].className = "";
@@ -2625,15 +2611,11 @@ function abelha() {
           let abelha = inv.children[i];
           abelha.className = "";
 
-          if (abelha == inv.children[0]) {
-            inv.replaceChild(empty1, abelha);
-          } else if (abelha == inv.children[1]) {
-            inv.replaceChild(empty2, abelha);
-          } else if (abelha == inv.children[2]) {
-            inv.replaceChild(empty3, abelha);
-          } else if (abelha == inv.children[3]) {
-            inv.replaceChild(empty4, abelha);
-          }
+
+          elimCardInv(abelha)
+
+
+          
 
           let beeDeathAu = ["deathAbelha.mp3", 0.7];
           snd(beeDeathAu);
@@ -2657,7 +2639,22 @@ function abelha() {
 
           somaPontos();
           snd(beeHitAu);
-        } else if (
+        } else if (numOfBees == 5) {
+          pontoAbelha.textContent =
+            parseInt(pontoAbelha.textContent) / gerarNumero(5, 6) + "🐝";
+
+          somaPontos();
+          snd(beeHitAu);
+        } else if (numOfBees == 6) {
+          pontoAbelha.textContent =
+            parseInt(pontoAbelha.textContent) / gerarNumero(6, 7) + "🐝";
+
+          somaPontos();
+          snd(beeHitAu);
+        }
+        
+        
+        else if (
           parseInt(pontoAbelha.textContent) <= 60 &&
           parseInt(pontoAbelha.textContent) > 15
         ) {
@@ -2676,7 +2673,7 @@ function abelha() {
           snd(beeHitAu);
         }
 
-        for (let j = 0; j < 4; j++) {
+        for (let j = 0; j < 6; j++) {
           if (inv.children[j].id != "empty") {
             if (inv.children[j].children[0].children[0].textContent == "TURU") {
               if (inv.children[i].id == "abelha") {
@@ -2711,7 +2708,7 @@ function abelha() {
     }
   }
 
-  for (let l = 0; l < 4; l++) {
+  for (let l = 0; l < 6; l++) {
     let energiaAbelhas = inv.children[l].children[3].children[0];
     let abelha = inv.children[l].id == "abelha";
 
@@ -2733,6 +2730,12 @@ function elimCardInv(x) {
     inv.replaceChild(empty3, x);
   } else if (x == inv.children[3]) {
     inv.replaceChild(empty4, x);
+  }
+   else if (x == inv.children[4]) {
+    inv.replaceChild(empty5, x);
+  }
+   else if (x == inv.children[5]) {
+    inv.replaceChild(empty6, x);
   }
 }
 
@@ -2800,7 +2803,7 @@ function creeper(x) {
   }
 
   let creeperAu = ["creeper.mp3", 0.5];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     if (inv.children[i].id == "creeper") {
       let creeper = inv.children[i];
       let right = creeper.nextElementSibling;
@@ -2899,6 +2902,8 @@ export let empty1 = inv.children[0];
 export let empty2 = inv.children[1];
 export let empty3 = inv.children[2];
 export let empty4 = inv.children[3];
+export let empty5 = inv.children[4];
+export let empty6 = inv.children[5];
 let cartaMao = mao.children[0];
 
 function deletarDeck(e) {
@@ -2939,30 +2944,14 @@ function deletarDeck(e) {
     }
 
     if (e.target.offsetParent.dataset.canbedeleted == "true" && boss) {
-      if (e.target.offsetParent == inv.children[0]) {
+
+
         dmgBoss();
         venderCartaDeck();
-        inv.replaceChild(empty1, e.target.offsetParent);
-        ativarBtn();
-        somaPontos();
-      } else if (e.target.offsetParent == inv.children[1]) {
-        dmgBoss();
-        venderCartaDeck();
-        inv.replaceChild(empty2, e.target.offsetParent);
-        somaPontos();
-      } else if (e.target.offsetParent == inv.children[2]) {
-        dmgBoss();
-        venderCartaDeck();
-        inv.replaceChild(empty3, e.target.offsetParent);
-        ativarBtn();
-        somaPontos();
-      } else if (e.target.offsetParent == inv.children[3]) {
-        dmgBoss();
-        venderCartaDeck();
-        inv.replaceChild(empty4, e.target.offsetParent);
-        ativarBtn();
-        somaPontos();
-      }
+        elimCardInv(e.target.offsetParent)
+
+
+      
     } else if (
       e.target.offsetParent.id == "creeper" &&
       !e.target.offsetParent.dataset.exploding
@@ -2978,11 +2967,16 @@ function deletarDeck(e) {
 let usarDeckTrigg = false;
 
 function deckFull() {
+
+
+
   let deckOnlyDmgBoss =
     inv.children[0].dataset.dmgboss == "true" &&
     inv.children[1].dataset.dmgboss == "true" &&
     inv.children[2].dataset.dmgboss == "true" &&
-    inv.children[3].dataset.dmgboss == "true";
+    inv.children[3].dataset.dmgboss == "true" &&
+    inv.children[4].dataset.dmgboss == "true" &&
+    inv.children[5].dataset.dmgboss == "true";
 
   if (deckOnlyDmgBoss) {
     usarDeckTrigg = true;
@@ -3007,61 +3001,83 @@ function dmgBoss() {
   let energiaTotal = 0;
 
   if (deckFull()) {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       let carta = inv.children[i];
 
       let energia = parseInt(carta.children[3].children[0].textContent);
 
-      if (carta == inv.children[0]) {
-        inv.replaceChild(empty1, carta);
-        ativarBtn();
-        somaPontos();
-      } else if (carta == inv.children[1]) {
-        inv.replaceChild(empty2, carta);
-        ativarBtn();
-        somaPontos();
-      } else if (carta == inv.children[2]) {
-        inv.replaceChild(empty3, carta);
-        ativarBtn();
-        somaPontos();
-      } else if (carta == inv.children[3]) {
-        inv.replaceChild(empty4, carta);
-        ativarBtn();
-        somaPontos();
-      }
+      elimCardInv(carta)
+      
+      // SE ISSO FUNCONA ^, APAGUE ISSO v
+
+
+      // if (carta == inv.children[0]) {
+      //   inv.replaceChild(empty1, carta);
+      //   ativarBtn();
+      //   somaPontos();
+      // } else if (carta == inv.children[1]) {
+      //   inv.replaceChild(empty2, carta);
+      //   ativarBtn();
+      //   somaPontos();
+      // } else if (carta == inv.children[2]) {
+      //   inv.replaceChild(empty3, carta);
+      //   ativarBtn();
+      //   somaPontos();
+      // } else if (carta == inv.children[3]) {
+      //   inv.replaceChild(empty4, carta);
+      //   ativarBtn();
+      //   somaPontos();
+      // }
+
+
+
 
       energiaTotal = energia + energiaTotal;
     }
     boss.dmg(energiaTotal * 2);
   } else {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       let carta = inv.children[i];
       if (carta.dataset.dmgboss == "true") {
         let energia = parseInt(carta.children[3].children[0].textContent);
 
-        if (carta == inv.children[0]) {
-          inv.replaceChild(empty1, carta);
-          ativarBtn();
-          somaPontos();
-        } else if (carta == inv.children[1]) {
-          inv.replaceChild(empty2, carta);
-          ativarBtn();
-          somaPontos();
-        } else if (carta == inv.children[2]) {
-          inv.replaceChild(empty3, carta);
-          ativarBtn();
-          somaPontos();
-        } else if (carta == inv.children[3]) {
-          inv.replaceChild(empty4, carta);
-          ativarBtn();
-          somaPontos();
-        }
+
+        elimCardInv(carta)
+        
+        
+
+
+
+         // SE ISSO FUNCONA ^, APAGUE ISSO v
+
+        // if (carta == inv.children[0]) {
+        //   inv.replaceChild(empty1, carta);
+        //   ativarBtn();
+        //   somaPontos();
+        // } else if (carta == inv.children[1]) {
+        //   inv.replaceChild(empty2, carta);
+        //   ativarBtn();
+        //   somaPontos();
+        // } else if (carta == inv.children[2]) {
+        //   inv.replaceChild(empty3, carta);
+        //   ativarBtn();
+        //   somaPontos();
+        // } else if (carta == inv.children[3]) {
+        //   inv.replaceChild(empty4, carta);
+        //   ativarBtn();
+        //   somaPontos();
+        // }
 
         boss.dmg(energia);
       }
     }
   }
 }
+
+
+
+
+
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyE") {
@@ -3223,12 +3239,16 @@ function resetarDeck() {
   critico();
 
   mao.replaceChild(cartaMao, mao.children[0]);
-  inv.replaceChild(empty1, inv.children[0]);
-  inv.replaceChild(empty2, inv.children[1]);
-  inv.replaceChild(empty3, inv.children[2]);
-  inv.replaceChild(empty4, inv.children[3]);
-  // totalClicks = 50;
-  somaPontos();
+
+  for(let i=0;i<6;i++){
+
+    elimCardInv(inv.children[i])
+
+  }
+
+
+  
+  
   tudo();
   jaMovi = false;
 
@@ -3310,6 +3330,7 @@ function tick() {
     deckCheio();
     somaPontos();
     aplicarEfeitos();
+    ativarBtn()
   }, 100);
 }
 
@@ -3318,8 +3339,10 @@ function allMonark() {
   let monark1 = inv.children[1].id == "carta-monark";
   let monark2 = inv.children[2].id == "carta-monark";
   let monark3 = inv.children[3].id == "carta-monark";
+  let monark4 = inv.children[4].id == "carta-monark";
+  let monark5 = inv.children[5].id == "carta-monark";
 
-  let allMonarkInv = monark0 && monark1 && monark2 && monark3;
+  let allMonarkInv = monark0 && monark1 && monark2 && monark3 && monark4 && monark5
   //
 
   return allMonarkInv;
@@ -3330,8 +3353,10 @@ function deckVazio() {
   let empty2 = inv.children[1].id == "empty2";
   let empty3 = inv.children[2].id == "empty3";
   let empty4 = inv.children[3].id == "empty4";
+  let empty5 = inv.children[4].id == "empty4";
+  let empty6 = inv.children[5].id == "empty4";
 
-  let empty = empty1 && empty2 && empty3 && empty4;
+  let empty = empty1 && empty2 && empty3 && empty4 && empty5 && empty6;
 
   //
 
@@ -3343,8 +3368,10 @@ function deckCheio() {
   let empty2 = inv.children[1].id == "empty2";
   let empty3 = inv.children[2].id == "empty3";
   let empty4 = inv.children[3].id == "empty4";
+  let empty5 = inv.children[4].id == "empty4";
+  let empty6 = inv.children[5].id == "empty4";
 
-  let empty = !empty1 && !empty2 && !empty3 && !empty4;
+  let empty = !empty1 && !empty2 && !empty3 && !empty4 && !empty5 && !empty6;
 
   //
 
@@ -3352,7 +3379,7 @@ function deckCheio() {
 }
 
 function specialInDeck() {
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     if (inv.children[i].dataset.card == "especial") {
       return true;
     }
@@ -3365,8 +3392,10 @@ function allEspecial() {
   let monark1 = inv.children[1].dataset.card == "especial";
   let monark2 = inv.children[2].dataset.card == "especial";
   let monark3 = inv.children[3].dataset.card == "especial";
+  let monark4 = inv.children[4].dataset.card == "especial";
+  let monark5 = inv.children[5].dataset.card == "especial";
 
-  let allMonarkInv = monark0 && monark1 && monark2 && monark3;
+  let allMonarkInv = monark0 && monark1 && monark2 && monark3 && monark4 && monark5
   //
 
   return allMonarkInv;
@@ -3527,9 +3556,11 @@ export function somaPontos() {
     inv.children[0].dataset.dmgboss == "true" &&
     inv.children[1].dataset.dmgboss == "true" &&
     inv.children[2].dataset.dmgboss == "true" &&
-    inv.children[3].dataset.dmgboss == "true";
+    inv.children[3].dataset.dmgboss == "true" &&
+    inv.children[4].dataset.dmgboss == "true" &&
+    inv.children[5].dataset.dmgboss == "true";
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     let carta = inv.children[i];
     let energia = parseInt(carta.children[3].children[0].textContent);
 
@@ -3592,7 +3623,7 @@ document.addEventListener("keydown", (event) => {
 
 inv.addEventListener("click", deletarDeck);
 
-for (let p = 0; p < 4; p++) {
+for (let p = 0; p < 6; p++) {
   let slot = inv.children[p].children[1];
   slot.addEventListener("click", deletarDeck);
 }

@@ -1042,7 +1042,7 @@ justify-content: center;
 
 
 
-.nome1, .nome2 , .nome3 , .nome4   {
+.nome1, .nome2 , .nome3 , .nome4  , .nome5, .nome6 {
   color: #2f2f2f;
   /* background-color: white; */
   position: relative;
@@ -1190,12 +1190,13 @@ p {
   /* grid-area: inv; */
   height: 320px;
   width: 860px;
+  width: 1208px;
   background-color: #242427fe;
 
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr;
   gap: 10px;
   overflow: hidden;
@@ -1210,7 +1211,9 @@ p {
 #empty1,
 #empty2,
 #empty3,
-#empty4 {
+#empty4, 
+#empty5, 
+#empty6 {
   height: 100px;
   width: 100px;
   border-radius: 50px;
@@ -1220,7 +1223,9 @@ p {
 #action1,
 #action2,
 #action3,
-#action4 {
+#action4,
+#action5,
+#action6 {
   visibility: hidden;
 }
 #mao {

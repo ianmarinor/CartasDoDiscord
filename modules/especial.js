@@ -794,9 +794,9 @@ export function escolherEspecial(teste) {
 
        num = gerarNumero(1, 5);
 
-      if (false) {
-        especial = especiais.lucio;
-        especial.novoAtaqueE = 200 + "💚";
+      if (true) {
+        especial = especiais.abelha;
+        especial.ataqueE = abelhaEnergia() + "🐝";
 
       } else if (num == 1 ) {
         especial = especiais.lucio;
