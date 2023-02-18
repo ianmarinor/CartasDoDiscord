@@ -1,4 +1,5 @@
-import { escolherCargo, escolherVariante } from "/script.js";
+
+import { escolherCargo, escolherVariante,escolherPoder, pontoPoderSemCargo, pontoPoderPeople, pontoPoderGentleman, pontoPoderNobre, pontoPoderLord, pontoPoderMinistro, pontoPoderPrimeMinister, pontoPoderRNGPremioMarino } from "/script.js";
 
 let semCargo = 0;
 
@@ -18,66 +19,72 @@ let premiomarino = 0;
 
 let variante = 0;
 
-let champion = 1000000;
+let champion = 50;
 
 let num = 0;
 
 let cargo 
 
+let pontoVarianteValor
+
+let poderTotal = 0
+
+
+
+
 for (let i = 0; i < champion; i++) {
 
  cargo = escolherCargo(true)
-
-  if ( cargo == "carta-semcargo") {
-    semCargo += 1;
-    // console.log('semCargo: ', semCargo);
-
-  } else if (cargo == "carta-people") {
-    people += 1;
-    // console.log('people: ', people);
-  } else if (cargo == "carta-gentleman") {
-    gentleman += 1;
-    // console.log('gentleman: ', gentleman);
-  } else if (cargo == "carta-nobre") {
-    nobre += 1;
-    // console.log('nobre: ', nobre);
-  } else if (cargo == "carta-lord") {
-    lord += 1;
-    // console.log('lord: ', lord);
-  } else if (cargo == "carta-ministro") {
-    ministro += 1;
-    // console.log('ministro: ', ministro);
-  } else if (cargo == "carta-primeminister") {
-    primeminister += 1;
-    // console.log('primeminister: ', primeminister);
-  } else if (cargo == "carta-premiomarino") {
-    premiomarino += 1;
-    // console.log('premiomarino: ', premiomarino);
-  }
-
+ 
+ 
+ 
+ if ( cargo == "carta-semcargo") {
+     semCargo += 1;
+     // console.log('semCargo: ', semCargo);
+     
+    } else if (cargo == "carta-people") {
+        people += 1;
+        // console.log('people: ', people);
+    } else if (cargo == "carta-gentleman") {
+        gentleman += 1;
+        // console.log('gentleman: ', gentleman);
+    } else if (cargo == "carta-nobre") {
+        nobre += 1;
+        // console.log('nobre: ', nobre);
+    } else if (cargo == "carta-lord") {
+        lord += 1;
+        // console.log('lord: ', lord);
+    } else if (cargo == "carta-ministro") {
+        ministro += 1;
+        // console.log('ministro: ', ministro);
+    } else if (cargo == "carta-primeminister") {
+        primeminister += 1;
+        // console.log('primeminister: ', primeminister);
+    } else if (cargo == "carta-premiomarino") {
+        premiomarino += 1;
+        // console.log('premiomarino: ', premiomarino);
+    }
+    
+    
     if (escolherVariante(true)) {
 
-      variante++;
-
+        variante++;
+        
+        pontoVarianteValor = 4
+        
+    } else {
+        pontoVarianteValor = 1
     }
+    
+    let poder  = escolherPoder(cargo, pontoVarianteValor)
 
-//   console.log("escolherCargo(true): ", escolherCargo(true));
+poderTotal += poder._ataque
 
-//   num++;
+console.log('cargo: ', cargo,  typeof cargo);
+console.log('poderTotal: ', poder);
 
-//   console.log(
-//     "semCargo + people + gentleman + nobre + lord + ministro + primeminister + premiomarino: ",
-//     semCargo +
-//       people +
-//       gentleman +
-//       nobre +
-//       lord +
-//       ministro +
-//       primeminister +
-//       premiomarino
-//   );
 
-//   console.log("num: ", num);
+
 }
 
 console.log(
@@ -104,6 +111,10 @@ console.log(
 
 console.log("variante ", percentage(variante), "--", variante);
 
+console.log(
+    "-------------------PONTOS---------------------------------------"
+  );
+  console.log('poderTotal: ', poderTotal,);
 // console.log(escolherVariante(true))
 // console.log(escolherCargo(true))
 

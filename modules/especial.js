@@ -350,7 +350,7 @@ export let especiais = {
       color: "",
       fontSize: "",
       fontFamily: "",
-      visibility: "hidden",
+      visibility: "visible",
     },
     novoAtaqueStyle: {
       color: "",
@@ -809,7 +809,7 @@ export function escolherEspecial(teste) {
 
       } else if (num == 3 ) {
         especial = especiais.blackaoCamarada;
-        especial.novoAtaqueE = comunistaPE();
+        especial.ataqueE = comunistaPE();
         console.log("CAMARADA");
 
       } else if (num == 4 ) {

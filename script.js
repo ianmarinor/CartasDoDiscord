@@ -409,31 +409,31 @@ export function escolherVariante(x) {
 
 //RNG DOS PONTES DE PODER
 
-let pontoPoderSemCargo = () =>
+export let pontoPoderSemCargo = () =>
   Math.floor((parseInt(seedString[5]) + parseInt(seedString[0])) / 2 + 1); // 1 a 10
 
-let pontoPoderPeople = () =>
+  export let pontoPoderPeople = () =>
   Math.floor((parseInt(seedString[0]) + parseInt(seedString[12])) / 2 + 11); // 11 a 20
 
-let pontoPoderGentleman = () =>
+  export let pontoPoderGentleman = () =>
   Math.floor((parseInt(seedString[12]) + parseInt(seedString[0])) / 2 + 21); // 21 a 30
 
 let pontoPoderMonark = () => 0;
 
-let pontoPoderNobre = () =>
+export let pontoPoderNobre = () =>
   Math.floor((parseInt(seedString[11]) + parseInt(seedString[10])) / 2 + 31); // 31 a 40
 
-let pontoPoderLord = () =>
-  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 51); // 51 a 60
+  export let pontoPoderLord = () =>
+  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 61); // 51 a 60
 
-let pontoPoderMinistro = () =>
-  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 61); //61 a 70
+  export let pontoPoderMinistro = () =>
+  Math.floor((parseInt(seedString[10]) + parseInt(seedString[11])) / 2 + 71); //61 a 70
 
-let pontoPoderPrimeMinister = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 81); // 81 a 90
+  export let pontoPoderPrimeMinister = () =>
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[10])) / 2 + 121); // 81 a 90
 
-let pontoPoderRNGPremioMarino = () =>
-  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 121); // 121 a 130
+  export let pontoPoderRNGPremioMarino = () =>
+  Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 421); // 121 a 130
 
 let pontoVarianteValor = 0;
 // function pontoVariante() {
@@ -447,51 +447,56 @@ let pontoVarianteValor = 0;
 // }
 function pontoVariante() {
   if (variante != "") {
-    return (pontoVarianteValor = 100);
+    return (pontoVarianteValor = 4);
   } else {
-    return (pontoVarianteValor = 0);
+    return (pontoVarianteValor = 1);
   }
 }
 
 let poder = {};
 
-function escolherPoder() {
-  //
-  if (cargo === "carta-semcargo") {
+export function escolherPoder(x, y) {
+  
+ if(x && y){
+  cargo = x
+  pontoVarianteValor = y
+ }
+
+  if (cargo == "carta-semcargo") {
     return (poder = {
-      _ataque: pontoPoderSemCargo() + pontoVarianteValor,
+      _ataque: pontoPoderSemCargo() * pontoVarianteValor,
     });
-  } else if (cargo === "carta-people") {
+  } else if (cargo == "carta-people") {
     return (poder = {
-      _ataque: pontoPoderPeople() + pontoVarianteValor,
+      _ataque: pontoPoderPeople() * pontoVarianteValor,
     });
-  } else if (cargo === "carta-gentleman") {
+  } else if (cargo == "carta-gentleman") {
     return (poder = {
-      _ataque: pontoPoderGentleman() + pontoVarianteValor,
+      _ataque: pontoPoderGentleman() * pontoVarianteValor,
     });
-  } else if (cargo === "carta-monark") {
+  } else if (cargo == "carta-monark") {
     return (poder = {
       _ataque: pontoPoderMonark(),
     });
-  } else if (cargo === "carta-nobre") {
+  } else if (cargo == "carta-nobre") {
     return (poder = {
-      _ataque: pontoPoderNobre() + pontoVarianteValor,
+      _ataque: pontoPoderNobre() * pontoVarianteValor,
     });
-  } else if (cargo === "carta-lord") {
+  } else if (cargo == "carta-lord") {
     return (poder = {
-      _ataque: pontoPoderLord() + pontoVarianteValor,
+      _ataque: pontoPoderLord() * pontoVarianteValor,
     });
-  } else if (cargo === "carta-ministro") {
+  } else if (cargo == "carta-ministro") {
     return (poder = {
-      _ataque: pontoPoderMinistro() + pontoVarianteValor,
+      _ataque: pontoPoderMinistro() * pontoVarianteValor,
     });
-  } else if (cargo === "carta-primeminister") {
+  } else if (cargo == "carta-primeminister") {
     return (poder = {
-      _ataque: pontoPoderPrimeMinister() + pontoVarianteValor,
+      _ataque: pontoPoderPrimeMinister() * pontoVarianteValor,
     });
-  } else if (cargo === "carta-premiomarino") {
+  } else if (cargo == "carta-premiomarino") {
     return (poder = {
-      _ataque: pontoPoderRNGPremioMarino() + pontoVarianteValor,
+      _ataque: pontoPoderRNGPremioMarino() * pontoVarianteValor,
     });
   }
 }
@@ -584,6 +589,7 @@ function debug() {
   moneyP.textContent = 9999;
   numCartas.set(9999);
   hpPlayer.set(100);
+  vendas.update(9999)
 }
 
 document.addEventListener("keydown", (event) => {
@@ -1896,7 +1902,7 @@ function criarBtn() {
                 )
               ) {
                 comunista.children[3].children[2].style.visibility = "hidden";
-                let pontoComunista = comunista.children[3].children[1];
+                let pontoComunista = comunista.children[3].children[0];
 
                 let pontoEstatal = parseInt(pontoComunista.textContent) / 3;
 
@@ -2928,7 +2934,8 @@ function deletarDeck(e) {
     e.target.className == "retrato visible" ||
     e.target.className == "retrato invisible" ||
     e.target.className == "retratoEsp" ||
-    e.target.className == "retratoEsp invis"
+    e.target.className == "retratoEsp visible" ||
+    e.target.className == "retratoEsp invisible"
   ) {
     //
 
@@ -3295,7 +3302,7 @@ function tudo() {
       button.style.backgroundColor = "";
       button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
     }
-    vendas.update(+1);
+    // vendas.update(+1);
     snd(novaCartaAu);
     start();
     limparInput();
@@ -3307,7 +3314,7 @@ function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(1,inv);
+    moverCartaMonark(15,inv);
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();

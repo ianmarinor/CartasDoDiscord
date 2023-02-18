@@ -10,10 +10,10 @@ let btnRainha = document.getElementById("btnRainha");
 let inv = document.getElementById("inv")
 
 
-let precoCampones = 15;
-let precoCavalheiro = 35;
-let precoSangueAzul = 75;
-let precoRainha = 700;
+let precoCampones = 50;
+let precoCavalheiro = 150;
+let precoSangueAzul = 300;
+let precoRainha = 3500;
 
 let precoCamponesP = btnCampones.innerHTML = 'CAMPONES <br />' + precoCampones
 let precoCavalheiroP = btnCavalheiro.innerHTML =  'CAVALHEIRO <br />' + precoCavalheiro
