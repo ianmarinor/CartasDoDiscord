@@ -577,8 +577,7 @@ let mao0 = mao.children[0];
 let mao1 = mao.children[1];
 let mao2 = mao.children[2];
 let mao3 = mao.children[3];
-let mao4 = mao.children[4];
-let mao5 = mao.children[5];
+
 
 function zerarMoney() {
   moneyP.textContent = 0;
@@ -1032,7 +1031,7 @@ let cartasComBotao = [
   "dva",
 ];
 
-for (let m = 0; m < 6; m++) {
+for (let m = 0; m < 4; m++) {
   let slotMao = "mao" + m;
   document.getElementById(slotMao).addEventListener("click", function () {
     moveToMao(m);
@@ -1060,7 +1059,7 @@ export function moveToMao(i) {
 }
 
 function moverToCartaMao() {
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 4; i++) {
     if (mao.children[i].id == "mao" + i) {
       moveToMao(i);
       break;
@@ -1071,7 +1070,7 @@ function moverToCartaMao() {
 let chosenCard = 0;
 
 export function selectHandCard() {
-  for (let k = 0; k < 6; k++) {
+  for (let k = 0; k < 4; k++) {
     let mao = () => document.getElementById("mao");
 
     let slotMao = () => mao().children[k].id != "mao" + k;
@@ -1129,7 +1128,7 @@ export function selectHandCard() {
   }
 }
 
-for (let d = 1; d < 7; d++) {
+for (let d = 1; d < 5; d++) {
   let deck = "empty" + d;
 
   document.getElementById(deck).addEventListener("click", moverToDeck);
@@ -1209,11 +1208,8 @@ function moverToDeckNum(e) {
         mao.replaceChild(mao2, chosenCard);
       } else if (chosenCard == mao.children[3]) {
         mao.replaceChild(mao3, chosenCard);
-      } else if (chosenCard == mao.children[4]) {
-        mao.replaceChild(mao4, chosenCard);
-      } else if (chosenCard == mao.children[5]) {
-        mao.replaceChild(mao5, chosenCard);
-      }
+      } 
+      
 
 
       abelha();
@@ -1807,7 +1803,7 @@ function criarBtn() {
         let botao = varianteTenica.children[3].children[2];
         let energiaTenica = varianteTenica.children[3].children[0];
 
-        for (let j = 0; j < 6; j++) {
+        for (let j = 0; j < 4; j++) {
           let carta = inv.children[j];
           let energiaCarta = carta.children[3].children[0];
 
@@ -1819,7 +1815,7 @@ function criarBtn() {
           }
         }
 
-        for (let j = 0; j < 6; j++) {
+        for (let j = 0; j < 4; j++) {
           let cartaMao = mao.children[j];
           let energiaCartaMao = cartaMao.children[3].children[0];
           let energiaTenica = varianteTenica.children[3].children[0];
@@ -2748,11 +2744,8 @@ function elimCardMao(x) {
     mao.replaceChild(mao2, x);
   } else if (x == mao.children[3]) {
     mao.replaceChild(mao3, x);
-  } else if (x == mao.children[4]) {
-    mao.replaceChild(mao4, x);
-  } else if (x == mao.children[5]) {
-    mao.replaceChild(mao5, x);
-  }
+  } 
+  
 }
 
 function dmgCard(dmg, card, place) {
@@ -2836,7 +2829,7 @@ function creeper(x) {
   }
 
   // comportamento na mao
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 4; i++) {
     if (mao.children[i].id == "creeper") {
       let creeper = mao.children[i];
       let right = creeper.nextElementSibling;
@@ -3158,19 +3151,11 @@ function venderCarta() {
     let cargoMoney = parseInt(cargo.textContent);
 
     function deletar() {
-      if (chosenCard == mao.children[0]) {
-        mao.replaceChild(mao0, chosenCard);
-      } else if (chosenCard == mao.children[1]) {
-        mao.replaceChild(mao1, chosenCard);
-      } else if (chosenCard == mao.children[2]) {
-        mao.replaceChild(mao2, chosenCard);
-      } else if (chosenCard == mao.children[3]) {
-        mao.replaceChild(mao3, chosenCard);
-      } else if (chosenCard == mao.children[4]) {
-        mao.replaceChild(mao4, chosenCard);
-      } else if (chosenCard == mao.children[5]) {
-        mao.replaceChild(mao5, chosenCard);
-      }
+
+
+      elimCardMao(chosenCard)
+
+
     }
 
     let cartasVendiveis = [
@@ -3649,10 +3634,9 @@ export function startGame2() {
   mao.replaceChild(mao1, mao.children[1]);
   mao.replaceChild(mao2, mao.children[2]);
   mao.replaceChild(mao3, mao.children[3]);
-  mao.replaceChild(mao4, mao.children[4]);
-  mao.replaceChild(mao5, mao.children[5]);
 
-  for (let i = 0; i < 6; i++) {
+
+  for (let i = 0; i < 4; i++) {
     moverToCartaMao();
     rodadas = 0;
   }

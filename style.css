@@ -1190,7 +1190,7 @@ p {
   /* grid-area: inv; */
   height: 320px;
   width: 860px;
-  width: 1208px;
+  width: 1220px;
   background-color: #242427fe;
 
   display: grid;
@@ -1236,10 +1236,10 @@ p {
 
   
   height: 320px;
-  width: 1200px;
+  width: 870px;
   
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr  ;
   grid-template-rows: 1fr;
 
   justify-items: center;
