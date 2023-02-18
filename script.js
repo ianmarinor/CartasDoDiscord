@@ -613,6 +613,8 @@ let getSeed = document.getElementById("getseed");
 //pagin procura seed
 let novaCarta;
 
+let mao0Obj = {}
+
 
 
 
@@ -886,7 +888,7 @@ function colocarInfoNoWrap(a) {
   }
   packP.replaceChild(cartaP, packP.children[0]);
 
-  //
+  console.log('NOVA CARTA:', novaCarta);
 }
 export let rodadas = 0;
 export let rodadaSpawnBoss = 10;
@@ -929,27 +931,11 @@ function colocarEfeito() {
 //*************************MOVER CARTA PARA O INVENTARIO */
 //****************************************************** */
 
-// function cardShrinker(cartaGrande){
-//     cartaGrande.style.height = '49%'
-//     cartaGrande.style.width = '38%'
-//     // cartaGrande.style.fontSize = '10px'
-//     // cartaGrande.children[1].style.backgroundSize = '139px 87px'
-
-// }
-
-// let caixaDeSeeds = [0,0,0,0]
-
 function getSeedChecked() {
   return document.activeElement.id == "getseed";
 }
 
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "Digit1") {
-//     if (!getSeedChecked()) {
-//       moverToDeckNum(event);
-//     }
-//   }
-// });
+
 
 for (let z = 1; z < 5; z++) {
   document.addEventListener("keydown", (event) => {
@@ -961,26 +947,7 @@ for (let z = 1; z < 5; z++) {
   });
 }
 
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "Digit2") {
-//     if (!getSeedChecked()) {
-//       moverToDeckNum(event);
-//     }
-//   }
-// });
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "Digit3") {
-//     if (!getSeedChecked()) {
-//       moverToDeckNum(event);
-//     }
-//   }
-// });
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "Digit4") {
-//     if (!getSeedChecked()) {
-//       moverFour();
-//     }
-//   }
+
 // });
 
 let cartaParaMover = document.getElementById("pack").firstElementChild;
@@ -1071,9 +1038,15 @@ for (let m = 0; m < 6; m++) {
 export function moveToMao(i) {
   if (copyCard.id != "carta-monark" && copyCard.id != "carta") {
     if (numCartas.total <= 1 && packP.children[0].id != "carta") {
+
+
       mao.replaceChild(copyCard, mao.children[i]);
       packP.innerHTML = semCarta;
       numCartas.set(0);
+
+      
+
+
     } else if (packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
       tudo();
