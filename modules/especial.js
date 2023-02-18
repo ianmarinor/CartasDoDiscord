@@ -794,7 +794,7 @@ export function escolherEspecial(teste) {
 
        num = gerarNumero(1, 5);
 
-      if (true) {
+      if (false) {
         especial = especiais.abelha;
         especial.ataqueE = abelhaEnergia() + "🐝";
 

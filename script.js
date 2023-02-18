@@ -1044,6 +1044,12 @@ export function moveToMao(i) {
 
 
       mao.replaceChild(copyCard, mao.children[i]);
+      
+
+
+      
+
+
       packP.innerHTML = semCarta;
       numCartas.set(0);
 
@@ -1052,6 +1058,10 @@ export function moveToMao(i) {
 
     } else if (packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
+      mao0Obj[i] = novaCarta
+      console.log('mao0Obj: ', mao0Obj);
+
+
       tudo();
     }
     selectHandCard();
@@ -1106,6 +1116,8 @@ export function selectHandCard() {
           }
 
           chosenCard = retrato().offsetParent;
+          chosenCardObj = mao0Obj[k]
+          console.log('chosenCardObj', chosenCardObj);
 
           raiseCard();
         }
@@ -1128,7 +1140,7 @@ export function selectHandCard() {
   }
 }
 
-for (let d = 1; d < 5; d++) {
+for (let d = 1; d < 7; d++) {
   let deck = "empty" + d;
 
   document.getElementById(deck).addEventListener("click", moverToDeck);
@@ -1276,6 +1288,8 @@ function moverToDeckSpace() {
     if (chosenCard != 0 && cartaVazia) {
       emptyMao();
       inv.replaceChild(chosenCard, carta);
+      invObj[i] = chosenCardObj
+      console.log('invObj: ', invObj);
 
       chosenCard.dataset.inv = "true";
 
@@ -1411,7 +1425,7 @@ function moverCartaMonark(x,place) {
 
       num = gerarNumero(0, 5);
     } else {
-      num = gerarNumero(0, 5)
+      num = gerarNumero(0, 3)
     }
     slotEscolhido = place.children[num];
     left = slotEscolhido.previousElementSibling;
@@ -2717,7 +2731,7 @@ function abelha() {
   }
 }
 
-function elimCardInv(x) {
+export function elimCardInv(x) {
   if (x == inv.children[0]) {
     inv.replaceChild(empty1, x);
   } else if (x == inv.children[1]) {
@@ -2898,6 +2912,23 @@ export let empty4 = inv.children[3];
 export let empty5 = inv.children[4];
 export let empty6 = inv.children[5];
 let cartaMao = mao.children[0];
+
+
+
+let maoObj = [
+
+
+
+]
+
+let invObj = [
+
+]
+
+let chosenCardObj = [
+
+]
+
 
 function deletarDeck(e) {
   if (

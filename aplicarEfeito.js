@@ -1,5 +1,5 @@
 // import { efeitoPremioMonark } from './modules/especial';
-import { efeitos, rodadas,somaPontos, snd, hpPlayer } from "./script.js";
+import { efeitos, rodadas,somaPontos, snd, hpPlayer, elimCardInv } from "./script.js";
 
 
 let inv = document.getElementById("inv");
@@ -13,6 +13,8 @@ let empty1 = inv.children[0];
 let empty2 = inv.children[1];
 let empty3 = inv.children[2];
 let empty4 = inv.children[3];
+let empty5 = inv.children[4];
+let empty6 = inv.children[5];
 let moneyP = document.getElementById('money')
 // let placarRodadasNumero = parseInt(placarRodadas.textContent)
 
@@ -36,7 +38,7 @@ export function aplicarEfeitos() {
 
 function premioMonark() {
   let bonusMonark = 50
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     if (inv.children[i].id != "empty" && inv.children[i].id == "carta-monark") {
 
       
@@ -88,22 +90,11 @@ function premioMonark() {
 
         
 
-        if(monark == inv.children[0]){
-          inv.replaceChild(empty1,monark);
-
-        } else if(monark == inv.children[1]){
-          inv.replaceChild(empty2,monark);
-
-        } else if(monark == inv.children[2]){
-          inv.replaceChild(empty3,monark);
-
-        } else if(monark == inv.children[3]){
-          inv.replaceChild(empty4,monark);
-        }
+        elimCardInv(monark)
 
 
         
-        somaPontos()
+       
       }
 
       
