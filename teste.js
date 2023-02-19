@@ -1,31 +1,31 @@
 
-let mao0 = {
-    num: 0
-}
-let mao1 = {
-    num: 1
-}
-let mao2 = {
-    num: 2
-}
-let mao3 = {
-    num: 3
+let obj = {
+    foo: true,
+    bar: 10,
+    _place: false,
+    place(){
+
+       console.log(  this._place = arr.indexOf(this) ); 
+
+    }
+
 }
 
+let arr =[
 
-let invObj = [
-
-    mao0,
-    mao1,
-    mao2,
-    mao3
-
-    
 
 
 ]
 
-console.log(invObj[0]);
+// let mama = Object.create(obj) 
+let mama = obj
 
-invObj[0].num = 2
-console.log(invObj[0]);
+arr[0] = mama
+arr[1] = obj
+
+console.log(arr);
+
+arr[1].place()
+
+
+

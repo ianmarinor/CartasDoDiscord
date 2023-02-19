@@ -1,5 +1,6 @@
 let DEBUG = false;
 import { seedRNG } from "./seedFabricator.js";
+import { invObj, hpPlayer, ammo } from "../script.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
 
@@ -56,6 +57,32 @@ export function comunistaPE() {
   }
 }
 
+function fabricaDeCartaEsp() {
+  return {
+    _place: false,
+    _eventAdded: false,
+
+    place() {
+      this._place = invObj.indexOf(this);
+    },
+
+    print(){
+      let hp = inv.children[this._place].children[3].children[1]
+      let energia = inv.children[this._place].children[3].children[0]
+      let ulti = inv.children[this._place].children[2];
+
+      if(this.ulti){
+        ulti.textContent = this.ulti + "%";
+      }
+      energia.textContent = this.energia + '⚡'
+       hp.textContent = this.hp + "💚";
+
+
+    }
+
+  };
+}
+
 export let especiais = {
   notSpecial: {
     cartaId: "notSpecial",
@@ -87,9 +114,9 @@ export let especiais = {
     cargo: "",
     // ataqueE:tenicaEnergia() + "👑"
     ataqueE: 1,
-    novoAtaqueE: "700💚",
+    hp: 700,
+    hashp: true,
     dmgboss: "false",
-  
 
     nomeStyle: {
       fontSize: "",
@@ -133,7 +160,8 @@ export let especiais = {
     retrato: "url('pics/SPEAKER.webp')",
     cargo: "MONARK BAN!",
     ataqueE: 1,
-    novoAtaqueE: "50💚",
+    hp: 50,
+    hashp: true,
     dmgboss: "true",
 
     // ataqueE: pontoSpeaker() + "⚡"
@@ -182,7 +210,8 @@ export let especiais = {
     retrato: "url('pics/clickretrato.webp')",
     cargo: "",
     ataqueE: 1,
-    novoAtaqueE: "10💚",
+    hp: 10,
+    hashp: true,
     dmgboss: "false",
 
     // ataqueE: bonusCartasPE()
@@ -277,10 +306,9 @@ export let especiais = {
     retrato2: "url('pics/retratoAbelha.webp')",
     cargo: "bzzzz....",
     ataqueE: 1,
-    novoAtaqueE: "",
+    hp: 0,
     dmgboss: "false",
-    hashp: "false",
-
+    hashp: false,
 
     nomeStyle: {
       fontSize: "180%",
@@ -328,7 +356,8 @@ export let especiais = {
     retrato2: "",
     cargo: "",
     ataqueE: "",
-    novoAtaqueE: "50💚",
+    hp: "50💚",
+    hashp: true,
     dmgboss: "false",
 
     // ataqueE: comunistaPE() + "☭"
@@ -376,7 +405,8 @@ export let especiais = {
     retrato2: "",
     cargo: "",
     ataqueE: 1,
-    novoAtaqueE: "50💚",
+    hp: 50,
+    hashp: true,
     dmgboss: "false",
 
     nomeStyle: {
@@ -424,9 +454,9 @@ export let especiais = {
     retrato2: "",
     cargo: "",
     ataqueE: "1⚡",
-    novoAtaqueE: "⌚",
+    hp: "⌚",
     dmgboss: "true",
-    hashp: 'false',
+    hashp: false,
 
     nomeStyle: {
       fontSize: "210%",
@@ -475,7 +505,8 @@ export let especiais = {
     // ataqueE: estoicoPE()
     ataqueE: "🛡️",
 
-    novoAtaqueE: "10💚",
+    hp: 10,
+    hashp: true,
     nomeStyle: {
       fontSize: "250%",
       fontFamily: "estoico",
@@ -510,8 +541,7 @@ export let especiais = {
     nome: "LÚCIO",
     raridade: raridades.sangueAzul,
     pontoEspecial: 0,
-    energia: 0,
-    poder: true,
+    energia: 1,
     efeito: "",
     familia: "overwatch",
     descricao: "",
@@ -521,9 +551,22 @@ export let especiais = {
     retrato: "url('pics/retratoLucio.jpg')",
     dmgboss: "true",
 
+    ulti: 0,
+
+    buildUlt(n) {
+      this.ulti += n;
+      if (this.ulti > 100) {
+        this.ulti = 100;
+      }
+      this.lucioP()
+    },
+
+   
+
     // ataqueE: lucioPE()
-    ataqueE: "1⚡",
-    novoAtaqueE: "1",
+    
+    hp: 50,
+    hashp: true,
 
     nomeStyle: {
       fontSize: "250%",
@@ -551,6 +594,66 @@ export let especiais = {
       fontFamily: "overwatch",
       visibility: "visible",
     },
+
+    poder() {
+
+      if(ammo.total == 0){
+        return
+      }
+
+      console.log("55555", this);
+
+      for (let j = 0; j < 6; j++) {
+        if (this.ulti < 100) {
+          if (invObj[j].id == "monark") {
+            let vitima = invObj[j];
+
+            vitima.hp.remove(1);
+            this.buildUlt(20);
+            ammo.use(1)
+            
+
+            break;
+          }
+          //se tiver ulti
+        } else {
+          hpPlayer.add(50);
+
+          // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
+
+          this.ulti = 0;
+
+          //colocar barreira
+          // for (let k = 0; k < 6; k++) {
+          //   if (invObj[k].hashp == true && invObj[k] != lucio) {
+          //     let energia = inv.children[k].children[3].children[1];
+
+          //     energia.textContent =
+          //       parseInt(energia.textContent) +
+          //       parseInt(barreira.textContent) +
+          //       "💚";
+
+          //     energia.style.visibility = "visible";
+          //   }
+          
+
+
+
+
+        }
+
+        this.lucioP();
+      }
+    },
+
+    lucioP() {
+      let ulti = inv.children[this._place].children[2];
+      
+
+      ulti.textContent = this.ulti + "%";
+     
+
+    },
   },
 
   jhin: {
@@ -571,7 +674,8 @@ export let especiais = {
 
     // ataqueE: lucioPE()
     ataqueE: "4⚡",
-    novoAtaqueE: "10💚",
+    hp: 10,
+    hashp: true,
 
     nomeStyle: {
       fontSize: "250%",
@@ -619,7 +723,8 @@ export let especiais = {
 
     // ataqueE: lucioPE()
     ataqueE: "1⚡",
-    novoAtaqueE: "50💚",
+    hp: 50,
+    hashp: true,
 
     nomeStyle: {
       fontSize: "250%",
@@ -666,7 +771,8 @@ export let especiais = {
     retrato2: "",
     cargo: "",
     ataqueE: "1⚡",
-    novoAtaqueE: "10000💚",
+    hp: 10000,
+    hashp: true,
     dmgboss: "true",
 
     nomeStyle: {
@@ -698,7 +804,6 @@ export let especiais = {
     },
   },
 
-
   creeper: {
     cartaId: "creeper",
     nome: "CREEPER",
@@ -714,11 +819,11 @@ export let especiais = {
     retrato: "url('pics/retratoCreeper.png')",
     retrato2: "",
     cargo: "",
-    ataqueE: '',
+    ataqueE: "",
     novoAtaque: "",
     dmgboss: "false",
-    canbedeleted: 'false',
-    hashp: 'custom',
+    canbedeleted: "false",
+    hashp: false,
 
     nomeStyle: {
       fontSize: "180%",
@@ -749,16 +854,18 @@ export let especiais = {
 
     // ataqueE: abelhaEnergia() + "🐝"
   },
-
-
-
-
 };
 
 DEBUG && console.log("ESPECAIISMAISCARTAS", especiais.menosCartas);
 DEBUG && console.log("RARIDADES", raridades.campones);
 
+function objBinder(obj) {
+  return Object.assign(Object.create(obj), fabricaDeCartaEsp());
+  // return Object.assign( obj , fabricaDeCartaEsp())
+}
+
 export let especial = "";
+
 let raridade = "";
 
 export function escolherEspecial(teste) {
@@ -781,7 +888,7 @@ export function escolherEspecial(teste) {
     if (raridades.rainha.rng()) {
       raridade = raridades.rainha;
       if (true) {
-        especial = especiais.tenica;
+        especial = objBinder(especiais.tenica);
         especial.ataqueE = tenicaEnergia();
       }
 
@@ -789,92 +896,71 @@ export function escolherEspecial(teste) {
     } else if (raridades.sangueAzul.rng()) {
       raridade = raridades.sangueAzul;
 
+      let num;
 
-      let num
+      num = gerarNumero(1, 5);
 
-       num = gerarNumero(1, 5);
-
-      if (false) {
-        especial = especiais.abelha;
-        especial.ataqueE = abelhaEnergia() + "🐝";
-
-      } else if (num == 1 ) {
-        especial = especiais.lucio;
-        especial.novoAtaqueE = lucioPE();
-        
-
-      } else if (num == 2 ) {
-        especial = especiais.premioMonark;
+      if (true) {
+        especial = objBinder(especiais.lucio);
+      } else if (num == 1) {
+        especial = objBinder(especiais.lucio);
+      } else if (num == 2) {
+        especial = objBinder(especiais.premioMonark);
         console.log("PREMIOMONARK");
-
-      } else if (num == 3 ) {
-        especial = especiais.blackaoCamarada;
+      } else if (num == 3) {
+        especial = objBinder(especiais.blackaoCamarada);
         especial.ataqueE = comunistaPE();
         console.log("CAMARADA");
-
-      } else if (num == 4 ) {
-        especial = especiais.abelha;
+      } else if (num == 4) {
+        especial = objBinder(especiais.abelha);
         especial.ataqueE = abelhaEnergia() + "🐝";
-
-      } else if (num == 5 ) {
-        especial = especiais.dva;
-        especial.cargo = preBuiltUltimate() + '%'
-        
+      } else if (num == 5) {
+        especial = objBinder(especiais.dva);
+        especial.cargo = preBuiltUltimate() + "%";
       }
-
-
-
-
-
-
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
       DEBUG && console.log(raridades.cavaleiro.rng());
 
-      let num
+      let num;
 
-       num = gerarNumero(1, 3);
-
+      num = gerarNumero(1, 3);
 
       if (false) {
-        especial = especiais.spy;
+        especial = objBinder(especiais.spy);
       } else if (num == 1) {
-        especial = especiais.speaker;
+        especial = objBinder(especiais.speaker);
         especial.ataqueE = pontoSpeaker();
       } else if (num == 2) {
-        especial = especiais.jhin;
+        especial = objBinder(especiais.jhin);
       } else if (num == 3) {
-        especial = especiais.spy;
+        especial = objBinder(especiais.spy);
       }
     } else {
       raridade = raridades.campones;
 
+      let num;
 
-      let num
-
-       num = gerarNumero(1, 4);
+      num = gerarNumero(1, 4);
 
       //CAMPONESES
 
       if (false) {
-        especial = especiais.creeper
-
+        especial = objBinder(especiais.creeper);
       } else if (false) {
-        especial = especiais.menosCartas;
+        especial = objBinder(especiais.menosCartas);
         especial.ataqueE = bonusCartasPE() + "🃏";
-
       } else if (num == 1) {
-        especial = especiais.maisCartas;
+        especial = objBinder(especiais.maisCartas);
         especial.ataqueE = bonusCartasPE() + "🃏";
       } else if (num == 2) {
-        especial = especiais.tank;
+        especial = objBinder(especiais.tank);
         especial.cargo = tankCargo(especiais.tank.emoji);
-      } else if (num == 3){
-        especial = especiais.estoicoTuru;
-      } else if (num == 4){
-        especial = especiais.creeper
-        
-      } 
+      } else if (num == 3) {
+        especial = objBinder(especiais.estoicoTuru);
+      } else if (num == 4) {
+        especial = objBinder(especiais.creeper);
+      }
     }
   } else {
     raridade = raridades.semRaridade;
@@ -956,9 +1042,8 @@ export function abelhaDecreaseComTuru() {
   return Math.floor(Math.random() * 50 + 25);
 }
 
-
-function preBuiltUltimate(){
-  return gerarNumero(0,35)
+function preBuiltUltimate() {
+  return gerarNumero(0, 35);
 }
 
 let frasesAbelhaTuru = [
@@ -1018,20 +1103,11 @@ function estoico() {}
 function lucio() {}
 
 export function estoicoPE() {
- 
-  return gerarNumero(5,15) + "🛡️"
-
-
-}
-
-export function lucioPE() {
- return gerarNumero(20,35) + '💚'
+  return gerarNumero(5, 15) + "🛡️";
 }
 
 function tankCargo(emoji) {
-  
-  
-  return gerarNumero(200, 350)+ emoji;
+  return gerarNumero(200, 350) + emoji;
 }
 
 // export function pontoSpeaker() {

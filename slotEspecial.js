@@ -304,14 +304,26 @@ function colocarSlot(tipo) {
   }
 
   //ATAQUE
-  ataqueE.innerHTML = especial.ataqueE;
+
+  if(especial.energia){
+    ataqueE.innerHTML = especial.energia + '⚡'
+  } else{
+
+    ataqueE.innerHTML = especial.ataqueE;
+  }
+
   ataqueE.style.color = especial.ataqueStyle.color;
   ataqueE.style.fontSize = especial.ataqueStyle.fontSize;
   ataqueE.style.fontFamily = especial.ataqueStyle.fontFamily;
   ataqueE.style.visibility = especial.ataqueStyle.visibility;
 
   //ATAQUENOVO
-  novoAtaqueE.innerHTML = especial.novoAtaqueE;
+  if(especial.hashp){
+
+    novoAtaqueE.innerHTML = especial.hp + '💚'
+  } else {
+    novoAtaqueE.innerHTML = especial.hp;
+  }
   novoAtaqueE.style.color = especial.novoAtaqueStyle.color;
   novoAtaqueE.style.fontSize = especial.novoAtaqueStyle.fontSize;
   novoAtaqueE.style.fontFamily = especial.novoAtaqueStyle.fontFamily;
@@ -359,7 +371,7 @@ export function moveToMao() {
   if (cartaEspecial.id && !myInterval){
 
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 4; i++) {
       if (mao.children[i].id == "mao" + i) {
 
 
@@ -376,6 +388,7 @@ export function moveToMao() {
             let monark = inv.children[i]
 
             if(isMonark){
+
               if (monark == inv.children[0]) {
                 inv.replaceChild(empty1, monark);
               } else if (monark == inv.children[1]) {
@@ -384,7 +397,13 @@ export function moveToMao() {
                 inv.replaceChild(empty3, monark);
               } else if (monark == inv.children[3]) {
                 inv.replaceChild(empty4, monark);
+              } else if (monark == inv.children[4]) {
+                inv.replaceChild(empty5, monark);
+              } else if (monark == inv.children[5]) {
+                inv.replaceChild(empty6, monark);
               }
+
+
               break
             }
 
