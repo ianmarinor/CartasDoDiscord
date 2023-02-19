@@ -612,7 +612,7 @@ let getSeed = document.getElementById("getseed");
 //pagin procura seed
 let novaCarta;
 
-let mao0Obj = {}
+
 
 
 
@@ -887,7 +887,7 @@ function colocarInfoNoWrap(a) {
   }
   packP.replaceChild(cartaP, packP.children[0]);
 
-  console.log('NOVA CARTA:', novaCarta);
+  
 }
 export let rodadas = 0;
 export let rodadaSpawnBoss = 10;
@@ -1058,8 +1058,8 @@ export function moveToMao(i) {
 
     } else if (packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
-      mao0Obj[i] = novaCarta
-      console.log('mao0Obj: ', mao0Obj);
+      maoObj[i] = novaCarta
+      
 
 
       tudo();
@@ -1116,8 +1116,8 @@ export function selectHandCard() {
           }
 
           chosenCard = retrato().offsetParent;
-          chosenCardObj = mao0Obj[k]
-          console.log('chosenCardObj', chosenCardObj);
+          chosenCardObj = maoObj[k]
+          
 
           raiseCard();
         }
@@ -1133,6 +1133,7 @@ export function selectHandCard() {
         if (chosenCard != 0) {
           chosenCard.style.bottom = "0px";
           chosenCard = 0;
+          chosenCardObj = emptyObj
         }
       });
     } else {
@@ -1182,21 +1183,31 @@ function moverToDeck(e) {
     // inv.removeChild(slot)
     chosenCard.dataset.inv = "true";
 
-    if (slot.className) {
-      inv.replaceChild(chosenCard, slot.parentElement.parentElement);
-    } else {
+    // if (slot.className) {
+    //   inv.replaceChild(chosenCard, slot.parentElement.parentElement);
+    //   invObj[slot.className[5]] = chosenCardObj
+    // } 
+    
       inv.replaceChild(chosenCard, slot);
-    }
+      invObj[(slot.id[5]) - 1] = chosenCardObj
+    
 
     criarBtn();
 
     chosenCard.style.bottom = "0px";
 
     chosenCard = 0;
+    chosenCardObj = emptyObj
   }
 }
 
 function moverToDeckNum(e) {
+
+
+  if(true){
+    return false
+  }
+
   let key1 = e.code == "Digit1";
   let key2 = e.code == "Digit2";
   let key3 = e.code == "Digit3";
@@ -1263,46 +1274,33 @@ function moverToDeckSpace() {
     let cartaVazia = inv.children[i].dataset.card == "empty";
     let carta = inv.children[i];
 
-    function emptyMao() {
-
-
-      elimCardMao(chosenCard)
-
-      // if (chosenCard == mao.children[0]) {
-      //   mao.replaceChild(mao0, chosenCard);
-      // } else if (chosenCard == mao.children[1]) {
-      //   mao.replaceChild(mao1, chosenCard);
-      // } else if (chosenCard == mao.children[2]) {
-      //   mao.replaceChild(mao2, chosenCard);
-      // } else if (chosenCard == mao.children[3]) {
-      //   mao.replaceChild(mao3, chosenCard);
-      // } else if (chosenCard == mao.children[4]) {
-      //   mao.replaceChild(mao4, chosenCard);
-      // } else if (chosenCard == mao.children[5]) {
-      //   mao.replaceChild(mao5, chosenCard);
-      // }
-      
-      abelha();
-    }
+  
 
     if (chosenCard != 0 && cartaVazia) {
-      emptyMao();
+
+      elimCardMao(chosenCard)
+      abelha();
       inv.replaceChild(chosenCard, carta);
       invObj[i] = chosenCardObj
-      console.log('invObj: ', invObj);
+      
+      
+      
+      
+      
 
       chosenCard.dataset.inv = "true";
-
+      
       if (cartasComBotao.some((el) => chosenCard.id.includes(el))) {
         let botao = chosenCard.children[3].children[2];
         botao.style.visibility = "visible";
       }
-
+      
       criarBtn();
-
+      
       chosenCard.style.bottom = "0px";
-
+      
       chosenCard = 0;
+      chosenCardObj = emptyObj
     }
   }
 }
@@ -1341,6 +1339,12 @@ function efeitoDano(carta) {
 }
 
 function moverCartaMonark(x,place) {
+
+
+  let monarkObj = {
+    monark: 'monark'
+  }
+
   if (x) {
     if (gerarNumero(1, x) != 1) {
       
@@ -1448,7 +1452,8 @@ function moverCartaMonark(x,place) {
     dmgCard(1, slotEscolhido);
 
     if (parseInt(hp.textContent) <= 0 ) {
-      place.replaceChild(teste.children[0],place.children[num]);
+      place.replaceChild(teste.children[0],place.children[num])
+      invObj[num] = monarkObj
     }
 
     hpPlayer.remove(3);
@@ -1458,6 +1463,7 @@ function moverCartaMonark(x,place) {
     snd(monarkAu);
     if (slotEscolhido.id == "creeper") {
       creeper(true);
+      invObj[num] = monarkObj
       
     }
 
@@ -1485,6 +1491,7 @@ function moverCartaMonark(x,place) {
     }
 
     place.replaceChild(teste.children[0], slotEscolhido);
+    invObj[num] = monarkObj
   }
 }
 
@@ -1979,32 +1986,12 @@ function criarBtn() {
             elimCardInv(premioMonark)
 
 
-            // if (premioMonark == inv.children[0]) {
-            //   inv.replaceChild(empty1, premioMonark);
-            // } else if (premioMonark == inv.children[1]) {
-            //   inv.replaceChild(empty2, premioMonark);
-            // } else if (premioMonark == inv.children[2]) {
-            //   inv.replaceChild(empty3, premioMonark);
-            // } else if (premioMonark == inv.children[3]) {
-            //   inv.replaceChild(empty4, premioMonark);
-            // }
+           
 
 
             elimCardMao(premioMonark)
 
-            // if (premioMonark == mao.children[0]) {
-            //   inv.replaceChild(mao0, premioMonark);
-            // } else if (premioMonark == mao.children[1]) {
-            //   inv.replaceChild(mao1, premioMonark);
-            // } else if (premioMonark == mao.children[2]) {
-            //   inv.replaceChild(mao2, premioMonark);
-            // } else if (premioMonark == mao.children[3]) {
-            //   inv.replaceChild(mao3, premioMonark);
-            // } else if (premioMonark == mao.children[4]) {
-            //   inv.replaceChild(mao4, premioMonark);
-            // } else if (premioMonark == mao.children[5]) {
-            //   inv.replaceChild(mao5, premioMonark);
-            // }
+           
 
 
           }
@@ -2732,33 +2719,63 @@ function abelha() {
 }
 
 export function elimCardInv(x) {
+
+let slot
+
   if (x == inv.children[0]) {
     inv.replaceChild(empty1, x);
+    slot = 0
   } else if (x == inv.children[1]) {
     inv.replaceChild(empty2, x);
+    slot = 1
   } else if (x == inv.children[2]) {
     inv.replaceChild(empty3, x);
+    slot = 2
   } else if (x == inv.children[3]) {
     inv.replaceChild(empty4, x);
+    slot = 3
   }
    else if (x == inv.children[4]) {
     inv.replaceChild(empty5, x);
+    slot = 4
   }
    else if (x == inv.children[5]) {
     inv.replaceChild(empty6, x);
+    slot = 5
   }
+
+  invObj[slot] = emptyObj
+
+
+  return slot
+
+
 }
 
 function elimCardMao(x) {
+
+  let slot
+
   if (x == mao.children[0]) {
     mao.replaceChild(mao0, x);
+    slot = 0
   } else if (x == mao.children[1]) {
     mao.replaceChild(mao1, x);
+    slot = 1
   } else if (x == mao.children[2]) {
     mao.replaceChild(mao2, x);
+    slot = 2
   } else if (x == mao.children[3]) {
     mao.replaceChild(mao3, x);
-  } 
+    slot = 3
+  }   
+
+  maoObj[slot] = emptyObj
+
+
+  return slot
+  
+
   
 }
 
@@ -2914,20 +2931,57 @@ export let empty6 = inv.children[5];
 let cartaMao = mao.children[0];
 
 
+let emptyObj = {
+  empty: 'empty'
+}
 
 let maoObj = [
-
-
-
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj
+  
+  
 ]
 
 let invObj = [
 
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj
+  
+  
 ]
 
 let chosenCardObj = [
-
+  
+  emptyObj
+  
+  
 ]
+
+
+export function objToMao(x,y){
+
+maoObj[x] = y
+
+}
+
+
+document.addEventListener("keydown", (event) => {
+  
+  if (event.code == "KeyO") {
+    
+    console.log('maoObj: ', maoObj)
+    console.log('chosenCardObj: ', chosenCardObj);
+    console.log('invObj: ', invObj)
+    
+  }
+});
+
 
 
 function deletarDeck(e) {
@@ -2970,10 +3024,11 @@ function deletarDeck(e) {
     if (e.target.offsetParent.dataset.canbedeleted == "true" && boss) {
 
 
+      console.log(e.target.offsetParent);
         dmgBoss();
         venderCartaDeck();
         elimCardInv(e.target.offsetParent)
-
+        
 
       
     } else if (
@@ -3181,13 +3236,7 @@ function venderCarta() {
     let cardValue = parseInt(energia.textContent);
     let cargoMoney = parseInt(cargo.textContent);
 
-    function deletar() {
-
-
-      elimCardMao(chosenCard)
-
-
-    }
+    
 
     let cartasVendiveis = [
       "carta-semcargo",
@@ -3219,12 +3268,14 @@ function venderCarta() {
       }
       snd(venda);
 
-      deletar();
+      elimCardMao(chosenCard)
 
       chosenCard = 0;
+      chosenCardObj = emptyObj
 
       vendas.update(-1);
     } else {
+
       if (carta.dataset.tier == "campones") {
         animateSell(totalMoney, 5);
       }
@@ -3238,8 +3289,9 @@ function venderCarta() {
         animateSell(totalMoney, 60);
       }
 
-      deletar();
+      elimCardMao(chosenCard);
       chosenCard = 0;
+      chosenCardObj = emptyObj
     }
   } else {
     snd(naoAu);

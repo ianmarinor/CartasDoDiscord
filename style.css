@@ -1042,12 +1042,13 @@ justify-content: center;
 
 
 
-.nome1, .nome2 , .nome3 , .nome4  , .nome5, .nome6 {
+/* .nome1, .nome2 , .nome3 , .nome4  , .nome5, .nome6 {
+  
   color: #2f2f2f;
-  /* background-color: white; */
+  
   position: relative;
   bottom: -25px;
-}
+} */
 
 .cidade {
 

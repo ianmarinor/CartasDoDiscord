@@ -1,6 +1,6 @@
 import { seedObj, seedRNG } from "./modules/seedFabricator.js";
 import { escolherEspecial, especial } from "./modules/especial.js";
-import  {snd, selectHandCard, naoAu, empty1, empty2, empty3, empty4}  from "/script.js"
+import  {snd, selectHandCard, naoAu, empty1, empty2, empty3, empty4,  objToMao}  from "/script.js"
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
@@ -367,6 +367,8 @@ export function moveToMao() {
         mao.replaceChild(cartaEspecial, mao.children[i])
         limparEsp()
         snd(novaCarta)
+        objToMao(i, especial)
+        
 
         if(cartaEspecial.id == 'premiomonark'){
           for(let i=0; i<4; i++){
