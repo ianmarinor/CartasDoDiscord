@@ -570,6 +570,7 @@ let vendasP = document.getElementById("vendas");
 let bossRoomP = document.getElementById("bossRoom");
 let hpPlayerP = document.getElementById("healthPlayer");
 let hpPlayerEmojiP = document.getElementById("healthPlayerEmoji");
+let ammoP = document.getElementById("ammo");
 let hpPlayerWrapP = document.getElementById("healthPlayerWrap");
 let endP = document.getElementById("end");
 
@@ -588,6 +589,7 @@ function debug() {
   moneyP.textContent = 9999;
   numCartas.set(9999);
   hpPlayer.set(100);
+  ammo.set(100);
   vendas.update(9999)
 }
 
@@ -3604,6 +3606,38 @@ export let hpPlayer = {
   },
 };
 
+export let ammo = {
+  total: 0,
+  ammoUsed: 0,
+
+  add(n) {
+    this.total += n;
+    this.ammoP(this.total);
+  },
+
+  use(n) {
+    this.total -= n;
+    this.ammoUsed += n;
+
+    if (this.total <= 0) {
+      this.total = 0;
+    }
+
+    this.ammoP(this.total);
+  },
+
+  set(n) {
+    this.total = n;
+    this.ammoP(this.total);
+  },
+
+  ammoP(n) {
+    ammoP.textContent = n;
+
+    
+  },
+};
+
 function playerDead() {
   let rodadasStats = document.getElementById("rodadasStats");
   let bossDmgTakenStats = document.getElementById("bossDmgTakenStats");
@@ -3729,6 +3763,7 @@ export function startGame2() {
   numCartas.set(50);
   vendas.set(50);
   hpPlayer.set(100);
+  ammo.set(0);
   tick();
 }
 

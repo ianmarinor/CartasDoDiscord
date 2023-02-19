@@ -301,20 +301,32 @@ justify-content: center;
   color: wheat;
 }
 
-#healthPlayerWrap{
+#healthPlayerWrap, #ammoWrap{
   width: 120px;
   display: flex;
-  grid-area: dicas;
+  grid-area: mao;
+
+  justify-content: space-around;
   justify-self: start;
-  align-self: end;
+  align-self: start;
   /* background-color: #010101; */
-  margin-left: 100px;
-  
+  margin-left: 150px;
+  margin-top: 10px;  
+}
+#ammoWrap{
+  /* justify-self: end; */
+  /* margin-right: 150px; */
+  margin-top: 65px
+
+
 }
 
-#healthPlayerWrap > *{
+
+#healthPlayerWrap > *, #ammoWrap > *{
+  width: 60px;
   font-size: 2.5em;
   color: wheat;
+  text-align: center;
 }
 
 
@@ -360,10 +372,10 @@ justify-content: center;
   /* background-color: #15b871; */
   display: flex;
   font-size: 1.3em;
-  grid-area: dicas;
+  grid-area: inv;
   align-self: end;
   justify-self: end;
-  margin-right: 105px;
+  margin-right: 100px;
   
 }
 #placarDanoWrap > *{
