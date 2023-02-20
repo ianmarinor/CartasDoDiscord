@@ -18,7 +18,6 @@ import {
   especial,
   bonusCartasPE,
   estoicoPE,
-  
   lucioEfeito,
 } from "./modules/especial.js";
 
@@ -476,15 +475,11 @@ function fabricaDeCarta(
     _especial: especial,
     _seedobj: seedObj,
     _place: false,
+    cartaId: cargo,
 
-    place(){
-
-
-      
-      this._place = invObj.indexOf(this)
-
-    }
-
+    place() {
+      this._place = invObj.indexOf(this);
+    },
   };
 }
 
@@ -1131,9 +1126,6 @@ function moverToDeck(e) {
 
     inv.replaceChild(chosenCard, slot);
     invObj[slot.id[5] - 1] = chosenCardObj;
-    
-
-    
 
     criarBtn();
 
@@ -1255,11 +1247,11 @@ function killTank(x) {
 
 let hit = ["hit.mp3"];
 
-function efeitoDano(carta) {
-  let heart = carta.children[3].children[1];
+export function efeitoDano(carta) {
+  let heart = inv.children[carta].children[3].children[1];
 
   heart.style.backgroundColor = "red";
-  heart.style.border = "3px solid black";
+  heart.style.border = "3px dotted black";
   snd(hit);
 
   setTimeout(function () {
@@ -1268,26 +1260,34 @@ function efeitoDano(carta) {
   }, 300);
 }
 
+export function efeitoCura(carta) {
+  let heart = inv.children[carta].children[3].children[1];
+
+  heart.style.backgroundColor = "blue";
+  heart.style.border = "3px solid green";
+  
+
+  setTimeout(function () {
+    heart.style.backgroundColor = "";
+    heart.style.border = "";
+  }, 300);
+}
+
+
+
+
 function moverCartaMonark(x, place) {
   let monarkObj = {
     _place: false,
     id: "monark",
 
-    place(){
-
-
-      
-      this._place = invObj.indexOf(this)
-
+    place() {
+      this._place = invObj.indexOf(this);
     },
-
 
     hp: {
       total: 10,
       dmgTaken: 0,
-
-
-
 
       add(n) {
         this.total += n;
@@ -1303,14 +1303,17 @@ function moverCartaMonark(x, place) {
 
         if (this.total <= 0) {
           this.total = 0;
+          efeitoDano(monarkObj._place)
           this.monarkKill();
-          return false
+          return false;
         }
+
+        efeitoDano(monarkObj._place)
+
+        
 
         this.monarkP(this.total);
       },
-
-    
 
       monarkP(x) {
         for (let i = 0; i < 6; i++) {
@@ -1319,20 +1322,17 @@ function moverCartaMonark(x, place) {
           let hpP = monarkCarta.children[3].children[1];
 
           if (isMonark) {
-
-            if( x == 'kill'){
-
+            if (x == "kill") {
               return monarkCarta;
-              
             }
 
             hpP.textContent = this.total + "❤️";
-            break
+            break;
           }
         }
       },
       monarkKill() {
-        elimCardInv(this.monarkP('kill'));
+        elimCardInv(this.monarkP("kill"));
       },
     },
   };
@@ -1405,8 +1405,8 @@ function moverCartaMonark(x, place) {
 
   // let slotEscolhido
   let slotEscolhido;
-  let left;
-  let right;
+  let left = false
+  let right = false
   let num;
 
   // FUNCAO QUE ESCOLHE QUAL SLOT DO INVENTARIO IRA ATACAR
@@ -1419,9 +1419,17 @@ function moverCartaMonark(x, place) {
       num = gerarNumero(0, 3);
     }
     slotEscolhido = place.children[num];
-    left = slotEscolhido.previousElementSibling;
-    right = slotEscolhido.nextElementSibling;
+    if (num > 0) {
+      left = invObj[num - 1] ;
+    } else {
+      left = false
+    }
 
+    if (num < 5) {
+      right = invObj[num + 1];
+    } else{
+      right = false
+    }
     return num;
   }
 
@@ -1434,11 +1442,11 @@ function moverCartaMonark(x, place) {
     //SE A CARTA TEM HP
   } else if (slotEscolhido.dataset.hashp == "true") {
     snd(monarkAu);
-    let hp = slotEscolhido.children[3].children[1];
+    let vitima = invObj[num];
 
-    dmgCard(1, slotEscolhido);
+    vitima.dmg(1);
 
-    if (parseInt(hp.textContent) <= 0) {
+    if (vitima.hp <= 0) {
       place.replaceChild(teste.children[0], place.children[num]);
       invObj[num] = monarkObj;
     }
@@ -1468,18 +1476,20 @@ function moverCartaMonark(x, place) {
     }
 
     //atacar cartas hp do lado
-    if (left) {
-      dmgCard(1, left);
+    console.log(left);
+    console.log(right);
+    console.log(num);
+
+    if (left.hashp == true) {
+      left.dmg(1)
     }
-    if (right) {
-      dmgCard(1, right);
+    if (right.hashp == true) {
+      right.dmg(1)
     }
 
     place.replaceChild(teste.children[0], slotEscolhido);
     invObj[num] = monarkObj;
   }
-
-  
 }
 
 let morte = ["morte.mp3"];
@@ -1617,47 +1627,30 @@ function critico() {
 //
 ////////////////////////////////////////////////
 
+function criarBtn() {
+  for (let i = 0; i < 6; i++) {
+    let carta = invObj[i];
 
-
-function criarBtn(){
-  
-for(let i=0;i<6;i++){
-
-  let carta =  invObj[i]
-
-  if(!carta._eventAdded){
-
-    inv.children[i].children[3].children[2].addEventListener(
-      "click", function(){
-  
-        if(invObj[i].poder){
-  
-          invObj[i].poder()
+    if (!carta._eventAdded) {
+      inv.children[i].children[3].children[2].addEventListener(
+        "click",
+        function () {
+          if (invObj[i].poder) {
+            invObj[i].poder();
+          }
         }
-      }
-    );
+      );
 
-    carta._eventAdded = true
-    
-
-
-  } 
-
-
+      carta._eventAdded = true;
+    }
+  }
 }
-
-  
-
-}
-
-
-
 
 // function criarBtn() {
 //   //
 
 //   if(true){
-//     return 
+//     return
 //   }
 
 //   for (let i = 0; i < 6; i++) {
@@ -2191,7 +2184,7 @@ for(let i=0;i<6;i++){
 
 //       let ultiReadyAu = ["ultiReadyLucio1.mp3"];
 //       function Lucio(e) {
-        
+
 //         let lucioP = e.target.offsetParent;
 //         let lucioEnergia = lucioP.children[3].children[0];
 //         let barreira = lucioP.children[3].children[1];
@@ -2201,21 +2194,16 @@ for(let i=0;i<6;i++){
 //           if (lucio.ulti < 100) {
 //             // se a carta for gentleman
 //             if (invObj[j].id == "monark") {
-              
+
 //               let vitima = invObj[j]
 
 //               vitima.hp.remove(1)
 
-              
 //               this.buildUlt(20)
-              
-//               ulti.textContent = lucio.ulti + '%'
-            
-              
-              
-//               // se tiver pdoer novo, o adiquira e exclua a carta
 
-          
+//               ulti.textContent = lucio.ulti + '%'
+
+//               // se tiver pdoer novo, o adiquira e exclua a carta
 
 //               break
 //             }
@@ -2229,7 +2217,6 @@ for(let i=0;i<6;i++){
 //             // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
 
 //             lucio.ulti = 0
-            
 
 //             //colocar barreira
 //             for (let k = 0; k < 6; k++) {
@@ -2246,7 +2233,6 @@ for(let i=0;i<6;i++){
 //                 energia.style.visibility = "visible";
 //               }
 
-              
 //             }
 
 //             break;
@@ -2254,9 +2240,6 @@ for(let i=0;i<6;i++){
 //         }
 
 //         ulti.textContent = lucio.ulti + '%'
-        
-
-
 
 //       }
 
@@ -2540,27 +2523,27 @@ function poderesEspeciais(x) {
 
 function lucio() {
   for (let i = 0; i < 6; i++) {
-    let isLucio = inv.children[i].id == "lucio";
-    let lucio = inv.children[i];
-    let ulti = lucio.children[2];
+    let isLucio = invObj[i].cartaId == "lucio";
+    let lucio = invObj[i];
+    let ulti = lucio.ulti;
     if (isLucio) {
       for (let j = 0; j < 6; j++) {
-        if (
-          inv.children[j].id != "lucio" &&
-          inv.children[j].dataset.hashp == "true" &&
-          gerarNumero(1, 2) == 1
-        ) {
+        if (invObj[j].hashp && gerarNumero(1, 2) == 1) {
+          let aliado = invObj[j];
           if (ulti >= 100) {
-            ulti.textContent = 100 + "%";
-            snd(ultiReadyAu);
+            ulti = 100;
+            // snd(ultiReadyAu);
           } else {
-            ulti.textContent = parseInt(ulti.textContent) + 1 + "%";
-            healCard(1, inv.children[j]);
-            hpPlayer.add(1);
 
-            if (gerarNumero(1, 2) == 1) {
-              healCard(1, lucio);
-            }
+            if(hpPlayer.total >= 100) return
+
+            hpPlayer.add(1);
+            lucio.buildUlt(1);
+
+             if(aliado.hp >= aliado.maxHealth) return
+
+            lucio.buildUlt(1);
+            aliado.heal(1);
           }
         }
       }
@@ -2850,10 +2833,10 @@ function creeper(x) {
             elimCardMao(left);
           }
 
-          let cartaInv1 = gerarNumero(0, 1);
-          let cartaInv2 = gerarNumero(2, 3);
+          let cartaInv1 = gerarNumero(0, 2);
+          let cartaInv2 = gerarNumero(3, 5);
 
-          if (i < 3) {
+          if (i < 2) {
             if (dmgCard(gerarNumero(25, 70), inv.children[cartaInv1])) {
             } else {
               elimCardInv(inv.children[cartaInv1]);
@@ -2899,14 +2882,28 @@ let cartaMao = mao.children[0];
 
 let emptyObj = {
   empty: "empty",
-  place(){
-    return false
+  place() {
+    return false;
+  },
+
+  dmg(x) {
+    x
+    return false;
   }
+
+
 };
 
 let maoObj = [emptyObj, emptyObj, emptyObj, emptyObj];
 
-export let invObj = [emptyObj, emptyObj, emptyObj, emptyObj, emptyObj, emptyObj];
+export let invObj = [
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj,
+];
 
 let chosenCardObj = [emptyObj];
 
@@ -3322,20 +3319,15 @@ function tick() {
     aplicarEfeitos();
     ativarBtn();
 
-    for(let i=0;i<6;i++){
+    for (let i = 0; i < 6; i++) {
+      let carta = invObj[i];
 
-    let carta =  invObj[i]
+      carta.place();
 
-        
-          carta.place()
-
-          if(carta.print){
-            carta.print()
-          }
-
-
+      if (carta.print) {
+        carta.print();
+      }
     }
-
   }, 100);
 }
 
@@ -3505,11 +3497,30 @@ export let hpPlayer = {
   dmgTaken: 0,
 
   add(n) {
+
+    if(this.total >= 100) return
+
     this.total += n;
     if (this.total > 100) {
       this.total = 100;
     }
     this.playerP(this.total);
+
+
+    let heart = hpPlayerWrapP
+
+    heart.style.backgroundColor = "blue";
+    heart.style.border = "4px solid green";
+    heart.style.borderRadius = "5px";
+  
+
+  setTimeout(function () {
+    heart.style.backgroundColor = "";
+    heart.style.border = "";
+    heart.style.borderRadius = ""
+  }, 300);
+
+
   },
 
   remove(n) {
@@ -3521,6 +3532,20 @@ export let hpPlayer = {
       playerDead();
     }
     this.playerP(this.total);
+
+    let heart = hpPlayerWrapP
+    heart.style.backgroundColor = "red";
+    heart.style.border = "4px dotted black";
+    heart.style.borderRadius = "5px";
+  
+
+  setTimeout(function () {
+    heart.style.backgroundColor = "";
+    heart.style.border = "";
+    heart.style.borderRadius = ""
+  }, 300);
+
+
   },
 
   set(n) {

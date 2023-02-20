@@ -1,6 +1,6 @@
 let DEBUG = false;
 import { seedRNG } from "./seedFabricator.js";
-import { invObj, hpPlayer, ammo } from "../script.js";
+import { invObj, hpPlayer, ammo, elimCardInv, efeitoDano, efeitoCura} from "../script.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
 
@@ -61,9 +61,29 @@ function fabricaDeCartaEsp() {
   return {
     _place: false,
     _eventAdded: false,
-
     place() {
       this._place = invObj.indexOf(this);
+    },
+
+    heal(n){
+      if(this.hp == this.maxHealth) return
+
+      this.hp += n
+      efeitoCura(this._place)
+      if( this.hp >  this.maxHealth){
+        this.hp = this.maxHealth
+      }
+      this.print()
+    },
+
+
+    dmg(n){
+      this.hp -= n
+      this.print()
+      efeitoDano(this._place)
+      if( this.hp <= 0){
+        elimCardInv(inv.children[this._place])
+      }
     },
 
     print(){
@@ -116,6 +136,7 @@ export let especiais = {
     ataqueE: 1,
     hp: 700,
     hashp: true,
+    maxHealth: 700,
     dmgboss: "false",
 
     nomeStyle: {
@@ -162,6 +183,7 @@ export let especiais = {
     ataqueE: 1,
     hp: 50,
     hashp: true,
+    maxHealth: 50,
     dmgboss: "true",
 
     // ataqueE: pontoSpeaker() + "⚡"
@@ -211,6 +233,7 @@ export let especiais = {
     cargo: "",
     ataqueE: 1,
     hp: 10,
+    maxHealth: 10,
     hashp: true,
     dmgboss: "false",
 
@@ -356,8 +379,9 @@ export let especiais = {
     retrato2: "",
     cargo: "",
     ataqueE: "",
-    hp: "50💚",
+    hp: 50,
     hashp: true,
+    maxHealth: 50,
     dmgboss: "false",
 
     // ataqueE: comunistaPE() + "☭"
@@ -407,6 +431,7 @@ export let especiais = {
     ataqueE: 1,
     hp: 50,
     hashp: true,
+    maxHealth: 50,
     dmgboss: "false",
 
     nomeStyle: {
@@ -506,6 +531,7 @@ export let especiais = {
     ataqueE: "🛡️",
 
     hp: 10,
+    maxHealth: 50,
     hashp: true,
     nomeStyle: {
       fontSize: "250%",
@@ -551,7 +577,7 @@ export let especiais = {
     retrato: "url('pics/retratoLucio.jpg')",
     dmgboss: "true",
 
-    ulti: 0,
+    ulti: 100,
 
     buildUlt(n) {
       this.ulti += n;
@@ -565,7 +591,8 @@ export let especiais = {
 
     // ataqueE: lucioPE()
     
-    hp: 50,
+    hp: 10,
+    maxHealth: 10,
     hashp: true,
 
     nomeStyle: {
@@ -601,15 +628,17 @@ export let especiais = {
         return
       }
 
-      console.log("55555", this);
+      
 
       for (let j = 0; j < 6; j++) {
         if (this.ulti < 100) {
+
+        
           if (invObj[j].id == "monark") {
             let vitima = invObj[j];
 
-            vitima.hp.remove(1);
-            this.buildUlt(20);
+            vitima.hp.remove(2);
+            this.buildUlt(2);
             ammo.use(1)
             
 
@@ -617,33 +646,26 @@ export let especiais = {
           }
           //se tiver ulti
         } else {
-          hpPlayer.add(50);
+          hpPlayer.add(20);
 
-          // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
+          
 
           this.ulti = 0;
 
-          //colocar barreira
-          // for (let k = 0; k < 6; k++) {
-          //   if (invObj[k].hashp == true && invObj[k] != lucio) {
-          //     let energia = inv.children[k].children[3].children[1];
+          invObj.map(function(x){
 
-          //     energia.textContent =
-          //       parseInt(energia.textContent) +
-          //       parseInt(barreira.textContent) +
-          //       "💚";
+              if(!x.hashp) return
 
-          //     energia.style.visibility = "visible";
-          //   }
+              x.heal(20)
+
+          })
+            break
+          }  
           
-
-
-
-
         }
 
         this.lucioP();
-      }
+      
     },
 
     lucioP() {
@@ -676,6 +698,7 @@ export let especiais = {
     ataqueE: "4⚡",
     hp: 10,
     hashp: true,
+    maxHealth: 10,
 
     nomeStyle: {
       fontSize: "250%",
@@ -725,6 +748,7 @@ export let especiais = {
     ataqueE: "1⚡",
     hp: 50,
     hashp: true,
+    maxHealth: 50,
 
     nomeStyle: {
       fontSize: "250%",
@@ -773,6 +797,7 @@ export let especiais = {
     ataqueE: "1⚡",
     hp: 10000,
     hashp: true,
+    maxHealth: 10000,
     dmgboss: "true",
 
     nomeStyle: {
