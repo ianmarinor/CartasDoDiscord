@@ -2,6 +2,7 @@ var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
 import {
+  
   tenicaEnergia,
   abelhaEnergia,
   abelhaDecrease,
@@ -492,7 +493,7 @@ function fabricaDeCarta(
 ////D O M
 let main = document.getElementById("main");
 let teste = document.getElementById("test");
-let packP = document.getElementById("pack");
+export let packP = document.getElementById("pack");
 const semCarta =
   '<div id="carta">' +
   '<div class="nameAndCidadeWrapper">' +
@@ -3093,7 +3094,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-let vendas = {
+export let vendas = {
   vendas: 0,
 
   update(n) {
@@ -3270,7 +3271,7 @@ function limparInput() {
   getSeed.value = "";
 }
 
-function tudo() {
+export function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
   if (numCartas.total > 1) {
@@ -3471,7 +3472,7 @@ function poderBoss() {
   }
 }
 
-let numCartas = {
+export let numCartas = {
   total: 50,
 
   add(n) {

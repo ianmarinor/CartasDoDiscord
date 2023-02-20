@@ -9,6 +9,10 @@ import {
   elimCardInv,
   efeitoDano,
   efeitoCura,
+  vendas,
+  tudo,
+  numCartas,
+  packP
 } from "../script.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
@@ -86,8 +90,12 @@ function fabricaDeCartaEsp() {
       this.print();
       efeitoDano(this._place);
       if (this.hp <= 0) {
-        elimCardInv(inv.children[this._place]);
+        this.kill();
       }
+    },
+
+    kill() {
+      elimCardInv(inv.children[this._place]);
     },
 
     print() {
@@ -226,7 +234,7 @@ export let especiais = {
 
           let speakerSleepAu = ["speakerSleep.mp3"];
           snd(speakerSleepAu);
-          break
+          break;
         }
       }
       this.print();
@@ -266,8 +274,8 @@ export let especiais = {
     nome: "+ CARTAS +",
     raridade: raridades.campones,
     pontoEspecial: 0,
-    energia: 0,
-    poder: true,
+    energia: 15,
+
     efeito: "",
     familia: "",
     descricao: "BONUS?",
@@ -280,6 +288,17 @@ export let especiais = {
     maxHealth: 10,
     hashp: true,
     dmgboss: "false",
+
+    poder() {
+      
+
+      numCartas.add(this.energia);
+      vendas.update(5);
+      if (packP.children[0].id == "carta") {
+        tudo();
+      }
+      this.kill();
+    },
 
     // ataqueE: bonusCartasPE()
     nomeStyle: {
@@ -978,11 +997,10 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 3);
 
-      if (true) {
+      if (false) {
         especial = objBinder(especiais.speaker);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);
-        especial.ataqueE = pontoSpeaker();
       } else if (num == 2) {
         especial = objBinder(especiais.jhin);
       } else if (num == 3) {
@@ -997,8 +1015,8 @@ export function escolherEspecial(teste) {
 
       //CAMPONESES
 
-      if (false) {
-        especial = objBinder(especiais.creeper);
+      if (true) {
+        especial = objBinder(especiais.maisCartas);
       } else if (false) {
         especial = objBinder(especiais.menosCartas);
         especial.ataqueE = bonusCartasPE() + "🃏";
