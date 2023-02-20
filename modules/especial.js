@@ -1,12 +1,17 @@
 let DEBUG = false;
 import { seedRNG } from "./seedFabricator.js";
-import { invObj, hpPlayer, ammo, elimCardInv, efeitoDano, efeitoCura} from "../script.js";
+import {
+  snd,
+  gerarNumero,
+  invObj,
+  hpPlayer,
+  ammo,
+  elimCardInv,
+  efeitoDano,
+  efeitoCura,
+} from "../script.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
-
-function gerarNumero(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
 
 let seed2 = seedString[2];
 let seed3 = seedString[3];
@@ -65,41 +70,37 @@ function fabricaDeCartaEsp() {
       this._place = invObj.indexOf(this);
     },
 
-    heal(n){
-      if(this.hp == this.maxHealth) return
+    heal(n) {
+      if (this.hp == this.maxHealth) return;
 
-      this.hp += n
-      efeitoCura(this._place)
-      if( this.hp >  this.maxHealth){
-        this.hp = this.maxHealth
+      this.hp += n;
+      efeitoCura(this._place);
+      if (this.hp > this.maxHealth) {
+        this.hp = this.maxHealth;
       }
-      this.print()
+      this.print();
     },
 
-
-    dmg(n){
-      this.hp -= n
-      this.print()
-      efeitoDano(this._place)
-      if( this.hp <= 0){
-        elimCardInv(inv.children[this._place])
+    dmg(n) {
+      this.hp -= n;
+      this.print();
+      efeitoDano(this._place);
+      if (this.hp <= 0) {
+        elimCardInv(inv.children[this._place]);
       }
     },
 
-    print(){
-      let hp = inv.children[this._place].children[3].children[1]
-      let energia = inv.children[this._place].children[3].children[0]
+    print() {
+      let hp = inv.children[this._place].children[3].children[1];
+      let energia = inv.children[this._place].children[3].children[0];
       let ulti = inv.children[this._place].children[2];
 
-      if(this.ulti){
+      if (this.ulti) {
         ulti.textContent = this.ulti + "%";
       }
-      energia.textContent = this.energia + '⚡'
-       hp.textContent = this.hp + "💚";
-
-
-    }
-
+      energia.textContent = this.energia + "⚡";
+      hp.textContent = this.hp + "💚";
+    },
   };
 }
 
@@ -171,8 +172,7 @@ export let especiais = {
     nome: "SPEAKER",
     raridade: raridades.cavaleiro,
     pontoEspecial: "",
-    energia: 0,
-    poder: true,
+    energia: 1,
     efeito: "",
     familia: "",
     descricao: "MONARK BAN!",
@@ -186,7 +186,51 @@ export let especiais = {
     maxHealth: 50,
     dmgboss: "true",
 
-    // ataqueE: pontoSpeaker() + "⚡"
+    poder() {
+      let varianteSpeaker = inv.children[this._place];
+      let retratoVariante = varianteSpeaker.children[1];
+      let speakerDorminfo = 'url("pics/speakerDormindo.jpg")';
+      let descriptionSpeaker = varianteSpeaker.children[2];
+
+      let multiplicador = multiSpeaker();
+      let pontoParaDormir = multiSpeakerSono();
+
+      function multiSpeaker() {
+        return gerarNumero(2.0, 2.7, 1);
+      }
+      function multiSpeakerSono() {
+        return gerarNumero(90, 103);
+      }
+
+      for (let j = 0; j < 6; j++) {
+        //
+
+        if (invObj[j].id != "monark") continue;
+        let vitima = invObj[j];
+        console.log(vitima);
+        if (this.energia < pontoParaDormir) {
+          this.energia = Math.trunc(this.energia * multiplicador);
+
+          vitima.hp.monarkKill();
+
+          let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.3];
+          snd(order);
+
+          break;
+        } else {
+          retratoVariante.style.backgroundImage = speakerDorminfo;
+
+          descriptionSpeaker.innerHTML = "durmi kkjk <br> &#128564; &#128564;";
+
+          varianteSpeaker.children[3].children[2].style.visibility = "hidden";
+
+          let speakerSleepAu = ["speakerSleep.mp3"];
+          snd(speakerSleepAu);
+          break
+        }
+      }
+      this.print();
+    },
 
     nomeStyle: {
       fontSize: "",
@@ -584,13 +628,11 @@ export let especiais = {
       if (this.ulti > 100) {
         this.ulti = 100;
       }
-      this.lucioP()
+      this.lucioP();
     },
 
-   
-
     // ataqueE: lucioPE()
-    
+
     hp: 10,
     maxHealth: 10,
     hashp: true,
@@ -623,24 +665,18 @@ export let especiais = {
     },
 
     poder() {
-
-      if(ammo.total == 0){
-        return
+      if (ammo.total == 0) {
+        return;
       }
-
-      
 
       for (let j = 0; j < 6; j++) {
         if (this.ulti < 100) {
-
-        
           if (invObj[j].id == "monark") {
             let vitima = invObj[j];
 
             vitima.hp.remove(2);
             this.buildUlt(2);
-            ammo.use(1)
-            
+            ammo.use(1);
 
             break;
           }
@@ -648,33 +684,24 @@ export let especiais = {
         } else {
           hpPlayer.add(20);
 
-          
-
           this.ulti = 0;
 
-          invObj.map(function(x){
+          invObj.map(function (x) {
+            if (!x.hashp) return;
 
-              if(!x.hashp) return
-
-              x.heal(20)
-
-          })
-            break
-          }  
-          
+            x.heal(20);
+          });
+          break;
         }
+      }
 
-        this.lucioP();
-      
+      this.lucioP();
     },
 
     lucioP() {
       let ulti = inv.children[this._place].children[2];
-      
 
       ulti.textContent = this.ulti + "%";
-     
-
     },
   },
 
@@ -951,8 +978,8 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 3);
 
-      if (false) {
-        especial = objBinder(especiais.spy);
+      if (true) {
+        especial = objBinder(especiais.speaker);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);
         especial.ataqueE = pontoSpeaker();

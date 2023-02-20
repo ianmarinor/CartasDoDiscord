@@ -36,7 +36,7 @@ showVersion();
 const totalNumOfSeeds = 9000000000000000 + 1000000000000000;
 
 //NUMERO ALEATORIO
-function gerarNumero(min, max, decimals) {
+export function gerarNumero(min, max, decimals) {
   if (decimals) {
     return (Math.random() * (max - min) + min).toFixed(decimals);
   } else {
@@ -1284,6 +1284,8 @@ function moverCartaMonark(x, place) {
     place() {
       this._place = invObj.indexOf(this);
     },
+
+  
 
     hp: {
       total: 10,
