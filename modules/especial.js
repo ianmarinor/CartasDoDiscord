@@ -4,6 +4,7 @@ import {
   snd,
   gerarNumero,
   invObj,
+  maoObj,
   hpPlayer,
   ammo,
   elimCardInv,
@@ -12,7 +13,7 @@ import {
   vendas,
   tudo,
   numCartas,
-  packP
+  packP,
 } from "../script.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
@@ -70,8 +71,35 @@ function fabricaDeCartaEsp() {
   return {
     _place: false,
     _eventAdded: false,
+    _parent: false,
+
+
+
     place() {
-      this._place = invObj.indexOf(this);
+
+
+      for (let i = 0; i < 6; i++) {
+        if (this == invObj[i]) {
+          this._parent = invObj;
+          this.parentP = inv;
+          break;
+        }
+      } 
+
+        for (let i = 0; i < 4; i++) {
+        if (this == maoObj[i]) {
+          this._parent = maoObj;
+          this.parentP = mao;
+          break;
+        }
+      }
+  
+      this._place = this._parent.indexOf(this);
+
+
+
+
+
     },
 
     heal(n) {
@@ -99,9 +127,12 @@ function fabricaDeCartaEsp() {
     },
 
     print() {
-      let hp = inv.children[this._place].children[3].children[1];
-      let energia = inv.children[this._place].children[3].children[0];
-      let ulti = inv.children[this._place].children[2];
+
+      let parentP = this.parentP
+
+      let hp = parentP.children[this._place].children[3].children[1];
+      let energia = parentP.children[this._place].children[3].children[0];
+      let ulti = parentP.children[this._place].children[2];
 
       if (this.ulti) {
         ulti.textContent = this.ulti + "%";
@@ -132,8 +163,7 @@ export let especiais = {
     nome: "TÉNICA",
     raridade: raridades.rainha,
     pontoEspecial: "",
-    energia: 0,
-    poder: true,
+    energia: 80,
     efeito: "",
     familia: "",
     descricao: "Prazer, <br> sou a Ténica",
@@ -146,7 +176,33 @@ export let especiais = {
     hp: 700,
     hashp: true,
     maxHealth: 700,
-    dmgboss: "false",
+    dmgBoss: false,
+
+    poder() {
+      let varianteTenica = inv.children[this._place];
+      let botao = varianteTenica.children[3].children[2];
+
+      for (let j = 0; j < 6; j++) {
+        let carta = invObj[j];
+
+        if (carta.dmgBoss) {
+          carta.energia = carta.energia + this.energia;
+        }
+      }
+
+      for (let j = 0; j < 4; j++) {
+        let carta = maoObj[j];
+
+        if (carta.dmgBoss) {
+          carta.energia = carta.energia + this.energia;
+        }
+      }
+
+      this.dmgBoss = true;
+      let tenicaAu = ["tenica.mp3"];
+      snd(tenicaAu);
+      botao.style.visibility = "hidden";
+    },
 
     nomeStyle: {
       fontSize: "",
@@ -290,8 +346,6 @@ export let especiais = {
     dmgboss: "false",
 
     poder() {
-      
-
       numCartas.add(this.energia);
       vendas.update(5);
       if (packP.children[0].id == "carta") {

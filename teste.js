@@ -1,51 +1,105 @@
+let pai = "arr";
+let mae = "arr2";
 
-let obj = {
-    foo: true,
-    bar: 10,
-    _place: false,
-    place(){
+let obj1 = {
+  foo: true,
+  bar: 10,
+  _place: false,
+  parent: false,
+  place() {
+    for (let i = 0; i < 2; i++) {
+      if (this == arr[i]) {
+        this.parent = arr[2];
+        break;
+      }
 
-       console.log(  this._place = arr.indexOf(this) ); 
-
+      if (this == arr2[i]) {
+        this.parent = arr[2];
+        break;
+      }
     }
 
-}
+    this._place = this.parent.indexOf(this);
 
-let arr =[
+    console.log(this._place, this.parent);
+  },
+};
 
+let obj2 = {
+  foo: true,
+  bar: 10,
+  _place: false,
+  parent: false,
+  place() {
+    for (let i = 0; i < 2; i++) {
+      if (this == arr[i]) {
+        this.parent = arr;
+        break;
+      }
 
-
-]
-
-// let mama = Object.create(obj) 
-let mama = obj
-
-arr[0] = mama
-arr[1] = Object.create(obj) 
-
-
-arr[1].bar = 5
-
-// console.log(arr[0].bar);
-
-
-// arr.map((x) => console.log(x.place()))
-
-
-function loop(x,y,b){
-
-    for(let i=0;i<x;i++){
-        y()
-        b
+      if (this == arr2[i]) {
+        this.parent = arr2;
+        break;
+      }
     }
 
-}
+    this._place = this.parent.indexOf(this);
 
-loop(4, function(){
+    console.log(this._place, this.parent);
+  },
+};
 
-    console.log(1);
-    
+let obj3 = {
+  foo: true,
+  bar: pai,
+  _place: false,
+  parent: false,
+  place() {
+    for (let i = 0; i < 2; i++) {
+      if (this == arr[i]) {
+        this.parent = arr[2];
+        break;
+      }
 
+      if (this == arr2[i]) {
+        this.parent = arr[2];
+        break;
+      }
+    }
 
-}, )
+    this._place = this.parent.indexOf(this);
+
+    console.log(this._place, this.parent);
+  },
+};
+
+let obj4 = {
+  foo: true,
+  bar: 10,
+  _place: false,
+  parent: false,
+  place() {
+    for (let i = 0; i < 2; i++) {
+      if (this == arr[i]) {
+        this.parent = arr[2];
+        break;
+      }
+
+      if (this == arr2[i]) {
+        this.parent = arr[2];
+        break;
+      }
+    }
+
+    this._place = this.parent.indexOf(this);
+
+    console.log(this._place, this.parent);
+  },
+};
+
+let arr2 = [obj3, obj4, pai];
+
+let arr = [obj1, obj2, mae];
+
+arr[1].place();
 

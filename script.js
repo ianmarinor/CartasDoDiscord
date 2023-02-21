@@ -2,7 +2,6 @@ var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
 import {
-  
   tenicaEnergia,
   abelhaEnergia,
   abelhaDecrease,
@@ -418,41 +417,23 @@ export function escolherPoder(x, y) {
   }
 
   if (cargo == "carta-semcargo") {
-    return (poder = {
-      _ataque: pontoPoderSemCargo() * pontoVarianteValor,
-    });
+    return (poder = pontoPoderSemCargo() * pontoVarianteValor);
   } else if (cargo == "carta-people") {
-    return (poder = {
-      _ataque: pontoPoderPeople() * pontoVarianteValor,
-    });
+    return (poder = pontoPoderPeople() * pontoVarianteValor);
   } else if (cargo == "carta-gentleman") {
-    return (poder = {
-      _ataque: pontoPoderGentleman() * pontoVarianteValor,
-    });
+    return (poder = pontoPoderGentleman() * pontoVarianteValor);
   } else if (cargo == "carta-monark") {
-    return (poder = {
-      _ataque: pontoPoderMonark(),
-    });
+    return (poder = pontoPoderMonark());
   } else if (cargo == "carta-nobre") {
-    return (poder = {
-      _ataque: pontoPoderNobre() * pontoVarianteValor,
-    });
+    return (poder = pontoPoderNobre() * pontoVarianteValor);
   } else if (cargo == "carta-lord") {
-    return (poder = {
-      _ataque: pontoPoderLord() * pontoVarianteValor,
-    });
+    return (poder = pontoPoderLord() * pontoVarianteValor);
   } else if (cargo == "carta-ministro") {
-    return (poder = {
-      _ataque: pontoPoderMinistro() * pontoVarianteValor,
-    });
+    return (poder = pontoPoderMinistro() * pontoVarianteValor);
   } else if (cargo == "carta-primeminister") {
-    return (poder = {
-      _ataque: pontoPoderPrimeMinister() * pontoVarianteValor,
-    });
+    return (poder = pontoPoderPrimeMinister() * pontoVarianteValor);
   } else if (cargo == "carta-premiomarino") {
-    return (poder = {
-      _ataque: pontoPoderRNGPremioMarino() * pontoVarianteValor,
-    });
+    return (poder = pontoPoderRNGPremioMarino() * pontoVarianteValor);
   }
 }
 
@@ -471,16 +452,59 @@ function fabricaDeCarta(
     _integrante: integrante,
     _cidade: cidade,
     _cargo: cargo,
-    _poder: poder,
+    energia: poder,
     _variante: variante,
     _especial: especial,
     _seedobj: seedObj,
     _place: false,
+    _parent: false,
+    parentP: false,
     cartaId: cargo,
+    dmgBoss: true,
 
     place() {
-      this._place = invObj.indexOf(this);
+      for (let i = 0; i < 6; i++) {
+        if (this == invObj[i]) {
+          this._parent = invObj;
+          this.parentP = inv;
+          break;
+        }
+      } 
+
+        for (let i = 0; i < 4; i++) {
+        if (this == maoObj[i]) {
+          this._parent = maoObj;
+          this.parentP = mao;
+          break;
+        }
+      }
+  
+      this._place = this._parent.indexOf(this);
     },
+
+    firstPrint(){
+
+      ataqueP.innerHTML = this.energia + "⚡"
+
+    },
+
+    print(){
+
+     
+      
+      
+      let energia = this.parentP.children[this._place].children[3].children[0];
+      
+
+      
+      energia.textContent = this.energia + "⚡";
+      
+
+
+
+
+    }
+
   };
 }
 
@@ -636,7 +660,7 @@ function colocarInfoNoWrap(a) {
 
   cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
 
-  ataqueP.innerHTML = novaCarta._poder._ataque + "&#9889;";
+    novaCarta.firstPrint()
 
   novoAtaquerP.innerHTML = 0;
 
@@ -1266,16 +1290,12 @@ export function efeitoCura(carta) {
 
   heart.style.backgroundColor = "blue";
   heart.style.border = "3px solid green";
-  
 
   setTimeout(function () {
     heart.style.backgroundColor = "";
     heart.style.border = "";
   }, 300);
 }
-
-
-
 
 function moverCartaMonark(x, place) {
   let monarkObj = {
@@ -1285,8 +1305,6 @@ function moverCartaMonark(x, place) {
     place() {
       this._place = invObj.indexOf(this);
     },
-
-  
 
     hp: {
       total: 10,
@@ -1306,14 +1324,12 @@ function moverCartaMonark(x, place) {
 
         if (this.total <= 0) {
           this.total = 0;
-          efeitoDano(monarkObj._place)
+          efeitoDano(monarkObj._place);
           this.monarkKill();
           return false;
         }
 
-        efeitoDano(monarkObj._place)
-
-        
+        efeitoDano(monarkObj._place);
 
         this.monarkP(this.total);
       },
@@ -1408,8 +1424,8 @@ function moverCartaMonark(x, place) {
 
   // let slotEscolhido
   let slotEscolhido;
-  let left = false
-  let right = false
+  let left = false;
+  let right = false;
   let num;
 
   // FUNCAO QUE ESCOLHE QUAL SLOT DO INVENTARIO IRA ATACAR
@@ -1423,15 +1439,15 @@ function moverCartaMonark(x, place) {
     }
     slotEscolhido = place.children[num];
     if (num > 0) {
-      left = invObj[num - 1] ;
+      left = invObj[num - 1];
     } else {
-      left = false
+      left = false;
     }
 
     if (num < 5) {
       right = invObj[num + 1];
-    } else{
-      right = false
+    } else {
+      right = false;
     }
     return num;
   }
@@ -1484,10 +1500,10 @@ function moverCartaMonark(x, place) {
     console.log(num);
 
     if (left.hashp == true) {
-      left.dmg(1)
+      left.dmg(1);
     }
     if (right.hashp == true) {
-      right.dmg(1)
+      right.dmg(1);
     }
 
     place.replaceChild(teste.children[0], slotEscolhido);
@@ -2537,13 +2553,12 @@ function lucio() {
             ulti = 100;
             // snd(ultiReadyAu);
           } else {
-
-            if(hpPlayer.total >= 100) return
+            if (hpPlayer.total >= 100) return;
 
             hpPlayer.add(1);
             lucio.buildUlt(1);
 
-             if(aliado.hp >= aliado.maxHealth) return
+            if (aliado.hp >= aliado.maxHealth) return;
 
             lucio.buildUlt(1);
             aliado.heal(1);
@@ -2890,14 +2905,16 @@ let emptyObj = {
   },
 
   dmg(x) {
-    x
+    x;
     return false;
+  },
+
+  print(){
+    return
   }
-
-
 };
 
-let maoObj = [emptyObj, emptyObj, emptyObj, emptyObj];
+export let maoObj = [emptyObj, emptyObj, emptyObj, emptyObj];
 
 export let invObj = [
   emptyObj,
@@ -3327,10 +3344,28 @@ function tick() {
 
       carta.place();
 
-      if (carta.print) {
+      if(carta.print){
+
         carta.print();
       }
+      
     }
+
+    for (let i = 0; i < 4; i++) {
+      let carta = maoObj[i];
+
+      carta.place();
+
+      if(carta.print){
+
+        carta.print();
+      }
+      
+    }
+    
+
+
+
   }, 100);
 }
 
@@ -3500,8 +3535,7 @@ export let hpPlayer = {
   dmgTaken: 0,
 
   add(n) {
-
-    if(this.total >= 100) return
+    if (this.total >= 100) return;
 
     this.total += n;
     if (this.total > 100) {
@@ -3509,21 +3543,17 @@ export let hpPlayer = {
     }
     this.playerP(this.total);
 
-
-    let heart = hpPlayerWrapP
+    let heart = hpPlayerWrapP;
 
     heart.style.backgroundColor = "blue";
     heart.style.border = "4px solid green";
     heart.style.borderRadius = "5px";
-  
 
-  setTimeout(function () {
-    heart.style.backgroundColor = "";
-    heart.style.border = "";
-    heart.style.borderRadius = ""
-  }, 300);
-
-
+    setTimeout(function () {
+      heart.style.backgroundColor = "";
+      heart.style.border = "";
+      heart.style.borderRadius = "";
+    }, 300);
   },
 
   remove(n) {
@@ -3536,19 +3566,16 @@ export let hpPlayer = {
     }
     this.playerP(this.total);
 
-    let heart = hpPlayerWrapP
+    let heart = hpPlayerWrapP;
     heart.style.backgroundColor = "red";
     heart.style.border = "4px dotted black";
     heart.style.borderRadius = "5px";
-  
 
-  setTimeout(function () {
-    heart.style.backgroundColor = "";
-    heart.style.border = "";
-    heart.style.borderRadius = ""
-  }, 300);
-
-
+    setTimeout(function () {
+      heart.style.backgroundColor = "";
+      heart.style.border = "";
+      heart.style.borderRadius = "";
+    }, 300);
   },
 
   set(n) {
@@ -3617,13 +3644,6 @@ function playerDead() {
 export function somaPontos() {
   let danoTotal = 0;
 
-  let deckCritico =
-    inv.children[0].dataset.dmgboss == "true" &&
-    inv.children[1].dataset.dmgboss == "true" &&
-    inv.children[2].dataset.dmgboss == "true" &&
-    inv.children[3].dataset.dmgboss == "true" &&
-    inv.children[4].dataset.dmgboss == "true" &&
-    inv.children[5].dataset.dmgboss == "true";
 
   for (let i = 0; i < 6; i++) {
     let carta = inv.children[i];
@@ -3634,7 +3654,7 @@ export function somaPontos() {
     }
   }
 
-  if (deckCritico) {
+  if (invObj.every( (x) => x.dmgBoss == true)) {
     placarP.style.color = "red";
     placarWrapP.className = "critico";
     danoTotal = danoTotal * 2;
