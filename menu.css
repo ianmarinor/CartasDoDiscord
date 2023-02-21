@@ -81,3 +81,17 @@ a:last-of-type {
     display: none;
     font-size: 10em 
 }
+#spy{
+ 
+  height: calc(var(--tamanhoCartaHeight) * 3);
+  width: calc(var(--tamanhoCartaWidth) * 3);
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: rotate(8deg);
+
+}
+
+#spy > *{
+  font-size: 2em;
+}
+

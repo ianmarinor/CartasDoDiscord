@@ -1,6 +1,6 @@
 import { seedObj, seedRNG } from "./modules/seedFabricator.js";
 import { escolherEspecial, especial } from "./modules/especial.js";
-import  {snd, selectHandCard, naoAu, empty1, empty2, empty3, empty4,  objToMao}  from "/script.js"
+import  {snd, selectHandCard, naoAu, empty1, empty2, empty3, empty4,  objToMao, emptyObj}  from "/script.js"
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
@@ -231,14 +231,25 @@ function makeRainha() {
   return seedmakeRainha;
 }
 
+export let slotEspObj 
+
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyO") {
+    console.log('slotEspObj: ', slotEspObj);
+    
+}});
+
+export let slotEsp =  document.getElementById("slotEsp")
 function colocarSlot(tipo) {
+  
+ 
   
 
   btnCampones = document.getElementById("btnCampones");
   btnCavalheiro = document.getElementById("btnCavalheiro");
   btnSangue = document.getElementById("btnSangue");
   btnRainha = document.getElementById("btnRainha");
-
   let cartaEspecial = document.getElementById("slotEsp").children[0]
   let cartaE = slotEsp.querySelector(".cartaEsp");
   let btnEsp = document.getElementById("btnEsp");
@@ -333,6 +344,12 @@ function colocarSlot(tipo) {
 
   //SEED
   seedEsp.innerHTML = seedEspecial;
+
+  slotEspObj = especial
+
+  
+  especial.print()
+
 }
 
 btnCampones.addEventListener("click", function () {
@@ -380,6 +397,7 @@ export function moveToMao() {
         limparEsp()
         snd(novaCarta)
         objToMao(i, especial)
+        slotEspObj = emptyObj
         
 
         if(cartaEspecial.id == 'premiomonark'){

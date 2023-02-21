@@ -624,7 +624,8 @@ function colocarInfoNoWrap(a) {
   varianteP.innerHTML = "";
   cartaParaMover.classList.remove("voar");
   cartaParaMover.classList.remove("monark");
-  actionP.style.visibility = "hidden";
+  actionP.style.visibility = "visible";
+  actionP.innerHTML = "";
 
   cidadeP.removeAttribute("style");
   retratoP.removeAttribute("style");
@@ -2898,7 +2899,7 @@ export let empty5 = inv.children[4];
 export let empty6 = inv.children[5];
 let cartaMao = mao.children[0];
 
-let emptyObj = {
+export let emptyObj = {
   empty: "empty",
   place() {
     return false;
@@ -3018,7 +3019,7 @@ function deckFull() {
     inv.children[4].dataset.dmgboss == "true" &&
     inv.children[5].dataset.dmgboss == "true";
 
-  if (deckOnlyDmgBoss) {
+  if (invObj.every( (x)=> x.dmgBoss == true)) {
     usarDeckTrigg = true;
     return true;
   } else {
@@ -3048,26 +3049,6 @@ function dmgBoss() {
 
       elimCardInv(carta);
 
-      // SE ISSO FUNCONA ^, APAGUE ISSO v
-
-      // if (carta == inv.children[0]) {
-      //   inv.replaceChild(empty1, carta);
-      //   ativarBtn();
-      //   somaPontos();
-      // } else if (carta == inv.children[1]) {
-      //   inv.replaceChild(empty2, carta);
-      //   ativarBtn();
-      //   somaPontos();
-      // } else if (carta == inv.children[2]) {
-      //   inv.replaceChild(empty3, carta);
-      //   ativarBtn();
-      //   somaPontos();
-      // } else if (carta == inv.children[3]) {
-      //   inv.replaceChild(empty4, carta);
-      //   ativarBtn();
-      //   somaPontos();
-      // }
-
       energiaTotal = energia + energiaTotal;
     }
     boss.dmg(energiaTotal * 2);
@@ -3079,25 +3060,6 @@ function dmgBoss() {
 
         elimCardInv(carta);
 
-        // SE ISSO FUNCONA ^, APAGUE ISSO v
-
-        // if (carta == inv.children[0]) {
-        //   inv.replaceChild(empty1, carta);
-        //   ativarBtn();
-        //   somaPontos();
-        // } else if (carta == inv.children[1]) {
-        //   inv.replaceChild(empty2, carta);
-        //   ativarBtn();
-        //   somaPontos();
-        // } else if (carta == inv.children[2]) {
-        //   inv.replaceChild(empty3, carta);
-        //   ativarBtn();
-        //   somaPontos();
-        // } else if (carta == inv.children[3]) {
-        //   inv.replaceChild(empty4, carta);
-        //   ativarBtn();
-        //   somaPontos();
-        // }
 
         boss.dmg(energia);
       }
@@ -3645,19 +3607,20 @@ export function somaPontos() {
   let danoTotal = 0;
 
 
-  for (let i = 0; i < 6; i++) {
-    let carta = inv.children[i];
-    let energia = parseInt(carta.children[3].children[0].textContent);
-
-    if (carta.dataset.dmgboss == "true") {
-      danoTotal += energia;
+  invObj.map( function(x){
+    if(x.dmgBoss == true){
+      danoTotal += x.energia
     }
-  }
+  } )
+    
+    
+
 
   if (invObj.every( (x) => x.dmgBoss == true)) {
     placarP.style.color = "red";
     placarWrapP.className = "critico";
     danoTotal = danoTotal * 2;
+    
   } else {
     placarP.style.color = "wheat";
     placarWrapP.className = "";

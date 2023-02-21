@@ -1,5 +1,6 @@
 let DEBUG = false;
 import { seedRNG } from "./seedFabricator.js";
+import { slotEspObj, slotEsp } from "../slotEspecial.js";
 import {
   snd,
   gerarNumero,
@@ -72,16 +73,28 @@ function fabricaDeCartaEsp() {
     _place: false,
     _eventAdded: false,
     _parent: false,
+    _defaultEmoji: '⚡',
+    _parentP: false,
+    
+
 
 
 
     place() {
 
 
+
+      if(this == slotEspObj){
+        this._parentP = slotEsp
+        this._parent = slotEspObj
+        this._place = 0
+        return
+      }
+
       for (let i = 0; i < 6; i++) {
         if (this == invObj[i]) {
           this._parent = invObj;
-          this.parentP = inv;
+          this._parentP = inv;
           break;
         }
       } 
@@ -89,7 +102,7 @@ function fabricaDeCartaEsp() {
         for (let i = 0; i < 4; i++) {
         if (this == maoObj[i]) {
           this._parent = maoObj;
-          this.parentP = mao;
+          this._parentP = mao;
           break;
         }
       }
@@ -126,9 +139,33 @@ function fabricaDeCartaEsp() {
       elimCardInv(inv.children[this._place]);
     },
 
+
+
+
+    changeEmojiToDefault(){
+      
+      this.emoji = this._defaultEmoji
+
+      
+
+
+    },
+
+
+    giveAllyEmoji(parent,ally){
+      
+      let emoji = parent.children[ally].children[3].children[2]
+
+      emoji.textContent = this.allyEmoji
+
+    },
+
+
     print() {
 
-      let parentP = this.parentP
+      this.place()
+    
+      let parentP = this._parentP
 
       let hp = parentP.children[this._place].children[3].children[1];
       let energia = parentP.children[this._place].children[3].children[0];
@@ -137,9 +174,22 @@ function fabricaDeCartaEsp() {
       if (this.ulti) {
         ulti.textContent = this.ulti + "%";
       }
-      energia.textContent = this.energia + "⚡";
-      hp.textContent = this.hp + "💚";
+      if(!this.emoji){
+        energia.textContent = this.energia + this._defaultEmoji
+      } else {
+
+        energia.textContent = this.energia + this.emoji;
+      }
+
+      if(this.hashp){
+
+        hp.textContent = this.hp + "💚";
+      }
+
     },
+
+
+
   };
 }
 
@@ -168,6 +218,7 @@ export let especiais = {
     familia: "",
     descricao: "Prazer, <br> sou a Ténica",
     emoji: "👑",
+    allyEmoji:"👑",
     emojiEsp: "",
     retrato: "url('pics/tenica.webp')",
     cargo: "",
@@ -187,6 +238,7 @@ export let especiais = {
 
         if (carta.dmgBoss) {
           carta.energia = carta.energia + this.energia;
+          this.giveAllyEmoji(inv,j)
         }
       }
 
@@ -195,10 +247,18 @@ export let especiais = {
 
         if (carta.dmgBoss) {
           carta.energia = carta.energia + this.energia;
+          this.giveAllyEmoji(mao,j)
         }
       }
 
+      this.changeEmojiToDefault()
+      console.log(this.dmgBoss);
       this.dmgBoss = true;
+      console.log(this.dmgBoss);
+
+      console.log(this.energia);
+      console.log(this.energia);
+
       let tenicaAu = ["tenica.mp3"];
       snd(tenicaAu);
       botao.style.visibility = "hidden";
@@ -240,7 +300,7 @@ export let especiais = {
     efeito: "",
     familia: "",
     descricao: "MONARK BAN!",
-    emoji: "&#9889;",
+    emoji: false,
     emojiEsp: "",
     retrato: "url('pics/SPEAKER.webp')",
     cargo: "MONARK BAN!",
@@ -248,7 +308,7 @@ export let especiais = {
     hp: 50,
     hashp: true,
     maxHealth: 50,
-    dmgboss: "true",
+    dmgBoss: true,
 
     poder() {
       let varianteSpeaker = inv.children[this._place];
@@ -343,7 +403,7 @@ export let especiais = {
     hp: 10,
     maxHealth: 10,
     hashp: true,
-    dmgboss: "false",
+    dmgBoss: false,
 
     poder() {
       numCartas.add(this.energia);
@@ -585,7 +645,7 @@ export let especiais = {
     nome: "SPY",
     raridade: raridades.cavaleiro,
     pontoEspecial: "",
-    energia: 0,
+    energia: 1,
     poder: true,
     efeito: "",
     familia: "",
@@ -595,9 +655,9 @@ export let especiais = {
     retrato: 'url("/pics/spyRetrato.webp")',
     retrato2: "",
     cargo: "",
-    ataqueE: "1⚡",
+    ataqueE: "",
     hp: "⌚",
-    dmgboss: "true",
+    dmgBoss: true,
     hashp: false,
 
     nomeStyle: {
@@ -692,7 +752,7 @@ export let especiais = {
     emoji: "💚",
     cargo: "0%",
     retrato: "url('pics/retratoLucio.jpg')",
-    dmgboss: "true",
+    dmgBoss: true,
 
     ulti: 100,
 
@@ -790,6 +850,7 @@ export let especiais = {
     descricao: "",
     emojiEsp: "",
     emoji: "",
+    allyEmoji: '💢',
     cargo: "4",
     retrato: "url('pics/retratoJhin.jpg')",
     dmgboss: "true",
@@ -985,6 +1046,15 @@ DEBUG && console.log("ESPECAIISMAISCARTAS", especiais.menosCartas);
 DEBUG && console.log("RARIDADES", raridades.campones);
 
 function objBinder(obj) {
+
+  let proto = fabricaDeCartaEsp()
+  let obj1 = obj
+
+  let newo = {...proto,...obj1}
+
+  // console.log(newo);
+  // return newo
+  return Object.assign(Object.create(proto), obj);
   return Object.assign(Object.create(obj), fabricaDeCartaEsp());
   // return Object.assign( obj , fabricaDeCartaEsp())
 }
