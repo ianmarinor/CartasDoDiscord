@@ -461,7 +461,7 @@ function fabricaDeCarta(
     parentP: false,
     cartaId: cargo,
     dmgBoss: true,
-
+    isNormal: true,
     place() {
       for (let i = 0; i < 6; i++) {
         if (this == invObj[i]) {

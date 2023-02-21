@@ -72,23 +72,17 @@ function fabricaDeCartaEsp() {
   return {
     _place: false,
     _eventAdded: false,
+    _cfgAdded: false,
     _parent: false,
-    _defaultEmoji: '⚡',
+    _defaultEmoji: "⚡",
     _parentP: false,
-    
-
-
-
 
     place() {
-
-
-
-      if(this == slotEspObj){
-        this._parentP = slotEsp
-        this._parent = slotEspObj
-        this._place = 0
-        return
+      if (this == slotEspObj) {
+        this._parentP = slotEsp;
+        this._parent = slotEspObj;
+        this._place = 0;
+        return;
       }
 
       for (let i = 0; i < 6; i++) {
@@ -97,22 +91,17 @@ function fabricaDeCartaEsp() {
           this._parentP = inv;
           break;
         }
-      } 
+      }
 
-        for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         if (this == maoObj[i]) {
           this._parent = maoObj;
           this._parentP = mao;
           break;
         }
       }
-  
+
       this._place = this._parent.indexOf(this);
-
-
-
-
-
     },
 
     heal(n) {
@@ -139,33 +128,21 @@ function fabricaDeCartaEsp() {
       elimCardInv(inv.children[this._place]);
     },
 
-
-
-
-    changeEmojiToDefault(){
-      
-      this.emoji = this._defaultEmoji
-
-      
-
-
+    changeEmojiToDefault() {
+      this.emoji = this._defaultEmoji;
     },
 
+    giveAllyEmoji(parent, ally) {
+      let emoji = parent.children[ally].children[3].children[2];
 
-    giveAllyEmoji(parent,ally){
-      
-      let emoji = parent.children[ally].children[3].children[2]
-
-      emoji.textContent = this.allyEmoji
-
+      emoji.textContent = this.allyEmoji;
     },
-
 
     print() {
+      this.cfg();
+      this.place();
 
-      this.place()
-    
-      let parentP = this._parentP
+      let parentP = this._parentP;
 
       let hp = parentP.children[this._place].children[3].children[1];
       let energia = parentP.children[this._place].children[3].children[0];
@@ -174,22 +151,21 @@ function fabricaDeCartaEsp() {
       if (this.ulti) {
         ulti.textContent = this.ulti + "%";
       }
-      if(!this.emoji){
-        energia.textContent = this.energia + this._defaultEmoji
+      if (!this.emoji) {
+        energia.textContent = this.energia + this._defaultEmoji;
       } else {
-
         energia.textContent = this.energia + this.emoji;
       }
 
-      if(this.hashp){
-
+      if (this.hashp) {
         hp.textContent = this.hp + "💚";
       }
-
     },
 
-
-
+    // this method will set dafaults for each card
+    cfg() {
+      false;
+    },
   };
 }
 
@@ -218,7 +194,7 @@ export let especiais = {
     familia: "",
     descricao: "Prazer, <br> sou a Ténica",
     emoji: "👑",
-    allyEmoji:"👑",
+    allyEmoji: "👑",
     emojiEsp: "",
     retrato: "url('pics/tenica.webp')",
     cargo: "",
@@ -238,7 +214,7 @@ export let especiais = {
 
         if (carta.dmgBoss) {
           carta.energia = carta.energia + this.energia;
-          this.giveAllyEmoji(inv,j)
+          this.giveAllyEmoji(inv, j);
         }
       }
 
@@ -247,11 +223,11 @@ export let especiais = {
 
         if (carta.dmgBoss) {
           carta.energia = carta.energia + this.energia;
-          this.giveAllyEmoji(mao,j)
+          this.giveAllyEmoji(mao, j);
         }
       }
 
-      this.changeEmojiToDefault()
+      this.changeEmojiToDefault();
       console.log(this.dmgBoss);
       this.dmgBoss = true;
       console.log(this.dmgBoss);
@@ -546,7 +522,6 @@ export let especiais = {
     raridade: raridades.sangueAzul,
     pontoEspecial: "",
     energia: 0,
-    poder: true,
     efeito: "",
     familia: "",
     descricao: "",
@@ -560,6 +535,28 @@ export let especiais = {
     hashp: true,
     maxHealth: 50,
     dmgboss: "false",
+    allyEmoji: "☭",
+
+    cfg() {
+      if (this._cfgAdded) return;
+      let x = [111, 222, 333];
+      this.energia = x[gerarNumero(0, 2)];
+      this._cfgAdded = true;
+    },
+
+    poder() {
+      if (!invObj.some((x) => x._integrante == "Blackao")) return;
+
+      for (let i = 0; i < invObj.length; i++) {
+        let aliado = invObj[i];
+
+        if (aliado.isNormal) {
+          aliado.energia += this.energia;
+          this.giveAllyEmoji(inv, i);
+          this.kill();
+        }
+      }
+    },
 
     // ataqueE: comunistaPE() + "☭"
     nomeStyle: {
@@ -850,7 +847,7 @@ export let especiais = {
     descricao: "",
     emojiEsp: "",
     emoji: "",
-    allyEmoji: '💢',
+    allyEmoji: "💢",
     cargo: "4",
     retrato: "url('pics/retratoJhin.jpg')",
     dmgboss: "true",
@@ -1046,17 +1043,12 @@ DEBUG && console.log("ESPECAIISMAISCARTAS", especiais.menosCartas);
 DEBUG && console.log("RARIDADES", raridades.campones);
 
 function objBinder(obj) {
+  let proto = fabricaDeCartaEsp();
+  let obj1 = obj;
 
-  let proto = fabricaDeCartaEsp()
-  let obj1 = obj
+  let newo = { ...proto, ...obj1 };
 
-  let newo = {...proto,...obj1}
-
-  // console.log(newo);
-  // return newo
   return Object.assign(Object.create(proto), obj);
-  return Object.assign(Object.create(obj), fabricaDeCartaEsp());
-  // return Object.assign( obj , fabricaDeCartaEsp())
 }
 
 export let especial = "";
@@ -1096,7 +1088,8 @@ export function escolherEspecial(teste) {
       num = gerarNumero(1, 5);
 
       if (true) {
-        especial = objBinder(especiais.lucio);
+        especial = objBinder(especiais.blackaoCamarada);
+        especial.ataqueE = comunistaPE();
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
       } else if (num == 2) {
