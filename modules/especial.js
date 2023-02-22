@@ -81,6 +81,9 @@ function fabricaDeCartaEsp() {
     _defaultEmoji: "⚡",
     _parentP: false,
     _hasPower: [inv],
+    _thisCard: false,
+
+    _uber:false,
 
     place() {
       if (this == slotEspObj) {
@@ -107,6 +110,7 @@ function fabricaDeCartaEsp() {
       }
 
       this._place = this._parent.indexOf(this);
+      this._thisCard = this._parentP.children[this._place];
     },
 
     heal(n) {
@@ -148,21 +152,17 @@ function fabricaDeCartaEsp() {
       emoji.textContent = this.allyEmoji;
     },
 
-    hideButon(parent){
-      
-      if(!parent){
-        this._hasPower = []
-      } else{
-        let index = this._hasPower.indexOf(parent)
-        this._hasPower.splice(index,1)
+    hideButon(parent) {
+      if (!parent) {
+        this._hasPower = [];
+      } else {
+        let index = this._hasPower.indexOf(parent);
+        this._hasPower.splice(index, 1);
       }
-      
-
-
     },
     print() {
-      this.cfg();
       this.place();
+      this.cfg();
 
       let parentP = this._parentP;
 
@@ -186,11 +186,8 @@ function fabricaDeCartaEsp() {
 
       //butao
 
-      
-       if (this._hasPower.includes(this._parentP)) {
-
+      if (this._hasPower.includes(this._parentP)) {
         botao.style.visibility = "visible";
-        
       } else {
         botao.style.visibility = "hidden";
       }
@@ -622,8 +619,7 @@ export let especiais = {
   },
 
   premioMonark: {
-
-    _hasPower: [inv,mao],
+    _hasPower: [inv, mao],
 
     cartaId: "premiomonark",
     nome: "PREMIO MONARK",
@@ -647,11 +643,9 @@ export let especiais = {
 
     poder() {
       let premioMonark = this._parentP.children[this._place];
-      
 
       if (this._parentP == inv) {
         if (efeitos.status == false) {
-
           //coloca efeito
           efeitoPremioMonark.rodadas = gerarNumero(10, 15);
 
@@ -660,7 +654,7 @@ export let especiais = {
           //apaga a carta
 
           premioMonark.classList.add("vanish");
-          this.hideButon()
+          this.hideButon();
 
           setTimeout(() => this.kill(), 10000);
 
@@ -675,16 +669,15 @@ export let especiais = {
           snd(premioMonarkAu);
         }
       } else {
-        let y = false
-        invObj.map( (x)=> {if (x.id == 'monark' && !y){
-            let vitima = x 
-            vitima.hp.monarkKill()
-            this.hideButon(mao)
-            y = true
-            
-
-        }} )
-
+        let y = false;
+        invObj.map((x) => {
+          if (x.id == "monark" && !y) {
+            let vitima = x;
+            vitima.hp.monarkKill();
+            this.hideButon(mao);
+            y = true;
+          }
+        });
       }
     },
 
@@ -723,7 +716,6 @@ export let especiais = {
     raridade: raridades.cavaleiro,
     pontoEspecial: "",
     energia: 1,
-    poder: true,
     efeito: "",
     familia: "",
     descricao: "",
@@ -736,6 +728,115 @@ export let especiais = {
     hp: "⌚",
     dmgBoss: true,
     hashp: false,
+
+    cfg() {
+
+      if(this._parentP != inv) return
+
+      let spy = this._thisCard;
+      let spyWatch = spy.children[3].children[1];
+      let botao = spy.children[3].children[2];
+      let retrato = spy.children[1];
+
+      spyWatch.addEventListener("click", invisWatch);
+      function invisWatch() {
+        function invis() {
+          spy.className = "invisible";
+          spyWatch.id = "invis";
+
+          retrato.classname = "invisible";
+          spy.children[0].className = "invis";
+
+          botao.style.visibility = "hidden";
+          retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
+
+          let spyInvisAu = ["spyInvis.mp3", 0.2];
+          snd(spyInvisAu);
+          // snd(spyInvisLineAu);
+
+          // to()
+          setTimeout(vis, gerarNumero(800, 7000));
+          spyWatch.style.visibility = "hidden";
+
+          spy.dataset.hashp = "uber";
+        }
+
+        function vis() {
+          spy.dataset.hashp = "false";
+          spy.className = "visible";
+          spyWatch.id = "vis";
+          retrato.classList.remove("invisible");
+          retrato.classList.add("visible");
+          spy.children[0].className = "vis";
+
+          botao.style.visibility = "visible";
+          retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
+
+          let spyInvisAu = ["spyInvis.mp3", 0.3];
+          snd(spyInvisAu);
+          // snd(spyInvisLineAu);
+          // tudo()
+
+          setTimeout(function () {
+            spyWatch.style.visibility = "visible";
+          }, gerarNumero(2400, 14000));
+        }
+
+        if (spyWatch.id != "invis") {
+          invis();
+        } else {
+          // vis()
+        }
+      }
+
+
+    },
+
+    poder() {
+
+      let spy = this._thisCard;
+      let spyWatch = spy.children[3].children[1];
+      let botao = spy.children[3].children[2];
+      let retrato = spy.children[1];
+
+      
+
+      for (let i = 0; i < 6; i++) {
+        if (
+          inv.children[i].id == "carta-semcargo" &&
+          inv.children[i].children[3].children[0].textContent.includes("⚡")
+        ) {
+          let semcargo = inv.children[i];
+          let poderSemcargo = semcargo.children[3].children[0];
+
+          let poderSpy = spy.children[3].children[0];
+
+          //roubar o poder
+
+          poderSpy.textContent =
+            parseInt(poderSemcargo.textContent) * 5 +
+            parseInt(poderSpy.textContent) +
+            "⚡";
+
+          elimCardInv(semcargo);
+
+          spyWatch.style.visibility = "visible";
+          retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
+          somaPontos();
+
+          // audio
+          let stabAu = ["stab.mp3", 0.3];
+          snd(stabAu);
+
+          if (gerarNumero(1, 3) == 2) {
+            let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3", 0.3];
+            snd(spyAu);
+          }
+
+          break;
+        }
+      }
+    },
 
     nomeStyle: {
       fontSize: "210%",
@@ -1183,6 +1284,8 @@ export function escolherEspecial(teste) {
         especial = objBinder(especiais.dva);
         especial.cargo = preBuiltUltimate() + "%";
       }
+
+      //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
       DEBUG && console.log(raridades.cavaleiro.rng());
@@ -1191,8 +1294,8 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 3);
 
-      if (false) {
-        especial = objBinder(especiais.speaker);
+      if (true) {
+        especial = objBinder(especiais.spy);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);
       } else if (num == 2) {
