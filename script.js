@@ -894,6 +894,7 @@ export let rodadaSpawnBoss = 10;
 
 export function setEfeito(e) {
   efeitos = e;
+  colocarEfeito()
 }
 
 export let efeitos = {
@@ -1235,6 +1236,7 @@ export function efeitoCura(carta) {
 function moverCartaMonark(x, place) {
   let monarkObj = {
     id: "monark",
+    cartaId: 'carta-monark',
     _place: false,
     _parentP: false,
     _parent: false,

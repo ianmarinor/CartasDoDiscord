@@ -169,34 +169,23 @@ function fabricaDeCartaEsp() {
     // this function has 2 parameters
     // parent: is the location where to hide/show button. If empty has 'inv' as default
     // trigger: if empty will hide the button, if false will how the button
-    hideButon(parent,trigger) {
-
-      if(trigger == undefined){
-
+    hideButon(parent, trigger) {
+      if (trigger == undefined) {
         if (!parent) {
           this._hasPower = [];
         } else {
           let index = this._hasPower.indexOf(parent);
           this._hasPower.splice(index, 1);
         }
-
-      } else if (
-        trigger == false
-      ) {
-
+      } else if (trigger == false) {
         if (!parent) {
           this._hasPower = [inv];
-        } else if (parent == 'all') {
-          this._hasPower = [inv, mao]
+        } else if (parent == "all") {
+          this._hasPower = [inv, mao];
         } else {
           this._hasPower.push(parent);
         }
-
       }
-
-
-
-
     },
     print() {
       this.place();
@@ -699,7 +688,7 @@ export let especiais = {
 
           setTimeout(() => this.kill(), 10000);
 
-          colocarEfeito();
+          
           let premioMonarkAu = ["premioMonark.mp3", 0.3];
           let premioMonarkElimAu = ["premioMonarkElim.mp3"];
 
@@ -791,8 +780,7 @@ export let especiais = {
           retrato.classname = "invisible";
           spy.children[0].className = "invis";
 
-          
-          this.hideButon()
+          this.hideButon();
           retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
           let spyInvisAu = ["spyInvis.mp3", 0.2];
@@ -817,7 +805,7 @@ export let especiais = {
           retrato.classList.remove("invisible");
           retrato.classList.add("visible");
           spy.children[0].className = "vis";
-          this.hideButon(...[,],false)
+          this.hideButon(...[,], false);
           retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
 
           let spyInvisAu = ["spyInvis.mp3", 0.3];
@@ -835,18 +823,18 @@ export let especiais = {
     },
 
     poder() {
-      
       let spy = this._thisCardP;
       let retrato = spy.children[1];
 
       for (let i = 0; i < invObj.length; i++) {
-        if (this._rightCard != i && this._leftCard != i) {continue};
+        if (this._rightCard != i && this._leftCard != i) {
+          continue;
+        }
         if (invObj[i].id == "monark") {
-          
           let vitima = invObj[i];
           console.log(vitima);
           //roubar o poder
-          console.log(  'iiiiiiii',i);
+          console.log("iiiiiiii", i);
           this.energia += this.damage;
 
           vitima.hp.remove(this.damage);
@@ -907,7 +895,7 @@ export let especiais = {
     emoji: "🛡️",
     retrato: "url('pics/estoicoRetrato.jpg')",
     cargo: "",
-    dmgboss: "false",
+    dmgBoss: false,
     ataqueE: "🛡️",
 
     hp: 10,
@@ -915,41 +903,27 @@ export let especiais = {
     hashp: true,
 
     poder() {
-
-      let estoico = this._thisCardP
-      let butao = estoico.children[3].children[2];
-
-      if (!invObj.some((x) => x._cidade == "de Itapira")) return
-
-      for (let i = 0; i < 6; i++) {
-
+      for (const x of invObj) {
         if (
-          efeitos.status == false &&
-          inv.children[i].children[0].children[2].textContent ==
-            " de Itapira" &&
-          inv.children[i].id != "carta-monark"
+          x._cidade == "de Itapira" &&
+          x.cartaId != "carta-monark" &&
+          efeitos.status == false
         ) {
+          let itapira = x;
+          let itapiraEnergia = x.energia;
 
-          let itapira = inv.children[i];
-          let itapiraEnergia = itapira.children[3].children[0];
+          efeitoEstoico.rodadas = itapiraEnergia;
+          setEfeito(efeitoEstoico) 
 
-          efeitoEstoico.rodadas = Math.trunc(
-            parseInt(itapiraEnergia.textContent)
-          );
-          efeitos = efeitoEstoico;
+          hpPlayer.remove(itapiraEnergia);
 
-          hpPlayer.remove(Math.trunc(parseInt(itapiraEnergia.textContent)));
+          this.hideButon();
 
-          butao.style.visibility = "hidden";
-
-          elimCardInv(itapira);
-          elimCardInv(estoico);
-
-          somaPontos();
-          tudo();
+          itapira.kill();
+          this.kill();
 
           let estoicoAu = ["estoico.mp3", 0.2];
-          sndEfeito(estoicoAu);
+          // sndEfeito(estoicoAu);
           break;
         }
       }
@@ -974,7 +948,7 @@ export let especiais = {
       color: "",
       fontSize: "150%",
       fontFamily: "estoico",
-      visibility: "visible",
+      visibility: "hidden",
     },
     novoAtaqueStyle: {
       color: "",
