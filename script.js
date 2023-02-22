@@ -469,42 +469,28 @@ function fabricaDeCarta(
           this.parentP = inv;
           break;
         }
-      } 
+      }
 
-        for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         if (this == maoObj[i]) {
           this._parent = maoObj;
           this.parentP = mao;
           break;
         }
       }
-  
+
       this._place = this._parent.indexOf(this);
     },
 
-    firstPrint(){
-
-      ataqueP.innerHTML = this.energia + "⚡"
-
+    firstPrint() {
+      ataqueP.innerHTML = this.energia + "⚡";
     },
 
-    print(){
-
-     
-      
-      
+    print() {
       let energia = this.parentP.children[this._place].children[3].children[0];
-      
 
-      
       energia.textContent = this.energia + "⚡";
-      
-
-
-
-
-    }
-
+    },
   };
 }
 
@@ -661,7 +647,7 @@ function colocarInfoNoWrap(a) {
 
   cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
 
-    novaCarta.firstPrint()
+  novaCarta.firstPrint();
 
   novoAtaquerP.innerHTML = 0;
 
@@ -871,6 +857,11 @@ function colocarInfoNoWrap(a) {
 }
 export let rodadas = 0;
 export let rodadaSpawnBoss = 10;
+
+export function setEfeito(e) {
+  efeitos = e;
+}
+
 export let efeitos = {
   status: false,
   css: {
@@ -889,7 +880,7 @@ let efeitoVazio = {
   rodadas: 0,
 };
 
-function colocarEfeito() {
+export function colocarEfeito() {
   efeito1P.style.backgroundImage = efeitos.css.imagem;
   efeito1P.innerHTML = efeitos.rodadas;
 
@@ -993,20 +984,6 @@ document.addEventListener("keydown", (event) => {
     }
   }
 });
-
-let cartasComBotao = [
-  "especial-tenica",
-  "carta-speaker",
-  "especial-click",
-  "-click",
-  "comunista",
-  "premiomonark",
-  "spy",
-  "estoico",
-  "lucio",
-  "jhin",
-  "dva",
-];
 
 for (let m = 0; m < 4; m++) {
   let slotMao = "mao" + m;
@@ -1134,11 +1111,6 @@ function moverToDeck(e) {
     (chosenCard != 0 && (isEmpty || isEmpty2)) ||
     (chosenCard != 0 && chosenCard.id == "premiomonark")
   ) {
-    if (cartasComBotao.some((el) => chosenCard.id.includes(el))) {
-      let botao = chosenCard.children[3].children[2];
-      botao.style.visibility = "visible";
-    }
-
     elimCardMao(chosenCard);
 
     abelha();
@@ -1153,75 +1125,10 @@ function moverToDeck(e) {
     inv.replaceChild(chosenCard, slot);
     invObj[slot.id[5] - 1] = chosenCardObj;
 
-    criarBtn();
-
     chosenCard.style.bottom = "0px";
 
     chosenCard = 0;
     chosenCardObj = emptyObj;
-  }
-}
-
-function moverToDeckNum(e) {
-  if (true) {
-    return false;
-  }
-
-  let key1 = e.code == "Digit1";
-  let key2 = e.code == "Digit2";
-  let key3 = e.code == "Digit3";
-  let key4 = e.code == "Digit4";
-
-  let inv0 = inv.children[0];
-  let inv1 = inv.children[1];
-  let inv2 = inv.children[2];
-  let inv3 = inv.children[3];
-  let inv4 = inv.children[4];
-  let inv5 = inv.children[5];
-
-  if (chosenCard != 0) {
-    function emptyMao() {
-      if (chosenCard == mao.children[0]) {
-        mao.replaceChild(mao0, chosenCard);
-      } else if (chosenCard == mao.children[1]) {
-        mao.replaceChild(mao1, chosenCard);
-      } else if (chosenCard == mao.children[2]) {
-        mao.replaceChild(mao2, chosenCard);
-      } else if (chosenCard == mao.children[3]) {
-        mao.replaceChild(mao3, chosenCard);
-      }
-
-      abelha();
-    }
-
-    if (key1 && inv0.id == "empty1") {
-      emptyMao();
-      inv.replaceChild(chosenCard, inv0);
-    } else if (key2 && inv1.id == "empty2") {
-      emptyMao();
-      inv.replaceChild(chosenCard, inv1);
-    } else if (key3 && inv2.id == "empty3") {
-      emptyMao();
-      inv.replaceChild(chosenCard, inv2);
-    } else if (key4 && inv3.id == "empty4") {
-      emptyMao();
-      inv.replaceChild(chosenCard, inv3);
-    } else {
-      return false;
-    }
-
-    chosenCard.dataset.inv = "true";
-
-    if (cartasComBotao.some((el) => chosenCard.id.includes(el))) {
-      let botao = chosenCard.children[3].children[2];
-      botao.style.visibility = "visible";
-    }
-
-    criarBtn();
-
-    chosenCard.style.bottom = "0px";
-
-    chosenCard = 0;
   }
 }
 
@@ -1237,13 +1144,6 @@ function moverToDeckSpace() {
       invObj[i] = chosenCardObj;
 
       chosenCard.dataset.inv = "true";
-
-      if (cartasComBotao.some((el) => chosenCard.id.includes(el))) {
-        let botao = chosenCard.children[3].children[2];
-        botao.style.visibility = "visible";
-      }
-
-      criarBtn();
 
       chosenCard.style.bottom = "0px";
 
@@ -1651,7 +1551,7 @@ function criarBtn() {
   for (let i = 0; i < 6; i++) {
     let carta = invObj[i];
 
-    if (!carta._eventAdded) {
+    if (!carta._invEventAdded) {
       inv.children[i].children[3].children[2].addEventListener(
         "click",
         function () {
@@ -1661,7 +1561,24 @@ function criarBtn() {
         }
       );
 
-      carta._eventAdded = true;
+      carta._invEventAdded = true;
+    }
+  }
+
+  for (let i = 0; i < 4; i++) {
+    let carta = maoObj[i];
+
+    if (carta._maoEventAdded == false) {
+      mao.children[i].children[3].children[2].addEventListener(
+        "click",
+        function () {
+          if (maoObj[i].poder) {
+            maoObj[i].poder();
+          }
+        }
+      );
+
+      carta._maoEventAdded = true;
     }
   }
 }
@@ -2910,9 +2827,9 @@ export let emptyObj = {
     return false;
   },
 
-  print(){
-    return
-  }
+  print() {
+    return;
+  },
 };
 
 export let maoObj = [emptyObj, emptyObj, emptyObj, emptyObj];
@@ -3019,7 +2936,7 @@ function deckFull() {
     inv.children[4].dataset.dmgboss == "true" &&
     inv.children[5].dataset.dmgboss == "true";
 
-  if (invObj.every( (x)=> x.dmgBoss == true)) {
+  if (invObj.every((x) => x.dmgBoss == true)) {
     usarDeckTrigg = true;
     return true;
   } else {
@@ -3059,7 +2976,6 @@ function dmgBoss() {
         let energia = parseInt(carta.children[3].children[0].textContent);
 
         elimCardInv(carta);
-
 
         boss.dmg(energia);
       }
@@ -3300,17 +3216,16 @@ function tick() {
     somaPontos();
     aplicarEfeitos();
     ativarBtn();
+    criarBtn();
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];
 
       carta.place();
 
-      if(carta.print){
-
+      if (carta.print) {
         carta.print();
       }
-      
     }
 
     for (let i = 0; i < 4; i++) {
@@ -3318,16 +3233,10 @@ function tick() {
 
       carta.place();
 
-      if(carta.print){
-
+      if (carta.print) {
         carta.print();
       }
-      
     }
-    
-
-
-
   }, 100);
 }
 
@@ -3606,21 +3515,16 @@ function playerDead() {
 export function somaPontos() {
   let danoTotal = 0;
 
-
-  invObj.map( function(x){
-    if(x.dmgBoss == true){
-      danoTotal += x.energia
+  invObj.map(function (x) {
+    if (x.dmgBoss == true) {
+      danoTotal += x.energia;
     }
-  } )
-    
-    
+  });
 
-
-  if (invObj.every( (x) => x.dmgBoss == true)) {
+  if (invObj.every((x) => x.dmgBoss == true)) {
     placarP.style.color = "red";
     placarWrapP.className = "critico";
     danoTotal = danoTotal * 2;
-    
   } else {
     placarP.style.color = "wheat";
     placarWrapP.className = "";

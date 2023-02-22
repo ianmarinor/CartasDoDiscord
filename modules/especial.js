@@ -6,9 +6,12 @@ import {
   gerarNumero,
   invObj,
   maoObj,
+  colocarEfeito,
   hpPlayer,
   ammo,
   elimCardInv,
+  setEfeito,
+  efeitos,
   efeitoDano,
   efeitoCura,
   vendas,
@@ -71,11 +74,13 @@ export function comunistaPE() {
 function fabricaDeCartaEsp() {
   return {
     _place: false,
-    _eventAdded: false,
+    _invEventAdded: false,
+    _maoEventAdded: false,
     _cfgAdded: false,
     _parent: false,
     _defaultEmoji: "⚡",
     _parentP: false,
+    _hasPower: [inv],
 
     place() {
       if (this == slotEspObj) {
@@ -125,7 +130,12 @@ function fabricaDeCartaEsp() {
     },
 
     kill() {
-      elimCardInv(inv.children[this._place]);
+      if (!this._parentP) return;
+      if (this._parentP == inv) {
+        elimCardInv(inv.children[this._place]);
+      } else {
+        elimCardMao(mao.children[this._place]);
+      }
     },
 
     changeEmojiToDefault() {
@@ -138,6 +148,18 @@ function fabricaDeCartaEsp() {
       emoji.textContent = this.allyEmoji;
     },
 
+    hideButon(parent){
+      
+      if(!parent){
+        this._hasPower = []
+      } else{
+        let index = this._hasPower.indexOf(parent)
+        this._hasPower.splice(index,1)
+      }
+      
+
+
+    },
     print() {
       this.cfg();
       this.place();
@@ -147,6 +169,7 @@ function fabricaDeCartaEsp() {
       let hp = parentP.children[this._place].children[3].children[1];
       let energia = parentP.children[this._place].children[3].children[0];
       let ulti = parentP.children[this._place].children[2];
+      let botao = this._parentP.children[this._place].children[3].children[2];
 
       if (this.ulti) {
         ulti.textContent = this.ulti + "%";
@@ -159,6 +182,17 @@ function fabricaDeCartaEsp() {
 
       if (this.hashp) {
         hp.textContent = this.hp + "💚";
+      }
+
+      //butao
+
+      
+       if (this._hasPower.includes(this._parentP)) {
+
+        botao.style.visibility = "visible";
+        
+      } else {
+        botao.style.visibility = "hidden";
       }
     },
 
@@ -588,12 +622,15 @@ export let especiais = {
   },
 
   premioMonark: {
+
+    _hasPower: [inv,mao],
+
     cartaId: "premiomonark",
     nome: "PREMIO MONARK",
     raridade: raridades.sangueAzul,
     pontoEspecial: "",
     energia: 0,
-    poder: true,
+
     efeito: "",
     familia: "",
     descricao: "",
@@ -607,6 +644,49 @@ export let especiais = {
     hashp: true,
     maxHealth: 50,
     dmgboss: "false",
+
+    poder() {
+      let premioMonark = this._parentP.children[this._place];
+      
+
+      if (this._parentP == inv) {
+        if (efeitos.status == false) {
+
+          //coloca efeito
+          efeitoPremioMonark.rodadas = gerarNumero(10, 15);
+
+          setEfeito(efeitoPremioMonark);
+
+          //apaga a carta
+
+          premioMonark.classList.add("vanish");
+          this.hideButon()
+
+          setTimeout(() => this.kill(), 10000);
+
+          colocarEfeito();
+          let premioMonarkAu = ["premioMonark.mp3", 0.3];
+          let premioMonarkElimAu = ["premioMonarkElim.mp3"];
+
+          setTimeout(function () {
+            snd(premioMonarkElimAu);
+          }, 5000);
+
+          snd(premioMonarkAu);
+        }
+      } else {
+        let y = false
+        invObj.map( (x)=> {if (x.id == 'monark' && !y){
+            let vitima = x 
+            vitima.hp.monarkKill()
+            this.hideButon(mao)
+            y = true
+            
+
+        }} )
+
+      }
+    },
 
     nomeStyle: {
       fontSize: "",
@@ -1088,17 +1168,14 @@ export function escolherEspecial(teste) {
       num = gerarNumero(1, 5);
 
       if (true) {
-        especial = objBinder(especiais.blackaoCamarada);
-        especial.ataqueE = comunistaPE();
+        especial = objBinder(especiais.premioMonark);
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
       } else if (num == 2) {
         especial = objBinder(especiais.premioMonark);
-        console.log("PREMIOMONARK");
       } else if (num == 3) {
         especial = objBinder(especiais.blackaoCamarada);
         especial.ataqueE = comunistaPE();
-        console.log("CAMARADA");
       } else if (num == 4) {
         especial = objBinder(especiais.abelha);
         especial.ataqueE = abelhaEnergia() + "🐝";
@@ -1132,7 +1209,7 @@ export function escolherEspecial(teste) {
 
       //CAMPONESES
 
-      if (true) {
+      if (false) {
         especial = objBinder(especiais.maisCartas);
       } else if (false) {
         especial = objBinder(especiais.menosCartas);

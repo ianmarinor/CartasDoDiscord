@@ -1,37 +1,45 @@
 import { seedObj, seedRNG } from "./modules/seedFabricator.js";
 import { escolherEspecial, especial } from "./modules/especial.js";
-import  {snd, selectHandCard, naoAu, empty1, empty2, empty3, empty4,  objToMao, emptyObj}  from "/script.js"
+import {
+  snd,
+  selectHandCard,
+  naoAu,
+  empty1,
+  empty2,
+  empty3,
+  empty4,
+  objToMao,
+  emptyObj,
+} from "/script.js";
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
 let btnCavalheiro = document.getElementById("btnCavalheiro");
 let btnSangue = document.getElementById("btnSangue");
 let btnRainha = document.getElementById("btnRainha");
-let inv = document.getElementById("inv")
-
+let inv = document.getElementById("inv");
 
 let precoCampones = 50;
 let precoCavalheiro = 150;
 let precoSangueAzul = 300;
 let precoRainha = 3500;
 
-let precoCamponesP = btnCampones.innerHTML = 'CAMPONES <br />' + precoCampones
-let precoCavalheiroP = btnCavalheiro.innerHTML =  'CAVALHEIRO <br />' + precoCavalheiro
-let precoSangueAzulP = btnSangue.innerHTML =  'SANGUE AZUL <br />' + precoSangueAzul
-let precoRainhaP = btnRainha.innerHTML =  'RAINHA <br />' + precoRainha
+let precoCamponesP = (btnCampones.innerHTML =
+  "CAMPONES <br />" + precoCampones);
+let precoCavalheiroP = (btnCavalheiro.innerHTML =
+  "CAVALHEIRO <br />" + precoCavalheiro);
+let precoSangueAzulP = (btnSangue.innerHTML =
+  "SANGUE AZUL <br />" + precoSangueAzul);
+let precoRainhaP = (btnRainha.innerHTML = "RAINHA <br />" + precoRainha);
 
-function debug(){
-   precoCampones = 1;
-   precoCavalheiro = 1;
-   precoSangueAzul = 1;
-   precoRainha = 1;
-  
-   
+function debug() {
+  precoCampones = 1;
+  precoCavalheiro = 1;
+  precoSangueAzul = 1;
+  precoRainha = 1;
 }
 
-
-
-let novaCarta = ['novaCarta.mp3']
+let novaCarta = ["novaCarta.mp3"];
 
 document.addEventListener("contextmenu", alerta);
 
@@ -39,96 +47,92 @@ function alerta() {
   return false;
 }
 
-
-
 // export function ativarBtn(){
 
 //   setInterval(ativarBtn2, 500)
-//   
+//
 
 // }
 
-
-
 export function ativarBtn() {
-  // 
+  //
 
   // ATIVAR CAMPO
   if (parseInt(moneyP.textContent) >= precoCampones) {
     btnCampones.disabled = false;
 
-    // 
+    //
   } else {
     btnCampones.disabled = true;
-    // 
+    //
   }
 
   //ATIVAR CAVA
   if (parseInt(moneyP.textContent) >= precoCavalheiro) {
     btnCavalheiro.disabled = false;
 
-    // 
+    //
   } else {
     btnCavalheiro.disabled = true;
-    // 
+    //
   }
 
   //ATIVAR SA
   if (parseInt(moneyP.textContent) >= precoSangueAzul) {
     btnSangue.disabled = false;
 
-    // 
+    //
   } else {
     btnSangue.disabled = true;
-    // 
+    //
   }
 
   //ATIVAR RAINHA
   if (parseInt(moneyP.textContent) >= precoRainha) {
     btnRainha.disabled = false;
 
-    // 
+    //
   } else {
     btnRainha.disabled = true;
-    // 
+    //
   }
 }
 
 function comprarCampones() {
-  let audio = ['campones.wav', 0.3]
+  let audio = ["campones.wav", 0.3];
   if (parseInt(moneyP.textContent) >= precoCampones) {
     colocarSlot(makeCampones());
     moneyP.textContent = parseInt(moneyP.textContent) - precoCampones;
     ativarBtn();
-    snd(audio)
+    snd(audio);
   }
 }
 
 function comprarCavalheiro() {
-  let audio = ['campones.wav', 0.3]
+  let audio = ["campones.wav", 0.3];
   if (parseInt(moneyP.textContent) >= precoCavalheiro) {
     colocarSlot(makeCavalheiro());
     moneyP.textContent = parseInt(moneyP.textContent) - precoCavalheiro;
     ativarBtn();
-    snd(audio)
+    snd(audio);
   }
 }
 function comprarSangue() {
-  let audio = ['campones.wav', 0.3]
+  let audio = ["campones.wav", 0.3];
   if (parseInt(moneyP.textContent) >= precoSangueAzul) {
     colocarSlot(makeSangueAzul());
     moneyP.textContent = parseInt(moneyP.textContent) - precoSangueAzul;
     ativarBtn();
-    snd(audio)
+    snd(audio);
   }
 }
 function comprarRainha() {
-  let audio = ['campones.wav', 0.3]
+  let audio = ["campones.wav", 0.3];
   if (parseInt(moneyP.textContent) >= precoRainha) {
     colocarSlot(makeRainha());
     moneyP.textContent = parseInt(moneyP.textContent) - precoRainha;
     ativarBtn();
-    snd(audio)
+    snd(audio);
   }
 }
 
@@ -161,17 +165,15 @@ export let stringSeed = seedRNG().toString();
 function makeCampones() {
   stringSeed = seedRNG().toString();
   let arrSeed = stringSeed.split("");
-  
+
   let specialSeed = arrSeed;
   specialSeed[0] = "1";
   specialSeed[8] = "0";
   specialSeed[14] = "0";
 
-  
-
   seedCampones = specialSeed.join("");
   seedEspecial = seedCampones;
-  
+
   ativarBtn();
   return seedCampones;
 }
@@ -179,17 +181,14 @@ function makeCampones() {
 function makeCavalheiro() {
   stringSeed = seedRNG().toString();
   let arrSeed = stringSeed.split("");
-  
+
   let specialSeed = arrSeed;
   specialSeed[0] = "1";
   specialSeed[8] = "1";
   specialSeed[14] = "0";
 
-  
-
   seedmakeCavalheiro = specialSeed.join("");
   seedEspecial = seedmakeCavalheiro;
-  
 
   return seedmakeCavalheiro;
 }
@@ -197,18 +196,14 @@ function makeCavalheiro() {
 function makeSangueAzul() {
   stringSeed = seedRNG().toString();
   let arrSeed = stringSeed.split("");
-  
+
   let specialSeed = arrSeed;
   specialSeed[0] = "1";
   specialSeed[8] = "2";
   specialSeed[14] = "0";
 
-  
-
-
   seedmakeSangueAzul = specialSeed.join("");
   seedEspecial = seedmakeSangueAzul;
-  
 
   return seedmakeSangueAzul;
 }
@@ -216,41 +211,33 @@ function makeSangueAzul() {
 function makeRainha() {
   stringSeed = seedRNG().toString();
   let arrSeed = stringSeed.split("");
-  
+
   let specialSeed = arrSeed;
   specialSeed[0] = "1";
   specialSeed[8] = "3";
   specialSeed[14] = "0";
 
-  
-
   seedmakeRainha = specialSeed.join("");
   seedEspecial = seedmakeRainha;
-  
 
   return seedmakeRainha;
 }
 
-export let slotEspObj 
-
+export let slotEspObj;
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
-    console.log('slotEspObj: ', slotEspObj);
-    
-}});
+    console.log("slotEspObj: ", slotEspObj);
+  }
+});
 
-export let slotEsp =  document.getElementById("slotEsp")
+export let slotEsp = document.getElementById("slotEsp");
 function colocarSlot(tipo) {
-  
- 
-  
-
   btnCampones = document.getElementById("btnCampones");
   btnCavalheiro = document.getElementById("btnCavalheiro");
   btnSangue = document.getElementById("btnSangue");
   btnRainha = document.getElementById("btnRainha");
-  let cartaEspecial = document.getElementById("slotEsp").children[0]
+  let cartaEspecial = document.getElementById("slotEsp").children[0];
   let cartaE = slotEsp.querySelector(".cartaEsp");
   let btnEsp = document.getElementById("btnEsp");
   let nomeE = slotEsp.querySelector(".nomeEsp");
@@ -264,7 +251,6 @@ function colocarSlot(tipo) {
   let seedEsp = slotEsp.querySelector(".seedEsp");
 
   escolherEspecial(tipo);
-  
 
   nomeE.classList.remove("float");
 
@@ -272,23 +258,22 @@ function colocarSlot(tipo) {
 
   //PERSONALIZADO
   console.log(cartaEspecial);
-  cartaEspecial.dataset.tier = especial.raridade.nome
-  cartaEspecial.dataset.dmgboss = especial.dmgboss
+  cartaEspecial.dataset.tier = especial.raridade.nome;
+  cartaEspecial.dataset.dmgboss = especial.dmgboss;
   retratoE.style.visibility = "visible";
 
-
-  if(especial.canbedeleted){
-    cartaEspecial.dataset.canbedeleted = especial.canbedeleted
+  if (especial.canbedeleted) {
+    cartaEspecial.dataset.canbedeleted = especial.canbedeleted;
   } else {
-    cartaEspecial.dataset.canbedeleted = 'true'
+    cartaEspecial.dataset.canbedeleted = "true";
   }
 
-  if(especial.hashp){
-    cartaEspecial.dataset.hashp = especial.hashp
+  if (especial.hashp) {
+    cartaEspecial.dataset.hashp = especial.hashp;
   } else {
-    cartaEspecial.dataset.hashp = 'true'
+    cartaEspecial.dataset.hashp = "true";
   }
-  
+
   //NOME
   // nomeE.className = ''
   nomeE.innerHTML = especial.nome;
@@ -311,15 +296,14 @@ function colocarSlot(tipo) {
   cargoE.style.fontFamily = especial.cargoStyle.fontFamily;
   cargoE.style.fontSize = especial.cargoStyle.fontSize;
   if (especial.cargoStyle.visibility) {
-    cargoE.style.visibility = especial.cargoStyle.visibility
+    cargoE.style.visibility = especial.cargoStyle.visibility;
   }
 
   //ATAQUE
 
-  if(especial.energia){
-    ataqueE.innerHTML = especial.energia + '⚡'
-  } else{
-
+  if (especial.energia) {
+    ataqueE.innerHTML = especial.energia + "⚡";
+  } else {
     ataqueE.innerHTML = especial.ataqueE;
   }
 
@@ -329,9 +313,8 @@ function colocarSlot(tipo) {
   ataqueE.style.visibility = especial.ataqueStyle.visibility;
 
   //ATAQUENOVO
-  if(especial.hashp){
-
-    novoAtaqueE.innerHTML = especial.hp + '💚'
+  if (especial.hashp) {
+    novoAtaqueE.innerHTML = especial.hp + "💚";
   } else {
     novoAtaqueE.innerHTML = especial.hp;
   }
@@ -345,11 +328,9 @@ function colocarSlot(tipo) {
   //SEED
   seedEsp.innerHTML = seedEspecial;
 
-  slotEspObj = especial
+  slotEspObj = especial;
 
-  
-  especial.print()
-
+  especial.print();
 }
 
 btnCampones.addEventListener("click", function () {
@@ -377,75 +358,33 @@ function moverToCartaMao() {
   if (cartaEspecial.id && !myInterval) {
     mao.replaceChild(cartaEspecial, mao.children[0]);
     limparEsp();
-    snd(novaCarta)
+    snd(novaCarta);
   }
 }
 
 export function moveToMao() {
+  cartaEspecial = slotEsp.children[0];
 
-  cartaEspecial = slotEsp.children[0]
-
-  if (cartaEspecial.id && !myInterval){
-
-
+  if (cartaEspecial.id && !myInterval) {
     for (let i = 0; i < 4; i++) {
       if (mao.children[i].id == "mao" + i) {
-
-
-        
-        mao.replaceChild(cartaEspecial, mao.children[i])
-        limparEsp()
-        snd(novaCarta)
-        objToMao(i, especial)
-        slotEspObj = emptyObj
-        
-
-        if(cartaEspecial.id == 'premiomonark'){
-          for(let i=0; i<4; i++){
-            let isMonark = inv.children[i].id == 'carta-monark'
-            let monark = inv.children[i]
-
-            if(isMonark){
-
-              if (monark == inv.children[0]) {
-                inv.replaceChild(empty1, monark);
-              } else if (monark == inv.children[1]) {
-                inv.replaceChild(empty2, monark);
-              } else if (monark == inv.children[2]) {
-                inv.replaceChild(empty3, monark);
-              } else if (monark == inv.children[3]) {
-                inv.replaceChild(empty4, monark);
-              } else if (monark == inv.children[4]) {
-                inv.replaceChild(empty5, monark);
-              } else if (monark == inv.children[5]) {
-                inv.replaceChild(empty6, monark);
-              }
-
-
-              break
-            }
-
-          }
-        }
+        mao.replaceChild(cartaEspecial, mao.children[i]);
+        limparEsp();
+        snd(novaCarta);
+        objToMao(i, especial);
+        slotEspObj = emptyObj;
 
         break;
       } else {
-        
         // snd(naoAu)
       }
     }
-
-    
   }
-  
+
   selectHandCard();
 }
-
-
-
 
 export function limparEsp() {
   slotEsp.innerHTML = cartaEsp;
   ativarBtn();
 }
-
