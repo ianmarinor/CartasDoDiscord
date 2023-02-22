@@ -81,7 +81,7 @@ function fabricaDeCartaEsp() {
     _defaultEmoji: "⚡",
     _parentP: false,
     _hasPower: [inv],
-    _thisCard: false,
+    _thisCardP: false,
     _monarkFree: false,
     _uber: false,
     _rightCard: false,
@@ -112,7 +112,7 @@ function fabricaDeCartaEsp() {
       }
 
       this._place = this._parent.indexOf(this);
-      this._thisCard = this._parentP.children[this._place];
+      this._thisCardP = this._parentP.children[this._place];
 
       if (this._place > 0) {
         this._leftCard = this._place - 1;
@@ -166,13 +166,37 @@ function fabricaDeCartaEsp() {
       emoji.textContent = this.allyEmoji;
     },
 
-    hideButon(parent) {
-      if (!parent) {
-        this._hasPower = [];
-      } else {
-        let index = this._hasPower.indexOf(parent);
-        this._hasPower.splice(index, 1);
+    // this function has 2 parameters
+    // parent: is the location where to hide/show button. If empty has 'inv' as default
+    // trigger: if empty will hide the button, if false will how the button
+    hideButon(parent,trigger) {
+
+      if(trigger == undefined){
+
+        if (!parent) {
+          this._hasPower = [];
+        } else {
+          let index = this._hasPower.indexOf(parent);
+          this._hasPower.splice(index, 1);
+        }
+
+      } else if (
+        trigger == false
+      ) {
+
+        if (!parent) {
+          this._hasPower = [inv];
+        } else if (parent == 'all') {
+          this._hasPower = [inv, mao]
+        } else {
+          this._hasPower.push(parent);
+        }
+
       }
+
+
+
+
     },
     print() {
       this.place();
@@ -752,7 +776,7 @@ export let especiais = {
     cfg() {
       if (this._parentP != inv) return;
 
-      let spy = this._thisCard;
+      let spy = this._thisCardP;
       let spyWatch = spy.children[3].children[1];
       let botao = spy.children[3].children[2];
       let retrato = spy.children[1];
@@ -767,7 +791,8 @@ export let especiais = {
           retrato.classname = "invisible";
           spy.children[0].className = "invis";
 
-          botao.style.visibility = "hidden";
+          
+          this.hideButon()
           retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
           let spyInvisAu = ["spyInvis.mp3", 0.2];
@@ -792,8 +817,7 @@ export let especiais = {
           retrato.classList.remove("invisible");
           retrato.classList.add("visible");
           spy.children[0].className = "vis";
-
-          botao.style.visibility = "visible";
+          this.hideButon(...[,],false)
           retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
 
           let spyInvisAu = ["spyInvis.mp3", 0.3];
@@ -811,18 +835,18 @@ export let especiais = {
     },
 
     poder() {
-      console.log(7777777777777777777);
-      let spy = this._thisCard;
+      
+      let spy = this._thisCardP;
       let retrato = spy.children[1];
 
       for (let i = 0; i < invObj.length; i++) {
+        if (this._rightCard != i && this._leftCard != i) {continue};
         if (invObj[i].id == "monark") {
+          
           let vitima = invObj[i];
-
-          if (this._rightCard != i && this._leftCard != i) continue;
-
+          console.log(vitima);
           //roubar o poder
-
+          console.log(  'iiiiiiii',i);
           this.energia += this.damage;
 
           vitima.hp.remove(this.damage);
@@ -876,7 +900,6 @@ export let especiais = {
     raridade: raridades.campones,
     pontoEspecial: 0,
     energia: 0,
-    poder: true,
     efeito: "",
     familia: "",
     descricao: "",
@@ -885,13 +908,53 @@ export let especiais = {
     retrato: "url('pics/estoicoRetrato.jpg')",
     cargo: "",
     dmgboss: "false",
-
-    // ataqueE: estoicoPE()
     ataqueE: "🛡️",
 
     hp: 10,
     maxHealth: 50,
     hashp: true,
+
+    poder() {
+
+      let estoico = this._thisCardP
+      let butao = estoico.children[3].children[2];
+
+      if (!invObj.some((x) => x._cidade == "de Itapira")) return
+
+      for (let i = 0; i < 6; i++) {
+
+        if (
+          efeitos.status == false &&
+          inv.children[i].children[0].children[2].textContent ==
+            " de Itapira" &&
+          inv.children[i].id != "carta-monark"
+        ) {
+
+          let itapira = inv.children[i];
+          let itapiraEnergia = itapira.children[3].children[0];
+
+          efeitoEstoico.rodadas = Math.trunc(
+            parseInt(itapiraEnergia.textContent)
+          );
+          efeitos = efeitoEstoico;
+
+          hpPlayer.remove(Math.trunc(parseInt(itapiraEnergia.textContent)));
+
+          butao.style.visibility = "hidden";
+
+          elimCardInv(itapira);
+          elimCardInv(estoico);
+
+          somaPontos();
+          tudo();
+
+          let estoicoAu = ["estoico.mp3", 0.2];
+          sndEfeito(estoicoAu);
+          break;
+        }
+      }
+    },
+
     nomeStyle: {
       fontSize: "250%",
       fontFamily: "estoico",
@@ -1307,6 +1370,8 @@ export function escolherEspecial(teste) {
       } else if (num == 3) {
         especial = objBinder(especiais.spy);
       }
+
+      //CAMPONESES
     } else {
       raridade = raridades.campones;
 
@@ -1314,10 +1379,8 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 4);
 
-      //CAMPONESES
-
-      if (false) {
-        especial = objBinder(especiais.maisCartas);
+      if (true) {
+        especial = objBinder(especiais.estoicoTuru);
       } else if (false) {
         especial = objBinder(especiais.menosCartas);
         especial.ataqueE = bonusCartasPE() + "🃏";

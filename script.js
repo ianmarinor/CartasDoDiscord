@@ -22,7 +22,7 @@ import {
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
-import { ativarBtn, limparEsp } from "./slotEspecial.js";
+import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
 import { boss, spawnBoss, resetBoss } from "./boss.js";
 
 let versaoHTML = document.getElementById("versao");
@@ -456,17 +456,29 @@ function fabricaDeCarta(
     _variante: variante,
     _especial: especial,
     _seedobj: seedObj,
+    _thisCardP: false,
     _place: false,
+    _parentP: false,
     _parent: false,
-    parentP: false,
+    _leftCard: false,
+    _rightCard:false,
     cartaId: cargo,
     dmgBoss: true,
     isNormal: true,
+
+
     place() {
+      if (this == slotEspObj) {
+        this._parentP = slotEsp;
+        this._parent = slotEspObj;
+        this._place = 0;
+        return;
+      }
+
       for (let i = 0; i < 6; i++) {
         if (this == invObj[i]) {
           this._parent = invObj;
-          this.parentP = inv;
+          this._parentP = inv;
           break;
         }
       }
@@ -474,12 +486,25 @@ function fabricaDeCarta(
       for (let i = 0; i < 4; i++) {
         if (this == maoObj[i]) {
           this._parent = maoObj;
-          this.parentP = mao;
+          this._parentP = mao;
           break;
         }
       }
 
       this._place = this._parent.indexOf(this);
+      this._thisCardP = this._parentP.children[this._place];
+
+      if (this._place > 0) {
+        this._leftCard = this._place - 1;
+      } else {
+        this._leftCard = false;
+      }
+
+      if (this._place < 5) {
+        this._rightCard = this._place + 1;
+      } else {
+        this._rightCard = false;
+      }
     },
 
     firstPrint() {
@@ -487,10 +512,19 @@ function fabricaDeCarta(
     },
 
     print() {
-      let energia = this.parentP.children[this._place].children[3].children[0];
+      let energia = this._parentP.children[this._place].children[3].children[0];
 
       energia.textContent = this.energia + "⚡";
     },
+
+    kill(){
+      if (!this._parentP) return;
+      if (this._parentP == inv) {
+        elimCardInv(this._thisCardP);
+      } else {
+        elimCardMao(this._thisCardP);
+      }
+    }
   };
 }
 
@@ -1200,14 +1234,64 @@ export function efeitoCura(carta) {
 
 function moverCartaMonark(x, place) {
   let monarkObj = {
-    _place: false,
     id: "monark",
+    _place: false,
+    _parentP: false,
+    _parent: false,
+    _thisCardP: false,
+    _leftCard: false,
+    _rightCard:false,
+
 
     place() {
-      this._place = invObj.indexOf(this);
+
+      this.hp.__ = this
+
+       if (this == slotEspObj) {
+        this._parentP = slotEsp;
+        this._parent = slotEspObj;
+        this._place = 0;
+        return;
+      }
+
+      for (let i = 0; i < 6; i++) {
+        if (this == invObj[i]) {
+          this._parent = invObj;
+          this._parentP = inv;
+          break;
+        }
+      }
+
+      for (let i = 0; i < 4; i++) {
+        if (this == maoObj[i]) {
+          this._parent = maoObj;
+          this._parentP = mao;
+          break;
+        }
+      }
+
+      this._place = this._parent.indexOf(this);
+      this._thisCardP = this._parentP.children[this._place];
+
+      if (this._place > 0) {
+        this._leftCard = this._place - 1;
+      } else {
+        this._leftCard = false;
+      }
+
+      if (this._place < 5) {
+        this._rightCard = this._place + 1;
+      } else {
+        this._rightCard = false;
+      }
+
+
+
+
     },
 
     hp: {
+      __: false,
       total: 10,
       dmgTaken: 0,
 
@@ -1252,7 +1336,10 @@ function moverCartaMonark(x, place) {
         }
       },
       monarkKill() {
-        elimCardInv(this.monarkP("kill"));
+
+        elimCardInv(this.__._thisCardP);
+        
+        
       },
     },
   };
@@ -2472,7 +2559,7 @@ function spy() {
 
     if (x.cartaId == "spy" && x.isInvisible == false){
 
-      let watch = x._thisCard.children[3].children[1];
+      let watch = x._thisCardP.children[3].children[1];
   
       x.clockReady = true;
       watch.style.visibility = "visible";
@@ -2951,13 +3038,7 @@ function deletarDeck(e) {
 let usarDeckTrigg = false;
 
 function deckFull() {
-  let deckOnlyDmgBoss =
-    inv.children[0].dataset.dmgboss == "true" &&
-    inv.children[1].dataset.dmgboss == "true" &&
-    inv.children[2].dataset.dmgboss == "true" &&
-    inv.children[3].dataset.dmgboss == "true" &&
-    inv.children[4].dataset.dmgboss == "true" &&
-    inv.children[5].dataset.dmgboss == "true";
+  
 
   if (invObj.every((x) => x.dmgBoss == true)) {
     usarDeckTrigg = true;
@@ -2982,27 +3063,26 @@ function dmgBoss() {
   let energiaTotal = 0;
 
   if (deckFull()) {
-    for (let i = 0; i < 6; i++) {
-      let carta = inv.children[i];
 
-      let energia = parseInt(carta.children[3].children[0].textContent);
 
-      elimCardInv(carta);
+    invObj.map( (x)=> {
+      energiaTotal += x.energia
+      x.kill()
+    } )
 
-      energiaTotal = energia + energiaTotal;
-    }
     boss.dmg(energiaTotal * 2);
   } else {
-    for (let i = 0; i < 6; i++) {
-      let carta = inv.children[i];
-      if (carta.dataset.dmgboss == "true") {
-        let energia = parseInt(carta.children[3].children[0].textContent);
 
-        elimCardInv(carta);
 
-        boss.dmg(energia);
-      }
+    for (const x of invObj) {
+      if(x.dmgBoss != true) {continue}
+      energiaTotal += x.energia
+        x.kill()
     }
+
+
+    boss.dmg(energiaTotal);
+
   }
 }
 
@@ -3215,7 +3295,7 @@ export function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(2, inv);
+    moverCartaMonark(3, inv);
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();
