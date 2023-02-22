@@ -2448,14 +2448,37 @@ function criarBtn() {
 //   }
 // }
 
-function poderesEspeciais(x) {
+export let functionsToPlay;
+
+export function poderesEspeciais(x) {
   if (x) {
-    x();
+    x;
+    return;
   }
 
   abelha();
   creeper();
   lucio();
+  spy();
+}
+
+function spy() {
+
+  let chanceSpy = ()=> gerarNumero(1,5)
+
+  if(chanceSpy() != 1) return
+
+  invObj.map((x) => {
+
+    if (x.cartaId == "spy" && x.isInvisible == false){
+
+      let watch = x._thisCard.children[3].children[1];
+  
+      x.clockReady = true;
+      watch.style.visibility = "visible";
+    } 
+
+  });
 }
 
 function lucio() {

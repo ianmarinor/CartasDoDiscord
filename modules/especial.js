@@ -82,8 +82,10 @@ function fabricaDeCartaEsp() {
     _parentP: false,
     _hasPower: [inv],
     _thisCard: false,
-
-    _uber:false,
+    _monarkFree: false,
+    _uber: false,
+    _rightCard: false,
+    _leftCard: false,
 
     place() {
       if (this == slotEspObj) {
@@ -111,6 +113,18 @@ function fabricaDeCartaEsp() {
 
       this._place = this._parent.indexOf(this);
       this._thisCard = this._parentP.children[this._place];
+
+      if (this._place > 0) {
+        this._leftCard = this._place - 1;
+      } else {
+        this._leftCard = false;
+      }
+
+      if (this._place < 5) {
+        this._rightCard = this._place + 1;
+      } else {
+        this._rightCard = false;
+      }
     },
 
     heal(n) {
@@ -162,7 +176,10 @@ function fabricaDeCartaEsp() {
     },
     print() {
       this.place();
-      this.cfg();
+
+      if (!this._cfgAdded) {
+        this.cfg();
+      }
 
       let parentP = this._parentP;
 
@@ -728,19 +745,22 @@ export let especiais = {
     hp: "⌚",
     dmgBoss: true,
     hashp: false,
+    clockReady: true,
+    isInvisible: false,
+    damage: 60,
 
     cfg() {
-
-      if(this._parentP != inv) return
+      if (this._parentP != inv) return;
 
       let spy = this._thisCard;
       let spyWatch = spy.children[3].children[1];
       let botao = spy.children[3].children[2];
       let retrato = spy.children[1];
 
-      spyWatch.addEventListener("click", invisWatch);
-      function invisWatch() {
-        function invis() {
+      spyWatch.addEventListener("click", () => invisWatch());
+
+      let invisWatch = () => {
+        let invis = () => {
           spy.className = "invisible";
           spyWatch.id = "invis";
 
@@ -759,9 +779,13 @@ export let especiais = {
           spyWatch.style.visibility = "hidden";
 
           spy.dataset.hashp = "uber";
-        }
 
-        function vis() {
+          this.clockReady = false;
+          this.isInvisible = true;
+          this._monarkFree = true;
+        };
+
+        let vis = () => {
           spy.dataset.hashp = "false";
           spy.className = "visible";
           spyWatch.id = "vis";
@@ -774,57 +798,37 @@ export let especiais = {
 
           let spyInvisAu = ["spyInvis.mp3", 0.3];
           snd(spyInvisAu);
-          // snd(spyInvisLineAu);
-          // tudo()
+          this.isInvisible = false;
+          this._monarkFree = false;
+        };
 
-          setTimeout(function () {
-            spyWatch.style.visibility = "visible";
-          }, gerarNumero(2400, 14000));
-        }
-
-        if (spyWatch.id != "invis") {
+        if (this.clockReady) {
           invis();
-        } else {
-          // vis()
         }
-      }
+      };
 
-
+      this._cfgAdded = true;
     },
 
     poder() {
-
+      console.log(7777777777777777777);
       let spy = this._thisCard;
-      let spyWatch = spy.children[3].children[1];
-      let botao = spy.children[3].children[2];
       let retrato = spy.children[1];
 
-      
+      for (let i = 0; i < invObj.length; i++) {
+        if (invObj[i].id == "monark") {
+          let vitima = invObj[i];
 
-      for (let i = 0; i < 6; i++) {
-        if (
-          inv.children[i].id == "carta-semcargo" &&
-          inv.children[i].children[3].children[0].textContent.includes("⚡")
-        ) {
-          let semcargo = inv.children[i];
-          let poderSemcargo = semcargo.children[3].children[0];
-
-          let poderSpy = spy.children[3].children[0];
+          if (this._rightCard != i && this._leftCard != i) continue;
 
           //roubar o poder
 
-          poderSpy.textContent =
-            parseInt(poderSemcargo.textContent) * 5 +
-            parseInt(poderSpy.textContent) +
-            "⚡";
+          this.energia += this.damage;
 
-          elimCardInv(semcargo);
+          vitima.hp.remove(this.damage);
 
-          spyWatch.style.visibility = "visible";
           retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
-          somaPontos();
 
-          // audio
           let stabAu = ["stab.mp3", 0.3];
           snd(stabAu);
 
