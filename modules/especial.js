@@ -3,10 +3,12 @@ import { seedRNG } from "./seedFabricator.js";
 import { slotEspObj, slotEsp } from "../slotEspecial.js";
 import {
   snd,
+  semCarta,
   gerarNumero,
   invObj,
   maoObj,
   colocarEfeito,
+  cartaParaMover,
   hpPlayer,
   ammo,
   elimCardInv,
@@ -18,7 +20,9 @@ import {
   tudo,
   numCartas,
   packP,
+  novaCarta
 } from "../script.js";
+import { boss} from "../boss.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
 
@@ -127,6 +131,57 @@ function fabricaDeCartaEsp() {
       }
     },
 
+    ataque(dmg,ammO){
+
+      if (ammo.total == 0) {
+        return;
+      }
+
+      let dano
+      let ammoUsage
+
+      if(dmg){
+        dano = dmg
+      } else {
+        dano = this.dano
+      }
+
+      if(ammO){
+        ammoUsage = ammO
+      } else {
+        ammoUsage = 1
+      }
+
+
+
+      if(invObj.some( (x) => x.id == 'monark' ) ){
+
+        for(let x of invObj){
+          if(x.id == 'monark'){
+            x.hp.remove(dano)
+            ammo.use(ammoUsage);
+
+            return true
+          }
+        }
+
+      } else if ( invObj.some( (x) => x.id == 'miniBoss')) {
+        
+        console.log('TEM MINI BOSS');
+        return true
+
+      } else if (boss){
+
+        boss.dmg(dano)
+        ammo.use(ammoUsage);
+        return true
+
+      }
+      
+
+
+    },
+
     heal(n) {
       if (this.hp == this.maxHealth) return;
 
@@ -160,10 +215,10 @@ function fabricaDeCartaEsp() {
       this.emoji = this._defaultEmoji;
     },
 
-    giveAllyEmoji(parent, ally) {
-      let emoji = parent.children[ally].children[3].children[2];
-
-      emoji.textContent = this.allyEmoji;
+    giveAllyEmoji(ally) {
+      if(ally.statusEmoji == false){
+        ally.statusEmoji = this.allyEmoji
+      }
     },
 
     // this function has 2 parameters
@@ -275,7 +330,7 @@ export let especiais = {
 
         if (carta.dmgBoss) {
           carta.energia = carta.energia + this.energia;
-          this.giveAllyEmoji(inv, j);
+          this.giveAllyEmoji(carta);
         }
       }
 
@@ -284,21 +339,19 @@ export let especiais = {
 
         if (carta.dmgBoss) {
           carta.energia = carta.energia + this.energia;
-          this.giveAllyEmoji(mao, j);
+          this.giveAllyEmoji(carta);
         }
       }
 
       this.changeEmojiToDefault();
-      console.log(this.dmgBoss);
+      
       this.dmgBoss = true;
-      console.log(this.dmgBoss);
+      
 
-      console.log(this.energia);
-      console.log(this.energia);
-
+      
       let tenicaAu = ["tenica.mp3"];
       snd(tenicaAu);
-      botao.style.visibility = "hidden";
+      this.hideButon()
     },
 
     nomeStyle: {
@@ -968,12 +1021,14 @@ export let especiais = {
     familia: "overwatch",
     descricao: "",
     emojiEsp: "",
-    emoji: "💚",
+    emoji: "",
     cargo: "0%",
     retrato: "url('pics/retratoLucio.jpg')",
     dmgBoss: true,
+    dano:5,
+    dmgDone: 0,
 
-    ulti: 100,
+    ulti: 0,
 
     buildUlt(n) {
       this.ulti += n;
@@ -1023,15 +1078,19 @@ export let especiais = {
 
       for (let j = 0; j < 6; j++) {
         if (this.ulti < 100) {
-          if (invObj[j].id == "monark") {
-            let vitima = invObj[j];
+          
+            
 
-            vitima.hp.remove(2);
-            this.buildUlt(2);
-            ammo.use(1);
+            
+            
+            if(this.ataque()){
+              
+              this.buildUlt(2);
+            }
+            
 
             break;
-          }
+          
           //se tiver ulti
         } else {
           hpPlayer.add(20);
@@ -1063,7 +1122,7 @@ export let especiais = {
     raridade: raridades.cavaleiro,
     pontoEspecial: 0,
     energia: 4,
-    poder: true,
+    
     efeito: "",
     familia: "League Of Legends",
     descricao: "",
@@ -1073,6 +1132,181 @@ export let especiais = {
     cargo: "4",
     retrato: "url('pics/retratoJhin.jpg')",
     dmgboss: "true",
+    tiros: 4,
+    dano:0 ,
+
+
+
+    poder(){
+
+
+      
+                let jhin = this._thisCardP
+                let tiros = this.tiros;
+                let tirosString = jhin.children[2];
+        
+                //ESCOLHER ATIRADOS
+                for (let j = 0; j < invObj.length; j++) {
+
+                  let atirador = invObj[j];
+                  let nome = atirador._integrante;
+                  let atiradorCargo = atirador._cargo;
+                  let baralhoCargo = novaCarta._cargo
+                  // let emojiAtirador = atirador.children[3].children[1];
+                  let energiaJhin = this.energia
+                  // );
+                  // let energiaJhin = jhin.children[3].children[0];
+                  let energiaVitima = novaCarta.energia
+                  // );
+                  // let butao = jhin.children[3].children[2];
+        
+                  let  checkTiros =  () => {
+                    if (this.tiros >= 1) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }
+        
+                  if (
+                    atirador._cargo != "carta-monark" 
+                    && nome == "Gandalf" 
+                    && checkTiros()
+                  ) {
+                    
+                    //se nao tiver atirador, escolha atirador
+        
+                    let  naoTemAtirador = () => {
+                      if (
+                        invObj.some( (x)=> x.atiradorJhin )
+                      ) {
+                        
+                        return false;
+                      } else {
+                        
+                        return true;
+                      }
+                    }
+                    
+                    if (naoTemAtirador()) {
+                     atirador.statusEmoji = this.allyEmoji
+                    atirador.atiradorJhin = true
+        
+                      let jhinEscolhaAu = ["jhinEscolha.mp3", 0.7];
+                      let ultiJhinAu = ["ultiJhin.mp3", 0.3];
+        
+                      snd(jhinEscolhaAu);
+                      snd(ultiJhinAu);
+
+                      this.energia +=  atirador.energia * 4 
+                          this.dano = atirador.energia * 4 
+
+
+        
+                      break;
+                      //se tiver atirador
+                    } else {
+                      let playJhinAu = (n)=> {
+                        let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.4];
+        
+                        if (gerarNumero(1, n) == 1) {
+                          setTimeout(function () {
+                            snd(jhinAu);
+                          }, 800);
+                        }
+                      }
+                    
+                      // if (tiros == 1 && atiradorCargo == baralhoCargo) {
+                      //   butao.style.visibility = "hidden";
+        
+                      //   emojiAtirador.textContent = "";
+        
+                      //   tirosString.classList.remove("critico");
+                      // }
+        
+                      if (
+                        checkTiros() 
+                        && numCartas.total >= 1
+                        
+                      ) {
+
+                        if (tiros == 4) {
+                          let countAu = ["jhinConta1.mp3", 0.5];
+                          snd(countAu);
+                          // snd(hit);
+                          // somDeath(350);
+                          playJhinAu(3);
+                        }
+
+                        if (tiros == 3) {
+                          let countAu = ["jhinConta2.mp3", 0.5];
+                          snd(countAu);
+                          // snd(hit);
+                          // somDeath(350);
+                        }
+                        
+                        if (tiros == 2) {
+                          tirosString.classList.add("critico");
+                          let countAu = ["jhinConta3.mp3", 0.5];
+                          snd(countAu);
+                          // snd(hit);
+                          // somDeath(350);
+                        }
+                        
+
+
+
+                        // TULTIMO TIRO MULTIPLICA POR 4
+                        if (tiros == 1) {
+                          energiaJhin +=  energiaVitima * 8 
+                          cartaParaMover.classList.add("voar");
+                          
+                          if (numCartas.total == 1) {
+                            setTimeout(function () {
+                              packP.innerHTML = semCarta;
+                              numCartas.set(0);
+                            }, 250);
+                          } else {
+                            setTimeout(tudo, 250);
+                          }
+        
+                          let countAu = ["jhinConta4.mp3", 0.5];
+                          snd(countAu);
+                          // snd(hit);
+                          // somDeath(350);
+                          playJhinAu(1);
+                          tirosString.textContent = "";
+                        } else {
+                          
+
+                          this.ataque()
+
+                          
+
+
+                         
+                          
+                          this.tiros--
+                          tirosString.textContent = tiros 
+                          console.log( 'tiros' ,tiros);
+        
+        
+                        }
+                      
+                      
+
+                        
+                        break;
+                      }
+                    }
+                    break;
+                  }
+                }
+        
+
+
+    },
+
 
     // ataqueE: lucioPE()
     ataqueE: "4⚡",
@@ -1310,7 +1544,7 @@ export function escolherEspecial(teste) {
       num = gerarNumero(1, 5);
 
       if (true) {
-        especial = objBinder(especiais.premioMonark);
+        especial = objBinder(especiais.lucio);
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
       } else if (num == 2) {
@@ -1336,7 +1570,7 @@ export function escolherEspecial(teste) {
       num = gerarNumero(1, 3);
 
       if (true) {
-        especial = objBinder(especiais.spy);
+        especial = objBinder(especiais.jhin);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);
       } else if (num == 2) {

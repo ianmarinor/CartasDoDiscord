@@ -462,17 +462,38 @@ function fabricaDeCarta(
     _parent: false,
     _leftCard: false,
     _rightCard:false,
+
+    statusEmoji: false,
     cartaId: cargo,
     dmgBoss: true,
     isNormal: true,
 
 
     place() {
+
       if (this == slotEspObj) {
         this._parentP = slotEsp;
         this._parent = slotEspObj;
         this._place = 0;
-        return;
+        this._thisCardP = this._parentP.children[this._place]
+        this.print()
+        return
+        
+      } else if (this == slotEspObj) {
+        this._parentP = slotEsp;
+        this._parent = slotEspObj;
+        this._place = 0;
+        this._thisCardP = this._parentP.children[this._place]
+        this.print()
+        return
+        
+      } else if (this == novaCarta){
+        this._parentP = packP;
+        this._parent = novaCarta;
+        this._place = 0;
+        this._thisCardP = this._parentP.children[this._place]
+        this.print()
+        return
       }
 
       for (let i = 0; i < 6; i++) {
@@ -505,6 +526,7 @@ function fabricaDeCarta(
       } else {
         this._rightCard = false;
       }
+      this.print()
     },
 
     firstPrint() {
@@ -512,7 +534,17 @@ function fabricaDeCarta(
     },
 
     print() {
+      let thisP = this._thisCardP
       let energia = this._parentP.children[this._place].children[3].children[0];
+      let statusEmoji = thisP.children[3].children[2]
+
+
+      if(this.statusEmoji){
+        statusEmoji.style.visibility = 'visible'
+        statusEmoji.textContent = this.statusEmoji
+      } else {
+        statusEmoji.style.visibility = 'hidden'
+      }
 
       energia.textContent = this.energia + "⚡";
     },
@@ -538,7 +570,7 @@ function fabricaDeCarta(
 let main = document.getElementById("main");
 let teste = document.getElementById("test");
 export let packP = document.getElementById("pack");
-const semCarta =
+export const semCarta =
   '<div id="carta">' +
   '<div class="nameAndCidadeWrapper">' +
   '<p class="nome"></p>' +
@@ -616,7 +648,8 @@ let cartaP = packP.children[0];
 //input
 let getSeed = document.getElementById("getseed");
 //pagin procura seed
-let novaCarta;
+export let novaCarta;
+
 
 function colocarInfoNoWrap(a) {
   if (a) {
@@ -952,7 +985,7 @@ for (let z = 1; z < 5; z++) {
 
 // });
 
-let cartaParaMover = document.getElementById("pack").firstElementChild;
+export let cartaParaMover = document.getElementById("pack").firstElementChild;
 let copyCard = cartaParaMover.cloneNode(true);
 let seedCopyCard;
 let cartaNotEspecial;
@@ -2966,6 +2999,8 @@ document.addEventListener("keydown", (event) => {
     console.log("maoObj: ", maoObj);
     console.log("chosenCardObj: ", chosenCardObj);
     console.log("invObj: ", invObj);
+    console.log('novaCarta: ', novaCarta);
+
   }
 });
 
@@ -3342,6 +3377,9 @@ function tick() {
         carta.print();
       }
     }
+
+    novaCarta.place()
+
   }, 100);
 }
 
