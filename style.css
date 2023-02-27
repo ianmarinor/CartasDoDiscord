@@ -186,8 +186,9 @@ main {
 
   background-image:
   linear-gradient(360deg, rgba(28, 7, 102, 1) 10%, 
-  rgba(56, 44, 68, 0.2) 70%),
-   url(https://cutewallpaper.org/21/1920-x-1080-gif/Wahoo-GIF-Find-Share-on-GIPHY.gif);
+  rgba(56, 44, 68, 0.8) 70%),
+   /* url(https://cutewallpaper.org/21/1920-x-1080-gif/Wahoo-GIF-Find-Share-on-GIPHY.gif); */
+   url(pics/bg.gif);
    background-size: cover;
 
   display: none;
@@ -1202,8 +1203,8 @@ p {
   /* grid-area: inv; */
   height: 320px;
   width: 860px;
-  width: 1220px;
-  background-color: #242427fe;
+  width: 1330px;
+  background-color: #2424279c;
 
   display: grid;
   justify-items: center;
@@ -1212,9 +1213,9 @@ p {
   grid-template-rows: 1fr;
   gap: 10px;
   overflow: hidden;
-
+  border: #f43ad563 double 3px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 1px;
   
   
   

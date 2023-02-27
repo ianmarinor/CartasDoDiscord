@@ -625,7 +625,7 @@ function debug() {
   moneyP.textContent = 9999;
   numCartas.set(9999);
   hpPlayer.set(100);
-  ammo.set(100);
+  ammo.set(5);
   vendas.update(9999);
 }
 
@@ -3295,11 +3295,11 @@ function blockInv() {
     (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
     seedObj._isMarket;
 
-  if (!PodeMover || isJaMovi()) {
-    inv.style.border = "10px double red";
-  } else {
-    inv.style.border = "7px double green";
-  }
+  // if (!PodeMover || isJaMovi()) {
+  //   inv.style.border = "10px double red";
+  // } else {
+  //   inv.style.border = "7px double green";
+  // }
 }
 
 function limparInput() {
@@ -3332,7 +3332,7 @@ export function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(3, inv);
+    moverCartaMonark(100, inv);
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();
