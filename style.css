@@ -443,7 +443,7 @@ justify-content: center;
   width: 100px;
   border-radius: 100%;
   background-color: #090909;
-  
+  opacity: 0.5;
 
 }
 
@@ -1232,6 +1232,7 @@ p {
   border-radius: 50px;
   background-color: #090909;
   display: block;
+  opacity: 0.5;
 }
 #action1,
 #action2,

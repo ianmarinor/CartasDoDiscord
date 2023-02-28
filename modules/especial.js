@@ -20,9 +20,9 @@ import {
   tudo,
   numCartas,
   packP,
-  novaCarta
+  novaCarta,
 } from "../script.js";
-import { boss} from "../boss.js";
+import { boss } from "../boss.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
 
@@ -131,55 +131,43 @@ function fabricaDeCartaEsp() {
       }
     },
 
-    ataque(dmg,ammO){
-
+    ataque(dmg, ammO) {
       if (ammo.total == 0) {
         return;
       }
 
-      let dano
-      let ammoUsage
+      let dano;
+      let ammoUsage;
 
-      if(dmg){
-        dano = dmg
+      if (dmg) {
+        dano = dmg;
       } else {
-        dano = this.dano
+        dano = this.dano;
       }
 
-      if(ammO){
-        ammoUsage = ammO
+      if (ammO) {
+        ammoUsage = ammO;
       } else {
-        ammoUsage = 1
+        ammoUsage = 1;
       }
 
-
-
-      if(invObj.some( (x) => x.id == 'monark' ) ){
-
-        for(let x of invObj){
-          if(x.id == 'monark'){
-            x.hp.remove(dano)
+      if (invObj.some((x) => x.id == "monark")) {
+        for (let x of invObj) {
+          if (x.id == "monark") {
+            x.hp.remove(dano);
             ammo.use(ammoUsage);
 
-            return true
+            return true;
           }
         }
-
-      } else if ( invObj.some( (x) => x.id == 'miniBoss')) {
-        
-        console.log('TEM MINI BOSS');
-        return true
-
-      } else if (boss){
-
-        boss.dmg(dano)
+      } else if (invObj.some((x) => x.id == "miniBoss")) {
+        console.log("TEM MINI BOSS");
+        return true;
+      } else if (boss) {
+        boss.dmg(dano);
         ammo.use(ammoUsage);
-        return true
-
+        return true;
       }
-      
-
-
     },
 
     heal(n) {
@@ -216,8 +204,8 @@ function fabricaDeCartaEsp() {
     },
 
     giveAllyEmoji(ally) {
-      if(ally.statusEmoji == false){
-        ally.statusEmoji = this.allyEmoji
+      if (ally.statusEmoji == false) {
+        ally.statusEmoji = this.allyEmoji;
       }
     },
 
@@ -344,14 +332,12 @@ export let especiais = {
       }
 
       this.changeEmojiToDefault();
-      
-      this.dmgBoss = true;
-      
 
-      
+      this.dmgBoss = true;
+
       let tenicaAu = ["tenica.mp3"];
       snd(tenicaAu);
-      this.hideButon()
+      this.hideButon();
     },
 
     nomeStyle: {
@@ -660,13 +646,16 @@ export let especiais = {
 
     poder() {
       if (!invObj.some((x) => x._integrante == "Blackao")) return;
+      if (invObj.some((x) => x._integrante == "Nefesto")) return;
 
       for (let i = 0; i < invObj.length; i++) {
         let aliado = invObj[i];
+        let aliadoP = aliado._thisCardP
 
         if (aliado.isNormal) {
           aliado.energia += this.energia;
-          this.giveAllyEmoji(inv, i);
+          this.giveAllyEmoji(aliado);
+          
           this.kill();
         }
       }
@@ -741,7 +730,6 @@ export let especiais = {
 
           setTimeout(() => this.kill(), 10000);
 
-          
           let premioMonarkAu = ["premioMonark.mp3", 0.3];
           let premioMonarkElimAu = ["premioMonarkElim.mp3"];
 
@@ -966,7 +954,7 @@ export let especiais = {
           let itapiraEnergia = x.energia;
 
           efeitoEstoico.rodadas = itapiraEnergia;
-          setEfeito(efeitoEstoico) 
+          setEfeito(efeitoEstoico);
 
           hpPlayer.remove(itapiraEnergia);
 
@@ -1025,7 +1013,7 @@ export let especiais = {
     cargo: "0%",
     retrato: "url('pics/retratoLucio.jpg')",
     dmgBoss: true,
-    dano:5,
+    dano: 5,
     dmgDone: 0,
 
     ulti: 0,
@@ -1078,19 +1066,12 @@ export let especiais = {
 
       for (let j = 0; j < 6; j++) {
         if (this.ulti < 100) {
-          
-            
+          if (this.ataque()) {
+            this.buildUlt(2);
+          }
 
-            
-            
-            if(this.ataque()){
-              
-              this.buildUlt(2);
-            }
-            
+          break;
 
-            break;
-          
           //se tiver ulti
         } else {
           hpPlayer.add(20);
@@ -1122,191 +1103,163 @@ export let especiais = {
     raridade: raridades.cavaleiro,
     pontoEspecial: 0,
     energia: 4,
-    
+
     efeito: "",
     familia: "League Of Legends",
     descricao: "",
     emojiEsp: "",
-    emoji: "",
+    emoji: "💥",
     allyEmoji: "💢",
     cargo: "4",
     retrato: "url('pics/retratoJhin.jpg')",
-    dmgboss: "true",
+    dmgboss: false,
     tiros: 4,
-    dano:0 ,
+    dano: 0,
 
+    poder() {
+      let jhin = this._thisCardP;
+      let tiros = this.tiros;
+      let tirosString = jhin.children[2];
 
+      //ESCOLHER ATIRADOS
+      for (let j = 0; j < invObj.length; j++) {
+        let atirador = invObj[j];
+        let atiradorP = atirador._thisCardP;
+        let nome = atirador._integrante;
+        let atiradorCargo = atirador._cargo;
+        let baralhoCargo = novaCarta._cargo;
+        // let emojiAtirador = atirador.children[3].children[1];
+        let energiaJhin = this.energia;
+        // );
+        // let energiaJhin = jhin.children[3].children[0];
+        let energiaVitima = novaCarta.energia;
+        // );
+        // let butao = jhin.children[3].children[2];
 
-    poder(){
+        let checkTiros = () => {
+          if (this.tiros >= 1) {
+            return true;
+          } else {
+            return false;
+          }
+        };
 
+        if (
+          atirador._cargo != "carta-monark" &&
+          nome == "Gandalf" &&
+          checkTiros()
+        ) {
+          //se nao tiver atirador, escolha atirador
 
-      
-                let jhin = this._thisCardP
-                let tiros = this.tiros;
-                let tirosString = jhin.children[2];
-        
-                //ESCOLHER ATIRADOS
-                for (let j = 0; j < invObj.length; j++) {
+          let naoTemAtirador = () => {
+            if (invObj.some((x) => x.atiradorJhin)) {
+              return false;
+            } else {
+              return true;
+            }
+          };
 
-                  let atirador = invObj[j];
-                  let nome = atirador._integrante;
-                  let atiradorCargo = atirador._cargo;
-                  let baralhoCargo = novaCarta._cargo
-                  // let emojiAtirador = atirador.children[3].children[1];
-                  let energiaJhin = this.energia
-                  // );
-                  // let energiaJhin = jhin.children[3].children[0];
-                  let energiaVitima = novaCarta.energia
-                  // );
-                  // let butao = jhin.children[3].children[2];
-        
-                  let  checkTiros =  () => {
-                    if (this.tiros >= 1) {
-                      return true;
-                    } else {
-                      return false;
-                    }
-                  }
-        
-                  if (
-                    atirador._cargo != "carta-monark" 
-                    && nome == "Gandalf" 
-                    && checkTiros()
-                  ) {
-                    
-                    //se nao tiver atirador, escolha atirador
-        
-                    let  naoTemAtirador = () => {
-                      if (
-                        invObj.some( (x)=> x.atiradorJhin )
-                      ) {
-                        
-                        return false;
-                      } else {
-                        
-                        return true;
-                      }
-                    }
-                    
-                    if (naoTemAtirador()) {
-                     atirador.statusEmoji = this.allyEmoji
-                    atirador.atiradorJhin = true
-        
-                      let jhinEscolhaAu = ["jhinEscolha.mp3", 0.7];
-                      let ultiJhinAu = ["ultiJhin.mp3", 0.3];
-        
-                      snd(jhinEscolhaAu);
-                      snd(ultiJhinAu);
+          if (naoTemAtirador()) {
+            atirador.statusEmoji = this.allyEmoji;
+            atirador.atiradorJhin = true;
 
-                      this.energia +=  atirador.energia * 4 
-                          this.dano = atirador.energia * 4 
+            let jhinEscolhaAu = ["jhinEscolha.mp3", 0.7];
+            let ultiJhinAu = ["ultiJhin.mp3", 0.3];
 
+            snd(jhinEscolhaAu);
+            snd(ultiJhinAu);
 
-        
-                      break;
-                      //se tiver atirador
-                    } else {
-                      let playJhinAu = (n)=> {
-                        let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.4];
-        
-                        if (gerarNumero(1, n) == 1) {
-                          setTimeout(function () {
-                            snd(jhinAu);
-                          }, 800);
-                        }
-                      }
-                    
-                      // if (tiros == 1 && atiradorCargo == baralhoCargo) {
-                      //   butao.style.visibility = "hidden";
-        
-                      //   emojiAtirador.textContent = "";
-        
-                      //   tirosString.classList.remove("critico");
-                      // }
-        
-                      if (
-                        checkTiros() 
-                        && numCartas.total >= 1
-                        
-                      ) {
+            this.energia = atirador.energia * 4;
+            this.dano = atirador.energia * 4;
 
-                        if (tiros == 4) {
-                          let countAu = ["jhinConta1.mp3", 0.5];
-                          snd(countAu);
-                          // snd(hit);
-                          // somDeath(350);
-                          playJhinAu(3);
-                        }
+            if (this.tiros == 1) {
+              this.energia *= 2;
+            }
 
-                        if (tiros == 3) {
-                          let countAu = ["jhinConta2.mp3", 0.5];
-                          snd(countAu);
-                          // snd(hit);
-                          // somDeath(350);
-                        }
-                        
-                        if (tiros == 2) {
-                          tirosString.classList.add("critico");
-                          let countAu = ["jhinConta3.mp3", 0.5];
-                          snd(countAu);
-                          // snd(hit);
-                          // somDeath(350);
-                        }
-                        
+            break;
+            //se tiver atirador
+          } else {
+            if (ammo.total <= 0) return;
 
+            let playJhinAu = (n) => {
+              let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.4];
 
+              if (gerarNumero(1, n) == 1) {
+                setTimeout(function () {
+                  snd(jhinAu);
+                }, 800);
+              }
+            };
 
-                        // TULTIMO TIRO MULTIPLICA POR 4
-                        if (tiros == 1) {
-                          energiaJhin +=  energiaVitima * 8 
-                          cartaParaMover.classList.add("voar");
-                          
-                          if (numCartas.total == 1) {
-                            setTimeout(function () {
-                              packP.innerHTML = semCarta;
-                              numCartas.set(0);
-                            }, 250);
-                          } else {
-                            setTimeout(tudo, 250);
-                          }
-        
-                          let countAu = ["jhinConta4.mp3", 0.5];
-                          snd(countAu);
-                          // snd(hit);
-                          // somDeath(350);
-                          playJhinAu(1);
-                          tirosString.textContent = "";
-                        } else {
-                          
+            // if (tiros == 1 && atiradorCargo == baralhoCargo) {
+            //   butao.style.visibility = "hidden";
 
-                          this.ataque()
+            //   emojiAtirador.textContent = "";
 
-                          
+            //   tirosString.classList.remove("critico");
+            // }
 
+            if (checkTiros() && numCartas.total >= 1) {
+              if (tiros == 4) {
+                let countAu = ["jhinConta1.mp3", 0.5];
+                snd(countAu);
+                // snd(hit);
+                // somDeath(350);
+                playJhinAu(3);
+              }
 
-                         
-                          
-                          this.tiros--
-                          tirosString.textContent = tiros 
-                          console.log( 'tiros' ,tiros);
-        
-        
-                        }
-                      
-                      
+              if (tiros == 3) {
+                let countAu = ["jhinConta2.mp3", 0.5];
+                snd(countAu);
+                // snd(hit);
+                // somDeath(350);
+              }
 
-                        
-                        break;
-                      }
-                    }
-                    break;
-                  }
-                }
-        
+              if (tiros == 2) {
+                let countAu = ["jhinConta3.mp3", 0.5];
+                snd(countAu);
 
+                tirosString.classList.add("critico");
+                // snd(hit);
+                // somDeath(350);
+              }
 
+              // TULTIMO TIRO MULTIPLICA POR 4
+              if (tiros == 1) {
+                this.ataque(this.energia);
+
+                atirador.statusEmoji = "";
+                atirador.atiradorJhin = false;
+
+                tirosString.textContent = "";
+                this.hideButon();
+
+                let countAu = ["jhinConta4.mp3", 0.5];
+                snd(countAu);
+                // snd(hit);
+                // somDeath(350);
+                playJhinAu(1);
+                elimCardInv(atiradorP);
+                this.tiros--;
+                this.energia = 4;
+                this.kill()
+              } else {
+                this.ataque(this.energia);
+                elimCardInv(atiradorP);
+                this.energia = 4;
+
+                this.tiros--;
+                tirosString.textContent = this.tiros;
+                console.log("tiros", tiros);
+              }
+
+              break;
+            }
+          }
+          break;
+        }
+      }
     },
-
 
     // ataqueE: lucioPE()
     ataqueE: "4⚡",
@@ -1543,7 +1496,7 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 5);
 
-      if (true) {
+      if (false) {
         especial = objBinder(especiais.lucio);
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
