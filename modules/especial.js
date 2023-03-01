@@ -650,12 +650,12 @@ export let especiais = {
 
       for (let i = 0; i < invObj.length; i++) {
         let aliado = invObj[i];
-        let aliadoP = aliado._thisCardP
+        let aliadoP = aliado._thisCardP;
 
         if (aliado.isNormal) {
           aliado.energia += this.energia;
           this.giveAllyEmoji(aliado);
-          
+
           this.kill();
         }
       }
@@ -1242,7 +1242,7 @@ export let especiais = {
                 elimCardInv(atiradorP);
                 this.tiros--;
                 this.energia = 4;
-                this.kill()
+                this.kill();
               } else {
                 this.ataque(this.energia);
                 elimCardInv(atiradorP);
@@ -1301,7 +1301,6 @@ export let especiais = {
     raridade: raridades.sangueAzul,
     pontoEspecial: 0,
     energia: 0,
-    poder: true,
     efeito: "",
     familia: "overwatch",
     descricao: "",
@@ -1343,6 +1342,88 @@ export let especiais = {
       fontSize: "120%",
       fontFamily: "overwatch",
       visibility: "visible",
+    },
+
+    poder() {
+
+      
+      let dva = e.target.offsetParent;
+      let dvaEnergia = dva.children[3].children[0];
+      let butao = dva.children[3].children[2];
+      let ulti = dva.children[2];
+      let retratoFoto = dva.children[1];
+      let hp = dva.children[3].children[1];
+
+      for (let i = 0; i < 6; i++) {
+        let vitima =
+          inv.children[i].dataset.dmgboss == "false" &&
+          inv.children[i].dataset.card == "especial";
+
+        if (parseInt(ulti.textContent) < 100) {
+          // se a carta for gentleman
+          if (vitima) {
+            let gentleman = inv.children[i];
+
+            // se tiver pdoer novo, o adiquira e exclua a carta
+
+            ulti = parseInt(ulti.textContent) + gerarNumero(19, 26);
+
+            if (ulti > 100) {
+              dva.children[2].textContent = 100 + "%";
+              // dva.children[2].textContent = 100 + "";
+            } else {
+              dva.children[2].textContent = ulti + "%";
+            }
+
+            elimCardInv(gentleman);
+            break;
+          }
+          //se tiver ulti
+        } else {
+          butao.style.visibility = "hidden";
+
+          hp.textContent = "4💚";
+
+          retratoFoto.style.backgroundImage = 'url("/pics/dva.webp")';
+          dva.children[2].textContent = "";
+
+          let pontoDeTodos = 0;
+          let pontoDeTodosEsp = 0;
+
+          for (let j = 0; j < 6; j++) {
+            let ponto = inv.children[j].children[3].children[0];
+            let cartaEspecial = inv.children[j].dataset.dmgboss == "false";
+            let cartaNormal = inv.children[j].dataset.dmgboss == "true";
+            // if(ponto.textContent != ''){
+
+            if (cartaEspecial) {
+              pontoDeTodosEsp = pontoDeTodosEsp + 25;
+            } else if (cartaNormal) {
+              pontoDeTodos =
+                pontoDeTodos + Math.trunc(parseInt(ponto.textContent) * 1.5);
+            }
+          }
+          dvaEnergia.textContent = 1 + pontoDeTodos + pontoDeTodosEsp + "⚡";
+
+          function dvaSelfDestroy() {
+            for (let k = 0; k < 6; k++) {
+              if (dva != inv.children[k] && inv.children[k].id != "tank") {
+                elimCardInv(inv.children[k]);
+              }
+            }
+
+            for (let j = 0; j < 6; j++) {
+              let carta = inv.children[j];
+              let isTank = carta.id == "tank";
+              let aliveTank = carta.dataset.tankdead == "false";
+
+              if (isTank && aliveTank) {
+                killTank(j);
+              }
+            }
+          }
+        }
+      }
     },
   },
 

@@ -549,6 +549,13 @@ function fabricaDeCarta(
       energia.textContent = this.energia + "⚡";
     },
 
+    dmg(){
+
+      this.kill()
+
+
+    },
+
     kill(){
       if (!this._parentP) return;
       if (this._parentP == inv) {
