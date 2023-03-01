@@ -83,6 +83,7 @@ function fabricaDeCartaEsp() {
     _cfgAdded: false,
     _parent: false,
     _defaultEmoji: "⚡",
+    _defaultEmojiDano: '💥' ,
     _parentP: false,
     _hasPower: [inv],
     _thisCardP: false,
@@ -131,6 +132,22 @@ function fabricaDeCartaEsp() {
       }
     },
 
+    buildUlt(n) {
+      this.ulti += n;
+      if (this.ulti > 100) {
+        this.ulti = 100;
+      }
+      
+      
+        let ulti = inv.children[this._place].children[2];
+  
+        ulti.textContent = this.ulti + "%";
+      
+
+    },
+
+
+
     ataque(dmg, ammO) {
       if (ammo.total == 0) {
         return;
@@ -138,18 +155,21 @@ function fabricaDeCartaEsp() {
 
       let dano;
       let ammoUsage;
-
+      
       if (dmg) {
         dano = dmg;
       } else {
         dano = this.dano;
       }
-
+      
       if (ammO) {
         ammoUsage = ammO;
       } else {
         ammoUsage = 1;
       }
+      
+      
+      console.log('dano: ', dano);
 
       if (invObj.some((x) => x.id == "monark")) {
         for (let x of invObj) {
@@ -168,6 +188,11 @@ function fabricaDeCartaEsp() {
         ammo.use(ammoUsage);
         return true;
       }
+    },
+
+    setHp(n){
+      this.hp = n
+      this.maxHealth = n
     },
 
     heal(n) {
@@ -230,6 +255,16 @@ function fabricaDeCartaEsp() {
         }
       }
     },
+
+    changeRetrato(img){
+      
+      let retrato = this._thisCardP.children[1]
+      retrato.style.backgroundImage = img
+
+    },
+
+
+
     print() {
       this.place();
 
@@ -247,11 +282,15 @@ function fabricaDeCartaEsp() {
       if (this.ulti) {
         ulti.textContent = this.ulti + "%";
       }
-      if (!this.emoji) {
-        energia.textContent = this.energia + this._defaultEmoji;
+      if (this.dmgBoss) {
+        energia.textContent = Math.trunc(this.energia) + this._defaultEmoji;
+      } else if (this.dano){
+        energia.textContent = this.dano + this._defaultEmojiDano;
       } else {
-        energia.textContent = this.energia + this.emoji;
+        energia.textContent = this.energia + this.emoji
       }
+      
+      
 
       if (this.hashp) {
         hp.textContent = this.hp + "💚";
@@ -1018,13 +1057,7 @@ export let especiais = {
 
     ulti: 0,
 
-    buildUlt(n) {
-      this.ulti += n;
-      if (this.ulti > 100) {
-        this.ulti = 100;
-      }
-      this.lucioP();
-    },
+    
 
     // ataqueE: lucioPE()
 
@@ -1060,12 +1093,16 @@ export let especiais = {
     },
 
     poder() {
-      if (ammo.total == 0) {
-        return;
-      }
+      
 
       for (let j = 0; j < 6; j++) {
         if (this.ulti < 100) {
+          if (ammo.total == 0) {
+            return;
+          }
+
+
+
           if (this.ataque()) {
             this.buildUlt(2);
           }
@@ -1087,14 +1124,10 @@ export let especiais = {
         }
       }
 
-      this.lucioP();
+      
     },
 
-    lucioP() {
-      let ulti = inv.children[this._place].children[2];
-
-      ulti.textContent = this.ulti + "%";
-    },
+    
   },
 
   jhin: {
@@ -1261,6 +1294,13 @@ export let especiais = {
       }
     },
 
+
+
+
+
+
+
+    
     // ataqueE: lucioPE()
     ataqueE: "4⚡",
     hp: 10,
@@ -1300,7 +1340,7 @@ export let especiais = {
     nome: "D.Va",
     raridade: raridades.sangueAzul,
     pontoEspecial: 0,
-    energia: 0,
+    energia: 10,
     efeito: "",
     familia: "overwatch",
     descricao: "",
@@ -1308,14 +1348,192 @@ export let especiais = {
     emoji: "",
     cargo: "0%",
     retrato: "url('pics/dvaMecaRetrato.jpg')",
-    dmgboss: "true",
+    dmgBoss: false,
+    ulti: 95,
+    dano: 10,
+    hp: 50,
+    maxHealth: 50,
+    hashp: true,
+
+
+
+    poder() {
+
+      let dvaToMinidva = (energiaFromField) =>{
+
+        this.hideButon()
+        this.setHp(10)
+        this.changeRetrato('url("/pics/dva.webp")')
+        this.dmgBoss = true
+        this.dano = false
+        this.ulti = false
+        this._thisCardP.children[2].textContent = '' 
+        this.energia = 1 + Math.trunc(energiaFromField * 1.2)
+
+
+        
+      }
+
+      let ultiRate = ()=> gerarNumero(5,12)
+      let ultiDmg = ()=> gerarNumero(500,920)
+
+      for (let j = 0; j < 6; j++) {
+        if (this.ulti < 100) {
+          if (ammo.total == 0) {
+            return;
+          }
+
+
+
+          if (this.ataque()) {
+            this.buildUlt(ultiRate());
+          }
+
+          if(this.ulti >= 100){
+            this.dano = ultiDmg()
+          }
+
+
+          break;
+
+
+
+
+          //se tiver ulti
+        } else {
+          
+          
+
+          let energiaTotal = 0
+          
+          invObj.map( (x) => {
+
+            if(x != this){
+              
+              if(x.dmgBoss){
+                energiaTotal += x.energia
+              }
+
+                if(x._enemy == true){
+                x.hp.remove(this.dano)
+
+
+                } else {
+                  
+                  x.dmg(this.dano)
+                }
+                
+                
+                
+                
+                
+              }
+              
+              
+            })
+            if(boss) boss.dmg(this.dano)
+            
+            
+            
+            console.log('energiaTotal: ', energiaTotal);
+
+            dvaToMinidva(energiaTotal)
+          
+            break
+
+        }
+
+       
+
+      }
+
+
+
+
+
+
+      
+      // let dva = e.target.offsetParent;
+      // let dvaEnergia = dva.children[3].children[0];
+      // let butao = dva.children[3].children[2];
+      // let ulti = dva.children[2];
+      // let retratoFoto = dva.children[1];
+      // let hp = dva.children[3].children[1];
+
+      // for (let i = 0; i < 6; i++) {
+      //   let vitima =
+      //     inv.children[i].dataset.dmgboss == "false" &&
+      //     inv.children[i].dataset.card == "especial";
+
+      //   if (parseInt(ulti.textContent) < 100) {
+      //     // se a carta for gentleman
+      //     if (vitima) {
+      //       let gentleman = inv.children[i];
+
+      //       // se tiver pdoer novo, o adiquira e exclua a carta
+
+      //       ulti = parseInt(ulti.textContent) + gerarNumero(19, 26);
+
+      //       if (ulti > 100) {
+      //         dva.children[2].textContent = 100 + "%";
+      //         // dva.children[2].textContent = 100 + "";
+      //       } else {
+      //         dva.children[2].textContent = ulti + "%";
+      //       }
+
+      //       elimCardInv(gentleman);
+      //       break;
+      //     }
+      //     //se tiver ulti
+      //   } else {
+      //     butao.style.visibility = "hidden";
+
+      //     hp.textContent = "4💚";
+
+      //     retratoFoto.style.backgroundImage = 'url("/pics/dva.webp")';
+      //     dva.children[2].textContent = "";
+
+      //     let pontoDeTodos = 0;
+      //     let pontoDeTodosEsp = 0;
+
+      //     for (let j = 0; j < 6; j++) {
+      //       let ponto = inv.children[j].children[3].children[0];
+      //       let cartaEspecial = inv.children[j].dataset.dmgboss == "false";
+      //       let cartaNormal = inv.children[j].dataset.dmgboss == "true";
+      //       // if(ponto.textContent != ''){
+
+      //       if (cartaEspecial) {
+      //         pontoDeTodosEsp = pontoDeTodosEsp + 25;
+      //       } else if (cartaNormal) {
+      //         pontoDeTodos =
+      //           pontoDeTodos + Math.trunc(parseInt(ponto.textContent) * 1.5);
+      //       }
+      //     }
+      //     dvaEnergia.textContent = 1 + pontoDeTodos + pontoDeTodosEsp + "⚡";
+
+      //     function dvaSelfDestroy() {
+      //       for (let k = 0; k < 6; k++) {
+      //         if (dva != inv.children[k] && inv.children[k].id != "tank") {
+      //           elimCardInv(inv.children[k]);
+      //         }
+      //       }
+   //       for (let j = 0; j < 6; j++) {
+      //         let carta = inv.children[j];
+      //         let isTank = carta.id == "tank";
+      //         let aliveTank = carta.dataset.tankdead == "false";
+
+      //         if (isTank && aliveTank) {
+      //           killTank(j);
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
+    },
+
 
     // ataqueE: lucioPE()
-    ataqueE: "1⚡",
-    hp: 50,
-    hashp: true,
-    maxHealth: 50,
-
+    
     nomeStyle: {
       fontSize: "250%",
       fontFamily: "overwatch",
@@ -1344,87 +1562,8 @@ export let especiais = {
       visibility: "visible",
     },
 
-    poder() {
-
-      
-      let dva = e.target.offsetParent;
-      let dvaEnergia = dva.children[3].children[0];
-      let butao = dva.children[3].children[2];
-      let ulti = dva.children[2];
-      let retratoFoto = dva.children[1];
-      let hp = dva.children[3].children[1];
-
-      for (let i = 0; i < 6; i++) {
-        let vitima =
-          inv.children[i].dataset.dmgboss == "false" &&
-          inv.children[i].dataset.card == "especial";
-
-        if (parseInt(ulti.textContent) < 100) {
-          // se a carta for gentleman
-          if (vitima) {
-            let gentleman = inv.children[i];
-
-            // se tiver pdoer novo, o adiquira e exclua a carta
-
-            ulti = parseInt(ulti.textContent) + gerarNumero(19, 26);
-
-            if (ulti > 100) {
-              dva.children[2].textContent = 100 + "%";
-              // dva.children[2].textContent = 100 + "";
-            } else {
-              dva.children[2].textContent = ulti + "%";
-            }
-
-            elimCardInv(gentleman);
-            break;
-          }
-          //se tiver ulti
-        } else {
-          butao.style.visibility = "hidden";
-
-          hp.textContent = "4💚";
-
-          retratoFoto.style.backgroundImage = 'url("/pics/dva.webp")';
-          dva.children[2].textContent = "";
-
-          let pontoDeTodos = 0;
-          let pontoDeTodosEsp = 0;
-
-          for (let j = 0; j < 6; j++) {
-            let ponto = inv.children[j].children[3].children[0];
-            let cartaEspecial = inv.children[j].dataset.dmgboss == "false";
-            let cartaNormal = inv.children[j].dataset.dmgboss == "true";
-            // if(ponto.textContent != ''){
-
-            if (cartaEspecial) {
-              pontoDeTodosEsp = pontoDeTodosEsp + 25;
-            } else if (cartaNormal) {
-              pontoDeTodos =
-                pontoDeTodos + Math.trunc(parseInt(ponto.textContent) * 1.5);
-            }
-          }
-          dvaEnergia.textContent = 1 + pontoDeTodos + pontoDeTodosEsp + "⚡";
-
-          function dvaSelfDestroy() {
-            for (let k = 0; k < 6; k++) {
-              if (dva != inv.children[k] && inv.children[k].id != "tank") {
-                elimCardInv(inv.children[k]);
-              }
-            }
-
-            for (let j = 0; j < 6; j++) {
-              let carta = inv.children[j];
-              let isTank = carta.id == "tank";
-              let aliveTank = carta.dataset.tankdead == "false";
-
-              if (isTank && aliveTank) {
-                killTank(j);
-              }
-            }
-          }
-        }
-      }
-    },
+    
+   
   },
 
   tank: {
@@ -1577,8 +1716,8 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 5);
 
-      if (false) {
-        especial = objBinder(especiais.lucio);
+      if (true) {
+        especial = objBinder(especiais.dva);
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
       } else if (num == 2) {
@@ -1591,7 +1730,6 @@ export function escolherEspecial(teste) {
         especial.ataqueE = abelhaEnergia() + "🐝";
       } else if (num == 5) {
         especial = objBinder(especiais.dva);
-        especial.cargo = preBuiltUltimate() + "%";
       }
 
       //CAVALEIRO
@@ -1622,7 +1760,8 @@ export function escolherEspecial(teste) {
       num = gerarNumero(1, 4);
 
       if (true) {
-        especial = objBinder(especiais.estoicoTuru);
+        especial = objBinder(especiais.tank);
+        especial.cargo = tankCargo(especiais.tank.emoji);
       } else if (false) {
         especial = objBinder(especiais.menosCartas);
         especial.ataqueE = bonusCartasPE() + "🃏";

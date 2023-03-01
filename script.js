@@ -1283,6 +1283,7 @@ function moverCartaMonark(x, place) {
     _thisCardP: false,
     _leftCard: false,
     _rightCard:false,
+    _enemy: true,
 
 
     place() {
@@ -1334,7 +1335,7 @@ function moverCartaMonark(x, place) {
 
     hp: {
       __: false,
-      total: 10,
+      total: 15,
       dmgTaken: 0,
 
       add(n) {
@@ -1444,7 +1445,7 @@ function moverCartaMonark(x, place) {
     '<p class="cargo">&nbsp;monark💩</p>' +
     '<div class="poder">' +
     '<p class="ataque">0⚡</p>' +
-    '<p class="novoAtaque">10❤️</p>' +
+    '<p class="novoAtaque">15❤️</p>' +
     '<button class="action" style="visibility: hidden;">PRESS</button>' +
     "</div>" +
     '<p class="seed"></p>' +
@@ -3339,7 +3340,7 @@ export function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(100, inv);
+    moverCartaMonark(200, inv);
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();
@@ -3471,7 +3472,7 @@ function healMonarkBoss(x) {
   }
 }
 
-let chuvaCooldown = false;
+let chuvaCooldown = true;
 // setTimeout(() => (chuvaCooldown = false), 15000);
 
 //************************************************************************************* */
