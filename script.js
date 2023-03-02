@@ -473,6 +473,7 @@ function fabricaDeCarta(
     dmgBoss: true,
     isNormal: true,
 
+    removeBuff(n){},
 
     place() {
 
@@ -1290,7 +1291,7 @@ function moverCartaMonark(x, place) {
     _leftCard: false,
     _rightCard:false,
     _enemy: true,
-
+    removeBuff(n){},
 
     place() {
 
@@ -2989,6 +2990,10 @@ export let emptyObj = {
   print() {
     return;
   },
+  removeBuff(n){
+
+  }
+
 };
 
 export let maoObj = [emptyObj, emptyObj, emptyObj, emptyObj];
@@ -3371,6 +3376,28 @@ function runEveryRound(){
   invObj.map( (x)=> x.everyRound ? x.everyRound() : false )
 }
 
+function removeBuffAll(){
+
+ 
+  
+
+  setInterval(
+    function(){
+
+      let debuffRate = gerarNumero(1,3)
+
+
+      hpPlayer.removeBuff(debuffRate)
+
+      invObj.map( (x)=> x.removeBuff(debuffRate) )
+      
+
+    }
+    ,1500)
+
+}
+
+
 function tick() {
 
   if (!TICK) return
@@ -3407,7 +3434,9 @@ function tick() {
 
     novaCarta.place()
 
-  }, 100);
+    hpPlayer.playerP()
+
+  }, 50);
 }
 
 function allMonark() {
@@ -3575,19 +3604,20 @@ export let hpPlayer = {
   max: 100,
   total: 100,
   absolute: 100,
-  buff: 5,
+  buff: 0,
   dmgTaken: 0,
   isFull: true,
   mit: 0,
 
   add(n) {
-    if (this.total >= this.max ){
-      this.isFull = true
-      return;
-    } 
+    if (this.total >= this.max )return;
+      
+      
+    
 
     this.total += n;
-    if (this.total > 100) {
+    if (this.total >= 100) {
+      this.isFull = true
       this.total = 100;
     }
     this.playerP();
@@ -3631,6 +3661,23 @@ export let hpPlayer = {
     
   },
   
+  addBuff(n){
+
+    this.buff += n
+
+  },
+
+  removeBuff(n){
+
+    this.buff -= n
+
+    if(this.buff <=0){
+      this.buff = 0
+    }
+
+
+  },
+
   buffTank(n){
 
     if(this.buff == 0) return n - 0
@@ -3710,7 +3757,7 @@ export let hpPlayer = {
 
     }
 
-    console.log(this);
+    
 
   },
 };
@@ -3860,6 +3907,8 @@ export function startGame2() {
   hpPlayer.set(100);
   ammo.set(0);
   tick();
+  removeBuffAll()
+
 }
 
 document.addEventListener("contextmenu", function () {

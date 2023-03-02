@@ -93,6 +93,11 @@ function fabricaDeCartaEsp() {
     _uber: false,
     _rightCard: false,
     _leftCard: false,
+    _fullHp: true,
+    _buff: 0,
+    _mit: 0,
+    _dmgTaken: 0,
+    _totalHp: 0,
 
     place() {
       if (this == slotEspObj) {
@@ -190,24 +195,81 @@ function fabricaDeCartaEsp() {
     },
 
     heal(n) {
-      if (this.hp == this.maxHealth) return;
+      if (this.hp == this.maxHealth)return;
+        
+        
+     
       if (n == 0) return;
 
       this.hp += n;
       efeitoCura(this._place);
-      if (this.hp > this.maxHealth) {
+      if (this.hp >= this.maxHealth) {
+        this._fullHp = true
         this.hp = this.maxHealth;
       }
       return true;
     },
 
+    addBuff(n){
+
+      this._buff += n
+
+    },
+
+    removeBuff(n){
+
+      this._buff -= n
+
+      if(this._buff <=0){
+        this._buff = 0
+      }
+
+
+    },
+
+
+    buffTank(n){
+
+      if(this._buff == 0) return n - 0
+  
+      if(n <= this._buff){
+        this._buff -=n
+        this._mit += n
+        efeitoDano(this._place)
+        return 'tankei'
+      } else{
+  
+        let change = Math.abs(this.buff - n)
+        this.mit += this.buff
+        this.buff = 0
+        
+        return change
+  
+        
+        
+      }
+    },
+
     dmg(n) {
-      this.hp -= n;
-      this.print();
+
+      this._dmgTaken += n;
+
+      let resto = this.buffTank(n)
+      if(resto == 'tankei') return
+
+      this._fullHp = false
+      this.hp -=resto;
+
+      this._totalHp = this.hp + this._buff
+
+      
       efeitoDano(this._place);
-      if (this.hp <= 0) {
+      if (this._totalHp <= 0) {
         this.kill();
       }
+
+
+
     },
 
     kill() {
@@ -286,7 +348,14 @@ function fabricaDeCartaEsp() {
       }
 
       if (this.hashp) {
-        hp.textContent = this.hp + "💚";
+        this._totalHp = this.hp + this._buff 
+        hp.textContent = this._totalHp + "💚";
+      }
+
+      if(this._buff > 0){
+        hp.classList.add('critico')
+      } else {
+        hp.classList.remove('critico')
       }
 
       //butao
@@ -723,8 +792,9 @@ export let especiais = {
   },
 
   premioMonark: {
-    _hasPower: [inv, mao],
 
+    
+    _hasPower: [inv, mao],
     cartaId: "premiomonark",
     nome: "PREMIO MONARK",
     raridade: raridades.sangueAzul,
@@ -1048,7 +1118,7 @@ export let especiais = {
     dano: 5,
     dmgDone: 0,
 
-    ulti: 0,
+    ulti: 95,
 
     // ataqueE: lucioPE()
 
@@ -1085,17 +1155,19 @@ export let especiais = {
 
     everyRound() {
 
-      if( per(40) && !hpPlayer.isFull ){
+      if( per(15) && !hpPlayer.isFull ){
 
-
-        
+        hpPlayer.add(5)
+        this.buildUlt(5) 
 
       }
 
 
       invObj.map((x) => {
-        if (x.hashp && per(40)) {
-          x.heal(1) ? this.buildUlt(1) : console.log("FULL HP CANT HEAL");
+        if (x.hashp && per(40) && !x._fullHp) {
+
+          x.heal(1)  
+          this.buildUlt(1) 
           
         }
       })
@@ -1118,15 +1190,17 @@ export let especiais = {
 
           //se tiver ulti
         } else {
-          hpPlayer.add(20);
+          hpPlayer.addBuff(200)
+          
+          invObj.map(function (x) {
+            if(x.hashp){
+
+              x.addBuff(100);
+            }
+            
+          });
 
           this.ulti = 0;
-
-          invObj.map(function (x) {
-            if (!x.hashp) return;
-
-            x.heal(20);
-          });
           break;
         }
       }
