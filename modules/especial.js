@@ -78,6 +78,7 @@ export function comunistaPE() {
 }
 
 function fabricaDeCartaEsp() {
+  
   return {
     _place: false,
     _invEventAdded: false,
@@ -98,6 +99,7 @@ function fabricaDeCartaEsp() {
     _mit: 0,
     _dmgTaken: 0,
     _totalHp: 0,
+    _hasUlti: false,
 
     place() {
       if (this == slotEspObj) {
@@ -336,7 +338,7 @@ function fabricaDeCartaEsp() {
       let ulti = parentP.children[this._place].children[2];
       let botao = this._parentP.children[this._place].children[3].children[2];
 
-      if (this.ulti) {
+      if (this._hasUlti != false) {
         ulti.textContent = this.ulti + "%";
       }
       if (this.dmgBoss) {
@@ -793,7 +795,7 @@ export let especiais = {
 
   premioMonark: {
 
-    
+
     _hasPower: [inv, mao],
     cartaId: "premiomonark",
     nome: "PREMIO MONARK",
@@ -1117,6 +1119,7 @@ export let especiais = {
     dmgBoss: false,
     dano: 5,
     dmgDone: 0,
+    _hasUlti: true,
 
     ulti: 95,
 
@@ -1423,6 +1426,7 @@ export let especiais = {
     hp: 50,
     maxHealth: 50,
     hashp: true,
+    _hasUlti: true,
 
     poder() {
       let dvaToMinidva = (energiaFromField) => {
