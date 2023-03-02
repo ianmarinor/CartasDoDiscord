@@ -44,6 +44,11 @@ export function gerarNumero(min, max, decimals) {
   }
 }
 
+export let per = (n)=> {
+  let rng = Math.random() * 100
+  return rng < n  
+}
+
 // AUDIO
 
 let morteAu = ["morte.mp3", 0.4];
@@ -612,6 +617,7 @@ let mao = document.getElementById("mao");
 let moneyP = document.getElementById("money");
 let vendasP = document.getElementById("vendas");
 let bossRoomP = document.getElementById("bossRoom");
+let hpPlayerBuffP = document.getElementById("healthPlayerBuff");
 let hpPlayerP = document.getElementById("healthPlayer");
 let hpPlayerEmojiP = document.getElementById("healthPlayerEmoji");
 let ammoP = document.getElementById("ammo");
@@ -1526,9 +1532,9 @@ function moverCartaMonark(x, place) {
     }
 
     //atacar cartas hp do lado
-    console.log(left);
-    console.log(right);
-    console.log(num);
+    // console.log(left);
+    // console.log(right);
+    // console.log(num);
 
     if (left.hashp == true) {
       left.dmg(1);
@@ -3004,10 +3010,14 @@ export function objToMao(x, y) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
+
+
+    console.group('OBJECTS')
     console.log("maoObj: ", maoObj);
     console.log("chosenCardObj: ", chosenCardObj);
     console.log("invObj: ", invObj);
     console.log('novaCarta: ', novaCarta);
+    console.groupEnd()
 
   }
 });
@@ -3340,22 +3350,31 @@ export function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(200, inv);
+    moverCartaMonark(5, inv);
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();
-    poderesEspeciais();
+    
     colocarEfeito();
     verificarCartaParaMover();
     blockInv();
     ativarBtn();
     poderBoss();
-    //
+    runEveryRound()
+
+
   } else {
   }
 }
 
+function runEveryRound(){
+  invObj.map( (x)=> x.everyRound ? x.everyRound() : false )
+}
+
 function tick() {
+
+  if (!TICK) return
+
   setInterval(function () {
     allMonark();
     specialInDeck();
@@ -3472,7 +3491,7 @@ function healMonarkBoss(x) {
   }
 }
 
-let chuvaCooldown = true;
+let chuvaCooldown = !true;
 // setTimeout(() => (chuvaCooldown = false), 15000);
 
 //************************************************************************************* */
@@ -3553,17 +3572,25 @@ export let numCartas = {
 };
 
 export let hpPlayer = {
+  max: 100,
   total: 100,
+  absolute: 100,
+  buff: 5,
   dmgTaken: 0,
+  isFull: true,
+  mit: 0,
 
   add(n) {
-    if (this.total >= 100) return;
+    if (this.total >= this.max ){
+      this.isFull = true
+      return;
+    } 
 
     this.total += n;
     if (this.total > 100) {
       this.total = 100;
     }
-    this.playerP(this.total);
+    this.playerP();
 
     let heart = hpPlayerWrapP;
 
@@ -3578,37 +3605,94 @@ export let hpPlayer = {
     }, 300);
   },
 
-  remove(n) {
-    this.total -= n;
-    this.dmgTaken += n;
+  
+  hitP(n){
+    
+    let heart
 
-    if (this.total <= 0) {
-      this.total = 0;
-      playerDead();
+    if(n == 'buff'){
+
+       heart = hpPlayerBuffP;
+    } else {
+       heart = hpPlayerP;
+
     }
-    this.playerP(this.total);
 
-    let heart = hpPlayerWrapP;
     heart.style.backgroundColor = "red";
     heart.style.border = "4px dotted black";
     heart.style.borderRadius = "5px";
-
+    
     setTimeout(function () {
       heart.style.backgroundColor = "";
       heart.style.border = "";
       heart.style.borderRadius = "";
     }, 300);
+    
+    
+  },
+  
+  buffTank(n){
+
+    if(this.buff == 0) return n - 0
+
+    if(n <= this.buff){
+      this.buff -=n
+      this.hitP('buff')
+      this.playerP()
+      this.mit += n
+      
+      return 'tankei'
+    } else{
+
+      let change = Math.abs(this.buff - n)
+      this.mit += this.buff
+      this.buff = 0
+      
+      return change
+
+      
+      
+    }
+  },
+
+  remove(n) {
+
+    
+    this.dmgTaken += n;
+
+    let resto = this.buffTank(n)
+    
+    if(resto == 'tankei') return
+    this.isFull = false
+
+    
+
+    this.total -= resto;
+
+    this.absolute = this.total + this.buff
+
+    if (this.absolute <= 0) {
+      this.total = 0;
+      playerDead();
+    }
+
+    this.hitP()
+    this.playerP();
+    
   },
 
   set(n) {
     this.total = n;
-    this.playerP(this.total);
+    this.playerP();
   },
 
-  playerP(n) {
-    hpPlayerP.textContent = n;
+  playerP() {
+// console.trace();
+    this.absolute = this.total + this.buff
 
-    if (n > 25) {
+    hpPlayerP.textContent = this.total;
+
+    if (this.total > 25) {
       hpPlayerP.style.color = "wheat";
       hpPlayerEmojiP.innerHTML = "💚";
       hpPlayerWrapP.className = "";
@@ -3617,6 +3701,17 @@ export let hpPlayer = {
       hpPlayerEmojiP.innerHTML = "💔";
       hpPlayerWrapP.className = "pulsar";
     }
+
+    if(this.buff>0){
+      hpPlayerBuffP.innerHTML = '+' + this.buff
+      
+    } else {
+      hpPlayerBuffP.innerHTML = ''
+
+    }
+
+    console.log(this);
+
   },
 };
 

@@ -28,6 +28,7 @@ let getSeed = document.getElementById("getseed");
 let input = "";
 function colocarInput() {
   input = getSeed.value;
+  
   // input = 11111111331561567
 }
 

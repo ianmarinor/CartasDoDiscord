@@ -4,6 +4,7 @@ import { slotEspObj, slotEsp } from "../slotEspecial.js";
 import {
   snd,
   semCarta,
+  per,
   gerarNumero,
   invObj,
   maoObj,
@@ -21,6 +22,7 @@ import {
   numCartas,
   packP,
   novaCarta,
+  rodadas,
 } from "../script.js";
 import { boss } from "../boss.js";
 // import { stringSeed } from "../slotEspecial.js";
@@ -83,7 +85,7 @@ function fabricaDeCartaEsp() {
     _cfgAdded: false,
     _parent: false,
     _defaultEmoji: "⚡",
-    _defaultEmojiDano: '💥' ,
+    _defaultEmojiDano: "💥",
     _parentP: false,
     _hasPower: [inv],
     _thisCardP: false,
@@ -138,15 +140,10 @@ function fabricaDeCartaEsp() {
         this.ulti = 100;
       }
       
-      
-        let ulti = inv.children[this._place].children[2];
-  
-        ulti.textContent = this.ulti + "%";
-      
+      let ulti = inv.children[this._place].children[2];
 
+      ulti.textContent = this.ulti + "%";
     },
-
-
 
     ataque(dmg, ammO) {
       if (ammo.total == 0) {
@@ -155,21 +152,18 @@ function fabricaDeCartaEsp() {
 
       let dano;
       let ammoUsage;
-      
+
       if (dmg) {
         dano = dmg;
       } else {
         dano = this.dano;
       }
-      
+
       if (ammO) {
         ammoUsage = ammO;
       } else {
         ammoUsage = 1;
       }
-      
-      
-      console.log('dano: ', dano);
 
       if (invObj.some((x) => x.id == "monark")) {
         for (let x of invObj) {
@@ -190,20 +184,21 @@ function fabricaDeCartaEsp() {
       }
     },
 
-    setHp(n){
-      this.hp = n
-      this.maxHealth = n
+    setHp(n) {
+      this.hp = n;
+      this.maxHealth = n;
     },
 
     heal(n) {
       if (this.hp == this.maxHealth) return;
+      if (n == 0) return;
 
       this.hp += n;
       efeitoCura(this._place);
       if (this.hp > this.maxHealth) {
         this.hp = this.maxHealth;
       }
-      this.print();
+      return true;
     },
 
     dmg(n) {
@@ -256,14 +251,14 @@ function fabricaDeCartaEsp() {
       }
     },
 
-    changeRetrato(img){
-      
-      let retrato = this._thisCardP.children[1]
-      retrato.style.backgroundImage = img
-
+    changeRetrato(img) {
+      let retrato = this._thisCardP.children[1];
+      retrato.style.backgroundImage = img;
     },
 
-
+    everyRound() {
+      console.log("everyRound", rodadas);
+    },
 
     print() {
       this.place();
@@ -284,13 +279,11 @@ function fabricaDeCartaEsp() {
       }
       if (this.dmgBoss) {
         energia.textContent = Math.trunc(this.energia) + this._defaultEmoji;
-      } else if (this.dano){
+      } else if (this.dano) {
         energia.textContent = this.dano + this._defaultEmojiDano;
       } else {
-        energia.textContent = this.energia + this.emoji
+        energia.textContent = this.energia + this.emoji;
       }
-      
-      
 
       if (this.hashp) {
         hp.textContent = this.hp + "💚";
@@ -1051,13 +1044,11 @@ export let especiais = {
     emoji: "",
     cargo: "0%",
     retrato: "url('pics/retratoLucio.jpg')",
-    dmgBoss: true,
+    dmgBoss: false,
     dano: 5,
     dmgDone: 0,
 
     ulti: 0,
-
-    
 
     // ataqueE: lucioPE()
 
@@ -1092,8 +1083,26 @@ export let especiais = {
       visibility: "visible",
     },
 
+    everyRound() {
+
+      if( per(40) && !hpPlayer.isFull ){
+
+
+        
+
+      }
+
+
+      invObj.map((x) => {
+        if (x.hashp && per(40)) {
+          x.heal(1) ? this.buildUlt(1) : console.log("FULL HP CANT HEAL");
+          
+        }
+      })
+    },
+
     poder() {
-      
+      let ultiRate = () => gerarNumero(1, 4);
 
       for (let j = 0; j < 6; j++) {
         if (this.ulti < 100) {
@@ -1101,10 +1110,8 @@ export let especiais = {
             return;
           }
 
-
-
           if (this.ataque()) {
-            this.buildUlt(2);
+            this.buildUlt(ultiRate());
           }
 
           break;
@@ -1123,11 +1130,7 @@ export let especiais = {
           break;
         }
       }
-
-      
     },
-
-    
   },
 
   jhin: {
@@ -1202,11 +1205,10 @@ export let especiais = {
             snd(jhinEscolhaAu);
             snd(ultiJhinAu);
 
-            this.energia = atirador.energia * 4;
             this.dano = atirador.energia * 4;
 
             if (this.tiros == 1) {
-              this.energia *= 2;
+              this.dano *= 2;
             }
 
             break;
@@ -1294,13 +1296,6 @@ export let especiais = {
       }
     },
 
-
-
-
-
-
-
-    
     // ataqueE: lucioPE()
     ataqueE: "4⚡",
     hp: 10,
@@ -1355,27 +1350,20 @@ export let especiais = {
     maxHealth: 50,
     hashp: true,
 
-
-
     poder() {
+      let dvaToMinidva = (energiaFromField) => {
+        this.hideButon();
+        this.setHp(10);
+        this.changeRetrato('url("/pics/dva.webp")');
+        this.dmgBoss = true;
+        this.dano = false;
+        this.ulti = false;
+        this._thisCardP.children[2].textContent = "";
+        this.energia = 1 + Math.trunc(energiaFromField * 1.2);
+      };
 
-      let dvaToMinidva = (energiaFromField) =>{
-
-        this.hideButon()
-        this.setHp(10)
-        this.changeRetrato('url("/pics/dva.webp")')
-        this.dmgBoss = true
-        this.dano = false
-        this.ulti = false
-        this._thisCardP.children[2].textContent = '' 
-        this.energia = 1 + Math.trunc(energiaFromField * 1.2)
-
-
-        
-      }
-
-      let ultiRate = ()=> gerarNumero(5,12)
-      let ultiDmg = ()=> gerarNumero(500,920)
+      let ultiRate = () => gerarNumero(5, 12);
+      let ultiDmg = () => gerarNumero(500, 920);
 
       for (let j = 0; j < 6; j++) {
         if (this.ulti < 100) {
@@ -1383,76 +1371,43 @@ export let especiais = {
             return;
           }
 
-
-
           if (this.ataque()) {
             this.buildUlt(ultiRate());
           }
 
-          if(this.ulti >= 100){
-            this.dano = ultiDmg()
+          if (this.ulti >= 100) {
+            this.dano = ultiDmg();
           }
-
 
           break;
 
-
-
-
           //se tiver ulti
         } else {
-          
-          
+          let energiaTotal = 0;
 
-          let energiaTotal = 0
-          
-          invObj.map( (x) => {
-
-            if(x != this){
-              
-              if(x.dmgBoss){
-                energiaTotal += x.energia
+          invObj.map((x) => {
+            if (x != this) {
+              if (x.dmgBoss) {
+                energiaTotal += x.energia;
               }
 
-                if(x._enemy == true){
-                x.hp.remove(this.dano)
-
-
-                } else {
-                  
-                  x.dmg(this.dano)
-                }
-                
-                
-                
-                
-                
+              if (x._enemy == true) {
+                x.hp.remove(this.dano);
+              } else {
+                x.dmg(this.dano);
               }
-              
-              
-            })
-            if(boss) boss.dmg(this.dano)
-            
-            
-            
-            console.log('energiaTotal: ', energiaTotal);
+            }
+          });
+          if (boss) boss.dmg(this.dano);
 
-            dvaToMinidva(energiaTotal)
-          
-            break
+          console.log("energiaTotal: ", energiaTotal);
 
+          dvaToMinidva(energiaTotal);
+
+          break;
         }
-
-       
-
       }
 
-
-
-
-
-
-      
       // let dva = e.target.offsetParent;
       // let dvaEnergia = dva.children[3].children[0];
       // let butao = dva.children[3].children[2];
@@ -1517,7 +1472,7 @@ export let especiais = {
       //           elimCardInv(inv.children[k]);
       //         }
       //       }
-   //       for (let j = 0; j < 6; j++) {
+      //       for (let j = 0; j < 6; j++) {
       //         let carta = inv.children[j];
       //         let isTank = carta.id == "tank";
       //         let aliveTank = carta.dataset.tankdead == "false";
@@ -1531,9 +1486,8 @@ export let especiais = {
       // }
     },
 
-
     // ataqueE: lucioPE()
-    
+
     nomeStyle: {
       fontSize: "250%",
       fontFamily: "overwatch",
@@ -1561,9 +1515,6 @@ export let especiais = {
       fontFamily: "overwatch",
       visibility: "visible",
     },
-
-    
-   
   },
 
   tank: {
@@ -1716,7 +1667,7 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 5);
 
-      if (true) {
+      if (!true) {
         especial = objBinder(especiais.dva);
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
