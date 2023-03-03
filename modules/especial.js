@@ -13,6 +13,7 @@ import {
   hpPlayer,
   ammo,
   elimCardInv,
+  elimCardMao,
   setEfeito,
   efeitos,
   efeitoDano,
@@ -41,6 +42,7 @@ export let raridades = {
 
   rainha: {
     nome: "rainha",
+    resellPrice: 3500,
     rng: () =>
       // seedString[8] == 0 &&
       // seedString[9] == 0 &&
@@ -51,16 +53,19 @@ export let raridades = {
   sangueAzul: {
     nome: "sangueAzul",
     rng: () => seedString[8] == 2 && seedString[14] == 0,
+    resellPrice: 300,
   },
 
   cavaleiro: {
     nome: "cavaleiro",
     rng: () => seedString[8] == 1 && seedString[14] == 0,
+    resellPrice: 150
   },
 
   campones: {
     nome: "campones",
     rng: () => seedString[8] == 0 && seedString[14] == 0,
+    resellPrice: 50
   },
 };
 

@@ -467,6 +467,7 @@ function fabricaDeCarta(
     _parent: false,
     _leftCard: false,
     _rightCard:false,
+    _canBeDeleted:true,
 
     statusEmoji: false,
     cartaId: cargo,
@@ -636,11 +637,11 @@ function zerarMoney() {
 zerarMoney();
 
 function debug() {
-  moneyP.textContent = 9999;
-  numCartas.set(9999);
+  money.set(1000)
+  numCartas.set(999);
   hpPlayer.set(100);
   ammo.set(5);
-  vendas.update(9999);
+  
 }
 
 document.addEventListener("keydown", (event) => {
@@ -1282,6 +1283,7 @@ function moverCartaMonark(x, place) {
     _leftCard: false,
     _rightCard:false,
     _enemy: true,
+    _canBeDeleted: false,
     removeBuff(n){},
 
     place() {
@@ -2801,7 +2803,7 @@ export function elimCardInv(x) {
   return slot;
 }
 
-function elimCardMao(x) {
+export function elimCardMao(x) {
   let slot;
 
   if (x == mao.children[0]) {
@@ -3015,10 +3017,18 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
 
 
+    console.group('ARENA')
+    console.log("invObj: ", invObj);
+    console.log('placarArena', placarArena);
+    console.groupEnd()
+
+    console.group('MONEY')
+    console.log('money', money);
+    console.groupEnd()
+
     console.group('OBJECTS')
     console.log("maoObj: ", maoObj);
     console.log("chosenCardObj: ", chosenCardObj);
-    console.log("invObj: ", invObj);
     console.log('novaCarta: ', novaCarta);
     console.groupEnd()
 
@@ -3048,48 +3058,24 @@ function deletarDeck(e) {
     e.target.className == "retratoEsp visible" ||
     e.target.className == "retratoEsp invisible"
   ) {
-    //
+    
+    //FIND IT'S OBJECT
 
-    let totalMoney = parseInt(moneyP.textContent);
 
-    let cargoMoney = parseInt(e.target.offsetParent.children[2].textContent);
+    
+  for(let i=0; i<6;i++){
+    if(e.target.offsetParent == inv.children[i]){
 
-    function venderCartaDeck() {
-      let cartasVendiveis = ["tf2Money"];
+      if(invObj[i]._canBeDeleted == false) return
+       invObj[i].kill()
 
-      let vendivelDeck = cartasVendiveis.some((el) =>
-        e.target.offsetParent.id.includes(el)
-      );
-
-      if (vendivelDeck) {
-        animateSell(totalMoney, cargoMoney);
-      }
+      break
     }
+  }
+  
 
-    function dmgBoss() {
-      let energia = parseInt(
-        e.target.offsetParent.children[3].children[0].textContent
-      );
 
-      if (e.target.offsetParent.dataset.dmgboss == "true") {
-        boss.dmg(energia);
-      }
-    }
 
-    if (e.target.offsetParent.dataset.canbedeleted == "true" && boss) {
-      console.log(e.target.offsetParent);
-      dmgBoss();
-      venderCartaDeck();
-      elimCardInv(e.target.offsetParent);
-    } else if (
-      e.target.offsetParent.id == "creeper" &&
-      !e.target.offsetParent.dataset.exploding
-    ) {
-      creeper(true);
-    } else {
-      let naoAu = ["nao.mp3"];
-      snd(naoAu);
-    }
   }
 }
 
@@ -3107,41 +3093,195 @@ function deckFull() {
   }
 }
 
+// document.addEventListener("keydown", (event) => {
+//   if (event.code == "KeyQ") {
+//     if (boss) {
+//       dmgBoss();
+//     } else {
+//       snd(naoAu);
+//     }
+//   }
+// });
+
+
+export let money = {
+
+  total: 0,
+
+  add(n){
+
+    this.total += n
+    this.printP(n)
+
+  },
+
+  remove(n){
+
+    if(n <= this.total){
+      this.total -= n
+    }
+    moneyP.innerHTML = this.total
+
+  },
+
+set(n){
+
+  this.total = n
+  moneyP.innerHTML = this.total
+},
+
+  printP(n){
+
+    animateSell(false,n)
+
+  }
+
+
+}
+
+
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyQ") {
     if (boss) {
-      dmgBoss();
+      placarArena.action();
     } else {
       snd(naoAu);
     }
   }
 });
 
-function dmgBoss() {
-  let energiaTotal = 0;
-
-  if (deckFull()) {
 
 
-    invObj.map( (x)=> {
-      energiaTotal += x.energia
-      x.kill()
-    } )
+let placarArena = {
 
-    boss.dmg(energiaTotal * 2);
-  } else {
+  energiaTotal: 0,
+  dinheiroTotal: 0,
+  ammoTotal: 0,
+  cardsTotal: 0,
+
+  coolDown: false,
+  coolDownRate: 0,
+
+  getEnergia(){
+    
+    this.energiaTotal = 0
+
+    let multiplicador =  parseFloat( 1 + '.' + this.cardsTotal)
+    for (const x of invObj) {
+      if(x.dmgBoss != true) {continue}
+      this.energiaTotal += x.energia   
+    }
+
+    this.energiaTotal *= multiplicador
+
+  },
+
+  getDinheiro(){
+
+    this.dinheiroTotal = 0
 
 
     for (const x of invObj) {
       if(x.dmgBoss != true) {continue}
-      energiaTotal += x.energia
+      this.dinheiroTotal += x.energia 
+    }
+  },
+
+  getAmmo(){
+
+    this.ammoTotal = 0
+
+    for (const x of invObj) {
+      if(x.dmgBoss != true) {continue}
+      this.ammoTotal += Math.trunc(x.energia / 20 )
+    }
+  },
+
+  getNumberOfCards(){
+
+    let num = 0
+    invObj.map( (x)=> x.dmgBoss == true ? num++ : false )
+    this.cardsTotal = num
+  },
+
+  action(){
+
+    if(this.coolDown) return
+
+    dmgBoss(this.energiaTotal)
+    money.add(this.dinheiroTotal)
+    ammo.add(this.ammoTotal)
+   
+
+  },
+
+
+  printP(){
+
+    this.getEnergia()
+    this.getDinheiro()
+    this.getAmmo()
+    this.getNumberOfCards()
+
+
+
+    let placarDanoP = document.getElementById('placarDano')
+    let placarMoneyP = document.getElementById('placarMoney')
+    let placarAmmoP = document.getElementById('placarAmmo')
+
+    placarDanoP.innerHTML = Math.trunc(this.energiaTotal)
+    placarMoneyP.innerHTML = this.dinheiroTotal
+    placarAmmoP.innerHTML = this.ammoTotal
+  }
+
+
+
+
+
+}
+
+
+
+function dmgBoss() {
+
+  let energiaTotal = 0;
+  let dinheiroTotal = 0
+  
+
+  let numOfCards = () => {
+
+    let num = 0
+
+    invObj.map( (x)=> x.dmgBoss == true ? num++ : false )
+
+    return num
+    
+  }
+
+  
+
+  // ENERGIA
+
+  let multiplicador =  parseFloat( 1 + '.' + numOfCards())
+    for (const x of invObj) {
+      if(x.dmgBoss != true) {continue}
+      energiaTotal += x.energia 
+        x.kill()
+    }
+
+    boss.dmg( Math.trunc(energiaTotal * multiplicador) );
+
+
+    //DINHEIRO
+    
+    for (const x of invObj) {
+      if(x.dmgBoss != true) {continue}
+      energiaTotal += x.energia 
         x.kill()
     }
 
 
-    boss.dmg(energiaTotal);
-
-  }
+  
 }
 
 document.addEventListener("keydown", (event) => {
@@ -3182,7 +3322,7 @@ function animateSell(start, plus) {
     increment = 1;
   }
 
-  var stepTime = Math.floor(500 / plus);
+  var stepTime = Math.floor(50 / plus);
   let x = 0;
 
   let timer = setInterval(function () {
@@ -3213,69 +3353,23 @@ function animateSell(start, plus) {
 }
 
 function venderCarta() {
-  if (chosenCard != 0 && vendas.vendas > 0) {
-    let energia = chosenCard.children[3].children[0];
-    let carta = chosenCard;
-    let cargo = carta.children[2];
 
-    let totalMoney = parseInt(moneyP.textContent);
-    let cardValue = parseInt(energia.textContent);
-    let cargoMoney = parseInt(cargo.textContent);
+  if (chosenCard != 0) {
+    if (!chosenCardObj.isNormal) {
 
-    let cartasVendiveis = [
-      "carta-semcargo",
-      "carta-people",
-      "carta-monark",
-      "carta-gentleman",
-      "tf2Money",
-      "carta-nobre",
-      "carta-ministro",
-      "carta-lord",
-      "carta-primeminister",
-      "carta-premiomarino",
-    ];
+      money.add(chosenCardObj.raridade.resellPrice)
+      chosenCardObj.kill()
+      chosenCard = 0;
+      chosenCardObj = emptyObj;
 
-    let isVendivel = cartasVendiveis.some(
-      (el) => carta.id.includes(el) && energia.innerHTML.includes("⚡")
-    );
-
-    let venda = ["venda.mp3"];
-
-    if (isVendivel) {
-      if (carta == "tf2Money") {
-        animateSell(totalMoney, cargoMoney);
+        
       } else {
-        animateSell(totalMoney, cardValue);
-
-        //   moneyP.textContent =
-        // parseInt(moneyP.textContent) + parseInt(energia.textContent);
+        
+        chosenCardObj.kill()
+        chosenCard = 0;
+        chosenCardObj = emptyObj;
+        
       }
-      snd(venda);
-
-      elimCardMao(chosenCard);
-
-      chosenCard = 0;
-      chosenCardObj = emptyObj;
-
-      vendas.update(-1);
-    } else {
-      if (carta.dataset.tier == "campones") {
-        animateSell(totalMoney, 5);
-      }
-      if (carta.dataset.tier == "cavaleiro") {
-        animateSell(totalMoney, 10);
-      }
-      if (carta.dataset.tier == "sangueAzul") {
-        animateSell(totalMoney, 30);
-      }
-      if (carta.dataset.tier == "rainha") {
-        animateSell(totalMoney, 60);
-      }
-
-      elimCardMao(chosenCard);
-      chosenCard = 0;
-      chosenCardObj = emptyObj;
-    }
   } else {
     snd(naoAu);
   }
@@ -3409,6 +3503,8 @@ function tick() {
     aplicarEfeitos();
     ativarBtn();
     criarBtn();
+    placarArena.printP()
+
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];
@@ -3438,7 +3534,7 @@ function tick() {
 
     hpPlayer.playerP()
 
-  }, 50);
+  }, 5);
 }
 
 function allMonark() {
@@ -3808,25 +3904,25 @@ function playerDead() {
 }
 
 export function somaPontos() {
-  let danoTotal = 0;
+  // let danoTotal = 0;
 
-  invObj.map(function (x) {
-    if (x.dmgBoss == true) {
-      danoTotal += x.energia;
-    }
-  });
+  // invObj.map(function (x) {
+  //   if (x.dmgBoss == true) {
+  //     danoTotal += x.energia;
+  //   }
+  // });
 
-  if (invObj.every((x) => x.dmgBoss == true)) {
-    placarP.style.color = "red";
-    placarWrapP.className = "critico";
-    danoTotal = danoTotal * 2;
-  } else {
-    placarP.style.color = "wheat";
-    placarWrapP.className = "";
-    danoTotal = danoTotal;
-  }
+  // if (invObj.every((x) => x.dmgBoss == true)) {
+  //   placarP.style.color = "red";
+  //   placarWrapP.className = "critico";
+  //   danoTotal = danoTotal * 2;
+  // } else {
+  //   placarP.style.color = "wheat";
+  //   placarWrapP.className = "";
+  //   danoTotal = danoTotal;
+  // }
 
-  placarP.innerHTML = danoTotal;
+  // placarP.innerHTML = danoTotal;
 }
 
 button.addEventListener("click", tudo);

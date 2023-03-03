@@ -10,7 +10,9 @@ import {
   empty4,
   objToMao,
   emptyObj,
+  money
 } from "/script.js";
+import { gerarNumero } from "./script.js";
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
@@ -24,13 +26,23 @@ let precoCavalheiro = 150;
 let precoSangueAzul = 300;
 let precoRainha = 3500;
 
-let precoCamponesP = (btnCampones.innerHTML =
-  "CAMPONES <br />" + precoCampones);
-let precoCavalheiroP = (btnCavalheiro.innerHTML =
-  "CAVALHEIRO <br />" + precoCavalheiro);
-let precoSangueAzulP = (btnSangue.innerHTML =
-  "SANGUE AZUL <br />" + precoSangueAzul);
-let precoRainhaP = (btnRainha.innerHTML = "RAINHA <br />" + precoRainha);
+
+let precoPrint = () => {
+
+  let precoCamponesP = (btnCampones.innerHTML =
+    "CAMPONES <br />" + precoCampones);
+  let precoCavalheiroP = (btnCavalheiro.innerHTML =
+    "CAVALHEIRO <br />" + precoCavalheiro);
+  let precoSangueAzulP = (btnSangue.innerHTML =
+    "SANGUE AZUL <br />" + precoSangueAzul);
+  let precoRainhaP = (btnRainha.innerHTML = "RAINHA <br />" + precoRainha);
+
+
+}
+
+precoPrint()
+
+
 
 function debug() {
   precoCampones = 1;
@@ -58,7 +70,7 @@ export function ativarBtn() {
   //
 
   // ATIVAR CAMPO
-  if (parseInt(moneyP.textContent) >= precoCampones) {
+  if (money.total >= precoCampones) {
     btnCampones.disabled = false;
 
     //
@@ -68,7 +80,7 @@ export function ativarBtn() {
   }
 
   //ATIVAR CAVA
-  if (parseInt(moneyP.textContent) >= precoCavalheiro) {
+  if (money.total >= precoCavalheiro) {
     btnCavalheiro.disabled = false;
 
     //
@@ -78,7 +90,7 @@ export function ativarBtn() {
   }
 
   //ATIVAR SA
-  if (parseInt(moneyP.textContent) >= precoSangueAzul) {
+  if (money.total >= precoSangueAzul) {
     btnSangue.disabled = false;
 
     //
@@ -88,7 +100,7 @@ export function ativarBtn() {
   }
 
   //ATIVAR RAINHA
-  if (parseInt(moneyP.textContent) >= precoRainha) {
+  if (money.total >= precoRainha) {
     btnRainha.disabled = false;
 
     //
@@ -98,42 +110,61 @@ export function ativarBtn() {
   }
 }
 
+let increasePrice = (x) => {
+
+  let increaseRate = gerarNumero(1.8, 4, true)
+
+return Math.trunc(x / increaseRate)
+
+}
+
 function comprarCampones() {
+
+
   let audio = ["campones.wav", 0.3];
-  if (parseInt(moneyP.textContent) >= precoCampones) {
+  if (money.total >= precoCampones) {
     colocarSlot(makeCampones());
-    moneyP.textContent = parseInt(moneyP.textContent) - precoCampones;
+    money.remove(precoCampones);
     ativarBtn();
     snd(audio);
+    precoCampones +=  increasePrice(precoCampones)
   }
+  precoPrint()
 }
 
 function comprarCavalheiro() {
   let audio = ["campones.wav", 0.3];
-  if (parseInt(moneyP.textContent) >= precoCavalheiro) {
+  if (money.total >= precoCavalheiro) {
     colocarSlot(makeCavalheiro());
-    moneyP.textContent = parseInt(moneyP.textContent) - precoCavalheiro;
+    money.remove(precoCavalheiro)
     ativarBtn();
     snd(audio);
+    precoCavalheiro += increasePrice(precoCavalheiro)
   }
+  precoPrint()
 }
 function comprarSangue() {
   let audio = ["campones.wav", 0.3];
-  if (parseInt(moneyP.textContent) >= precoSangueAzul) {
+  if (money.total >= precoSangueAzul) {
     colocarSlot(makeSangueAzul());
-    moneyP.textContent = parseInt(moneyP.textContent) - precoSangueAzul;
+    money.remove(precoSangueAzul)
     ativarBtn();
     snd(audio);
+    precoSangueAzul += increasePrice(precoSangueAzul)
   }
+  precoPrint()
 }
 function comprarRainha() {
   let audio = ["campones.wav", 0.3];
-  if (parseInt(moneyP.textContent) >= precoRainha) {
+  if (money.total >= precoRainha) {
     colocarSlot(makeRainha());
-    moneyP.textContent = parseInt(moneyP.textContent) - precoRainha;
+    money.remove(precoRainha)
     ativarBtn();
     snd(audio);
+    precoRainha += increasePrice(precoRainha)
   }
+  precoPrint()
+  
 }
 
 const cartaEsp =

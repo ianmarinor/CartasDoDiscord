@@ -377,21 +377,28 @@ justify-content: center;
   align-items: center;
 }
 
-#placarDanoWrap{
 
-  /* width: 300px; */
 
-  /* background-color: #15b871; */
-  display: flex;
-  font-size: 1.3em;
+#placarArena{
+
+  /* background-color: #000000; */
+  width: 360px;
   grid-area: inv;
+  display: flex;
   align-self: end;
   justify-self: end;
-  margin-right: 100px;
-  
-}
-#placarDanoWrap > *{
 
+  margin-right: 41px;
+  margin-bottom: 31px;
+
+  display: flex;
+  justify-content: space-between;
+
+}
+
+#placarArena > *{
+  display: flex;
+  font-size: 0.7em;
   color: wheat;
 }
 
