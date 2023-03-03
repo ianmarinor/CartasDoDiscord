@@ -257,7 +257,7 @@ function colocarSlot(tipo) {
   slotEsp.children[0].id = especial.cartaId;
 
   //PERSONALIZADO
-  console.log(cartaEspecial);
+  // console.log(cartaEspecial);
   cartaEspecial.dataset.tier = especial.raridade.nome;
   cartaEspecial.dataset.dmgboss = especial.dmgboss;
   retratoE.style.visibility = "visible";
@@ -301,11 +301,11 @@ function colocarSlot(tipo) {
 
   //ATAQUE
 
-  if (especial.energia) {
-    ataqueE.innerHTML = especial.energia + "⚡";
-  } else {
-    ataqueE.innerHTML = especial.ataqueE;
-  }
+  // if (especial.energia) {
+  //   ataqueE.innerHTML = especial.energia + "⚡";
+  // } else {
+  //   ataqueE.innerHTML = especial.ataqueE;
+  // }
 
   ataqueE.style.color = especial.ataqueStyle.color;
   ataqueE.style.fontSize = especial.ataqueStyle.fontSize;

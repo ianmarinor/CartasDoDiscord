@@ -77,303 +77,308 @@ export function comunistaPE() {
   }
 }
 
-function fabricaDeCartaEsp() {
-  
-  return {
-    _place: false,
-    _invEventAdded: false,
-    _maoEventAdded: false,
-    _cfgAdded: false,
-    _parent: false,
-    _defaultEmoji: "⚡",
-    _defaultEmojiDano: "💥",
-    _parentP: false,
-    _hasPower: [inv],
-    _thisCardP: false,
-    _monarkFree: false,
-    _uber: false,
-    _rightCard: false,
-    _leftCard: false,
-    _fullHp: true,
-    _buff: 0,
-    _mit: 0,
-    _dmgTaken: 0,
-    _totalHp: 0,
-    _hasUlti: false,
+class Especial {
+  constructor(card) {
+    //unique
+    this.cartaId = card.cartaId;
+    this.nome = card.nome;
+    this.raridade = card.raridade;
+    this.energia = card.energia;
+    this.dano = card.dano;
+    this.emoji = card.emoji;
+    this.allyEmoji = card.allyEmoji;
+    this.retrato = card.retrato;
+    this.retrato2 = card.retrato2;
+    this.cargo = card.cargo;
+    this.hp = card.hp;
+    this.hashp = card.hashp;
+    this.maxHealth = card.maxHealth;
+    this.dmgBoss = card.dmgBoss;
 
-    place() {
-      if (this == slotEspObj) {
-        this._parentP = slotEsp;
-        this._parent = slotEspObj;
-        this._place = 0;
-        return;
+    this.nomeStyle = card.nomeStyle;
+    this.retratoStyle = card.retratoStyle;
+    this.cargoStyle = card.cargoStyle;
+    this.ataqueStyle = card.ataqueStyle;
+    this.novoAtaqueStyle = card.novoAtaqueStyle;
+
+
+
+    //defaults
+    this._place = false;
+    this._invEventAdded = false;
+    this._maoEventAdded = false;
+    this._cfgAdded = false;
+    this._parent = false;
+    this._defaultEmoji = "⚡";
+    this._defaultEmojiDano = "💥";
+    this._parentP = false;
+    this._invHiddenButton = false;
+    this._maoHiddenButton = true;
+    this._thisCardP = false;
+    this._monarkFree = false;
+    this._uber = false;
+    this._rightCard = false;
+    this._leftCard = false;
+    this._fullHp = true;
+    this._buff = 0;
+    this._mit = 0;
+    this._dmgTaken = 0;
+    this._dmgDone = 0;
+    this._totalHp = 0;
+    this._hasUlti = false;
+    this._canBeDeleted = true;
+  }
+
+  place() {
+    if (this == slotEspObj) {
+      this._parentP = slotEsp;
+      this._parent = slotEspObj;
+      this._place = 0;
+      return;
+    }
+
+    for (let i = 0; i < 6; i++) {
+      if (this == invObj[i]) {
+        this._parent = invObj;
+        this._parentP = inv;
+        break;
       }
+    }
 
-      for (let i = 0; i < 6; i++) {
-        if (this == invObj[i]) {
-          this._parent = invObj;
-          this._parentP = inv;
-          break;
+    for (let i = 0; i < 4; i++) {
+      if (this == maoObj[i]) {
+        this._parent = maoObj;
+        this._parentP = mao;
+        break;
+      }
+    }
+
+    this._place = this._parent.indexOf(this);
+    this._thisCardP = this._parentP.children[this._place];
+
+    if (this._place > 0) {
+      this._leftCard = this._place - 1;
+    } else {
+      this._leftCard = false;
+    }
+
+    if (this._place < 5) {
+      this._rightCard = this._place + 1;
+    } else {
+      this._rightCard = false;
+    }
+  }
+
+  buildUlt(n) {
+    this.ulti += n;
+    if (this.ulti > 100) {
+      this.ulti = 100;
+    }
+
+    let ulti = inv.children[this._place].children[2];
+
+    ulti.textContent = this.ulti + "%";
+  }
+
+  ataque(dmg, ammO) {
+    if (ammo.total == 0) {
+      return;
+    }
+
+    let dano;
+    let ammoUsage;
+
+    if (dmg) {
+      dano = dmg;
+    } else {
+      dano = this.dano;
+    }
+
+    if (ammO) {
+      ammoUsage = ammO;
+    } else {
+      ammoUsage = 1;
+    }
+
+    if (invObj.some((x) => x.id == "monark")) {
+      for (let x of invObj) {
+        if (x.id == "monark") {
+          x.hp.remove(dano);
+          ammo.use(ammoUsage);
+
+          return true;
         }
       }
-
-      for (let i = 0; i < 4; i++) {
-        if (this == maoObj[i]) {
-          this._parent = maoObj;
-          this._parentP = mao;
-          break;
-        }
-      }
-
-      this._place = this._parent.indexOf(this);
-      this._thisCardP = this._parentP.children[this._place];
-
-      if (this._place > 0) {
-        this._leftCard = this._place - 1;
-      } else {
-        this._leftCard = false;
-      }
-
-      if (this._place < 5) {
-        this._rightCard = this._place + 1;
-      } else {
-        this._rightCard = false;
-      }
-    },
-
-    buildUlt(n) {
-      this.ulti += n;
-      if (this.ulti > 100) {
-        this.ulti = 100;
-      }
-      
-      let ulti = inv.children[this._place].children[2];
-
-      ulti.textContent = this.ulti + "%";
-    },
-
-    ataque(dmg, ammO) {
-      if (ammo.total == 0) {
-        return;
-      }
-
-      let dano;
-      let ammoUsage;
-
-      if (dmg) {
-        dano = dmg;
-      } else {
-        dano = this.dano;
-      }
-
-      if (ammO) {
-        ammoUsage = ammO;
-      } else {
-        ammoUsage = 1;
-      }
-
-      if (invObj.some((x) => x.id == "monark")) {
-        for (let x of invObj) {
-          if (x.id == "monark") {
-            x.hp.remove(dano);
-            ammo.use(ammoUsage);
-
-            return true;
-          }
-        }
-      } else if (invObj.some((x) => x.id == "miniBoss")) {
-        console.log("TEM MINI BOSS");
-        return true;
-      } else if (boss) {
-        boss.dmg(dano);
-        ammo.use(ammoUsage);
-        return true;
-      }
-    },
-
-    setHp(n) {
-      this.hp = n;
-      this.maxHealth = n;
-    },
-
-    heal(n) {
-      if (this.hp == this.maxHealth)return;
-        
-        
-     
-      if (n == 0) return;
-
-      this.hp += n;
-      efeitoCura(this._place);
-      if (this.hp >= this.maxHealth) {
-        this._fullHp = true
-        this.hp = this.maxHealth;
-      }
+    } else if (invObj.some((x) => x.id == "miniBoss")) {
+      console.log("TEM MINI BOSS");
       return true;
-    },
+    } else if (boss) {
+      boss.dmg(dano);
+      ammo.use(ammoUsage);
+      return true;
+    }
+  }
 
-    addBuff(n){
+  setHp(n) {
+    this.hp = n;
+    this.maxHealth = n;
+  }
 
-      this._buff += n
+  heal(n) {
+    if (this.hp == this.maxHealth) return;
 
-    },
+    if (n == 0) return;
 
-    removeBuff(n){
+    this.hp += n;
+    efeitoCura(this._place);
+    if (this.hp >= this.maxHealth) {
+      this._fullHp = true;
+      this.hp = this.maxHealth;
+    }
+    return true;
+  }
 
-      this._buff -= n
+  addBuff(n) {
+    this._buff += n;
+  }
 
-      if(this._buff <=0){
-        this._buff = 0
-      }
+  removeBuff(n) {
+    this._buff -= n;
 
+    if (this._buff <= 0) {
+      this._buff = 0;
+    }
+  }
 
-    },
+  buffTank(n) {
+    if (this._buff == 0) return n - 0;
 
-
-    buffTank(n){
-
-      if(this._buff == 0) return n - 0
-  
-      if(n <= this._buff){
-        this._buff -=n
-        this._mit += n
-        efeitoDano(this._place)
-        return 'tankei'
-      } else{
-  
-        let change = Math.abs(this.buff - n)
-        this.mit += this.buff
-        this.buff = 0
-        
-        return change
-  
-        
-        
-      }
-    },
-
-    dmg(n) {
-
-      this._dmgTaken += n;
-
-      let resto = this.buffTank(n)
-      if(resto == 'tankei') return
-
-      this._fullHp = false
-      this.hp -=resto;
-
-      this._totalHp = this.hp + this._buff
-
-      
+    if (n <= this._buff) {
+      this._buff -= n;
+      this._mit += n;
       efeitoDano(this._place);
-      if (this._totalHp <= 0) {
-        this.kill();
-      }
+      return "tankei";
+    } else {
+      console.log('n: ', n);
+      console.log('this.buff: ', this._buff);
 
 
 
-    },
+      let change = Math.abs(this._buff - n);
+      console.log('change: ', change);
+      this.mit += this.buff;
+      this.buff = 0;
 
-    kill() {
-      if (!this._parentP) return;
-      if (this._parentP == inv) {
-        elimCardInv(inv.children[this._place]);
-      } else {
-        elimCardMao(mao.children[this._place]);
-      }
-    },
+      return change;
+    }
+  }
 
-    changeEmojiToDefault() {
-      this.emoji = this._defaultEmoji;
-    },
+  dmg(n) {
+    this._dmgTaken += n;
 
-    giveAllyEmoji(ally) {
-      if (ally.statusEmoji == false) {
-        ally.statusEmoji = this.allyEmoji;
-      }
-    },
+    let resto = this.buffTank(n);
+    if (resto == "tankei") return;
 
-    // this function has 2 parameters
-    // parent: is the location where to hide/show button. If empty has 'inv' as default
-    // trigger: if empty will hide the button, if false will how the button
-    hideButon(parent, trigger) {
-      if (trigger == undefined) {
-        if (!parent) {
-          this._hasPower = [];
-        } else {
-          let index = this._hasPower.indexOf(parent);
-          this._hasPower.splice(index, 1);
-        }
-      } else if (trigger == false) {
-        if (!parent) {
-          this._hasPower = [inv];
-        } else if (parent == "all") {
-          this._hasPower = [inv, mao];
-        } else {
-          this._hasPower.push(parent);
-        }
-      }
-    },
+    this._fullHp = false;
+    this.hp -= resto;
 
-    changeRetrato(img) {
-      let retrato = this._thisCardP.children[1];
-      retrato.style.backgroundImage = img;
-    },
+    this._totalHp = this.hp + this._buff;
 
-    everyRound() {
-      console.log("everyRound", rodadas);
-    },
+    efeitoDano(this._place);
+    if (this._totalHp <= 0) {
+      this.kill();
+    }
+  }
 
-    print() {
-      this.place();
+  kill() {
+    if (!this._parentP) return;
+    if (this._parentP == inv) {
+      elimCardInv(inv.children[this._place]);
+    } else {
+      elimCardMao(mao.children[this._place]);
+    }
+  }
 
-      if (!this._cfgAdded) {
-        this.cfg();
-      }
+  changeEmojiToDefault() {
+    this.emoji = this._defaultEmoji;
+  }
 
-      let parentP = this._parentP;
+  giveAllyEmoji(ally) {
+    if (ally.statusEmoji == false) {
+      ally.statusEmoji = this.allyEmoji;
+    }
+  }
 
-      let hp = parentP.children[this._place].children[3].children[1];
-      let energia = parentP.children[this._place].children[3].children[0];
-      let ulti = parentP.children[this._place].children[2];
-      let botao = this._parentP.children[this._place].children[3].children[2];
+  // this function has 2 parameters
+  // parent: is the location where to hide/show button. If empty has 'inv' as default
+  // trigger: if empty will hide the button, if false will how the button
 
-      if (this._hasUlti != false) {
-        ulti.textContent = this.ulti + "%";
-      }
-      if (this.dmgBoss) {
-        energia.textContent = Math.trunc(this.energia) + this._defaultEmoji;
-      } else if (this.dano) {
-        energia.textContent = this.dano + this._defaultEmojiDano;
-      } else {
-        energia.textContent = this.energia + this.emoji;
-      }
+  changeRetrato(img) {
+    let retrato = this._thisCardP.children[1];
+    retrato.style.backgroundImage = img;
+  }
 
-      if (this.hashp) {
-        this._totalHp = this.hp + this._buff 
-        hp.textContent = this._totalHp + "💚";
-      }
+  everyRound() {
+    
+  }
 
-      if(this._buff > 0){
-        hp.classList.add('critico')
-      } else {
-        hp.classList.remove('critico')
-      }
+  print() {
+    this.place();
 
-      //butao
+    if (!this._cfgAdded) {
+      this.cfg();
+    }
 
-      if (this._hasPower.includes(this._parentP)) {
-        botao.style.visibility = "visible";
-      } else {
-        botao.style.visibility = "hidden";
-      }
-    },
+    let parentP = this._parentP;
 
-    // this method will set dafaults for each card
-    cfg() {
-      false;
-    },
-  };
+    let hp = parentP.children[this._place].children[3].children[1];
+    let energia = parentP.children[this._place].children[3].children[0];
+    let ulti = parentP.children[this._place].children[2];
+    let botao = this._parentP.children[this._place].children[3].children[2];
+
+    if (this._hasUlti != false) {
+      ulti.textContent = this.ulti + "%";
+    } else {
+      ulti.textContent = ''
+    }
+    if (this.dmgBoss) {
+      energia.textContent = Math.trunc(this.energia) + this._defaultEmoji;
+    } else if (this.dano) {
+      energia.textContent = this.dano + this._defaultEmojiDano;
+    } else {
+      energia.textContent = this.energia + this.emoji;
+    }
+
+    if (this.hashp) {
+      this._totalHp = this.hp + this._buff;
+      hp.textContent = this._totalHp + "💚";
+    }
+
+    if (this._buff > 0) {
+      hp.classList.add("critico");
+    } else {
+      hp.classList.remove("critico");
+    }
+
+    //butao
+
+    if (this._parentP == inv) {
+      this._invHiddenButton
+        ? (botao.style.visibility = "hidden")
+        : (botao.style.visibility = "visible");
+    }
+
+    if (this._parentP == mao) {
+      this._maoHiddenButton
+        ? (botao.style.visibility = "hidden")
+        : (botao.style.visibility = "visible");
+    }
+  }
+
+  // this method will set dafaults for each card
+  cfg() {
+    false;
+  }
 }
 
 export let especiais = {
@@ -395,18 +400,11 @@ export let especiais = {
     cartaId: "especial-tenica",
     nome: "TÉNICA",
     raridade: raridades.rainha,
-    pontoEspecial: "",
     energia: 80,
-    efeito: "",
-    familia: "",
-    descricao: "Prazer, <br> sou a Ténica",
     emoji: "👑",
     allyEmoji: "👑",
-    emojiEsp: "",
     retrato: "url('pics/tenica.webp')",
     cargo: "",
-    // ataqueE:tenicaEnergia() + "👑"
-    ataqueE: 1,
     hp: 700,
     hashp: true,
     maxHealth: 700,
@@ -440,7 +438,7 @@ export let especiais = {
 
       let tenicaAu = ["tenica.mp3"];
       snd(tenicaAu);
-      this.hideButon();
+      this._invHiddenButton = true;
     },
 
     nomeStyle: {
@@ -470,17 +468,13 @@ export let especiais = {
       visibility: "visible",
     },
   },
+
   speaker: {
     cartaId: "carta-speaker",
     nome: "SPEAKER",
     raridade: raridades.cavaleiro,
-    pontoEspecial: "",
     energia: 1,
-    efeito: "",
-    familia: "",
-    descricao: "MONARK BAN!",
     emoji: false,
-    emojiEsp: "",
     retrato: "url('pics/SPEAKER.webp')",
     cargo: "MONARK BAN!",
     ataqueE: 1,
@@ -568,17 +562,13 @@ export let especiais = {
     cartaId: "especial-click",
     nome: "+ CARTAS +",
     raridade: raridades.campones,
-    pontoEspecial: 0,
+
     energia: 15,
 
-    efeito: "",
-    familia: "",
-    descricao: "BONUS?",
-    emojiEsp: "",
     emoji: "🃏",
     retrato: "url('pics/clickretrato.webp')",
     cargo: "",
-    ataqueE: 1,
+
     hp: 10,
     maxHealth: 10,
     hashp: true,
@@ -673,20 +663,15 @@ export let especiais = {
     cartaId: "abelha",
     nome: "ABELHA",
     raridade: raridades.sangueAzul,
-    pontoEspecial: "",
+
     energia: 0,
-    poder: false,
-    efeito: "",
-    familia: "minecraft",
-    descricao: "VOU MORRER!!!",
+
     emoji: "🐝",
-    emojiEsp: "",
+
     retrato: "url('pics/retratoAbelha.gif')",
     retrato2: "url('pics/retratoAbelha.webp')",
     cargo: "bzzzz....",
-    ataqueE: 1,
-    hp: 0,
-    dmgboss: "false",
+    dmgBoss: false,
     hashp: false,
 
     nomeStyle: {
@@ -723,22 +708,20 @@ export let especiais = {
     cartaId: "comunista",
     nome: "BLACKAO COMUNISTA",
     raridade: raridades.sangueAzul,
-    pontoEspecial: "",
+
     energia: 0,
-    efeito: "",
-    familia: "",
-    descricao: "",
+
     emoji: "☭",
-    emojiEsp: "",
+    allyEmoji: "☭",
+
     retrato: "url('pics/retratoCamarada.gif')",
-    retrato2: "",
+
     cargo: "",
-    ataqueE: "",
+
     hp: 50,
     hashp: true,
     maxHealth: 50,
-    dmgboss: "false",
-    allyEmoji: "☭",
+    dmgBoss: false,
 
     cfg() {
       if (this._cfgAdded) return;
@@ -794,28 +777,20 @@ export let especiais = {
   },
 
   premioMonark: {
-
-
-    _hasPower: [inv, mao],
     cartaId: "premiomonark",
     nome: "PREMIO MONARK",
     raridade: raridades.sangueAzul,
-    pontoEspecial: "",
     energia: 0,
+    _maoHiddenButton: false,
 
-    efeito: "",
-    familia: "",
-    descricao: "",
     emoji: "",
-    emojiEsp: "",
+
     retrato: 'url("/pics/retratoPremioMonark.gif")',
-    retrato2: "",
     cargo: "",
-    ataqueE: 1,
     hp: 50,
     hashp: true,
     maxHealth: 50,
-    dmgboss: "false",
+    dmgBoss: false,
 
     poder() {
       let premioMonark = this._parentP.children[this._place];
@@ -830,7 +805,7 @@ export let especiais = {
           //apaga a carta
 
           premioMonark.classList.add("vanish");
-          this.hideButon();
+          this._invHiddenButton = true;
 
           setTimeout(() => this.kill(), 10000);
 
@@ -849,7 +824,7 @@ export let especiais = {
           if (x.id == "monark" && !y) {
             let vitima = x;
             vitima.hp.monarkKill();
-            this.hideButon(mao);
+            this._maoHiddenButton = true;
             y = true;
           }
         });
@@ -889,17 +864,13 @@ export let especiais = {
     cartaId: "spy",
     nome: "SPY",
     raridade: raridades.cavaleiro,
-    pontoEspecial: "",
     energia: 1,
-    efeito: "",
-    familia: "",
-    descricao: "",
+
     emoji: "",
-    emojiEsp: "",
+
     retrato: 'url("/pics/spyRetrato.webp")',
-    retrato2: "",
     cargo: "",
-    ataqueE: "",
+
     hp: "⌚",
     dmgBoss: true,
     hashp: false,
@@ -925,7 +896,7 @@ export let especiais = {
           retrato.classname = "invisible";
           spy.children[0].className = "invis";
 
-          this.hideButon();
+          this._invHiddenButton = true;
           retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
           let spyInvisAu = ["spyInvis.mp3", 0.2];
@@ -950,7 +921,7 @@ export let especiais = {
           retrato.classList.remove("invisible");
           retrato.classList.add("visible");
           spy.children[0].className = "vis";
-          this.hideButon(...[,], false);
+          this._invHiddenButton = false;
           retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
 
           let spyInvisAu = ["spyInvis.mp3", 0.3];
@@ -1033,15 +1004,11 @@ export let especiais = {
     raridade: raridades.campones,
     pontoEspecial: 0,
     energia: 0,
-    efeito: "",
-    familia: "",
-    descricao: "",
-    emojiEsp: "",
+
     emoji: "🛡️",
     retrato: "url('pics/estoicoRetrato.jpg')",
     cargo: "",
     dmgBoss: false,
-    ataqueE: "🛡️",
 
     hp: 10,
     maxHealth: 50,
@@ -1062,7 +1029,7 @@ export let especiais = {
 
           hpPlayer.remove(itapiraEnergia);
 
-          this.hideButon();
+          this._invHiddenButton = true;
 
           itapira.kill();
           this.kill();
@@ -1107,23 +1074,16 @@ export let especiais = {
     cartaId: "lucio",
     nome: "LÚCIO",
     raridade: raridades.sangueAzul,
-    pontoEspecial: 0,
+
     energia: 1,
-    efeito: "",
-    familia: "overwatch",
-    descricao: "",
-    emojiEsp: "",
+
     emoji: "",
     cargo: "0%",
     retrato: "url('pics/retratoLucio.jpg')",
     dmgBoss: false,
     dano: 5,
-    dmgDone: 0,
     _hasUlti: true,
-
     ulti: 95,
-
-    // ataqueE: lucioPE()
 
     hp: 10,
     maxHealth: 10,
@@ -1157,23 +1117,17 @@ export let especiais = {
     },
 
     everyRound() {
-
-      if( per(15) && !hpPlayer.isFull ){
-
-        hpPlayer.add(5)
-        this.buildUlt(5) 
-
+      if (per(15) && !hpPlayer.isFull) {
+        hpPlayer.add(5);
+        this.buildUlt(5);
       }
-
 
       invObj.map((x) => {
         if (x.hashp && per(40) && !x._fullHp) {
-
-          x.heal(1)  
-          this.buildUlt(1) 
-          
+          x.heal(1);
+          this.buildUlt(1);
         }
-      })
+      });
     },
 
     poder() {
@@ -1193,14 +1147,12 @@ export let especiais = {
 
           //se tiver ulti
         } else {
-          hpPlayer.addBuff(200)
-          
-          invObj.map(function (x) {
-            if(x.hashp){
+          hpPlayer.addBuff(200);
 
+          invObj.map(function (x) {
+            if (x.hashp) {
               x.addBuff(100);
             }
-            
           });
 
           this.ulti = 0;
@@ -1214,13 +1166,9 @@ export let especiais = {
     cartaId: "jhin",
     nome: "JHIN",
     raridade: raridades.cavaleiro,
-    pontoEspecial: 0,
+
     energia: 4,
 
-    efeito: "",
-    familia: "League Of Legends",
-    descricao: "",
-    emojiEsp: "",
     emoji: "💥",
     allyEmoji: "💢",
     cargo: "4",
@@ -1228,6 +1176,9 @@ export let especiais = {
     dmgboss: false,
     tiros: 4,
     dano: 0,
+    hp: 10,
+    hashp: true,
+    maxHealth: 10,
 
     poder() {
       let jhin = this._thisCardP;
@@ -1344,7 +1295,7 @@ export let especiais = {
                 atirador.atiradorJhin = false;
 
                 tirosString.textContent = "";
-                this.hideButon();
+                this._invHiddenButton = true;
 
                 let countAu = ["jhinConta4.mp3", 0.5];
                 snd(countAu);
@@ -1372,12 +1323,6 @@ export let especiais = {
         }
       }
     },
-
-    // ataqueE: lucioPE()
-    ataqueE: "4⚡",
-    hp: 10,
-    hashp: true,
-    maxHealth: 10,
 
     nomeStyle: {
       fontSize: "250%",
@@ -1411,12 +1356,7 @@ export let especiais = {
     cartaId: "dva",
     nome: "D.Va",
     raridade: raridades.sangueAzul,
-    pontoEspecial: 0,
     energia: 10,
-    efeito: "",
-    familia: "overwatch",
-    descricao: "",
-    emojiEsp: "",
     emoji: "",
     cargo: "0%",
     retrato: "url('pics/dvaMecaRetrato.jpg')",
@@ -1430,14 +1370,17 @@ export let especiais = {
 
     poder() {
       let dvaToMinidva = (energiaFromField) => {
-        this.hideButon();
+        this._invHiddenButton = true;
         this.setHp(10);
         this.changeRetrato('url("/pics/dva.webp")');
         this.dmgBoss = true;
-        this.dano = false;
-        this.ulti = false;
+        this.ulti = 0;
         this._thisCardP.children[2].textContent = "";
+        this.dano = 0;
+        this._buff = 0  
         this.energia = 1 + Math.trunc(energiaFromField * 1.2);
+        this._hasUlti = false
+        
       };
 
       let ultiRate = () => gerarNumero(5, 12);
@@ -1461,6 +1404,7 @@ export let especiais = {
 
           //se tiver ulti
         } else {
+
           let energiaTotal = 0;
 
           invObj.map((x) => {
@@ -1476,95 +1420,18 @@ export let especiais = {
               }
             }
           });
+
           if (boss) boss.dmg(this.dano);
 
-          console.log("energiaTotal: ", energiaTotal);
+          
 
           dvaToMinidva(energiaTotal);
+          
 
           break;
         }
       }
-
-      // let dva = e.target.offsetParent;
-      // let dvaEnergia = dva.children[3].children[0];
-      // let butao = dva.children[3].children[2];
-      // let ulti = dva.children[2];
-      // let retratoFoto = dva.children[1];
-      // let hp = dva.children[3].children[1];
-
-      // for (let i = 0; i < 6; i++) {
-      //   let vitima =
-      //     inv.children[i].dataset.dmgboss == "false" &&
-      //     inv.children[i].dataset.card == "especial";
-
-      //   if (parseInt(ulti.textContent) < 100) {
-      //     // se a carta for gentleman
-      //     if (vitima) {
-      //       let gentleman = inv.children[i];
-
-      //       // se tiver pdoer novo, o adiquira e exclua a carta
-
-      //       ulti = parseInt(ulti.textContent) + gerarNumero(19, 26);
-
-      //       if (ulti > 100) {
-      //         dva.children[2].textContent = 100 + "%";
-      //         // dva.children[2].textContent = 100 + "";
-      //       } else {
-      //         dva.children[2].textContent = ulti + "%";
-      //       }
-
-      //       elimCardInv(gentleman);
-      //       break;
-      //     }
-      //     //se tiver ulti
-      //   } else {
-      //     butao.style.visibility = "hidden";
-
-      //     hp.textContent = "4💚";
-
-      //     retratoFoto.style.backgroundImage = 'url("/pics/dva.webp")';
-      //     dva.children[2].textContent = "";
-
-      //     let pontoDeTodos = 0;
-      //     let pontoDeTodosEsp = 0;
-
-      //     for (let j = 0; j < 6; j++) {
-      //       let ponto = inv.children[j].children[3].children[0];
-      //       let cartaEspecial = inv.children[j].dataset.dmgboss == "false";
-      //       let cartaNormal = inv.children[j].dataset.dmgboss == "true";
-      //       // if(ponto.textContent != ''){
-
-      //       if (cartaEspecial) {
-      //         pontoDeTodosEsp = pontoDeTodosEsp + 25;
-      //       } else if (cartaNormal) {
-      //         pontoDeTodos =
-      //           pontoDeTodos + Math.trunc(parseInt(ponto.textContent) * 1.5);
-      //       }
-      //     }
-      //     dvaEnergia.textContent = 1 + pontoDeTodos + pontoDeTodosEsp + "⚡";
-
-      //     function dvaSelfDestroy() {
-      //       for (let k = 0; k < 6; k++) {
-      //         if (dva != inv.children[k] && inv.children[k].id != "tank") {
-      //           elimCardInv(inv.children[k]);
-      //         }
-      //       }
-      //       for (let j = 0; j < 6; j++) {
-      //         let carta = inv.children[j];
-      //         let isTank = carta.id == "tank";
-      //         let aliveTank = carta.dataset.tankdead == "false";
-
-      //         if (isTank && aliveTank) {
-      //           killTank(j);
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
     },
-
-    // ataqueE: lucioPE()
 
     nomeStyle: {
       fontSize: "250%",
@@ -1599,22 +1466,19 @@ export let especiais = {
     cartaId: "tank",
     nome: "TANK",
     raridade: raridades.campones,
-    pontoEspecial: "",
+
     energia: 0,
-    poder: false,
-    efeito: "",
-    familia: "tf2",
-    descricao: "",
+
     emoji: "💰",
-    emojiEsp: "",
+
     retrato: 'url("/pics/tankRetrato.jpg")',
-    retrato2: "",
+
     cargo: "",
-    ataqueE: "1⚡",
+
     hp: 10000,
     hashp: true,
     maxHealth: 10000,
-    dmgboss: "true",
+    dmgBoss: false,
 
     nomeStyle: {
       fontSize: "210%",
@@ -1649,21 +1513,17 @@ export let especiais = {
     cartaId: "creeper",
     nome: "CREEPER",
     raridade: raridades.campones,
-    pontoEspecial: "",
+
     energia: 0,
-    poder: false,
-    efeito: "",
-    familia: "minecraft",
-    descricao: "",
+
     emoji: "",
-    emojiEsp: "",
+
     retrato: "url('pics/retratoCreeper.png')",
-    retrato2: "",
+
     cargo: "",
-    ataqueE: "",
-    novoAtaque: "",
-    dmgboss: "false",
-    canbedeleted: "false",
+
+    dmgBoss: false,
+    _canBeDeleted: false,
     hashp: false,
 
     nomeStyle: {
@@ -1701,12 +1561,12 @@ DEBUG && console.log("ESPECAIISMAISCARTAS", especiais.menosCartas);
 DEBUG && console.log("RARIDADES", raridades.campones);
 
 function objBinder(obj) {
-  let proto = fabricaDeCartaEsp();
-  let obj1 = obj;
+  
+  
 
-  let newo = { ...proto, ...obj1 };
+  let newo = new Especial(obj);
 
-  return Object.assign(Object.create(proto), obj);
+  return Object.assign(newo, obj);
 }
 
 export let especial = "";
@@ -1715,7 +1575,7 @@ let raridade = "";
 
 export function escolherEspecial(teste) {
   seedString = teste;
-  console.log("seedString: ", seedString);
+  // console.log("seedString: ", seedString);
 
   // seedString = seedObj._seedString
 

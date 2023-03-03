@@ -3384,7 +3384,7 @@ function removeBuffAll(){
   setInterval(
     function(){
 
-      let debuffRate = gerarNumero(1,3)
+      let debuffRate = gerarNumero(1,2)
 
 
       hpPlayer.removeBuff(debuffRate)
@@ -3393,7 +3393,7 @@ function removeBuffAll(){
       
 
     }
-    ,1500)
+    ,900)
 
 }
 
