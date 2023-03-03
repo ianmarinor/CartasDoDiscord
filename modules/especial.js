@@ -101,8 +101,6 @@ class Especial {
     this.ataqueStyle = card.ataqueStyle;
     this.novoAtaqueStyle = card.novoAtaqueStyle;
 
-
-
     //defaults
     this._place = false;
     this._invEventAdded = false;
@@ -181,10 +179,6 @@ class Especial {
   }
 
   ataque(dmg, ammO) {
-    if (ammo.total == 0) {
-      return;
-    }
-
     let dano;
     let ammoUsage;
 
@@ -194,8 +188,12 @@ class Especial {
       dano = this.dano;
     }
 
-    if (ammO) {
+    if (ammO != undefined) {
       ammoUsage = ammO;
+
+      if (ammo.total == 0) {
+        return;
+      }
     } else {
       ammoUsage = 1;
     }
@@ -204,7 +202,9 @@ class Especial {
       for (let x of invObj) {
         if (x.id == "monark") {
           x.hp.remove(dano);
+
           ammo.use(ammoUsage);
+          this._dmgDone += dano
 
           return true;
         }
@@ -214,6 +214,7 @@ class Especial {
       return true;
     } else if (boss) {
       boss.dmg(dano);
+      this._dmgDone += dano
       ammo.use(ammoUsage);
       return true;
     }
@@ -259,13 +260,11 @@ class Especial {
       efeitoDano(this._place);
       return "tankei";
     } else {
-      console.log('n: ', n);
-      console.log('this.buff: ', this._buff);
-
-
+      console.log("n: ", n);
+      console.log("this.buff: ", this._buff);
 
       let change = Math.abs(this._buff - n);
-      console.log('change: ', change);
+      console.log("change: ", change);
       this.mit += this.buff;
       this.buff = 0;
 
@@ -318,15 +317,16 @@ class Especial {
     retrato.style.backgroundImage = img;
   }
 
-  everyRound() {
-    
-  }
+  everyRound() {}
+
+  tick() {}
 
   print() {
     this.place();
 
     if (!this._cfgAdded) {
       this.cfg();
+      this._cfgAdded = true;
     }
 
     let parentP = this._parentP;
@@ -339,7 +339,7 @@ class Especial {
     if (this._hasUlti != false) {
       ulti.textContent = this.ulti + "%";
     } else {
-      ulti.textContent = ''
+      ulti.textContent = "";
     }
     if (this.dmgBoss) {
       energia.textContent = Math.trunc(this.energia) + this._defaultEmoji;
@@ -352,6 +352,8 @@ class Especial {
     if (this.hashp) {
       this._totalHp = this.hp + this._buff;
       hp.textContent = this._totalHp + "💚";
+    } else {
+      hp.textContent = "";
     }
 
     if (this._buff > 0) {
@@ -663,16 +665,96 @@ export let especiais = {
     cartaId: "abelha",
     nome: "ABELHA",
     raridade: raridades.sangueAzul,
+    _invHiddenButton: true,
 
     energia: 0,
 
-    emoji: "🐝",
+    emoji: "",
 
     retrato: "url('pics/retratoAbelha.gif')",
     retrato2: "url('pics/retratoAbelha.webp')",
     cargo: "bzzzz....",
     dmgBoss: false,
-    hashp: false,
+    hp: 65,
+    maxHealth: 65,
+    hashp: true,
+    dano: 12,
+
+    tick() {
+      let turuInField = () => {
+        let inv = this._parentP;
+        let i = this._place;
+
+        if (!invObj.some((x) => x._integrante == "Turu")) {
+          inv.children[i].className = "";
+          inv.children[i].children[1].style.border = "2px solid #545251";
+          inv.children[i].style.border = "";
+          inv.children[i].style.color = "#ffd11a";
+
+          return false;
+        } else {
+          inv.children[i].classList.add("critico");
+          inv.children[i].children[1].style.border = "1px solid red";
+          inv.children[i].style.border = "1px solid red";
+          inv.children[i].style.color = "red";
+
+          return true;
+        }
+      };
+      let numOfBees = 0;
+
+      invObj.map((x) => {
+        x.cartaId == "abelha" ? numOfBees++ : false;
+      });
+
+      
+      if (numOfBees > 0) {
+        this.dano = 12 * numOfBees * numOfBees 
+      }
+
+      
+
+
+
+
+
+      
+    },
+
+    everyRound() {
+      let turuInField = () => {
+        if (!invObj.some((x) => x._integrante == "Turu")) {
+          return false;
+        } else {
+          return true;
+        }
+      };
+      
+      let numOfBees = 0;
+
+      invObj.map((x) => {
+        x.cartaId == "abelha" ? numOfBees++ : false;
+      });
+
+      let dmgRate = Math.trunc(numOfBees * 2);
+
+      if (turuInField()) {
+        dmgRate *= gerarNumero(5, 7);
+        console.log(88888888, dmgRate);
+      }
+
+      if (numOfBees > 0) {
+        this.dmg(dmgRate);
+      }
+      
+      setTimeout(() => {
+        this.ataque(false, 0);
+      }, 100);
+    },
+
+    cfg() {
+
+    },
 
     nomeStyle: {
       fontSize: "180%",
@@ -698,7 +780,7 @@ export let especiais = {
       color: "",
       fontSize: "",
       fontFamily: "",
-      visibility: "hidden",
+      visibility: "visible",
     },
 
     // ataqueE: abelhaEnergia() + "🐝"
@@ -1377,10 +1459,9 @@ export let especiais = {
         this.ulti = 0;
         this._thisCardP.children[2].textContent = "";
         this.dano = 0;
-        this._buff = 0  
+        this._buff = 0;
         this.energia = 1 + Math.trunc(energiaFromField * 1.2);
-        this._hasUlti = false
-        
+        this._hasUlti = false;
       };
 
       let ultiRate = () => gerarNumero(5, 12);
@@ -1404,7 +1485,6 @@ export let especiais = {
 
           //se tiver ulti
         } else {
-
           let energiaTotal = 0;
 
           invObj.map((x) => {
@@ -1423,10 +1503,7 @@ export let especiais = {
 
           if (boss) boss.dmg(this.dano);
 
-          
-
           dvaToMinidva(energiaTotal);
-          
 
           break;
         }
@@ -1561,9 +1638,6 @@ DEBUG && console.log("ESPECAIISMAISCARTAS", especiais.menosCartas);
 DEBUG && console.log("RARIDADES", raridades.campones);
 
 function objBinder(obj) {
-  
-  
-
   let newo = new Especial(obj);
 
   return Object.assign(newo, obj);
@@ -1606,7 +1680,7 @@ export function escolherEspecial(teste) {
       num = gerarNumero(1, 5);
 
       if (!true) {
-        especial = objBinder(especiais.dva);
+        especial = objBinder(especiais.abelha);
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
       } else if (num == 2) {
@@ -1616,7 +1690,6 @@ export function escolherEspecial(teste) {
         especial.ataqueE = comunistaPE();
       } else if (num == 4) {
         especial = objBinder(especiais.abelha);
-        especial.ataqueE = abelhaEnergia() + "🐝";
       } else if (num == 5) {
         especial = objBinder(especiais.dva);
       }

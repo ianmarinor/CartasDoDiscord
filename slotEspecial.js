@@ -313,11 +313,13 @@ function colocarSlot(tipo) {
   ataqueE.style.visibility = especial.ataqueStyle.visibility;
 
   //ATAQUENOVO
-  if (especial.hashp) {
-    novoAtaqueE.innerHTML = especial.hp + "💚";
-  } else {
-    novoAtaqueE.innerHTML = especial.hp;
-  }
+
+  // if (especial.hashp) {
+  //   novoAtaqueE.innerHTML = especial.hp + "💚";
+  // } else {
+  //   novoAtaqueE.innerHTML = especial.hp;
+  // }
+
   novoAtaqueE.style.color = especial.novoAtaqueStyle.color;
   novoAtaqueE.style.fontSize = especial.novoAtaqueStyle.fontSize;
   novoAtaqueE.style.fontFamily = especial.novoAtaqueStyle.fontFamily;

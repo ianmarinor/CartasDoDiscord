@@ -816,17 +816,7 @@ function colocarInfoNoWrap(a) {
       cargoP.innerHTML = "&nbsp;" + "monark" + "&#128169;";
       retratoP.style.border = "";
     }
-    // else if (novaCarta._cargo === "abelha") {
-    //   cargoP.innerHTML = "ABELHA";
-    // } else if (novaCarta._cargo === "comunista") {
-    //   cargoP.innerHTML = "CAMARADA BLACKAO";
-    //   retratoP.style.border = "2px solid RED";
-    // } else if (novaCarta._cargo === "premiomonark") {
-    //   cargoP.innerHTML = "PREMIO MONARK";
-    //   retratoP.style.border = "2px solid black";
-    // } else {
-    //   true;
-    // }
+    
   }
 
   //CARTAS VARIANTES
@@ -1195,7 +1185,7 @@ function moverToDeck(e) {
   ) {
     elimCardMao(chosenCard);
 
-    abelha();
+    // abelha();
     // inv.removeChild(slot)
     chosenCard.dataset.inv = "true";
 
@@ -1221,7 +1211,7 @@ function moverToDeckSpace() {
 
     if (chosenCard != 0 && cartaVazia) {
       elimCardMao(chosenCard);
-      abelha();
+      // abelha();
       inv.replaceChild(chosenCard, carta);
       invObj[i] = chosenCardObj;
 
@@ -1281,6 +1271,7 @@ export function efeitoCura(carta) {
 }
 
 function moverCartaMonark(x, place) {
+
   let monarkObj = {
     id: "monark",
     cartaId: 'carta-monark',
@@ -1434,6 +1425,10 @@ function moverCartaMonark(x, place) {
     monarkFoto = "";
   }
 
+  let cidade = escolherCidade()
+  monarkObj._cidade = cidade
+  monarkObj._integrante = monarkNome
+
   let monarkBluePrint =
     '<div id="carta-monark" data-card="normal" data-dmgboss="false" data-canbedeleted="false" data-hashp="uber"  class="monark">' +
     '<div class="nameAndCidadeWrapper">' +
@@ -1442,7 +1437,7 @@ function moverCartaMonark(x, place) {
     "</p>" +
     '<div class="variante"></div>' +
     '<p class="cidade">' +
-    escolherCidade() +
+    cidade +
     "</p>" +
     '<div class="especial"></div>' +
     "</div>" +
@@ -2593,7 +2588,7 @@ export function poderesEspeciais(x) {
     return;
   }
 
-  abelha();
+  // abelha();
   creeper();
   lucio();
   spy();
@@ -2647,133 +2642,136 @@ function lucio() {
   }
 }
 
-function abelha() {
-  let beeHitAu = ["hitAbelha.mp3", 0.1];
-  let numOfBees = 0;
-  for (let k = 0; k < 6; k++) {
-    let abelha = inv.children[k].id == "abelha";
-    if (abelha) {
-      numOfBees++;
-    }
-  }
+// function abelha() {
+//   let beeHitAu = ["hitAbelha.mp3", 0.1];
+//   let numOfBees = 0;
+//   for (let k = 0; k < 6; k++) {
+//     let abelha = inv.children[k].id == "abelha";
+//     if (abelha) {
+//       numOfBees++;
+//     }
+//   }
 
-  for (let i = 0; i < 6; i++) {
-    if (inv.children[i].id != "empty") {
-      if (inv.children[i].id == "abelha") {
-        inv.children[i].className = "";
-        inv.children[i].children[1].style.border = "2px solid #545251";
-        1;
-        inv.children[i].style.border = "";
-        inv.children[i].style.color = "#ffd11a";
+//   for (let i = 0; i < 6; i++) {
+//     if (inv.children[i].id != "empty") {
+//       if (inv.children[i].id == "abelha") {
 
-        let pontoAbelha = inv.children[i].children[3].children[0];
+//         inv.children[i].className = "";
+//         inv.children[i].children[1].style.border = "2px solid #545251";
+//         1;
+//         inv.children[i].style.border = "";
+//         inv.children[i].style.color = "#ffd11a";
 
-        if (parseInt(pontoAbelha.textContent) <= 0) {
-          let abelha = inv.children[i];
-          abelha.className = "";
+//         let pontoAbelha = inv.children[i].children[3].children[0];
 
-          elimCardInv(abelha);
+//         if (parseInt(pontoAbelha.textContent) <= 0) {
+//           let abelha = inv.children[i];
+//           abelha.className = "";
 
-          let beeDeathAu = ["deathAbelha.mp3", 0.7];
-          snd(beeDeathAu);
+//           elimCardInv(abelha);
 
-          somaPontos();
-        } else if (numOfBees == 2) {
-          pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) / gerarNumero(2, 3) + "🐝";
+//           let beeDeathAu = ["deathAbelha.mp3", 0.7];
+//           snd(beeDeathAu);
 
-          somaPontos();
-          snd(beeHitAu);
-        } else if (numOfBees == 3) {
-          pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) / gerarNumero(3, 4) + "🐝";
+//           somaPontos();
+//         } else if (numOfBees == 2) {
+//           pontoAbelha.textContent =
+//             parseInt(pontoAbelha.textContent) / gerarNumero(2, 3) + "🐝";
 
-          somaPontos();
-          snd(beeHitAu);
-        } else if (numOfBees == 4) {
-          pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) / gerarNumero(4, 5) + "🐝";
+//           somaPontos();
+//           snd(beeHitAu);
+//         } else if (numOfBees == 3) {
+//           pontoAbelha.textContent =
+//             parseInt(pontoAbelha.textContent) / gerarNumero(3, 4) + "🐝";
 
-          somaPontos();
-          snd(beeHitAu);
-        } else if (numOfBees == 5) {
-          pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) / gerarNumero(5, 6) + "🐝";
+//           somaPontos();
+//           snd(beeHitAu);
+//         } else if (numOfBees == 4) {
+//           pontoAbelha.textContent =
+//             parseInt(pontoAbelha.textContent) / gerarNumero(4, 5) + "🐝";
 
-          somaPontos();
-          snd(beeHitAu);
-        } else if (numOfBees == 6) {
-          pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) / gerarNumero(6, 7) + "🐝";
+//           somaPontos();
+//           snd(beeHitAu);
+//         } else if (numOfBees == 5) {
+//           pontoAbelha.textContent =
+//             parseInt(pontoAbelha.textContent) / gerarNumero(5, 6) + "🐝";
 
-          somaPontos();
-          snd(beeHitAu);
-        } else if (
-          parseInt(pontoAbelha.textContent) <= 60 &&
-          parseInt(pontoAbelha.textContent) > 15
-        ) {
-          pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) - abelhaLowHp() + "🐝";
-          somaPontos();
-          snd(beeHitAu);
-        } else if (parseInt(pontoAbelha.textContent) <= 15) {
-          pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) - 1 + "🐝";
-          snd(beeHitAu);
-        } else {
-          pontoAbelha.textContent =
-            parseInt(pontoAbelha.textContent) - abelhaDecrease() + "🐝";
-          somaPontos();
-          snd(beeHitAu);
-        }
+//           somaPontos();
+//           snd(beeHitAu);
+//         } else if (numOfBees == 6) {
+//           pontoAbelha.textContent =
+//             parseInt(pontoAbelha.textContent) / gerarNumero(6, 7) + "🐝";
 
-        for (let j = 0; j < 6; j++) {
-          if (inv.children[j].id != "empty") {
-            if (inv.children[j].children[0].children[0].textContent == "TURU") {
-              if (inv.children[i].id == "abelha") {
-                inv.children[i].classList.add("critico");
-                inv.children[i].children[1].style.border = "1px solid red";
-                inv.children[i].style.border = "1px solid red";
-                inv.children[i].style.color = "red";
-              }
+//           somaPontos();
+//           snd(beeHitAu);
+//         } else if (
+//           parseInt(pontoAbelha.textContent) <= 60 &&
+//           parseInt(pontoAbelha.textContent) > 15
+//         ) {
+//           pontoAbelha.textContent =
+//             parseInt(pontoAbelha.textContent) - abelhaLowHp() + "🐝";
+//           somaPontos();
+//           snd(beeHitAu);
+//         } else if (parseInt(pontoAbelha.textContent) <= 15) {
+//           pontoAbelha.textContent =
+//             parseInt(pontoAbelha.textContent) - 1 + "🐝";
+//           snd(beeHitAu);
+//         } else {
+//           pontoAbelha.textContent =
+//             parseInt(pontoAbelha.textContent) - abelhaDecrease() + "🐝";
+//           somaPontos();
+//           snd(beeHitAu);
+//         }
 
-              if (parseInt(pontoAbelha.textContent) > 76) {
-                pontoAbelha.textContent =
-                  parseInt(pontoAbelha.textContent) -
-                  abelhaDecreaseComTuru() +
-                  "🐝";
-                somaPontos();
-                snd(beeHitAu);
-              } else {
-                if (inv.children[i].id == "abelha") {
-                  inv.children[i].children[1].style.backgroundImage =
-                    "url('pics/abelhaMorrendo.jpg')";
-                  inv.children[i].children[2].innerHTML = frasesAbelha();
-                  inv.children[i].children[2].style.fontSize = "1em";
-                }
-                pontoAbelha.textContent = 0 + "☠";
-                snd(beeHitAu);
-                somaPontos();
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+//         for (let j = 0; j < 6; j++) {
+//           if (inv.children[j].id != "empty") {
+//             if (inv.children[j].children[0].children[0].textContent == "TURU") {
+//               if (inv.children[i].id == "abelha") 
+//               {
+//                 inv.children[i].classList.add("critico");
+//                 inv.children[i].children[1].style.border = "1px solid red";
+//                 inv.children[i].style.border = "1px solid red";
+//                 inv.children[i].style.color = "red";
 
-  for (let l = 0; l < 6; l++) {
-    let energiaAbelhas = inv.children[l].children[3].children[0];
-    let abelha = inv.children[l].id == "abelha";
+//               }
 
-    if (abelha && numOfBees > 1) {
-      energiaAbelhas.textContent =
-        parseInt(energiaAbelhas.textContent) * numOfBees + "⚡";
+//               if (parseInt(pontoAbelha.textContent) > 76) {
+//                 pontoAbelha.textContent =
+//                   parseInt(pontoAbelha.textContent) -
+//                   abelhaDecreaseComTuru() +
+//                   "🐝";
+//                 somaPontos();
+//                 snd(beeHitAu);
+//               } else {
+//                 if (inv.children[i].id == "abelha") {
+//                   inv.children[i].children[1].style.backgroundImage =
+//                     "url('pics/abelhaMorrendo.jpg')";
+//                   inv.children[i].children[2].innerHTML = frasesAbelha();
+//                   inv.children[i].children[2].style.fontSize = "1em";
+//                 }
+//                 pontoAbelha.textContent = 0 + "☠";
+//                 snd(beeHitAu);
+//                 somaPontos();
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
 
-      inv.children[l].dataset.dmgboss = "true";
-    }
-  }
-}
+//   for (let l = 0; l < 6; l++) {
+//     let energiaAbelhas = inv.children[l].children[3].children[0];
+//     let abelha = inv.children[l].id == "abelha";
+
+//     if (abelha && numOfBees > 1) {
+//       energiaAbelhas.textContent =
+//         parseInt(energiaAbelhas.textContent) * numOfBees + "⚡";
+
+//       inv.children[l].dataset.dmgboss = "true";
+//     }
+//   }
+// }
 
 export function elimCardInv(x) {
   let slot;
@@ -3419,7 +3417,11 @@ function tick() {
 
       if (carta.print) {
         carta.print();
+
       }
+
+      carta.tick ? carta.tick() : false
+
     }
 
     for (let i = 0; i < 4; i++) {
