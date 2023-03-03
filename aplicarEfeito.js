@@ -37,7 +37,7 @@ export function aplicarEfeitos() {
 }
 
 function premioMonark() {
-  let bonusMonark = 50
+  
   for (let i = 0; i < 6; i++) {
 
 
