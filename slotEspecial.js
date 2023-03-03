@@ -112,6 +112,8 @@ export function ativarBtn() {
 
 let increasePrice = (x) => {
 
+  return 1
+
   let increaseRate = gerarNumero(1.8, 4, true)
 
 return Math.trunc(x / increaseRate)

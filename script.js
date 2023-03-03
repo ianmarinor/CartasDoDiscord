@@ -3317,7 +3317,7 @@ function animateSell(start, plus) {
   let increment;
 
   if (plus > 200) {
-    increment = 4;
+    increment = 12;
   } else {
     increment = 1;
   }

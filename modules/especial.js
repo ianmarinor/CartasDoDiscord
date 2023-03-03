@@ -8,6 +8,7 @@ import {
   gerarNumero,
   invObj,
   maoObj,
+  money,
   colocarEfeito,
   cartaParaMover,
   hpPlayer,
@@ -130,6 +131,10 @@ class Especial {
     this._totalHp = 0;
     this._hasUlti = false;
     this._canBeDeleted = true;
+
+    this._retratoP = false
+    this._nomeP = false
+    this._cargoP = false
   }
 
   place() {
@@ -137,6 +142,9 @@ class Especial {
       this._parentP = slotEsp;
       this._parent = slotEspObj;
       this._place = 0;
+
+      
+
       return;
     }
 
@@ -170,6 +178,11 @@ class Especial {
     } else {
       this._rightCard = false;
     }
+
+    this._retratoP = this._thisCardP.children[1]
+    this._nomeP =  this._thisCardP.children[0].children[0];
+    this._cargoP  = this._thisCardP.children[2];
+
   }
 
   buildUlt(n) {
@@ -296,6 +309,11 @@ class Especial {
 
   kill() {
     if (!this._parentP) return;
+    if(this.cartaId == 'tank' && !this.tankDead){
+      this.tankToMoney()
+      return
+    }
+
     if (this._parentP == inv) {
       elimCardInv(inv.children[this._place]);
     } else {
@@ -343,9 +361,8 @@ class Especial {
 
     if (this._hasUlti != false) {
       ulti.textContent = this.ulti + "%";
-    } else {
-      ulti.textContent = "";
-    }
+    } 
+
     if (this.dmgBoss) {
       energia.textContent = Math.trunc(this.energia) + this._defaultEmoji;
     } else if (this.dano) {
@@ -1448,7 +1465,7 @@ export let especiais = {
     cargo: "0%",
     retrato: "url('pics/dvaMecaRetrato.jpg')",
     dmgBoss: false,
-    ulti: 95,
+    ulti: 99,
     dano: 10,
     hp: 50,
     maxHealth: 50,
@@ -1548,7 +1565,7 @@ export let especiais = {
     cartaId: "tank",
     nome: "TANK",
     raridade: raridades.campones,
-
+    _invHiddenButton: true,
     energia: 0,
 
     emoji: "💰",
@@ -1557,10 +1574,37 @@ export let especiais = {
 
     cargo: "",
 
-    hp: 10000,
+    hp: 520,
     hashp: true,
-    maxHealth: 10000,
+    maxHealth: 300,
     dmgBoss: false,
+    money: 0,
+
+    tankToMoney(){
+      
+      this._thisCardP.id = "tf2Money";
+      this._retratoP.style.backgroundImage = "url('pics/tankDeadRetrato.jpg')";
+      this._nomeP.textContent = "MONEY";
+
+      this._cargoP.style.visibility = "visible";
+      
+      this.money = gerarNumero(767,1215) 
+      this._cargoP.innerHTML = this.money + '💰'
+
+      this.hashp = false
+      this.tankDead = true
+      this._invHiddenButton = false
+
+
+    },
+
+    poder(){
+
+      money.add(this.money)
+      this.kill()
+
+    },
+
 
     nomeStyle: {
       fontSize: "210%",
@@ -1581,7 +1625,7 @@ export let especiais = {
       color: "",
       fontSize: "",
       fontFamily: "tf2",
-      visibility: "",
+      visibility: "hidden",
     },
     novoAtaqueStyle: {
       color: "",
