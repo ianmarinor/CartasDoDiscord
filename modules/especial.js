@@ -131,6 +131,8 @@ class Especial {
     this._totalHp = 0;
     this._hasUlti = false;
     this._canBeDeleted = true;
+    this._canBeSold = true
+    this._everyRoundMao = false
 
     this._retratoP = false
     this._nomeP = false
@@ -168,13 +170,17 @@ class Especial {
     this._thisCardP = this._parentP.children[this._place];
 
     if (this._place > 0) {
-      this._leftCard = this._place - 1;
+      this._leftCard = this._parentP.children[this._place- 1];
+      this._leftCardIndex = this._place - 1;
+      this._leftObj = this._parent[this._place - 1]
     } else {
       this._leftCard = false;
     }
 
     if (this._place < 5) {
-      this._rightCard = this._place + 1;
+      this._rightCard = this._parentP.children[this._place+1]
+      this._rightCardIndex = this._place+1
+      this._rightObj = this._parent[this._place + 1]
     } else {
       this._rightCard = false;
     }
@@ -293,6 +299,11 @@ class Especial {
   dmg(n) {
     this._dmgTaken += n;
 
+    if(this.hashp == false){
+      this.kill()
+      return
+    }
+
     let resto = this.buffTank(n);
     if (resto == "tankei") return;
 
@@ -307,9 +318,9 @@ class Especial {
     }
   }
 
-  kill() {
+  kill(absolute) {
     if (!this._parentP) return;
-    if(this.cartaId == 'tank' && !this.tankDead){
+    if(this.cartaId == 'tank' && !this.tankDead && !absolute ){
       this.tankToMoney()
       return
     }
@@ -374,9 +385,13 @@ class Especial {
     if (this.hashp) {
       this._totalHp = this.hp + this._buff;
       hp.textContent = this._totalHp + "💚";
-    } else {
-      hp.textContent = "";
     }
+    if(this.emojiHp){
+      hp.textContent = this.hp + this.emojiHp
+    }
+
+    hp.style.visibility = this.novoAtaqueStyle.visibility
+
 
     if (this._buff > 0) {
       hp.classList.add("critico");
@@ -971,11 +986,12 @@ export let especiais = {
     energia: 1,
 
     emoji: "",
+    emojiHp: "⌚",
 
     retrato: 'url("/pics/spyRetrato.webp")',
     cargo: "",
 
-    hp: "⌚",
+    hp: '',
     dmgBoss: true,
     hashp: false,
     clockReady: true,
@@ -1047,7 +1063,7 @@ export let especiais = {
       let retrato = spy.children[1];
 
       for (let i = 0; i < invObj.length; i++) {
-        if (this._rightCard != i && this._leftCard != i) {
+        if (this._rightCardIndex != i && this._leftCardIndex != i) {
           continue;
         }
         if (invObj[i].id == "monark") {
@@ -1592,6 +1608,7 @@ export let especiais = {
       this._cargoP.innerHTML = this.money + '💰'
 
       this.hashp = false
+      this.novoAtaqueStyle.visibility = 'hidden'
       this.tankDead = true
       this._invHiddenButton = false
 
@@ -1639,18 +1656,113 @@ export let especiais = {
     cartaId: "creeper",
     nome: "CREEPER",
     raridade: raridades.campones,
-
     energia: 0,
-
     emoji: "",
-
     retrato: "url('pics/retratoCreeper.png')",
-
     cargo: "",
-
     dmgBoss: false,
     _canBeDeleted: false,
     hashp: false,
+    _everyRoundMao: true,
+    _invHiddenButton: true,
+    _canBeSold: false,
+    dano: 250,
+    exploding: false,
+
+    everyRound(){
+
+      if(this.exploding) return
+
+      if(per(10)){
+
+        this.explode()
+      }
+      
+
+    },
+
+    explode(){
+
+
+      this.exploding = true
+
+      this._thisCardP.className = "piscar";
+
+
+      
+      setTimeout(
+        ()=>{
+
+        if(this._leftCard)  {
+
+          if(this._leftObj._enemy){
+            this._leftObj.hp.remove(this.dano)
+          } else {
+            this._leftObj.dmg(this.dano)
+          }
+
+        }
+
+        if(this._rightCard)  {
+
+          if(this._rightObj._enemy){
+            this._rightObj.hp.remove(this.dano)
+          } else {
+            this._rightObj.dmg(this.dano)
+          }
+
+        }
+
+        if(this._parentP == mao){
+
+          if(this._place < 2){
+            invObj.map( (x)=>{
+              if(x._place < 3 ){
+                if(x._enemy){
+
+                  x.hp.remove(this.dano)
+
+                } else {
+
+                  x.dmg(this.dano)
+                }
+              }
+              } 
+            )
+          }
+
+          if(this._place > 1){
+            invObj.map( (x)=>{
+              if(x._place > 2 ){
+
+                if(x._enemy){
+
+                  x.hp.remove(this.dano)
+
+                } else {
+
+                  x.dmg(this.dano)
+                }
+
+              }
+              } 
+            )
+          }
+
+
+        }
+
+
+        this.kill()
+
+
+        }
+      ,2600)
+    
+
+
+    },
+
 
     nomeStyle: {
       fontSize: "180%",
@@ -1670,7 +1782,7 @@ export let especiais = {
       color: "",
       fontSize: "",
       fontFamily: "",
-      visibility: "",
+      visibility: "hidden",
     },
     novoAtaqueStyle: {
       color: "",
@@ -1728,8 +1840,8 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 5);
 
-      if (!true) {
-        especial = objBinder(especiais.abelha);
+      if (true) {
+        especial = objBinder(especiais.premioMonark);
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
       } else if (num == 2) {
@@ -1752,7 +1864,7 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 3);
 
-      if (true) {
+      if (!true) {
         especial = objBinder(especiais.jhin);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);
@@ -1770,9 +1882,8 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 4);
 
-      if (true) {
-        especial = objBinder(especiais.tank);
-        especial.cargo = tankCargo(especiais.tank.emoji);
+      if (!true) {
+        especial = objBinder(especiais.creeper);
       } else if (false) {
         especial = objBinder(especiais.menosCartas);
         especial.ataqueE = bonusCartasPE() + "🃏";

@@ -44,7 +44,7 @@ export function gerarNumero(min, max, decimals) {
   }
 }
 
-export let per = (n)=> {
+export function per(n){
   let rng = Math.random() * 100
   return rng < n  
 }
@@ -523,13 +523,16 @@ function fabricaDeCarta(
       this._thisCardP = this._parentP.children[this._place];
 
       if (this._place > 0) {
-        this._leftCard = this._place - 1;
+        this._leftCard = this._parentP.children[this._place- 1];
+        this._leftCardIndex = this._place- 1;
+
       } else {
         this._leftCard = false;
       }
 
       if (this._place < 5) {
-        this._rightCard = this._place + 1;
+        this._rightCard = this._rightCard = this._parentP.children[this._place+1]
+        this._rightCardIndex = this._place+1
       } else {
         this._rightCard = false;
       }
@@ -637,7 +640,7 @@ function zerarMoney() {
 zerarMoney();
 
 function debug() {
-  money.set(1000)
+  money.add(1000)
   numCartas.set(999);
   hpPlayer.set(100);
   ammo.set(5);
@@ -1050,13 +1053,13 @@ function verificarCartaParaMover() {
   //   seedCopyCard.textContent != seed4.textContent;
 }
 
-document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyB") {
-    if (!getSeedChecked()) {
-      moverToCartaMao();
-    }
-  }
-});
+// document.addEventListener("keydown", (event) => {
+//   if (event.code == "KeyB") {
+//     if (!getSeedChecked()) {
+//       moverToCartaMao();
+//     }
+//   }
+// });
 
 for (let m = 0; m < 4; m++) {
   let slotMao = "mao" + m;
@@ -1066,12 +1069,15 @@ for (let m = 0; m < 4; m++) {
 }
 
 export function moveToMao(i) {
-  if (copyCard.id != "carta-monark" && copyCard.id != "carta") {
+  if (copyCard.id != "carta") {
+
     if (numCartas.total <= 1 && packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
 
+      maoObj[i] = novaCarta;
       packP.innerHTML = semCarta;
       numCartas.set(0);
+      novaCarta = emptyObj
     } else if (packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
       maoObj[i] = novaCarta;
@@ -1229,20 +1235,7 @@ function moverToDeckSpace() {
 let copyCardSeed;
 let copyCardName;
 
-function killTank(x) {
-  let tank = inv.children[x];
-  let retrato = tank.children[1];
-  let nome = tank.children[0].children[0];
-  let money = tank.children[2];
-  let HP = tank.children[3].children[1];
 
-  tank.id = "tf2Money";
-  tank.dataset.tankdead = "true";
-  retrato.style.backgroundImage = "url('pics/tankDeadRetrato.jpg')";
-  nome.textContent = "MONEY";
-  HP.textContent = "";
-  money.style.visibility = "visible";
-}
 
 let hit = ["hit.mp3"];
 
@@ -1380,8 +1373,9 @@ function moverCartaMonark(x, place) {
       },
       monarkKill() {
 
+        console.trace();
         elimCardInv(this.__._thisCardP);
-        
+        money.add(20)
         
       },
     },
@@ -1717,871 +1711,6 @@ function criarBtn() {
   }
 }
 
-// function criarBtn() {
-//   //
-
-//   if(true){
-//     return
-//   }
-
-//   for (let i = 0; i < 6; i++) {
-//     //se i nao for vazio
-//     if (inv.children[i].id != "empty") {
-//       // e se tiver botao na carta
-//       if (
-//         inv.children[i].children[3].children[2].style.visibility == "visible"
-//       ) {
-//         //
-
-//         //   PODER speaker
-//         if (
-//           inv.children[i].id == "carta-speaker" &&
-//           inv.children[i].children[0].id != "foi"
-//         ) {
-//           inv.children[i].children[3].children[2].addEventListener(
-//             "click",
-//             explusarMonark
-//           );
-//           inv.children[i].children[0].id = "foi";
-//           //
-//         }
-
-//         function explusarMonark(e) {
-//           let varianteSpeaker = e.target.offsetParent;
-//           let pontoSpeaker = varianteSpeaker.children[3].children[0];
-//           let retratoVariante = varianteSpeaker.children[1];
-//           let speakerDorminfo = 'url("pics/speakerDormindo.jpg")';
-//           let descriptionSpeaker = varianteSpeaker.children[2];
-//           let hpSpeaker = varianteSpeaker.children[3].children[1];
-
-//           let multiplicador;
-//           let pontoParaDormir;
-
-//           function multiSpeaker() {
-//             multiplicador = gerarNumero(2.0, 2.7, 1);
-//           }
-
-//           multiSpeaker();
-//           multiSpeakerSono();
-
-//           function multiSpeakerSono() {
-//             pontoParaDormir = gerarNumero(90, 103);
-//           }
-
-//           for (let j = 0; j < 6; j++) {
-//             //
-
-//             if (inv.children[j].id == "carta-monark") {
-//               if (parseInt(pontoSpeaker.textContent) < pontoParaDormir) {
-//                 pontoSpeaker.textContent =
-//                   Math.trunc(
-//                     parseInt(pontoSpeaker.textContent) * multiplicador
-//                   ) + " ⚡";
-
-//                 elimCardInv(inv.children[j]);
-
-//                 let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.3];
-//                 snd(order);
-
-//                 somaPontos();
-//                 break;
-//               } else {
-//                 retratoVariante.style.backgroundImage = speakerDorminfo;
-//                 pontoSpeaker.innerHTML =
-//                   parseInt(pontoSpeaker.textContent) + "&#9889;";
-//                 descriptionSpeaker.innerHTML =
-//                   "durmi kkjk <br> &#128564; &#128564;";
-//                 varianteSpeaker.children[3].children[2].style.visibility =
-//                   "hidden";
-//                 hpSpeaker.textContent = "5💚";
-//                 hpSpeaker.style.visibility = "visible";
-
-//                 let speakerSleepAu = ["speakerSleep.mp3"];
-//                 snd(speakerSleepAu);
-//               }
-//             }
-//           }
-//         }
-//       }
-
-//       // PODER CLICKS
-//       if (
-//         inv.children[i].id == "especial-click" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         inv.children[i].children[3].children[2].addEventListener(
-//           "click",
-//           cartaClique
-//         );
-//         inv.children[i].children[0].id = "foi";
-//         //
-//       }
-
-//       if (
-//         inv.children[i].id == "-click" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         inv.children[i].children[3].children[2].addEventListener(
-//           "click",
-//           cartaMenosclique
-//         );
-//         inv.children[i].children[0].id = "foi";
-//         //
-//       }
-
-//       function cartaClique(e) {
-//         let varianteClique = e.target.offsetParent;
-
-//         numCartas.add(
-//           parseInt(varianteClique.children[3].children[0].textContent)
-//         );
-
-//         vendas.update(5);
-
-//         if (packP.children[0].id == "carta") {
-//           tudo();
-//         }
-
-//         varianteClique.children[3].children[2].style.visibility = "hidden";
-//         button.style.backgroundColor = "";
-//         button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-//         // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
-
-//         elimCardInv(varianteClique);
-
-//         // if (varianteClique == inv.children[0]) {
-//         //   inv.replaceChild(empty1, varianteClique);
-//         // } else if (varianteClique == inv.children[1]) {
-//         //   inv.replaceChild(empty2, varianteClique);
-//         // } else if (varianteClique == inv.children[2]) {
-//         //   inv.replaceChild(empty3, varianteClique);
-//         // } else if (varianteClique == inv.children[3]) {
-//         //   inv.replaceChild(empty4, varianteClique);
-//         // }
-//       }
-
-//       function cartaMenosclique(e) {
-//         let varianteMenosClique = e.target.offsetParent;
-
-//         if (
-//           numCartas.total >
-//           parseInt(varianteMenosClique.children[3].children[0].textContent)
-//         ) {
-//           numCartas.add(
-//             parseInt(varianteMenosClique.children[3].children[0].textContent) +
-//               1
-//           );
-
-//           varianteMenosClique.children[3].children[2].style.visibility =
-//             "hidden";
-//           button.style.backgroundColor = "";
-//           button.innerHTML = "&#127381; NOVA CARTA &#127381;";
-//           // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
-
-//           elimCardInv(varianteMenosClique);
-
-//           // if (varianteMenosClique == inv.children[0]) {
-//           //   inv.replaceChild(empty1, varianteMenosClique);
-//           // } else if (varianteMenosClique == inv.children[1]) {
-//           //   inv.replaceChild(empty2, varianteMenosClique);
-//           // } else if (varianteMenosClique == inv.children[2]) {
-//           //   inv.replaceChild(empty3, varianteMenosClique);
-//           // } else if (varianteMenosClique == inv.children[3]) {
-//           //   inv.replaceChild(empty4, varianteMenosClique);
-//           // }
-//         }
-//       }
-
-//       // PODER TENICA
-//       if (
-//         inv.children[i].id == "especial-tenica" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         inv.children[i].children[3].children[2].addEventListener(
-//           "click",
-//           cartaTenica
-//         );
-//         inv.children[i].children[0].id = "foi";
-//       }
-
-//       function cartaTenica(e) {
-//         let varianteTenica = e.target.offsetParent;
-//         let botao = varianteTenica.children[3].children[2];
-//         let energiaTenica = varianteTenica.children[3].children[0];
-
-//         for (let j = 0; j < 4; j++) {
-//           let carta = inv.children[j];
-//           let energiaCarta = carta.children[3].children[0];
-
-//           if (carta.dataset.dmgboss == "true") {
-//             energiaCarta.textContent =
-//               parseInt(energiaCarta.textContent) +
-//               parseInt(energiaTenica.textContent) +
-//               "⚡";
-//           }
-//         }
-
-//         for (let j = 0; j < 4; j++) {
-//           let cartaMao = mao.children[j];
-//           let energiaCartaMao = cartaMao.children[3].children[0];
-//           let energiaTenica = varianteTenica.children[3].children[0];
-
-//           if (cartaMao.dataset.dmgboss == "true") {
-//             energiaCartaMao.textContent =
-//               parseInt(energiaCartaMao.textContent) +
-//               parseInt(energiaTenica.textContent) +
-//               "⚡";
-//           }
-//         }
-
-//         energiaTenica.textContent = parseInt(energiaTenica.textContent) + "⚡";
-//         varianteTenica.dataset.dmgboss = "true";
-//         let tenicaAu = ["tenica.mp3"];
-//         snd(tenicaAu);
-//         somaPontos();
-//         botao.style.visibility = "hidden";
-//       }
-
-//       // poder COMUNISTA
-//       if (
-//         inv.children[i].id == "comunista" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         inv.children[i].children[3].children[2].addEventListener(
-//           "click",
-//           camarada
-//         );
-//         inv.children[i].children[0].id = "foi";
-//       }
-
-//       function camarada(e) {
-//         let cartasQueOCamaradaNaoGosta = [
-//           "especial-click",
-//           "-click",
-//           "empty1",
-//           "empty2",
-//           "empty3",
-//           "empty4",
-//           "empty5",
-//           "empty6",
-//           "especial-tenica",
-//           "spy",
-//           "premiomonark",
-//           "comunista",
-//           "abelha",
-//           "estoico",
-//           "carta-monark",
-//           "jhin",
-//         ];
-
-//         let comunista = e.target.offsetParent;
-//         // comunista.children[3].children[2].style.visibility = "hidden";
-//         let comunistaAu = ["comuna.mp3", 0.6];
-
-//         for (let k = 0; k < 6; k++) {
-//           if (inv.children[k].id == "carta-speaker") {
-//             for (let j = 0; j < 6; j++) {
-//               if (
-//                 inv.children[j].children[0].children[0].textContent !=
-//                   "NEFESTO" &&
-//                 !cartasQueOCamaradaNaoGosta.some((el) =>
-//                   inv.children[j].id.includes(el)
-//                 )
-//               ) {
-//                 comunista.children[3].children[2].style.visibility = "hidden";
-//                 let pontoComunista = comunista.children[3].children[0];
-
-//                 let pontoEstatal = parseInt(pontoComunista.textContent) / 3;
-
-//                 //SE FOR BLACKAO, DUPLICA
-//                 if (
-//                   inv.children[j].children[0].children[0].textContent ==
-//                   "BLACKAO"
-//                 ) {
-//                   inv.children[j].children[3].children[0].textContent =
-//                     parseInt(
-//                       inv.children[j].children[3].children[0].textContent
-//                     ) +
-//                     parseInt(pontoEstatal) * 2 +
-//                     "☭";
-//                   inv.children[j].children[2].innerHTML = frasesComuna();
-//                   inv.children[j].children[2].fontSize = "1em";
-//                   if (inv.children[j].id != "carta-people") {
-//                     inv.children[j].children[3].children[0].style.color = "red";
-//                     inv.children[j].children[2].style.color = "red";
-//                   }
-//                   inv.children[j].children[3].children[0].style.fontWeight =
-//                     "bold";
-//                   elimCardInv(comunista);
-//                   somaPontos();
-//                   //SE NAO FOR movercarta
-//                 } else
-//                   inv.children[j].children[3].children[0].textContent =
-//                     parseInt(
-//                       inv.children[j].children[3].children[0].textContent
-//                     ) +
-//                     parseInt(pontoEstatal) +
-//                     "☭";
-//                 inv.children[j].children[3].children[0].style.fontWeight =
-//                   "bold";
-//                 if (inv.children[j].id != "carta-people") {
-//                   inv.children[j].children[3].children[0].style.color = "red";
-//                 }
-
-//                 elimCardInv(comunista);
-
-//                 somaPontos();
-//               }
-//               if (true) {
-//                 snd(comunistaAu);
-//               }
-//             }
-//           }
-//         }
-//       }
-//       // poder premiomonark
-//       if (
-//         inv.children[i].id == "premiomonark" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         inv.children[i].children[3].children[2].addEventListener(
-//           "click",
-//           premiomonark
-//         );
-//         inv.children[i].children[0].id = "foi";
-//       }
-
-//       function premiomonark(e) {
-//         let premioMonark = e.target.offsetParent;
-//         let premioMonarkBotao = premioMonark.children[3].children[2];
-
-//         if (efeitos.status == false) {
-//           //coloca efeito
-//           efeitoPremioMonark.rodadas = gerarNumero(10, 15);
-//           efeitos = efeitoPremioMonark;
-//           //apaga a carta
-
-//           premioMonark.classList.add("vanish");
-//           premioMonarkBotao.style.visibility = "hidden";
-
-//           function eliminarPremioMonark() {
-//             // premioMonark.remove();
-
-//             elimCardInv(premioMonark);
-
-//             elimCardMao(premioMonark);
-//           }
-
-//           setTimeout(eliminarPremioMonark, 10000);
-
-//           colocarEfeito();
-//           let premioMonarkAu = ["premioMonark.mp3", 0.3];
-//           let premioMonarkElimAu = ["premioMonarkElim.mp3"];
-
-//           setTimeout(function () {
-//             snd(premioMonarkElimAu);
-//           }, 5000);
-
-//           snd(premioMonarkAu);
-//         }
-//       }
-//       //PODER SPY
-//       if (
-//         inv.children[i].id == "spy" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         inv.children[i].children[3].children[2].addEventListener("click", spy);
-//         inv.children[i].children[0].id = "foi";
-//       }
-
-//       function spy(e) {
-//         let spy = e.target.offsetParent;
-
-//         let spyWatch = spy.children[3].children[1];
-//         let botao = spy.children[3].children[2];
-//         let retrato = spy.children[1];
-
-//         if (botao.id != "foi") {
-//           spyWatch.addEventListener("click", invisWatch);
-//           botao.id = "foi";
-//         }
-
-//         function invisWatch() {
-//           function invis() {
-//             spy.className = "invisible";
-//             spyWatch.id = "invis";
-
-//             retrato.classname = "invisible";
-//             spy.children[0].className = "invis";
-
-//             botao.style.visibility = "hidden";
-//             retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
-
-//             let spyInvisAu = ["spyInvis.mp3", 0.2];
-//             snd(spyInvisAu);
-//             // snd(spyInvisLineAu);
-
-//             // to()
-//             setTimeout(vis, gerarNumero(800, 7000));
-//             spyWatch.style.visibility = "hidden";
-
-//             spy.dataset.hashp = "uber";
-//           }
-
-//           function vis() {
-//             spy.dataset.hashp = "false";
-//             spy.className = "visible";
-//             spyWatch.id = "vis";
-//             retrato.classList.remove("invisible");
-//             retrato.classList.add("visible");
-//             spy.children[0].className = "vis";
-
-//             botao.style.visibility = "visible";
-//             retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
-
-//             let spyInvisAu = ["spyInvis.mp3", 0.3];
-//             snd(spyInvisAu);
-//             // snd(spyInvisLineAu);
-//             // tudo()
-
-//             setTimeout(function () {
-//               spyWatch.style.visibility = "visible";
-//             }, gerarNumero(2400, 14000));
-//           }
-
-//           if (spyWatch.id != "invis") {
-//             invis();
-//           } else {
-//             // vis()
-//           }
-//         }
-
-//         for (let i = 0; i < 6; i++) {
-//           if (
-//             inv.children[i].id == "carta-semcargo" &&
-//             inv.children[i].children[3].children[0].textContent.includes("⚡")
-//           ) {
-//             let semcargo = inv.children[i];
-//             let poderSemcargo = semcargo.children[3].children[0];
-
-//             let poderSpy = spy.children[3].children[0];
-
-//             //roubar o poder
-
-//             poderSpy.textContent =
-//               parseInt(poderSemcargo.textContent) * 5 +
-//               parseInt(poderSpy.textContent) +
-//               "⚡";
-
-//             elimCardInv(semcargo);
-
-//             spyWatch.style.visibility = "visible";
-//             retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
-//             somaPontos();
-
-//             // audio
-//             let stabAu = ["stab.mp3", 0.3];
-//             snd(stabAu);
-
-//             if (gerarNumero(1, 3) == 2) {
-//               let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3", 0.3];
-//               snd(spyAu);
-//             }
-
-//             break;
-//           }
-//         }
-//       }
-//       // PODER ESTOICO
-//       if (
-//         inv.children[i].id == "estoico" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         inv.children[i].children[3].children[2].addEventListener(
-//           "click",
-//           estoico
-//         );
-//         inv.children[i].children[0].id = "foi";
-//       }
-
-//       function estoico(e) {
-//         let estoico = e.target.offsetParent;
-//         let butao = estoico.children[3].children[2];
-
-//         for (let i = 0; i < 6; i++) {
-//           if (
-//             efeitos.status == false &&
-//             inv.children[i].children[0].children[2].textContent ==
-//               " de Itapira" &&
-//             inv.children[i].id != "carta-monark"
-//           ) {
-//             let itapira = inv.children[i];
-//             let itapiraEnergia = itapira.children[3].children[0];
-
-//             efeitoEstoico.rodadas = Math.trunc(
-//               parseInt(itapiraEnergia.textContent)
-//             );
-//             efeitos = efeitoEstoico;
-
-//             hpPlayer.remove(Math.trunc(parseInt(itapiraEnergia.textContent)));
-
-//             butao.style.visibility = "hidden";
-
-//             elimCardInv(itapira);
-//             elimCardInv(estoico);
-
-//             somaPontos();
-//             tudo();
-
-//             let estoicoAu = ["estoico.mp3", 0.2];
-//             sndEfeito(estoicoAu);
-//             break;
-//           }
-//         }
-//       }
-//       // PODER LUCIO
-//       let lucio
-//       if (
-//         invObj[i].cartaId == "lucio" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         lucio = invObj[i]
-//         inv.children[i].children[3].children[2].addEventListener(
-//           "click",
-//           Lucio
-//         );
-//         inv.children[i].children[0].id = "foi";
-//       }
-
-//       let ultiReadyAu = ["ultiReadyLucio1.mp3"];
-//       function Lucio(e) {
-
-//         let lucioP = e.target.offsetParent;
-//         let lucioEnergia = lucioP.children[3].children[0];
-//         let barreira = lucioP.children[3].children[1];
-//         let ulti = lucioP.children[2];
-
-//         for (let j = 0; j < 6; j++) {
-//           if (lucio.ulti < 100) {
-//             // se a carta for gentleman
-//             if (invObj[j].id == "monark") {
-
-//               let vitima = invObj[j]
-
-//               vitima.hp.remove(1)
-
-//               this.buildUlt(20)
-
-//               ulti.textContent = lucio.ulti + '%'
-
-//               // se tiver pdoer novo, o adiquira e exclua a carta
-
-//               break
-//             }
-//             //se tiver ulti
-//           } else {
-//             let ultiLucioAu = ["ultiLucio.oga"];
-//             snd(ultiLucioAu);
-
-//             hpPlayer.add(lucio.novoAtaqueE);
-
-//             // arenaP.innerHTML = "VOCÊ TEM " + totalClicks + " CARTAS";
-
-//             lucio.ulti = 0
-
-//             //colocar barreira
-//             for (let k = 0; k < 6; k++) {
-//               if (
-//                 invObj[k].hashp == true && invObj[k] != lucio
-//               ) {
-//                 let energia = inv.children[k].children[3].children[1];
-
-//                 energia.textContent =
-//                   parseInt(energia.textContent) +
-//                   parseInt(barreira.textContent) +
-//                   "💚";
-
-//                 energia.style.visibility = "visible";
-//               }
-
-//             }
-
-//             break;
-//           }
-//         }
-
-//         ulti.textContent = lucio.ulti + '%'
-
-//       }
-
-//       if (
-//         inv.children[i].id == "jhin" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         inv.children[i].children[3].children[2].addEventListener("click", jhin);
-//         inv.children[i].children[0].id = "foi";
-//       }
-
-//       //PODER JHIN
-
-//       function jhin(e) {
-//         let jhin = e.target.offsetParent;
-//         let tiros = parseInt(jhin.children[2].textContent);
-//         let tirosString = jhin.children[2];
-
-//         //ESCOLHER ATIRADOS
-//         for (let j = 0; j < 6; j++) {
-//           let nome = inv.children[j].children[0].children[0].textContent;
-//           let atirador = inv.children[j];
-//           let atiradorCargo = inv.children[j].id;
-//           let baralhoCargo = copyCard.id;
-//           let emojiAtirador = atirador.children[3].children[1];
-//           let energiaJhinNum = parseInt(
-//             jhin.children[3].children[0].textContent
-//           );
-//           let energiaJhin = jhin.children[3].children[0];
-//           let energiaVitima = parseInt(
-//             copyCard.children[3].children[0].textContent
-//           );
-//           let butao = jhin.children[3].children[2];
-
-//           function checkTiros() {
-//             if (tiros >= 1) {
-//               return true;
-//             } else {
-//               return false;
-//             }
-//           }
-
-//           if (
-//             atirador.id != "carta-monark" &&
-//             nome == "GANDALF" &&
-//             checkTiros()
-//           ) {
-//             //se nao tiver atirador, escolha atirador
-
-//             function naoTemAtirador() {
-//               if (
-//                 inv.children[0].children[3].children[1].textContent != "💢" &&
-//                 inv.children[1].children[3].children[1].textContent != "💢" &&
-//                 inv.children[2].children[3].children[1].textContent != "💢" &&
-//                 inv.children[3].children[3].children[1].textContent != "💢" &&
-//                 inv.children[4].children[3].children[1].textContent != "💢" &&
-//                 inv.children[5].children[3].children[1].textContent != "💢"
-//               ) {
-//                 return true;
-//               } else {
-//                 return false;
-//               }
-//             }
-
-//             if (naoTemAtirador()) {
-//               emojiAtirador.textContent = "💢";
-//               emojiAtirador.style.visibility = "visible";
-
-//               let jhinEscolhaAu = ["jhinEscolha.mp3", 0.7];
-//               let ultiJhinAu = ["ultiJhin.mp3", 0.3];
-
-//               snd(jhinEscolhaAu);
-//               snd(ultiJhinAu);
-
-//               break;
-//               //se tiver atirador
-//             } else {
-//               function playJhinAu(n) {
-//                 let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.4];
-
-//                 if (gerarNumero(1, n) == 1) {
-//                   setTimeout(function () {
-//                     snd(jhinAu);
-//                   }, 800);
-//                 }
-//               }
-
-//               if (tiros == 1 && atiradorCargo == baralhoCargo) {
-//                 butao.style.visibility = "hidden";
-
-//                 emojiAtirador.textContent = "";
-
-//                 tirosString.classList.remove("critico");
-//               }
-
-//               if (
-//                 checkTiros() &&
-//                 atiradorCargo == baralhoCargo &&
-//                 numCartas.total >= 1
-//               ) {
-//                 if (tiros == 2) {
-//                   tirosString.classList.add("critico");
-//                 }
-//                 // TULTIMO TIRO MULTIPLICA POR 4
-//                 if (tiros == 1) {
-//                   energiaJhin.textContent =
-//                     energiaJhinNum + energiaVitima * 8 + "⚡";
-//                   cartaParaMover.classList.add("voar");
-//                   somaPontos();
-//                   if (numCartas.total == 1) {
-//                     setTimeout(function () {
-//                       packP.innerHTML = semCarta;
-//                       numCartas.set(0);
-//                     }, 250);
-//                   } else {
-//                     setTimeout(tudo, 250);
-//                   }
-
-//                   let countAu = ["jhinConta4.mp3", 0.5];
-//                   snd(countAu);
-//                   snd(hit);
-//                   somDeath(350);
-//                   playJhinAu(1);
-//                 } else {
-//                   energiaJhin.textContent =
-//                     energiaJhinNum + energiaVitima * 4 + "⚡";
-//                   cartaParaMover.classList.add("voar");
-//                   somaPontos();
-//                   if (numCartas.total == 1) {
-//                     setTimeout(function () {
-//                       packP.innerHTML = semCarta;
-//                       numCartas.set(0);
-//                     }, 250);
-//                   } else {
-//                     setTimeout(tudo, 250);
-//                   }
-
-//                   if (tiros == 4) {
-//                     let countAu = ["jhinConta1.mp3", 0.5];
-//                     snd(countAu);
-//                     snd(hit);
-//                     somDeath(350);
-//                     playJhinAu(3);
-//                   }
-
-//                   if (tiros == 3) {
-//                     let countAu = ["jhinConta2.mp3", 0.5];
-//                     snd(countAu);
-//                     snd(hit);
-//                     somDeath(350);
-//                   }
-
-//                   if (tiros == 2) {
-//                     let countAu = ["jhinConta3.mp3", 0.5];
-//                     snd(countAu);
-//                     snd(hit);
-//                     somDeath(350);
-//                   }
-//                 }
-
-//                 if (tiros == 1) {
-//                   tirosString.textContent = "";
-//                 } else {
-//                   tirosString.textContent = tiros - 1;
-//                 }
-//                 // tudo()
-//                 break;
-//               }
-//             }
-//             break;
-//           }
-//         }
-//       }
-
-//       // PODER DVA
-//       if (
-//         inv.children[i].id == "dva" &&
-//         inv.children[i].children[0].id != "foi"
-//       ) {
-//         inv.children[i].children[3].children[2].addEventListener("click", dva);
-//         inv.children[i].children[0].id = "foi";
-//       }
-
-//       function dva(e) {
-//         let dva = e.target.offsetParent;
-//         let dvaEnergia = dva.children[3].children[0];
-//         let butao = dva.children[3].children[2];
-//         let ulti = dva.children[2];
-//         let retratoFoto = dva.children[1];
-//         let hp = dva.children[3].children[1];
-
-//         for (let i = 0; i < 6; i++) {
-//           let vitima =
-//             inv.children[i].dataset.dmgboss == "false" &&
-//             inv.children[i].dataset.card == "especial";
-
-//           if (parseInt(ulti.textContent) < 100) {
-//             // se a carta for gentleman
-//             if (vitima) {
-//               let gentleman = inv.children[i];
-
-//               // se tiver pdoer novo, o adiquira e exclua a carta
-
-//               ulti = parseInt(ulti.textContent) + gerarNumero(19, 26);
-
-//               if (ulti > 100) {
-//                 dva.children[2].textContent = 100 + "%";
-//                 // dva.children[2].textContent = 100 + "";
-//               } else {
-//                 dva.children[2].textContent = ulti + "%";
-//               }
-
-//               elimCardInv(gentleman);
-//               break;
-//             }
-//             //se tiver ulti
-//           } else {
-//             butao.style.visibility = "hidden";
-
-//             hp.textContent = "4💚";
-
-//             retratoFoto.style.backgroundImage = 'url("/pics/dva.webp")';
-//             dva.children[2].textContent = "";
-
-//             let pontoDeTodos = 0;
-//             let pontoDeTodosEsp = 0;
-
-//             for (let j = 0; j < 6; j++) {
-//               let ponto = inv.children[j].children[3].children[0];
-//               let cartaEspecial = inv.children[j].dataset.dmgboss == "false";
-//               let cartaNormal = inv.children[j].dataset.dmgboss == "true";
-//               // if(ponto.textContent != ''){
-
-//               if (cartaEspecial) {
-//                 pontoDeTodosEsp = pontoDeTodosEsp + 25;
-//               } else if (cartaNormal) {
-//                 pontoDeTodos =
-//                   pontoDeTodos + Math.trunc(parseInt(ponto.textContent) * 1.5);
-//               }
-//             }
-//             dvaEnergia.textContent = 1 + pontoDeTodos + pontoDeTodosEsp + "⚡";
-
-//             function dvaSelfDestroy() {
-//               for (let k = 0; k < 6; k++) {
-//                 if (dva != inv.children[k] && inv.children[k].id != "tank") {
-//                   elimCardInv(inv.children[k]);
-//                 }
-//               }
-
-//               for (let j = 0; j < 6; j++) {
-//                 let carta = inv.children[j];
-//                 let isTank = carta.id == "tank";
-//                 let aliveTank = carta.dataset.tankdead == "false";
-
-//                 if (isTank && aliveTank) {
-//                   killTank(j);
-//                 }
-//               }
-//             }
-
-//             dvaSelfDestroy();
-
-//             somaPontos();
-//             break;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-
 export let functionsToPlay;
 
 export function poderesEspeciais(x) {
@@ -2596,184 +1725,54 @@ export function poderesEspeciais(x) {
   spy();
 }
 
-function spy() {
+// function spy() {
 
-  let chanceSpy = ()=> gerarNumero(1,5)
+//   let chanceSpy = ()=> gerarNumero(1,5)
 
-  if(chanceSpy() != 1) return
+//   if(chanceSpy() != 1) return
 
-  invObj.map((x) => {
+//   invObj.map((x) => {
 
-    if (x.cartaId == "spy" && x.isInvisible == false){
+//     if (x.cartaId == "spy" && x.isInvisible == false){
 
-      let watch = x._thisCardP.children[3].children[1];
+//       let watch = x._thisCardP.children[3].children[1];
   
-      x.clockReady = true;
-      watch.style.visibility = "visible";
-    } 
+//       x.clockReady = true;
+//       watch.style.visibility = "visible";
+//     } 
 
-  });
-}
+//   });
+// }
 
-function lucio() {
-  for (let i = 0; i < 6; i++) {
-    let isLucio = invObj[i].cartaId == "lucio";
-    let lucio = invObj[i];
-    let ulti = lucio.ulti;
-    if (isLucio) {
-      for (let j = 0; j < 6; j++) {
-        if (invObj[j].hashp && gerarNumero(1, 2) == 1) {
-          let aliado = invObj[j];
-          if (ulti >= 100) {
-            ulti = 100;
-            // snd(ultiReadyAu);
-          } else {
-            if (hpPlayer.total >= 100) return;
-
-            hpPlayer.add(1);
-            lucio.buildUlt(1);
-
-            if (aliado.hp >= aliado.maxHealth) return;
-
-            lucio.buildUlt(1);
-            aliado.heal(1);
-          }
-        }
-      }
-    }
-  }
-}
-
-// function abelha() {
-//   let beeHitAu = ["hitAbelha.mp3", 0.1];
-//   let numOfBees = 0;
-//   for (let k = 0; k < 6; k++) {
-//     let abelha = inv.children[k].id == "abelha";
-//     if (abelha) {
-//       numOfBees++;
-//     }
-//   }
-
+// function lucio() {
 //   for (let i = 0; i < 6; i++) {
-//     if (inv.children[i].id != "empty") {
-//       if (inv.children[i].id == "abelha") {
+//     let isLucio = invObj[i].cartaId == "lucio";
+//     let lucio = invObj[i];
+//     let ulti = lucio.ulti;
+//     if (isLucio) {
+//       for (let j = 0; j < 6; j++) {
+//         if (invObj[j].hashp && gerarNumero(1, 2) == 1) {
+//           let aliado = invObj[j];
+//           if (ulti >= 100) {
+//             ulti = 100;
+//             // snd(ultiReadyAu);
+//           } else {
+//             if (hpPlayer.total >= 100) return;
 
-//         inv.children[i].className = "";
-//         inv.children[i].children[1].style.border = "2px solid #545251";
-//         1;
-//         inv.children[i].style.border = "";
-//         inv.children[i].style.color = "#ffd11a";
+//             hpPlayer.add(1);
+//             lucio.buildUlt(1);
 
-//         let pontoAbelha = inv.children[i].children[3].children[0];
+//             if (aliado.hp >= aliado.maxHealth) return;
 
-//         if (parseInt(pontoAbelha.textContent) <= 0) {
-//           let abelha = inv.children[i];
-//           abelha.className = "";
-
-//           elimCardInv(abelha);
-
-//           let beeDeathAu = ["deathAbelha.mp3", 0.7];
-//           snd(beeDeathAu);
-
-//           somaPontos();
-//         } else if (numOfBees == 2) {
-//           pontoAbelha.textContent =
-//             parseInt(pontoAbelha.textContent) / gerarNumero(2, 3) + "🐝";
-
-//           somaPontos();
-//           snd(beeHitAu);
-//         } else if (numOfBees == 3) {
-//           pontoAbelha.textContent =
-//             parseInt(pontoAbelha.textContent) / gerarNumero(3, 4) + "🐝";
-
-//           somaPontos();
-//           snd(beeHitAu);
-//         } else if (numOfBees == 4) {
-//           pontoAbelha.textContent =
-//             parseInt(pontoAbelha.textContent) / gerarNumero(4, 5) + "🐝";
-
-//           somaPontos();
-//           snd(beeHitAu);
-//         } else if (numOfBees == 5) {
-//           pontoAbelha.textContent =
-//             parseInt(pontoAbelha.textContent) / gerarNumero(5, 6) + "🐝";
-
-//           somaPontos();
-//           snd(beeHitAu);
-//         } else if (numOfBees == 6) {
-//           pontoAbelha.textContent =
-//             parseInt(pontoAbelha.textContent) / gerarNumero(6, 7) + "🐝";
-
-//           somaPontos();
-//           snd(beeHitAu);
-//         } else if (
-//           parseInt(pontoAbelha.textContent) <= 60 &&
-//           parseInt(pontoAbelha.textContent) > 15
-//         ) {
-//           pontoAbelha.textContent =
-//             parseInt(pontoAbelha.textContent) - abelhaLowHp() + "🐝";
-//           somaPontos();
-//           snd(beeHitAu);
-//         } else if (parseInt(pontoAbelha.textContent) <= 15) {
-//           pontoAbelha.textContent =
-//             parseInt(pontoAbelha.textContent) - 1 + "🐝";
-//           snd(beeHitAu);
-//         } else {
-//           pontoAbelha.textContent =
-//             parseInt(pontoAbelha.textContent) - abelhaDecrease() + "🐝";
-//           somaPontos();
-//           snd(beeHitAu);
-//         }
-
-//         for (let j = 0; j < 6; j++) {
-//           if (inv.children[j].id != "empty") {
-//             if (inv.children[j].children[0].children[0].textContent == "TURU") {
-//               if (inv.children[i].id == "abelha") 
-//               {
-//                 inv.children[i].classList.add("critico");
-//                 inv.children[i].children[1].style.border = "1px solid red";
-//                 inv.children[i].style.border = "1px solid red";
-//                 inv.children[i].style.color = "red";
-
-//               }
-
-//               if (parseInt(pontoAbelha.textContent) > 76) {
-//                 pontoAbelha.textContent =
-//                   parseInt(pontoAbelha.textContent) -
-//                   abelhaDecreaseComTuru() +
-//                   "🐝";
-//                 somaPontos();
-//                 snd(beeHitAu);
-//               } else {
-//                 if (inv.children[i].id == "abelha") {
-//                   inv.children[i].children[1].style.backgroundImage =
-//                     "url('pics/abelhaMorrendo.jpg')";
-//                   inv.children[i].children[2].innerHTML = frasesAbelha();
-//                   inv.children[i].children[2].style.fontSize = "1em";
-//                 }
-//                 pontoAbelha.textContent = 0 + "☠";
-//                 snd(beeHitAu);
-//                 somaPontos();
-//               }
-//             }
+//             lucio.buildUlt(1);
+//             aliado.heal(1);
 //           }
 //         }
 //       }
 //     }
 //   }
-
-//   for (let l = 0; l < 6; l++) {
-//     let energiaAbelhas = inv.children[l].children[3].children[0];
-//     let abelha = inv.children[l].id == "abelha";
-
-//     if (abelha && numOfBees > 1) {
-//       energiaAbelhas.textContent =
-//         parseInt(energiaAbelhas.textContent) * numOfBees + "⚡";
-
-//       inv.children[l].dataset.dmgboss = "true";
-//     }
-//   }
 // }
+
 
 export function elimCardInv(x) {
   let slot;
@@ -2863,95 +1862,100 @@ function healCard(heal, card) {
   }
 }
 
-function creeper(x) {
-  let condition;
+// function creeper(x) {
+//   let condition;
 
-  if (x) {
-    condition = true;
-  } else {
-    condition = gerarNumero(1, 5) == 5;
-  }
+//   if (x) {
+//     condition = true;
+//   } else {
+//     condition = gerarNumero(1, 5) == 5;
+//   }
 
-  let creeperAu = ["creeper.mp3", 0.5];
-  for (let i = 0; i < 6; i++) {
-    if (inv.children[i].id == "creeper") {
-      let creeper = inv.children[i];
-      let right = creeper.nextElementSibling;
-      let left = creeper.previousElementSibling;
+//   let creeperAu = ["creeper.mp3", 0.5];
+//   for (let i = 0; i < 6; i++) {
+//     if (inv.children[i].id == "creeper") {
+//       let creeper = inv.children[i];
+//       let right = creeper.nextElementSibling;
+//       let left = creeper.previousElementSibling;
 
-      if (condition && !creeper.dataset.exploding) {
-        creeper.dataset.exploding = "true";
+//       if (condition && !creeper.dataset.exploding) {
 
-        snd(creeperAu);
-        creeper.className = "piscar";
-        setTimeout(function () {
-          if (dmgCard(gerarNumero(170, 220), right)) {
-            // condition already does the job ;)
-          } else {
-            elimCardInv(right);
-          }
+//         creeper.dataset.exploding = "true";
 
-          if (dmgCard(gerarNumero(170, 220), left)) {
-          } else {
-            elimCardInv(left);
-          }
-          elimCardInv(creeper);
+//         snd(creeperAu);
+//         creeper.className = "piscar";
 
-          if (boss) {
-            boss.dmg(gerarNumero(100, 250));
-          }
-        }, 2600);
-      }
-    }
-  }
 
-  // comportamento na mao
-  for (let i = 0; i < 4; i++) {
-    if (mao.children[i].id == "creeper") {
-      let creeper = mao.children[i];
-      let right = creeper.nextElementSibling;
-      let left = creeper.previousElementSibling;
+//         setTimeout(function () {
+//           if (dmgCard(gerarNumero(170, 220), right)) {
+//             // condition already does the job ;)
+//           } else {
+//             elimCardInv(right);
+//           }
 
-      if (condition && !creeper.dataset.exploding) {
-        creeper.dataset.exploding = "true";
-        snd(creeperAu);
-        creeper.className = "piscar";
+//           if (dmgCard(gerarNumero(170, 220), left)) {
+//           } else {
+//             elimCardInv(left);
+//           }
+//           elimCardInv(creeper);
 
-        setTimeout(function () {
-          if (dmgCard(gerarNumero(170, 220), right, "mao")) {
-            // condition already does the job ;)
-          } else {
-            elimCardMao(right);
-          }
+//           if (boss) {
+//             boss.dmg(gerarNumero(100, 250));
+//           }
 
-          if (dmgCard(gerarNumero(170, 220), left, "mao")) {
-          } else {
-            elimCardMao(left);
-          }
+//         }, 2600);
 
-          let cartaInv1 = gerarNumero(0, 2);
-          let cartaInv2 = gerarNumero(3, 5);
+//       }
+//     }
+//   }
 
-          if (i < 2) {
-            if (dmgCard(gerarNumero(25, 70), inv.children[cartaInv1])) {
-            } else {
-              elimCardInv(inv.children[cartaInv1]);
-            }
-          } else {
-            if (dmgCard(gerarNumero(25, 700), inv.children[cartaInv2])) {
-            } else {
-              elimCardInv(inv.children[cartaInv2]);
-            }
-          }
+//   // comportamento na mao
+//   for (let i = 0; i < 4; i++) {
+//     if (mao.children[i].id == "creeper") {
+//       let creeper = mao.children[i];
+//       let right = creeper.nextElementSibling;
+//       let left = creeper.previousElementSibling;
 
-          elimCardMao(creeper);
+//       if (condition && !creeper.dataset.exploding) {
+//         creeper.dataset.exploding = "true";
+//         snd(creeperAu);
+//         creeper.className = "piscar";
 
-          hpPlayer.remove(gerarNumero(7, 12));
-        }, 2600);
-      }
-    }
-  }
-}
+//         setTimeout(function () {
+//           if (dmgCard(gerarNumero(170, 220), right, "mao")) {
+//             // condition already does the job ;)
+//           } else {
+//             elimCardMao(right);
+//           }
+
+//           if (dmgCard(gerarNumero(170, 220), left, "mao")) {
+//           } else {
+//             elimCardMao(left);
+//           }
+
+//           let cartaInv1 = gerarNumero(0, 2);
+//           let cartaInv2 = gerarNumero(3, 5);
+
+//           if (i < 2) {
+//             if (dmgCard(gerarNumero(25, 70), inv.children[cartaInv1])) {
+//             } else {
+//               elimCardInv(inv.children[cartaInv1]);
+//             }
+//           } else {
+//             if (dmgCard(gerarNumero(25, 700), inv.children[cartaInv2])) {
+//             } else {
+//               elimCardInv(inv.children[cartaInv2]);
+//             }
+//           }
+
+//           elimCardMao(creeper);
+
+//           hpPlayer.remove(gerarNumero(7, 12));
+//         }, 2600);
+//       }
+//     }
+//   }
+// }
 
 // if (inv.children[0].id != 'empty' && inv.children[1].id != 'empty' && inv.children[2].id != 'empty' && inv.children[3].id != 'empty') {
 
@@ -3067,7 +2071,13 @@ function deletarDeck(e) {
     if(e.target.offsetParent == inv.children[i]){
 
       if(invObj[i]._canBeDeleted == false) return
-       invObj[i].kill()
+
+      if(invObj[i]._enemy){
+        invObj[i].hp.monarkKill()
+      } else {
+
+        invObj[i].kill(true)
+      }
 
       break
     }
@@ -3079,29 +2089,10 @@ function deletarDeck(e) {
   }
 }
 
-let usarDeckTrigg = false;
 
-function deckFull() {
-  
 
-  if (invObj.every((x) => x.dmgBoss == true)) {
-    usarDeckTrigg = true;
-    return true;
-  } else {
-    usarDeckTrigg = false;
-    return false;
-  }
-}
 
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "KeyQ") {
-//     if (boss) {
-//       dmgBoss();
-//     } else {
-//       snd(naoAu);
-//     }
-//   }
-// });
+
 
 
 export let money = {
@@ -3193,8 +2184,9 @@ let placarArena = {
 
     for (const x of invObj) {
       if(x.dmgBoss != true) {continue}
-      this.ammoTotal += Math.trunc(x.energia / 20 )
+      this.ammoTotal += x.energia
     }
+    this.ammoTotal = Math.trunc(this.ammoTotal / 20)
   },
 
   getNumberOfCards(){
@@ -3357,6 +2349,8 @@ function venderCarta() {
   if (chosenCard != 0) {
     if (!chosenCardObj.isNormal) {
 
+      if(!chosenCardObj._canBeSold) return
+
       money.add(chosenCardObj.raridade.resellPrice)
       chosenCardObj.kill()
       chosenCard = 0;
@@ -3447,7 +2441,7 @@ export function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(5, inv);
+    moverCartaMonark(15, inv);
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();
@@ -3465,7 +2459,11 @@ export function tudo() {
 }
 
 function runEveryRound(){
-  invObj.map( (x)=> x.everyRound ? x.everyRound() : false )
+
+  invObj.map( (x)=> {x.everyRound ? x.everyRound() : false} )
+  maoObj.map( (x)=> {x._everyRoundMao ? x.everyRound() : false} )
+
+
 }
 
 function removeBuffAll(){
@@ -3618,7 +2616,7 @@ function healMonarkBoss(x) {
   }
 }
 
-let chuvaCooldown = !true;
+let chuvaCooldown = false;
 // setTimeout(() => (chuvaCooldown = false), 15000);
 
 //************************************************************************************* */

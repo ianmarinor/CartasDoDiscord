@@ -1,5 +1,5 @@
 // import { efeitoPremioMonark } from './modules/especial';
-import { efeitos, rodadas,somaPontos, snd, hpPlayer, elimCardInv } from "./script.js";
+import { efeitos, rodadas,somaPontos, snd, hpPlayer, elimCardInv, invObj } from "./script.js";
 
 
 let inv = document.getElementById("inv");
@@ -39,47 +39,42 @@ export function aplicarEfeitos() {
 function premioMonark() {
   let bonusMonark = 50
   for (let i = 0; i < 6; i++) {
-    if (inv.children[i].id != "empty" && inv.children[i].id == "carta-monark") {
+
+
+    if (invObj[i].id == 'monark') {
 
       
-      let monark = inv.children[i];
+      let monark = invObj[i]
 
       function infectarMonark(){
 
-        monark.dataset.canbedeleted = "true"
+        monark._canBeDeleted = true
 
-        if(monark.children[0].className != "float"){
+        if(monark._thisCardP.children[0].className != "float"){
           // moneyP.textContent = parseInt(moneyP.textContent) + bonusMonark
-          hpPlayer.add(1)
+          hpPlayer.add(3)
 
           let premioMonarkElimAu = ['premioMonarkElim.mp3', 0.5]
         setTimeout(function(){
           snd(premioMonarkElimAu)
         }, 1000)
-
-        // let vendaAu = ['venda.mp3']
-        
-
-        // setTimeout(function(){
-        //   snd(vendaAu)
-        // }, 500)
         }
       
       
-      monark.children[0].className = "float";
-      monark.style.backgroundColor = "black";
-      monark.children[1].style.backgroundImage =
+      monark._thisCardP.children[0].className = "float";
+      monark._thisCardP.style.backgroundColor = "black";
+      monark._thisCardP.children[1].style.backgroundImage =
         'url("/pics/retratoPremioMonark.gif")';
-      monark.children[1].style.backgroundSize = "100% 100%";
-      monark.children[1].style.backgroundColor = "#343436";
-      monark.children[1].style.fontFamily = "premiomonark";
-      monark.children[1].style.border = "2px solid black";
-      monark.style.color = "#343436";
-      monark.style.border = "2px solid black";
-      monark.children[2].innerHTML = "ADEUS...";
-      monark.children[2].className = "float";
-      monark.children[3].children[0].style.visibility = 'hidden';
-      monark.classList.add('vanish')
+      monark._thisCardP.children[1].style.backgroundSize = "100% 100%";
+      monark._thisCardP.children[1].style.backgroundColor = "#343436";
+      monark._thisCardP.children[1].style.fontFamily = "premiomonark";
+      monark._thisCardP.children[1].style.border = "2px solid black";
+      monark._thisCardP.style.color = "#343436";
+      monark._thisCardP.style.border = "2px solid black";
+      monark._thisCardP.children[2].innerHTML = "ADEUS...";
+      monark._thisCardP.children[2].className = "float";
+      monark._thisCardP.children[3].children[0].style.visibility = 'hidden';
+      monark._thisCardP.classList.add('vanish')
         
         
       }
@@ -90,7 +85,7 @@ function premioMonark() {
 
         
 
-        elimCardInv(monark)
+        monark.hp.monarkKill()
 
 
         
