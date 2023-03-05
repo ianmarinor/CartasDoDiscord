@@ -1373,7 +1373,7 @@ function moverCartaMonark(x, place) {
       },
       monarkKill() {
 
-        console.trace();
+        
         elimCardInv(this.__._thisCardP);
         money.add(20)
         

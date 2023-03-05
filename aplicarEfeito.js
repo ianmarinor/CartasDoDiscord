@@ -41,10 +41,11 @@ function premioMonark() {
   for (let i = 0; i < 6; i++) {
 
 
-    if (invObj[i].id == 'monark') {
+    if (invObj[i].id == 'monark' && !invObj[i].isInfected) {
 
       
       let monark = invObj[i]
+      monark.isInfected = true
 
       function infectarMonark(){
 
@@ -86,10 +87,8 @@ function premioMonark() {
         
 
         monark.hp.monarkKill()
-
-
         
-       
+      
       }
 
       
@@ -98,6 +97,8 @@ function premioMonark() {
 
 
       setTimeout(eliminarMonark, 10000)
+    } else {
+      console.log('NAO TEM MONARK');
     }
   }
 }
