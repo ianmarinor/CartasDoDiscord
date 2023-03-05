@@ -21,10 +21,10 @@ let btnSangue = document.getElementById("btnSangue");
 let btnRainha = document.getElementById("btnRainha");
 let inv = document.getElementById("inv");
 
-let precoCampones = 50;
-let precoCavalheiro = 150;
-let precoSangueAzul = 300;
-let precoRainha = 3500;
+let precoCampones = 25;
+let precoCavalheiro = 75;
+let precoSangueAzul = 150;
+let precoRainha = 1500;
 
 
 let precoPrint = () => {
@@ -114,7 +114,7 @@ let increasePrice = (x) => {
 
   // return 1
 
-  let increaseRate = gerarNumero(2.5, 4, true)
+  let increaseRate = gerarNumero(9, 25)
 
 return Math.trunc(x / increaseRate)
 

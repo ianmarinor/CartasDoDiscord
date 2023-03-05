@@ -2186,7 +2186,7 @@ let placarArena = {
       if(x.dmgBoss != true) {continue}
       this.ammoTotal += x.energia
     }
-    this.ammoTotal = Math.trunc(this.ammoTotal / 20)
+    this.ammoTotal = Math.trunc(this.ammoTotal / 35)
   },
 
   getNumberOfCards(){
@@ -2352,14 +2352,14 @@ function venderCarta() {
       if(!chosenCardObj._canBeSold) return
 
       money.add(chosenCardObj.raridade.resellPrice)
-      chosenCardObj.kill()
+      chosenCardObj.kill(true)
       chosenCard = 0;
       chosenCardObj = emptyObj;
 
         
       } else {
         
-        chosenCardObj.kill()
+        chosenCardObj.kill(true)
         chosenCard = 0;
         chosenCardObj = emptyObj;
         

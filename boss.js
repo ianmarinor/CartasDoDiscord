@@ -91,7 +91,7 @@ function probMonarkChuvaDeMonark() {
 }
 function createMonark() {
   
-  let bossClass = new Boss(5000, 5000, "monark");
+  let bossClass = new Boss(15000, 15000, "monark");
   
   let monark = {
     carta() {

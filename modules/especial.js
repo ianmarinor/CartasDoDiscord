@@ -175,6 +175,8 @@ class Especial {
       this._leftObj = this._parent[this._place - 1]
     } else {
       this._leftCard = false;
+      this._leftCardIndex = null
+      this._leftObj = false
     }
 
     if (this._place < 5) {
@@ -183,6 +185,8 @@ class Especial {
       this._rightObj = this._parent[this._place + 1]
     } else {
       this._rightCard = false;
+      this._rightCardIndex = null
+      this._rightObj = false
     }
 
     this._retratoP = this._thisCardP.children[1]
@@ -1066,6 +1070,7 @@ export let especiais = {
         if (this._rightCardIndex != i && this._leftCardIndex != i) {
           continue;
         }
+        console.log('NAO ignora ', i);
         if (invObj[i].id == "monark") {
           let vitima = invObj[i];
           console.log(vitima);
@@ -1201,9 +1206,9 @@ export let especiais = {
     cargo: "0%",
     retrato: "url('pics/retratoLucio.jpg')",
     dmgBoss: false,
-    dano: 5,
+    dano: 8,
     _hasUlti: true,
-    ulti: 95,
+    ulti: 0,
 
     hp: 10,
     maxHealth: 10,
@@ -1424,12 +1429,12 @@ export let especiais = {
                 playJhinAu(1);
                 elimCardInv(atiradorP);
                 this.tiros--;
-                this.energia = 4;
+                this.dano = 4;
                 this.kill();
               } else {
                 this.ataque(this.energia);
                 elimCardInv(atiradorP);
-                this.energia = 4;
+                this.dano = 4;
 
                 this.tiros--;
                 tirosString.textContent = this.tiros;
@@ -1481,8 +1486,8 @@ export let especiais = {
     cargo: "0%",
     retrato: "url('pics/dvaMecaRetrato.jpg')",
     dmgBoss: false,
-    ulti: 99,
-    dano: 10,
+    ulti: 0,
+    dano: 80,
     hp: 50,
     maxHealth: 50,
     hashp: true,
@@ -1840,7 +1845,7 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 5);
 
-      if (true) {
+      if (!true) {
         especial = objBinder(especiais.premioMonark);
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
@@ -1864,8 +1869,8 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 3);
 
-      if (!true) {
-        especial = objBinder(especiais.jhin);
+      if (true) {
+        especial = objBinder(especiais.spy);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);
       } else if (num == 2) {
