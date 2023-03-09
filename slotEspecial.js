@@ -256,7 +256,12 @@ function makeRainha() {
   return seedmakeRainha;
 }
 
-export let slotEspObj;
+export let slotEspObj = {
+  place(){
+
+  },
+  print(){}
+}
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
@@ -334,11 +339,6 @@ function colocarSlot(tipo) {
 
   //ATAQUE
 
-  // if (especial.energia) {
-  //   ataqueE.innerHTML = especial.energia + "⚡";
-  // } else {
-  //   ataqueE.innerHTML = especial.ataqueE;
-  // }
 
   ataqueE.style.color = especial.ataqueStyle.color;
   ataqueE.style.fontSize = especial.ataqueStyle.fontSize;
@@ -346,12 +346,6 @@ function colocarSlot(tipo) {
   ataqueE.style.visibility = especial.ataqueStyle.visibility;
 
   //ATAQUENOVO
-
-  // if (especial.hashp) {
-  //   novoAtaqueE.innerHTML = especial.hp + "💚";
-  // } else {
-  //   novoAtaqueE.innerHTML = especial.hp;
-  // }
 
   novoAtaqueE.style.color = especial.novoAtaqueStyle.color;
   novoAtaqueE.style.fontSize = especial.novoAtaqueStyle.fontSize;

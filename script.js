@@ -468,7 +468,8 @@ function fabricaDeCarta(
     _leftCard: false,
     _rightCard:false,
     _canBeDeleted:true,
-
+    _monarkFree: false,
+    hp: 0,
     statusEmoji: false,
     cartaId: cargo,
     dmgBoss: true,
@@ -1277,9 +1278,19 @@ function moverCartaMonark(x, place) {
     _rightCard:false,
     _enemy: true,
     _canBeDeleted: false,
+    _cfgAdded: false,
+    dano: 3,
+
     removeBuff(n){},
 
+
+
     place() {
+
+      if (!this._cfgAdded) {
+        this.cfg();
+        this._cfgAdded = true;
+      }
 
       this.hp.__ = this
 
@@ -1328,7 +1339,7 @@ function moverCartaMonark(x, place) {
 
     hp: {
       __: false,
-      total: 15,
+      total: 30,
       dmgTaken: 0,
 
       add(n) {
@@ -1379,6 +1390,14 @@ function moverCartaMonark(x, place) {
         
       },
     },
+
+    cfg(){
+
+     console.log(this);
+
+
+    }
+
   };
 
   if (x) {
@@ -1443,7 +1462,7 @@ function moverCartaMonark(x, place) {
     '<p class="cargo">&nbsp;monark💩</p>' +
     '<div class="poder">' +
     '<p class="ataque">0⚡</p>' +
-    '<p class="novoAtaque">15❤️</p>' +
+    '<p class="novoAtaque">30❤️</p>' +
     '<button class="action" style="visibility: hidden;">PRESS</button>' +
     "</div>" +
     '<p class="seed"></p>' +
@@ -1453,6 +1472,7 @@ function moverCartaMonark(x, place) {
 
   // let slotEscolhido
   let slotEscolhido;
+  let objEscolhido;
   let left = false;
   let right = false;
   let num;
@@ -1467,6 +1487,7 @@ function moverCartaMonark(x, place) {
       num = gerarNumero(0, 3);
     }
     slotEscolhido = place.children[num];
+    objEscolhido = invObj[num]
     if (num > 0) {
       left = invObj[num - 1];
     } else {
@@ -1481,63 +1502,41 @@ function moverCartaMonark(x, place) {
     return num;
   }
 
-  // SE TIVER ESTOICO
-  if (efeitos.css.nome == "estoico") {
-    snd(monarkAu);
+  
 
-    teste.children[0].className = "voar";
+ let dano =  monarkObj.dano
 
-    //SE A CARTA TEM HP
-  } else if (slotEscolhido.dataset.hashp == "true") {
+ if (objEscolhido._monarkFree == false && !objEscolhido._enemy) {
     snd(monarkAu);
     let vitima = invObj[num];
 
-    vitima.dmg(1);
+    vitima.dmg(dano);
 
-    if (vitima.hp <= 0) {
+    
+    
+    
+    
+
+    
+    !left._enemy && left.hashp && left.dmg(dano);
+    !right._enemy && right.hashp  && right.dmg(dano); 
+
+    if (vitima.empty) {
+      
+      
       place.replaceChild(teste.children[0], place.children[num]);
       invObj[num] = monarkObj;
     }
+    hpPlayer.remove(dano);
 
-    hpPlayer.remove(3);
+
+
+    healMonarkBoss(dano * 20);
 
     //INTERACOES PERSONALIZADAS COM CARTA
-  } else if (slotEscolhido.dataset.hashp == "custom") {
-    snd(monarkAu);
-    if (slotEscolhido.id == "creeper") {
-      creeper(true);
-      invObj[num] = monarkObj;
-    }
-
-    hpPlayer.remove(3);
   } else if (slotEscolhido.dataset.hashp == "uber") {
     return false;
-  } else {
-    healMonarkBoss(50);
-    hpPlayer.remove(3);
-
-    snd(monarkAu);
-
-    if (slotEscolhido.id == "spy") {
-      let deathSpyAu = ["deathSpy" + gerarNumero(1, 3) + ".mp3", 0.3];
-      snd(deathSpyAu);
-    }
-
-    //atacar cartas hp do lado
-    // console.log(left);
-    // console.log(right);
-    // console.log(num);
-
-    if (left.hashp == true) {
-      left.dmg(1);
-    }
-    if (right.hashp == true) {
-      right.dmg(1);
-    }
-
-    place.replaceChild(teste.children[0], slotEscolhido);
-    invObj[num] = monarkObj;
-  }
+  } 
 }
 
 let morte = ["morte.mp3"];
@@ -1981,14 +1980,15 @@ export let empty6 = inv.children[5];
 let cartaMao = mao.children[0];
 
 export let emptyObj = {
-  empty: "empty",
+  empty: true,
+  _monarkFree: false,
+  hp:0,
   place() {
     return false;
   },
 
   dmg(x) {
-    x;
-    return false;
+    x
   },
 
   print() {
@@ -1997,6 +1997,7 @@ export let emptyObj = {
   removeBuff(n){
 
   }
+
 
 };
 
@@ -2021,20 +2022,20 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
 
 
-    console.group('ARENA')
-    console.log("invObj: ", invObj);
-    console.log('placarArena', placarArena);
-    console.groupEnd()
+    
+    
+    
+    
 
-    console.group('MONEY')
-    console.log('money', money);
-    console.groupEnd()
+    
+    
+    
 
-    console.group('OBJECTS')
-    console.log("maoObj: ", maoObj);
-    console.log("chosenCardObj: ", chosenCardObj);
-    console.log('novaCarta: ', novaCarta);
-    console.groupEnd()
+    
+    
+    
+    
+    
 
   }
 });
@@ -2441,7 +2442,7 @@ export function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(15, inv);
+    moverCartaMonark(1, inv);
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();
@@ -2529,6 +2530,7 @@ function tick() {
     }
 
     novaCarta.place()
+    slotEspObj.print()
 
     hpPlayer.playerP()
 
@@ -2830,7 +2832,7 @@ export let hpPlayer = {
   },
 
   playerP() {
-// console.trace();
+// 
     this.absolute = this.total + this.buff
 
     hpPlayerP.textContent = this.total;

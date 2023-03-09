@@ -50,7 +50,7 @@ function premioMonark() {
       function infectarMonark(){
 
         monark._canBeDeleted = true
-
+        monark.infected = true
         if(monark._thisCardP.children[0].className != "float"){
           // moneyP.textContent = parseInt(moneyP.textContent) + bonusMonark
           hpPlayer.add(3)
@@ -85,8 +85,10 @@ function premioMonark() {
       function eliminarMonark(){
 
         
+        if(monark.infected){
 
-        monark.hp.monarkKill()
+          monark.hp.monarkKill()
+        }
         
       
       }

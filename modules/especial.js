@@ -118,7 +118,7 @@ class Especial {
     this._parentP = false;
     this._invHiddenButton = false;
     this._maoHiddenButton = true;
-    this._thisCardP = false;
+    
     this._monarkFree = false;
     this._uber = false;
     this._rightCard = false;
@@ -134,20 +134,28 @@ class Especial {
     this._canBeSold = true
     this._everyRoundMao = false
 
-    this._retratoP = false
+
+    //DOM
+    this._thisCardP = false;
+
     this._nomeP = false
+    this._retratoP = false
     this._cargoP = false
+    
+    this._energiaP = false
+    this._hpP = false
+    this._buttonP = false
   }
 
   place() {
+
+
+
+
     if (this == slotEspObj) {
       this._parentP = slotEsp;
       this._parent = slotEspObj;
       this._place = 0;
-
-      
-
-      return;
     }
 
     for (let i = 0; i < 6; i++) {
@@ -166,8 +174,18 @@ class Especial {
       }
     }
 
-    this._place = this._parent.indexOf(this);
     this._thisCardP = this._parentP.children[this._place];
+    this._nomeP =  this._thisCardP.children[0].children[0];
+    this._retratoP = this._thisCardP.children[1]
+    this._cargoP  = this._thisCardP.children[2];
+
+    this._energiaP = this._thisCardP.children[3].children[0]
+    this._hpP = this._thisCardP.children[3].children[1]
+    this._buttonP = this._thisCardP.children[3].children[2]
+
+    if(this == slotEspObj) return
+
+    this._place = this._parent.indexOf(this);
 
     if (this._place > 0) {
       this._leftCard = this._parentP.children[this._place- 1];
@@ -189,9 +207,7 @@ class Especial {
       this._rightObj = false
     }
 
-    this._retratoP = this._thisCardP.children[1]
-    this._nomeP =  this._thisCardP.children[0].children[0];
-    this._cargoP  = this._thisCardP.children[2];
+    
 
   }
 
@@ -318,16 +334,24 @@ class Especial {
 
     efeitoDano(this._place);
     if (this._totalHp <= 0) {
+      this.hp = 0
       this.kill();
     }
   }
 
   kill(absolute) {
     if (!this._parentP) return;
+
     if(this.cartaId == 'tank' && !this.tankDead && !absolute ){
       this.tankToMoney()
       return
     }
+
+    if(this.cartaId == 'creeper' && !this.exploding && !absolute){
+      this.explode()
+      return
+    }
+
 
     if (this._parentP == inv) {
       elimCardInv(inv.children[this._place]);
@@ -359,6 +383,21 @@ class Especial {
 
   tick() {}
 
+
+  //DOM METHODS
+
+  hideHp(x){
+    if(x === false){
+
+      this._hpP.style.visibility = 'visible'
+    } else {
+
+      this._hpP.style.visibility = 'hidden'
+
+
+    }
+  }
+
   print() {
     this.place();
 
@@ -369,7 +408,7 @@ class Especial {
 
     let parentP = this._parentP;
 
-    let hp = parentP.children[this._place].children[3].children[1];
+    let hp = this._hpP
     let energia = parentP.children[this._place].children[3].children[0];
     let ulti = parentP.children[this._place].children[2];
     let botao = this._parentP.children[this._place].children[3].children[2];
@@ -386,15 +425,17 @@ class Especial {
       energia.textContent = this.energia + this.emoji;
     }
 
-    if (this.hashp) {
+    if (this.hashp === true) {
       this._totalHp = this.hp + this._buff;
       hp.textContent = this._totalHp + "💚";
     }
+
+
     if(this.emojiHp){
       hp.textContent = this.hp + this.emojiHp
     }
 
-    hp.style.visibility = this.novoAtaqueStyle.visibility
+    
 
 
     if (this._buff > 0) {
@@ -418,7 +459,7 @@ class Especial {
     }
   }
 
-  // this method will set dafaults for each card
+  // this method will set dafaults for each card and will run only once
   cfg() {
     false;
   }
@@ -443,7 +484,7 @@ export let especiais = {
     cartaId: "especial-tenica",
     nome: "TÉNICA",
     raridade: raridades.rainha,
-    energia: 80,
+    energia: undefined,
     emoji: "👑",
     allyEmoji: "👑",
     retrato: "url('pics/tenica.webp')",
@@ -452,6 +493,11 @@ export let especiais = {
     hashp: true,
     maxHealth: 700,
     dmgBoss: false,
+
+    cfg(){
+      let energia = gerarNumero(94,156)
+      this.energia = energia
+    },
 
     poder() {
       let varianteTenica = inv.children[this._place];
@@ -524,7 +570,7 @@ export let especiais = {
     hp: 50,
     hashp: true,
     maxHealth: 50,
-    dmgBoss: true,
+    dmgBoss: false,
 
     poder() {
       let varianteSpeaker = inv.children[this._place];
@@ -566,6 +612,7 @@ export let especiais = {
 
           let speakerSleepAu = ["speakerSleep.mp3"];
           snd(speakerSleepAu);
+          this.dmgBoss = true
           break;
         }
       }
@@ -1315,16 +1362,7 @@ export let especiais = {
         let atirador = invObj[j];
         let atiradorP = atirador._thisCardP;
         let nome = atirador._integrante;
-        let atiradorCargo = atirador._cargo;
-        let baralhoCargo = novaCarta._cargo;
-        // let emojiAtirador = atirador.children[3].children[1];
-        let energiaJhin = this.energia;
-        // );
-        // let energiaJhin = jhin.children[3].children[0];
-        let energiaVitima = novaCarta.energia;
-        // );
-        // let butao = jhin.children[3].children[2];
-
+        
         let checkTiros = () => {
           if (this.tiros >= 1) {
             return true;
@@ -1414,7 +1452,7 @@ export let especiais = {
 
               // TULTIMO TIRO MULTIPLICA POR 4
               if (tiros == 1) {
-                this.ataque(this.energia);
+                this.ataque(this.dano);
 
                 atirador.statusEmoji = "";
                 atirador.atiradorJhin = false;
@@ -1432,7 +1470,7 @@ export let especiais = {
                 this.dano = 4;
                 this.kill();
               } else {
-                this.ataque(this.energia);
+                this.ataque(this.dano);
                 elimCardInv(atiradorP);
                 this.dano = 4;
 
@@ -1613,7 +1651,7 @@ export let especiais = {
       this._cargoP.innerHTML = this.money + '💰'
 
       this.hashp = false
-      this.novoAtaqueStyle.visibility = 'hidden'
+      this.hideHp()
       this.tankDead = true
       this._invHiddenButton = false
 
@@ -1623,7 +1661,8 @@ export let especiais = {
     poder(){
 
       money.add(this.money)
-      this.kill()
+      // this.novoAtaqueStyle.visibility = 'visible'
+      // this.kill()
 
     },
 
@@ -1671,15 +1710,28 @@ export let especiais = {
     _everyRoundMao: true,
     _invHiddenButton: true,
     _canBeSold: false,
-    dano: 250,
+    dano: undefined,
     exploding: false,
+
+    cfg(){
+
+      let dano = gerarNumero(200,285)
+
+      this.dano = dano
+
+    },
+
 
     everyRound(){
 
       if(this.exploding) return
 
-      if(per(10)){
+      let chance = per(0.5)
 
+
+      if(chance){
+
+        
         this.explode()
       }
       
@@ -1688,15 +1740,14 @@ export let especiais = {
 
     explode(){
 
-
       this.exploding = true
-
       this._thisCardP.className = "piscar";
 
-
-      
       setTimeout(
         ()=>{
+
+        boss.dmg(this.dano)
+        hpPlayer.remove(Math.trunc(this.dano / 20))
 
         if(this._leftCard)  {
 
@@ -1870,7 +1921,7 @@ export function escolherEspecial(teste) {
       num = gerarNumero(1, 3);
 
       if (true) {
-        especial = objBinder(especiais.spy);
+        especial = objBinder(especiais.jhin);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);
       } else if (num == 2) {
@@ -1887,7 +1938,7 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 4);
 
-      if (!true) {
+      if (true) {
         especial = objBinder(especiais.creeper);
       } else if (false) {
         especial = objBinder(especiais.menosCartas);

@@ -890,14 +890,15 @@ justify-content: center;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border-radius: 55px;
+  border-radius: 15px;
   position: relative;
   font-weight: 900;
   background-repeat: no-repeat;
   background-size: COVER;
   font-family: estoico;
-  color: #cde2e0;
-  border: 5px solid #cde2e0;
+  /* color: #cde2e0; */
+  color: #adb6b2;
+  border: 2px solid #cde2e0;
 }
 #spy {
   /* background:  url(/pics/fundoPremioMonark.gif); */
