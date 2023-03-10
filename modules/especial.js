@@ -27,6 +27,7 @@ import {
   rodadas,
 } from "../script.js";
 import { boss } from "../boss.js";
+import { areObj } from "../arena.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
 
@@ -245,16 +246,19 @@ class Especial {
       if(ammo.total <=0) return
     }
 
-    if (invObj.some((x) => x.id == "monark")) {
-      for (let x of invObj) {
-        if (x.id == "monark") {
-          x.hp.remove(dano);
 
+
+    if (areObj.some((x) => x.empty == false)) {
+      for (let x of areObj) {
+        if(x.empty == false){
+
+          x.dmg(dano);
           ammo.use(ammoUsage);
           this._dmgDone += dano
 
           return true;
         }
+        
       }
     } else if (invObj.some((x) => x.id == "miniBoss")) {
       console.log("TEM MINI BOSS");

@@ -1095,6 +1095,7 @@ justify-content: center;
   margin: 10px;
 }
 .poder,
+.poder-inimigo,
 .poderEsp {
   height: 10%;
   width: 94%;
@@ -1107,6 +1108,9 @@ justify-content: center;
   margin-bottom: 12px;
 
   /* background-color: #010101; */
+}
+.poder-inimigo{
+  font-size: 0.80em;
 }
 
 .ataqueEsp,.ataque {

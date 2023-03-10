@@ -25,6 +25,7 @@ export let areObj
 class Inimigo {
     constructor(card){
 
+
         //unique
     this.cartaId = card.cartaId;
     this.nome = card.nome;
@@ -36,11 +37,13 @@ class Inimigo {
     this.retrato2 = card.retrato2;
     this.cargo = card.cargo;
     this.hp = card.hp;
-    this.hashp = card.hashp;
+    this.hashp = true
+    this.hasdmg = true
     this.maxHealth = card.maxHealth;
 
 
     //defaults
+    this.empty = false
     this._dead = false
     this._place = false;
     this._thisCardP = false
@@ -156,6 +159,7 @@ class Inimigo {
       }
 
       dmg(n) {
+        console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
         this._dmgTaken += n;
     
         if(this.hashp == false){
@@ -181,6 +185,43 @@ class Inimigo {
     
         elimCardAre(this._thisCardP)
         this._dead = true
+
+      }
+
+      print() {
+        this.place();
+    
+        if (!this._cfgAdded) {
+          this.cfg();
+          this._cfgAdded = true;
+        }
+    
+        let parentP = this._parentP;
+    
+        let hp = this._hpP
+        let energia = parentP.children[this._place].children[3].children[0];
+        let cargo = parentP.children[this._place].children[2];
+        
+
+        if (this.hashp === true) {
+          this._totalHp = this.hp + this._buff;
+          hp.textContent = this._totalHp + "❤️";
+        }
+        
+        if (this.hasdmg === true) {
+            energia.textContent = this.dano + "💀";
+          }
+          
+    
+        if(this.emojiHp){
+          hp.textContent = this.hp + this.emojiHp
+        }
+    
+        
+    
+    
+       
+       
 
       }
 
@@ -246,7 +287,7 @@ let monark = {
 
     hp: 5,
     maxHealth: 15,
-    dano: 3,
+    dano: 10,
 
 
     
@@ -297,9 +338,9 @@ function spawnMonark(){
     monarkFoto +
     '"></div>' +
     '<p class="cargo">&nbsp;monark💩</p>' +
-    '<div class="poder">' +
+    '<div class="poder-inimigo">' +
     '<p class="ataque"></p>' +
-    '<p class="novoAtaque">30❤️</p>' +
+    '<p class="novoAtaque"></p>' +
     '<button class="action" style="visibility: hidden;">PRESS</button>' +
     "</div>" +
     '<p class="seed"></p>' +
@@ -314,7 +355,7 @@ function spawnMonark(){
     areObj[slot].place()
 
     setTimeout(areObj[slot].heal(10),1000)
-    setTimeout( ()=>  areObj[slot].kill() ,2000)
+    
     
     
     console.log(areObj);

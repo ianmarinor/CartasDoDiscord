@@ -2524,6 +2524,16 @@ function tick() {
       }
     }
 
+    for (let i = 0; i < 10; i++) {
+      let carta = areObj[i];
+
+      
+
+      if (carta.print) {
+        carta.print();
+      }
+    }
+
     novaCarta.place()
     slotEspObj.print()
 
