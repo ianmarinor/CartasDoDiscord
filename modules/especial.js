@@ -86,7 +86,7 @@ export function comunistaPE() {
 class Especial {
   constructor(card) {
     //unique
-    this.cartaId = card.cartaId;
+    this.id = card.id;
     this.nome = card.nome;
     this.raridade = card.raridade;
     this.energia = card.energia;
@@ -278,7 +278,7 @@ class Especial {
     if (n == 0) return;
 
     this.hp += n;
-    efeitoCura(this._place);
+    efeitoCura(this);
     if (this.hp >= this.maxHealth) {
       this._fullHp = true;
       this.hp = this.maxHealth;
@@ -335,7 +335,7 @@ class Especial {
 
     this._totalHp = this.hp + this._buff;
 
-    efeitoDano(this._place);
+    efeitoDano(this);
     if (this._totalHp <= 0) {
       this.hp = 0
       this.kill();

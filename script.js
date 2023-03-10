@@ -5,23 +5,9 @@ import { seedObj, start } from "./modules/seedFabricator.js";
 import { are, areObj } from "./arena.js"
 
 import {
-  tenicaEnergia,
-  abelhaEnergia,
-  abelhaDecrease,
-  abelhaDecreaseComTuru,
-  abelhaLowHp,
-  abelhaHardDecrease,
-  frasesAbelha,
-  comunistaPE,
-  frasesComuna,
-  efeitoPremioMonark,
-  efeitoEstoico,
-  pontoSpeaker,
-  escolherEspecial,
+ 
   especial,
-  bonusCartasPE,
-  estoicoPE,
-  lucioEfeito,
+  
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
@@ -125,7 +111,7 @@ let cartaCustom;
 // let seedObj
 let seedString = "";
 
-function escolherIntegrante() {
+export function escolherIntegrante() {
   // seedObj = generateSeed(input);
   seedString = seedObj._seedString;
 
@@ -1237,7 +1223,7 @@ let copyCardName;
 let hit = ["hit.mp3"];
 
 export function efeitoDano(carta) {
-  let heart = inv.children[carta].children[3].children[1];
+  let heart = carta._thisCardP.children[3].children[1];
 
   heart.style.backgroundColor = "red";
   heart.style.border = "3px dotted black";
@@ -1250,7 +1236,7 @@ export function efeitoDano(carta) {
 }
 
 export function efeitoCura(carta) {
-  let heart = inv.children[carta].children[3].children[1];
+  let heart = carta._thisCardP.children[3].children[1];
 
   heart.style.backgroundColor = "blue";
   heart.style.border = "3px solid green";
@@ -1447,7 +1433,7 @@ function moverCartaMonark(x, place) {
     '<p class="nome-inimigo">' +
     monarkNome.toUpperCase() +
     "</p>" +
-    
+
     "</div>" +
     '<div class="retrato" style="display: block; background-image: ' +
     monarkFoto +
