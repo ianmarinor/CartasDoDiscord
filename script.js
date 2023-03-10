@@ -1,6 +1,9 @@
 var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
+
+import { are, areObj } from "./arena.js"
+
 import {
   tenicaEnergia,
   abelhaEnergia,
@@ -157,7 +160,7 @@ function escolherIntegrante() {
     // &&
     // seedString[2] == 0
   ) {
-    return (integrante = "Sr. Antonio");
+    return (integrante = "Antonio");
   } else if (
     seedString[1] == 6
     // &&
@@ -469,6 +472,7 @@ function fabricaDeCarta(
     _rightCard:false,
     _canBeDeleted:true,
     _monarkFree: false,
+    _monarkReplaceble: true,
     hp: 0,
     statusEmoji: false,
     cartaId: cargo,
@@ -574,6 +578,7 @@ function fabricaDeCarta(
       } else {
         elimCardMao(this._thisCardP);
       }
+      this._dead = true
     }
   };
 }
@@ -618,7 +623,7 @@ let novoAtaquerP = document.querySelector(".novoAtaque");
 let placarP = document.getElementById("placarDano");
 let placarWrapP = document.getElementById("placarDanoWrap");
 
-let efeito1P = document.getElementById("efeito1");
+
 let mao = document.getElementById("mao");
 let moneyP = document.getElementById("money");
 let vendasP = document.getElementById("vendas");
@@ -774,7 +779,7 @@ function colocarInfoNoWrap(a) {
       retratoP.style.backgroundImage = "url('pics/pedro.png')";
     } else if (novaCarta._integrante === "Nefesto") {
       retratoP.style.backgroundImage = "url('pics/nefesto.png')";
-    } else if (novaCarta._integrante === "Sr. Antonio") {
+    } else if (novaCarta._integrante === "Antonio") {
       retratoP.style.backgroundImage = "url('pics/antonio.png')";
     } else if (novaCarta._integrante === "Diuks Bay") {
       retratoP.style.backgroundImage = "url('pics/cesarino.png')";
@@ -935,8 +940,7 @@ export let rodadas = 0;
 export let rodadaSpawnBoss = 10;
 
 export function setEfeito(e) {
-  efeitos = e;
-  colocarEfeito()
+  
 }
 
 export let efeitos = {
@@ -958,15 +962,7 @@ let efeitoVazio = {
 };
 
 export function colocarEfeito() {
-  efeito1P.style.backgroundImage = efeitos.css.imagem;
-  efeito1P.innerHTML = efeitos.rodadas;
-
-  if (efeitos.rodadas > 0) {
-    efeitos.rodadas--;
-  } else {
-    efeitos = efeitoVazio;
-    audioEffectE.pause();
-  }
+  
 }
 
 //*************************MOVER CARTA PARA O INVENTARIO */
@@ -1387,13 +1383,14 @@ function moverCartaMonark(x, place) {
         
         elimCardInv(this.__._thisCardP);
         money.add(20)
+        this._dead = true
         
       },
     },
 
     cfg(){
 
-     console.log(this);
+     this.dano = gerarNumero(5,9)
 
 
     }
@@ -1427,7 +1424,7 @@ function moverCartaMonark(x, place) {
     monarkFoto = "url('pics/pedro.png')";
   } else if (monarkNome == "Nefesto") {
     monarkFoto = "url('pics/nefesto.png')";
-  } else if (monarkNome == "Sr. Antonio") {
+  } else if (monarkNome == "Antonio") {
     monarkFoto = "url('pics/antonio.png')";
   } else if (monarkNome == "Diuks Bay") {
     monarkFoto = "url('pics/cesarino.png')";
@@ -1445,23 +1442,19 @@ function moverCartaMonark(x, place) {
   monarkObj._integrante = monarkNome
 
   let monarkBluePrint =
-    '<div id="carta-monark" data-card="normal" data-dmgboss="false" data-canbedeleted="false" data-hashp="uber"  class="monark">' +
+    '<div id="carta-monark" class="monark">' +
     '<div class="nameAndCidadeWrapper">' +
-    '<p class="nome">' +
+    '<p class="nome-inimigo">' +
     monarkNome.toUpperCase() +
     "</p>" +
-    '<div class="variante"></div>' +
-    '<p class="cidade">' +
-    cidade +
-    "</p>" +
-    '<div class="especial"></div>' +
+    
     "</div>" +
     '<div class="retrato" style="display: block; background-image: ' +
     monarkFoto +
     '"></div>' +
     '<p class="cargo">&nbsp;monark💩</p>' +
     '<div class="poder">' +
-    '<p class="ataque">0⚡</p>' +
+    '<p class="ataque"></p>' +
     '<p class="novoAtaque">30❤️</p>' +
     '<button class="action" style="visibility: hidden;">PRESS</button>' +
     "</div>" +
@@ -1483,22 +1476,28 @@ function moverCartaMonark(x, place) {
   function escolherSlot() {
     if (place == inv) {
       num = gerarNumero(0, 5);
-    } else {
+    } else if (place == mao) {
       num = gerarNumero(0, 3);
+    } else if (place == are){
+      num = gerarNumero(0, 9);
     }
+
     slotEscolhido = place.children[num];
-    objEscolhido = invObj[num]
+    objEscolhido = areObj[num]
     if (num > 0) {
-      left = invObj[num - 1];
+      left = areObj[num - 1];
     } else {
       left = false;
     }
 
     if (num < 5) {
-      right = invObj[num + 1];
+      right = areObj[num + 1];
     } else {
       right = false;
     }
+
+
+    console.log('num: ', num);
     return num;
   }
 
@@ -1507,25 +1506,20 @@ function moverCartaMonark(x, place) {
  let dano =  monarkObj.dano
 
  if (objEscolhido._monarkFree == false && !objEscolhido._enemy) {
-    snd(monarkAu);
-    let vitima = invObj[num];
 
+    snd(monarkAu);
+    let vitima = areObj[num];
     vitima.dmg(dano);
 
-    
-    
-    
-    
-
-    
     !left._enemy && left.hashp && left.dmg(dano);
     !right._enemy && right.hashp  && right.dmg(dano); 
 
-    if (vitima.empty) {
+
+    if (vitima.hp <=0 && vitima._monarkReplaceble == true) {
       
       
       place.replaceChild(teste.children[0], place.children[num]);
-      invObj[num] = monarkObj;
+      areObj[num] = monarkObj;
     }
     hpPlayer.remove(dano);
 
@@ -1983,6 +1977,7 @@ export let emptyObj = {
   empty: true,
   _monarkFree: false,
   hp:0,
+  _monarkReplaceble: true,
   place() {
     return false;
   },
@@ -2021,15 +2016,26 @@ export function objToMao(x, y) {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
 
+    console.group('ARE');
+    console.log(areObj);
+      console.groupEnd()
 
+    console.group('INV');
+  console.log(invObj);
+    console.groupEnd()
     
-    
-    
+    console.group('MAO');
+  console.log(maoObj);
+    console.groupEnd()
     
 
+    console.group('NOVA CARTA');
+  console.log(novaCarta);
+    console.groupEnd()
     
-    
-    
+    console.group('ESPECIAL');
+  console.log(slotEspObj);
+    console.groupEnd()
 
     
     
@@ -2074,9 +2080,11 @@ function deletarDeck(e) {
       if(invObj[i]._canBeDeleted == false) return
 
       if(invObj[i]._enemy){
+        
         invObj[i].hp.monarkKill()
       } else {
 
+        
         invObj[i].kill(true)
       }
 
@@ -2259,6 +2267,7 @@ function dmgBoss() {
     for (const x of invObj) {
       if(x.dmgBoss != true) {continue}
       energiaTotal += x.energia 
+        x._dead = true
         x.kill()
     }
 
@@ -2442,12 +2451,12 @@ export function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(1, inv);
+    moverCartaMonark(1, are);
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();
     
-    colocarEfeito();
+    
     verificarCartaParaMover();
     blockInv();
     ativarBtn();
