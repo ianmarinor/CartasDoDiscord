@@ -1,4 +1,4 @@
-import { emptyObj, escolherIntegrante, gerarNumero, per,efeitoCura, efeitoDano, elimCardInv } from './script.js';
+import { emptyObj, escolherIntegrante, gerarNumero, per ,efeitoCura, efeitoDano, elimCardInv, invObj } from './script.js';
 import {  start } from "./modules/seedFabricator.js";
 import { seedComprada } from './modules/seedsCompradas.js';
 
@@ -40,6 +40,7 @@ class Inimigo {
     this.hashp = true
     this.hasdmg = true
     this.maxHealth = card.maxHealth;
+    this.attackChance = 1
 
 
     //defaults
@@ -52,6 +53,7 @@ class Inimigo {
     this._defaultEmoji = "⚡";
     this._defaultEmojiDano = "💥";
     this._parentP = false;
+    this._money = false
     
 
     this._uber = false;
@@ -159,7 +161,7 @@ class Inimigo {
       }
 
       dmg(n) {
-        console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+        console.trace();
         this._dmgTaken += n;
     
         if(this.hashp == false){
@@ -179,6 +181,31 @@ class Inimigo {
         }
       }
 
+      everyRound(){
+
+        
+         
+    }
+      
+    autoAtaque(){
+
+        if(this.readyToAttack){
+            this.ataque()
+        }
+
+
+        
+
+        if(per(this.attackChance)){
+
+            this.readyToAttack = true
+        }
+
+        
+        
+
+    }
+
 
       kill(absolute) {
         if (!this._parentP) return;
@@ -187,6 +214,31 @@ class Inimigo {
         this._dead = true
 
       }
+
+      ataque(dano){
+
+        
+
+        if(invObj.every( (x) => x.empty == true )) return
+
+        
+        for (let i=0;i<1000;i++){
+            let slot = gerarNumero(0,5)
+            console.log(slot);
+
+            if(!invObj[slot].empty){
+
+                this.readyToAttack = false
+                console.log('invObj[slot]: ', invObj[slot]);
+                invObj[slot].dmg(this.dano)
+
+                break
+            } 
+
+        }
+    }
+
+    // everyRound() {}
 
       print() {
         this.place();
@@ -201,6 +253,7 @@ class Inimigo {
         let hp = this._hpP
         let energia = parentP.children[this._place].children[3].children[0];
         let cargo = parentP.children[this._place].children[2];
+        let moneyP = parentP.children[this._place].children[3].children[2];
         
 
         if (this.hashp === true) {
@@ -217,8 +270,17 @@ class Inimigo {
           hp.textContent = this.hp + this.emojiHp
         }
     
-        
+        if(this.readyToAttack){
+            this._thisCardP.classList.add('critico')
+        } else {
+            this._thisCardP.classList.remove('critico')
+        }
     
+        if(this._money){
+
+            moneyP.textContent = this._money + '💰'
+
+        }
     
        
        
@@ -284,6 +346,7 @@ let monark = {
     _enemy: true,
     _canBeDeleted: false,
     _cfgAdded: false,
+    _money: 10,
 
     hp: 5,
     maxHealth: 15,
@@ -294,7 +357,17 @@ let monark = {
 
 }
 
-function spawnMonark(){
+export function spawnMonark(n){
+
+    if(n){
+        if( per(n) ){
+
+        } else {
+            return
+        }
+        
+    }
+
     start();
 
   let monarkNome = escolherIntegrante();
@@ -341,24 +414,27 @@ function spawnMonark(){
     '<div class="poder-inimigo">' +
     '<p class="ataque"></p>' +
     '<p class="novoAtaque"></p>' +
-    '<button class="action" style="visibility: hidden;">PRESS</button>' +
+    '<p></p>' +
     "</div>" +
     '<p class="seed"></p>' +
     "</div>";
 
     let slot = gerarNumero(0,9)
+    
 
     secret.innerHTML = monarkBluePrint
-    console.log(secret);
-    are.replaceChild(secret.children[0] ,are.children[slot])
-    areObj[slot] = new Inimigo(monark)
-    areObj[slot].place()
+   
+    
+    
+    
+    if(areObj[slot].empty == true){
+        
+        are.replaceChild(secret.children[0] ,are.children[slot])
+        areObj[slot] = Object.assign(new Inimigo(monark), monark)
+    }
+    
+    
 
-    setTimeout(areObj[slot].heal(10),1000)
-    
-    
-    
-    console.log(areObj);
     
 
 }

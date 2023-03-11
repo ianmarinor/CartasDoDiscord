@@ -249,17 +249,26 @@ class Especial {
 
 
     if (areObj.some((x) => x.empty == false)) {
-      for (let x of areObj) {
-        if(x.empty == false){
+      
+      for(let i=0; i<1000; i++){
 
-          x.dmg(dano);
-          ammo.use(ammoUsage);
-          this._dmgDone += dano
-
-          return true;
-        }
+        let slot = gerarNumero(0,9)
         
+                if(areObj[slot].empty == false){
+                  
+                  let vitima = areObj[slot]
+
+                  vitima.dmg(dano);
+                  ammo.use(ammoUsage);
+                  money.add(vitima._money)
+                  this._dmgDone += dano
+        
+                  return true;
+                }
       }
+        
+      
+
     } else if (invObj.some((x) => x.id == "miniBoss")) {
       console.log("TEM MINI BOSS");
       return true;

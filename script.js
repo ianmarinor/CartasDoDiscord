@@ -2,7 +2,7 @@ var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
 
-import { are, areObj } from "./arena.js"
+import { are, areObj, spawnMonark } from "./arena.js"
 
 import {
  
@@ -1978,6 +1978,9 @@ export let emptyObj = {
   removeBuff(n){
 
   }
+  ,everyRound(){
+
+  }
 
 
 };
@@ -2437,7 +2440,7 @@ export function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    moverCartaMonark(1, are);
+    spawnMonark(90)
     copyCard = cartaParaMover.cloneNode(true);
     numCartas.remove(1);
     spawnBoss();
@@ -2458,9 +2461,18 @@ function runEveryRound(){
 
   invObj.map( (x)=> {x.everyRound ? x.everyRound() : false} )
   maoObj.map( (x)=> {x._everyRoundMao ? x.everyRound() : false} )
+  areObj.map( (x)=>  { 
+    if(x.autoAtaque){
+
+      x.autoAtaque()
+    }
+  } 
+    )
+  }
 
 
-}
+
+
 
 function removeBuffAll(){
 
@@ -2663,7 +2675,7 @@ function poderBoss() {
           return gerarNumero(1, 48) == 1;
         }
 
-        if (probChuva()) {
+        if (false) {
           //CHUVA DE MONARK
           if (chuvaCooldown == false) {
             boss.chuvaDeMonark(true);
