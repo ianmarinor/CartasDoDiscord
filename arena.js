@@ -1,32 +1,36 @@
-import { emptyObj, escolherIntegrante, gerarNumero, per ,efeitoCura, efeitoDano, elimCardInv, invObj } from './script.js';
-import {  start } from "./modules/seedFabricator.js";
-import { seedComprada } from './modules/seedsCompradas.js';
+import {
+  emptyObj,
+  escolherIntegrante,
+  gerarNumero,
+  per,
+  efeitoCura,
+  efeitoDano,
+  elimCardInv,
+  invObj,
+  hpPlayer,
+} from "./script.js";
+import { start } from "./modules/seedFabricator.js";
+import { seedComprada } from "./modules/seedsCompradas.js";
 
-
-export const are = document.getElementById('are')
+export const are = document.getElementById("are");
 const secret = document.getElementById("test");
 
-const empty0 = are.children[0]
-const empty1 = are.children[1]
-const empty2 = are.children[2]
-const empty3 =are.children[3]
-const empty4 =are.children[4]
-const empty5 =are.children[5]
-const empty6 = are.children[6]
-const empty7 =are.children[7]
-const empty8 = are.children[8]
-const empty9 =are.children[9]
+const empty0 = are.children[0];
+const empty1 = are.children[1];
+const empty2 = are.children[2];
+const empty3 = are.children[3];
+const empty4 = are.children[4];
+const empty5 = are.children[5];
+const empty6 = are.children[6];
+const empty7 = are.children[7];
+const empty8 = are.children[8];
+const empty9 = are.children[9];
 
-
-export let areObj
-
-
+export let areObj;
 
 class Inimigo {
-    constructor(card){
-
-
-        //unique
+  constructor(card) {
+    //unique
     this.cartaId = card.cartaId;
     this.nome = card.nome;
     this.energia = card.energia;
@@ -37,24 +41,22 @@ class Inimigo {
     this.retrato2 = card.retrato2;
     this.cargo = card.cargo;
     this.hp = card.hp;
-    this.hashp = true
-    this.hasdmg = true
+    this.hashp = true;
+    this.hasdmg = true;
     this.maxHealth = card.maxHealth;
-    this.attackChance = 1
-
+    this.attackChance = 10;
 
     //defaults
-    this.empty = false
-    this._dead = false
+    this.empty = false;
+    this._dead = false;
     this._place = false;
-    this._thisCardP = false
+    this._thisCardP = false;
     this._cfgAdded = false;
     this._parent = false;
     this._defaultEmoji = "⚡";
     this._defaultEmojiDano = "💥";
     this._parentP = false;
-    this._money = false
-    
+    this._money = false;
 
     this._uber = false;
     this._rightCard = false;
@@ -67,308 +69,267 @@ class Inimigo {
     this._totalHp = 0;
     this._hasUlti = false;
 
-
     //DOM
     this._thisCardP = false;
 
-    this._nomeP = false
-    this._retratoP = false
-    this._cargoP = false
-    
-    this._energiaP = false
-    this._hpP = false
-    this._buttonP = false
+    this._nomeP = false;
+    this._retratoP = false;
+    this._cargoP = false;
 
+    this._energiaP = false;
+    this._hpP = false;
+    this._buttonP = false;
+  }
+
+  place() {
+    if (!this._cfgAdded) {
+      this.cfg();
+      this._cfgAdded = true;
     }
 
-    place() {
+    this._parent = areObj;
+    this._parentP = are;
 
-        if (!this._cfgAdded) {
-          this.cfg();
-          this._cfgAdded = true;
-        }
-       
-        this._parent = areObj
-        this._parentP = are
-  
-        this._place = this._parent.indexOf(this);
-        this._thisCardP = this._parentP.children[this._place];
-  
-        if (this._place > 0) {
-          this._leftCard = this._place - 1;
-        } else {
-          this._leftCard = false;
-        }
-  
-        if (this._place < 9) {
-          this._rightCard = this._place + 1;
-        } else {
-          this._rightCard = false;
-        }
+    this._place = this._parent.indexOf(this);
+    this._thisCardP = this._parentP.children[this._place];
 
-        this._thisCardP = this._parentP.children[this._place];
-        this._nomeP =  this._thisCardP.children[0].children[0];
-        this._retratoP = this._thisCardP.children[1]
-        this._cargoP  = this._thisCardP.children[2];
-
-        this._energiaP = this._thisCardP.children[3].children[0]
-        this._hpP = this._thisCardP.children[3].children[1]
-        
-        this._place = this._parent.indexOf(this);
-
-        if (this._place > 0) {
-            this._leftCard = this._parentP.children[this._place- 1];
-            this._leftCardIndex = this._place - 1;
-            this._leftObj = this._parent[this._place - 1]
-          } else {
-            this._leftCard = false;
-            this._leftCardIndex = null
-            this._leftObj = false
-          }
-      
-          if (this._place < 9) {
-            this._rightCard = this._parentP.children[this._place+1]
-            this._rightCardIndex = this._place+1
-            this._rightObj = this._parent[this._place + 1]
-          } else {
-            this._rightCard = false;
-            this._rightCardIndex = null
-            this._rightObj = false
-          }
-      
-
-
-      }
-
-
-      setHp(n) {
-        this.hp = n;
-        this.maxHealth = n;
-      }
-    
-      heal(n) {
-        if (this.hp == this.maxHealth) return;
-    
-        if (n == 0) return;
-    
-        this.hp += n;
-        efeitoCura(this);
-        if (this.hp >= this.maxHealth) {
-          this._fullHp = true;
-          this.hp = this.maxHealth;
-        }
-        return true;
-      }
-
-      dmg(n) {
-        console.trace();
-        this._dmgTaken += n;
-    
-        if(this.hashp == false){
-          this.kill()
-          return
-        }
-    
-        this._fullHp = false;
-
-        this.hp -= n;
-        this._totalHp = this.hp
-    
-        efeitoDano(this);
-        if (this._totalHp <= 0) {
-          this.hp = 0
-          this.kill();
-        }
-      }
-
-      everyRound(){
-
-        
-         
-    }
-      
-    autoAtaque(){
-
-        if(this.readyToAttack){
-            this.ataque()
-        }
-
-
-        
-
-        if(per(this.attackChance)){
-
-            this.readyToAttack = true
-        }
-
-        
-        
-
+    if (this._place > 0) {
+      this._leftCard = this._place - 1;
+    } else {
+      this._leftCard = false;
     }
 
-
-      kill(absolute) {
-        if (!this._parentP) return;
-    
-        elimCardAre(this._thisCardP)
-        this._dead = true
-
-      }
-
-      ataque(dano){
-
-        
-
-        if(invObj.every( (x) => x.empty == true )) return
-
-        
-        for (let i=0;i<1000;i++){
-            let slot = gerarNumero(0,5)
-            console.log(slot);
-
-            if(!invObj[slot].empty){
-
-                this.readyToAttack = false
-                console.log('invObj[slot]: ', invObj[slot]);
-                invObj[slot].dmg(this.dano)
-
-                break
-            } 
-
-        }
+    if (this._place < 9) {
+      this._rightCard = this._place + 1;
+    } else {
+      this._rightCard = false;
     }
 
-    // everyRound() {}
+    this._thisCardP = this._parentP.children[this._place];
+    this._nomeP = this._thisCardP.children[0].children[0];
+    this._retratoP = this._thisCardP.children[1];
+    this._cargoP = this._thisCardP.children[2];
 
-      print() {
-        this.place();
-    
-        if (!this._cfgAdded) {
-          this.cfg();
-          this._cfgAdded = true;
-        }
-    
-        let parentP = this._parentP;
-    
-        let hp = this._hpP
-        let energia = parentP.children[this._place].children[3].children[0];
-        let cargo = parentP.children[this._place].children[2];
-        let moneyP = parentP.children[this._place].children[3].children[2];
-        
+    this._energiaP = this._thisCardP.children[3].children[0];
+    this._hpP = this._thisCardP.children[3].children[1];
 
-        if (this.hashp === true) {
-          this._totalHp = this.hp + this._buff;
-          hp.textContent = this._totalHp + "❤️";
-        }
-        
-        if (this.hasdmg === true) {
-            energia.textContent = this.dano + "💀";
-          }
+    this._place = this._parent.indexOf(this);
+
+    if (this._place > 0) {
+      this._leftCard = this._parentP.children[this._place - 1];
+      this._leftCardIndex = this._place - 1;
+      this._leftObj = this._parent[this._place - 1];
+    } else {
+      this._leftCard = false;
+      this._leftCardIndex = null;
+      this._leftObj = false;
+    }
+
+    if (this._place < 9) {
+      this._rightCard = this._parentP.children[this._place + 1];
+      this._rightCardIndex = this._place + 1;
+      this._rightObj = this._parent[this._place + 1];
+    } else {
+      this._rightCard = false;
+      this._rightCardIndex = null;
+      this._rightObj = false;
+    }
+  }
+
+  setHp(n) {
+    this.hp = n;
+    this.maxHealth = n;
+  }
+
+  heal(n) {
+    if (this.hp == this.maxHealth) return;
+
+    if (n == 0) return;
+
+    this.hp += n;
+    efeitoCura(this);
+    if (this.hp >= this.maxHealth) {
+      this._fullHp = true;
+      this.hp = this.maxHealth;
+    }
+    return true;
+  }
+
+  dmg(n) {
+    console.trace();
+    this._dmgTaken += n;
+
+    if (this.hashp == false) {
+      this.kill();
+      return;
+    }
+
+    this._fullHp = false;
+
+    this.hp -= n;
+    this._totalHp = this.hp;
+
+    efeitoDano(this);
+    if (this._totalHp <= 0) {
+      this.hp = 0;
+      this.kill();
+    }
+  }
+
+  everyRound() {}
+
+  autoAtaque() {
+    if (this.readyToAttack) {
+      this.ataque();
+    }
+
+    if (per(this.attackChance)) {
+      this.readyToAttack = true;
+    }
+  }
+
+  kill(absolute) {
+    if (!this._parentP) return;
+
+    elimCardAre(this._thisCardP);
+    this._dead = true;
+  }
+
+  ataque(dano) {
+    let invAllEmpty = invObj.every((x) => x.isInvisible == true);
+
+    if (invAllEmpty) {
+      hpPlayer.remove(this.dano);
+      this.readyToAttack = false;
+    } else {
+      for (let i = 0; i < 1000; i++) {
+        let slot = gerarNumero(0, 5);
+        let vitima = invObj[slot];
+
+        if (!vitima.empty) {
+
           
-    
-        if(this.emojiHp){
-          hp.textContent = this.hp + this.emojiHp
-        }
-    
-        if(this.readyToAttack){
-            this._thisCardP.classList.add('critico')
-        } else {
-            this._thisCardP.classList.remove('critico')
-        }
-    
-        if(this._money){
+            this.readyToAttack = false;
+            vitima.dmg(this.dano);
+          
 
-            moneyP.textContent = this._money + '💰'
-
+          break;
         }
-    
-       
-       
-
       }
+    }
+  }
 
+  // everyRound() {}
 
+  print() {
+    this.place();
 
-      cfg(){
+    if (!this._cfgAdded) {
+      this.cfg();
+      this._cfgAdded = true;
+    }
 
-      }
+    let parentP = this._parentP;
+
+    let hp = this._hpP;
+    let energia = parentP.children[this._place].children[3].children[0];
+    let cargo = parentP.children[this._place].children[2];
+    let moneyP = parentP.children[this._place].children[3].children[2];
+
+    if (this.hashp === true) {
+      this._totalHp = this.hp + this._buff;
+      hp.textContent = this._totalHp + "❤️";
+    }
+
+    if (this.hasdmg === true) {
+      energia.textContent = this.dano + "💀";
+    }
+
+    if (this.emojiHp) {
+      hp.textContent = this.hp + this.emojiHp;
+    }
+
+    if (this.readyToAttack) {
+      this._thisCardP.classList.add("critico");
+    } else {
+      this._thisCardP.classList.remove("critico");
+    }
+
+    if (this._money) {
+      moneyP.textContent = this._money + "💰";
+    }
+  }
+
+  cfg() {}
 }
 
 export function elimCardAre(x) {
-    let slot;
-  
-    if (x == are.children[0]) {
-      are.replaceChild(empty0, x);
-      slot = 0;
-    } else if (x == are.children[1]) {
-      are.replaceChild(empty1, x);
-      slot = 1;
-    } else if (x == are.children[2]) {
-      are.replaceChild(empty2, x);
-      slot = 2;
-    } else if (x == are.children[3]) {
-      are.replaceChild(empty3, x);
-      slot = 3;
-    } else if (x == are.children[4]) {
-      are.replaceChild(empty4, x);
-      slot = 4;
-    } else if (x == are.children[5]) {
-      are.replaceChild(empty5, x);
-      slot = 5;
-    } else if (x == are.children[6]) {
-        are.replaceChild(empty6, x);
-        slot = 6;
-    } else if (x == are.children[7]) {
-        are.replaceChild(empty7, x);
-        slot = 7;
-    } else if (x == are.children[8]) {
-        are.replaceChild(empty8, x);
-        slot = 8;
-    } else if (x == are.children[9]) {
-        are.replaceChild(empty9, x);
-        slot = 9;
-      }
-  
-    areObj[slot] = emptyObj;
-  
-    return slot;
+  let slot;
+
+  if (x == are.children[0]) {
+    are.replaceChild(empty0, x);
+    slot = 0;
+  } else if (x == are.children[1]) {
+    are.replaceChild(empty1, x);
+    slot = 1;
+  } else if (x == are.children[2]) {
+    are.replaceChild(empty2, x);
+    slot = 2;
+  } else if (x == are.children[3]) {
+    are.replaceChild(empty3, x);
+    slot = 3;
+  } else if (x == are.children[4]) {
+    are.replaceChild(empty4, x);
+    slot = 4;
+  } else if (x == are.children[5]) {
+    are.replaceChild(empty5, x);
+    slot = 5;
+  } else if (x == are.children[6]) {
+    are.replaceChild(empty6, x);
+    slot = 6;
+  } else if (x == are.children[7]) {
+    are.replaceChild(empty7, x);
+    slot = 7;
+  } else if (x == are.children[8]) {
+    are.replaceChild(empty8, x);
+    slot = 8;
+  } else if (x == are.children[9]) {
+    are.replaceChild(empty9, x);
+    slot = 9;
   }
 
-let monark = {
+  areObj[slot] = emptyObj;
 
-    cartaId: "monark",
-    _place: false,
-    _parentP: false,
-    _parent: false,
-    _thisCardP: false,
-    _leftCard: false,
-    _rightCard:false,
-    _enemy: true,
-    _canBeDeleted: false,
-    _cfgAdded: false,
-    _money: 10,
-
-    hp: 5,
-    maxHealth: 15,
-    dano: 10,
-
-
-    
-
+  return slot;
 }
 
-export function spawnMonark(n){
+let monark = {
+  cartaId: "monark",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 10,
 
-    if(n){
-        if( per(n) ){
+  hp: 5,
+  maxHealth: 15,
+  dano: 3,
+};
 
-        } else {
-            return
-        }
-        
+export function spawnMonark(n) {
+  if (n) {
+    if (per(n)) {
+    } else {
+      return;
     }
+  }
 
-    start();
+  start();
 
   let monarkNome = escolherIntegrante();
   let monarkFoto;
@@ -397,15 +358,12 @@ export function spawnMonark(n){
     monarkFoto = "";
   }
 
-  
-  
-    let monarkBluePrint =
+  let monarkBluePrint =
     '<div id="carta-monark" class="monark">' +
     '<div class="nameAndCidadeWrapper">' +
     '<p class="nome-inimigo">' +
     monarkNome.toUpperCase() +
     "</p>" +
-
     "</div>" +
     '<div class="retrato" style="display: block; background-image: ' +
     monarkFoto +
@@ -414,57 +372,42 @@ export function spawnMonark(n){
     '<div class="poder-inimigo">' +
     '<p class="ataque"></p>' +
     '<p class="novoAtaque"></p>' +
-    '<p></p>' +
+    "<p></p>" +
     "</div>" +
     '<p class="seed"></p>' +
     "</div>";
 
-    let slot = gerarNumero(0,9)
-    
+  let slot = gerarNumero(0, 9);
 
-    secret.innerHTML = monarkBluePrint
-   
-    
-    
-    
-    if(areObj[slot].empty == true){
-        
-        are.replaceChild(secret.children[0] ,are.children[slot])
-        areObj[slot] = Object.assign(new Inimigo(monark), monark)
-    }
-    
-    
+  secret.innerHTML = monarkBluePrint;
 
-    
-
+  if (areObj[slot].empty == true) {
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(monark), monark);
+  }
 }
 
 document.addEventListener("keydown", (event) => {
-    if (event.code == "KeyX") {
-        spawnMonark();
-    }
-  });
+  if (event.code == "KeyX") {
+    spawnMonark();
+  }
+});
 
+function Main() {
+  areObj = [
+    emptyObj,
+    emptyObj,
+    emptyObj,
+    emptyObj,
+    emptyObj,
+    emptyObj,
+    emptyObj,
+    emptyObj,
+    emptyObj,
+    emptyObj,
+  ];
 
-
-function Main(){
-    areObj = [
-        emptyObj,
-        emptyObj,
-        emptyObj,
-        emptyObj,
-        emptyObj,
-        emptyObj,
-        emptyObj,
-        emptyObj,
-        emptyObj,
-        emptyObj,
-      ];
-     
-      
-
-
-return console.log('----------------- **LOADED** ---------------------');
+  return console.log("----------------- **LOADED** ---------------------");
 }
 
-window.addEventListener('load', Main)
+window.addEventListener("load", Main);
