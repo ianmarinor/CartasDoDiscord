@@ -2,7 +2,7 @@ var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
 
-import { are, areObj, spawnMonark } from "./arena.js";
+import { are, areObj, spawnMonark, populateArena } from "./arena.js";
 
 import { especial } from "./modules/especial.js";
 
@@ -549,7 +549,12 @@ function fabricaDeCarta(
     kill() {
       if (!this._parentP) return;
       if (this._parentP == inv) {
-        elimCardInv(this._thisCardP);
+
+        this._thisCardP.classList.add('morto')
+        setTimeout( ()=>elimCardInv(this._thisCardP),210)
+        
+        
+
       } else {
         elimCardMao(this._thisCardP);
       }
@@ -620,7 +625,7 @@ function zerarMoney() {
 zerarMoney();
 
 function debug() {
-  money.add(1000);
+  money.set(99999);
   numCartas.set(999);
   hpPlayer.set(100);
   ammo.set(5);
@@ -1201,6 +1206,9 @@ let copyCardName;
 let hit = ["hit.mp3"];
 
 export function efeitoDano(carta) {
+  console.trace();
+  console.log(carta);
+
   let heart = carta._thisCardP.children[3].children[1];
 
   heart.style.backgroundColor = "red";
@@ -1612,14 +1620,27 @@ function criarBtn() {
     let carta = invObj[i];
 
     if (!carta._invEventAdded) {
-      inv.children[i].children[3].children[2].addEventListener(
-        "click",
-        function () {
-          if (invObj[i].poder) {
-            invObj[i].poder();
-          }
+      let buttonWithEvent = inv.children[i].children[3].children[2];
+      let cargo = inv.children[i].children[2]
+
+
+      let cargoLimpo = cargo.cloneNode(true);
+      let limpo = buttonWithEvent.cloneNode(true);
+
+
+      
+      
+      inv.children[i].replaceChild(cargoLimpo, cargo);
+
+      inv.children[i].children[3].replaceChild(limpo, buttonWithEvent);
+      
+      limpo.addEventListener("click", function () {
+        if (invObj[i].poder) {
+          invObj[i].poder();
         }
-      );
+      });
+      
+      cargoLimpo.addEventListener("click", () => carta.ult());
 
       carta._invEventAdded = true;
     }
@@ -1923,7 +1944,9 @@ export let emptyObj = {
   dmg(x) {
     x;
   },
+  heal() {},
 
+  setHp() {},
   print() {
     return;
   },
@@ -2040,11 +2063,7 @@ export let money = {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyQ") {
-    if (boss) {
-      placarArena.action();
-    } else {
-      snd(naoAu);
-    }
+    placarArena.action();
   }
 });
 
@@ -2091,7 +2110,7 @@ let placarArena = {
       }
       this.ammoTotal += x.energia;
     }
-    this.ammoTotal = Math.trunc(this.ammoTotal / 35);
+    this.ammoTotal = Math.trunc(this.ammoTotal / 50);
   },
 
   getNumberOfCards() {
@@ -2148,7 +2167,7 @@ function dmgBoss() {
     x.kill();
   }
 
-  boss.dmg(Math.trunc(energiaTotal * multiplicador));
+  boss && boss.dmg(Math.trunc(energiaTotal * multiplicador));
 
   //DINHEIRO
 
@@ -2294,6 +2313,22 @@ function limparInput() {
   getSeed.value = "";
 }
 
+function passarCarta() {
+  snd(novaCartaAu);
+  start();
+  limparInput();
+  escolherIntegrante();
+  escolherCidade();
+  escolherCargo();
+  escolherVariante();
+  pontoVariante();
+  escolherPoder();
+  colocarInfoNoWrap();
+  critico();
+  copyCard = cartaParaMover.cloneNode(true);
+  ativarBtn();
+}
+
 export function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
@@ -2309,6 +2344,7 @@ export function tudo() {
       button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
     }
     // vendas.update(+1);
+
     snd(novaCartaAu);
     start();
     limparInput();
@@ -2320,16 +2356,17 @@ export function tudo() {
     escolherPoder();
     colocarInfoNoWrap();
     critico();
-    spawnMonark(30);
     copyCard = cartaParaMover.cloneNode(true);
+    ativarBtn();
+
     numCartas.remove(1);
     spawnBoss();
-
+    
     verificarCartaParaMover();
     blockInv();
-    ativarBtn();
     poderBoss();
     runEveryRound();
+    populateArena();
   } else {
   }
 }
@@ -2345,6 +2382,17 @@ function runEveryRound() {
     if (x.autoAtaque) {
       x.autoAtaque();
     }
+
+    if (x.everyRound) {
+      x.everyRound();
+      if(!x.empty){
+
+        x.isInvisible = false
+      }
+    }
+
+
+
   });
 }
 
@@ -2793,10 +2841,10 @@ document.addEventListener("keydown", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
-  if (copyCard) {
+  if (copyCard && false) {
     if (event.code == teclaMoverVariasCartas) {
       if (!getSeedChecked() && chosenCard == 0) {
-        for (let z = 0; z < 6; z++) {
+        for (let z = 0; z < 4; z++) {
           moverToCartaMao();
         }
       }

@@ -8,7 +8,15 @@ import {
   elimCardInv,
   invObj,
   hpPlayer,
+  numCartas,
+  money,
 } from "./script.js";
+import { boss, spawnBoss, resetBoss } from "./boss.js";
+import {
+  menosClickBlueprint,
+  camaradaBlueprint,
+  tankBlueprint,
+} from "./domCards.js";
 import { start } from "./modules/seedFabricator.js";
 import { seedComprada } from "./modules/seedsCompradas.js";
 
@@ -42,12 +50,13 @@ class Inimigo {
     this.cargo = card.cargo;
     this.hp = card.hp;
     this.hashp = true;
-    this.hasdmg = true;
     this.maxHealth = card.maxHealth;
-    this.attackChance = 10;
+    this.attackChance = 15;
+    this.isInvisible = true
 
     //defaults
     this.empty = false;
+    this._hasdmg = true;
     this._dead = false;
     this._place = false;
     this._thisCardP = false;
@@ -57,8 +66,11 @@ class Inimigo {
     this._defaultEmojiDano = "💥";
     this._parentP = false;
     this._money = false;
-
     this._uber = false;
+    this._doesAttack = true;
+    this._attackAtSpawn = false
+    this._critico = false
+
     this._rightCard = false;
     this._leftCard = false;
     this._fullHp = true;
@@ -82,10 +94,7 @@ class Inimigo {
   }
 
   place() {
-    if (!this._cfgAdded) {
-      this.cfg();
-      this._cfgAdded = true;
-    }
+    
 
     this._parent = areObj;
     this._parentP = are;
@@ -134,6 +143,8 @@ class Inimigo {
       this._rightCardIndex = null;
       this._rightObj = false;
     }
+
+    
   }
 
   setHp(n) {
@@ -154,6 +165,23 @@ class Inimigo {
     }
     return true;
   }
+
+  critico(trigger){
+
+    if(trigger){
+
+        if(this._critico || !this._hasdmg) return
+        this._critico = true
+        this.dano *= 2
+     } else {
+        this._critico = false
+        this.dano = Math.trunc(this.dano / 2)
+     } 
+
+
+
+  }
+
 
   dmg(n) {
     console.trace();
@@ -180,7 +208,11 @@ class Inimigo {
 
   autoAtaque() {
     if (this.readyToAttack) {
-      this.ataque();
+      if (this._doesAttack) {
+        this.ataque();
+      } else {
+        this.poder();
+      }
     }
 
     if (per(this.attackChance)) {
@@ -190,6 +222,9 @@ class Inimigo {
 
   kill(absolute) {
     if (!this._parentP) return;
+    if (!absolute) {
+      money.add(this._money);
+    }
 
     elimCardAre(this._thisCardP);
     this._dead = true;
@@ -207,11 +242,8 @@ class Inimigo {
         let vitima = invObj[slot];
 
         if (!vitima.empty) {
-
-          
-            this.readyToAttack = false;
-            vitima.dmg(this.dano);
-          
+          this.readyToAttack = false;
+          vitima.dmg(this.dano);
 
           break;
         }
@@ -224,10 +256,7 @@ class Inimigo {
   print() {
     this.place();
 
-    if (!this._cfgAdded) {
-      this.cfg();
-      this._cfgAdded = true;
-    }
+    
 
     let parentP = this._parentP;
 
@@ -241,8 +270,10 @@ class Inimigo {
       hp.textContent = this._totalHp + "❤️";
     }
 
-    if (this.hasdmg === true) {
+    if (this._hasdmg === true) {
       energia.textContent = this.dano + "💀";
+    } else {
+      energia.textContent = this.energia + this.emoji;
     }
 
     if (this.emojiHp) {
@@ -258,6 +289,24 @@ class Inimigo {
     if (this._money) {
       moneyP.textContent = this._money + "💰";
     }
+
+    if(this._hasdmg){
+        this._critico ? energia.classList.add('critico') : energia.classList.remove('critico')
+    }
+
+    if (!this._cfgAdded) {
+        this.cfg();
+        this._cfgAdded = true;
+      }
+
+
+      if(this.isInvisible){
+        this._thisCardP.style.opacity = '0.16'
+      } else {
+        this._thisCardP.style.opacity = '1'
+      }
+
+
   }
 
   cfg() {}
@@ -315,13 +364,193 @@ let monark = {
   _canBeDeleted: false,
   _cfgAdded: false,
   _money: 10,
+  _attackAtSpawn: false,
 
   hp: 5,
   maxHealth: 15,
   dano: 3,
 };
 
+let menosCartas = {
+  cartaId: "-cartas",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 30,
+  _doesAttack: false,
+  _hasdmg: false,
+  energia: -7,
+  emoji: "🃏",
+  hp: 20,
+  maxHealth: 20,
+  dano: false,
+  attackChance: 7,
+
+  poder() {
+    numCartas.remove(Math.abs(this.energia));
+    this.kill();
+  },
+};
+
+let camarada = {
+  cartaId: "camarada",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 30,
+  _doesAttack: false,
+  _hasdmg: false,
+  energia: '',
+  emoji: "☭",
+  hp: 20,
+  maxHealth: 20,
+  dano: false,
+  attackChance: 7,
+
+
+cfg(){
+
+    this._energiaP.classList.add('critico')
+    console.log(this._energiaP.classList.value)
+    console.log('+++++++++++++++++++++');
+    this._cargoP.textContent = 'CRITICO PARA TODOS'
+    this._cargoP.style.fontSize = '65%'
+},
+
+  poder() {
+    areObj.map((x) => {
+        
+    x.critico &&  x.critico(true);
+    });
+
+    this.kill();
+  },
+};
+
+let tank = {
+  cartaId: "tank",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 300,
+  _doesAttack: false,
+  _hasdmg: false,
+  energia: "",
+  emoji: "",
+  hp: 251,
+  maxHealth: 250,
+  dano: 130,
+  attackChance: false,
+  ulti: 0,
+
+  cfg() {},
+
+  everyRound() {
+    if (this.ulti >= 100) return;
+
+    let ultiRate = gerarNumero(1, 2);
+
+    this.ulti += ultiRate;
+    this._cargoP.children[0].value = this.ulti;
+
+    if (this.ulti >= 100) {
+      this.readyToAttack = true;
+    }
+  },
+
+  poder() {
+    invObj.map((x) => {
+      x.dmg(this.dano);
+    });
+    this.kill(true);
+  },
+};
+
+export function spawnTank(n) {
+
+    if(coolDown)return
+  if (n) {
+    if (per(n)) {
+    } else {
+      return;
+    }
+  }
+
+  let slot = gerarNumero(0, 9);
+
+  secret.innerHTML = tankBlueprint;
+
+  if (areObj[slot].empty == true) {
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(tank), tank);
+    areObj[slot].print();
+  }
+}
+
+export function spawnCamarada(n) {
+    if(coolDown)return
+  if (n) {
+    if (per(n)) {
+    } else {
+      return;
+    }
+  }
+
+  let slot = gerarNumero(0, 9);
+
+  secret.innerHTML = camaradaBlueprint;
+
+  if (areObj[slot].empty == true) {
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(camarada), camarada);
+  }
+  coolDown = true
+}
+
+export function spawnMenosCartas(n) {
+
+    if(coolDown)return
+
+  if (n) {
+    if (per(n)) {
+    } else {
+      return;
+    }
+  }
+
+  let slot = gerarNumero(0, 9);
+
+  secret.innerHTML = menosClickBlueprint;
+
+  if (areObj[slot].empty == true) {
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(menosCartas), menosCartas);
+  }
+  coolDown = true
+}
+
 export function spawnMonark(n) {
+
+    if(coolDown)return
+
   if (n) {
     if (per(n)) {
     } else {
@@ -372,7 +601,7 @@ export function spawnMonark(n) {
     '<div class="poder-inimigo">' +
     '<p class="ataque"></p>' +
     '<p class="novoAtaque"></p>' +
-    "<p></p>" +
+    '<p class="action-inimigo" ></p>' +
     "</div>" +
     '<p class="seed"></p>' +
     "</div>";
@@ -385,11 +614,12 @@ export function spawnMonark(n) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(monark), monark);
   }
+  coolDown = true;
 }
-
+let coolDown = false;
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnMonark();
+    spawnTank();
   }
 });
 
@@ -408,6 +638,26 @@ function Main() {
   ];
 
   return console.log("----------------- **LOADED** ---------------------");
+}
+
+export function populateArena() {
+  if (!boss) return;
+  coolDown = false;
+  let chanceNormal = 80;
+
+  if (!per(chanceNormal)) {
+
+    spawnMonark(50);
+    
+
+    
+    
+  } else {
+    // spawnMenosCartas(60);
+    // spawnCamarada(30);
+    spawnCamarada(100);
+    // spawnTank(10);
+  }
 }
 
 window.addEventListener("load", Main);

@@ -218,6 +218,14 @@ class Especial {
     ulti.textContent = this.ulti + "%";
   }
 
+  areaAtack(){
+
+    areObj.map( (x)=> {
+      x.dmg(this.dano)
+    } )
+
+  }
+
   ataque(dmg, ammO) {
     let dano;
     let ammoUsage;
@@ -237,16 +245,16 @@ class Especial {
       if (ammo.total <= 0) return;
     }
 
-    if (areObj.some((x) => x.empty == false)) {
+    if (areObj.some((x) => !x.isInvisible)) {
       for (let i = 0; i < 1000; i++) {
         let slot = gerarNumero(0, 9);
 
-        if (areObj[slot].empty == false) {
+        if (!areObj[slot].isInvisible) {
           let vitima = areObj[slot];
 
           vitima.dmg(dano);
           ammo.use(ammoUsage);
-          money.add(vitima._money);
+          
           this._dmgDone += dano;
 
           return true;
@@ -300,7 +308,7 @@ class Especial {
     if (n <= this._buff) {
       this._buff -= n;
       this._mit += n;
-      efeitoDano(this._place);
+      efeitoDano(this);
       return "tankei";
     } else {
       console.log("n: ", n);
@@ -699,50 +707,7 @@ export let especiais = {
   },
 
   menosCartas: {
-    cartaId: "-click",
-    nome: "- CARTAS -",
-    raridade: raridades.campones,
-    pontoEspecial: 0,
-    energia: 0,
-    poder: true,
-    efeito: "",
-    familia: "",
-    descricao: "BONUS?",
-    emojiEsp: "",
-    emoji: "🃏",
-    retrato: "url('pics/clickretrato.webp')",
-    cargo: "",
-    ataqueE: 1,
-    novoAtaque: "",
-    dmgboss: "false",
-
-    // ataqueE: bonusCartasPE()
-    nomeStyle: {
-      fontSize: "",
-      fontFamily: "",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "hidden",
-    },
+    
   },
 
   abelha: {
@@ -956,11 +921,11 @@ export let especiais = {
           x.infected = true;
 
           x._thisCardP.children[0].className = "float";
+          x._thisCardP.style.background = "none";
           x._thisCardP.style.backgroundColor = "black";
           x._thisCardP.children[1].style.backgroundImage =
             'url("/pics/retratoPremioMonark.gif")';
           x._thisCardP.children[1].style.backgroundSize = "100% 100%";
-          x._thisCardP.children[1].style.backgroundColor = "#343436";
           x._thisCardP.children[1].style.fontFamily = "premiomonark";
           x._thisCardP.children[1].style.border = "2px solid black";
           x._thisCardP.style.color = "#343436";
@@ -1098,6 +1063,12 @@ export let especiais = {
     },
 
     poder() {
+
+      if(ammo.total <= 0){
+        
+        return
+      }
+
       let spy = this._thisCardP;
       let retrato = spy.children[1];
 
@@ -1149,40 +1120,40 @@ export let especiais = {
     pontoEspecial: 0,
     energia: 0,
 
-    emoji: "🛡️",
+    emoji: "",
     retrato: "url('pics/estoicoRetrato.jpg')",
     cargo: "",
     dmgBoss: false,
-
-    hp: 10,
-    maxHealth: 50,
+    dano: 1,
+    hp: 25,
+    maxHealth: 25,
     hashp: true,
+    _invHiddenButton: true,
 
     poder() {
-      for (const x of invObj) {
-        if (
-          x._cidade == "de Itapira" &&
-          x.cartaId != "carta-monark" &&
-          efeitos.status == false
-        ) {
-          let itapira = x;
-          let itapiraEnergia = x.energia;
+      
+      this.areaAtack()
+      this.kill()
 
-          efeitoEstoico.rodadas = itapiraEnergia;
-          setEfeito(efeitoEstoico);
 
-          hpPlayer.remove(itapiraEnergia);
+    },
 
-          this._invHiddenButton = true;
+    tick(){
 
-          itapira.kill();
-          this.kill();
+      
 
-          let estoicoAu = ["estoico.mp3", 0.2];
-          // sndEfeito(estoicoAu);
-          break;
-        }
+      this.dano = this._dmgTaken + 1
+
+      let hasTuru = invObj.some( (x)=> x._cidade == 'de Itapira' )
+
+      if(hasTuru){
+
+        this._invHiddenButton = false
+
+      } else {
+        this._invHiddenButton = true
       }
+
     },
 
     nomeStyle: {
@@ -1204,7 +1175,7 @@ export let especiais = {
       color: "",
       fontSize: "150%",
       fontFamily: "estoico",
-      visibility: "hidden",
+      visibility: "visible",
     },
     novoAtaqueStyle: {
       color: "",
@@ -1227,7 +1198,7 @@ export let especiais = {
     dmgBoss: false,
     dano: 8,
     _hasUlti: true,
-    ulti: 0,
+    ulti: 99,
 
     hp: 10,
     maxHealth: 10,
@@ -1260,9 +1231,7 @@ export let especiais = {
       visibility: "visible",
     },
 
-    cfg() {
-      this._cargoP.addEventListener("click", () => this.ult());
-    },
+    
 
     everyRound() {
       if (!hpPlayer.isFull) {
@@ -1279,6 +1248,9 @@ export let especiais = {
     },
 
     ult() {
+
+      if(this._parentP != inv)return
+
       let buff = gerarNumero(125, 180);
       if (this.ulti != 100) return;
       hpPlayer.addBuff(buff);
@@ -1375,7 +1347,7 @@ export let especiais = {
           } else {
             if (!boss) return;
 
-            if (ammo.total <= 0) return;
+          
 
             let playJhinAu = (n) => {
               let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.4];
@@ -1387,7 +1359,7 @@ export let especiais = {
               }
             };
 
-            if (checkTiros() && numCartas.total >= 1) {
+            if (checkTiros() ) {
               if (tiros == 4) {
                 let countAu = ["jhinConta1.mp3", 0.5];
                 snd(countAu);
@@ -1485,16 +1457,14 @@ export let especiais = {
     cargo: "0%",
     retrato: "url('pics/dvaMecaRetrato.jpg')",
     dmgBoss: false,
-    ulti: 0,
-    dano: 80,
+    ulti: 100,
+    dano: 15,
     hp: 50,
     maxHealth: 50,
     hashp: true,
     _hasUlti: true,
 
-    cfg() {
-      this._cargoP.addEventListener("click", () => this.ult());
-    },
+    
 
     ult() {
       let dvaToMinidva = (energiaFromField) => {
@@ -1515,13 +1485,13 @@ export let especiais = {
       let energiaTotal = 0;
 
       invObj.map((x) => {
-        if (x != this) {
+        if (x.dmgBoss) {
           x.dmg(this.dano)
-          if (x.dmgBoss) {
+          
             if(x._dead){
               energiaTotal += x.energia;
             }
-          }
+          
         }
       });
 
@@ -1618,8 +1588,7 @@ export let especiais = {
 
     poder() {
       money.add(this.money);
-      // this.novoAtaqueStyle.visibility = 'visible'
-      // this.kill()
+      this.kill()
     },
 
     nomeStyle: {
@@ -1840,20 +1809,18 @@ export function escolherEspecial(teste) {
 
       let num;
 
-      num = gerarNumero(1, 5);
+      num = gerarNumero(1, 4);
+      
 
       if (!true) {
-        especial = objBinder(especiais.premioMonark);
+        especial = objBinder(especiais.dva);
       } else if (num == 1) {
         especial = objBinder(especiais.lucio);
       } else if (num == 2) {
         especial = objBinder(especiais.premioMonark);
       } else if (num == 3) {
-        especial = objBinder(especiais.blackaoCamarada);
-        especial.ataqueE = comunistaPE();
-      } else if (num == 4) {
         especial = objBinder(especiais.abelha);
-      } else if (num == 5) {
+      } else if (num == 4) {
         especial = objBinder(especiais.dva);
       }
 
@@ -1882,22 +1849,16 @@ export function escolherEspecial(teste) {
 
       let num;
 
-      num = gerarNumero(1, 4);
+      num = gerarNumero(1, 3);
 
       if (!true) {
         especial = objBinder(especiais.creeper);
-      } else if (false) {
-        especial = objBinder(especiais.menosCartas);
-        especial.ataqueE = bonusCartasPE() + "🃏";
       } else if (num == 1) {
         especial = objBinder(especiais.maisCartas);
         especial.ataqueE = bonusCartasPE() + "🃏";
-      } else if (num == 2) {
-        especial = objBinder(especiais.tank);
-        especial.cargo = tankCargo(especiais.tank.emoji);
-      } else if (num == 3) {
+      }  else if (num == 2) {
         especial = objBinder(especiais.estoicoTuru);
-      } else if (num == 4) {
+      } else if (num == 3) {
         especial = objBinder(especiais.creeper);
       }
     }

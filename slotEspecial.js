@@ -116,7 +116,9 @@ let increasePrice = (x) => {
 
   let increaseRate = gerarNumero(9, 25)
 
-return Math.trunc(x / increaseRate)
+  
+
+  return Math.trunc(x / increaseRate)
 
 }
 
@@ -130,6 +132,7 @@ function comprarCampones() {
     ativarBtn();
     snd(audio);
     precoCampones +=  increasePrice(precoCampones)
+    precoCampones >= 150 ? precoCampones = 150 : false
   }
   precoPrint()
 }
@@ -142,6 +145,7 @@ function comprarCavalheiro() {
     ativarBtn();
     snd(audio);
     precoCavalheiro += increasePrice(precoCavalheiro)
+    precoCavalheiro >= 450 ? precoCavalheiro = 450 : false
   }
   precoPrint()
 }
@@ -153,6 +157,7 @@ function comprarSangue() {
     ativarBtn();
     snd(audio);
     precoSangueAzul += increasePrice(precoSangueAzul)
+    precoSangueAzul >= 900 ? precoSangueAzul = 900 : false
   }
   precoPrint()
 }
@@ -164,6 +169,7 @@ function comprarRainha() {
     ativarBtn();
     snd(audio);
     precoRainha += increasePrice(precoRainha)
+    precoRainha >= 9000 ? precoRainha = 9000 : false
   }
   precoPrint()
   
@@ -296,8 +302,7 @@ function colocarSlot(tipo) {
 
   //PERSONALIZADO
   // console.log(cartaEspecial);
-  cartaEspecial.dataset.tier = especial.raridade.nome;
-  cartaEspecial.dataset.dmgboss = especial.dmgboss;
+  
   retratoE.style.visibility = "visible";
 
   if (especial.canbedeleted) {
@@ -360,6 +365,8 @@ function colocarSlot(tipo) {
   slotEspObj = especial;
 
   especial.print();
+  console.log('especial: ', especial);
+  
 }
 
 btnCampones.addEventListener("click", function () {
