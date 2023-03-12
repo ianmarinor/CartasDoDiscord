@@ -1031,13 +1031,13 @@ justify-content: center;
 /* ***************************************************** */
 /* **************************************************** */
 
-#selo {
+#selo, .seloEsp {
   /* background-color: #010101; */
   position: absolute;
   top: 5px;
   right: 5px;
-  font-size: 10px;
-  opacity: 0.5;
+  font-size: 13px;
+  opacity: 0.6;
   /* transform: rotate(90deg); */
 }
 
@@ -1137,6 +1137,7 @@ justify-content: center;
   /* background-color: #11446d; */
   width: 35%;
   font-size: 1.5em;
+  cursor: pointer;
   
 }
 

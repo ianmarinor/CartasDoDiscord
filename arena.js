@@ -186,7 +186,7 @@ class Inimigo {
   }
 
   dmg(n) {
-    // console.trace();
+    // 
     this._dmgTaken += n;
 
     if (this.hashp == false) {
@@ -258,7 +258,7 @@ class Inimigo {
         for (let i = 0; i < 100; i++) {
           let slot = gerarNumero(0, 5);
           let carta = invObj[slot];
-          console.log(slot);
+          
           if (carta.tank) {
 
             let vitima = invObj[slot];
@@ -276,7 +276,7 @@ class Inimigo {
         for (let i = 0; i < 100; i++) {
           let slot = gerarNumero(0, 5);
           let carta = invObj[slot];
-          console.log(slot);
+          
           if (carta.especial) {
 
             let vitima = invObj[slot];
@@ -294,7 +294,7 @@ class Inimigo {
         for (let i = 0; i < 100; i++) {
           let slot = gerarNumero(0, 5);
           let carta = invObj[slot];
-          console.log(slot);
+          
           if (!carta.isInvisible) {
 
             let vitima = invObj[slot];
@@ -488,8 +488,8 @@ let camarada = {
 
   cfg() {
     this._energiaP.classList.add("critico");
-    console.log(this._energiaP.classList.value);
-    console.log("+++++++++++++++++++++");
+    
+    
     this._cargoP.textContent = "CRITICO PARA TODOS";
     this._cargoP.style.fontSize = "65%";
   },
@@ -532,7 +532,7 @@ let tank = {
     if (this.ulti >= 100) return;
 
     let ultiRate = gerarNumero(1, 2);
-    console.trace();
+    
     this.ulti += ultiRate;
     this._cargoP.children[0].value = this.ulti;
 
@@ -698,7 +698,7 @@ function Main() {
     emptyObj,
   ];
 
-  return console.log("----------------- **LOADED** ---------------------");
+  return 
 }
 
 export function populateArena() {

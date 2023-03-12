@@ -1653,6 +1653,8 @@ export function elimCardInv(x) {
   return slot;
 }
 
+
+
 export function elimCardMao(x) {
   let slot;
 

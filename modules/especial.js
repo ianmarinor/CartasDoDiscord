@@ -103,6 +103,7 @@ class Especial {
     this.hashp = card.hashp;
     this.maxHealth = card.maxHealth;
     this.dmgBoss = card.dmgBoss;
+    this.requireAmmo = false;
 
     this.nomeStyle = card.nomeStyle;
     this.retratoStyle = card.retratoStyle;
@@ -122,6 +123,7 @@ class Especial {
     this._parentP = false;
     this._invHiddenButton = false;
     this._maoHiddenButton = true;
+    this._poderUsing = false
 
     this._monarkFree = false;
     this._monarkReplaceble = true;
@@ -150,7 +152,10 @@ class Especial {
     this._energiaP = false;
     this._hpP = false;
     this._buttonP = false;
+    this._seloP = false;
   }
+
+  ult() {}
 
   place() {
     if (this == slotEspObj) {
@@ -183,6 +188,7 @@ class Especial {
     this._energiaP = this._thisCardP.children[3].children[0];
     this._hpP = this._thisCardP.children[3].children[1];
     this._buttonP = this._thisCardP.children[3].children[2];
+    this._seloP = this._thisCardP.children[3].children[4];
 
     if (this == slotEspObj) return;
 
@@ -258,6 +264,7 @@ class Especial {
       ammoUsage = 1;
       if (ammo.total <= 0) return;
     }
+    ammo.use(ammoUsage);
 
     // se nao estiver vazio ve quem ta dentro
     // caso esteja vai para o Boss
@@ -316,7 +323,7 @@ class Especial {
             let vitima = areObj[slot];
 
             vitima.dmg(dano);
-            ammo.use(ammoUsage);
+
             classHit = "tank";
             checkLeftRight(vitima);
 
@@ -337,7 +344,7 @@ class Especial {
             let vitima = areObj[slot];
 
             vitima.dmg(dano);
-            ammo.use(ammoUsage);
+
             classHit = "especial";
             checkLeftRight(vitima);
             this._dmgDone += dano;
@@ -355,7 +362,7 @@ class Especial {
             let vitima = areObj[slot];
 
             vitima.dmg(dano);
-            ammo.use(ammoUsage);
+
             classHit = "miniBoss";
             checkLeftRight(vitima);
             this._dmgDone += dano;
@@ -373,7 +380,7 @@ class Especial {
             let vitima = areObj[slot];
 
             vitima.dmg(dano);
-            ammo.use(ammoUsage);
+
             classHit = "normal";
             checkLeftRight(vitima);
 
@@ -386,7 +393,7 @@ class Especial {
     } else if (boss) {
       boss.dmg(dano);
       this._dmgDone += dano;
-      ammo.use(ammoUsage);
+
       return true;
     }
   }
@@ -396,18 +403,13 @@ class Especial {
     this.maxHealth = n;
   }
 
-  heal(n,_delay) {
+  heal(n, _delay) {
+    let delay;
 
-
-    let delay 
-
-
-    !_delay ? delay = gerarNumero(450,650) : delay = _delay
-
+    !_delay ? (delay = gerarNumero(450, 650)) : (delay = _delay);
 
     setTimeout(() => {
       if (this.hp == this.maxHealth || this._dead) return;
-      
 
       if (n == 0) return;
 
@@ -419,8 +421,6 @@ class Especial {
       }
       return true;
     }, delay);
-
-
   }
 
   addBuff(n) {
@@ -562,6 +562,9 @@ class Especial {
 
     if (this._hasUlti != false) {
       ulti.textContent = this.ulti + "%";
+      this.ulti == 100
+        ? (ulti.style.cursor = "pointer")
+        : (ulti.style.cursor = "not-allowed");
     }
 
     if (this.dmgBoss) {
@@ -599,6 +602,22 @@ class Especial {
       this._maoHiddenButton
         ? (botao.style.visibility = "hidden")
         : (botao.style.visibility = "visible");
+    }
+
+    // stilo botao
+
+    if (this.requireAmmo) {
+      this._buttonP.innerHTML = "⚔️";
+
+      if (ammo.total != 0 || !this._poderUsing) {
+        this._buttonP.style.opacity = 1;
+        this._buttonP.style.cursor = "pointer";
+      } else {
+        this._buttonP.style.opacity = 0.3;
+        this._buttonP.style.cursor = "not-allowed";
+      }
+    } else {
+      this._buttonP.innerHTML = "🔘";
     }
   }
 
@@ -905,8 +924,6 @@ export let especiais = {
     hashp: true,
     dano: 9,
 
-   
-
     tick() {
       let turuInField = () => {
         let inv = this._parentP;
@@ -1156,7 +1173,7 @@ export let especiais = {
     nome: "SPY",
     raridade: raridades.cavaleiro,
     energia: 1,
-
+    requireAmmo: true,
     emoji: "🗡️",
     emojiHp: "⌚",
 
@@ -1320,8 +1337,9 @@ export let especiais = {
       this.dano = this._dmgTaken + 1;
 
       let hasTuru = invObj.some((x) => x._cidade == "de Itapira");
+      let hasItapira = invObj.some((x) => x._integrante == "Turu");
 
-      if (hasTuru) {
+      if (hasTuru || hasItapira) {
         this._invHiddenButton = false;
       } else {
         this._invHiddenButton = true;
@@ -1363,12 +1381,12 @@ export let especiais = {
     raridade: raridades.sangueAzul,
 
     energia: 1,
-
+    requireAmmo: true,
     emoji: "",
     cargo: "0%",
     retrato: "url('pics/retratoLucio.jpg')",
     dmgBoss: false,
-    dano: 8,
+    dano: 4,
     _hasUlti: true,
     ulti: 0,
 
@@ -1410,9 +1428,12 @@ export let especiais = {
       }
 
       invObj.map((x) => {
-        if (x.hashp && per(50) && !x._fullHp) {
-          x.heal(3);
-          this.buildUlt(3);
+
+        let healValue = gerarNumero (1,3)
+
+        if (x.hashp && per(75) && !x._fullHp) {
+          x.heal(healValue);
+          this.buildUlt(healValue);
         }
       });
     },
@@ -1433,13 +1454,34 @@ export let especiais = {
     },
 
     poder() {
-      let ultiRate = () => gerarNumero(1, 4);
-      for (let j = 0; j < 6; j++) {
-        if (this.ataque()) {
+
+      if(this._poderUsing) return
+      this._poderUsing = true
+      let ultiRate = () => gerarNumero(0, 1);
+
+      let ammo = 1;
+      let tiros = 3
+
+      let weapon = () => {
+
+        if (this._dead) return;
+        if (this.ataque(false, ammo)) {
           this.buildUlt(ultiRate());
         }
-        break;
-      }
+
+        tiros--
+        ammo = 0
+        if(tiros == 0 || this._dead) {
+          clearInterval(multiShot)
+          this._poderUsing = false
+          return
+        }
+      };
+
+      let multiShot = setInterval(() => {
+        weapon();
+      }, 300);
+
     },
   },
 
@@ -1460,6 +1502,48 @@ export let especiais = {
     hp: 10,
     hashp: true,
     maxHealth: 10,
+    aim: "are",
+    atirador: false,
+
+    ult() {
+      this.aim == "boss" ? (this.aim = "are") : (this.aim = "boss");
+      console.log(this.aim);
+    },
+
+    tick() {
+      this.aim == "boss"
+        ? (this._cargoP.style.color = "red")
+        : (this._cargoP.style.color = "#FFBC42");
+
+        
+          if (invObj.some((x) => x.atiradorJhin)) {
+            this.atirador = true
+          } else {
+            this.atirador = false
+          }
+        
+          if(this.atirador && this.tiros > 1){
+
+            invObj.map(
+              (x) => {
+                x.atiradorJhin ? this.dano = x.energia * 4 : 0
+              }
+              )
+
+          } else if (this.atirador && this.tiros == 1) {
+            invObj.map(
+              (x) => {
+                x.atiradorJhin ? this.dano = x.energia * 8 : 0
+              }
+              )
+          } else {
+            this.dano = 4
+          }
+
+
+    },
+
+
 
     poder() {
       let jhin = this._thisCardP;
@@ -1487,15 +1571,9 @@ export let especiais = {
         ) {
           //se nao tiver atirador, escolha atirador
 
-          let naoTemAtirador = () => {
-            if (invObj.some((x) => x.atiradorJhin)) {
-              return false;
-            } else {
-              return true;
-            }
-          };
+          
 
-          if (naoTemAtirador()) {
+          if (!this.atirador) {
             atirador.statusEmoji = this.allyEmoji;
             atirador.atiradorJhin = true;
 
@@ -1505,11 +1583,9 @@ export let especiais = {
             snd(jhinEscolhaAu);
             snd(ultiJhinAu);
 
-            this.dano = atirador.energia * 4;
-
-            if (this.tiros == 1) {
-              this.dano *= 2;
-            }
+            
+            this.atirador = true
+           
 
             break;
             //se tiver atirador
@@ -1551,9 +1627,13 @@ export let especiais = {
                 // somDeath(350);
               }
 
+              //TIROS
               // TULTIMO TIRO MULTIPLICA POR 4
               if (tiros == 1) {
-                boss.dmg(this.dano);
+                this.aim == "boss"
+                  ? boss.dmg(this.dano)
+                  : this.ataque(false, false);
+
                 atirador.statusEmoji = "";
                 atirador.atiradorJhin = false;
 
@@ -1567,16 +1647,18 @@ export let especiais = {
                 playJhinAu(1);
                 elimCardInv(atiradorP);
                 this.tiros--;
-                this.dano = 4;
                 this.kill();
+
+
               } else {
-                boss.dmg(this.dano);
+                this.aim == "boss"
+                  ? boss.dmg(this.dano)
+                  : this.ataque(false, false);
                 elimCardInv(atiradorP);
-                this.dano = 4;
+                
 
                 this.tiros--;
                 tirosString.textContent = this.tiros;
-                console.log("tiros", tiros);
               }
 
               break;
@@ -1631,7 +1713,7 @@ export let especiais = {
     hashp: true,
     _hasUlti: true,
     tank: true,
-
+    requireAmmo: true,
     ult() {
       let dvaToMinidva = (energiaFromField) => {
         this._invHiddenButton = true;
