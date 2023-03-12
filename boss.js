@@ -1,4 +1,6 @@
+import { gerarNumero } from "./script.js";
 import { triggerChuvaMonark, startGame2, rodadas } from "/script.js";
+import { spawnMonark, areObj } from "/arena.js";
 
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
@@ -45,10 +47,9 @@ class Boss {
     this.health += n;
     if (this.health > this.fullHealth) {
       this.health = this.fullHealth;
-      animatebossHealth()
-    } 
-    animatebossHealth()
-    
+      animatebossHealth();
+    }
+    animatebossHealth();
   }
 
   set(n) {
@@ -79,6 +80,14 @@ class Boss {
       bossP().classList.add("bossAnimation");
     }
   }
+
+  coolDown(n) {
+    this._coolDown = true;
+
+    setTimeout(() => {
+      this._coolDown = false;
+    }, n);
+  }
 }
 
 // LISTA DE BOSSES
@@ -86,26 +95,37 @@ class Boss {
 export let boss;
 
 let probMonark;
-function probMonarkChuvaDeMonark() {
-  
-}
+
 function createMonark() {
-  
   let bossClass = new Boss(15000, 15000, "monark");
-  
+
   let monark = {
     carta() {
       bossRoomP.innerHTML = cartaBossMonark;
     },
-    
+
     chuvaDeMonark(x) {
-      triggerChuvaMonark(x);
+      if (this._coolDown) return;
+
+      this.treme(true);
+      this.coolDown(5000);
+      setTimeout(() => {
+        this.treme(false);
+
+        for (let i = 0; i < 100; i++) {
+          spawnMonark();
+        }
+
+        areObj.map((x) => {
+          if (x.cartaId == "monark") {
+            x.isInvisible = false;
+            x.readyToAttack = true;
+          }
+        });
+      }, gerarNumero(750, 3200));
     },
-    
-    
   };
-  
-  
+
   return (boss = Object.assign(bossClass, monark));
 }
 
@@ -114,19 +134,15 @@ export function resetBoss() {
 }
 
 let chosenBoss;
-let countDownSpawnBoss = 10
+let countDownSpawnBoss = 10;
 
 function startGame() {
-  
- 
   spawnBoss();
 
-  
-    protector.style.display = "none";
-    main.style.display = "grid";
-    testP.style.display = "block";
-    startGame2();
-  
+  protector.style.display = "none";
+  main.style.display = "grid";
+  testP.style.display = "block";
+  startGame2();
 }
 
 function chooseMonark() {
@@ -136,27 +152,22 @@ function chooseMonark() {
 
 pickMonark.addEventListener("click", chooseMonark);
 
-let hasSpawned = false
+let hasSpawned = false;
 
 export function spawnBoss() {
-
-  if(rodadas >= 10 && !hasSpawned){
-
+  if (rodadas >= 10 && !hasSpawned) {
     if (chosenBoss == "monark") {
       createMonark();
     } else {
       return false;
     }
 
-  
+    healthPointsP.textContent = boss.health;
+    healthWrapP.classList.add("aparecer");
+    boss.carta();
 
-
-  healthPointsP.textContent = boss.health;
-  healthWrapP.classList.add("aparecer");
-  boss.carta();
-  
-  hasSpawned = true
-}
+    hasSpawned = true;
+  }
   // healthWrapP.className = 'aparecer'
 }
 
@@ -165,22 +176,12 @@ export function spawnBoss() {
 function bossDead() {}
 
 function animatebossHealth() {
-  
-
-
-
-  let style = boss.health / boss.fullHealth * 100 + '%'
+  let style = (boss.health / boss.fullHealth) * 100 + "%";
 
   healthPointsP.textContent = boss.health;
 
-
   progressP.style.width = style;
-  
-
-  
 }
-
-
 
 let teclaDeckPronto = "KeyG";
 
@@ -190,9 +191,7 @@ function deckPronto() {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {
-    
     //   deckPronto();
-    location.reload()
-    
+    location.reload();
   }
 });

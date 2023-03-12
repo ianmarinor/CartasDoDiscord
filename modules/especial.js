@@ -90,6 +90,7 @@ class Especial {
     //unique
     this.id = card.id;
     this.nome = card.nome;
+    this.especial = true
     this.raridade = card.raridade;
     this.energia = card.energia;
     this.dano = card.dano;
@@ -224,7 +225,7 @@ class Especial {
 
     if(this._hasUlti){
 
-    per(33) ? this.ulti++ : false
+    per(33) ? this.buildUlt(1) : false
 
     }
   }
@@ -256,24 +257,89 @@ class Especial {
       if (ammo.total <= 0) return;
     }
 
+
+    // se nao estiver vazio ve quem ta dentro
+    // caso esteja vai para o Boss
     if (areObj.some((x) => !x.isInvisible)) {
-      for (let i = 0; i < 1000; i++) {
-        let slot = gerarNumero(0, 9);
 
-        if (!areObj[slot].isInvisible) {
-          let vitima = areObj[slot];
 
-          vitima.dmg(dano);
-          ammo.use(ammoUsage);
-          
-          this._dmgDone += dano;
+      //se houver tank
+      if(areObj.some((x) => x.tank)){
 
-          return true;
+
+        for (let i = 0; i < 1000; i++) {
+          let slot = gerarNumero(0, 9);
+  
+          if (areObj[slot].tank) {
+            let vitima = areObj[slot];
+  
+            vitima.dmg(dano);
+            ammo.use(ammoUsage);
+            
+            this._dmgDone += dano;
+  
+            return true;
+          }
         }
+
+        //se houver especias
+      } else if (areObj.some((x) => x.especial)){
+
+        for (let i = 0; i < 1000; i++) {
+          let slot = gerarNumero(0, 9);
+  
+          if (areObj[slot].especial) {
+            let vitima = areObj[slot];
+  
+            vitima.dmg(dano);
+            ammo.use(ammoUsage);
+            
+            this._dmgDone += dano;
+  
+            return true;
+          }
+        }
+
+        // caso haja mini bosses
+      } else if (areObj.some((x) => x.miniBoss)){
+
+
+        for (let i = 0; i < 1000; i++) {
+          let slot = gerarNumero(0, 9);
+
+          if (areObj[slot].miniBoss) {
+            let vitima = areObj[slot];
+  
+            vitima.dmg(dano);
+            ammo.use(ammoUsage);
+            
+            this._dmgDone += dano;
+  
+            return true;
+          }
+        }
+
+        // caso haja so normais
+      } else {
+
+
+        for (let i = 0; i < 1000; i++) {
+          let slot = gerarNumero(0, 9);
+  
+          if (!areObj[slot].isInvisible) {
+            let vitima = areObj[slot];
+  
+            vitima.dmg(dano);
+            ammo.use(ammoUsage);
+            
+            this._dmgDone += dano;
+  
+            return true;
+          }
+        }
+        
       }
-    } else if (invObj.some((x) => x.id == "miniBoss")) {
-      console.log("TEM MINI BOSS");
-      return true;
+
     } else if (boss) {
       boss.dmg(dano);
       this._dmgDone += dano;
@@ -542,6 +608,7 @@ export let especiais = {
     hashp: true,
     maxHealth: 700,
     dmgBoss: false,
+    tank: true,
 
     cfg() {
       let energia = gerarNumero(94, 156);
@@ -871,7 +938,7 @@ export let especiais = {
         x.cartaId == "abelha" ? numOfBees++ : false;
       });
 
-      let dmgRate = gerarNumero(1,3)
+      let dmgRate = gerarNumero(1,2)
 
       if (turuInField()) {
         dmgRate *= gerarNumero(5, 7);
@@ -999,7 +1066,7 @@ export let especiais = {
 
     retrato: 'url("/pics/retratoPremioMonark.gif")',
     cargo: "",
-    hp: 20,
+    hp: 10,
     hashp: true,
     maxHealth: 20,
     dmgBoss: false,
@@ -1007,8 +1074,8 @@ export let especiais = {
     cfg(){
 
       
-      this._cargoP.style.color = 'white'
-      this._cargoP.classList.add('float')
+      
+      
 
 
     },
@@ -1059,8 +1126,9 @@ export let especiais = {
       backgroundColor: "",
     },
     cargoStyle: {
-      fontFamily: "",
+      fontFamily: "premiomonark",
       fontSize: "",
+      class: 'float'
     },
     ataqueStyle: {
       color: "",
@@ -1227,7 +1295,7 @@ export let especiais = {
     raridade: raridades.campones,
     pontoEspecial: 0,
     energia: 0,
-
+    tank: true,
     emoji: "",
     retrato: "url('pics/estoicoRetrato.jpg')",
     cargo: "",
@@ -1571,7 +1639,7 @@ export let especiais = {
     maxHealth: 35,
     hashp: true,
     _hasUlti: true,
-
+    tank: true,
     
 
     ult() {

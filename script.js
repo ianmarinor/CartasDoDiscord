@@ -2332,11 +2332,14 @@ let chuvaCooldown = false;
 //************************************************************************************* */
 //************************************************************************************* */
 function poderBoss() {
-  if (boss) {
-    bossIsMonark = boss.name == "monark";
+  if (!boss) return 
 
-    if (boss) {
-      if (bossIsMonark) {
+
+  
+
+    
+      if (boss.name == "monark") {
+        
         function probChuva() {
           if (allMonark()) {
             return gerarNumero(1, 66) == 1;
@@ -2371,8 +2374,8 @@ function poderBoss() {
             setTimeout(() => (chuvaCooldown = false), 7000);
           }
         }
-      }
-    }
+      
+    
   }
 }
 

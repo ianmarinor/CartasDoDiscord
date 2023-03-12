@@ -297,6 +297,8 @@ function colocarSlot(tipo) {
   escolherEspecial(tipo);
 
   nomeE.classList.remove("float");
+  cargoE.classList.remove("float");
+  
 
   slotEsp.children[0].id = especial.cartaId;
 
@@ -341,6 +343,8 @@ function colocarSlot(tipo) {
   if (especial.cargoStyle.visibility) {
     cargoE.style.visibility = especial.cargoStyle.visibility;
   }
+
+  especial.cargoStyle.class ? cargoE.classList.add(especial.cargoStyle.class) : false
 
   //ATAQUE
 

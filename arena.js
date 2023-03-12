@@ -52,7 +52,7 @@ class Inimigo {
     this.hashp = true;
     this.maxHealth = card.maxHealth;
     this.attackChance = 15;
-    this.isInvisible = true
+    this.isInvisible = true;
 
     //defaults
     this.empty = false;
@@ -68,8 +68,8 @@ class Inimigo {
     this._money = false;
     this._uber = false;
     this._doesAttack = true;
-    this._attackAtSpawn = false
-    this._critico = false
+    this._attackAtSpawn = false;
+    this._critico = false;
 
     this._rightCard = false;
     this._leftCard = false;
@@ -94,8 +94,6 @@ class Inimigo {
   }
 
   place() {
-    
-
     this._parent = areObj;
     this._parentP = are;
 
@@ -143,8 +141,6 @@ class Inimigo {
       this._rightCardIndex = null;
       this._rightObj = false;
     }
-
-    
   }
 
   setHp(n) {
@@ -166,36 +162,27 @@ class Inimigo {
     return true;
   }
 
-  critico(trigger){
-
-    if(trigger){
-
-        if(this._critico || !this._hasdmg) return
-        this._critico = true
-        this.dano *= 2
-     } else {
-        this._critico = false
-        this.dano = Math.trunc(this.dano / 2)
-     } 
-
-
-
+  critico(trigger) {
+    if (trigger) {
+      if (this._critico || !this._hasdmg) return;
+      this._critico = true;
+      this.dano *= 2;
+    } else {
+      this._critico = false;
+      this.dano = Math.trunc(this.dano / 2);
+    }
   }
 
-  desinfectar(){
-    
-    
-      if (!this.infected) return;
+  desinfectar() {
+    if (!this.infected) return;
 
-      this.hp = this.previousHp;
-      this._money = Math.trunc(this._money / 2);
-      this.infected = false;
-      this._thisCardP.children[0].classList.remove("float");    
-      this._thisCardP.children[2].classList.remove("float");
-      this._hpP.classList.remove("float");
-      x._thisCardP.children[3].children[2].classList.remove("float");
-    
-
+    this.hp = this.previousHp;
+    this._money = Math.trunc(this._money / 2);
+    this.infected = false;
+    this._thisCardP.children[0].classList.remove("float");
+    this._thisCardP.children[2].classList.remove("float");
+    this._hpP.classList.remove("float");
+    x._thisCardP.children[3].children[2].classList.remove("float");
   }
 
   dmg(n) {
@@ -245,38 +232,92 @@ class Inimigo {
     this._dead = true;
   }
 
-  ataque(dano) {
+  ataque(dmg) {
+
+
+    let dano;
+    
+
+    if (dmg) {
+      dano = dmg;
+    } else {
+      dano = this.dano;
+    }
+
     let invAllEmpty = invObj.every((x) => x.isInvisible == true);
 
     if (invAllEmpty) {
+
       hpPlayer.remove(this.dano);
       this.readyToAttack = false;
+
     } else {
-      for (let i = 0; i < 1000; i++) {
-        let slot = gerarNumero(0, 5);
-        let vitima = invObj[slot];
+      if (invObj.some((x) => x.tank)) {
 
-        if (!vitima.empty) {
-          this.readyToAttack = false;
-          vitima.dmg(this.dano);
+        for (let i = 0; i < 100; i++) {
+          let slot = gerarNumero(0, 5);
+          let carta = invObj[slot];
+          console.log(slot);
+          if (carta.tank) {
 
-          break;
+            let vitima = invObj[slot];
+            vitima.dmg(dano);
+            this._dmgDone += dano;
+            this.readyToAttack = false
+            return true;
+          }
         }
+
+        //se houver especias
+      } else if (invObj.some((x) => x.especial)) {
+
+
+        for (let i = 0; i < 100; i++) {
+          let slot = gerarNumero(0, 5);
+          let carta = invObj[slot];
+          console.log(slot);
+          if (carta.especial) {
+
+            let vitima = invObj[slot];
+            vitima.dmg(dano);
+            this._dmgDone += dano;
+            this.readyToAttack = false
+            return true;
+          }
+        }
+
+
+        // caso so normais
+      } else {
+
+        for (let i = 0; i < 100; i++) {
+          let slot = gerarNumero(0, 5);
+          let carta = invObj[slot];
+          console.log(slot);
+          if (!carta.isInvisible) {
+
+            let vitima = invObj[slot];
+            vitima.dmg(dano);
+            this._dmgDone += dano;
+            this.readyToAttack = false
+            return true;
+          }
+        }
+
+
       }
+
+      
+
     }
   }
 
   defaultEveryRound() {
-
-   per(33) && this.desinfectar()
-
-
+    per(33) && this.desinfectar();
   }
 
   print() {
     this.place();
-
-    
 
     let parentP = this._parentP;
 
@@ -310,23 +351,22 @@ class Inimigo {
       moneyP.textContent = this._money + "💰";
     }
 
-    if(this._hasdmg){
-        this._critico ? energia.classList.add('critico') : energia.classList.remove('critico')
+    if (this._hasdmg) {
+      this._critico
+        ? energia.classList.add("critico")
+        : energia.classList.remove("critico");
     }
 
     if (!this._cfgAdded) {
-        this.cfg();
-        this._cfgAdded = true;
-      }
+      this.cfg();
+      this._cfgAdded = true;
+    }
 
-
-      if(this.isInvisible){
-        this._thisCardP.style.opacity = '0.16'
-      } else {
-        this._thisCardP.style.opacity = '1'
-      }
-
-
+    if (this.isInvisible) {
+      this._thisCardP.style.opacity = "0.16";
+    } else {
+      this._thisCardP.style.opacity = "1";
+    }
   }
 
   cfg() {}
@@ -411,6 +451,7 @@ let menosCartas = {
   maxHealth: 30,
   dano: false,
   attackChance: 7,
+  especial: true,
 
   poder() {
     numCartas.remove(Math.abs(this.energia));
@@ -432,27 +473,25 @@ let camarada = {
   _money: 30,
   _doesAttack: false,
   _hasdmg: false,
-  energia: '',
+  energia: "",
   emoji: "☭",
   hp: 30,
   maxHealth: 30,
   dano: false,
   attackChance: 7,
+  especial: true,
 
-
-cfg(){
-
-    this._energiaP.classList.add('critico')
-    console.log(this._energiaP.classList.value)
-    console.log('+++++++++++++++++++++');
-    this._cargoP.textContent = 'CRITICO PARA TODOS'
-    this._cargoP.style.fontSize = '65%'
-},
+  cfg() {
+    this._energiaP.classList.add("critico");
+    console.log(this._energiaP.classList.value);
+    console.log("+++++++++++++++++++++");
+    this._cargoP.textContent = "CRITICO PARA TODOS";
+    this._cargoP.style.fontSize = "65%";
+  },
 
   poder() {
     areObj.map((x) => {
-        
-    x.critico &&  x.critico(true);
+      x.critico && x.critico(true);
     });
 
     this.kill();
@@ -480,6 +519,7 @@ let tank = {
   dano: 130,
   attackChance: false,
   ulti: 0,
+  tank: true,
 
   cfg() {},
 
@@ -496,8 +536,6 @@ let tank = {
     }
   },
 
-  
-
   poder() {
     invObj.map((x) => {
       x.dmg(this.dano);
@@ -507,8 +545,7 @@ let tank = {
 };
 
 export function spawnTank(n) {
-
-    if(coolDown)return
+  if (coolDown) return;
   if (n) {
     if (per(n)) {
     } else {
@@ -528,7 +565,7 @@ export function spawnTank(n) {
 }
 
 export function spawnCamarada(n) {
-    if(coolDown)return
+  if (coolDown) return;
   if (n) {
     if (per(n)) {
     } else {
@@ -544,12 +581,11 @@ export function spawnCamarada(n) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(camarada), camarada);
   }
-  coolDown = true
+  coolDown = true;
 }
 
 export function spawnMenosCartas(n) {
-
-    if(coolDown)return
+  if (coolDown) return;
 
   if (n) {
     if (per(n)) {
@@ -566,14 +602,12 @@ export function spawnMenosCartas(n) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(menosCartas), menosCartas);
   }
-  coolDown = true
+  coolDown = true;
 }
 
 export function spawnMonark(n) {
-
-    if(coolDown)return
-
   if (n) {
+    if (coolDown) return;
     if (per(n)) {
     } else {
       return;
@@ -641,7 +675,7 @@ export function spawnMonark(n) {
 let coolDown = false;
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnTank();
+    boss.chuvaDeMonark();
   }
 });
 
@@ -665,15 +699,10 @@ function Main() {
 export function populateArena() {
   if (!boss) return;
   coolDown = false;
-  let chanceNormal = 83;
+  let chanceNormal = 100;
 
   if (per(chanceNormal)) {
-
     spawnMonark();
-    
-
-    
-    
   } else {
     spawnMenosCartas(40);
     spawnCamarada(35);
