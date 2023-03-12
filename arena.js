@@ -182,6 +182,21 @@ class Inimigo {
 
   }
 
+  desinfectar(){
+    
+    
+      if (!this.infected) return;
+
+      this.hp = this.previousHp;
+      this._money = Math.trunc(this._money / 2);
+      this.infected = false;
+      this._thisCardP.children[0].classList.remove("float");    
+      this._thisCardP.children[2].classList.remove("float");
+      this._hpP.classList.remove("float");
+      x._thisCardP.children[3].children[2].classList.remove("float");
+    
+
+  }
 
   dmg(n) {
     console.trace();
@@ -251,7 +266,12 @@ class Inimigo {
     }
   }
 
-  // everyRound() {}
+  defaultEveryRound() {
+
+   per(33) && this.desinfectar()
+
+
+  }
 
   print() {
     this.place();
@@ -467,7 +487,7 @@ let tank = {
     if (this.ulti >= 100) return;
 
     let ultiRate = gerarNumero(1, 2);
-
+    console.trace();
     this.ulti += ultiRate;
     this._cargoP.children[0].value = this.ulti;
 
@@ -475,6 +495,8 @@ let tank = {
       this.readyToAttack = true;
     }
   },
+
+  
 
   poder() {
     invObj.map((x) => {

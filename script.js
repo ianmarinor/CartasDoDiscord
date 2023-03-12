@@ -2175,6 +2175,9 @@ function runEveryRound() {
         x.isInvisible = false;
       }
     }
+
+    x.defaultEveryRound? x.defaultEveryRound() : false
+
   });
 }
 

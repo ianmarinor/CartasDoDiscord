@@ -603,37 +603,64 @@ export let especiais = {
     retrato: "url('pics/SPEAKER.webp')",
     cargo: "MONARK BAN!",
     ataqueE: 1,
-    hp: 50,
+    hp: 15,
     hashp: true,
-    maxHealth: 50,
+    maxHealth: 15,
     dmgBoss: false,
 
     poder() {
+
       let varianteSpeaker = inv.children[this._place];
       let retratoVariante = varianteSpeaker.children[1];
       let speakerDorminfo = 'url("pics/speakerDormindo.jpg")';
       let descriptionSpeaker = varianteSpeaker.children[2];
 
+      
+      
+      
+      let multiSpeaker = () => {
+        
+        if(this.energia < 80){
+          
+          return gerarNumero(1.9, 2.5, 1);
+        } else {
+          
+          return gerarNumero(1.2, 1.5, 1);
+        }
+      }
       let multiplicador = multiSpeaker();
-      let pontoParaDormir = multiSpeakerSono();
+      
+      let speakerSono = () => {
+        
+        let highRiskSleep = gerarNumero(110,200)
+        let caraCoroa = per(50)
 
-      function multiSpeaker() {
-        return gerarNumero(2.0, 2.7, 1);
+        if(this.energia > highRiskSleep && caraCoroa){
+
+          this.dormindo = true
+
+        }
+
+
       }
-      function multiSpeakerSono() {
-        return gerarNumero(90, 103);
-      }
+
+      speakerSono()
 
       for (let j = 0; j < 10; j++) {
         //
 
-        if (areObj[j].cartaId != "monark") continue;
         let vitima = areObj[j];
+        if (areObj[j].cartaId != "monark" || vitima.isInvisible ) continue;
         console.log(vitima);
-        if (this.energia < pontoParaDormir) {
+
+
+
+
+        if (!this.dormindo) {
           this.energia = Math.trunc(this.energia * multiplicador);
 
-          vitima.kill()
+          
+           vitima.kill() 
 
           let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.3];
           snd(order);
@@ -701,16 +728,17 @@ export let especiais = {
     hashp: true,
     dmgBoss: false,
     _requiredIntegrante: true,
-
+    _invHiddenButton: true,
     cfg(){
 
       this.energia = gerarNumero(25,50)
-      this._cargoP.textContent = this._requiredIntegrante
 
+      
     },
-
+    
     tick(){
-
+      
+      this._parentP == inv ? this._cargoP.textContent = this._requiredIntegrante.toUpperCase() : false
      
 
       
@@ -958,14 +986,14 @@ export let especiais = {
 
     retrato: 'url("/pics/retratoPremioMonark.gif")',
     cargo: "",
-    hp: 50,
+    hp: 20,
     hashp: true,
-    maxHealth: 50,
+    maxHealth: 20,
     dmgBoss: false,
     _requiredIntegrante: true,
     cfg(){
 
-      this._cargoP.textContent = this._requiredIntegrante.toUpperCase()
+      
       this._cargoP.style.color = 'white'
       this._cargoP.classList.add('float')
 
@@ -975,34 +1003,32 @@ export let especiais = {
     tick(){
 
       this.requiredCardOnInv() ? this._invHiddenButton = false : this._invHiddenButton = true
-
+      this._parentP == inv ? this._cargoP.textContent = this._requiredIntegrante.toUpperCase() : false
 
     },
 
     poder() {
       function infectar() {
+
         areObj.map((x) => {
           if (x.empty) return;
 
+          x.previousHp = x.hp
           x.hp = 1;
           x.readyToAttack = false;
           x._money *= 2;
           x.infected = true;
-
-          x._thisCardP.children[0].className = "float";
-          x._thisCardP.style.background = "none";
-          x._thisCardP.style.backgroundColor = "black";
-          x._thisCardP.children[1].style.backgroundImage =
-            'url("/pics/retratoPremioMonark.gif")';
-          x._thisCardP.children[1].style.backgroundSize = "100% 100%";
-          x._thisCardP.children[1].style.fontFamily = "premiomonark";
-          x._thisCardP.children[1].style.border = "2px solid black";
-          x._thisCardP.style.color = "#343436";
-          x._thisCardP.style.border = "2px solid black";
-          x._thisCardP.children[2].innerHTML = "ADEUS...";
-          x._thisCardP.children[2].className = "float";
+          x._thisCardP.children[0].classList.add("float");    
+          x._thisCardP.children[2].classList.add("float");
+          x._thisCardP.children[2].classList.add("float");
+          x._hpP.classList.add("float");
+          x._thisCardP.children[3].children[2].classList.add("float");
         });
+
+
       }
+
+      
 
       infectar();
       this.kill();
@@ -1076,7 +1102,7 @@ export let especiais = {
           retrato.classname = "invisible";
           spy.children[0].className = "invis";
 
-          this.energia = this._dmgDone
+          this.energia = Math.trunc(this._dmgDone / 6) 
 
           this._invHiddenButton = true;
           retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
@@ -1528,8 +1554,8 @@ export let especiais = {
     dmgBoss: false,
     ulti: 0,
     dano: 15,
-    hp: 50,
-    maxHealth: 50,
+    hp: 35,
+    maxHealth: 35,
     hashp: true,
     _hasUlti: true,
 
