@@ -609,7 +609,7 @@ class Especial {
     if (this.requireAmmo) {
       this._buttonP.innerHTML = "⚔️";
 
-      if (ammo.total != 0 || !this._poderUsing) {
+      if (ammo.total > 0 && !this._poderUsing) {
         this._buttonP.style.opacity = 1;
         this._buttonP.style.cursor = "pointer";
       } else {
@@ -1755,7 +1755,7 @@ export let especiais = {
     },
 
     poder() {
-      let ultiRate = () => gerarNumero(2, 7);
+      let ultiRate = () => gerarNumero(2, 5);
 
       if (this.ataque(false, undefined, [true, false])) {
         this.buildUlt(ultiRate());

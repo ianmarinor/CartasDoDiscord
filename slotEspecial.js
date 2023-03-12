@@ -10,7 +10,7 @@ import {
   empty4,
   objToMao,
   emptyObj,
-  money
+  money,
 } from "/script.js";
 import { gerarNumero } from "./script.js";
 
@@ -26,9 +26,7 @@ let precoCavalheiro = 100;
 let precoSangueAzul = 175;
 let precoRainha = 1750;
 
-
 let precoPrint = () => {
-
   let precoCamponesP = (btnCampones.innerHTML =
     "CAMPONES <br />" + precoCampones);
   let precoCavalheiroP = (btnCavalheiro.innerHTML =
@@ -36,20 +34,9 @@ let precoPrint = () => {
   let precoSangueAzulP = (btnSangue.innerHTML =
     "SANGUE AZUL <br />" + precoSangueAzul);
   let precoRainhaP = (btnRainha.innerHTML = "RAINHA <br />" + precoRainha);
+};
 
-
-}
-
-precoPrint()
-
-
-
-function debug() {
-  precoCampones = 1;
-  precoCavalheiro = 1;
-  precoSangueAzul = 1;
-  precoRainha = 1;
-}
+precoPrint();
 
 let novaCarta = ["novaCarta.mp3"];
 
@@ -111,68 +98,61 @@ export function ativarBtn() {
 }
 
 let increasePrice = (x) => {
-
   // return 1
 
-  let increaseRate = gerarNumero(9, 25)
+  let increaseRate = gerarNumero(9, 25);
 
-  
-
-  return Math.trunc(x / increaseRate)
-
-}
+  return Math.trunc(x / increaseRate);
+};
 
 function comprarCampones() {
-
-
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoCampones) {
     colocarSlot(makeCampones());
     money.remove(precoCampones);
     ativarBtn();
     snd(audio);
-    precoCampones +=  increasePrice(precoCampones)
-    precoCampones >= 150 ? precoCampones = 150 : false
+    precoCampones += increasePrice(precoCampones);
+    precoCampones >= 150 ? (precoCampones = 150) : false;
   }
-  precoPrint()
+  precoPrint();
 }
 
 function comprarCavalheiro() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoCavalheiro) {
     colocarSlot(makeCavalheiro());
-    money.remove(precoCavalheiro)
+    money.remove(precoCavalheiro);
     ativarBtn();
     snd(audio);
-    precoCavalheiro += increasePrice(precoCavalheiro)
-    precoCavalheiro >= 450 ? precoCavalheiro = 450 : false
+    precoCavalheiro += increasePrice(precoCavalheiro);
+    precoCavalheiro >= 450 ? (precoCavalheiro = 450) : false;
   }
-  precoPrint()
+  precoPrint();
 }
 function comprarSangue() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoSangueAzul) {
     colocarSlot(makeSangueAzul());
-    money.remove(precoSangueAzul)
+    money.remove(precoSangueAzul);
     ativarBtn();
     snd(audio);
-    precoSangueAzul += increasePrice(precoSangueAzul)
-    precoSangueAzul >= 900 ? precoSangueAzul = 900 : false
+    precoSangueAzul += increasePrice(precoSangueAzul);
+    precoSangueAzul >= 900 ? (precoSangueAzul = 900) : false;
   }
-  precoPrint()
+  precoPrint();
 }
 function comprarRainha() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoRainha) {
     colocarSlot(makeRainha());
-    money.remove(precoRainha)
+    money.remove(precoRainha);
     ativarBtn();
     snd(audio);
-    precoRainha += increasePrice(precoRainha)
-    precoRainha >= 9000 ? precoRainha = 9000 : false
+    precoRainha += increasePrice(precoRainha);
+    precoRainha >= 9000 ? (precoRainha = 9000) : false;
   }
-  precoPrint()
-  
+  precoPrint();
 }
 
 const cartaEsp =
@@ -263,11 +243,9 @@ function makeRainha() {
 }
 
 export let slotEspObj = {
-  place(){
-
-  },
-  print(){}
-}
+  place() {},
+  print() {},
+};
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
@@ -276,7 +254,9 @@ document.addEventListener("keydown", (event) => {
 });
 
 export let slotEsp = document.getElementById("slotEsp");
+
 function colocarSlot(tipo) {
+  
   btnCampones = document.getElementById("btnCampones");
   btnCavalheiro = document.getElementById("btnCavalheiro");
   btnSangue = document.getElementById("btnSangue");
@@ -298,13 +278,12 @@ function colocarSlot(tipo) {
 
   nomeE.classList.remove("float");
   cargoE.classList.remove("float");
-  
 
   slotEsp.children[0].id = especial.cartaId;
 
   //PERSONALIZADO
   // console.log(cartaEspecial);
-  
+
   retratoE.style.visibility = "visible";
 
   if (especial.canbedeleted) {
@@ -344,10 +323,11 @@ function colocarSlot(tipo) {
     cargoE.style.visibility = especial.cargoStyle.visibility;
   }
 
-  especial.cargoStyle.class ? cargoE.classList.add(especial.cargoStyle.class) : false
+  especial.cargoStyle.class
+    ? cargoE.classList.add(especial.cargoStyle.class)
+    : false;
 
   //ATAQUE
-
 
   ataqueE.style.color = especial.ataqueStyle.color;
   ataqueE.style.fontSize = especial.ataqueStyle.fontSize;
@@ -370,7 +350,6 @@ function colocarSlot(tipo) {
 
   especial.print();
   // console.log('especial: ', especial);
-  
 }
 
 btnCampones.addEventListener("click", function () {
