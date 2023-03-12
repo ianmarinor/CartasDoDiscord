@@ -1210,6 +1210,9 @@ export function efeitoDano(carta) {
   console.log(carta);
 
   let heart = carta._thisCardP.children[3].children[1];
+  let cartaP = carta._thisCardP
+
+  cartaP.style.borderStyle = 'dashed'
 
   heart.style.backgroundColor = "red";
   heart.style.border = "3px dotted black";
@@ -1218,6 +1221,7 @@ export function efeitoDano(carta) {
   setTimeout(function () {
     heart.style.backgroundColor = "";
     heart.style.border = "";
+    cartaP.style.borderStyle = 'solid'
   }, 300);
 }
 

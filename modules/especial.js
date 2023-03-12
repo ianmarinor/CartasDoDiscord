@@ -1,5 +1,6 @@
 let DEBUG = false;
 import { seedRNG } from "./seedFabricator.js";
+import {integrante} from "../integrante.js"
 import { slotEspObj, slotEsp } from "../slotEspecial.js";
 import {
   snd,
@@ -136,6 +137,7 @@ class Especial {
     this._canBeDeleted = true;
     this._canBeSold = true;
     this._everyRoundMao = false;
+    this._requiredIntegrante = false
 
     //DOM
     this._thisCardP = false;
@@ -395,6 +397,9 @@ class Especial {
 
   tick() {}
 
+
+
+
   //DOM METHODS
 
   hideHp(x) {
@@ -408,10 +413,17 @@ class Especial {
   print() {
     this.place();
 
+    if (!this._defaultCfgAdded) {
+      this.defaultCfg();
+      this._defaultCfgAdded = true;
+    }
+
     if (!this._cfgAdded) {
       this.cfg();
       this._cfgAdded = true;
     }
+
+
 
     let parentP = this._parentP;
 
@@ -460,12 +472,33 @@ class Especial {
         ? (botao.style.visibility = "hidden")
         : (botao.style.visibility = "visible");
     }
+
+    
+
+
+
   }
 
   // this method will set dafaults for each card and will run only once
   cfg() {
     false;
   }
+
+  defaultCfg(){
+
+    //required cards
+    this._requiredIntegrante ? this._requiredIntegrante = integrante() : false
+
+
+  }
+
+  requiredCardOnInv(){
+
+
+    return invObj.some( (x)=> x._integrante == this._requiredIntegrante)
+
+  }
+
 }
 
 export let especiais = {
@@ -667,6 +700,26 @@ export let especiais = {
     maxHealth: 10,
     hashp: true,
     dmgBoss: false,
+    _requiredIntegrante: true,
+
+    cfg(){
+
+      this.energia = gerarNumero(25,50)
+      this._cargoP.textContent = this._requiredIntegrante
+
+    },
+
+    tick(){
+
+     
+
+      
+     this.requiredCardOnInv() ? this._invHiddenButton = false : this._invHiddenButton = true
+      
+      
+
+    },
+
 
     poder() {
       numCartas.add(this.energia);
@@ -724,10 +777,10 @@ export let especiais = {
     retrato2: "url('pics/retratoAbelha.webp')",
     cargo: "bzzzz....",
     dmgBoss: false,
-    hp: 65,
-    maxHealth: 65,
+    hp: 15,
+    maxHealth: 15,
     hashp: true,
-    dano: 12,
+    dano: 9,
 
     tick() {
       let turuInField = () => {
@@ -750,6 +803,7 @@ export let especiais = {
           return true;
         }
       };
+
       let numOfBees = 0;
 
       invObj.map((x) => {
@@ -757,7 +811,7 @@ export let especiais = {
       });
 
       if (numOfBees > 0) {
-        this.dano = 12 * numOfBees * numOfBees;
+        this.dano = 9 * numOfBees * numOfBees;
       }
     },
 
@@ -776,11 +830,10 @@ export let especiais = {
         x.cartaId == "abelha" ? numOfBees++ : false;
       });
 
-      let dmgRate = Math.trunc(numOfBees * 2);
+      let dmgRate = gerarNumero(1,2)
 
       if (turuInField()) {
         dmgRate *= gerarNumero(5, 7);
-        console.log(88888888, dmgRate);
       }
 
       if (numOfBees > 0) {
@@ -909,6 +962,22 @@ export let especiais = {
     hashp: true,
     maxHealth: 50,
     dmgBoss: false,
+    _requiredIntegrante: true,
+    cfg(){
+
+      this._cargoP.textContent = this._requiredIntegrante.toUpperCase()
+      this._cargoP.style.color = 'white'
+      this._cargoP.classList.add('float')
+
+
+    },
+
+    tick(){
+
+      this.requiredCardOnInv() ? this._invHiddenButton = false : this._invHiddenButton = true
+
+
+    },
 
     poder() {
       function infectar() {
@@ -1198,7 +1267,7 @@ export let especiais = {
     dmgBoss: false,
     dano: 8,
     _hasUlti: true,
-    ulti: 99,
+    ulti: 0,
 
     hp: 10,
     maxHealth: 10,
@@ -1457,7 +1526,7 @@ export let especiais = {
     cargo: "0%",
     retrato: "url('pics/dvaMecaRetrato.jpg')",
     dmgBoss: false,
-    ulti: 100,
+    ulti: 0,
     dano: 15,
     hp: 50,
     maxHealth: 50,
@@ -1639,7 +1708,7 @@ export let especiais = {
     _monarkReplaceble: false,
 
     cfg() {
-      let dano = gerarNumero(200, 285);
+      let dano = gerarNumero(70, 110);
 
       this.dano = dano;
     },
@@ -1661,7 +1730,7 @@ export let especiais = {
 
       setTimeout(() => {
         
-        hpPlayer.remove(Math.trunc(this.dano / 20));
+        hpPlayer.remove(Math.trunc(this.dano / 4.5));
 
         if (this._leftCard) {
           if (this._leftObj._enemy) {

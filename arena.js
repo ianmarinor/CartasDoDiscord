@@ -387,8 +387,8 @@ let menosCartas = {
   _hasdmg: false,
   energia: -7,
   emoji: "🃏",
-  hp: 20,
-  maxHealth: 20,
+  hp: 30,
+  maxHealth: 30,
   dano: false,
   attackChance: 7,
 
@@ -414,8 +414,8 @@ let camarada = {
   _hasdmg: false,
   energia: '',
   emoji: "☭",
-  hp: 20,
-  maxHealth: 20,
+  hp: 30,
+  maxHealth: 30,
   dano: false,
   attackChance: 7,
 
@@ -645,18 +645,17 @@ export function populateArena() {
   coolDown = false;
   let chanceNormal = 80;
 
-  if (!per(chanceNormal)) {
+  if (per(chanceNormal)) {
 
-    spawnMonark(50);
+    spawnMonark();
     
 
     
     
   } else {
-    // spawnMenosCartas(60);
-    // spawnCamarada(30);
-    spawnCamarada(100);
-    // spawnTank(10);
+    spawnMenosCartas(60);
+    spawnCamarada(30);
+    spawnTank(10);
   }
 }
 
