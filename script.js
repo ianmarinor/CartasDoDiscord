@@ -1909,7 +1909,7 @@ let placarArena = {
       }
       this.ammoTotal += x.energia;
     }
-    this.ammoTotal = Math.trunc(this.ammoTotal / 50);
+    this.ammoTotal = Math.trunc(this.ammoTotal / 43);
   },
 
   getNumberOfCards() {
@@ -2160,6 +2160,7 @@ export function tudo() {
 function runEveryRound() {
   invObj.map((x) => {
     x.everyRound ? x.everyRound() : false;
+    x.defaultEveryRound? x.defaultEveryRound() : false
   });
   maoObj.map((x) => {
     x._everyRoundMao ? x.everyRound() : false;

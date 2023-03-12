@@ -665,7 +665,7 @@ function Main() {
 export function populateArena() {
   if (!boss) return;
   coolDown = false;
-  let chanceNormal = 80;
+  let chanceNormal = 83;
 
   if (per(chanceNormal)) {
 
@@ -675,9 +675,9 @@ export function populateArena() {
     
     
   } else {
-    spawnMenosCartas(60);
-    spawnCamarada(30);
-    spawnTank(10);
+    spawnMenosCartas(40);
+    spawnCamarada(35);
+    spawnTank(25);
   }
 }
 

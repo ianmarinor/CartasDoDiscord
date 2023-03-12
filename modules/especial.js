@@ -805,8 +805,8 @@ export let especiais = {
     retrato2: "url('pics/retratoAbelha.webp')",
     cargo: "bzzzz....",
     dmgBoss: false,
-    hp: 15,
-    maxHealth: 15,
+    hp: 10,
+    maxHealth: 10,
     hashp: true,
     dano: 9,
 
@@ -858,7 +858,7 @@ export let especiais = {
         x.cartaId == "abelha" ? numOfBees++ : false;
       });
 
-      let dmgRate = gerarNumero(1,2)
+      let dmgRate = gerarNumero(1,3)
 
       if (turuInField()) {
         dmgRate *= gerarNumero(5, 7);
