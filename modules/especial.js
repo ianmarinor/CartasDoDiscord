@@ -271,9 +271,9 @@ class Especial {
         // se left ou right exisitirem
         // dano neles
         if (left || right) {
-          let spreadBaseDmg = 2
+          let spreadBaseDmg = 3
 
-          classHit == 'tank' ? spreadBaseDmg = 4 : 0
+          classHit == 'tank' ? spreadBaseDmg = 6 : 0
           if(classHit == 'miniBoss') return 
 
             
@@ -1642,7 +1642,7 @@ export let especiais = {
       invObj.map((x) => {
         if (x.dmgBoss) {
           x.dmg(this.dano);
-
+          this._dmgDone += this.dano
           if (x._dead) {
             energiaTotal += x.energia;
           }
@@ -1651,9 +1651,11 @@ export let especiais = {
 
       areObj.map((x) => {
         x.dmg(this.dano);
+        this._dmgDone += this.dano
       });
 
       if (boss) boss.dmg(this.dano);
+      this._dmgDone += this.dano
 
       dvaToMinidva(energiaTotal);
     },

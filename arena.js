@@ -182,7 +182,7 @@ class Inimigo {
     this._thisCardP.children[0].classList.remove("float");
     this._thisCardP.children[2].classList.remove("float");
     this._hpP.classList.remove("float");
-    x._thisCardP.children[3].children[2].classList.remove("float");
+    this._thisCardP.children[3].children[2].classList.remove("float");
   }
 
   dmg(n) {
@@ -214,6 +214,7 @@ class Inimigo {
         this.ataque();
       } else {
         this.poder();
+        this.readyToAttack = false
       }
     }
 
@@ -450,12 +451,11 @@ let menosCartas = {
   hp: 30,
   maxHealth: 30,
   dano: false,
-  attackChance: 7,
+  attackChance: 10,
   especial: true,
 
   poder() {
     numCartas.remove(Math.abs(this.energia));
-    this.kill();
   },
 };
 
@@ -478,7 +478,7 @@ let camarada = {
   hp: 30,
   maxHealth: 30,
   dano: false,
-  attackChance: 7,
+  attackChance: 25,
   especial: true,
 
   cfg() {
@@ -494,7 +494,7 @@ let camarada = {
       x.critico && x.critico(true);
     });
 
-    this.kill();
+    
   },
 };
 
@@ -699,7 +699,7 @@ function Main() {
 export function populateArena() {
   if (!boss) return;
   coolDown = false;
-  let chanceNormal = 50;
+  let chanceNormal = 75;
 
   if (per(chanceNormal)) {
     spawnMonark();
