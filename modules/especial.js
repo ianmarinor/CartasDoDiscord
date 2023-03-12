@@ -262,7 +262,6 @@ class Especial {
     // se nao estiver vazio ve quem ta dentro
     // caso esteja vai para o Boss
     if (areObj.some((x) => !x.isInvisible)) {
-
       let left;
       let classHit;
       let right;
@@ -271,21 +270,19 @@ class Especial {
         // se left ou right exisitirem
         // dano neles
         if (left || right) {
-          let spreadBaseDmg = 3
+          let spreadBaseDmg = 3;
 
-          classHit == 'tank' ? spreadBaseDmg = 6 : 0
-          if(classHit == 'miniBoss') return 
-
-            
+          classHit == "tank" ? (spreadBaseDmg = 6) : 0;
+          if (classHit == "miniBoss") return;
 
           let danoSpread;
-          
+
           spread[1]
-          ? (danoSpread = spread[1])
-          : (danoSpread = Math.trunc(dano / spreadBaseDmg));
+            ? (danoSpread = spread[1])
+            : (danoSpread = Math.trunc(dano / spreadBaseDmg));
 
           console.log("danoSpread: ", danoSpread);
-          
+
           if (left && !left.isInvisible) {
             left.dmg(danoSpread);
             console.log("leftDAMAGES: ", left);
@@ -320,7 +317,7 @@ class Especial {
 
             vitima.dmg(dano);
             ammo.use(ammoUsage);
-            classHit = 'tank'
+            classHit = "tank";
             checkLeftRight(vitima);
 
             // atacar por dano spread
@@ -341,7 +338,7 @@ class Especial {
 
             vitima.dmg(dano);
             ammo.use(ammoUsage);
-            classHit = 'especial'
+            classHit = "especial";
             checkLeftRight(vitima);
             this._dmgDone += dano;
 
@@ -359,7 +356,7 @@ class Especial {
 
             vitima.dmg(dano);
             ammo.use(ammoUsage);
-            classHit = 'miniBoss'
+            classHit = "miniBoss";
             checkLeftRight(vitima);
             this._dmgDone += dano;
 
@@ -377,7 +374,7 @@ class Especial {
 
             vitima.dmg(dano);
             ammo.use(ammoUsage);
-            classHit = 'normal'
+            classHit = "normal";
             checkLeftRight(vitima);
 
             this._dmgDone += dano;
@@ -399,18 +396,31 @@ class Especial {
     this.maxHealth = n;
   }
 
-  heal(n) {
-    if (this.hp == this.maxHealth) return;
+  heal(n,_delay) {
 
-    if (n == 0) return;
 
-    this.hp += n;
-    efeitoCura(this);
-    if (this.hp >= this.maxHealth) {
-      this._fullHp = true;
-      this.hp = this.maxHealth;
-    }
-    return true;
+    let delay 
+
+
+    !_delay ? delay = gerarNumero(450,650) : delay = _delay
+
+
+    setTimeout(() => {
+      if (this.hp == this.maxHealth || this._dead) return;
+      
+
+      if (n == 0) return;
+
+      this.hp += n;
+      efeitoCura(this);
+      if (this.hp >= this.maxHealth) {
+        this._fullHp = true;
+        this.hp = this.maxHealth;
+      }
+      return true;
+    }, delay);
+
+
   }
 
   addBuff(n) {
@@ -894,6 +904,8 @@ export let especiais = {
     maxHealth: 10,
     hashp: true,
     dano: 9,
+
+   
 
     tick() {
       let turuInField = () => {
@@ -1392,9 +1404,9 @@ export let especiais = {
     },
 
     everyRound() {
-      if (!hpPlayer.isFull) {
-        hpPlayer.add(2);
-        this.buildUlt(2);
+      if (!hpPlayer.isFull && per(50)) {
+        hpPlayer.add(1);
+        this.buildUlt(1);
       }
 
       invObj.map((x) => {
@@ -1410,7 +1422,7 @@ export let especiais = {
 
       let buff = gerarNumero(125, 180);
       if (this.ulti != 100) return;
-      hpPlayer.addBuff(buff);
+
       invObj.map(function (x) {
         if (x.hashp) {
           x.addBuff(buff);
@@ -1642,7 +1654,7 @@ export let especiais = {
       invObj.map((x) => {
         if (x.dmgBoss) {
           x.dmg(this.dano);
-          this._dmgDone += this.dano
+          this._dmgDone += this.dano;
           if (x._dead) {
             energiaTotal += x.energia;
           }
@@ -1651,19 +1663,19 @@ export let especiais = {
 
       areObj.map((x) => {
         x.dmg(this.dano);
-        this._dmgDone += this.dano
+        this._dmgDone += this.dano;
       });
 
       if (boss) boss.dmg(this.dano);
-      this._dmgDone += this.dano
+      this._dmgDone += this.dano;
 
       dvaToMinidva(energiaTotal);
     },
 
     poder() {
-      let ultiRate = () => gerarNumero(5, 12);
+      let ultiRate = () => gerarNumero(2, 7);
 
-      if (this.ataque(false, false, [true, false])) {
+      if (this.ataque(false, undefined, [true, false])) {
         this.buildUlt(ultiRate());
       }
     },

@@ -428,8 +428,8 @@ let monark = {
   _attackAtSpawn: false,
 
   hp: 5,
-  maxHealth: 15,
-  dano: 3,
+  maxHealth: 5,
+  dano: 5,
 };
 
 let menosCartas = {
@@ -446,13 +446,18 @@ let menosCartas = {
   _money: 30,
   _doesAttack: false,
   _hasdmg: false,
-  energia: -7,
+  energia: '',
   emoji: "🃏",
   hp: 30,
   maxHealth: 30,
   dano: false,
   attackChance: 10,
   especial: true,
+
+  cfg(){
+      this.energia = gerarNumero(-3,-15)
+  },
+
 
   poder() {
     numCartas.remove(Math.abs(this.energia));
@@ -704,9 +709,9 @@ export function populateArena() {
   if (per(chanceNormal)) {
     spawnMonark();
   } else {
+    spawnTank(30);
     spawnMenosCartas(35);
     spawnCamarada(35);
-    spawnTank(30);
   }
 }
 
