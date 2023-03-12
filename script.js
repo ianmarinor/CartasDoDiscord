@@ -174,14 +174,6 @@ export function escolherIntegrante() {
   ) {
     return (integrante = "Murillo");
   }
-  // else if
-  //     (
-  //     // seedString[0] == 1  &&
-  //     seedString[1]
-  //     )
-  //     {return integrante = 'Curtas'
-  // } else
-  //     {return integrante = 'SEM NOME'}
 }
 
 //cidade
@@ -381,15 +373,7 @@ export let pontoPoderRNGPremioMarino = () =>
   Math.floor((parseInt(seedString[0]) + parseInt(seedString[5])) / 2 + 421); // 121 a 130
 
 let pontoVarianteValor = 0;
-// function pontoVariante() {
-//   if (variante != "") {
-//     return (pontoVarianteValor = Math.floor(
-//       parseInt(seedString[0]) + parseInt(seedString[1]) + 25 * 5 // 125 a 215
-//     ));
-//   } else {
-//     return (pontoVarianteValor = 0);
-//   }
-// }
+
 function pontoVariante() {
   if (variante != "") {
     return (pontoVarianteValor = 4);
@@ -549,12 +533,8 @@ function fabricaDeCarta(
     kill() {
       if (!this._parentP) return;
       if (this._parentP == inv) {
-
-        this._thisCardP.classList.add('morto')
-        setTimeout( ()=>elimCardInv(this._thisCardP),210)
-        
-        
-
+        this._thisCardP.classList.add("morto");
+        setTimeout(() => elimCardInv(this._thisCardP), 210);
       } else {
         elimCardMao(this._thisCardP);
       }
@@ -562,12 +542,6 @@ function fabricaDeCarta(
     },
   };
 }
-
-//*********************************************************** */
-// escolherIntegrante()
-// escolherCidade()
-// escolherCargo()
-// escolherPoder()
 
 ////D O M
 let main = document.getElementById("main");
@@ -1015,20 +989,7 @@ function verificarCartaParaMover() {
   seed6 = inv.children[5].children[4];
 
   seedDiferente = true;
-  // seedDiferente =
-  //   seedCopyCard.textContent != seed1.textContent &&
-  //   seedCopyCard.textContent != seed2.textContent &&
-  //   seedCopyCard.textContent != seed3.textContent &&
-  //   seedCopyCard.textContent != seed4.textContent;
 }
-
-// document.addEventListener("keydown", (event) => {
-//   if (event.code == "KeyB") {
-//     if (!getSeedChecked()) {
-//       moverToCartaMao();
-//     }
-//   }
-// });
 
 for (let m = 0; m < 4; m++) {
   let slotMao = "mao" + m;
@@ -1108,12 +1069,6 @@ export function selectHandCard() {
 
           raiseCard();
         }
-
-        // setTimeout(function(){
-        //   if(chosenCard !=0){
-        //     lowerCard()
-        //   }
-        // }, 10000)
       });
 
       retrato().addEventListener("contextmenu", function () {
@@ -1160,14 +1115,7 @@ function moverToDeck(e) {
   ) {
     elimCardMao(chosenCard);
 
-    // abelha();
-    // inv.removeChild(slot)
     chosenCard.dataset.inv = "true";
-
-    // if (slot.className) {
-    //   inv.replaceChild(chosenCard, slot.parentElement.parentElement);
-    //   invObj[slot.className[5]] = chosenCardObj
-    // }
 
     inv.replaceChild(chosenCard, slot);
     invObj[slot.id[5] - 1] = chosenCardObj;
@@ -1210,9 +1158,9 @@ export function efeitoDano(carta) {
   console.log(carta);
 
   let heart = carta._thisCardP.children[3].children[1];
-  let cartaP = carta._thisCardP
+  let cartaP = carta._thisCardP;
 
-  cartaP.style.borderStyle = 'dashed'
+  cartaP.style.borderStyle = "dashed";
 
   heart.style.backgroundColor = "red";
   heart.style.border = "3px dotted black";
@@ -1221,7 +1169,7 @@ export function efeitoDano(carta) {
   setTimeout(function () {
     heart.style.backgroundColor = "";
     heart.style.border = "";
-    cartaP.style.borderStyle = 'solid'
+    cartaP.style.borderStyle = "solid";
   }, 300);
 }
 
@@ -1610,7 +1558,6 @@ function critico() {
       }
     }
   }
-  // getSeed.setAttribute('class', 'customOff')
 }
 
 // //////////////////////////////////////////////
@@ -1625,25 +1572,21 @@ function criarBtn() {
 
     if (!carta._invEventAdded) {
       let buttonWithEvent = inv.children[i].children[3].children[2];
-      let cargo = inv.children[i].children[2]
-
+      let cargo = inv.children[i].children[2];
 
       let cargoLimpo = cargo.cloneNode(true);
       let limpo = buttonWithEvent.cloneNode(true);
 
-
-      
-      
       inv.children[i].replaceChild(cargoLimpo, cargo);
 
       inv.children[i].children[3].replaceChild(limpo, buttonWithEvent);
-      
+
       limpo.addEventListener("click", function () {
         if (invObj[i].poder) {
           invObj[i].poder();
         }
       });
-      
+
       cargoLimpo.addEventListener("click", () => carta.ult());
 
       carta._invEventAdded = true;
@@ -1681,54 +1624,6 @@ export function poderesEspeciais(x) {
   lucio();
   spy();
 }
-
-// function spy() {
-
-//   let chanceSpy = ()=> gerarNumero(1,5)
-
-//   if(chanceSpy() != 1) return
-
-//   invObj.map((x) => {
-
-//     if (x.cartaId == "spy" && x.isInvisible == false){
-
-//       let watch = x._thisCardP.children[3].children[1];
-
-//       x.clockReady = true;
-//       watch.style.visibility = "visible";
-//     }
-
-//   });
-// }
-
-// function lucio() {
-//   for (let i = 0; i < 6; i++) {
-//     let isLucio = invObj[i].cartaId == "lucio";
-//     let lucio = invObj[i];
-//     let ulti = lucio.ulti;
-//     if (isLucio) {
-//       for (let j = 0; j < 6; j++) {
-//         if (invObj[j].hashp && gerarNumero(1, 2) == 1) {
-//           let aliado = invObj[j];
-//           if (ulti >= 100) {
-//             ulti = 100;
-//             // snd(ultiReadyAu);
-//           } else {
-//             if (hpPlayer.total >= 100) return;
-
-//             hpPlayer.add(1);
-//             lucio.buildUlt(1);
-
-//             if (aliado.hp >= aliado.maxHealth) return;
-
-//             lucio.buildUlt(1);
-//             aliado.heal(1);
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
 
 export function elimCardInv(x) {
   let slot;
@@ -1817,106 +1712,6 @@ function healCard(heal, card) {
     }
   }
 }
-
-// function creeper(x) {
-//   let condition;
-
-//   if (x) {
-//     condition = true;
-//   } else {
-//     condition = gerarNumero(1, 5) == 5;
-//   }
-
-//   let creeperAu = ["creeper.mp3", 0.5];
-//   for (let i = 0; i < 6; i++) {
-//     if (inv.children[i].id == "creeper") {
-//       let creeper = inv.children[i];
-//       let right = creeper.nextElementSibling;
-//       let left = creeper.previousElementSibling;
-
-//       if (condition && !creeper.dataset.exploding) {
-
-//         creeper.dataset.exploding = "true";
-
-//         snd(creeperAu);
-//         creeper.className = "piscar";
-
-//         setTimeout(function () {
-//           if (dmgCard(gerarNumero(170, 220), right)) {
-//             // condition already does the job ;)
-//           } else {
-//             elimCardInv(right);
-//           }
-
-//           if (dmgCard(gerarNumero(170, 220), left)) {
-//           } else {
-//             elimCardInv(left);
-//           }
-//           elimCardInv(creeper);
-
-//           if (boss) {
-//             boss.dmg(gerarNumero(100, 250));
-//           }
-
-//         }, 2600);
-
-//       }
-//     }
-//   }
-
-//   // comportamento na mao
-//   for (let i = 0; i < 4; i++) {
-//     if (mao.children[i].id == "creeper") {
-//       let creeper = mao.children[i];
-//       let right = creeper.nextElementSibling;
-//       let left = creeper.previousElementSibling;
-
-//       if (condition && !creeper.dataset.exploding) {
-//         creeper.dataset.exploding = "true";
-//         snd(creeperAu);
-//         creeper.className = "piscar";
-
-//         setTimeout(function () {
-//           if (dmgCard(gerarNumero(170, 220), right, "mao")) {
-//             // condition already does the job ;)
-//           } else {
-//             elimCardMao(right);
-//           }
-
-//           if (dmgCard(gerarNumero(170, 220), left, "mao")) {
-//           } else {
-//             elimCardMao(left);
-//           }
-
-//           let cartaInv1 = gerarNumero(0, 2);
-//           let cartaInv2 = gerarNumero(3, 5);
-
-//           if (i < 2) {
-//             if (dmgCard(gerarNumero(25, 70), inv.children[cartaInv1])) {
-//             } else {
-//               elimCardInv(inv.children[cartaInv1]);
-//             }
-//           } else {
-//             if (dmgCard(gerarNumero(25, 700), inv.children[cartaInv2])) {
-//             } else {
-//               elimCardInv(inv.children[cartaInv2]);
-//             }
-//           }
-
-//           elimCardMao(creeper);
-
-//           hpPlayer.remove(gerarNumero(7, 12));
-//         }, 2600);
-//       }
-//     }
-//   }
-// }
-
-// if (inv.children[0].id != 'empty' && inv.children[1].id != 'empty' && inv.children[2].id != 'empty' && inv.children[3].id != 'empty') {
-
-//     console.log ('sem loop')
-
-// }
 
 /****************************************** */
 // TIRAR CARTA DO INVENTARIO
@@ -2298,20 +2093,7 @@ function resetarDeck() {
 
 /////// CRITICO
 
-function blockInv() {
-  let cartaNotEspecial = copyCard.children[0].children[3].textContent == "";
-  let cartaNotMonark = copyCard.id != "carta-monark";
-  let PodeMover =
-    (!seedObj._isSeedReal && cartaNotEspecial && cartaNotMonark) ||
-    (seedObj._isSeedReal && !seedObj._isPutByPlayer) ||
-    seedObj._isMarket;
-
-  // if (!PodeMover || isJaMovi()) {
-  //   inv.style.border = "10px double red";
-  // } else {
-  //   inv.style.border = "7px double green";
-  // }
-}
+function blockInv() {}
 
 function limparInput() {
   getSeed.value = "";
@@ -2365,7 +2147,7 @@ export function tudo() {
 
     numCartas.remove(1);
     spawnBoss();
-    
+
     verificarCartaParaMover();
     blockInv();
     poderBoss();
@@ -2389,14 +2171,10 @@ function runEveryRound() {
 
     if (x.everyRound) {
       x.everyRound();
-      if(!x.empty){
-
-        x.isInvisible = false
+      if (!x.empty) {
+        x.isInvisible = false;
       }
     }
-
-
-
   });
 }
 
@@ -2543,7 +2321,6 @@ function healMonarkBoss(x) {
 }
 
 let chuvaCooldown = false;
-// setTimeout(() => (chuvaCooldown = false), 15000);
 
 //************************************************************************************* */
 //************************************************************************************* */
@@ -2589,10 +2366,6 @@ function poderBoss() {
             chuvaCooldown = true;
             setTimeout(() => (chuvaCooldown = false), 7000);
           }
-
-          //NUMERO 2
-
-          //NUMERO 2
         }
       }
     }
@@ -2798,24 +2571,7 @@ function playerDead() {
   playerDmgTakenStats.innerHTML = "DANO JOGADOR RECEBIDO " + hpPlayer.dmgTaken;
 }
 
-export function somaPontos() {
-  // let danoTotal = 0;
-  // invObj.map(function (x) {
-  //   if (x.dmgBoss == true) {
-  //     danoTotal += x.energia;
-  //   }
-  // });
-  // if (invObj.every((x) => x.dmgBoss == true)) {
-  //   placarP.style.color = "red";
-  //   placarWrapP.className = "critico";
-  //   danoTotal = danoTotal * 2;
-  // } else {
-  //   placarP.style.color = "wheat";
-  //   placarWrapP.className = "";
-  //   danoTotal = danoTotal;
-  // }
-  // placarP.innerHTML = danoTotal;
-}
+export function somaPontos() {}
 
 button.addEventListener("click", tudo);
 button.addEventListener("click", blockInv);
