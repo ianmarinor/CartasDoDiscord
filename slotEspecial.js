@@ -21,10 +21,10 @@ let btnSangue = document.getElementById("btnSangue");
 let btnRainha = document.getElementById("btnRainha");
 let inv = document.getElementById("inv");
 
-let precoCampones = 25;
-let precoCavalheiro = 75;
-let precoSangueAzul = 150;
-let precoRainha = 1500;
+let precoCampones = 50;
+let precoCavalheiro = 100;
+let precoSangueAzul = 175;
+let precoRainha = 1750;
 
 
 let precoPrint = () => {
@@ -369,7 +369,7 @@ function colocarSlot(tipo) {
   slotEspObj = especial;
 
   especial.print();
-  console.log('especial: ', especial);
+  // console.log('especial: ', especial);
   
 }
 

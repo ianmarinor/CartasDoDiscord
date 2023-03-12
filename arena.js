@@ -186,7 +186,7 @@ class Inimigo {
   }
 
   dmg(n) {
-    console.trace();
+    // console.trace();
     this._dmgTaken += n;
 
     if (this.hashp == false) {
@@ -699,14 +699,14 @@ function Main() {
 export function populateArena() {
   if (!boss) return;
   coolDown = false;
-  let chanceNormal = 100;
+  let chanceNormal = 50;
 
   if (per(chanceNormal)) {
     spawnMonark();
   } else {
-    spawnMenosCartas(40);
+    spawnMenosCartas(35);
     spawnCamarada(35);
-    spawnTank(25);
+    spawnTank(30);
   }
 }
 

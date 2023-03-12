@@ -1154,8 +1154,8 @@ let copyCardName;
 let hit = ["hit.mp3"];
 
 export function efeitoDano(carta) {
-  console.trace();
-  console.log(carta);
+  // console.trace();
+  // console.log(carta);
 
   let heart = carta._thisCardP.children[3].children[1];
   let cartaP = carta._thisCardP;
@@ -2339,7 +2339,7 @@ function poderBoss() {
 
     
       if (boss.name == "monark") {
-        
+
         function probChuva() {
           if (allMonark()) {
             return gerarNumero(1, 66) == 1;
