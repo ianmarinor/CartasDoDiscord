@@ -220,6 +220,15 @@ class Especial {
     ulti.textContent = this.ulti + "%";
   }
 
+  buildUltAuto(){
+
+    if(this._hasUlti){
+
+    per(33) ? this.ulti++ : false
+
+    }
+  }
+
   areaAtack(){
 
     areObj.map( (x)=> {
@@ -393,7 +402,11 @@ class Especial {
     retrato.style.backgroundImage = img;
   }
 
-  everyRound() {}
+  defaultEveryRound() {
+
+    this.buildUltAuto()
+
+  }
 
   tick() {}
 
