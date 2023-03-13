@@ -684,14 +684,14 @@ export let especiais = {
     allyEmoji: "👑",
     retrato: "url('pics/tenica.webp')",
     cargo: "",
-    hp: 700,
+    hp: 250,
     hashp: true,
     maxHealth: 700,
     dmgBoss: false,
     tank: true,
 
     cfg() {
-      let energia = gerarNumero(94, 156);
+      let energia = gerarNumero(79, 102);
       this.energia = energia;
     },
 
@@ -1412,7 +1412,7 @@ export let especiais = {
     dmgBoss: false,
     dano: 4,
     _hasUlti: true,
-    ulti: 100,
+    ulti: 0,
 
     hp: 10,
     maxHealth: 10,

@@ -69,3 +69,25 @@ export let tankBlueprint = '<div id="tank" class="monark">' +
 '<p class="seed"></p>' +
 "</div>";
 
+let dogBPicture = "url('pics/dogRetrato.gif')"
+let dogNome = 'CACHORRO SEM NOME '
+export let dogBlueprint = '<div id="tank" class="monark">' +
+'<div class="nameAndCidadeWrapper">' +
+'<p class="nome-inimigo">' +
+dogNome +
+"</p>" +
+"</div>" +
+'<div class="retrato" style="display: block; background-image: ' 
++ dogBPicture +
+
+'"></div>' +
+
+'<p class="cargo" style="transform: rotate(0deg)">  <progress style="width: 75%; border: none; background-color: #895538; height: 40%" value="0" max="100"> </progress>   </p>' +
+
+'<div class="poder-inimigo">' +
+'<p class="ataque"></p>' +
+'<p class="novoAtaque"></p>' +
+'<p class="action-inimigo" ></p>' +
+"</div>" +
+'<p class="seed"></p>' +
+"</div>";
