@@ -462,6 +462,8 @@ class Especial {
 
   dmg(n) {
 
+
+    
     this._dmgTaken += n;
 
     if (this.hashp == false) {
