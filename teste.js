@@ -1,42 +1,43 @@
 let ian = {
 
     hp: 100,
-    buff: 40,
-    barreira: 20,
-    totalHp: true,
+    _buff: 40,
+    __barreira: 20,
+    _totalHp: true,
 
     damageTaken: 0,
     mit: 0,
 
     tick(){
 
-        this.totalHp = this.hp + this.buff
+        this._totalHp = this.hp + this._buff
         console.group(' INITIAL ');
-                console.log( 'total', this.totalHp  );
+                console.log( 'total', this._totalHp  );
                 console.log( 'hp', this.hp  );
-                console.log( 'buff',this.buff  );
-                console.log( 'barreira',this.barreira );
-                console.log( 'dmgTaken',this.damageTaken );
+                console.log( ' _buff',this._buff  );
+                console.log( '_barreira',this._barreira );
+                console.log( 'dmgTaken',this._damageTaken );
                 console.groupEnd()
     },
 
     useBarrier(damage){
 
-        if (  this.barreira > 0){
+        if (  this._barreira > 0){
 
-            this.barreira -= damage
+            this._barreira -= damage
 
             this.mit += damage
-           if (this.barreira <= 0) this.barreira = 0
+           if (this._barreira <= 0) this._barreira = 0
 
-            console.group('somente com tank do barreira');
-            console.log( 'total', this.totalHp  );
+            console.group('somente com tank do _barreira');
+            console.log( 'total', this._totalHp  );
             console.log( 'hp', this.hp  );
-            console.log( 'buff',this.buff  );
-            console.log( 'barreira',this.barreira  );
+            console.log( ' _buff',this._buff  );
+            console.log( '_barreira',this._barreira  );
             console.log( 'mit',this.mit  );
-            console.log( 'dmgTaken',this.damageTaken );
+            console.log( 'dmgTaken',this._damageTaken );
             console.groupEnd()
+
             return true
         }
 
@@ -54,36 +55,36 @@ let ian = {
                 return
             }
 
-            this.buff -= n
-            this.damageTaken += n
+            this._buff -= n
+            this._damageTaken += n
 
-            if (  this.buff > 0){
-                this.totalHp = this.hp + this.buff
+            if (  this._buff > 0){
+                this._totalHp = this.hp + this._buff
 
-                console.group('somente com tank do buff');
-                console.log( 'total', this.totalHp  );
+                console.group('somente com tank do  _buff');
+                console.log( 'total', this._totalHp  );
                 console.log( 'hp', this.hp  );
-                console.log( 'buff',this.buff  );
-                console.log( 'barreira',this.barreira  );
+                console.log( ' _buff',this._buff  );
+                console.log( '_barreira',this._barreira  );
                 console.log( 'mit',this.mit  );
-                console.log( 'dmgTaken',this.damageTaken );
+                console.log( 'dmgTaken',this._damageTaken );
                 console.groupEnd()
                 return
             }
 
 
-            this.hp +=  this.buff 
+            this.hp +=  this._buff 
             
 
-            this.buff = 0
-            this.totalHp = this.hp + this.buff
-            console.group('tank do buff e hp pu buff == 0');
-            console.log( 'total', this.totalHp  );
+            this._buff = 0
+            this._totalHp = this.hp + this._buff
+            console.group('tank do  _buff e hp pu  _buff == 0');
+            console.log( 'total', this._totalHp  );
             console.log( 'hp', this.hp  );
-            console.log( 'buff',this.buff  );
-            console.log( 'barreira',this.barreira );
+            console.log( ' _buff',this._buff  );
+            console.log( '_barreira',this._barreira );
             console.log( 'mit',this.mit  );
-            console.log( 'dmgTaken',this.damageTaken );
+            console.log( 'dmgTaken',this._damageTaken );
             console.groupEnd()
     } 
 

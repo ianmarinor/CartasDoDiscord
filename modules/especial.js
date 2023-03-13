@@ -124,18 +124,19 @@ class Especial {
     this._invHiddenButton = false;
     this._maoHiddenButton = true;
     this._poderUsing = false
-
+    
+    this._barreira = 0;
     this._monarkFree = false;
     this._monarkReplaceble = true;
     this._uber = false;
     this._rightCard = false;
     this._leftCard = false;
+    this._totalHp = 0;
     this._fullHp = true;
     this._buff = 0;
     this._mit = 0;
     this._dmgTaken = 0;
     this._dmgDone = 0;
-    this._totalHp = 0;
     this._hasUlti = false;
     this._canBeDeleted = true;
     this._canBeSold = true;
@@ -217,7 +218,21 @@ class Especial {
       this._rightCardIndex = null;
       this._rightObj = false;
     }
+
+    this.checkFullHp()
+    this.setTotalHp()
+     
+
   }
+
+  setTotalHp(){
+    this._totalHp = this.hp + this._buff 
+  }
+
+  checkFullHp(){
+    this.hp == this.maxHealth ? this._fullHp = true : this._fullHp = false
+  }
+
 
   buildUlt(n) {
     this.ulti += n;
@@ -439,45 +454,41 @@ class Especial {
     }
   }
 
-  buffTank(n) {
-    if (this._buff == 0) return n - 0;
+  useBarrier(damage){
 
-    if (n <= this._buff) {
-      this._buff -= n;
-      this._mit += n;
-      efeitoDano(this);
-      return "tankei";
-    } else {
-      console.log("n: ", n);
-      console.log("this.buff: ", this._buff);
+    if ( this._barreira > 0){
 
-      let change = Math.abs(this._buff - n);
-      console.log("change: ", change);
-      this.mit += this.buff;
-      this.buff = 0;
+        this._barreira -= damage
 
-      return change;
+        this.mit += damage
+       if (this._barreira <= 0) this._barreira = 0
+
+        return true
     }
-  }
+
+    return false
+}
 
   dmg(n) {
 
-
-    
-    this._dmgTaken += n;
-
+    if(this.useBarrier(n))return
+  
     if (this.hashp == false) {
+      efeitoDano(this);
       this.kill();
       return;
     }
 
-    let resto = this.buffTank(n);
-    if (resto == "tankei") return;
+    this._buff -= n
+    this._damageTaken += n
+    if ( this._buff > 0){
+      this.setTotalHp()
+      return
+  }
+   
+  this.hp += this._buff 
+  this.setTotalHp()
 
-    this._fullHp = false;
-    this.hp -= resto;
-
-    this._totalHp = this.hp + this._buff;
 
     efeitoDano(this);
     if (this._totalHp <= 0) {
