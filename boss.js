@@ -185,9 +185,6 @@ function animatebossHealth() {
 
 let teclaDeckPronto = "KeyG";
 
-function deckPronto() {
-  startGame();
-}
 
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {

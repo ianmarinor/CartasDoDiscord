@@ -12,7 +12,7 @@ import {
   emptyObj,
   money,
 } from "/script.js";
-import { gerarNumero } from "./script.js";
+import { gerarNumero, teste } from "./script.js";
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
@@ -108,7 +108,11 @@ let increasePrice = (x) => {
 function comprarCampones() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoCampones) {
-    colocarSlot(makeCampones());
+
+    colocarSlot(makeCampones(), 0);
+    colocarSlot(makeCampones(), 1);
+    colocarSlot(makeCampones(), 2);
+
     money.remove(precoCampones);
     ativarBtn();
     snd(audio);
@@ -121,8 +125,13 @@ function comprarCampones() {
 function comprarCavalheiro() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoCavalheiro) {
-    colocarSlot(makeCavalheiro());
+
+    colocarSlot(makeCavalheiro(), 0);
+    colocarSlot(makeCavalheiro(), 1);
+    colocarSlot(makeCavalheiro(), 2);
+
     money.remove(precoCavalheiro);
+
     ativarBtn();
     snd(audio);
     precoCavalheiro += increasePrice(precoCavalheiro);
@@ -133,7 +142,11 @@ function comprarCavalheiro() {
 function comprarSangue() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoSangueAzul) {
-    colocarSlot(makeSangueAzul());
+
+    colocarSlot(makeSangueAzul(), 0);
+    colocarSlot(makeSangueAzul(), 1);
+    colocarSlot(makeSangueAzul(), 2);
+
     money.remove(precoSangueAzul);
     ativarBtn();
     snd(audio);
@@ -145,7 +158,11 @@ function comprarSangue() {
 function comprarRainha() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoRainha) {
-    colocarSlot(makeRainha());
+
+    colocarSlot(makeRainha(), 0);
+    colocarSlot(makeRainha(), 1);
+    colocarSlot(makeRainha(), 2);
+
     money.remove(precoRainha);
     ativarBtn();
     snd(audio);
@@ -156,6 +173,7 @@ function comprarRainha() {
 }
 
 const cartaEsp =
+
   '<div class="cartaEsp" data-card="especial" data-tankdead="false" data-dmgboss="" data-tier="" > ' +
   '<div class="nameAndCidadeWrapperEsp">' +
   '<p class="nomeEsp"></p>' +
@@ -172,6 +190,8 @@ const cartaEsp =
   '<p class="seedEsp"></p>' +
   '<p class="seloEsp"></p>' +
   "</div>";
+
+
 
 let seedCampones;
 let seedmakeCavalheiro;
@@ -241,11 +261,18 @@ function makeRainha() {
 
   return seedmakeRainha;
 }
+export let slotEspObj
+function Main(){
 
-export let slotEspObj = {
-  place() {},
-  print() {},
-};
+
+  slotEspObj =  [
+    emptyObj,
+    emptyObj,
+    emptyObj,
+  ]
+}
+  
+
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
@@ -255,31 +282,37 @@ document.addEventListener("keydown", (event) => {
 
 export let slotEsp = document.getElementById("slotEsp");
 
-function colocarSlot(tipo) {
+function colocarSlot(tipo,_slot) {
+
+
+ 
+   let slot = _slot
+
   
+
+
   btnCampones = document.getElementById("btnCampones");
   btnCavalheiro = document.getElementById("btnCavalheiro");
   btnSangue = document.getElementById("btnSangue");
   btnRainha = document.getElementById("btnRainha");
-  let cartaEspecial = document.getElementById("slotEsp").children[0];
-  let cartaE = slotEsp.querySelector(".cartaEsp");
-  let btnEsp = document.getElementById("btnEsp");
-  let nomeE = slotEsp.querySelector(".nomeEsp");
-  // let nomeE = slotEsp.children[0].children[0]
-  let retratoE = slotEsp.querySelector(".retratoEsp");
-  let cargoE = slotEsp.querySelector(".cargoEsp");
-  let poderE = slotEsp.querySelector(".poderEsp");
-  let ataqueE = slotEsp.querySelector(".ataqueEsp");
-  let novoAtaqueE = slotEsp.querySelector(".novoAtaqueEsp");
-  let actionE = slotEsp.querySelector(".actionEsp");
-  let seedEsp = slotEsp.querySelector(".seedEsp");
+
+  let cartaEspecial = document.getElementById("slotEsp").children[slot];
+
+  
+  
+  let nomeE = slotEsp.querySelectorAll(".nomeEsp")[slot];
+  let retratoE = slotEsp.querySelectorAll(".retratoEsp")[slot];
+  let cargoE = slotEsp.querySelectorAll(".cargoEsp")[slot];
+  let ataqueE = slotEsp.querySelectorAll(".ataqueEsp")[slot];
+  let novoAtaqueE = slotEsp.querySelectorAll(".novoAtaqueEsp")[slot];
+  let seedEsp = slotEsp.querySelectorAll(".seedEsp")[slot];
 
   escolherEspecial(tipo);
 
   nomeE.classList.remove("float");
   cargoE.classList.remove("float");
 
-  slotEsp.children[0].id = especial.cartaId;
+  slotEsp.children[slot].id = especial.cartaId;
 
   //PERSONALIZADO
   // console.log(cartaEspecial);
@@ -346,7 +379,7 @@ function colocarSlot(tipo) {
   //SEED
   seedEsp.innerHTML = seedEspecial;
 
-  slotEspObj = especial;
+  slotEspObj[slot] = especial;
 
   especial.print();
   // console.log('especial: ', especial);
@@ -371,18 +404,21 @@ let myInterval;
 slotEsp.addEventListener("click", moveToMao);
 let cartaEspecial;
 
-function moverToCartaMao() {
-  cartaEspecial = slotEsp.children[0];
 
-  if (cartaEspecial.id && !myInterval) {
-    mao.replaceChild(cartaEspecial, mao.children[0]);
-    limparEsp();
-    snd(novaCarta);
-  }
-}
 
-export function moveToMao() {
-  cartaEspecial = slotEsp.children[0];
+function moveToMao(e) {
+
+  
+
+  // cartaEspecial = slotEsp.children[0].cloneNode(true)
+  cartaEspecial = e.target.offsetParent
+
+  let obj 
+  e.target.offsetParent == slotEsp.children[0] ? obj = 0 : 0
+  e.target.offsetParent == slotEsp.children[1] ? obj = 1 : 0
+  e.target.offsetParent == slotEsp.children[2] ? obj = 2 : 0
+
+
 
   if (cartaEspecial.id && !myInterval) {
     for (let i = 0; i < 4; i++) {
@@ -390,8 +426,10 @@ export function moveToMao() {
         mao.replaceChild(cartaEspecial, mao.children[i]);
         limparEsp();
         snd(novaCarta);
-        objToMao(i, especial);
-        slotEspObj = emptyObj;
+
+        objToMao(i, slotEspObj[obj]);
+
+        slotEspObj = [emptyObj,emptyObj,emptyObj];
 
         break;
       } else {
@@ -404,6 +442,26 @@ export function moveToMao() {
 }
 
 export function limparEsp() {
-  slotEsp.innerHTML = cartaEsp;
+
+  teste.innerHTML = cartaEsp 
+  let emptyEspP0 = teste.children[0].cloneNode(true)
+  let emptyEspP1 = teste.children[0].cloneNode(true)
+  let emptyEspP2 = teste.children[0].cloneNode(true)
+
+  // console.log('eeeeeeeeeee', emptyEspP);
+
+  slotEsp.innerHTML = ''
+
+  slotEsp.appendChild(emptyEspP0)
+  slotEsp.appendChild(emptyEspP1)
+  slotEsp.appendChild(emptyEspP2)
+
+  // slotEsp.replaceChild( emptyEspP0 , slotEsp.children[0])
+  // slotEsp.replaceChild( emptyEspP1 , slotEsp.children[1])
+  // slotEsp.replaceChild( emptyEspP2, slotEsp.children[2])
+  
+  
   ativarBtn();
 }
+
+window.addEventListener("load", Main);

@@ -158,10 +158,13 @@ class Especial {
   ult() {}
 
   place() {
-    if (this == slotEspObj) {
-      this._parentP = slotEsp;
-      this._parent = slotEspObj;
-      this._place = 0;
+
+    for (let i = 0; i < 3; i++) {
+      if (this == slotEspObj[i]) {
+        this._parent = slotEspObj
+        this._parentP = slotEsp
+        break;
+      }
     }
 
     for (let i = 0; i < 6; i++) {
@@ -179,6 +182,8 @@ class Especial {
         break;
       }
     }
+    // console.log(this._parent);
+    this._place = this._parent.indexOf(this);
 
     this._thisCardP = this._parentP.children[this._place];
     this._nomeP = this._thisCardP.children[0].children[0];
@@ -190,9 +195,8 @@ class Especial {
     this._buttonP = this._thisCardP.children[3].children[2];
     this._seloP = this._thisCardP.children[3].children[4];
 
-    if (this == slotEspObj) return;
+   
 
-    this._place = this._parent.indexOf(this);
 
     if (this._place > 0) {
       this._leftCard = this._parentP.children[this._place - 1];
@@ -1187,9 +1191,11 @@ export let especiais = {
     isInvisible: false,
     dano: 60,
 
+    
+
+
     cfg() {
       // if (this._parentP != inv) return;
-      console.trace();
       let spy = this._thisCardP;
       let spyWatch = spy.children[3].children[1];
       let botao = spy.children[3].children[2];

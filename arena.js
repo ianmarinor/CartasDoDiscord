@@ -259,7 +259,7 @@ class Inimigo {
           let slot = gerarNumero(0, 5);
           let carta = invObj[slot];
           
-          if (carta.tank) {
+          if (carta.tank && !carta.isInvisible) {
 
             let vitima = invObj[slot];
             vitima.dmg(dano);
@@ -277,7 +277,7 @@ class Inimigo {
           let slot = gerarNumero(0, 5);
           let carta = invObj[slot];
           
-          if (carta.especial) {
+          if (carta.especial && !carta.isInvisible ) {
 
             let vitima = invObj[slot];
             vitima.dmg(dano);

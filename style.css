@@ -184,7 +184,7 @@ main {
   background-color: #083535;
   background: linear-gradient(360deg, rgba(28, 7, 102, 0.649) 0%, rgba(39, 13, 65, 0.649) 46%);
 
-  grid-template-columns: 0.9fr 2.2fr 0.9fr;
+  grid-template-columns: 0.9fr 2fr 1.1fr;
 
   grid-template-rows: 0.2fr  0.9fr 0.6fr  1.1fr 0.1fr 1fr;
  
@@ -310,7 +310,7 @@ justify-content: center;
 }
 
 #healthPlayerWrap, #ammoWrap{
-  width: 260px;
+  width: 232px;
   display: flex;
   grid-area: mao;
 
@@ -455,15 +455,15 @@ justify-content: center;
 }
 
 #store{
-  grid-area: especial;
+  grid-area: texto;
   width: 195px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  
-
-  justify-self: end;
+    margin-bottom: 75px;
+  align-self: end;
+  justify-self: center;
 }
 #moneyWrap{
   display: flex;
@@ -535,6 +535,12 @@ justify-content: center;
 
 
 #slotEsp {
+   
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 320px;
+  width: 650px;
   grid-area: especial;
   border: 7px double rgba(170, 183, 30, 0.129);
   background-color: #1f350853;
@@ -1320,12 +1326,15 @@ div[id^="empty-"] {
 
 #btnEspecial {
   /* height: 70%; */
-  grid-area: especial;
+  width: 600px;
+  grid-area: texto;
   display: flex;
-  flex-direction: column-reverse;
-  justify-self: start;
+  flex-direction: row;
+  justify-self: center;
+  align-self: end;
   justify-content: space-around;
   align-content: space-around;
+  
   /* background-color: #010101; */
 }
 
@@ -1335,8 +1344,10 @@ div[id^="empty-"] {
 #btnRainha {
   grid-area: btnReset;
   align-self: end;
-  width: 90%;
-  height: 50px;
+  width: 50%;
+  height: 70px;
+  font-size: 1.1em;
+  opacity: 1;
 }
 
 .voar {

@@ -545,7 +545,7 @@ function fabricaDeCarta(
 
 ////D O M
 let main = document.getElementById("main");
-let teste = document.getElementById("test");
+export let teste = document.getElementById("test");
 export let packP = document.getElementById("pack");
 export const semCarta =
   '<div id="carta">' +
@@ -1996,15 +1996,15 @@ export let vendas = {
     if (vendas <= 0) {
       this.vendas = 0;
 
-      return (vendasP.innerHTML = this.vendas);
+      
     } else {
-      return (vendasP.innerHTML = this.vendas);
+      
     }
   },
 
   set(n) {
     this.vendas = n;
-    return (vendasP.innerHTML = this.vendas);
+    
   },
 };
 
@@ -2054,10 +2054,12 @@ function venderCarta() {
     if (!chosenCardObj.isNormal) {
       if (!chosenCardObj._canBeSold) return;
 
-      money.add(chosenCardObj.raridade.resellPrice);
+      
       chosenCardObj.kill(true);
       chosenCard = 0;
       chosenCardObj = emptyObj;
+
+
     } else {
       chosenCardObj.kill(true);
       chosenCard = 0;
@@ -2090,7 +2092,7 @@ function resetarDeck() {
 
   getSeed.className = "";
   zerarMoney();
-  limparEsp();
+  // limparEsp();
 }
 
 /////// CRITICO
@@ -2238,8 +2240,19 @@ function tick() {
       }
     }
 
+    for (let i = 0; i < 4; i++) {
+      let cartaO = slotEspObj[i];
+      
+
+      if (cartaO) {
+        cartaO.print();
+      }
+
+    }
+
+   
+
     novaCarta.place();
-    slotEspObj.print();
 
     hpPlayer.playerP();
   }, 5);
@@ -2634,13 +2647,7 @@ btnReset.addEventListener("click", resetarDeck);
 
 // DECK COMECA COM 4 CARTAS
 
-document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyR") {
-    if (!getSeedChecked()) {
-      resetarDeck();
-    }
-  }
-});
+
 
 export function startGame2() {
   resetarDeck();
