@@ -1780,6 +1780,7 @@ document.addEventListener("keydown", (event) => {
 
     console.group("INV");
     console.log(invObj);
+
     console.groupEnd();
 
     console.group("MAO");

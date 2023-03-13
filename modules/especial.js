@@ -220,7 +220,7 @@ class Especial {
     }
 
     this.checkFullHp()
-    this.setTotalHp()
+    
      
 
   }
@@ -428,7 +428,9 @@ class Especial {
     !_delay ? (delay = gerarNumero(450, 650)) : (delay = _delay);
 
     setTimeout(() => {
-      if (this.hp == this.maxHealth || this._dead) return;
+
+      this.checkFullHp()
+      if (this._fullHp || this._dead) return;
 
       if (n == 0) return;
 
@@ -438,6 +440,7 @@ class Especial {
         this._fullHp = true;
         this.hp = this.maxHealth;
       }
+      this.setTotalHp()
       return true;
     }, delay);
   }
@@ -480,13 +483,14 @@ class Especial {
     }
 
     this._buff -= n
-    this._damageTaken += n
+    this._dmgTaken += n
     if ( this._buff > 0){
       this.setTotalHp()
       return
   }
    
   this.hp += this._buff 
+  this._buff = 0
   this.setTotalHp()
 
 
