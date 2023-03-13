@@ -463,7 +463,7 @@ class Especial {
 
         this._barreira -= damage
 
-        this.mit += damage
+        this._mit += damage
        if (this._barreira <= 0) this._barreira = 0
 
         return true
@@ -2053,10 +2053,18 @@ export function escolherEspecial(teste) {
     //RAINHA
     if (raridades.rainha.rng()) {
       raridade = raridades.rainha;
-      if (true) {
+
+      let num;
+
+      num = gerarNumero(1, 2);
+
+      if (num == 1) {
         especial = objBinder(especiais.tenica);
-        especial.ataqueE = tenicaEnergia();
+      } else if (num == 2){
+        especial = objBinder(especiais.premioMonark);
       }
+
+
 
       //SANGUE AZUL
     } else if (raridades.sangueAzul.rng()) {
@@ -2064,19 +2072,19 @@ export function escolherEspecial(teste) {
 
       let num;
 
-      num = gerarNumero(1, 4);
+      num = gerarNumero(1, 3);
 
       if (!true) {
         especial = objBinder(especiais.dva);
-      } else if (num == 1) {
+      } 
+      
+        else if (num == 1) {
         especial = objBinder(especiais.lucio);
       } else if (num == 2) {
-        especial = objBinder(especiais.premioMonark);
-      } else if (num == 3) {
-        especial = objBinder(especiais.abelha);
-      } else if (num == 4) {
         especial = objBinder(especiais.dva);
-      }
+      } else if (num == 3) {
+        especial = objBinder(especiais.spy);
+      } 
 
       //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
@@ -2085,16 +2093,22 @@ export function escolherEspecial(teste) {
 
       let num;
 
-      num = gerarNumero(1, 3);
+      num = gerarNumero(1, 5);
 
       if (!true) {
         especial = objBinder(especiais.jhin);
-      } else if (num == 1) {
+      } 
+      
+        else if (num == 1) {
         especial = objBinder(especiais.speaker);
       } else if (num == 2) {
-        especial = objBinder(especiais.jhin);
+        especial = objBinder(especiais.estoicoTuru);
       } else if (num == 3) {
-        especial = objBinder(especiais.spy);
+        especial = objBinder(especiais.creeper);
+      } else if (num == 4) {
+        especial = objBinder(especiais.jhin);
+      } else if (num == 5) {
+        especial = objBinder(especiais.abelha);
       }
 
       //CAMPONESES
@@ -2103,17 +2117,10 @@ export function escolherEspecial(teste) {
 
       let num;
 
-      num = gerarNumero(1, 3);
+      num = gerarNumero(1, 1);
 
-      if (!true) {
-        especial = objBinder(especiais.creeper);
-      } else if (num == 1) {
+       if (num == 1) {
         especial = objBinder(especiais.maisCartas);
-        especial.ataqueE = bonusCartasPE() + "🃏";
-      } else if (num == 2) {
-        especial = objBinder(especiais.estoicoTuru);
-      } else if (num == 3) {
-        especial = objBinder(especiais.creeper);
       }
     }
   } else {

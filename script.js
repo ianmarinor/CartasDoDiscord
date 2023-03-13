@@ -1842,8 +1842,12 @@ export let money = {
   total: 0,
 
   add(n) {
-    this.total += n;
+   
     this.printP(n);
+  },
+
+  addAbsolute(n){
+    this.total += n;
   },
 
   remove(n) {
@@ -2029,10 +2033,12 @@ function animateSell(start, plus) {
     if (plus - x < 40) {
       x++;
       moneyP.textContent = parseInt(moneyP.textContent) + 1;
+      money.addAbsolute(1)
       snd(coinAu);
       // ativarBtn()
     } else {
       x += increment;
+      money.addAbsolute(increment)
       moneyP.textContent = parseInt(moneyP.textContent) + increment;
       // ativarBtn()
 

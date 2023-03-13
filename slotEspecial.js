@@ -36,6 +36,7 @@ let precoPrint = () => {
   let precoRainhaP = (btnRainha.innerHTML = "RAINHA <br />" + precoRainha);
 };
 
+
 precoPrint();
 
 let novaCarta = ["novaCarta.mp3"];
