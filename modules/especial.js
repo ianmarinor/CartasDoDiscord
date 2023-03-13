@@ -461,6 +461,7 @@ class Especial {
   }
 
   dmg(n) {
+
     this._dmgTaken += n;
 
     if (this.hashp == false) {
@@ -1191,7 +1192,7 @@ export let especiais = {
     isInvisible: false,
     dano: 60,
 
-    
+
 
 
     cfg() {
@@ -1394,7 +1395,7 @@ export let especiais = {
     dmgBoss: false,
     dano: 4,
     _hasUlti: true,
-    ulti: 0,
+    ulti: 100,
 
     hp: 10,
     maxHealth: 10,

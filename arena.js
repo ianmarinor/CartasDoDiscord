@@ -186,7 +186,7 @@ class Inimigo {
   }
 
   dmg(n) {
-    // 
+    //
     this._dmgTaken += n;
 
     if (this.hashp == false) {
@@ -214,7 +214,7 @@ class Inimigo {
         this.ataque();
       } else {
         this.poder();
-        this.readyToAttack = false
+        this.readyToAttack = false;
       }
     }
 
@@ -234,10 +234,7 @@ class Inimigo {
   }
 
   ataque(dmg) {
-
-
     let dano;
-    
 
     if (dmg) {
       dano = dmg;
@@ -248,68 +245,53 @@ class Inimigo {
     let invAllEmpty = invObj.every((x) => x.isInvisible == true);
 
     if (invAllEmpty) {
-
       hpPlayer.remove(this.dano);
       this.readyToAttack = false;
-
     } else {
       if (invObj.some((x) => x.tank)) {
-
         for (let i = 0; i < 100; i++) {
           let slot = gerarNumero(0, 5);
           let carta = invObj[slot];
-          
-          if (carta.tank && !carta.isInvisible) {
 
+          if (carta.tank && !carta.isInvisible) {
             let vitima = invObj[slot];
             vitima.dmg(dano);
             this._dmgDone += dano;
-            this.readyToAttack = false
+            this.readyToAttack = false;
             return true;
           }
         }
-
+        
         //se houver especias
       } else if (invObj.some((x) => x.especial)) {
-
-
         for (let i = 0; i < 100; i++) {
           let slot = gerarNumero(0, 5);
           let carta = invObj[slot];
-          
-          if (carta.especial && !carta.isInvisible ) {
 
+          if (carta.especial && !carta.isInvisible) {
             let vitima = invObj[slot];
             vitima.dmg(dano);
             this._dmgDone += dano;
-            this.readyToAttack = false
+            this.readyToAttack = false;
             return true;
           }
         }
-
 
         // caso so normais
       } else {
-
         for (let i = 0; i < 100; i++) {
           let slot = gerarNumero(0, 5);
           let carta = invObj[slot];
-          
-          if (!carta.isInvisible) {
 
+          if (!carta.isInvisible) {
             let vitima = invObj[slot];
             vitima.dmg(dano);
             this._dmgDone += dano;
-            this.readyToAttack = false
+            this.readyToAttack = false;
             return true;
           }
         }
-
-
       }
-
-      
-
     }
   }
 
@@ -446,7 +428,7 @@ let menosCartas = {
   _money: 30,
   _doesAttack: false,
   _hasdmg: false,
-  energia: '',
+  energia: "",
   emoji: "🃏",
   hp: 30,
   maxHealth: 30,
@@ -454,10 +436,9 @@ let menosCartas = {
   attackChance: 10,
   especial: true,
 
-  cfg(){
-      this.energia = gerarNumero(-3,-15)
+  cfg() {
+    this.energia = gerarNumero(-3, -15);
   },
-
 
   poder() {
     numCartas.remove(Math.abs(this.energia));
@@ -488,8 +469,7 @@ let camarada = {
 
   cfg() {
     this._energiaP.classList.add("critico");
-    
-    
+
     this._cargoP.textContent = "CRITICO PARA TODOS";
     this._cargoP.style.fontSize = "65%";
   },
@@ -498,8 +478,6 @@ let camarada = {
     areObj.map((x) => {
       x.critico && x.critico(true);
     });
-
-    
   },
 };
 
@@ -532,7 +510,7 @@ let tank = {
     if (this.ulti >= 100) return;
 
     let ultiRate = gerarNumero(1, 2);
-    
+
     this.ulti += ultiRate;
     this._cargoP.children[0].value = this.ulti;
 
@@ -698,7 +676,7 @@ function Main() {
     emptyObj,
   ];
 
-  return 
+  return;
 }
 
 export function populateArena() {
