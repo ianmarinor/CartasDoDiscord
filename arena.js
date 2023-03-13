@@ -16,6 +16,7 @@ import {
   menosClickBlueprint,
   camaradaBlueprint,
   tankBlueprint,
+  dogBlueprint,
 } from "./domCards.js";
 import { start } from "./modules/seedFabricator.js";
 import { seedComprada } from "./modules/seedsCompradas.js";
@@ -527,6 +528,27 @@ let tank = {
   },
 };
 
+
+let dog = {
+  cartaId: "dog",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 30,
+  _attackAtSpawn: false,
+
+  hp: 25,
+  maxHealth: 25,
+  dano: 20,
+
+};
+
 export function spawnTank(n) {
   if (coolDown) return;
   if (n) {
@@ -587,6 +609,29 @@ export function spawnMenosCartas(n) {
   }
   coolDown = true;
 }
+
+export function spawnDog(n) {
+  if (coolDown) return;
+
+  if (n) {
+    if (per(n)) {
+    } else {
+      return;
+    }
+  }
+
+  let slot = gerarNumero(0, 9);
+
+  secret.innerHTML = dogBlueprint;
+
+  if (areObj[slot].empty == true) {
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(dog), dog);
+  }
+  coolDown = true;
+}
+
+
 
 export function spawnMonark(n) {
   if (n) {
@@ -658,7 +703,7 @@ export function spawnMonark(n) {
 let coolDown = false;
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    boss.chuvaDeMonark();
+    spawnDog()
   }
 });
 
@@ -680,12 +725,14 @@ function Main() {
 }
 
 export function populateArena() {
+
   if (!boss) return;
   coolDown = false;
   let chanceNormal = 75;
 
   if (per(chanceNormal)) {
-    spawnMonark();
+    spawnMonark(80);
+    spawnDog(80);
   } else {
     spawnTank(30);
     spawnMenosCartas(35);
