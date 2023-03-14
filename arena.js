@@ -833,7 +833,7 @@ function Main() {
     emptyObj,
     emptyObj,
   ];
-  console.log('placarInimigoDano: ', placarInimigoDano);
+  
   return;
 }
 

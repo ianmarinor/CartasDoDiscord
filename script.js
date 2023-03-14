@@ -2369,42 +2369,8 @@ function poderBoss() {
 
     
       if (boss.name == "monark") {
-
-        function probChuva() {
-          if (allMonark()) {
-            return gerarNumero(1, 66) == 1;
-          }
-          if (deckVazio()) {
-            return gerarNumero(1, 33) == 1;
-          }
-          if (deckCheio()) {
-            return gerarNumero(1, 27) == 1;
-          }
-          if (specialInDeck()) {
-            return gerarNumero(1, 21) == 1;
-          }
-          if (allEspecial()) {
-            return gerarNumero(1, 15) == 1;
-          }
-          if (boss.health < 1000) {
-            return gerarNumero(1, 12) == 1;
-          }
-          if (boss.health < 300) {
-            return gerarNumero(1, 3) == 1;
-          }
-
-          return gerarNumero(1, 48) == 1;
-        }
-
-        if (false) {
-          //CHUVA DE MONARK
-          if (chuvaCooldown == false) {
-            boss.chuvaDeMonark(true);
-            chuvaCooldown = true;
-            setTimeout(() => (chuvaCooldown = false), 7000);
-          }
-        }
-      
+        // console.log(777777777777);
+        boss.chuvaDeMonark()
     
   }
 }
@@ -2438,7 +2404,7 @@ export let numCartas = {
       arenaP.textContent = " ⚠️ SUAS CARTAS ACABARAM ⚠️ ";
       arenaP.classList.add('warning-cards')
     } else if (this.total < 11){
-      arenaP.textContent = " ⚠️ VOCÊ TEM " + this.total + (this.total == 1 ? " CARTA ⚠️" : " CARTAS ⚠️ ")
+      arenaP.textContent = " ⚠️ VOCÊ TEM SOMENTE " + this.total + (this.total == 1 ? " CARTA ⚠️" : " CARTAS ⚠️ ")
       arenaP.classList.add('warning-cards')
     } else {
       arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
@@ -2460,7 +2426,9 @@ export let hpPlayer = {
   mit: 0,
 
   add(n) {
-    if (this.total >= this.max) return;
+
+
+   setTimeout(()=> {if (this.total >= this.max) return;
 
     this.total += n;
     if (this.total >= 100) {
@@ -2479,7 +2447,11 @@ export let hpPlayer = {
       heart.style.backgroundColor = "";
       heart.style.border = "";
       heart.style.borderRadius = "";
-    }, 300);
+    }, 300);} , 350)
+
+
+
+
   },
 
   hitP(n) {

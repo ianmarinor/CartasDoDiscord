@@ -1222,6 +1222,12 @@ export let especiais = {
     isInvisible: false,
     dano: 60,
 
+    cfg(){
+
+      this.dano = gerarNumero (57,75)
+
+
+    },
 
     ult(){
 
@@ -1454,13 +1460,13 @@ export let especiais = {
     },
     ataqueStyle: {
       color: "",
-      fontSize: "100%",
+      fontSize: "150%",
       fontFamily: "overwatch",
       visibility: "",
     },
     novoAtaqueStyle: {
       color: "",
-      fontSize: "120%",
+      fontSize: "150%",
       fontFamily: "overwatch",
       visibility: "visible",
     },
@@ -1768,7 +1774,7 @@ export let especiais = {
 
     cfg(){
 
-      this.dano = gerarNumero(10,18)
+      this.dano = gerarNumero(18,23)
 
     },
 
@@ -1838,13 +1844,13 @@ export let especiais = {
     },
     ataqueStyle: {
       color: "",
-      fontSize: "130%",
+      fontSize: "150%",
       fontFamily: "overwatch",
       visibility: "",
     },
     novoAtaqueStyle: {
       color: "",
-      fontSize: "120%",
+      fontSize: "150%",
       fontFamily: "overwatch",
       visibility: "visible",
     },
@@ -1946,7 +1952,7 @@ export let especiais = {
     everyRound() {
       if (this.exploding) return;
 
-      let chance = per(4.5);
+      let chance = per(10);
 
       if (chance) {
         this.explode();

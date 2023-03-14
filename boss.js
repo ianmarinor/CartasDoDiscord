@@ -1,4 +1,4 @@
-import { gerarNumero } from "./script.js";
+import { gerarNumero, per, money } from "./script.js";
 import { triggerChuvaMonark, startGame2, rodadas } from "/script.js";
 import { spawnMonark, areObj } from "/arena.js";
 
@@ -24,6 +24,8 @@ class Boss {
     this.health = _health;
     this.fullHealth = _fullHealth;
     this.dmgTaken = 0;
+    this._coolDown = false;
+    this._gotHitLastRound = [false, 0];
   }
 
   dmg(n) {
@@ -88,6 +90,11 @@ class Boss {
       this._coolDown = false;
     }, n);
   }
+
+  everyRoundDefault() {}
+  everyRound() {
+    this.everyRoundDefault();
+  }
 }
 
 // LISTA DE BOSSES
@@ -104,25 +111,41 @@ function createMonark() {
       bossRoomP.innerHTML = cartaBossMonark;
     },
 
-    chuvaDeMonark(x) {
-      if (this._coolDown) return;
+    chuvaDeMonark() {
+      let chance = 1;
 
-      this.treme(true);
-      this.coolDown(5000);
-      setTimeout(() => {
-        this.treme(false);
+      let porcentagemVida = Math.trunc((this.health / this.fullHealth) * 100);
+      chance += 100 - porcentagemVida;
+      // chance += Math.trunc(rodadas / 50);
+      // chance += Math.trunc(money.total / 700);
 
-        for (let i = 0; i < 100; i++) {
-          spawnMonark();
-        }
+      if (chance > 100) chance = 100;
 
-        areObj.map((x) => {
-          if (x.cartaId == "monark") {
-            x.isInvisible = false;
-            x.readyToAttack = true;
+      console.log("CHANCE CHUVA DE MONARK: ", chance);
+
+      setInterval(() => {
+        if (this._coolDown) return;
+
+        if (!per(chance)) return;
+
+        this.treme(true);
+        this.coolDown(5000);
+        setTimeout(() => {
+          this.treme(false);
+
+          for (let i = 0; i < 100; i++) {
+            spawnMonark();
           }
-        });
-      }, gerarNumero(750, 3200));
+
+          areObj.map((x) => {
+            if (x.cartaId == "monark") {
+              x.isInvisible = false;
+              x.ataque()
+              x.readyToAttack = true;
+            }
+          });
+        }, gerarNumero(750, 3200));
+      }, gerarNumero(3120, 15000));
     },
   };
 
@@ -184,7 +207,6 @@ function animatebossHealth() {
 }
 
 let teclaDeckPronto = "KeyG";
-
 
 document.addEventListener("keydown", (event) => {
   if (event.code == teclaDeckPronto) {
