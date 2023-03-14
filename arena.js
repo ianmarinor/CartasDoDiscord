@@ -320,7 +320,35 @@ class Inimigo {
       hpPlayer.remove(dano);
       this.readyToAttack = false;
     } else {
-      if (invObj.some((x) => x.tank)) {
+
+
+
+
+
+
+
+
+
+      //se houver  exposto
+      if (invObj.some((x) => x._exposto && !x.isInvisible)) {
+        for (let i = 0; i < 1000; i++) {
+          let slot = gerarNumero(0, 5);
+
+          if (invObj[slot]._exposto && !invObj[slot].isInvisible) {
+            let vitima = invObj[slot];
+
+            vitima.dmg(dano);
+
+            
+
+            this._dmgDone += dano;
+            this.readyToAttack = false;
+            return true;
+          }
+        }
+
+        //se houver tank
+      } else if (invObj.some((x) => x.tank)) {
         for (let i = 0; i < 100; i++) {
           let slot = gerarNumero(0, 5);
           let carta = invObj[slot];

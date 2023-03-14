@@ -125,6 +125,7 @@ class Especial {
     this._maoHiddenButton = true;
     this._poderUsing = false;
 
+    this._exposto = false
     this._barreira = 0;
     this._monarkFree = false;
     this._monarkReplaceble = true;
@@ -252,6 +253,15 @@ class Especial {
     });
   }
 
+  exposto(_trigger){
+    
+    if(_trigger == undefined ||_trigger == true ){
+      this._exposto = true
+    } else {
+      this._exposto = false
+    }
+  }
+
   ataque(dmg, ammO, _spread) {
     let dano;
     let ammoUsage;
@@ -326,8 +336,54 @@ class Especial {
         ataqueSpread();
       };
 
-      //se houver tank
-      if (areObj.some((x) => x.tank && !x.isInvisible)) {
+      
+      
+      
+      
+      //se houver  exposto
+      if (areObj.some((x) => x._exposto && !x.isInvisible)) {
+        for (let i = 0; i < 1000; i++) {
+          let slot = gerarNumero(0, 9);
+
+          if (areObj[slot]._exposto && !areObj[slot].isInvisible) {
+            let vitima = areObj[slot];
+
+            vitima.dmg(dano);
+
+            
+            checkLeftRight(vitima);
+
+            // atacar por dano spread
+
+            this._dmgDone += dano;
+
+            return true;
+          }
+        }
+
+        //se houver tank
+      } else  if (areObj.some((x) => x.tank && !x.isInvisible)) {
+        for (let i = 0; i < 1000; i++) {
+          let slot = gerarNumero(0, 9);
+
+          if (areObj[slot].tank && !areObj[slot].isInvisible) {
+            let vitima = areObj[slot];
+
+            vitima.dmg(dano);
+
+            classHit = "tank";
+            checkLeftRight(vitima);
+
+            // atacar por dano spread
+
+            this._dmgDone += dano;
+
+            return true;
+          }
+        }
+
+        //se houver especias
+      }else if (areObj.some((x) => x.tank && !x.isInvisible)) {
         for (let i = 0; i < 1000; i++) {
           let slot = gerarNumero(0, 9);
 
@@ -667,12 +723,19 @@ class Especial {
     }
 
     //estilo selo
-
-    if (this.tank) {
+    if (this._exposto) {
+      this._seloP.textContent = "❗";
+    } else if (this.tank) {
       this._seloP.textContent = "🛡️";
     } else {
       this._seloP.textContent = "";
     }
+    
+    
+
+
+
+
   }
 
   // this method will set dafaults for each card and will run only once
@@ -822,13 +885,13 @@ export let especiais = {
       let descriptionSpeaker = varianteSpeaker.children[2];
 
       if (this.dormindo) {
-        this.tank = true;
+        this.exposto()
         descriptionSpeaker.innerHTML = "durmi kkjk <br> &#128564; &#128564;";
         this.changeRetrato(speakerDorminfo);
         this.disableButton();
         this.dmgBoss = true
       } else {
-        this.tank = false;
+        this.exposto(false)
         descriptionSpeaker.innerHTML = "MONARK BAN! 🔨";
         this.disableButton(false);
         this.changeRetrato(speakerNotSleepingPic);
@@ -1287,7 +1350,7 @@ export let especiais = {
     clockReady: true,
     isInvisible: false,
     dano: 0,
-    tank: true,
+    _exposto: true,
 
     cfg() {
       this.dano = gerarNumero(68, 85);
@@ -1325,7 +1388,7 @@ export let especiais = {
           let spyInvisAu = ["spyInvis.mp3", 0.2];
           snd(spyInvisAu);
 
-          setTimeout(vis, gerarNumero(800, 7000));
+          setTimeout(vis, gerarNumero(2520, 7852));
           spyWatch.style.opacity = "0.1";
 
           this.clockReady = false;
@@ -1333,6 +1396,7 @@ export let especiais = {
           this._monarkFree = true;
           this.dmgBoss = true;
           this.changeEmojiToDefault();
+          this.exposto(false)
         };
 
         let vis = () => {
@@ -1354,6 +1418,7 @@ export let especiais = {
 
           this.dmgBoss = false;
           this.setEmoji(this._defaultEmojiDano);
+          this.exposto()
         };
 
         if (this.clockReady) {

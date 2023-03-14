@@ -701,13 +701,13 @@ function colocarInfoNoWrap(a) {
   // especialP.innerHTML = novaCarta._especial;
   seedP.innerHTML = "&nbsp;" + seedString;
 
-  if (seedObj._isMarket) {
-    seloP.innerHTML = "💰";
-  } else if (seedObj._isPutByPlayer) {
-    seloP.innerHTML = "💬";
-  } else {
-    seloP.innerHTML = "🎲";
-  }
+  // if (seedObj._isMarket) {
+  //   seloP.innerHTML = "💰";
+  // } else if (seedObj._isPutByPlayer) {
+  //   seloP.innerHTML = "💬";
+  // } else {
+  //   seloP.innerHTML = "🎲";
+  // }
 
   cartaP.id = novaCarta._cargo;
   if (novaCarta._cargo == "carta-monark") {
