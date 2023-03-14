@@ -23,6 +23,9 @@ import { seedComprada } from "./modules/seedsCompradas.js";
 
 export const are = document.getElementById("are");
 const secret = document.getElementById("test");
+const placarInimigoDano = document.getElementById("placarInimigoDano")
+const placarInimigoWrap = document.getElementById("placarInimigoWrap")
+
 
 const empty0 = are.children[0];
 const empty1 = are.children[1];
@@ -36,6 +39,42 @@ const empty8 = are.children[8];
 const empty9 = are.children[9];
 
 export let areObj;
+
+
+export function updatePlacarInimigo(){
+
+  let dmgTotal = 0
+  
+  areObj.map( (x)=> {
+
+    if(x._hasdmg && x.readyToAttack){
+      dmgTotal += x.dano
+    }
+
+
+  }
+  )
+  placarInimigoDano.children[0].textContent = dmgTotal
+  if(dmgTotal == 0){
+    placarInimigoDano.style.opacity = '0.2'
+    placarInimigoDano.children[1].style.opacity = '0.6'
+    placarInimigoWrap.style.backgroundColor = 'green'
+    placarInimigoWrap.style.opacity = '0.2'
+    placarInimigoWrap.style.border = 'solid 1px black'
+  } else if (dmgTotal < 20) {
+    placarInimigoDano.style.opacity = '0.9'
+    placarInimigoDano.children[1].style.opacity = '0.6'
+    placarInimigoWrap.style.backgroundColor = 'brown'
+    placarInimigoWrap.style.opacity = '0.9'
+    placarInimigoWrap.style.border = 'solid 2px black'
+  } else {
+    placarInimigoDano.style.opacity = '1'
+    placarInimigoDano.children[1].style.opacity = '1'
+    placarInimigoWrap.style.backgroundColor = 'red'
+    placarInimigoWrap.style.opacity = '1'
+    placarInimigoWrap.style.border = 'solid 3px yellow'
+  }
+}
 
 class Inimigo {
   constructor(card) {
@@ -71,6 +110,7 @@ class Inimigo {
     this._doesAttack = true;
     this._attackAtSpawn = false;
     this._critico = false;
+    this._poderUsing = false
 
     this._rightCard = false;
     this._leftCard = false;
@@ -174,6 +214,18 @@ class Inimigo {
     }
   }
 
+  superCritico(trigger) {
+    if (trigger) {
+      if (this._critico || !this._hasdmg) return;
+      this._critico = true;
+      this.dano *= 3;
+    } else {
+      this._critico = false;
+      this.dano = Math.trunc(this.dano / 3);
+    }
+  }
+
+
   desinfectar() {
     if (!this.infected) return;
 
@@ -186,7 +238,9 @@ class Inimigo {
     this._thisCardP.children[3].children[2].classList.remove("float");
   }
 
-  dmg(n) {
+  dmg(n,absolute) {
+
+    if(this.isInvisible && !absolute) return
     //
     this._dmgTaken += n;
 
@@ -246,7 +300,7 @@ class Inimigo {
     let invAllEmpty = invObj.every((x) => x.isInvisible == true);
 
     if (invAllEmpty) {
-      hpPlayer.remove(this.dano);
+      hpPlayer.remove(dano);
       this.readyToAttack = false;
     } else {
       if (invObj.some((x) => x.tank)) {
@@ -409,10 +463,26 @@ let monark = {
   _cfgAdded: false,
   _money: 10,
   _attackAtSpawn: false,
+  _doesAttack: true,
 
-  hp: 5,
-  maxHealth: 5,
+  hp: 10,
+  maxHealth: 10,
   dano: 5,
+
+  cfg(){
+
+    this.dano = gerarNumero(3,7)
+
+  },
+
+  poder(){
+
+    
+    
+
+
+  }
+
 };
 
 let menosCartas = {
@@ -471,14 +541,19 @@ let camarada = {
   cfg() {
     this._energiaP.classList.add("critico");
 
-    this._cargoP.textContent = "CRITICO PARA TODOS";
+    this._cargoP.textContent = "ARMA E SAUDE PARA TODOS";
     this._cargoP.style.fontSize = "65%";
   },
 
   poder() {
+
     areObj.map((x) => {
       x.critico && x.critico(true);
+      x.heal(3)
     });
+
+
+
   },
 };
 
@@ -495,22 +570,24 @@ let tank = {
   _cfgAdded: false,
   _money: 300,
   _doesAttack: false,
-  _hasdmg: false,
+  _hasdmg: true,
   energia: "",
   emoji: "",
-  hp: 251,
-  maxHealth: 250,
+  hp: 400,
+  maxHealth: 400,
   dano: 130,
   attackChance: false,
   ulti: 0,
   tank: true,
 
-  cfg() {},
+  cfg() {
+    this.dano = gerarNumero(100,211)
+  },
 
   everyRound() {
     if (this.ulti >= 100) return;
 
-    let ultiRate = gerarNumero(1, 2);
+    let ultiRate = gerarNumero(2, 4);
 
     this.ulti += ultiRate;
     this._cargoP.children[0].value = this.ulti;
@@ -542,10 +619,38 @@ let dog = {
   _cfgAdded: false,
   _money: 30,
   _attackAtSpawn: false,
-
+  _doesAttack: false,
+  attackChance: 11,
   hp: 25,
   maxHealth: 25,
   dano: 20,
+
+  cfg(){
+
+    this.dano = gerarNumero(15,27)
+
+  },
+
+  poder(){
+
+    if(this._poderUsing) return
+
+    this._poderUsing = true
+    this.ataque()
+    this.readyToAttack = true
+    this.print()
+    this.dano = Math.trunc (this.dano / 3)
+
+    setTimeout ( 
+      ()=> { if (this._dead) return 
+        this.ataque()
+        this._poderUsing = false
+        this.dano = Math.trunc (this.dano * 3)
+      },
+    1000
+    )
+   
+  }
 
 };
 
@@ -720,23 +825,30 @@ function Main() {
     emptyObj,
     emptyObj,
   ];
-
+  console.log('placarInimigoDano: ', placarInimigoDano);
   return;
 }
 
-export function populateArena() {
+export function populateArena(n) {
+
+  if(n){
+    if(!per(n)) return  
+  }
 
   if (!boss) return;
   coolDown = false;
   let chanceNormal = 75;
 
   if (per(chanceNormal)) {
-    spawnMonark(80);
+    spawnMonark(70);
     spawnDog(80);
   } else {
-    spawnTank(30);
-    spawnMenosCartas(35);
-    spawnCamarada(35);
+
+    spawnCamarada(40);
+    spawnMenosCartas(40);
+    spawnTank(80);
+
+
   }
 }
 

@@ -2,7 +2,7 @@ var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
 
-import { are, areObj, spawnMonark, populateArena } from "./arena.js";
+import { are, areObj, spawnMonark, populateArena, updatePlacarInimigo } from "./arena.js";
 
 import { especial } from "./modules/especial.js";
 
@@ -602,6 +602,7 @@ function debug() {
   money.set(99999);
   numCartas.set(999);
   hpPlayer.set(100);
+  hpPlayer.addBuff(5000)
   ammo.set(5);
 }
 
@@ -1164,18 +1165,23 @@ export function efeitoDano(carta) {
 
   heart.style.backgroundColor = "red";
   heart.style.border = "3px dotted black";
+  cartaP.style.opacity = '0.4'
+
   snd(hit);
 
   setTimeout(function () {
     heart.style.backgroundColor = "";
     heart.style.border = "";
     cartaP.style.borderStyle = "solid";
+    cartaP.style.opacity = '1'
   }, 300);
 }
 
 export function efeitoCura(carta) {
   let heart = carta._thisCardP.children[3].children[1];
+  
 
+  
   heart.style.backgroundColor = "blue";
   heart.style.border = "3px solid green";
 
@@ -2163,7 +2169,7 @@ export function tudo() {
     blockInv();
     poderBoss();
     runEveryRound();
-    populateArena();
+    populateArena(50);
   } else {
   }
 }
@@ -2216,6 +2222,7 @@ function tick() {
     ativarBtn();
     criarBtn();
     placarArena.printP();
+    updatePlacarInimigo()
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];
@@ -2247,7 +2254,7 @@ function tick() {
       }
     }
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 3; i++) {
       let cartaO = slotEspObj[i];
       
 
@@ -2406,7 +2413,7 @@ export let numCartas = {
 
   add(n) {
     this.total += n;
-    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
+    this.print()
   },
 
   remove(n) {
@@ -2415,13 +2422,31 @@ export let numCartas = {
     if (this.total < 0) {
       this.total = 0;
     }
-    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
+    this.print()
   },
 
   set(n) {
     this.total = n;
-    arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
+    this.print()
   },
+
+  print(){
+    
+    
+    if(this.total == 0) {
+      arenaP.textContent = " ⚠️ SUAS CARTAS ACABARAM ⚠️ ";
+      arenaP.classList.add('warning-cards')
+    } else if (this.total < 11){
+      arenaP.textContent = " ⚠️ VOCÊ TEM " + this.total + (this.total == 1 ? " CARTA ⚠️" : " CARTAS ⚠️ ")
+      arenaP.classList.add('warning-cards')
+    } else {
+      arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
+      arenaP.classList.remove('warning-cards')
+    }
+
+  }
+
+
 };
 
 export let hpPlayer = {

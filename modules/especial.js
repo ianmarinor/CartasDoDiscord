@@ -194,7 +194,7 @@ class Especial {
     this._energiaP = this._thisCardP.children[3].children[0];
     this._hpP = this._thisCardP.children[3].children[1];
     this._buttonP = this._thisCardP.children[3].children[2];
-    this._seloP = this._thisCardP.children[3].children[4];
+    this._seloP = this._thisCardP.children[5]
 
    
 
@@ -425,7 +425,7 @@ class Especial {
   heal(n, _delay) {
     let delay;
 
-    !_delay ? (delay = gerarNumero(450, 650)) : (delay = _delay);
+    !_delay ? (delay = gerarNumero(350, 650)) : (delay = _delay);
 
     setTimeout(() => {
 
@@ -641,6 +641,17 @@ class Especial {
     } else {
       this._buttonP.innerHTML = "🔘";
     }
+
+    //estilo selo
+
+    if(this.tank){
+      this._seloP.textContent = '🛡️'
+    } else {
+      
+      this._seloP.textContent = ''
+    }
+
+
   }
 
   // this method will set dafaults for each card and will run only once
@@ -1347,8 +1358,8 @@ export let especiais = {
     cargo: "",
     dmgBoss: false,
     dano: 1,
-    hp: 25,
-    maxHealth: 25,
+    hp: 40,
+    maxHealth: 40,
     hashp: true,
     _invHiddenButton: true,
 
@@ -1445,6 +1456,10 @@ export let especiais = {
       visibility: "visible",
     },
 
+    cfg(){
+      this.dano = gerarNumero (3,6)
+    },
+
     everyRound() {
       if (!hpPlayer.isFull && per(50)) {
         hpPlayer.add(1);
@@ -1453,9 +1468,9 @@ export let especiais = {
 
       invObj.map((x) => {
 
-        let healValue = gerarNumero (1,3)
+        let healValue = gerarNumero (2,4)
 
-        if (x.hashp && per(75) && !x._fullHp) {
+        if (x.hashp && per(80) && !x._fullHp) {
           x.heal(healValue);
           this.buildUlt(healValue);
         }
@@ -1738,6 +1753,15 @@ export let especiais = {
     _hasUlti: true,
     tank: true,
     requireAmmo: true,
+
+
+    cfg(){
+
+      this.dano = gerarNumero(10,18)
+
+    },
+
+
     ult() {
       let dvaToMinidva = (energiaFromField) => {
         this._invHiddenButton = true;
@@ -1753,7 +1777,7 @@ export let especiais = {
         this.tank = false;
       };
 
-      let ultiDmg = gerarNumero(500, 920);
+      let ultiDmg = gerarNumero(750, 1185);
       this.dano = ultiDmg;
       let energiaTotal = 0;
 

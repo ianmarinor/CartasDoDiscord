@@ -188,9 +188,9 @@ const cartaEsp =
   '<p class="ataqueEsp"></p>' +
   '<p class="novoAtaqueEsp"></p>' +
   '<div class="action">🔘</div>' +
+  "</div>" +
   '<p class="seedEsp"></p>' +
-  '<p class="seloEsp"></p>' +
-  "</div>";
+  '<p class="seloEsp"></p>' 
 
 
 

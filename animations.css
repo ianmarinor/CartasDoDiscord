@@ -1,3 +1,18 @@
+
+.warning-cards{
+
+  animation: piscar 890ms;
+  animation-iteration-count: infinite;
+  /* animation-direction: alternate; */
+
+  background-color: brown;
+  /* border-radius: 10px; */
+  color: rgb(206, 209, 14);
+}
+
+
+
+
 .piscar {
     animation: piscar 110ms;
     animation-iteration-count: infinite;
