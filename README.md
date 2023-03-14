@@ -1,4 +1,4 @@
-<div style='text-align:center; font-size: 3em' > 🎴 TENICARTAS 🎴 </div>
+<div align='center' > 🎴 TENICARTAS 🎴 </div>
 
 ### ⬇️ ESPECIAL CARDS METHODS⬇️
 ---
