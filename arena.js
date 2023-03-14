@@ -217,6 +217,7 @@ class Inimigo {
     } else if (trigger == false) {
       this._critico = false;
       this.dano = Math.trunc(this.dano / 2);
+      this.energia = Math.trunc(this.energia / 2);
     }
   }
 
@@ -234,14 +235,24 @@ class Inimigo {
 
   desinfectar() {
     if (!this.infected) return;
-
-    this.hp = this.previousHp;
-    this._money = Math.trunc(this._money / 2);
-    this.infected = false;
+    //devolver styles
+    this._thisCardP.style.backgroundColor = this.previousCartaBackgroundColor
+    this._thisCardP.style.backgroundImage = this.previousCartaBackgroundImage
+    this._cargoP.style.visibility = 'visible'
+    this._thisCardP.style.border = this.previousBorder
+    // tirar classes
     this._thisCardP.children[0].classList.remove("float");
-    this._thisCardP.children[2].classList.remove("float");
-    this._hpP.classList.remove("float");
     this._thisCardP.children[3].children[2].classList.remove("float");
+    this._hpP.classList.remove("float");
+    this._energiaP.classList.remove("float");
+    //devolver obj values
+    this.hp = this.previousHp;
+    this.maxHealth = this.previousMaxHealth
+    this._money = Math.trunc(this._money / 2);
+    this.dano = this.previousDano
+    this.energia = this.previousEnergia
+
+    this.infected = false;
   }
 
   dmg(n,absolute) {
@@ -357,7 +368,7 @@ class Inimigo {
   }
 
   defaultEveryRound() {
-    per(33) && this.desinfectar();
+     this.desinfectar();
   }
 
   print() {
@@ -519,11 +530,11 @@ let menosCartas = {
 
 
   cfg() {
-    this.energia = gerarNumero(-3, -15);
+    this.energia = gerarNumero(3, 15);
   },
 
   poder() {
-    numCartas.remove(Math.abs(this.energia));
+    numCartas.remove(this.energia);
   },
 };
 
@@ -552,7 +563,8 @@ let camarada = {
 
   cfg() {
     this._energiaP.classList.add("critico");
-
+    this._energiaP.style.visibility  = 'hidden'
+    
     this._cargoP.textContent = "ARMA E SAUDE PARA TODOS";
     this._cargoP.style.fontSize = "65%";
   },

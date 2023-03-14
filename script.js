@@ -2180,7 +2180,7 @@ export function tudo() {
 function runEveryRound() {
   invObj.map((x) => {
     x.everyRound ? x.everyRound() : false;
-    x.defaultEveryRound? x.defaultEveryRound() : false
+    x.everyRoundDefault? x.everyRoundDefault() : false
   });
   maoObj.map((x) => {
     x._everyRoundMao ? x.everyRound() : false;
@@ -2189,6 +2189,7 @@ function runEveryRound() {
     if (x.autoAtaque) {
       x.autoAtaque();
     }
+    x.defaultEveryRound ? x.defaultEveryRound() : 0
 
     if (x.everyRound) {
       x.everyRound();
@@ -2197,7 +2198,7 @@ function runEveryRound() {
       }
     }
 
-    x.defaultEveryRound? x.defaultEveryRound() : false
+    x.everyRoundDefault? x.everyRoundDefault() : false
 
   });
 }
