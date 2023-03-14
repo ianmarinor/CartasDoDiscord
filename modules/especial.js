@@ -322,8 +322,7 @@ class Especial {
         spread[0] ? (left = obj._leftObj) : false;
         spread[0] ? (right = obj._rightObj) : false;
 
-        console.log("left: ", left);
-        console.log("right: ", right);
+        
         ataqueSpread();
       };
 
@@ -450,11 +449,11 @@ class Especial {
     }
   }
 
-  useBarrier(damage) {
+  useBarrier(_damage) {
     if (this._barreira > 0) {
-      this._barreira -= damage;
+      this._barreira -= _damage;
 
-      this._mit += damage;
+      this._mit += _damage;
       if (this._barreira <= 0) this._barreira = 0;
 
       return true;
@@ -493,10 +492,6 @@ class Especial {
   kill(absolute) {
     if (!this._parentP) return;
 
-    if (this.cartaId == "tank" && !this.tankDead && !absolute) {
-      this.tankToMoney();
-      return;
-    }
 
     if (this.cartaId == "creeper" && !this.exploding && !absolute) {
       this.explode();
