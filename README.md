@@ -25,7 +25,7 @@
 ---
 🔹`ataque(dmg, ammO, _spread)`
 
-- Will attack one random card within ***are*** following this hierarchy if they're not invisible: tank > especial > normal > miniBoss > boss
+- Will attack one random card within ***are*** following this hierarchy if they're not invisible: exposto > tank > especial > normal > miniBoss > boss
   
    - ***REQUIRES IMPLEMENTATION***
 
