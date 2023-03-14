@@ -123,8 +123,8 @@ class Especial {
     this._parentP = false;
     this._invHiddenButton = false;
     this._maoHiddenButton = true;
-    this._poderUsing = false
-    
+    this._poderUsing = false;
+
     this._barreira = 0;
     this._monarkFree = false;
     this._monarkReplaceble = true;
@@ -137,12 +137,13 @@ class Especial {
     this._mit = 0;
     this._dmgTaken = 0;
     this._dmgDone = 0;
-    this._healingDone = 0
+    this._healingDone = 0;
     this._hasUlti = false;
     this._canBeDeleted = true;
     this._canBeSold = true;
     this._everyRoundMao = false;
     this._requiredIntegrante = false;
+    this._requiredIntegrante2 = false;
 
     //DOM
     this._thisCardP = false;
@@ -160,11 +161,10 @@ class Especial {
   ult() {}
 
   place() {
-
     for (let i = 0; i < 3; i++) {
       if (this == slotEspObj[i]) {
-        this._parent = slotEspObj
-        this._parentP = slotEsp
+        this._parent = slotEspObj;
+        this._parentP = slotEsp;
         break;
       }
     }
@@ -195,10 +195,7 @@ class Especial {
     this._energiaP = this._thisCardP.children[3].children[0];
     this._hpP = this._thisCardP.children[3].children[1];
     this._buttonP = this._thisCardP.children[3].children[2];
-    this._seloP = this._thisCardP.children[5]
-
-   
-
+    this._seloP = this._thisCardP.children[5];
 
     if (this._place > 0) {
       this._leftCard = this._parentP.children[this._place - 1];
@@ -220,20 +217,16 @@ class Especial {
       this._rightObj = false;
     }
 
-    this.checkFullHp()
-    
-     
-
+    this.checkFullHp();
   }
 
-  setTotalHp(){
-    this._totalHp = this.hp + this._buff 
+  setTotalHp() {
+    this._totalHp = this.hp + this._buff;
   }
 
-  checkFullHp(){
-    this.hp == this.maxHealth ? this._fullHp = true : this._fullHp = false
+  checkFullHp() {
+    this.hp == this.maxHealth ? (this._fullHp = true) : (this._fullHp = false);
   }
-
 
   buildUlt(n) {
     this.ulti += n;
@@ -429,8 +422,7 @@ class Especial {
     !_delay ? (delay = gerarNumero(350, 650)) : (delay = _delay);
 
     setTimeout(() => {
-
-      this.checkFullHp()
+      this.checkFullHp();
       if (this._fullHp || this._dead) return;
 
       if (n == 0) return;
@@ -441,7 +433,7 @@ class Especial {
         this._fullHp = true;
         this.hp = this.maxHealth;
       }
-      this.setTotalHp()
+      this.setTotalHp();
       return true;
     }, delay);
   }
@@ -458,42 +450,38 @@ class Especial {
     }
   }
 
-  useBarrier(damage){
+  useBarrier(damage) {
+    if (this._barreira > 0) {
+      this._barreira -= damage;
 
-    if ( this._barreira > 0){
+      this._mit += damage;
+      if (this._barreira <= 0) this._barreira = 0;
 
-        this._barreira -= damage
-
-        this._mit += damage
-       if (this._barreira <= 0) this._barreira = 0
-
-        return true
+      return true;
     }
 
-    return false
-}
+    return false;
+  }
 
   dmg(n) {
+    if (this.useBarrier(n)) return;
 
-    if(this.useBarrier(n))return
-  
     if (this.hashp == false) {
       efeitoDano(this);
       this.kill();
       return;
     }
 
-    this._buff -= n
-    this._dmgTaken += n
-    if ( this._buff > 0){
-      this.setTotalHp()
-      return
-  }
-   
-  this.hp += this._buff 
-  this._buff = 0
-  this.setTotalHp()
+    this._buff -= n;
+    this._dmgTaken += n;
+    if (this._buff > 0) {
+      this.setTotalHp();
+      return;
+    }
 
+    this.hp += this._buff;
+    this._buff = 0;
+    this.setTotalHp();
 
     efeitoDano(this);
     if (this._totalHp <= 0) {
@@ -545,6 +533,46 @@ class Especial {
   changeRetrato(img) {
     let retrato = this._thisCardP.children[1];
     retrato.style.backgroundImage = img;
+  }
+
+  activateButtonForCardId(_cartaId, _arena) {
+    let arena;
+    if (_arena == undefined) {
+      arena = areObj;
+    } else {
+      arena = _arena;
+    }
+
+    let cartaId = _cartaId;
+    let matchingCards = arena.some(
+      (x) => x.cartaId == cartaId && !x.isInvisible
+    );
+
+    matchingCards
+      ? (this._invHiddenButton = false)
+      : (this._invHiddenButton = true);
+  }
+
+  disableButton(_trigger, _element) {
+    let element;
+    let opacity;
+    let cursor;
+    if (_element == undefined) {
+      element = this._buttonP;
+    } else {
+      element = _element;
+    }
+
+    if (_trigger == undefined || _trigger == true) {
+      opacity = "0.2";
+      cursor = "not-allowed";
+    } else {
+      opacity = "1";
+      cursor = "pointer";
+    }
+
+    element.style.opacity = opacity;
+    element.style.cursor = cursor;
   }
 
   defaultEveryRound() {
@@ -645,14 +673,11 @@ class Especial {
 
     //estilo selo
 
-    if(this.tank){
-      this._seloP.textContent = '🛡️'
+    if (this.tank) {
+      this._seloP.textContent = "🛡️";
     } else {
-      
-      this._seloP.textContent = ''
+      this._seloP.textContent = "";
     }
-
-
   }
 
   // this method will set dafaults for each card and will run only once
@@ -665,10 +690,22 @@ class Especial {
     this._requiredIntegrante
       ? (this._requiredIntegrante = integrante())
       : false;
+  
+      this._requiredIntegrante2
+      ? (this._requiredIntegrante2 = integrante())
+      : false;
+
   }
 
   requiredCardOnInv() {
-    return invObj.some((x) => x._integrante == this._requiredIntegrante);
+    let requiredOnArena  = invObj.some((x) => x._integrante == this._requiredIntegrante);
+
+    if(requiredOnArena){
+      this._invHiddenButton = false
+    } else {
+      
+    }
+
   }
 }
 
@@ -773,70 +810,81 @@ export let especiais = {
     energia: 1,
     emoji: " 😡",
     retrato: "url('pics/SPEAKER.webp')",
-    cargo: "MONARK BAN!",
+    cargo: "MONARK BAN! 🔨",
     ataqueE: 1,
-    hp: 15,
+    hp: 25,
     hashp: true,
-    maxHealth: 15,
+    maxHealth: 25,
     dmgBoss: false,
+    dormindo: false,
+    _invHiddenButton: true,
 
-    poder() {
+    tick() {
       let varianteSpeaker = inv.children[this._place];
-      let retratoVariante = varianteSpeaker.children[1];
       let speakerDorminfo = 'url("pics/speakerDormindo.jpg")';
+      let speakerNotSleepingPic = 'url("pics/SPEAKER.webp")';
       let descriptionSpeaker = varianteSpeaker.children[2];
 
-      let multiSpeaker = () => {
-        if (this.energia < 80) {
-          return gerarNumero(1.9, 2.5, 1);
-        } else {
-          return gerarNumero(1.2, 1.5, 1);
-        }
-      };
-      let multiplicador = multiSpeaker();
+      if (this.dormindo) {
+        this.tank = true;
+        descriptionSpeaker.innerHTML = "durmi kkjk <br> &#128564; &#128564;";
+        this.changeRetrato(speakerDorminfo);
+        this.disableButton();
+        this.dmgBoss = true
+      } else {
+        this.tank = false;
+        descriptionSpeaker.innerHTML = "MONARK BAN! 🔨";
+        this.disableButton(false);
+        this.changeRetrato(speakerNotSleepingPic);
+        this.dmgBoss = false
+      }
+
+      this.activateButtonForCardId("monark");
+    },
+
+    poder() {
+      if (this.dormindo) return;
 
       let speakerSono = () => {
-        let highRiskSleep = gerarNumero(110, 200);
-        let caraCoroa = per(50);
+        let highRiskSleep = gerarNumero(110, 255);
+        let caraCoroa = per(90);
+        let normalChance = per(23);
 
         if (this.energia > highRiskSleep && caraCoroa) {
           this.dormindo = true;
+        } else if (normalChance) {
+          this.dormindo = true;
+          this.addBuff(15)
         }
       };
 
       speakerSono();
 
       for (let j = 0; j < 10; j++) {
-        //
-
         let vitima = areObj[j];
         if (areObj[j].cartaId != "monark" || vitima.isInvisible) continue;
-        // console.log(vitima);
-
         if (!this.dormindo) {
-          this.energia = Math.trunc(this.energia * multiplicador);
-
+          this.energia += gerarNumero(2, 12);
           vitima.kill();
-
           let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.3];
           snd(order);
-
           break;
         } else {
-          retratoVariante.style.backgroundImage = speakerDorminfo;
-
-          descriptionSpeaker.innerHTML = "durmi kkjk <br> &#128564; &#128564;";
-
-          varianteSpeaker.children[3].children[2].style.visibility = "hidden";
-
           let speakerSleepAu = ["speakerSleep.mp3"];
           snd(speakerSleepAu);
           this.dmgBoss = true;
-          this._invHiddenButton = true;
+
           break;
         }
       }
-      this.print();
+
+    },
+
+    everyRound(){
+
+      if(per(30)) this.dormindo = false
+
+
     },
 
     nomeStyle: {
@@ -1208,35 +1256,40 @@ export let especiais = {
     raridade: raridades.cavaleiro,
     energia: 1,
     requireAmmo: true,
-    emoji: "🗡️",
+    emoji: "💥",
     emojiHp: "",
     ulti: 0,
     retrato: 'url("/pics/spyRetrato.webp")',
     cargo: "",
     hashp: false,
-    hp: 1,
-    maxHealth:1,
+    hp: 5,
+    maxHealth: 5,
     dmgBoss: false,
     hashp: true,
     clockReady: true,
     isInvisible: false,
-    dano: 60,
+    dano: 0,
+    tank: true,
 
-    cfg(){
-
-      this.dano = gerarNumero(57,75)
-
-
+    cfg() {
+      this.dano = gerarNumero(68, 85);
+      this._cargoP.textContent = "⌚";
+      this._cargoP.style.fontSize = "2em";
     },
 
-    ult(){
+    tick() {
+      if (this.clockReady) {
+        this._cargoP.style.cursor = "pointer";
+      } else {
+        this._cargoP.style.cursor = "not-allowed";
+      }
+    },
 
-
+    ult() {
       let spy = this._thisCardP;
-      let spyWatch = this._cargoP
+      let spyWatch = this._cargoP;
       let botao = spy.children[3].children[2];
       let retrato = spy.children[1];
-
 
       let invisWatch = () => {
         let invis = () => {
@@ -1246,7 +1299,7 @@ export let especiais = {
           retrato.classname = "invisible";
           spy.children[0].className = "invis";
 
-          this.energia = Math.trunc(this._dmgDone / 6);
+          this._energiaP.textContent = this.energia;
 
           this._invHiddenButton = true;
           retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
@@ -1255,7 +1308,7 @@ export let especiais = {
           snd(spyInvisAu);
 
           setTimeout(vis, gerarNumero(800, 7000));
-          spyWatch.style.visibility = "hidden";
+          spyWatch.style.opacity = "0.1";
 
           this.clockReady = false;
           this.isInvisible = true;
@@ -1267,7 +1320,6 @@ export let especiais = {
         let vis = () => {
           if (this._dead) return;
 
-          spy.dataset.hashp = "false";
           spy.className = "visible";
           spyWatch.id = "vis";
           retrato.classList.remove("invisible");
@@ -1275,7 +1327,7 @@ export let especiais = {
           spy.children[0].className = "vis";
           this._invHiddenButton = false;
           retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
-          this.energia = 60;
+          this._energiaP = this.dano;
 
           let spyInvisAu = ["spyInvis.mp3", 0.3];
           snd(spyInvisAu);
@@ -1283,32 +1335,21 @@ export let especiais = {
           this._monarkFree = false;
 
           this.dmgBoss = false;
-          this.setEmoji("🗡️");
+          this.setEmoji(this._defaultEmojiDano);
         };
 
         if (this.clockReady) {
           invis();
         }
-
       };
 
-      invisWatch()
-
-    },
-
-    cfg() {
-      // if (this._parentP != inv) return;
-
-      this._cargoP.textContent = "⌚"
-      this._cargoP.style.fontSize = "2em"
-      console.log(spy);
-      this._cfgAdded = true;
+      invisWatch();
     },
 
     everyRound() {
-      if (per(33) && !this.isInvisible) {
+      if (per(50) && !this.isInvisible) {
         this.clockReady = true;
-        this._cargoP.style.visibility = "visible";
+        this._cargoP.style.opacity = "1";
       }
     },
 
@@ -1322,6 +1363,7 @@ export let especiais = {
 
       retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
 
+      this.energia += gerarNumero(5, 40);
       this.ataque();
 
       let stabAu = ["stab.mp3", 0.3];
@@ -1471,27 +1513,29 @@ export let especiais = {
       visibility: "visible",
     },
 
-    cfg(){
-      this.dano = gerarNumero (3,6)
+    cfg() {
+      this.dano = gerarNumero(3, 6);
     },
 
     everyRound() {
       if (!hpPlayer.isFull && per(50)) {
         hpPlayer.add(1);
-        this._healingDone += 1
+        this._healingDone += 1;
         this.buildUlt(1);
       }
 
+      let healValue = gerarNumero(2, 4);
       invObj.map((x) => {
-
-        let healValue = gerarNumero (2,4)
 
         if (x.hashp && per(80) && !x._fullHp) {
           x.heal(healValue);
           this.buildUlt(healValue);
-          this._healingDone += healValue
+          this._healingDone += healValue;
         }
       });
+
+      this.heal(healValue)
+
     },
 
     ult() {
@@ -1510,34 +1554,31 @@ export let especiais = {
     },
 
     poder() {
-
-      if(this._poderUsing) return
-      this._poderUsing = true
+      if (this._poderUsing) return;
+      this._poderUsing = true;
       let ultiRate = () => gerarNumero(0, 1);
 
       let ammo = 1;
-      let tiros = 3
+      let tiros = 3;
 
       let weapon = () => {
-
         if (this._dead) return;
         if (this.ataque(false, ammo)) {
           this.buildUlt(ultiRate());
         }
 
-        tiros--
-        ammo = 0
-        if(tiros == 0 || this._dead) {
-          clearInterval(multiShot)
-          this._poderUsing = false
-          return
+        tiros--;
+        ammo = 0;
+        if (tiros == 0 || this._dead) {
+          clearInterval(multiShot);
+          this._poderUsing = false;
+          return;
         }
       };
 
       let multiShot = setInterval(() => {
         weapon();
       }, 300);
-
     },
   },
 
@@ -1571,35 +1612,24 @@ export let especiais = {
         ? (this._cargoP.style.color = "red")
         : (this._cargoP.style.color = "#FFBC42");
 
-        
-          if (invObj.some((x) => x.atiradorJhin)) {
-            this.atirador = true
-          } else {
-            this.atirador = false
-          }
-        
-          if(this.atirador && this.tiros > 1){
+      if (invObj.some((x) => x.atiradorJhin)) {
+        this.atirador = true;
+      } else {
+        this.atirador = false;
+      }
 
-            invObj.map(
-              (x) => {
-                x.atiradorJhin ? this.dano = x.energia * 4 : 0
-              }
-              )
-
-          } else if (this.atirador && this.tiros == 1) {
-            invObj.map(
-              (x) => {
-                x.atiradorJhin ? this.dano = x.energia * 8 : 0
-              }
-              )
-          } else {
-            this.dano = 4
-          }
-
-
+      if (this.atirador && this.tiros > 1) {
+        invObj.map((x) => {
+          x.atiradorJhin ? (this.dano = x.energia * 4) : 0;
+        });
+      } else if (this.atirador && this.tiros == 1) {
+        invObj.map((x) => {
+          x.atiradorJhin ? (this.dano = x.energia * 8) : 0;
+        });
+      } else {
+        this.dano = 4;
+      }
     },
-
-
 
     poder() {
       let jhin = this._thisCardP;
@@ -1627,8 +1657,6 @@ export let especiais = {
         ) {
           //se nao tiver atirador, escolha atirador
 
-          
-
           if (!this.atirador) {
             atirador.statusEmoji = this.allyEmoji;
             atirador.atiradorJhin = true;
@@ -1639,9 +1667,7 @@ export let especiais = {
             snd(jhinEscolhaAu);
             snd(ultiJhinAu);
 
-            
-            this.atirador = true
-           
+            this.atirador = true;
 
             break;
             //se tiver atirador
@@ -1704,14 +1730,11 @@ export let especiais = {
                 elimCardInv(atiradorP);
                 this.tiros--;
                 this.kill();
-
-
               } else {
                 this.aim == "boss"
                   ? boss.dmg(this.dano)
                   : this.ataque(false, false);
                 elimCardInv(atiradorP);
-                
 
                 this.tiros--;
                 tirosString.textContent = this.tiros;
@@ -1771,13 +1794,9 @@ export let especiais = {
     tank: true,
     requireAmmo: true,
 
-
-    cfg(){
-
-      this.dano = gerarNumero(18,23)
-
+    cfg() {
+      this.dano = gerarNumero(18, 23);
     },
-
 
     ult() {
       let dvaToMinidva = (energiaFromField) => {
@@ -2102,11 +2121,9 @@ export function escolherEspecial(teste) {
 
       if (num == 1) {
         especial = objBinder(especiais.tenica);
-      } else if (num == 2){
+      } else if (num == 2) {
         especial = objBinder(especiais.premioMonark);
       }
-
-
 
       //SANGUE AZUL
     } else if (raridades.sangueAzul.rng()) {
@@ -2118,15 +2135,13 @@ export function escolherEspecial(teste) {
 
       if (!true) {
         especial = objBinder(especiais.dva);
-      } 
-      
-        else if (num == 1) {
+      } else if (num == 1) {
         especial = objBinder(especiais.lucio);
       } else if (num == 2) {
         especial = objBinder(especiais.dva);
       } else if (num == 3) {
         especial = objBinder(especiais.spy);
-      } 
+      }
 
       //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
@@ -2139,9 +2154,7 @@ export function escolherEspecial(teste) {
 
       if (!true) {
         especial = objBinder(especiais.jhin);
-      } 
-      
-        else if (num == 1) {
+      } else if (num == 1) {
         especial = objBinder(especiais.speaker);
       } else if (num == 2) {
         especial = objBinder(especiais.estoicoTuru);
@@ -2161,7 +2174,7 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 1);
 
-       if (num == 1) {
+      if (num == 1) {
         especial = objBinder(especiais.maisCartas);
       }
     }

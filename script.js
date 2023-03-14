@@ -2405,7 +2405,7 @@ export let numCartas = {
     if(this.total == 0) {
       arenaP.textContent = " ⚠️ SUAS CARTAS ACABARAM ⚠️ ";
       arenaP.classList.add('warning-cards')
-    } else if (this.total < 11){
+    } else if (this.total < 16){
       arenaP.textContent = " ⚠️ VOCÊ TEM SOMENTE " + this.total + (this.total == 1 ? " CARTA ⚠️" : " CARTAS ⚠️ ")
       arenaP.classList.add('warning-cards')
     } else {

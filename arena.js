@@ -618,6 +618,7 @@ let tank = {
     invObj.map((x) => {
       x.dmg(this.dano);
     });
+    hpPlayer.remove( Math.trunc( this.dano / 3 ) )
     this.kill(true);
   },
 };
@@ -644,7 +645,7 @@ let dog = {
 
   cfg(){
 
-    this.dano = gerarNumero(15,27)
+    this.dano = gerarNumero(21,32)
 
   },
 
@@ -656,13 +657,13 @@ let dog = {
     this.ataque()
     this.readyToAttack = true
     this.print()
-    this.dano = Math.trunc (this.dano / 3)
+    this.dano = Math.trunc (this.dano / 5)
 
     setTimeout ( 
       ()=> { if (this._dead) return 
         this.ataque()
         this._poderUsing = false
-        this.dano = Math.trunc (this.dano * 3)
+        this.dano = Math.trunc (this.dano * 5)
       },
     1000
     )
@@ -851,14 +852,14 @@ function Main() {
 
 export function populateArena() {
 
-  let chance = 20
+  let chance = 5
    if(boss){
     
     let porcentagemVida = Math.trunc(boss.health / boss.fullHealth * 100)
     chance += 100 - porcentagemVida
     console.log(porcentagemVida);
    }
-
+   chance += Math.trunc(money.total / 200)  
    chance += Math.trunc(rodadas / 25)
 
   chance > 100 ? chance = 100 : 0
