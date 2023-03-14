@@ -1,13 +1,13 @@
-# TENICARTAS
+<div style='text-align:center; font-size: 3em' > 🎴 TENICARTAS 🎴 </div>
 
-## ESPECIAL CARDS METHODS
+### ⬇️ ESPECIAL CARDS METHODS⬇️
 ---
-`addBuff(n)` 
+🔹`addBuff(n)` 
 
  - Will increase `this.buff` by `n`
 
 ---
-` activateButtonForCardId(_cartaId, _arena)` 
+🔹` activateButtonForCardId(_cartaId, _arena)` 
  - Checks if there is a card in `_arena` with the value of `_cartaId` as its `cartaId` value.
    - If yes, set `this._invHiddenButton` to `false`.
    - If not, set `this._invHiddenButton` to `true`.
@@ -15,13 +15,13 @@
 - ***REQUIRES REVISION***
 
 ---
-`areaAtack()`
+🔹`areaAtack()`
 
  - Will damage every card on ***are*** if they're not invisible.
  - Damage will be `this.dano`.
 
 ---
-`ataque(dmg, ammO, _spread)`
+🔹`ataque(dmg, ammO, _spread)`
 
 - Will attack one random card within ***are*** following this hierarchy if they're not invisible: tank > especial > normal > miniBoss > boss
   
@@ -45,28 +45,28 @@
     - Damage to be spread will be divided by 3 if `this.tank` is true and 6 if not.
     - If not set `_spread[0]` will be false.
 ---
-`buildUlt(n)`
+🔹`buildUlt(n)`
 
  - Increase the `this.ulti` attribute by `n`.
  - Change ulti value over the DOM and adds its css class `this.ulti` equals 100.
 
 ---
-`buildUltAuto()`
+🔹`buildUltAuto()`
 
  - Has 33% chance of increasing `this.ulti` by 1 when when run.
  - Is run every round.
 
 ---
-`changeEmojiToDefault()`
+🔹`changeEmojiToDefault()`
  - Will set `this.emoji` value to `this._defaultEmoji` value.
 
 ----------------- 
-`checkFullHp()` 
+🔹 `checkFullHp()` 
 
 - Returns `true` if `this.hp` equals `this._fullHp`
 
 ---
-`changeRetrato(img)` 
+  `changeRetrato(img)` 
  - Set `this._retratoP` background image value to `img`.
 
 ---
