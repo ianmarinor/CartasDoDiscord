@@ -114,6 +114,7 @@ class Inimigo {
     this._doesAttack = true;
     this._attackAtSpawn = false;
     this._critico = false;
+    this._canBeCritic = true
     this._poderUsing = false
 
     this._rightCard = false;
@@ -208,11 +209,12 @@ class Inimigo {
   }
 
   critico(trigger) {
-    if (trigger) {
-      if (this._critico || !this._hasdmg) return;
+    if (trigger == undefined || trigger) {
+      if (!this._canBeCritic || this._critico) return;
       this._critico = true;
       this.dano *= 2;
-    } else {
+      this.energia *= 2;
+    } else if (trigger == false) {
       this._critico = false;
       this.dano = Math.trunc(this.dano / 2);
     }
@@ -220,7 +222,7 @@ class Inimigo {
 
   superCritico(trigger) {
     if (trigger) {
-      if (this._critico || !this._hasdmg) return;
+      if (this._critico || !this._canBeCritic ) return;
       this._critico = true;
       this.dano *= 3;
     } else {
@@ -393,10 +395,12 @@ class Inimigo {
       moneyP.textContent = this._money + "💰";
     }
 
-    if (this._hasdmg) {
-      this._critico
-        ? energia.classList.add("critico")
-        : energia.classList.remove("critico");
+    if (this._critico) {
+      
+         energia.classList.add("critico")
+        } else {
+       energia.classList.remove("critico");
+
     }
 
     if (!this._cfgAdded) {
@@ -511,6 +515,9 @@ let menosCartas = {
   attackChance: 10,
   especial: true,
 
+  
+
+
   cfg() {
     this.energia = gerarNumero(-3, -15);
   },
@@ -541,6 +548,7 @@ let camarada = {
   dano: false,
   attackChance: 25,
   especial: true,
+  _canBeCritic: false,
 
   cfg() {
     this._energiaP.classList.add("critico");
@@ -554,11 +562,12 @@ let camarada = {
     let healAmount = gerarNumero(7,25)
 
     areObj.map((x) => {
-      x.critico && x.critico(true);
+      if(x.empty)return
+      x.critico(true);
       x.heal(healAmount)
     });
 
-    boss.heal(healAmount)
+    boss && boss.heal(healAmount)
 
 
 
@@ -816,7 +825,10 @@ export function spawnMonark(n) {
 let coolDown = false;
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnDog()
+    spawnCamarada()
+    coolDown = false
+    spawnMenosCartas()
+    coolDown = false
   }
 });
 

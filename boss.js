@@ -112,10 +112,10 @@ function createMonark() {
     },
 
     chuvaDeMonark() {
-      let chance = 1;
+      let chance = 0;
 
-      let porcentagemVida = Math.trunc((this.health / this.fullHealth) * 100);
-      chance += 100 - porcentagemVida;
+      let porcentagemVida = (this.health / this.fullHealth) * 10
+      chance += 10 - porcentagemVida;
       // chance += Math.trunc(rodadas / 50);
       // chance += Math.trunc(money.total / 700);
 
@@ -123,13 +123,18 @@ function createMonark() {
 
       console.log("CHANCE CHUVA DE MONARK: ", chance);
 
-      setInterval(() => {
+      setTimeout(() => {
         if (this._coolDown) return;
 
-        if (!per(chance)) return;
+        let canGo = per(chance)
+        console.log('canGo: ', canGo);
+
+        if (!canGo) return;
+
+        console.log();
 
         this.treme(true);
-        this.coolDown(5000);
+        this.coolDown(15000 - (chance * 100) );
         setTimeout(() => {
           this.treme(false);
 
@@ -145,7 +150,7 @@ function createMonark() {
             }
           });
         }, gerarNumero(750, 3200));
-      }, gerarNumero(3120, 15000));
+      }, gerarNumero(120, 120));
     },
   };
 

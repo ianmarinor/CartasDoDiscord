@@ -811,7 +811,7 @@ export let especiais = {
 
         let vitima = areObj[j];
         if (areObj[j].cartaId != "monark" || vitima.isInvisible) continue;
-        console.log(vitima);
+        // console.log(vitima);
 
         if (!this.dormindo) {
           this.energia = Math.trunc(this.energia * multiplicador);
@@ -1224,7 +1224,7 @@ export let especiais = {
 
     cfg(){
 
-      this.dano = gerarNumero (57,75)
+      this.dano = gerarNumero(57,75)
 
 
     },
@@ -1942,6 +1942,7 @@ export let especiais = {
     dano: undefined,
     exploding: false,
     _monarkReplaceble: false,
+    tank: true,
 
     cfg() {
       let dano = gerarNumero(70, 110);

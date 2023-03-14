@@ -31,6 +31,8 @@ export function gerarNumero(min, max, decimals) {
 
 export function per(n) {
   let rng = Math.random() * 100;
+  // console.log('per RNG:', rng);
+  // console.trace();
   return rng < n;
 }
 
@@ -2354,7 +2356,7 @@ function healMonarkBoss(x) {
   }
 }
 
-let chuvaCooldown = false;
+
 
 //************************************************************************************* */
 //************************************************************************************* */
@@ -2369,7 +2371,7 @@ function poderBoss() {
 
     
       if (boss.name == "monark") {
-        // console.log(777777777777);
+        
         boss.chuvaDeMonark()
     
   }
