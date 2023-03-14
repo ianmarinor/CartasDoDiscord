@@ -137,6 +137,7 @@ class Especial {
     this._mit = 0;
     this._dmgTaken = 0;
     this._dmgDone = 0;
+    this._healingDone = 0
     this._hasUlti = false;
     this._canBeDeleted = true;
     this._canBeSold = true;
@@ -697,7 +698,7 @@ export let especiais = {
     cargo: "",
     hp: 250,
     hashp: true,
-    maxHealth: 700,
+    maxHealth: 250,
     dmgBoss: false,
     tank: true,
 
@@ -1208,31 +1209,28 @@ export let especiais = {
     energia: 1,
     requireAmmo: true,
     emoji: "🗡️",
-    emojiHp: "⌚",
-
+    emojiHp: "",
+    ulti: 0,
     retrato: 'url("/pics/spyRetrato.webp")',
     cargo: "",
     hashp: false,
-    hp: "",
+    hp: 1,
+    maxHealth:1,
     dmgBoss: false,
-    hashp: false,
+    hashp: true,
     clockReady: true,
     isInvisible: false,
     dano: 60,
 
 
+    ult(){
 
 
-    cfg() {
-      // if (this._parentP != inv) return;
       let spy = this._thisCardP;
-      let spyWatch = spy.children[3].children[1];
+      let spyWatch = this._cargoP
       let botao = spy.children[3].children[2];
       let retrato = spy.children[1];
 
-      console.log(spy);
-
-      spyWatch.addEventListener("click", () => invisWatch());
 
       let invisWatch = () => {
         let invis = () => {
@@ -1285,15 +1283,26 @@ export let especiais = {
         if (this.clockReady) {
           invis();
         }
+
       };
 
+      invisWatch()
+
+    },
+
+    cfg() {
+      // if (this._parentP != inv) return;
+
+      this._cargoP.textContent = "⌚"
+      this._cargoP.style.fontSize = "2em"
+      console.log(spy);
       this._cfgAdded = true;
     },
 
     everyRound() {
       if (per(33) && !this.isInvisible) {
         this.clockReady = true;
-        this._hpP.style.visibility = "visible";
+        this._cargoP.style.visibility = "visible";
       }
     },
 
@@ -1334,14 +1343,14 @@ export let especiais = {
     },
     ataqueStyle: {
       color: "",
-      fontSize: "140%",
+      fontSize: "120%",
       fontFamily: "tf2",
       visibility: "",
     },
     novoAtaqueStyle: {
       color: "",
-      fontSize: "",
-      fontFamily: "",
+      fontSize: "120%",
+      fontFamily: "tf2",
       visibility: "visible",
     },
   },
@@ -1463,6 +1472,7 @@ export let especiais = {
     everyRound() {
       if (!hpPlayer.isFull && per(50)) {
         hpPlayer.add(1);
+        this._healingDone += 1
         this.buildUlt(1);
       }
 
@@ -1473,6 +1483,7 @@ export let especiais = {
         if (x.hashp && per(80) && !x._fullHp) {
           x.heal(healValue);
           this.buildUlt(healValue);
+          this._healingDone += healValue
         }
       });
     },

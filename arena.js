@@ -10,6 +10,7 @@ import {
   hpPlayer,
   numCartas,
   money,
+  rodadas,
 } from "./script.js";
 import { boss, spawnBoss, resetBoss } from "./boss.js";
 import {
@@ -58,18 +59,21 @@ export function updatePlacarInimigo(){
   if(dmgTotal == 0){
     placarInimigoDano.style.opacity = '0.2'
     placarInimigoDano.children[1].style.opacity = '0.6'
+    placarInimigoDano.children[0].style.color = 'wheat'
     placarInimigoWrap.style.backgroundColor = 'green'
     placarInimigoWrap.style.opacity = '0.2'
     placarInimigoWrap.style.border = 'solid 1px black'
   } else if (dmgTotal < 20) {
     placarInimigoDano.style.opacity = '0.9'
     placarInimigoDano.children[1].style.opacity = '0.6'
-    placarInimigoWrap.style.backgroundColor = 'brown'
+    placarInimigoDano.children[0].style.color = 'black'
+    placarInimigoWrap.style.backgroundColor = '#dfa506'
     placarInimigoWrap.style.opacity = '0.9'
     placarInimigoWrap.style.border = 'solid 2px black'
   } else {
     placarInimigoDano.style.opacity = '1'
     placarInimigoDano.children[1].style.opacity = '1'
+    placarInimigoDano.children[0].style.color = 'wheat'
     placarInimigoWrap.style.backgroundColor = 'red'
     placarInimigoWrap.style.opacity = '1'
     placarInimigoWrap.style.border = 'solid 3px yellow'
@@ -547,10 +551,14 @@ let camarada = {
 
   poder() {
 
+    let healAmount = gerarNumero(7,25)
+
     areObj.map((x) => {
       x.critico && x.critico(true);
-      x.heal(3)
+      x.heal(healAmount)
     });
+
+    boss.heal(healAmount)
 
 
 
@@ -829,12 +837,22 @@ function Main() {
   return;
 }
 
-export function populateArena(n) {
+export function populateArena() {
 
-  if(n){
-    if(!per(n)) return  
-  }
+  let chance = 20
+   if(boss){
+    
+    let porcentagemVida = Math.trunc(boss.health / boss.fullHealth * 100)
+    chance += 100 - porcentagemVida
+    console.log(porcentagemVida);
+   }
 
+   chance += Math.trunc(rodadas / 25)
+
+  chance > 100 ? chance = 100 : 0
+  console.log( 'POPULATE CHANCE ',chance );
+  if(!per(chance))return
+  
   if (!boss) return;
   coolDown = false;
   let chanceNormal = 75;

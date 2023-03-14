@@ -439,6 +439,7 @@ function fabricaDeCarta(
     _canBeDeleted: true,
     _monarkFree: false,
     _monarkReplaceble: true,
+    isInvisible: true,
     hp: 0,
     statusEmoji: false,
     cartaId: cargo,
@@ -603,7 +604,7 @@ function debug() {
   numCartas.set(999);
   hpPlayer.set(100);
   hpPlayer.addBuff(5000)
-  ammo.set(5);
+  ammo.set(500);
 }
 
 document.addEventListener("keydown", (event) => {
@@ -2169,7 +2170,7 @@ export function tudo() {
     blockInv();
     poderBoss();
     runEveryRound();
-    populateArena(50);
+    populateArena();
   } else {
   }
 }
