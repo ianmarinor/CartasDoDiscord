@@ -1,7 +1,9 @@
-<div align='center' > ## 🎴 TENICARTAS 🎴 </div>
+# <div align='center' >  🎴 TENICARTAS 🎴 </div>
+
 
 ### ⬇️ ESPECIAL CARDS METHODS⬇️
----
+
+
 🔹`addBuff(n)` 
 
  - Will increase `this.buff` by `n`
