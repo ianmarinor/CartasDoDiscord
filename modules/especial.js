@@ -2144,7 +2144,7 @@ export let especiais = {
     dano: undefined,
     exploding: false,
     _monarkReplaceble: false,
-    tank: true,
+    _exposto: true,
 
     cfg() {
       let dano = gerarNumero(40, 85);

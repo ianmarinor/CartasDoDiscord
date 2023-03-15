@@ -166,7 +166,7 @@ main {
   height: 100%;
   display: inline-grid;
   grid-template-areas:
-    "hb hb hb"
+    "ha hb hc"
     "c boss d"
     " e are  f"
     "b inv texto"
@@ -268,8 +268,11 @@ li {
   justify-content: center;
   align-items: center;
 
+  justify-self: center;
+
   grid-area: hb;
   opacity: 0;
+ 
 }
 #healthPoints,
 .healthPoints {

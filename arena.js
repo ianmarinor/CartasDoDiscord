@@ -116,6 +116,7 @@ class Inimigo {
     this._critico = false;
     this._canBeCritic = true
     this._poderUsing = false
+    this._despawn = false
 
     this._rightCard = false;
     this._leftCard = false;
@@ -397,6 +398,11 @@ class Inimigo {
 
   defaultEveryRound() {
      this.desinfectar();
+
+     if(this._despawn){
+      this._despawn--
+      this._despawn == 1 ? this.kill() : 0
+     } 
   }
 
   print() {
@@ -511,6 +517,7 @@ let monark = {
   _money: 10,
   _attackAtSpawn: false,
   _doesAttack: true,
+  _despawn: 5,
 
   hp: 10,
   maxHealth: 10,
@@ -520,15 +527,16 @@ let monark = {
 
     this.dano = gerarNumero(3,7)
 
+    this._despawn = Math.trunc(3 + (100 - chance) / 2)
   },
 
-  poder(){
+  everyRound(){
 
-    
-    
-
+    console.log(this._despawn);
 
   }
+
+  
 
 };
 
@@ -585,9 +593,10 @@ let camarada = {
   hp: 30,
   maxHealth: 30,
   dano: false,
-  attackChance: 25,
+  attackChance: 33,
   especial: true,
   _canBeCritic: false,
+  _despawn: 35,
 
   cfg() {
     this._energiaP.classList.add("critico");
@@ -599,7 +608,7 @@ let camarada = {
 
   poder() {
 
-    let healAmount = gerarNumero(7,25)
+    let healAmount = gerarNumero(55,125)
 
     areObj.map((x) => {
       if(x.empty)return
@@ -889,26 +898,33 @@ function Main() {
   
   return;
 }
-
+let chance
 export function populateArena() {
 
-  let chance = 5
+  let chanceNormal = 90;
+
+  chance = 5
    if(boss){
     
     let porcentagemVida = Math.trunc(boss.health / boss.fullHealth * 100)
     chance += 100 - porcentagemVida
-    console.log(porcentagemVida);
-   }
-   chance += Math.trunc(money.total / 200)  
-   chance += Math.trunc(rodadas / 25)
 
+    chanceNormal -=  100 - porcentagemVida 
+    
+    console.log(porcentagemVida);
+  }
+  chance += Math.trunc(money.total / 200)  
+  chance += Math.trunc(rodadas / 25)
+  
   chance > 100 ? chance = 100 : 0
+  chanceNormal < 40 ? chanceNormal = 40 : 0
+
   console.log( 'POPULATE CHANCE ',chance );
+  console.log('chanceNormal: ', chanceNormal);
   if(!per(chance))return
   
   if (!boss) return;
   coolDown = false;
-  let chanceNormal = 75;
 
   if (per(chanceNormal)) {
     spawnMonark(70);
