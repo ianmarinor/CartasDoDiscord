@@ -180,5 +180,8 @@
  - If `this.barreira`'s value is less than 0, will return `false`
 
 ---
+🔹 `lowHpWarning()`
+
+---
 `code`
 `code`

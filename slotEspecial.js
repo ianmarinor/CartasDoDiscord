@@ -11,6 +11,7 @@ import {
   objToMao,
   emptyObj,
   money,
+  ammo
 } from "/script.js";
 import { gerarNumero, teste } from "./script.js";
 
@@ -229,7 +230,7 @@ function makeCavalheiro() {
 
   seedmakeCavalheiro = specialSeed.join("");
   seedEspecial = seedmakeCavalheiro;
-
+  ammo.add(1)
   return seedmakeCavalheiro;
 }
 

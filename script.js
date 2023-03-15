@@ -219,7 +219,7 @@ function escolherCidade() {
     // seedString[4] == 0 &&
     seedString[3] == 6
   ) {
-    return (cidade = "Porto Alegre");
+    return (cidade = "de Porto Alegre");
   } else if (
     // seedString[4] == 0 &&
     seedString[3] == 7
@@ -2172,7 +2172,7 @@ export function tudo() {
     blockInv();
     poderBoss();
     runEveryRound();
-    populateArena();
+    // populateArena();
   } else {
   }
 }
@@ -2204,8 +2204,11 @@ function runEveryRound() {
 }
 
 function removeBuffAll() {
+
+
+
   setInterval(function () {
-    let debuffRate = gerarNumero(1, 2);
+    let debuffRate = gerarNumero(1, 1);
 
     hpPlayer.removeBuff(debuffRate);
 
