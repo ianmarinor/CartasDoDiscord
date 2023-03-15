@@ -139,7 +139,7 @@ function createMonark() {
           this.treme(false);
 
           for (let i = 0; i < 100; i++) {
-            spawnMonark();
+            spawnMonark(true);
           }
 
           areObj.map((x) => {

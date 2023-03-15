@@ -10,7 +10,15 @@
   color: rgb(206, 209, 14);
 }
 
+.warning-card{
 
+  animation: piscar2 700ms;
+  animation-iteration-count: infinite;
+  /* animation-direction: alternate; */
+
+  
+  
+}
 
 
 .piscar {
@@ -36,6 +44,32 @@
     100% {
       /* right: -2500px;ads */
       opacity: 1;
+    }
+  }
+
+  @keyframes piscar2{
+
+    0% {
+      background-color: red;
+      opacity: 0.1;
+    }
+    
+    25% {
+      /* right: -2500px;ads */
+      opacity: 0.8;
+      background-color: rgb(255, 174, 0);
+    }
+
+    50% {
+      background-color: red;
+      opacity: 0.8;
+    }
+
+
+    100% {
+      /* right: -2500px;ads */
+      opacity: 0.1;
+      background-color: rgb(255, 174, 0);
     }
   }
 

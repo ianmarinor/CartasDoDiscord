@@ -28,6 +28,7 @@ const placarInimigoDano = document.getElementById("placarInimigoDano")
 const placarInimigoWrap = document.getElementById("placarInimigoWrap")
 
 
+
 const empty0 = are.children[0];
 const empty1 = are.children[1];
 const empty2 = are.children[2];
@@ -723,6 +724,7 @@ let dog = {
 
 export function spawnTank(n) {
   if (coolDown) return;
+
   if (n) {
     if (per(n)) {
     } else {
@@ -806,13 +808,8 @@ export function spawnDog(n) {
 
 
 export function spawnMonark(n) {
-  if (n) {
-    if (coolDown) return;
-    if (per(n)) {
-    } else {
-      return;
-    }
-  }
+  if (coolDown && !n) return;
+  
 
   start();
 
@@ -873,14 +870,43 @@ export function spawnMonark(n) {
   coolDown = true;
 }
 let coolDown = false;
+
+let mySrc = "trovao.mp3"
+
+let monarkCHN = document.createElement('audio')
+let audioPlayer = (_src,_abort,_CHN)=> {
+
+
+
+  let CHN = _CHN
+  let src = "/audio/" + _src
+    
+  CHN.src = src
+
+  if(_abort == true){
+    
+    CHN.play()
+  } else {
+    let secondary = document.createElement('audio')
+    secondary.src = src
+    secondary.play()
+  }
+    
+    // console.log(monarkCHN.paused);
+}
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnCamarada()
-    coolDown = false
-    spawnMenosCartas()
-    coolDown = false
+    audioPlayer(mySrc,true,monarkCHN)
   }
 });
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyC") {
+    console.log(monarkCHN.pause());
+  }
+});
+
+
 
 function Main() {
   areObj = [
@@ -911,7 +937,7 @@ export function populateArena() {
 
     chanceNormal -=  100 - porcentagemVida 
     
-    console.log(porcentagemVida);
+    
   }
   chance += Math.trunc(money.total / 200)  
   chance += Math.trunc(rodadas / 25)
@@ -919,7 +945,7 @@ export function populateArena() {
   chance > 100 ? chance = 100 : 0
   chanceNormal < 40 ? chanceNormal = 40 : 0
 
-  console.log( 'POPULATE CHANCE ',chance );
+  console.log( 'POPULATE CHANCE ', chance );
   console.log('chanceNormal: ', chanceNormal);
   if(!per(chance))return
   
@@ -927,14 +953,28 @@ export function populateArena() {
   coolDown = false;
 
   if (per(chanceNormal)) {
-    spawnMonark(70);
-    spawnDog(80);
+
+    let normaisArr = [
+      spawnMonark,
+      spawnMenosCartas
+    ]
+    
+    let arrLenght = normaisArr.length
+    
+    
+    let rng =  () => normaisArr[gerarNumero(0,arrLenght - 1)]()
+    rng()
   } else {
+    
+    
+    let especiaisArr = [
+      spawnTank,
+      spawnCamarada,
+      spawnDog
+    ]
 
-    spawnCamarada(40);
-    spawnMenosCartas(40);
-    spawnTank(80);
-
+    let rng =  () => especiaisArr[gerarNumero(0,especiaisArr.length - 1)]()
+    rng()
 
   }
 }

@@ -201,7 +201,9 @@ class Especial {
     this._displayP = this._thisCardP.children[3]
 
     this._buttonP = this._thisCardP.children[3].children[2];
+    this._seedP = this._thisCardP.children[4];
     this._seloP = this._thisCardP.children[5];
+    this._seedP2 = this._thisCardP.children[6];
 
     if (this._place > 0) {
       this._leftCard = this._parentP.children[this._place - 1];
@@ -651,6 +653,8 @@ class Especial {
     if (!this._cfgAdded) {
       this.cfg();
       this._cfgAdded = true;
+      // console.log(this);
+      
     }
 
     let parentP = this._parentP;
@@ -727,12 +731,14 @@ class Especial {
     //warning low hp
 
     this.lowHpWarning();
+
+    // if (this.tick) this.tick()
   }
 
   lowHpWarning() {
     if (!this.hashp) return;
 
-    let inDanger = (this.hp / this.maxHealth) * 100 < 21;
+    let inDanger = (this.hp / this.maxHealth) * 100 < 30;
 
     this.setTotalHp();
 
@@ -746,16 +752,23 @@ class Especial {
 
     if (inDanger) {
       this._hpP.style.color = "red";
-      this._displayP.style.borderRadius = "10px";
-      this._displayP.style.backgroundColor = "yellow";
       this._hpP.textContent = this._totalHp + "💔";
-      this._displayP.classList.add("pulsar");
+      this._hpP.classList.add("pulsar");
+
+      this._seedP.classList.add("warning-card")
+      this._seedP2.classList.add("warning-card")
+      this._seedP.style.visibility = 'visible'
+      this._seedP2.style.visibility = 'visible'
+      
     } else {
-      this._displayP.style.borderRadius = "0px";
       this._hpP.style.color = this.prevColor;
-      this._displayP.style.backgroundColor = "";
       this._hpP.textContent = this._totalHp + "💚";
-      this._displayP.classList.remove("pulsar");
+      this._hpP.classList.remove("pulsar");
+      this._seedP.classList.remove("warning-card")
+      this._seedP2.classList.remove("warning-card")
+
+      this._seedP.style.visibility = 'hidden'
+      this._seedP2.style.visibility = 'hidden'
     }
   }
 
@@ -1137,10 +1150,15 @@ export let especiais = {
     dano: 9,
 
     cfg() {
-      this.dano = gerarNumero(7, 12);
+      
+      let _dano = gerarNumero(7, 12);
+      this.dano = _dano
+      this.onlyReadDmg = _dano
+      console.log('this.onlyReadDmg: ', this.onlyReadDmg);
     },
 
     tick() {
+
       if (this.buffAdded) {
       } else {
         this.buffAdded = true;
@@ -1154,8 +1172,20 @@ export let especiais = {
       });
 
       if (numOfBees > 0) {
-        this.dano = 9 * numOfBees * numOfBees;
+        this.dano = this.onlyReadDmg * numOfBees;
+        // console.log('this.onlyReadDmg: ', this.onlyReadDmg);
+        
       }
+      this._numOfBees = 0
+      invObj.map((x) => {
+        x.cartaId == "abelha" ? this._numOfBees++ : false;
+      });
+      
+      // console.log(this._numOfBees);
+
+      
+
+
     },
 
     everyRound() {
@@ -1167,19 +1197,18 @@ export let especiais = {
         }
       };
 
-      let numOfBees = 0;
+      
 
-      invObj.map((x) => {
-        x.cartaId == "abelha" ? numOfBees++ : false;
-      });
+      
 
-      let dmgRate = gerarNumero(1, 1);
+      let dmgRate =  this._numOfBees
+      console.log('dmgRate: ', dmgRate);
 
       if (turuInField()) {
         dmgRate *= gerarNumero(5, 7);
       }
 
-      if (numOfBees > 0) {
+      if ( this._numOfBees > 0) {
         this.dmg(dmgRate);
       }
 
@@ -1190,7 +1219,7 @@ export let especiais = {
       }, delayAttack);
     },
 
-    cfg() {},
+   
 
     nomeStyle: {
       fontSize: "180%",
@@ -1548,8 +1577,8 @@ export let especiais = {
 
       retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
 
-      this.energia += gerarNumero(5, 40);
-      this.ataque();
+      
+      this.ataque() ? this.energia += gerarNumero(5, 15) : 0
 
       let stabAu = ["stab.mp3", 0.3];
       snd(stabAu);
@@ -1665,7 +1694,7 @@ export let especiais = {
     dmgBoss: false,
     dano: 4,
     _hasUlti: true,
-    ulti: 0,
+    ulti: 100,
 
     hp: 10,
     maxHealth: 10,
@@ -2148,7 +2177,7 @@ export let especiais = {
 
     cfg() {
       let dano = gerarNumero(40, 85);
-
+      console.log(7777777777777);
       this.dano = dano;
     },
 

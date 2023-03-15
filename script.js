@@ -602,7 +602,7 @@ function zerarMoney() {
 zerarMoney();
 
 function debug() {
-  // money.set(99999);
+  money.set(99999);
   numCartas.set(999);
   hpPlayer.set(100);
   hpPlayer.addBuff(5000)

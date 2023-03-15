@@ -102,7 +102,7 @@ export function ativarBtn() {
 let increasePrice = (x) => {
   // return 1
 
-  let increaseRate = gerarNumero(9, 25);
+  let increaseRate = gerarNumero(13, 18);
 
   return Math.trunc(x / increaseRate);
 };
@@ -119,7 +119,7 @@ function comprarCampones() {
     ativarBtn();
     snd(audio);
     precoCampones += increasePrice(precoCampones);
-    precoCampones >= 150 ? (precoCampones = 150) : false;
+    precoCampones >= 300 ? (precoCampones = 300) : false;
   }
   precoPrint();
 }
@@ -137,7 +137,7 @@ function comprarCavalheiro() {
     ativarBtn();
     snd(audio);
     precoCavalheiro += increasePrice(precoCavalheiro);
-    precoCavalheiro >= 450 ? (precoCavalheiro = 450) : false;
+    precoCavalheiro >= 500 ? (precoCavalheiro = 500) : false;
   }
   precoPrint();
 }
@@ -153,7 +153,7 @@ function comprarSangue() {
     ativarBtn();
     snd(audio);
     precoSangueAzul += increasePrice(precoSangueAzul);
-    precoSangueAzul >= 900 ? (precoSangueAzul = 900) : false;
+    precoSangueAzul >= 800 ? (precoSangueAzul = 800) : false;
   }
   precoPrint();
 }
@@ -169,7 +169,7 @@ function comprarRainha() {
     ativarBtn();
     snd(audio);
     precoRainha += increasePrice(precoRainha);
-    precoRainha >= 9000 ? (precoRainha = 9000) : false;
+    precoRainha >= 8000 ? (precoRainha = 8000) : false;
   }
   precoPrint();
 }
@@ -191,8 +191,8 @@ const cartaEsp =
   '<div class="action">🔘</div>' +
   "</div>" +
   '<p class="seedEsp"></p>' +
-  '<p class="seloEsp"></p>' 
-
+  '<p class="seloEsp"></p>' +
+  '<p class="seedEsp2"></p>'
 
 
 let seedCampones;
@@ -379,7 +379,7 @@ function colocarSlot(tipo,_slot) {
   //BOTAO
 
   //SEED
-  seedEsp.innerHTML = seedEspecial;
+  // seedEsp.innerHTML = seedEspecial;
 
   slotEspObj[slot] = especial;
 

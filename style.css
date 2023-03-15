@@ -1182,8 +1182,7 @@ li {
   white-space: nowrap;
 }
 
-.seed,
-.seedEsp {
+.seed {
   /* background-color: #7e7a7a; */
   width: 100%;
   position: absolute;
@@ -1192,6 +1191,25 @@ li {
   transform: rotate(90deg);
   font-size: 0.65em;
   opacity: 0.6;
+}
+.seedEsp2, .seedEsp {
+  border-radius: 10px;
+  /* border-right:  1px solid red; */
+  background-color: rgb(255, 0, 0);
+  width: 220px;
+  height: 5px;
+  position: absolute;
+  left: -55%;
+  bottom: 50%;
+  transform: rotate(90deg);
+  font-size: 0.65em;
+  opacity: 0.8;
+  visibility:  hidden;
+}
+
+.seedEsp{
+  left: 37%;
+
 }
 
 #btnContainer {
