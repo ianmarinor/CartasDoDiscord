@@ -198,7 +198,7 @@ class Especial {
 
     this._hpP = this._thisCardP.children[3].children[1];
 
-    this._displayP = this._thisCardP.children[3]
+    this._displayP = this._thisCardP.children[3];
 
     this._buttonP = this._thisCardP.children[3].children[2];
     this._seedP = this._thisCardP.children[4];
@@ -277,8 +277,6 @@ class Especial {
     //se sim, spread tera sua info
     _spread ? (spread = _spread) : false;
 
-    
-
     if (dmg) {
       dano = dmg;
     } else {
@@ -316,8 +314,6 @@ class Especial {
           spread[1]
             ? (danoSpread = spread[1])
             : (danoSpread = Math.trunc(dano / spreadBaseDmg));
-
-          
 
           if (left && !left.isInvisible) {
             left.dmg(danoSpread);
@@ -654,7 +650,6 @@ class Especial {
       this.cfg();
       this._cfgAdded = true;
       // console.log(this);
-      
     }
 
     let parentP = this._parentP;
@@ -721,7 +716,7 @@ class Especial {
 
     //estilo selo
     if (this._exposto) {
-      this._seloP.textContent = "❗";
+      this._seloP.textContent = "🎯";
     } else if (this.tank) {
       this._seloP.textContent = "🛡️";
     } else {
@@ -742,9 +737,6 @@ class Especial {
 
     this.setTotalHp();
 
-   
-  
-
     if (!this.memoryStyle) {
       this.prevColor = this._hpP.style.color;
       this.memoryStyle = true;
@@ -755,20 +747,19 @@ class Especial {
       this._hpP.textContent = this._totalHp + "💔";
       this._hpP.classList.add("pulsar");
 
-      this._seedP.classList.add("warning-card")
-      this._seedP2.classList.add("warning-card")
-      this._seedP.style.visibility = 'visible'
-      this._seedP2.style.visibility = 'visible'
-      
+      this._seedP.classList.add("warning-card");
+      this._seedP2.classList.add("warning-card");
+      this._seedP.style.visibility = "visible";
+      this._seedP2.style.visibility = "visible";
     } else {
       this._hpP.style.color = this.prevColor;
       this._hpP.textContent = this._totalHp + "💚";
       this._hpP.classList.remove("pulsar");
-      this._seedP.classList.remove("warning-card")
-      this._seedP2.classList.remove("warning-card")
+      this._seedP.classList.remove("warning-card");
+      this._seedP2.classList.remove("warning-card");
 
-      this._seedP.style.visibility = 'hidden'
-      this._seedP2.style.visibility = 'hidden'
+      this._seedP.style.visibility = "hidden";
+      this._seedP2.style.visibility = "hidden";
     }
   }
 
@@ -1150,15 +1141,13 @@ export let especiais = {
     dano: 9,
 
     cfg() {
-      
       let _dano = gerarNumero(7, 12);
-      this.dano = _dano
-      this.onlyReadDmg = _dano
-      console.log('this.onlyReadDmg: ', this.onlyReadDmg);
+      this.dano = _dano;
+      this.onlyReadDmg = _dano;
+      console.log("this.onlyReadDmg: ", this.onlyReadDmg);
     },
 
     tick() {
-
       if (this.buffAdded) {
       } else {
         this.buffAdded = true;
@@ -1174,18 +1163,13 @@ export let especiais = {
       if (numOfBees > 0) {
         this.dano = this.onlyReadDmg * numOfBees;
         // console.log('this.onlyReadDmg: ', this.onlyReadDmg);
-        
       }
-      this._numOfBees = 0
+      this._numOfBees = 0;
       invObj.map((x) => {
         x.cartaId == "abelha" ? this._numOfBees++ : false;
       });
-      
+
       // console.log(this._numOfBees);
-
-      
-
-
     },
 
     everyRound() {
@@ -1197,18 +1181,14 @@ export let especiais = {
         }
       };
 
-      
-
-      
-
-      let dmgRate =  this._numOfBees
-      console.log('dmgRate: ', dmgRate);
+      let dmgRate = this._numOfBees;
+      console.log("dmgRate: ", dmgRate);
 
       if (turuInField()) {
         dmgRate *= gerarNumero(5, 7);
       }
 
-      if ( this._numOfBees > 0) {
+      if (this._numOfBees > 0) {
         this.dmg(dmgRate);
       }
 
@@ -1218,8 +1198,6 @@ export let especiais = {
         this.ataque(false, 0);
       }, delayAttack);
     },
-
-   
 
     nomeStyle: {
       fontSize: "180%",
@@ -1332,7 +1310,7 @@ export let especiais = {
 
     retrato: 'url("/pics/retratoPremioMonark.gif")',
     cargo: "",
-    hp: 1000,
+    hp: 70,
     hashp: true,
     maxHealth: 10,
     dmgBoss: false,
@@ -1529,32 +1507,34 @@ export let especiais = {
     },
 
     vis() {
-      let spy = this._thisCardP;
-      let spyWatch = this._cargoP;
-      let retrato = spy.children[1];
+      setTimeout(() => {
+        let spy = this._thisCardP;
+        let spyWatch = this._cargoP;
+        let retrato = spy.children[1];
 
-      if (this._dead) return;
+        if (this._dead) return;
 
-      spy.className = "visible";
-      spyWatch.id = "vis";
-      retrato.classList.remove("invisible");
-      retrato.classList.add("visible");
-      spy.children[0].className = "vis";
-      this._invHiddenButton = false;
-      retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
-      this._energiaP = this.dano;
+        spy.className = "visible";
+        spyWatch.id = "vis";
+        retrato.classList.remove("invisible");
+        retrato.classList.add("visible");
+        spy.children[0].className = "vis";
+        this._invHiddenButton = false;
+        retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
+        this._energiaP = this.dano;
 
-      let spyInvisAu = ["spyInvis.mp3", 0.3];
-      snd(spyInvisAu);
-      this.isInvisible = false;
-      this._monarkFree = false;
+        let spyInvisAu = ["spyInvis.mp3", 0.3];
+        snd(spyInvisAu);
+        this.isInvisible = false;
+        this._monarkFree = false;
 
-      this.clockToVis = false;
-      this.clockReady = false;
+        this.clockToVis = false;
+        this.clockReady = false;
 
-      this.dmgBoss = false;
-      this.setEmoji(this._defaultEmojiDano);
-      this.exposto();
+        this.dmgBoss = false;
+        this.setEmoji(this._defaultEmojiDano);
+        this.exposto();
+      }, 450);
     },
 
     everyRound() {
@@ -1577,14 +1557,13 @@ export let especiais = {
 
       retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
 
-      
-      this.ataque() ? this.energia += gerarNumero(5, 15) : 0
+      this.ataque() ? (this.energia += gerarNumero(5, 15)) : 0;
 
-      let stabAu = ["stab.mp3", 0.3];
+      let stabAu = ["stab.mp3", 0.1];
       snd(stabAu);
 
       if (gerarNumero(1, 3) == 2) {
-        let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3", 0.3];
+        let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3", 0.2];
         snd(spyAu);
       }
     },
@@ -1640,14 +1619,13 @@ export let especiais = {
     },
 
     tick() {
-      
-      if(!this.buffAdded){
-        this.addBuff(60)
-        this.buffAdded = true
+      if (!this.buffAdded) {
+        this.addBuff(60);
+        this.buffAdded = true;
       }
 
       this.dano = this._dmgTaken + 1;
-      this.dano > 35 ? this.dano = 35 : 0
+      this.dano > 35 ? (this.dano = 35) : 0;
 
       let hasTuru = invObj.some((x) => x._cidade == "de Itapira");
       let hasItapira = invObj.some((x) => x._integrante == "Turu");

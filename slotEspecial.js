@@ -102,7 +102,7 @@ export function ativarBtn() {
 let increasePrice = (x) => {
   // return 1
 
-  let increaseRate = gerarNumero(13, 18);
+  let increaseRate = gerarNumero(20, 28);
 
   return Math.trunc(x / increaseRate);
 };
@@ -230,7 +230,7 @@ function makeCavalheiro() {
 
   seedmakeCavalheiro = specialSeed.join("");
   seedEspecial = seedmakeCavalheiro;
-  ammo.add(1)
+  
   return seedmakeCavalheiro;
 }
 
@@ -245,7 +245,7 @@ function makeSangueAzul() {
 
   seedmakeSangueAzul = specialSeed.join("");
   seedEspecial = seedmakeSangueAzul;
-
+  
   return seedmakeSangueAzul;
 }
 
@@ -420,7 +420,7 @@ function moveToMao(e) {
   e.target.offsetParent == slotEsp.children[1] ? obj = 1 : 0
   e.target.offsetParent == slotEsp.children[2] ? obj = 2 : 0
 
-
+  
 
   if (cartaEspecial.id && !myInterval) {
     for (let i = 0; i < 4; i++) {
@@ -430,6 +430,11 @@ function moveToMao(e) {
         snd(novaCarta);
 
         objToMao(i, slotEspObj[obj]);
+
+
+        if(slotEspObj[obj].raridade.nome = 'sangueAzul'){
+          ammo.add(gerarNumero(1,2))
+        }
 
         slotEspObj = [emptyObj,emptyObj,emptyObj];
 

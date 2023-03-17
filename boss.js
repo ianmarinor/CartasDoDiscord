@@ -21,13 +21,15 @@ let cartaBossMonark =
 
 export function toMonark(_cartaObj){
 
+  
   let carta = _cartaObj
   let cartaP = _cartaObj._thisCardP
   let cargo = _cartaObj._cargoP
-
+  
+  if(cartaP.id == 'monark')  return
 
   cartaP.id = 'monark'
-  cartaP.style.border = 'none'
+  cartaP.style.border = '1px solid black'
 
   cargo.textContent = 'monark 💩'
 

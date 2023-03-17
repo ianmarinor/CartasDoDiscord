@@ -22,6 +22,7 @@ export let menosClickBlueprint = '<div id="-click" class="monark">' +
 '<p class="action-inimigo" ></p>' +
 "</div>" +
 '<p class="seed"></p>' +
+'<p class="seloAre"></p>' +
 "</div>";
 
 
@@ -29,7 +30,7 @@ let camaradaBPicture = "url('pics/retratoCamarada.gif')"
 export let camaradaBlueprint = '<div id="comunista" class="monark">' +
 '<div class="nameAndCidadeWrapper">' +
 '<p class="nome-inimigo">' +
-'BLACKAO COMUNISTA' +
+'BLACKAO CAMARADA' +
 "</p>" +
 "</div>" +
 '<div class="retrato" style="display: block; background-image: ' 
@@ -44,6 +45,7 @@ export let camaradaBlueprint = '<div id="comunista" class="monark">' +
 '<p class="action-inimigo" ></p>' +
 "</div>" +
 '<p class="seed"></p>' +
+'<p class="seloAre"></p>' +
 "</div>";
 
 
@@ -67,6 +69,7 @@ export let tankBlueprint = '<div id="tank" class="monark">' +
 '<p class="action-inimigo" ></p>' +
 "</div>" +
 '<p class="seed"></p>' +
+'<p class="seloAre"></p>' +
 "</div>";
 
 let dogBPicture = "url('pics/dogRetrato.webp')"
@@ -90,4 +93,5 @@ dogNome +
 '<p class="action-inimigo" ></p>' +
 "</div>" +
 '<p class="seed"></p>' +
+'<p class="seloAre"></p>' +
 "</div>";

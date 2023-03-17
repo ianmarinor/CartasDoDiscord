@@ -153,6 +153,8 @@ class Inimigo {
     this._dmgDone = 0;
     this._totalHp = 0;
     this._hasUlti = false;
+    this._exposto = false
+    this.tank = false
 
     //audio
     this._CHN = document.createElement("audio");
@@ -167,6 +169,7 @@ class Inimigo {
     this._energiaP = false;
     this._hpP = false;
     this._buttonP = false;
+    this._seloP = false
   }
 
   audioSpawn(_vol) {
@@ -205,11 +208,14 @@ class Inimigo {
     this._nomeP = this._thisCardP.children[0].children[0];
     this._retratoP = this._thisCardP.children[1];
     this._cargoP = this._thisCardP.children[2];
-
+    
     this._energiaP = this._thisCardP.children[3].children[0];
     this._hpP = this._thisCardP.children[3].children[1];
-
+    
     this._place = this._parent.indexOf(this);
+    
+    this._seloP = this._thisCardP.children[5];
+
 
     if (this._place > 0) {
       this._leftCard = this._parentP.children[this._place - 1];
@@ -230,6 +236,18 @@ class Inimigo {
       this._rightCardIndex = null;
       this._rightObj = false;
     }
+
+    if (this._exposto) {
+      this._seloP.textContent = "🎯";
+    } else if (this.tank) {
+      this._seloP.textContent = "🛡️";
+    } else if (this.especial) {
+      this._seloP.textContent = "⭐";
+    }else {
+      this._seloP.textContent = "";
+    }
+
+
   }
 
   setHp(n) {
@@ -556,7 +574,6 @@ let monark = {
   dano: 5,
   emoji: "💩",
 
-  attackChance: 1,
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
@@ -642,6 +659,7 @@ let camarada = {
   attackChance: 10,
   especial: true,
   _canBeCritic: false,
+  especial: true,
 
   cfg() {
     this._energiaP.classList.add("critico");
@@ -657,7 +675,7 @@ let camarada = {
 
     setTimeout(() => {
       areObj.map((x) => {
-        if (x.empty) return;
+        if (x.empty || x.isInvisible) return;
 
         if (x.cartaId != "camarada" && x.cartaId != "tank") {
           console.log(x);
@@ -744,28 +762,14 @@ let dog = {
   hp: 25,
   maxHealth: 25,
   dano: 20,
+  especial: true,
 
   cfg() {
     this.dano = gerarNumero(21, 32);
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
   },
 
-  primaryAttack() {
-    if (this._attacking) return;
-
-    this._attacking = true;
-    this.ataque();
-    this.readyToAttack = true;
-    this.print();
-    this.dano = Math.trunc(this.dano / 5);
-
-    setTimeout(() => {
-      if (this._dead) return;
-      this.ataque();
-      this._attacking = false;
-      this.dano = Math.trunc(this.dano * 5);
-    }, 1000);
-  },
+ 
 };
 
 export function spawnTank(n) {
@@ -900,6 +904,7 @@ export function spawnMonark(n) {
     '<p class="action-inimigo" ></p>' +
     "</div>" +
     '<p class="seed"></p>' +
+    '<p class="seloAre"></p>' +
     "</div>";
 
   let slot = gerarNumero(0, 9);
