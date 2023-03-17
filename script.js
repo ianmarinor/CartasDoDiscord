@@ -2205,6 +2205,7 @@ function runEveryRound() {
     x._everyRoundMao ? x.everyRound() : false;
   });
   areObj.map((x) => {
+    
     x.defaultEveryRound ? x.defaultEveryRound() : 0
     
     if (x.everyRound) {
