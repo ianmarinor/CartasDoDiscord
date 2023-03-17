@@ -563,16 +563,17 @@ let monark = {
 
     this.dano = gerarNumero(3, 7);
     this._despawn = Math.trunc(3 + (100 - chance) / 2);
+
+    if(per(30)){
+      this.poder()
+    }
+
   },
 
   everyRound() {
-    if (this.readyToAttack) return;
 
-    if (this._doesAttack && per(50)) {
-      this._doesAttack = false;
-    } else {
-      this._doesAttack = true;
-    }
+  
+
   },
 
   poder() {
