@@ -2,7 +2,7 @@ var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
 
-import { are, areObj, spawnMonark, populateArena, updatePlacarInimigo } from "./arena.js";
+import { are, areObj, spawnMonark, populateArena, updatePlacarInimigo, arenaByRound } from "./arena.js";
 
 import { especial } from "./modules/especial.js";
 
@@ -441,6 +441,7 @@ function fabricaDeCarta(
     _canBeDeleted: true,
     _monarkFree: false,
     _monarkReplaceble: true,
+    _despawn: false,
     isInvisible: true,
     hp: 0,
     statusEmoji: false,
@@ -492,6 +493,8 @@ function fabricaDeCarta(
 
       this._place = this._parent.indexOf(this);
       this._thisCardP = this._parentP.children[this._place];
+      this._cargoP = this._thisCardP.children[2]
+      this._hpP = this._thisCardP.children[3].children[1]
 
       if (this._place > 0) {
         this._leftCard = this._parentP.children[this._place - 1];
@@ -527,7 +530,16 @@ function fabricaDeCarta(
       }
 
       energia.textContent = this.energia + "⚡";
+
+      if(this._despawn != false){
+        this._hpP.style.visibility = 'visible'
+        this._hpP.textContent = this._despawn - 1 + '🏃'
+      }
+
     },
+
+
+
 
     dmg() {
       this.kill();
@@ -2181,6 +2193,13 @@ function runEveryRound() {
   invObj.map((x) => {
     x.everyRound ? x.everyRound() : false;
     x.everyRoundDefault? x.everyRoundDefault() : false
+
+    if(x._despawn != false){
+
+      x._despawn--
+      x._despawn <= 1 ? x.kill() :0
+
+    }
   });
   maoObj.map((x) => {
     x._everyRoundMao ? x.everyRound() : false;
@@ -2199,7 +2218,7 @@ function runEveryRound() {
     }
 
     x.everyRoundDefault? x.everyRoundDefault() : false
-
+    arenaByRound()
   });
 }
 
@@ -2430,6 +2449,8 @@ export let hpPlayer = {
   dmgTaken: 0,
   isFull: true,
   mit: 0,
+  _CHN: document.createElement('audio'),
+  _audioHit: 'playerHit.mp3',
 
   add(n) {
 
@@ -2469,10 +2490,13 @@ export let hpPlayer = {
       heart = hpPlayerP;
     }
 
+
+
+    
     heart.style.backgroundColor = "red";
     heart.style.border = "4px dotted black";
     heart.style.borderRadius = "5px";
-
+    
     setTimeout(function () {
       heart.style.backgroundColor = "";
       heart.style.border = "";
@@ -2513,6 +2537,9 @@ export let hpPlayer = {
 
   remove(n) {
     this.dmgTaken += n;
+    
+
+    audioPlayer(this._audioHit,true,this._CHN, 0.5)     
 
     let resto = this.buffTank(n);
 
@@ -2687,6 +2714,37 @@ document.addEventListener("contextmenu", function () {
   //
   return false;
 });
+
+export let audioPlayer = (_src,_abort,_CHN, _volume)=> {
+
+
+
+  let CHN = _CHN
+  let src = "/audio/" + _src
+  let vol 
+  if(typeof _volume ==  'number'){
+
+    
+    vol = _volume
+  } else {
+    vol = 1
+  }
+  console.log('888888', vol);
+  CHN.volume = vol
+  CHN.src = src
+  if(_abort === true){
+    
+    CHN.play()
+  } else {
+    let secondary = document.createElement('audio')
+    secondary.src = src
+    secondary.volume = vol
+    secondary.play()
+  }
+    
+    // console.log(monarkCHN.paused);
+}
+
 
 // LIST BINDS
 //  1, 2, 3, 4 ---> USAR CARTAS NO DECK

@@ -384,16 +384,17 @@ li {
   justify-self: end;
   align-self: start;
 
+flex-direction: column;
 
   margin-right: 135px;
   margin-top: 8px;
   grid-area: mao;
 
   width: 90px;
-
+  height: 320px;
   display: flex;
 
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: #b81a156f;
   border: #020101 solid 2px;
@@ -406,6 +407,11 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 7px;
+}
+
+#placarInimigoEfeito{
+  margin-bottom: 7px;
 }
 
 #inimigo-dano {
@@ -707,6 +713,21 @@ li {
   position: relative;
   color: #b0b0b6;
 }
+
+#monark {
+  background-color: var(--monark);
+  width: var(--tamanhoCartaWidth);
+  height: var(--tamanhoCartaHeight);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  position: relative;
+  color: #b0b0b6;
+}
+
 #carta-speaker {
   background-image: url(pics/cartaspeaker.webp);
   height: var(--tamanhoCartaHeight);

@@ -1,4 +1,4 @@
-import { gerarNumero, per, money } from "./script.js";
+import { gerarNumero, per, money, audioPlayer } from "./script.js";
 import { triggerChuvaMonark, startGame2, rodadas } from "/script.js";
 import { spawnMonark, areObj } from "/arena.js";
 
@@ -18,6 +18,29 @@ let cartaBossMonark =
 
 // CONSTRUTOR BOSSES
 
+
+export function toMonark(_cartaObj){
+
+  let carta = _cartaObj
+  let cartaP = _cartaObj._thisCardP
+  let cargo = _cartaObj._cargoP
+
+
+  cartaP.id = 'monark'
+  cartaP.style.border = 'none'
+
+  cargo.textContent = 'monark 💩'
+
+  carta.energia = 0
+  carta._cargo = 'carta-monark'
+  carta.dmgBoss = false
+  carta._canBeDeleted = false
+  carta._despawn = gerarNumero(2,8)
+  
+
+}
+
+
 class Boss {
   constructor(_health, _fullHealth, _name) {
     this.name = _name;
@@ -26,11 +49,25 @@ class Boss {
     this.dmgTaken = 0;
     this._coolDown = false;
     this._gotHitLastRound = [false, 0];
+    this._CHN = document.createElement('audio')
+    this._audioPoder = 'bossPower.mp3'
+    this._audioHit = 'bossHit.mp3'
   }
 
   dmg(n) {
     this.health -= n;
     this.dmgTaken += n;
+
+    let vol
+    if(n < 100){
+      vol = 0.2
+    } else if (n < 400){
+      vol = 0.3
+    } else {
+      vol = 0.8
+    }
+
+    audioPlayer(this._audioHit,true,this._CHN, vol)
 
     if (this.health <= 0) {
       this.health = 0;
@@ -107,11 +144,12 @@ function createMonark() {
   let bossClass = new Boss(15000, 15000, "monark");
 
   let monark = {
+    _audioChuva: 'trovao.mp3',
     carta() {
       bossRoomP.innerHTML = cartaBossMonark;
     },
 
-    chuvaDeMonark() {
+    chuvaDeMonark(absolute) {
       let chance = 0;
 
       let porcentagemVida = (this.health / this.fullHealth) * 10
@@ -119,8 +157,8 @@ function createMonark() {
       // chance += Math.trunc(rodadas / 50);
       // chance += Math.trunc(money.total / 700);
 
-      if (chance > 100) chance = 100;
-
+      if (chance > 100 || absolute) chance = 100;
+      
       console.log("CHANCE CHUVA DE MONARK: ", chance);
 
       setTimeout(() => {
@@ -134,6 +172,7 @@ function createMonark() {
         console.log();
 
         this.treme(true);
+        audioPlayer(this._audioPoder,true,this._CHN, 0.2)
         this.coolDown(15000 - (chance * 100) );
         setTimeout(() => {
           this.treme(false);
@@ -149,6 +188,7 @@ function createMonark() {
               x.readyToAttack = true;
             }
           });
+          audioPlayer(this._audioChuva,true,this._CHN, 0.1)
         }, gerarNumero(750, 3200));
       }, gerarNumero(120, 120));
     },

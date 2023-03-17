@@ -11,8 +11,9 @@ import {
   numCartas,
   money,
   rodadas,
+  audioPlayer
 } from "./script.js";
-import { boss, spawnBoss, resetBoss } from "./boss.js";
+import { boss, spawnBoss, resetBoss, toMonark } from "./boss.js";
 import {
   menosClickBlueprint,
   camaradaBlueprint,
@@ -42,42 +43,89 @@ const empty9 = are.children[9];
 
 export let areObj;
 
+let hasPlayed = false
+export function arenaByRound(){
+  hasPlayed = false
+}
 
 export function updatePlacarInimigo(){
-
+  
+  let drumAu = 'alertaDano.mp3'
+  let mGAu = 'alertaDano2.mp3'
+  let placarAudioChannel = document.createElement('audio')
   let dmgTotal = 0
+
+  let efeitos = ''
   
   areObj.map( (x)=> {
-
-    if(x._hasdmg && x.readyToAttack){
+    
+    if(x._doesAttack && x.readyToAttack){
       dmgTotal += x.dano
+    } else if(!x._doesAttack && x.readyToAttack){
+      efeitos = efeitos + '<br>' + x.emoji
     }
-
-
   }
   )
+
+
+  console.log('efeitos: ', efeitos);
+  
+
+
+  placarInimigoWrap.children[1].children[0].innerHTML = ''
   placarInimigoDano.children[0].textContent = dmgTotal
-  if(dmgTotal == 0){
+  if(dmgTotal == 0 && efeitos == ''){
     placarInimigoDano.style.opacity = '0.2'
     placarInimigoDano.children[1].style.opacity = '0.6'
     placarInimigoDano.children[0].style.color = 'wheat'
     placarInimigoWrap.style.backgroundColor = 'green'
     placarInimigoWrap.style.opacity = '0.2'
     placarInimigoWrap.style.border = 'solid 1px black'
-  } else if (dmgTotal < 20) {
+    hasPlayed = false
+     
+    
+  } else if (dmgTotal < 20 && efeitos == '' ) {
+
+    
     placarInimigoDano.style.opacity = '0.9'
     placarInimigoDano.children[1].style.opacity = '0.6'
     placarInimigoDano.children[0].style.color = 'black'
     placarInimigoWrap.style.backgroundColor = '#dfa506'
     placarInimigoWrap.style.opacity = '0.9'
     placarInimigoWrap.style.border = 'solid 2px black'
-  } else {
-    placarInimigoDano.style.opacity = '1'
-    placarInimigoDano.children[1].style.opacity = '1'
-    placarInimigoDano.children[0].style.color = 'wheat'
+
+    
+    
+    
+    if(hasPlayed) return
+    audioPlayer(drumAu,true,placarAudioChannel)
+    hasPlayed = true
+  } else if ( dmgTotal > 19 || efeitos != ''){
+    
     placarInimigoWrap.style.backgroundColor = 'red'
     placarInimigoWrap.style.opacity = '1'
     placarInimigoWrap.style.border = 'solid 3px yellow'
+    
+    if(dmgTotal != 0){
+      
+      placarInimigoDano.style.opacity = '1'
+      placarInimigoDano.children[1].style.opacity = '1'
+      placarInimigoDano.children[0].style.color = 'wheat'
+    } else {
+
+      placarInimigoDano.style.opacity = '0.2'
+    placarInimigoDano.children[1].style.opacity = '0.6'
+    placarInimigoDano.children[0].style.color = 'wheat'
+
+
+    }
+    if(efeitos != ''){
+
+      placarInimigoWrap.children[1].children[0].innerHTML = efeitos
+    }
+    if(hasPlayed) return
+    audioPlayer(mGAu,true,placarAudioChannel)
+    hasPlayed = true
   }
 }
 
@@ -129,6 +177,12 @@ class Inimigo {
     this._totalHp = 0;
     this._hasUlti = false;
 
+    //audio
+    this._CHN = document.createElement('audio')
+
+   
+
+
     //DOM
     this._thisCardP = false;
 
@@ -139,6 +193,24 @@ class Inimigo {
     this._energiaP = false;
     this._hpP = false;
     this._buttonP = false;
+  }
+
+
+
+  audioSpawn(_vol){
+
+    let vol
+
+
+    if(typeof  _vol == 'number'){
+      vol = _vol
+    } else {
+      vol = 1
+    }
+    console.log('vol: ', vol);
+
+    audioPlayer(this._audioSpawn,false,this._CHN, vol)
+
   }
 
   place() {
@@ -402,7 +474,7 @@ class Inimigo {
 
      if(this._despawn){
       this._despawn--
-      this._despawn == 1 ? this.kill() : 0
+      this._despawn == 1 ? this.kill(true) : 0
      } 
   }
 
@@ -518,25 +590,46 @@ let monark = {
   _money: 10,
   _attackAtSpawn: false,
   _doesAttack: true,
-  _despawn: 5,
-
+  _despawn: 60,
+  _audioSpawn: "monark.mp3",
+  _CHN:  document.createElement('audio'),
   hp: 10,
   maxHealth: 10,
   dano: 5,
+  emoji: '💩',
 
+
+ 
+
+
+
+
+
+  
   cfg(){
 
-    this.dano = gerarNumero(3,7)
+    audioPlayer(this._audioSpawn, true, this._CHN)
 
+    this.dano = gerarNumero(3,7)
     this._despawn = Math.trunc(3 + (100 - chance) / 2)
   },
 
   everyRound(){
 
-    console.log(this._despawn);
+   this._doesAttack = true && per(20) ? this._doesAttack = false : this._doesAttack = true
+
+  },
+
+  poder(){
+
+    let slot = invObj[gerarNumero(0,3)] 
+    // let slot = invObj[0] 
+    if(slot.isNormal){
+
+      toMonark(slot)
+    }
 
   }
-
   
 
 };
@@ -555,6 +648,7 @@ let menosCartas = {
   _money: 30,
   _doesAttack: false,
   _hasdmg: false,
+  _audioSpawn: 'menosCartas.wav',
   energia: "",
   emoji: "🃏",
   hp: 30,
@@ -568,6 +662,8 @@ let menosCartas = {
 
   cfg() {
     this.energia = gerarNumero(3, 15);
+
+    audioPlayer(this._audioSpawn,true,this._CHN, 0.2)
   },
 
   poder() {
@@ -589,15 +685,15 @@ let camarada = {
   _money: 30,
   _doesAttack: false,
   _hasdmg: false,
+  _audioSpawn: 'comunaShort.mp3',
   energia: "",
   emoji: "☭",
   hp: 30,
   maxHealth: 30,
   dano: false,
-  attackChance: 33,
+  attackChance: 15,
   especial: true,
   _canBeCritic: false,
-  _despawn: 35,
 
   cfg() {
     this._energiaP.classList.add("critico");
@@ -605,15 +701,17 @@ let camarada = {
     
     this._cargoP.textContent = "ARMA E SAUDE PARA TODOS";
     this._cargoP.style.fontSize = "65%";
+    this.audioSpawn(0.5)
   },
 
   poder() {
 
-    let healAmount = gerarNumero(55,125)
+    let healAmount = gerarNumero(80,125)
 
     areObj.map((x) => {
       if(x.empty)return
-      x.critico(true);
+      x.cartaId != 'camarada' ? x.readyToAttack = true : 0
+      
       x.heal(healAmount)
     });
 
@@ -638,6 +736,7 @@ let tank = {
   _money: 300,
   _doesAttack: false,
   _hasdmg: true,
+  _audioSpawn: 'tank.mp3',
   energia: "",
   emoji: "",
   hp: 400,
@@ -646,9 +745,12 @@ let tank = {
   attackChance: false,
   ulti: 0,
   tank: true,
+  _CHN: document.createElement('audio'),
 
   cfg() {
     this.dano = gerarNumero(100,211)
+    
+    this.audioSpawn(0.2)
   },
 
   everyRound() {
@@ -688,6 +790,7 @@ let dog = {
   _money: 30,
   _attackAtSpawn: false,
   _doesAttack: false,
+  _audioSpawn: 'dog.mp3',
   attackChance: 11,
   hp: 25,
   maxHealth: 25,
@@ -696,7 +799,7 @@ let dog = {
   cfg(){
 
     this.dano = gerarNumero(21,32)
-
+    audioPlayer(this._audioSpawn,true,this._CHN, 0.1)
   },
 
   poder(){
@@ -874,35 +977,26 @@ let coolDown = false;
 let mySrc = "trovao.mp3"
 
 let monarkCHN = document.createElement('audio')
-let audioPlayer = (_src,_abort,_CHN)=> {
+let ianCHN = document.createElement('audio')
 
-
-
-  let CHN = _CHN
-  let src = "/audio/" + _src
-    
-  CHN.src = src
-
-  if(_abort == true){
-    
-    CHN.play()
-  } else {
-    let secondary = document.createElement('audio')
-    secondary.src = src
-    secondary.play()
-  }
-    
-    // console.log(monarkCHN.paused);
-}
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    audioPlayer(mySrc,true,monarkCHN)
+    coolDown = false
+    spawnMenosCartas()
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    console.log(monarkCHN.pause());
+    coolDown = false
+    spawnMonark()
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyZ") {
+    coolDown = false
+    spawnCamarada()
   }
 });
 
@@ -939,7 +1033,7 @@ export function populateArena() {
     
     
   }
-  chance += Math.trunc(money.total / 200)  
+  
   chance += Math.trunc(rodadas / 25)
   
   chance > 100 ? chance = 100 : 0

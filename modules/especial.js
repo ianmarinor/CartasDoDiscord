@@ -1640,7 +1640,14 @@ export let especiais = {
     },
 
     tick() {
+      
+      if(!this.buffAdded){
+        this.addBuff(60)
+        this.buffAdded = true
+      }
+
       this.dano = this._dmgTaken + 1;
+      this.dano > 35 ? this.dano = 35 : 0
 
       let hasTuru = invObj.some((x) => x._cidade == "de Itapira");
       let hasItapira = invObj.some((x) => x._integrante == "Turu");
@@ -1694,7 +1701,7 @@ export let especiais = {
     dmgBoss: false,
     dano: 4,
     _hasUlti: true,
-    ulti: 100,
+    ulti: 0,
 
     hp: 10,
     maxHealth: 10,
