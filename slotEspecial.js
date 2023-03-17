@@ -102,7 +102,7 @@ export function ativarBtn() {
 let increasePrice = (x) => {
   // return 1
 
-  let increaseRate = gerarNumero(20, 28);
+  let increaseRate = gerarNumero(30, 42);
 
   return Math.trunc(x / increaseRate);
 };

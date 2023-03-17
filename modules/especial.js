@@ -943,11 +943,11 @@ export let especiais = {
       let speakerSono = () => {
         let highRiskSleep = gerarNumero(110, 255);
         let caraCoroa = per(90);
-        let normalChance = per(23);
+        let normalChance = per(15);
 
         if (this.energia > highRiskSleep && caraCoroa) {
           this.dormindo = true;
-        } else if (normalChance) {
+        } else if (normalChance && this.energia > 5) {
           this.dormindo = true;
           this.addBuff(25);
         }
@@ -1858,8 +1858,8 @@ export let especiais = {
             atirador.statusEmoji = this.allyEmoji;
             atirador.atiradorJhin = true;
 
-            let jhinEscolhaAu = ["jhinEscolha.mp3", 0.7];
-            let ultiJhinAu = ["ultiJhin.mp3", 0.3];
+            let jhinEscolhaAu = ["jhinEscolha.mp3", 0.3];
+            let ultiJhinAu = ["ultiJhin.mp3", 0.2];
 
             snd(jhinEscolhaAu);
             snd(ultiJhinAu);
@@ -1883,7 +1883,7 @@ export let especiais = {
 
             if (checkTiros()) {
               if (tiros == 4) {
-                let countAu = ["jhinConta1.mp3", 0.5];
+                let countAu = ["jhinConta1.mp3", 0.2];
                 snd(countAu);
                 // snd(hit);
                 // somDeath(350);
@@ -1891,14 +1891,14 @@ export let especiais = {
               }
 
               if (tiros == 3) {
-                let countAu = ["jhinConta2.mp3", 0.5];
+                let countAu = ["jhinConta2.mp3", 0.2];
                 snd(countAu);
                 // snd(hit);
                 // somDeath(350);
               }
 
               if (tiros == 2) {
-                let countAu = ["jhinConta3.mp3", 0.5];
+                let countAu = ["jhinConta3.mp3", 0.2];
                 snd(countAu);
 
                 tirosString.classList.add("critico");
@@ -1919,7 +1919,7 @@ export let especiais = {
                 tirosString.textContent = "";
                 this._invHiddenButton = true;
 
-                let countAu = ["jhinConta4.mp3", 0.5];
+                let countAu = ["jhinConta4.mp3", 0.2];
                 snd(countAu);
                 // snd(hit);
                 // somDeath(350);

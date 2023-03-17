@@ -580,6 +580,8 @@ let monark = {
 
     this.dano = gerarNumero(3, 7);
     this._despawn = Math.trunc(3 + (100 - chance) / 2);
+    this._despawn < 15 ? this._despawn = 15 : 0
+
 
     if(per(30)){
       this.poder()
