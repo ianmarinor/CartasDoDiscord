@@ -1167,7 +1167,7 @@ function moverToDeckSpace() {
 let copyCardSeed;
 let copyCardName;
 
-let hit = ["hit.mp3"];
+let hit = ["hit.mp3", 0.2];
 
 export function efeitoDano(carta) {
   // console.trace();
@@ -2205,20 +2205,21 @@ function runEveryRound() {
     x._everyRoundMao ? x.everyRound() : false;
   });
   areObj.map((x) => {
-    if (x.autoAtaque) {
-      x.autoAtaque();
-    }
     x.defaultEveryRound ? x.defaultEveryRound() : 0
-
+    
     if (x.everyRound) {
       x.everyRound();
       if (!x.empty) {
         x.isInvisible = false;
       }
     }
-
+    
     x.everyRoundDefault? x.everyRoundDefault() : false
     arenaByRound()
+
+    if (x.autoAtaque) {
+      x.autoAtaque();
+    }
   });
 }
 

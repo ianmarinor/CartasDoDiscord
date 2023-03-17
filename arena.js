@@ -68,7 +68,7 @@ export function updatePlacarInimigo(){
   )
 
 
-  console.log('efeitos: ', efeitos);
+ 
   
 
 
@@ -124,7 +124,7 @@ export function updatePlacarInimigo(){
       placarInimigoWrap.children[1].children[0].innerHTML = efeitos
     }
     if(hasPlayed) return
-    audioPlayer(mGAu,true,placarAudioChannel)
+    audioPlayer(mGAu,true,placarAudioChannel,0.85)
     hasPlayed = true
   }
 }
@@ -357,16 +357,22 @@ class Inimigo {
   autoAtaque() {
     if (this.readyToAttack) {
       if (this._doesAttack) {
-        this.ataque();
+        this.primaryAttack();
       } else {
         this.poder();
         this.readyToAttack = false;
       }
     }
 
+    
+
     if (per(this.attackChance)) {
       this.readyToAttack = true;
     }
+  }
+
+  primaryAttack(){
+    this.ataque(this.dano)
   }
 
   kill(absolute) {
@@ -608,7 +614,7 @@ let monark = {
   
   cfg(){
 
-    audioPlayer(this._audioSpawn, true, this._CHN)
+    audioPlayer(this._audioSpawn, true, this._CHN, 0.4)
 
     this.dano = gerarNumero(3,7)
     this._despawn = Math.trunc(3 + (100 - chance) / 2)
@@ -663,7 +669,7 @@ let menosCartas = {
   cfg() {
     this.energia = gerarNumero(3, 15);
 
-    audioPlayer(this._audioSpawn,true,this._CHN, 0.2)
+    audioPlayer(this._audioSpawn,true,this._CHN, 0.1)
   },
 
   poder() {
@@ -789,7 +795,7 @@ let dog = {
   _cfgAdded: false,
   _money: 30,
   _attackAtSpawn: false,
-  _doesAttack: false,
+  _doesAttack: true,
   _audioSpawn: 'dog.mp3',
   attackChance: 11,
   hp: 25,
@@ -802,11 +808,11 @@ let dog = {
     audioPlayer(this._audioSpawn,true,this._CHN, 0.1)
   },
 
-  poder(){
+  primaryAttack(){
 
-    if(this._poderUsing) return
+    if(this._attacking) return
 
-    this._poderUsing = true
+    this._attacking = true
     this.ataque()
     this.readyToAttack = true
     this.print()
@@ -815,13 +821,15 @@ let dog = {
     setTimeout ( 
       ()=> { if (this._dead) return 
         this.ataque()
-        this._poderUsing = false
+        this._attacking = false
         this.dano = Math.trunc (this.dano * 5)
       },
     1000
     )
-   
-  }
+
+  },
+
+  
 
 };
 
@@ -982,7 +990,7 @@ let ianCHN = document.createElement('audio')
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
     coolDown = false
-    spawnMenosCartas()
+    spawnDog()
   }
 });
 
