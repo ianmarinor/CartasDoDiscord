@@ -2,7 +2,14 @@ var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
 
-import { are, areObj, spawnMonark, populateArena, updatePlacarInimigo, arenaByRound } from "./arena.js";
+import {
+  are,
+  areObj,
+  spawnMonark,
+  populateArena,
+  updatePlacarInimigo,
+  arenaByRound,
+} from "./arena.js";
 
 import { especial } from "./modules/especial.js";
 
@@ -493,8 +500,8 @@ function fabricaDeCarta(
 
       this._place = this._parent.indexOf(this);
       this._thisCardP = this._parentP.children[this._place];
-      this._cargoP = this._thisCardP.children[2]
-      this._hpP = this._thisCardP.children[3].children[1]
+      this._cargoP = this._thisCardP.children[2];
+      this._hpP = this._thisCardP.children[3].children[1];
 
       if (this._place > 0) {
         this._leftCard = this._parentP.children[this._place - 1];
@@ -531,15 +538,11 @@ function fabricaDeCarta(
 
       energia.textContent = this.energia + "⚡";
 
-      if(this._despawn != false){
-        this._hpP.style.visibility = 'visible'
-        this._hpP.textContent = this._despawn - 1 + '🏃'
+      if (this._despawn != false) {
+        this._hpP.style.visibility = "visible";
+        this._hpP.textContent = this._despawn - 1 + "🏃";
       }
-
     },
-
-
-
 
     dmg() {
       this.kill();
@@ -617,8 +620,8 @@ function debug() {
   money.set(99999);
   numCartas.set(999);
   hpPlayer.set(100);
-  hpPlayer.addBuff(5000)
-  ammo.set(50);
+  hpPlayer.addBuff(5000);
+  ammo.set(0);
 }
 
 document.addEventListener("keydown", (event) => {
@@ -1180,7 +1183,7 @@ export function efeitoDano(carta) {
 
   heart.style.backgroundColor = "red";
   heart.style.border = "3px dotted black";
-  cartaP.style.opacity = '0.4'
+  cartaP.style.opacity = "0.4";
 
   snd(hit);
 
@@ -1188,15 +1191,13 @@ export function efeitoDano(carta) {
     heart.style.backgroundColor = "";
     heart.style.border = "";
     cartaP.style.borderStyle = "solid";
-    cartaP.style.opacity = '1'
+    cartaP.style.opacity = "1";
   }, 300);
 }
 
 export function efeitoCura(carta) {
   let heart = carta._thisCardP.children[3].children[1];
-  
 
-  
   heart.style.backgroundColor = "blue";
   heart.style.border = "3px solid green";
 
@@ -1674,8 +1675,6 @@ export function elimCardInv(x) {
   return slot;
 }
 
-
-
 export function elimCardMao(x) {
   let slot;
 
@@ -1817,11 +1816,10 @@ document.addEventListener("keydown", (event) => {
     console.groupEnd();
 
     console.group("BOSS");
-    console.log(boss ? boss : 'BOSS NOT SPAWNED');
+    console.log(boss ? boss : "BOSS NOT SPAWNED");
     console.groupEnd();
   }
-  }
-);
+});
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyI") {
@@ -1868,11 +1866,10 @@ export let money = {
   total: 0,
 
   add(n) {
-   
     this.printP(n);
   },
 
-  addAbsolute(n){
+  addAbsolute(n) {
     this.total += n;
   },
 
@@ -2026,16 +2023,12 @@ export let vendas = {
 
     if (vendas <= 0) {
       this.vendas = 0;
-
-      
     } else {
-      
     }
   },
 
   set(n) {
     this.vendas = n;
-    
   },
 };
 
@@ -2059,12 +2052,12 @@ function animateSell(start, plus) {
     if (plus - x < 40) {
       x++;
       moneyP.textContent = parseInt(moneyP.textContent) + 1;
-      money.addAbsolute(1)
+      money.addAbsolute(1);
       snd(coinAu);
       // ativarBtn()
     } else {
       x += increment;
-      money.addAbsolute(increment)
+      money.addAbsolute(increment);
       moneyP.textContent = parseInt(moneyP.textContent) + increment;
       // ativarBtn()
 
@@ -2087,12 +2080,9 @@ function venderCarta() {
     if (!chosenCardObj.isNormal) {
       if (!chosenCardObj._canBeSold) return;
 
-      
       chosenCardObj.kill(true);
       chosenCard = 0;
       chosenCardObj = emptyObj;
-
-
     } else {
       chosenCardObj.kill(true);
       chosenCard = 0;
@@ -2197,31 +2187,28 @@ export function tudo() {
 function runEveryRound() {
   invObj.map((x) => {
     x.everyRound ? x.everyRound() : false;
-    x.everyRoundDefault? x.everyRoundDefault() : false
+    x.everyRoundDefault ? x.everyRoundDefault() : false;
 
-    if(x._despawn != false){
-
-      x._despawn--
-      x._despawn <= 1 ? x.kill() :0
-
+    if (x._despawn != false) {
+      x._despawn--;
+      x._despawn <= 1 ? x.kill() : 0;
     }
   });
   maoObj.map((x) => {
     x._everyRoundMao ? x.everyRound() : false;
   });
   areObj.map((x) => {
-    
-    x.defaultEveryRound ? x.defaultEveryRound() : 0
-    
+    x.defaultEveryRound ? x.defaultEveryRound() : 0;
+
     if (x.everyRound) {
       x.everyRound();
       if (!x.empty) {
         x.isInvisible = false;
       }
     }
-    
-    x.everyRoundDefault? x.everyRoundDefault() : false
-    arenaByRound()
+
+    x.everyRoundDefault ? x.everyRoundDefault() : false;
+    arenaByRound();
 
     if (x.autoAtaque) {
       x.autoAtaque();
@@ -2230,9 +2217,6 @@ function runEveryRound() {
 }
 
 function removeBuffAll() {
-
-
-
   setInterval(function () {
     let debuffRate = gerarNumero(1, 1);
 
@@ -2255,7 +2239,7 @@ function tick() {
     ativarBtn();
     criarBtn();
     placarArena.printP();
-    updatePlacarInimigo()
+    updatePlacarInimigo();
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];
@@ -2289,15 +2273,11 @@ function tick() {
 
     for (let i = 0; i < 3; i++) {
       let cartaO = slotEspObj[i];
-      
 
       if (cartaO) {
         cartaO.print();
       }
-
     }
-
-   
 
     novaCarta.place();
 
@@ -2386,25 +2366,15 @@ function healMonarkBoss(x) {
   }
 }
 
-
-
 //************************************************************************************* */
 //************************************************************************************* */
 //************************************************************************************* */
 //************************************************************************************* */
 //************************************************************************************* */
 function poderBoss() {
-  if (!boss) return 
+  if (!boss) return;
 
-
-  
-
-    
-      if (boss.name == "monark") {
-        
-        boss.chuvaDeMonark()
-    
-  }
+  boss.ult();
 }
 
 export let numCartas = {
@@ -2412,7 +2382,7 @@ export let numCartas = {
 
   add(n) {
     this.total += n;
-    this.print()
+    this.print();
   },
 
   remove(n) {
@@ -2421,31 +2391,29 @@ export let numCartas = {
     if (this.total < 0) {
       this.total = 0;
     }
-    this.print()
+    this.print();
   },
 
   set(n) {
     this.total = n;
-    this.print()
+    this.print();
   },
 
-  print(){
-    
-    
-    if(this.total == 0) {
+  print() {
+    if (this.total == 0) {
       arenaP.textContent = " ⚠️ SUAS CARTAS ACABARAM ⚠️ ";
-      arenaP.classList.add('warning-cards')
-    } else if (this.total < 16){
-      arenaP.textContent = " ⚠️ VOCÊ TEM SOMENTE " + this.total + (this.total == 1 ? " CARTA ⚠️" : " CARTAS ⚠️ ")
-      arenaP.classList.add('warning-cards')
+      arenaP.classList.add("warning-cards");
+    } else if (this.total < 16) {
+      arenaP.textContent =
+        " ⚠️ VOCÊ TEM SOMENTE " +
+        this.total +
+        (this.total == 1 ? " CARTA ⚠️" : " CARTAS ⚠️ ");
+      arenaP.classList.add("warning-cards");
     } else {
       arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
-      arenaP.classList.remove('warning-cards')
+      arenaP.classList.remove("warning-cards");
     }
-
-  }
-
-
+  },
 };
 
 export let hpPlayer = {
@@ -2456,36 +2424,32 @@ export let hpPlayer = {
   dmgTaken: 0,
   isFull: true,
   mit: 0,
-  _CHN: document.createElement('audio'),
-  _audioHit: 'playerHit.mp3',
+  _CHN: document.createElement("audio"),
+  _audioHit: "playerHit.mp3",
 
   add(n) {
+    setTimeout(() => {
+      if (this.total >= this.max) return;
 
+      this.total += n;
+      if (this.total >= 100) {
+        this.isFull = true;
+        this.total = 100;
+      }
+      this.playerP();
 
-   setTimeout(()=> {if (this.total >= this.max) return;
+      let heart = hpPlayerWrapP;
 
-    this.total += n;
-    if (this.total >= 100) {
-      this.isFull = true;
-      this.total = 100;
-    }
-    this.playerP();
+      heart.style.backgroundColor = "blue";
+      heart.style.border = "4px solid green";
+      heart.style.borderRadius = "5px";
 
-    let heart = hpPlayerWrapP;
-
-    heart.style.backgroundColor = "blue";
-    heart.style.border = "4px solid green";
-    heart.style.borderRadius = "5px";
-
-    setTimeout(function () {
-      heart.style.backgroundColor = "";
-      heart.style.border = "";
-      heart.style.borderRadius = "";
-    }, 300);} , 350)
-
-
-
-
+      setTimeout(function () {
+        heart.style.backgroundColor = "";
+        heart.style.border = "";
+        heart.style.borderRadius = "";
+      }, 300);
+    }, 350);
   },
 
   hitP(n) {
@@ -2497,13 +2461,10 @@ export let hpPlayer = {
       heart = hpPlayerP;
     }
 
-
-
-    
     heart.style.backgroundColor = "red";
     heart.style.border = "4px dotted black";
     heart.style.borderRadius = "5px";
-    
+
     setTimeout(function () {
       heart.style.backgroundColor = "";
       heart.style.border = "";
@@ -2544,9 +2505,8 @@ export let hpPlayer = {
 
   remove(n) {
     this.dmgTaken += n;
-    
 
-    audioPlayer(this._audioHit,true,this._CHN, 0.5)     
+    audioPlayer(this._audioHit, true, this._CHN, 0.5);
 
     let resto = this.buffTank(n);
 
@@ -2692,8 +2652,6 @@ btnReset.addEventListener("click", resetarDeck);
 
 // DECK COMECA COM 4 CARTAS
 
-
-
 export function startGame2() {
   resetarDeck();
 
@@ -2722,36 +2680,29 @@ document.addEventListener("contextmenu", function () {
   return false;
 });
 
-export let audioPlayer = (_src,_abort,_CHN, _volume)=> {
-
-
-
-  let CHN = _CHN
-  let src = "/audio/" + _src
-  let vol 
-  if(typeof _volume ==  'number'){
-
-    
-    vol = _volume
+export let audioPlayer = (_src, _abort, _CHN, _volume) => {
+  let CHN = _CHN;
+  let src = "/audio/" + _src;
+  let vol;
+  if (typeof _volume == "number") {
+    vol = _volume;
   } else {
-    vol = 1
+    vol = 1;
   }
-  
-  CHN.volume = vol
-  CHN.src = src
-  if(_abort === true){
-    
-    CHN.play()
-  } else {
-    let secondary = document.createElement('audio')
-    secondary.src = src
-    secondary.volume = vol
-    secondary.play()
-  }
-    
-    // console.log(monarkCHN.paused);
-}
 
+  CHN.volume = vol;
+  CHN.src = src;
+  if (_abort === true) {
+    CHN.play();
+  } else {
+    let secondary = document.createElement("audio");
+    secondary.src = src;
+    secondary.volume = vol;
+    secondary.play();
+  }
+
+  // console.log(monarkCHN.paused);
+};
 
 // LIST BINDS
 //  1, 2, 3, 4 ---> USAR CARTAS NO DECK

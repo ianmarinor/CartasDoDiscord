@@ -275,6 +275,9 @@ class Especial {
   }
 
   ataque(dmg, ammO, _spread) {
+
+    if(this.unableToAttack()) return
+
     let dano;
     let ammoUsage;
     let spread = [false, false];
@@ -508,14 +511,16 @@ class Especial {
     }
   }
 
-  cantAttack(){
+  unableToAttack(){
 
-    let cantAttackCondition = this._stunned && this._attacking && this._poderUsing
+    let cantAttackCondition = this._stunned 
 
-    if(this.st){
-
+    if(cantAttackCondition){
+      return true
+    } else {
+      return false
     }
-
+    
 
   }
 
@@ -711,7 +716,7 @@ class Especial {
 
     if (this._hasUlti != false) {
       ulti.textContent = this.ulti + "%";
-      this.ulti == 100
+      this.ulti == 100 && !this.unableToAttack
         ? (ulti.style.cursor = "pointer")
         : (ulti.style.cursor = "not-allowed");
     }
@@ -753,17 +758,24 @@ class Especial {
     if (this.requireAmmo) {
       this._buttonP.innerHTML = "⚔️";
 
-      if (ammo.total > 0 && !this._poderUsing) {
+      if (ammo.total > 0 && !this.unableToAttack() && !this._poderUsing) {
         this._buttonP.style.opacity = 1;
         this._buttonP.style.cursor = "pointer";
       } else {
         this._buttonP.style.opacity = 0.3;
         this._buttonP.style.cursor = "not-allowed";
       }
+    } else if (!this.unableToAttack()){
+      this._buttonP.innerHTML = "🔘";
+      this._buttonP.style.opacity = 1;
+      this._buttonP.style.cursor = "pointer";
     } else {
       this._buttonP.innerHTML = "🔘";
+      this._buttonP.style.opacity = 0.3;
+      this._buttonP.style.cursor = "not-allowed";
     }
 
+ 
     //estilo selo
     if (this._exposto) {
       this._seloP.textContent = "🎯";
@@ -893,6 +905,7 @@ export let especiais = {
     },
 
     poder() {
+      if(this.unableToAttack()) return
       let varianteTenica = inv.children[this._place];
       let botao = varianteTenica.children[3].children[2];
 
@@ -982,7 +995,6 @@ export let especiais = {
       } else {
         this.exposto(false);
         descriptionSpeaker.innerHTML = "MONARK BAN! 🔨";
-        this.disableButton(false);
         this.changeRetrato(speakerNotSleepingPic);
         this.dmgBoss = false;
       }
@@ -991,6 +1003,7 @@ export let especiais = {
     },
 
     poder() {
+      if(this.unableToAttack()) return
       if (this.dormindo) return;
 
       let speakerSono = () => {
@@ -1129,6 +1142,7 @@ export let especiais = {
     },
 
     poder() {
+      if(this.unableToAttack()) return
       if (this.giveCard) {
         numCartas.add(this.energia);
         if (packP.children[0].id == "carta") {
@@ -1385,6 +1399,7 @@ export let especiais = {
     },
 
     poder() {
+      if(this.unableToAttack()) return
       function infectar() {
         areObj.map((x) => {
           if (x.empty) return;
@@ -1494,6 +1509,7 @@ export let especiais = {
     },
 
     ult() {
+      if(this.unableToAttack()) return
       let spy = this._thisCardP;
       let spyWatch = this._cargoP;
       let botao = spy.children[3].children[2];
@@ -1601,6 +1617,7 @@ export let especiais = {
     },
 
     poder() {
+      if(this.unableToAttack()) return
       if (ammo.total <= 0) {
         return;
       }
@@ -1667,6 +1684,7 @@ export let especiais = {
     _invHiddenButton: true,
 
     poder() {
+      if(this.unableToAttack()) return
       this.areaAtack();
       this.kill();
     },
@@ -1792,7 +1810,7 @@ export let especiais = {
       if (this._parentP != inv) return;
 
       let buff = gerarNumero(125, 180);
-      if (this.ulti != 100) return;
+      if (this.ulti != 100 || this.unableToAttack()) return;
 
       invObj.map(function (x) {
         if (x.hashp) {
@@ -1804,7 +1822,7 @@ export let especiais = {
     },
 
     poder() {
-      if (this._poderUsing) return;
+      if (this.unableToAttack()) return;
       this._poderUsing = true;
       let ultiRate = () => gerarNumero(0, 1);
 
@@ -1853,6 +1871,7 @@ export let especiais = {
     atirador: false,
 
     ult() {
+      if (this.unableToAttack()) return;
       this.aim == "boss" ? (this.aim = "are") : (this.aim = "boss");
       console.log(this.aim);
     },
@@ -1882,6 +1901,7 @@ export let especiais = {
     },
 
     poder() {
+      if (this.unableToAttack()) return;
       let jhin = this._thisCardP;
       let tiros = this.tiros;
       let tirosString = jhin.children[2];
@@ -2050,6 +2070,9 @@ export let especiais = {
     },
 
     ult() {
+
+      if(this.ulti != 100 || this.unableToAttack()) return
+
       let dvaToMinidva = (energiaFromField) => {
         this._invHiddenButton = true;
         this.setHp(10);
@@ -2231,6 +2254,7 @@ export let especiais = {
     },
 
     explode() {
+      
       this.exploding = true;
       this.isInvisible = true;
       this._thisCardP.className = "piscar";

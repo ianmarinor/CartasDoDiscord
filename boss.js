@@ -1,6 +1,12 @@
 import { gerarNumero, per, money, audioPlayer } from "./script.js";
 import { triggerChuvaMonark, startGame2, rodadas, tudo } from "/script.js";
-import { spawnMonark, areObj, populateArena, areWakeUp } from "/arena.js";
+import {
+  spawnMonark,
+  spawnVitor,
+  areObj,
+  populateArena,
+  areWakeUp,
+} from "/arena.js";
 import { spawnTank } from "./arena.js";
 
 let bossHealthP = document.getElementById("hb");
@@ -19,7 +25,7 @@ let cartaBossMonark =
 
 // CONSTRUTOR BOSSES
 
-export function toMonark(_cartaObj,_despawnTime) {
+export function toMonark(_cartaObj, _despawnTime) {
   let carta = _cartaObj;
   let cartaP = _cartaObj._thisCardP;
   let cargo = _cartaObj._cargoP;
@@ -35,7 +41,7 @@ export function toMonark(_cartaObj,_despawnTime) {
   carta._cargo = "carta-monark";
   carta.dmgBoss = false;
   carta._canBeDeleted = false;
-  if(_despawnTime) return
+  if (_despawnTime) return;
   carta._despawn = gerarNumero(2, 8);
 }
 
@@ -65,7 +71,7 @@ class Boss {
     } else {
       vol = 0.8;
     }
-    this.antiSpam()
+    this.antiSpam();
     audioPlayer(this._audioHit, true, this._CHN, vol);
     this.percentHealth = (this.health / this.fullHealth) * 100;
 
@@ -85,7 +91,6 @@ class Boss {
   antiSpam() {
     let chance = 100 - this.percentHealth;
 
-    
     console.log("chance: ", chance);
 
     if (!per(chance)) {
@@ -95,24 +100,20 @@ class Boss {
 
     if (per(80)) {
       populateArena(true);
-      areWakeUp()
+      areWakeUp();
       console.log("********* POPULEI *********");
     } else {
       // this.ulti();
-      this.chuvaDeMonark()
+      this.ult();
       console.log("********* VOU ULTAR *********");
-      areWakeUp()
-      
+      areWakeUp();
     }
 
-    if(this.percentHealth < 33 && per(100)){
-
-      spawnTank(false,true) 
-      areWakeUp()
+    if (this.percentHealth < 33 && per(100)) {
+      spawnTank(false, true);
+      areWakeUp();
       console.log("********* taaaaaank!!!! *********");
     }
-
-
   }
 
   heal(n) {
@@ -182,67 +183,72 @@ function createMonark() {
       bossRoomP.innerHTML = cartaBossMonark;
     },
 
-    ulti() {
+    ult(absolute) {
+
       let ultis = [
         this.chuvaDeMonark,
         this.liberdadeDeExpresao,
         this.vitorMetaforando,
       ];
 
-      ultis[gerarNumero(0, 2)]();
-    },
-
-    chuvaDeMonark(absolute) {
       let chance = 0;
 
       let porcentagemVida = (this.health / this.fullHealth) * 10;
       chance += 10 - porcentagemVida;
-      // chance += Math.trunc(rodadas / 50);
-      // chance += Math.trunc(money.total / 700);
 
       if (chance > 100 || absolute) chance = 100;
+      console.log("*** ULTI CHANCE ***");
 
-      console.log("CHANCE CHUVA DE MONARK: ", chance);
+      if (this._coolDown || this.hasTriggeredUltihasStarted) return;
+      if (!per(chance)) return;
 
+    
+      let delayUltAfterRound = gerarNumero(5000, 12000)
+      let timeShaking = gerarNumero(750, 3200)
+      this.hasTriggeredUltihasStarted = true
+      
+      // DELAY TO START SHAKING
       setTimeout(() => {
-        if (this._coolDown) return;
-
-        let canGo = per(chance);
         
-
-        if (!canGo) return;
-
-        console.log();
-
+        
         this.treme(true);
         audioPlayer(this._audioPoder, true, this._CHN, 0.2);
         this.coolDown(15000 - chance * 100);
+
+
+        // SHAKING DELAY
         setTimeout(() => {
           this.treme(false);
+          this.hasTriggeredUlti = false
+          ultis[gerarNumero(0, 2)]();
+        }, timeShaking);
 
-          for (let i = 0; i < 100; i++) {
-            spawnMonark(true);
-          }
 
-          areObj.map((x) => {
-            if (x.cartaId == "monark") {
-              x.isInvisible = false;
-              x.ataque();
-              x.readyToAttack = true;
-            }
-          });
-          audioPlayer(this._audioChuva, true, this._CHN, 0.1);
-        }, gerarNumero(750, 3200));
-      }, gerarNumero(120, 120));
+      }, delayUltAfterRound);
+    },
+
+    chuvaDeMonark() {
+      for (let i = 0; i < 100; i++) {
+        spawnMonark(true);
+      }
+
+      areObj.map((x) => {
+        if (x.cartaId == "monark") {
+          x.isInvisible = false;
+          x.ataque();
+          x.readyToAttack = true;
+        }
+      });
+
+      audioPlayer(this._audioChuva, true, this._CHN, 0.1);
     },
 
     vitorMetaforando() {
-      console.log('******  metaforei ****');
+      spawnVitor(true);
     },
 
     liberdadeDeExpresao() {
-
-      console.log('******  libertie ****');
+      console.log("******  libertie ****");
     },
   };
 

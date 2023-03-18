@@ -19,7 +19,7 @@ import {
   camaradaBlueprint,
   tankBlueprint,
   dogBlueprint,
-  blueprintBuilder
+  blueprintBuilder,
 } from "./domCards.js";
 import { start } from "./modules/seedFabricator.js";
 import { seedComprada } from "./modules/seedsCompradas.js";
@@ -40,17 +40,12 @@ const empty7 = are.children[7];
 const empty8 = are.children[8];
 const empty9 = are.children[9];
 
-export function areWakeUp(){
-
-  areObj.map(
-    (x)=> {
-      if (!x.empty){
-        x.isInvisible = false
-      }
+export function areWakeUp() {
+  areObj.map((x) => {
+    if (!x.empty) {
+      x.isInvisible = false;
     }
-
-  )
-
+  });
 }
 
 export let areObj;
@@ -73,7 +68,7 @@ export function updatePlacarInimigo() {
       dmgTotal += x.dano;
     } else if (!x._doesAttack && x.readyToAttack) {
       // efeitos = efeitos + "<br>" + x.emoji;
-      efeitos = efeitos  + x.emoji;
+      efeitos = efeitos + x.emoji;
     }
   });
 
@@ -168,8 +163,8 @@ class Inimigo {
     this._dmgDone = 0;
     this._totalHp = 0;
     this._hasUlti = false;
-    this._exposto = false
-    this.tank = false
+    this._exposto = false;
+    this.tank = false;
 
     //audio
     this._CHN = document.createElement("audio");
@@ -185,7 +180,7 @@ class Inimigo {
     this._energiaP = false;
     this._hpP = false;
     this._buttonP = false;
-    this._seloP = false
+    this._seloP = false;
   }
 
   audioSpawn(_vol) {
@@ -196,14 +191,13 @@ class Inimigo {
     } else {
       vol = 1;
     }
-    
 
     audioPlayer(this._audioSpawn, false, this._CHN, vol);
   }
 
   changeRetrato(img) {
     let retrato = this._thisCardP.children[1];
-    retrato.style.backgroundImage = "url('pics/" +img + "')";
+    retrato.style.backgroundImage = "url('pics/" + img + "')";
   }
 
   place() {
@@ -230,14 +224,13 @@ class Inimigo {
     this._cidadeP = this._thisCardP.children[0].children[1];
     this._retratoP = this._thisCardP.children[1];
     this._cargoP = this._thisCardP.children[2];
-    
+
     this._energiaP = this._thisCardP.children[3].children[0];
     this._hpP = this._thisCardP.children[3].children[1];
-    
+
     this._place = this._parent.indexOf(this);
     this._displayP = this._thisCardP.children[3];
     this._seloP = this._thisCardP.children[5];
-
 
     if (this._place > 0) {
       this._leftCard = this._parentP.children[this._place - 1];
@@ -265,19 +258,14 @@ class Inimigo {
       this._seloP.textContent = "🛡️";
     } else if (this.especial) {
       this._seloP.textContent = "⭐";
-    }  else if (this.miniBoss) {
+    } else if (this.miniBoss) {
       this._seloP.textContent = "🦹🏼‍♂️";
     } else {
       this._seloP.textContent = "";
     }
 
-
-    if(this._stunned){
-
+    if (this._stunned) {
     }
-
-    
-
   }
 
   setHp(n) {
@@ -314,12 +302,12 @@ class Inimigo {
 
   superCritico(trigger) {
     if (trigger) {
-      if (this._critico || !this._canBeCritic) return;
-      this._critico = true;
-      this.dano *= 3;
+      if (this._superCritico || !this._canBeCritic) return;
+      this._superCritico = true;
+      this.dano *= 6;
     } else {
-      this._critico = false;
-      this.dano = Math.trunc(this.dano / 3);
+      this._superCritico = false;
+      this.dano = Math.trunc(this.dano / 6);
     }
   }
 
@@ -521,7 +509,7 @@ class Inimigo {
       moneyP.textContent = this._money + "💰";
     }
 
-    if (this._critico) {
+    if (this._critico || this._superCritico) {
       energia.classList.add("critico");
     } else {
       energia.classList.remove("critico");
@@ -538,8 +526,7 @@ class Inimigo {
       this._thisCardP.style.opacity = "1";
     }
 
-   this.tick ? this.tick() : 0
-
+    this.tick ? this.tick() : 0;
   }
 
   cfg() {}
@@ -607,45 +594,40 @@ let monark = {
   dano: 5,
   emoji: "💩",
 
-
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
 
     this.dano = gerarNumero(3, 7);
-    this._despawn = gerarNumero(35,45)
-    this.attackChance = 20
+    this._despawn = gerarNumero(35, 45);
+    this.attackChance = 20;
 
-
-    if(per(50)){
-      this.poder()
+    if (per(50)) {
+      this.poder();
     }
-
   },
 
-  everyRound() {
-
-  
-
-  },
+  everyRound() {},
 
   poder() {
     let slot = invObj[gerarNumero(0, 3)];
-    let despawnTime
+    let despawnTime;
 
-    if(boss.percentHealth < 25){
-      despawnTime = gerarNumero(18, 23)
-    } else if (boss.percentHealth < 50){
-      despawnTime = gerarNumero(13, 18)
-    } else if (boss.percentHealth < 75){
-      despawnTime = gerarNumero(8, 13)
+    if (boss) {
+      if (boss.percentHealth < 25) {
+        despawnTime = gerarNumero(18, 23);
+      } else if (boss.percentHealth < 50) {
+        despawnTime = gerarNumero(13, 18);
+      } else if (boss.percentHealth < 75) {
+        despawnTime = gerarNumero(8, 13);
+      } else {
+        despawnTime = false;
+      }
     } else {
-      despawnTime = false
+      despawnTime = false;
     }
 
     // let slot = invObj[0]
     if (slot.isNormal) {
-
-
       toMonark(slot);
     }
   },
@@ -676,12 +658,12 @@ let menosCartas = {
 
   cfg() {
     this.energia = gerarNumero(8, 23);
-    if(per(0.5)){
-      this._cargoP.textContent = 'EVIL'
-      this.energia = gerarNumero(50,86);
-      this.changeRetrato('menosCartasEvil.gif')
-      this.attackChance = this.energia
-      this.setHp(this.energia * gerarNumero(2,4))
+    if (per(0.1)) {
+      this._cargoP.textContent = "EVIL";
+      this.energia = gerarNumero(50, 86);
+      this.changeRetrato("menosCartasEvil.gif");
+      this.attackChance = this.energia;
+      this.setHp(this.energia * gerarNumero(2, 4));
     }
 
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
@@ -734,7 +716,6 @@ let camarada = {
         if (x.empty || x.isInvisible) return;
 
         if (x.cartaId != "camarada" && x.cartaId != "tank") {
-          
           x.readyToAttack = true;
         }
 
@@ -820,6 +801,17 @@ let dog = {
   dano: 20,
   especial: true,
 
+  tick() {
+    let vitor = areObj.some((x) => x.cartaId == "vitor");
+
+    if (vitor) {
+      this.superCritico(true);
+      this.changeRetrato("dogRetrato2.png");
+      this._nomeP.textContent = "DOG DO VITINHO";
+      this._retratoP.style.backgroundSize = "100% 100%";
+    }
+  },
+
   cfg() {
     this.dano = gerarNumero(21, 32);
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
@@ -841,52 +833,51 @@ let metaforando = {
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
-  attackChance: 11,
+  attackChance: 15,
   hp: 2000,
   maxHealth: 2000,
   dano: 20,
   miniBoss: true,
+  emoji: "😵",
   cfg() {
+    this.dano = gerarNumero(8, 17);
+    this._nomeP.style.fontSize = "80%";
+    this._nomeP.style.marginTop = "8px";
+    this._nomeP.style.marginBottom = "10px";
+    this._retratoP.style.height = "80%";
 
-    
-    this._nomeP.style.fontSize = '80%'
-    this._nomeP.style.marginTop = '8px'
-    this._nomeP.style.marginBottom = '10px'
-    this._retratoP.style.height = '80%'
-    
-    
-    this._cargoP.innerHTML = '<progress style="width: 75%; border: none; background-color: red; color: black; height: 8px; width: 96%; transform: rotate(180deg) " value="0" max="700"> </progress>' 
-    this._cidadeP.style.marginBottom = '2px'
-  
-    let healthBar = this._cargoP.children[0]
-    this._displayP.style.visibility = 'hidden'
-    healthBar.style.borderRadius = '8px'
+    this._cargoP.innerHTML =
+      '<progress style="width: 75%; border: none; background-color: red; color: black; height: 8px; width: 96%; transform: rotate(180deg) " value="0" max="700"> </progress>';
+    this._cidadeP.style.marginBottom = "2px";
+
+    let healthBar = this._cargoP.children[0];
+    this._displayP.children[1].style.visibility = "hidden";
+
+    healthBar.style.borderRadius = "8px";
   },
 
- tick(){
-  let healthBar = this._cargoP.children[0]
+  tick() {
+    let healthBar = this._cargoP.children[0];
 
-  healthBar.max = this.maxHealth
-  healthBar.value = this._dmgTaken
-
-
-
- },
-
-  poder(){
-
-    inv.style.opacity = '0'
-
-
+    healthBar.max = this.maxHealth;
+    healthBar.value = this._dmgTaken;
   },
 
+  poder() {
+    invObj.map((x) => {
+      if (x.isNormal || x.isInvisible) return;
+      let stunTime = gerarNumero(8, 18);
+      x._stunned = true;
+      x._stunnedWeight = stunTime;
+    });
 
+
+    hpPlayer.remove(this.dano)
+  },
 };
 
-
-
-export function spawnTank(n,_absolute) {
-  _absolute ? coolDown = false : 0
+export function spawnTank(n, _absolute) {
+  _absolute ? (coolDown = false) : 0;
   if (coolDown) return;
 
   if (n) {
@@ -969,29 +960,25 @@ export function spawnDog(n) {
   coolDown = true;
 }
 
-
 export function spawnVitor(n) {
-  if (coolDown) return;
+  if (coolDown && !n) return;
 
-  if (n) {
-    if (per(n)) {
-    } else {
-      return;
-    }
-  }
+  
 
   let slot = gerarNumero(0, 9);
 
-  secret.innerHTML = blueprintBuilder('vitor','METAFORANDO',"url('pics/vitorRetrato.jpeg')" )
+  secret.innerHTML = blueprintBuilder(
+    "vitor",
+    "METAFORANDO",
+    "url('pics/vitorRetrato.jpeg')"
+  );
 
-  if (areObj[slot].empty == true) {
+  if (!areObj[slot].tank || !areObj[slot].miniBoss ) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
   }
   coolDown = true;
 }
-
-
 
 export function spawnMonark(n) {
   if (coolDown && !n) return;
@@ -1049,7 +1036,7 @@ export function spawnMonark(n) {
 
   secret.innerHTML = monarkBluePrint;
 
-  if (areObj[slot].empty == true) {
+  if (areObj[slot].empty == true ) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(monark), monark);
   }
@@ -1072,18 +1059,17 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     coolDown = false;
-    spawnCamarada();
+    spawnVitor(true);
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    // coolDown = false;
-    // invObj[0]._stunned = true
-    // invObj[0]._stunnedWeight = 2
     coolDown = false;
-    spawnMenosCartas()
-
+    invObj[0]._stunned = true;
+    invObj[0]._stunnedWeight = 3;
+    // coolDown = false;
+    // spawnMenosCartas()
   }
 });
 
@@ -1107,8 +1093,6 @@ let chance;
 export function populateArena(_absolute) {
   let chanceNormal = 90;
 
-
-
   chance = 5;
 
   if (boss) {
@@ -1122,10 +1106,9 @@ export function populateArena(_absolute) {
 
   chance > 100 ? (chance = 100) : 0;
   chanceNormal < 40 ? (chanceNormal = 40) : 0;
-  _absolute ? chance = 100 : 0
-  
-  
-  if (!per(chance) && !_absolute ) return;
+  _absolute ? (chance = 100) : 0;
+
+  if (!per(chance) && !_absolute) return;
 
   if (!boss) return;
   coolDown = false;

@@ -95,7 +95,7 @@ export function blueprintBuilder(_id, _name, _photo) {
   let defaultBlueprint =
     "<div id=" +
     id +
-    ">" +
+    " class='monark' >" +
     '<div class="nameAndCidadeWrapper">' +
     '<p class="nome-inimigo"  >' +
     name +
@@ -115,7 +115,7 @@ export function blueprintBuilder(_id, _name, _photo) {
     '<p class="seloAre"></p>' +
     "</div>";
 
-    console.log(defaultBlueprint);
+    
 
     return defaultBlueprint
 
