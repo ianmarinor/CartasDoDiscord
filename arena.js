@@ -40,6 +40,19 @@ const empty7 = are.children[7];
 const empty8 = are.children[8];
 const empty9 = are.children[9];
 
+export function areWakeUp(){
+
+  areObj.map(
+    (x)=> {
+      if (!x.empty){
+        x.isInvisible = false
+      }
+    }
+
+  )
+
+}
+
 export let areObj;
 
 let hasPlayed = false;
@@ -59,7 +72,8 @@ export function updatePlacarInimigo() {
     if (x._doesAttack && x.readyToAttack) {
       dmgTotal += x.dano;
     } else if (!x._doesAttack && x.readyToAttack) {
-      efeitos = efeitos + "<br>" + x.emoji;
+      // efeitos = efeitos + "<br>" + x.emoji;
+      efeitos = efeitos  + x.emoji;
     }
   });
 
@@ -182,9 +196,14 @@ class Inimigo {
     } else {
       vol = 1;
     }
-    console.log("vol: ", vol);
+    
 
     audioPlayer(this._audioSpawn, false, this._CHN, vol);
+  }
+
+  changeRetrato(img) {
+    let retrato = this._thisCardP.children[1];
+    retrato.style.backgroundImage = "url('pics/" +img + "')";
   }
 
   place() {
@@ -593,11 +612,11 @@ let monark = {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
 
     this.dano = gerarNumero(3, 7);
-    this._despawn = Math.trunc(3 + (100 - chance) / 2);
-    this._despawn < 15 ? this._despawn = 15 : 0
+    this._despawn = gerarNumero(35,45)
+    this.attackChance = 20
 
 
-    if(per(30)){
+    if(per(50)){
       this.poder()
     }
 
@@ -611,8 +630,22 @@ let monark = {
 
   poder() {
     let slot = invObj[gerarNumero(0, 3)];
+    let despawnTime
+
+    if(boss.percentHealth < 25){
+      despawnTime = gerarNumero(18, 23)
+    } else if (boss.percentHealth < 50){
+      despawnTime = gerarNumero(13, 18)
+    } else if (boss.percentHealth < 75){
+      despawnTime = gerarNumero(8, 13)
+    } else {
+      despawnTime = false
+    }
+
     // let slot = invObj[0]
     if (slot.isNormal) {
+
+
       toMonark(slot);
     }
   },
@@ -642,7 +675,14 @@ let menosCartas = {
   especial: true,
 
   cfg() {
-    this.energia = gerarNumero(3, 15);
+    this.energia = gerarNumero(8, 23);
+    if(per(0.5)){
+      this._cargoP.textContent = 'EVIL'
+      this.energia = gerarNumero(50,86);
+      this.changeRetrato('menosCartasEvil.gif')
+      this.attackChance = this.energia
+      this.setHp(this.energia * gerarNumero(2,4))
+    }
 
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
   },
@@ -694,7 +734,7 @@ let camarada = {
         if (x.empty || x.isInvisible) return;
 
         if (x.cartaId != "camarada" && x.cartaId != "tank") {
-          console.log(x);
+          
           x.readyToAttack = true;
         }
 
@@ -845,7 +885,8 @@ let metaforando = {
 
 
 
-export function spawnTank(n) {
+export function spawnTank(n,_absolute) {
+  _absolute ? coolDown = false : 0
   if (coolDown) return;
 
   if (n) {
@@ -1031,15 +1072,18 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     coolDown = false;
-    spawnVitor();
+    spawnCamarada();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
+    // coolDown = false;
+    // invObj[0]._stunned = true
+    // invObj[0]._stunnedWeight = 2
     coolDown = false;
-    invObj[0]._stunned = true
-    invObj[0]._stunnedWeight = 2
+    spawnMenosCartas()
+
   }
 });
 
@@ -1060,10 +1104,13 @@ function Main() {
   return;
 }
 let chance;
-export function populateArena() {
+export function populateArena(_absolute) {
   let chanceNormal = 90;
 
+
+
   chance = 5;
+
   if (boss) {
     let porcentagemVida = Math.trunc((boss.health / boss.fullHealth) * 100);
     chance += 100 - porcentagemVida;
@@ -1075,10 +1122,10 @@ export function populateArena() {
 
   chance > 100 ? (chance = 100) : 0;
   chanceNormal < 40 ? (chanceNormal = 40) : 0;
-
-  console.log("POPULATE CHANCE ", chance);
-  console.log("chanceNormal: ", chanceNormal);
-  if (!per(chance)) return;
+  _absolute ? chance = 100 : 0
+  
+  
+  if (!per(chance) && !_absolute ) return;
 
   if (!boss) return;
   coolDown = false;

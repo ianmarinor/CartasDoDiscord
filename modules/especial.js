@@ -1369,6 +1369,7 @@ export let especiais = {
     dmgBoss: false,
     _requiredIntegrante: true,
     _requiredIntegrante2: true,
+    _invHiddenButton: true,
     cfg() {},
 
     tick() {
@@ -1380,8 +1381,7 @@ export let especiais = {
             "<br>" +
             this._requiredIntegrante2.toUpperCase())
         : false;
-      //debug
-      this._invHiddenButton = false;
+      
     },
 
     poder() {

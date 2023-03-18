@@ -17,8 +17,8 @@
   --tamanhoCartaInimigoWidth: 128px;
   --tamanhoCartaInimigoHeight: 190px;
 
-  --heigthCartaBoss: 270px;
-  --widthCartaBoss: 190px;
+  --heigthCartaBoss: 230px;
+  --widthCartaBoss: 145px;
   /* CELULAR */
 
   --cartaWidthCelular: 110px;
@@ -185,7 +185,7 @@ main {
 
   grid-template-columns: 0.9fr 2fr 1.1fr;
 
-  grid-template-rows: 0.2fr 0.9fr 0.6fr 1.1fr 0.1fr 1fr;
+  grid-template-rows: 0.2fr 0.6fr 0.6fr 1.1fr 0.1fr 1fr;
 
   background-image: linear-gradient(
       360deg,
@@ -231,8 +231,8 @@ li {
 
 #bossRoom {
   grid-area: boss;
-  width: 600px;
-  height: 300px;
+  width: 575px;
+  height: 250px;
   background-color: rgb(85, 71, 71);
   border: 10px rgb(38, 40, 42) solid;
   background-image: linear-gradient(
@@ -252,8 +252,8 @@ li {
 
 #cartaBossMonark {
   background-color: #3d2b1f;
-  height: 280px;
-  width: 200px;
+  height: var(--heigthCartaBoss);
+  width: var(--widthCartaBoss);
   border-radius: 20px;
   border: 5px solid red;
 
@@ -376,42 +376,42 @@ li {
 
   flex-direction: column;
   justify-self: center;
-  align-self: end;
+  align-self: center;
   align-items: center;
 }
 
 #placarInimigoWrap {
-  justify-self: end;
-  align-self: start;
+  /* justify-self: end; */
+  /* align-self: start; */
 
-flex-direction: column;
+flex-direction: row;
 
-  margin-right: 135px;
-  margin-top: 8px;
-  grid-area: mao;
+ 
+  grid-area: dicas;
 
-  width: 90px;
-  height: 320px;
+  width: 320px;
+  height: 90px;
   display: flex;
 
   justify-content: space-between;
   align-items: center;
   background-color: #b81a156f;
   border: #020101 solid 2px;
+  /* transform: rotate(90deg); */
 }
 
 #placarInimigoDano {
   text-align: end;
-  width: 100%;
+  width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 7px;
+  
 }
 
 #placarInimigoEfeito{
-  margin-bottom: 7px;
+  margin-right: 7px;
 }
 
 #inimigo-dano {
@@ -427,7 +427,7 @@ flex-direction: column;
 
   display: flex;
 
-  margin-left: auto;
+  /* margin-left: auto; */
 
   display: flex;
   justify-content: space-between;
@@ -482,13 +482,13 @@ flex-direction: column;
 }
 
 #store {
-  grid-area: texto;
+  grid-area: dinheiro;
   width: 195px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 75px;
+  /* margin-bottom: 75px; */
   align-self: end;
   justify-self: center;
 }
@@ -1400,7 +1400,7 @@ div[id^="empty-"] {
   align-self: end;
   justify-content: space-around;
   align-content: space-around;
-
+  margin-bottom: 40px;
   /* background-color: #010101; */
 }
 
@@ -1463,7 +1463,7 @@ div[id^="empty-"] {
 }
 
 .bossAnimation {
-  animation: boss 4s;
+  animation: boss 3s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
   /* animation-timing-function: linear; */

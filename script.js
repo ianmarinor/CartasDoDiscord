@@ -618,7 +618,7 @@ function debug() {
   numCartas.set(999);
   hpPlayer.set(100);
   hpPlayer.addBuff(5000)
-  ammo.set(5);
+  ammo.set(50);
 }
 
 document.addEventListener("keydown", (event) => {
@@ -1815,8 +1815,13 @@ document.addEventListener("keydown", (event) => {
     console.group("ESPECIAL");
     console.log(slotEspObj);
     console.groupEnd();
+
+    console.group("BOSS");
+    console.log(boss ? boss : 'BOSS NOT SPAWNED');
+    console.groupEnd();
   }
-});
+  }
+);
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyI") {
@@ -2731,7 +2736,7 @@ export let audioPlayer = (_src,_abort,_CHN, _volume)=> {
   } else {
     vol = 1
   }
-  console.log('888888', vol);
+  
   CHN.volume = vol
   CHN.src = src
   if(_abort === true){
