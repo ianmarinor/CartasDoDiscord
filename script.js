@@ -618,7 +618,7 @@ function debug() {
   numCartas.set(999);
   hpPlayer.set(100);
   hpPlayer.addBuff(5000)
-  ammo.set(500);
+  ammo.set(5);
 }
 
 document.addEventListener("keydown", (event) => {

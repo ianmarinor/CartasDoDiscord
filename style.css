@@ -833,6 +833,8 @@ flex-direction: column;
   border: 2px solid rgb(5, 56, 86);
 }
 
+
+
 #abelha {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(pics/fundoAbelha.gif);
@@ -1111,7 +1113,7 @@ flex-direction: column;
   top: 2px;
   right: 2px;
   font-size: 10px;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .nome,

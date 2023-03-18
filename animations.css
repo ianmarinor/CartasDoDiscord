@@ -1,4 +1,17 @@
 
+.stunned{
+  
+  animation: virar 1000ms forwards;
+  animation-iteration-count: 1;
+  
+}
+.unstunned{
+  
+  animation: virar 1000ms reverse;
+  animation-iteration-count: 1;
+  border: 5px solid black;
+}
+
 .warning-cards{
 
   animation: piscar 890ms;
@@ -81,5 +94,16 @@
   
     100% {
       bottom: -400px
+    }
+  }
+
+  @keyframes virar{
+
+    0% {
+      
+    }
+  
+    100% {
+      transform: rotate(180deg);
     }
   }

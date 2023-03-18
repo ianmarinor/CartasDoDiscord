@@ -125,6 +125,12 @@ class Especial {
     this._invHiddenButton = false;
     this._maoHiddenButton = true;
     this._poderUsing = false;
+    this._attacking = false
+
+
+    this._stunned = false;
+    this._stunWeight = false
+
 
     this._exposto = false;
     this._barreira = 0;
@@ -502,6 +508,17 @@ class Especial {
     }
   }
 
+  cantAttack(){
+
+    let cantAttackCondition = this._stunned && this._attacking && this._poderUsing
+
+    if(this.st){
+
+    }
+
+
+  }
+
   useBarrier(_damage) {
     if (this._barreira > 0) {
       this._barreira -= _damage;
@@ -624,6 +641,33 @@ class Especial {
 
   everyRoundDefault() {
     this.buildUltAuto();
+    this.removeStun()
+
+  }
+
+  removeStun(){
+
+    if(!this._stunned)return
+
+      this._stunnedWeight--
+      if(this._stunnedWeight <=1){
+
+        this._stunned = false
+        this._thisCardP.classList.remove('stunned')
+        setTimeout(
+          ()=>  this._thisCardP.classList.add('unstunned')
+
+          
+
+
+        ,1)
+
+        setTimeout(
+          ()=> this._thisCardP.classList.remove('unstunned')
+         ,1000)
+      }
+  
+
   }
 
   tick() {}
@@ -651,6 +695,12 @@ class Especial {
       this._cfgAdded = true;
       // console.log(this);
     }
+
+    //stunned
+    if(this._stunned){
+      this._thisCardP.classList.add('stunned')
+    } 
+
 
     let parentP = this._parentP;
 
@@ -722,6 +772,9 @@ class Especial {
     } else {
       this._seloP.textContent = "";
     }
+
+    
+   
 
     //warning low hp
 
@@ -1990,6 +2043,7 @@ export let especiais = {
     _hasUlti: true,
     tank: true,
     requireAmmo: true,
+    
 
     cfg() {
       this.dano = gerarNumero(18, 23);

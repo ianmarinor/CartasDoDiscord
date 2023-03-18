@@ -19,6 +19,7 @@ import {
   camaradaBlueprint,
   tankBlueprint,
   dogBlueprint,
+  blueprintBuilder
 } from "./domCards.js";
 import { start } from "./modules/seedFabricator.js";
 import { seedComprada } from "./modules/seedsCompradas.js";
@@ -163,6 +164,7 @@ class Inimigo {
     this._thisCardP = false;
 
     this._nomeP = false;
+    this._cidadeP = false;
     this._retratoP = false;
     this._cargoP = false;
 
@@ -206,6 +208,7 @@ class Inimigo {
 
     this._thisCardP = this._parentP.children[this._place];
     this._nomeP = this._thisCardP.children[0].children[0];
+    this._cidadeP = this._thisCardP.children[0].children[1];
     this._retratoP = this._thisCardP.children[1];
     this._cargoP = this._thisCardP.children[2];
     
@@ -213,7 +216,7 @@ class Inimigo {
     this._hpP = this._thisCardP.children[3].children[1];
     
     this._place = this._parent.indexOf(this);
-    
+    this._displayP = this._thisCardP.children[3];
     this._seloP = this._thisCardP.children[5];
 
 
@@ -243,10 +246,18 @@ class Inimigo {
       this._seloP.textContent = "🛡️";
     } else if (this.especial) {
       this._seloP.textContent = "⭐";
-    }else {
+    }  else if (this.miniBoss) {
+      this._seloP.textContent = "🦹🏼‍♂️";
+    } else {
       this._seloP.textContent = "";
     }
 
+
+    if(this._stunned){
+
+    }
+
+    
 
   }
 
@@ -507,6 +518,9 @@ class Inimigo {
     } else {
       this._thisCardP.style.opacity = "1";
     }
+
+   this.tick ? this.tick() : 0
+
   }
 
   cfg() {}
@@ -770,9 +784,66 @@ let dog = {
     this.dano = gerarNumero(21, 32);
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
   },
-
- 
 };
+
+let metaforando = {
+  cartaId: "vitor",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 700,
+  _attackAtSpawn: false,
+  _doesAttack: false,
+  _audioSpawn: "dog.mp3",
+  attackChance: 11,
+  hp: 2000,
+  maxHealth: 2000,
+  dano: 20,
+  miniBoss: true,
+  cfg() {
+
+    
+    this._nomeP.style.fontSize = '80%'
+    this._nomeP.style.marginTop = '8px'
+    this._nomeP.style.marginBottom = '10px'
+    this._retratoP.style.height = '80%'
+    
+    
+    this._cargoP.innerHTML = '<progress style="width: 75%; border: none; background-color: red; color: black; height: 8px; width: 96%; transform: rotate(180deg) " value="0" max="700"> </progress>' 
+    this._cidadeP.style.marginBottom = '2px'
+  
+    let healthBar = this._cargoP.children[0]
+    this._displayP.style.visibility = 'hidden'
+    healthBar.style.borderRadius = '8px'
+  },
+
+ tick(){
+  let healthBar = this._cargoP.children[0]
+
+  healthBar.max = this.maxHealth
+  healthBar.value = this._dmgTaken
+
+
+
+ },
+
+  poder(){
+
+    inv.style.opacity = '0'
+
+
+  },
+
+
+};
+
+
 
 export function spawnTank(n) {
   if (coolDown) return;
@@ -857,6 +928,30 @@ export function spawnDog(n) {
   coolDown = true;
 }
 
+
+export function spawnVitor(n) {
+  if (coolDown) return;
+
+  if (n) {
+    if (per(n)) {
+    } else {
+      return;
+    }
+  }
+
+  let slot = gerarNumero(0, 9);
+
+  secret.innerHTML = blueprintBuilder('vitor','METAFORANDO',"url('pics/vitorRetrato.jpeg')" )
+
+  if (areObj[slot].empty == true) {
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
+  }
+  coolDown = true;
+}
+
+
+
 export function spawnMonark(n) {
   if (coolDown && !n) return;
 
@@ -936,14 +1031,15 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     coolDown = false;
-    spawnMonark();
+    spawnVitor();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
     coolDown = false;
-    spawnCamarada();
+    invObj[0]._stunned = true
+    invObj[0]._stunnedWeight = 2
   }
 });
 
