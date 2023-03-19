@@ -289,7 +289,7 @@ class Inimigo {
 
   critico(trigger) {
     if (trigger == undefined || trigger) {
-      if (!this._canBeCritic || this._critico) return;
+      if (!this._canBeCritic || this._critico || this._superCritico) return;
       this._critico = true;
       this.dano *= 2;
       this.energia *= 2;
@@ -753,7 +753,7 @@ let tank = {
   maxHealth: 400,
   dano: 130,
   attackChance: false,
-  ulti: 96,
+  ulti: 0,
   tank: true,
   _CHN: document.createElement("audio"),
 
@@ -769,18 +769,18 @@ let tank = {
   },
 
   everyRound() {
-    if (this.ulti >= 100) return;
+    if (this.ulti >= 60) return;
 
     let ultiRate = gerarNumero(2, 4);
 
-    if (this.ulti >= 92) {
+    if (this.ulti >= 52) {
       ultiRate = 1;
     }
 
     this.ulti += ultiRate;
     this._cargoP.children[0].value = this.ulti;
 
-    if (this.ulti >= 100) {
+    if (this.ulti >= 60) {
       this.readyToAttack = true;
       this._doesAttack = true;
       setTimeout(
@@ -850,13 +850,13 @@ let metaforando = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 700,
+  _money: 1000,
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
   attackChance: 5,
-  hp: 2000,
-  maxHealth: 2000,
+  hp: 950,
+  maxHealth: 950,
   dano: 20,
   miniBoss: true,
   emoji: "😵",
@@ -905,6 +905,71 @@ let metaforando = {
     hpPlayer.remove(this.dano);
   },
 };
+
+
+let liberdade = {
+  cartaId: "liberdade",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 1000,
+  _attackAtSpawn: false,
+  _doesAttack: false,
+  _audioSpawn: "",
+  attackChance: 50,
+  hp: 2500,
+  maxHealth: 2500,
+  dano: 0,
+  miniBoss: true,
+  emoji: "",
+  _exposto: true,
+
+  tick() {
+    let healthBar = this._nomeP.children[0];
+
+    healthBar.max = this.maxHealth;
+    healthBar.value = this._dmgTaken;
+  },
+
+  cfg() {
+
+    
+
+    this._cargoP.style.fontSize = "80%";
+    this._cargoP.style.marginTop = "8px";
+    this._cargoP.style.marginBottom = "10px";
+    this._cargoP.textContent = "LIBERDADE DE EXPRESSÃO";
+    this._cargoP.style.marginBottom = "0px";
+    this._retratoP.style.height = "80%";
+
+    this._nomeP.innerHTML =
+      '<progress style="border: none; background-color: red; color: black; height: 8px; width: 85%; transform: rotate(180deg) " value="0" max="700"> </progress>';
+
+    this._nomeP.style.marginBottom = "10px";
+
+    let healthBar = this._nomeP.children[0];
+    this._displayP.children[1].style.visibility = "hidden";
+
+    healthBar.style.borderRadius = "8px";
+
+    this.dano = gerarNumero(5,16)
+
+  },
+
+poder(){
+
+  hpPlayer.remove(this.dano)
+
+}
+
+}
+
 
 export function spawnTank(n, _absolute) {
   _absolute ? (coolDown = false) : 0;
@@ -1001,12 +1066,57 @@ export function spawnVitor(n) {
     "url('pics/vitorRetrato.jpeg')"
   );
 
+
+ 
+  
   if (!areObj[slot].tank && !areObj[slot].miniBoss) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
+  } else if(!areObj[slot].tank && !areObj[slot].miniBoss) {
+    slot = gerarNumero(0, 9);
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
+  } else if(!areObj[slot].tank && !areObj[slot].miniBoss) {
+    slot = gerarNumero(0, 9);
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
   }
+
   coolDown = true;
 }
+
+
+export function spawnLiberdade(n) {
+  if (coolDown && !n) return;
+
+  let slot = gerarNumero(0, 9);
+
+  secret.innerHTML = blueprintBuilder(
+    "liberdade",
+    "LIBERDADE DE <br>EXPRESSÃO",
+    "url('pics/liberdadeRetrato.PNG')"
+  );
+
+
+ 
+  
+  if (!areObj[slot].tank && !areObj[slot].miniBoss) {
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
+  } else if(!areObj[slot].tank && !areObj[slot].miniBoss) {
+    slot = gerarNumero(0, 9);
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
+  } else if(!areObj[slot].tank && !areObj[slot].miniBoss) {
+    slot = gerarNumero(0, 9);
+    are.replaceChild(secret.children[0], are.children[slot]);
+    areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
+  }
+
+  coolDown = true;
+}
+
+
 
 export function spawnMonark(n) {
   if (coolDown && !n) return;
@@ -1087,7 +1197,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     coolDown = false;
-    spawnVitor(true);
+    spawnLiberdade(true)
   }
 });
 

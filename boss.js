@@ -7,7 +7,7 @@ import {
   populateArena,
   areWakeUp,
 } from "/arena.js";
-import { spawnTank } from "./arena.js";
+import { spawnLiberdade, spawnTank } from "./arena.js";
 
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
@@ -224,6 +224,7 @@ function createMonark() {
     _audioHit: ["monarkHit.mp3", "monarkHit1.mp3"],
     _audioUlt: ["monarkUlt.mp3"],
     _audioVitorSpawn: ["vitorSpawn.mp3", "vitorSpawn1.mp3"],
+    _audioLiberdadeSpawn: ["/liberdade/liberdadeSpawn.mp3"],
     _image: 'url("pics/monark/1.PNG")',
     _imageHit: [
       'url("pics/monark/hit1.PNG")',
@@ -238,7 +239,8 @@ function createMonark() {
 
     ult(absolute) {
       let ultis = () => {
-        let sorteio = gerarNumero(0, 2);
+        // let sorteio = gerarNumero(0, 2);
+        let sorteio = 1
 
         if (sorteio == 0) {
           this.chuvaDeMonark();
@@ -305,6 +307,7 @@ function createMonark() {
     },
 
     vitorMetaforando() {
+
       spawnVitor(true);
       let faixa =
         this._audioVitorSpawn[gerarNumero(0, this._audioVitorSpawn.length - 1)];
@@ -312,7 +315,12 @@ function createMonark() {
     },
 
     liberdadeDeExpresao() {
-      console.log("******  libertie ****");
+
+      spawnLiberdade(true);
+      let faixa =
+        this._audioLiberdadeSpawn[gerarNumero(0, this._audioLiberdadeSpawn.length - 1)];
+      audioPlayer(faixa, false, this._CHN,0.5);
+
     },
   };
 

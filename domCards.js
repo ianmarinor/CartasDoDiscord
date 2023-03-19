@@ -51,7 +51,7 @@ export let tankBlueprint =
   '<div class="retrato" style="display: block; background-image: ' +
   tankBPicture +
   '"></div>' +
-  '<p class="cargo" style="transform: rotate(0deg)">  <progress style="width: 75%; border: none; background-color: #895538; height: 40%" value="0" max="100"> </progress>   </p>' +
+  '<p class="cargo" style="transform: rotate(0deg)">  <progress style="width: 75%; border: none; background-color: #895538; height: 40%" value="0" max="60"> </progress>   </p>' +
   '<div class="poder-inimigo">' +
   '<p class="ataque"></p>' +
   '<p class="novoAtaque"></p>' +

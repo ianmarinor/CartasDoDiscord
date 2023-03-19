@@ -1702,8 +1702,8 @@ export let especiais = {
     cargo: "",
     dmgBoss: false,
     dano: 1,
-    hp: 40,
-    maxHealth: 40,
+    hp: 60,
+    maxHealth: 60,
     hashp: true,
     _invHiddenButton: true,
 
@@ -1715,11 +1715,11 @@ export let especiais = {
 
     tick() {
       if (!this.buffAdded) {
-        this.addBuff(60);
+        this.addBuff(40);
         this.buffAdded = true;
       }
 
-      this.dano = 1 + Math.floor(this._dmgTaken / 20);
+      this.dano = 1 + Math.floor(this._dmgTaken / 9);
       this.dano > 500 ? (this.dano = 500) : 0;
 
       let hasTuru = invObj.some((x) => x._cidade == "de Itapira");

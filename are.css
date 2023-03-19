@@ -26,6 +26,37 @@
     border: 4px solid rgb(255, 0, 0);
   }
 
+  #liberdade {
+    background-image: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.7),
+        rgba(1, 32, 17, 0.7)
+      ),
+      url(/pics/liberdadeFundo.gif);
+
+
+
+
+    /* background-image: url(/pics/liberdadeFundo.gif); */
+  
+    /* background: url(); */
+    /* font-family: tf2; */
+    height: var(--tamanhoCartaInimigoHeight);
+    width: var(--tamanhoCartaInimigoWidth);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    position: relative;
+    font-weight: 900;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    font-family: tf2;
+    color: #cec3d5;
+    border: 4px solid rgb(41, 103, 16);
+  }
+
   #dog {
     background-image: linear-gradient(
         180deg,
