@@ -35,7 +35,7 @@ export function toMonark(_cartaObj, _despawnTime) {
       
       if(!carta.isNormal) return
 
-      if (cartaP.id == "monark") return;
+      // if (cartaP.id == "monark") return;
 
       cartaP.id = "monark";
       cartaP.style.border = "1px solid black";
