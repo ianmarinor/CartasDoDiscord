@@ -46,6 +46,7 @@ export function toMonark(_cartaObj, _despawnTime) {
       carta._cargo = "carta-monark";
       carta.dmgBoss = false;
       carta._canBeDeleted = false;
+      carta._despawn = _despawnTime
       if (_despawnTime) return;
       carta._despawn = gerarNumero(2, 8);
       let poopCHN = document.createElement("audio");
@@ -77,7 +78,7 @@ class Boss {
 
     let img = this._imageHit[gerarNumero(0, this._imageHit.length - 1)];
 
-    console.log(this._cartaP);
+    
     this._cartaP.style.backgroundImage = img;
     this._cartaP.style.border = "4px dashed red";
     this._cartaP.classList.remove("bossAnimation");
@@ -130,30 +131,30 @@ class Boss {
   }
 
   antiSpam() {
-    let chance = 100 - this.percentHealth;
+    let chance = (100 - this.percentHealth) / 25;
 
-    console.log("chance: ", chance);
+    console.log(" *** ANTI - SPAM   *** chance: ", chance);
 
     if (!per(chance)) {
       console.log("********* AZAR *********");
       return;
     }
-
+    console.log("********* SOOOOORTEEE *********");
     if (per(80)) {
       populateArena(true);
       areWakeUp();
-      console.log("********* POPULEI *********");
+      
     } else {
       // this.ulti();
       this.ult();
-      console.log("********* VOU ULTAR *********");
+     
       areWakeUp();
     }
 
     if (this.percentHealth < 33 && per(100)) {
       spawnTank(false, true);
       areWakeUp();
-      console.log("********* taaaaaank!!!! *********");
+      
     }
   }
 

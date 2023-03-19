@@ -583,7 +583,7 @@ let monark = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 10,
+  _money: 5,
   _attackAtSpawn: false,
   _doesAttack: true,
   _despawn: 60,
@@ -618,7 +618,9 @@ let monark = {
     let despawnTime;
 
     if (boss) {
-      if (boss.percentHealth < 25) {
+      if (boss.percentHealth < 10) {
+        despawnTime = gerarNumero(25, 50);
+      } else if (boss.percentHealth < 25) {
         despawnTime = gerarNumero(18, 23);
       } else if (boss.percentHealth < 50) {
         despawnTime = gerarNumero(13, 18);
@@ -636,6 +638,10 @@ let monark = {
       let slot = invObj[gerarNumero(0, 3)];
       toMonark(slot, despawnTime);
     }, 250);
+
+      
+
+
   },
 };
 
@@ -650,7 +656,7 @@ let menosCartas = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 30,
+  _money: 7,
   _doesAttack: false,
   _hasdmg: false,
   _audioSpawn: "menosCartas.wav",
@@ -690,7 +696,7 @@ let camarada = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 30,
+  _money: 10,
   _doesAttack: false,
   _hasdmg: false,
   _audioSpawn: "comunaShort.mp3",
@@ -743,7 +749,7 @@ let tank = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 300,
+  _money: 150,
   _doesAttack: false,
   _hasdmg: true,
   _audioSpawn: "tank.mp3",
@@ -762,9 +768,8 @@ let tank = {
 
     this.audioSpawn(0.3);
 
-    if(per(70)){
-
-      audioPlayer("tank/tankSpawn.mp3", false, this._CHN, 0.2)
+    if (per(70)) {
+      audioPlayer("tank/tankSpawn.mp3", false, this._CHN, 0.2);
     }
   },
 
@@ -811,7 +816,7 @@ let dog = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 30,
+  _money: 9,
   _attackAtSpawn: false,
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
@@ -850,7 +855,7 @@ let metaforando = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 1000,
+  _money: 350,
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
@@ -906,7 +911,6 @@ let metaforando = {
   },
 };
 
-
 let liberdade = {
   cartaId: "liberdade",
   _place: false,
@@ -918,13 +922,13 @@ let liberdade = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 1500,
+  _money: 700,
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "",
   attackChance: 10,
-  hp: 2500,
-  maxHealth: 2500,
+  hp: 2000,
+  maxHealth: 2000,
   dano: 0,
   miniBoss: true,
   emoji: "",
@@ -938,9 +942,6 @@ let liberdade = {
   },
 
   cfg() {
-
-    
-
     this._cargoP.style.fontSize = "80%";
     this._cargoP.style.marginTop = "8px";
     this._cargoP.style.marginBottom = "10px";
@@ -958,18 +959,13 @@ let liberdade = {
 
     healthBar.style.borderRadius = "8px";
 
-    this.dano = gerarNumero(5,16)
-
+    this.dano = gerarNumero(5, 16);
   },
 
-poder(){
-
-  hpPlayer.remove(this.dano)
-
-}
-
-}
-
+  poder() {
+    hpPlayer.remove(this.dano);
+  },
+};
 
 export function spawnTank(n, _absolute) {
   _absolute ? (coolDown = false) : 0;
@@ -1066,17 +1062,14 @@ export function spawnVitor(n) {
     "url('pics/vitorRetrato.jpeg')"
   );
 
-
- 
-  
   if (!areObj[slot].tank && !areObj[slot].miniBoss) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
-  } else if(!areObj[slot].tank && !areObj[slot].miniBoss) {
+  } else if (!areObj[slot].tank && !areObj[slot].miniBoss) {
     slot = gerarNumero(0, 9);
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
-  } else if(!areObj[slot].tank && !areObj[slot].miniBoss) {
+  } else if (!areObj[slot].tank && !areObj[slot].miniBoss) {
     slot = gerarNumero(0, 9);
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
@@ -1084,7 +1077,6 @@ export function spawnVitor(n) {
 
   coolDown = true;
 }
-
 
 export function spawnLiberdade(n) {
   if (coolDown && !n) return;
@@ -1097,17 +1089,14 @@ export function spawnLiberdade(n) {
     "url('pics/liberdadeRetrato.PNG')"
   );
 
-
- 
-  
   if (!areObj[slot].tank && !areObj[slot].miniBoss) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
-  } else if(!areObj[slot].tank && !areObj[slot].miniBoss) {
+  } else if (!areObj[slot].tank && !areObj[slot].miniBoss) {
     slot = gerarNumero(0, 9);
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
-  } else if(!areObj[slot].tank && !areObj[slot].miniBoss) {
+  } else if (!areObj[slot].tank && !areObj[slot].miniBoss) {
     slot = gerarNumero(0, 9);
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
@@ -1115,8 +1104,6 @@ export function spawnLiberdade(n) {
 
   coolDown = true;
 }
-
-
 
 export function spawnMonark(n) {
   if (coolDown && !n) return;
@@ -1190,14 +1177,14 @@ let ianCHN = document.createElement("audio");
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
     coolDown = false;
-    spawnTank();
+    spawnMonark();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     coolDown = false;
-    spawnLiberdade(true)
+    spawnLiberdade(true);
   }
 });
 
@@ -1228,7 +1215,7 @@ let chance;
 export function populateArena(_absolute) {
   let chanceNormal = 90;
 
-  chance = 10;
+  chance = 15;
 
   if (boss) {
     let porcentagemVida = Math.trunc((boss.health / boss.fullHealth) * 100);

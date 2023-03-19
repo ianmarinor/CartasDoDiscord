@@ -1719,7 +1719,7 @@ export let especiais = {
         this.buffAdded = true;
       }
 
-      this.dano = 1 + Math.floor(this._dmgTaken / 9);
+      this.dano = 1 + Math.floor(this._dmgTaken / 7);
       this.dano > 500 ? (this.dano = 500) : 0;
 
       let hasTuru = invObj.some((x) => x._cidade == "de Itapira");
@@ -2350,31 +2350,7 @@ export let especiais = {
           }
         }
 
-        if (this._parentP == mao) {
-          if (this._place < 2) {
-            invObj.map((x) => {
-              if (x._place < 3) {
-                if (x._enemy) {
-                  x.hp.remove(this.dano);
-                } else {
-                  x.dmg(this.dano);
-                }
-              }
-            });
-          }
-
-          if (this._place > 1) {
-            invObj.map((x) => {
-              if (x._place > 2) {
-                if (x._enemy) {
-                  x.hp.remove(this.dano);
-                } else {
-                  x.dmg(this.dano);
-                }
-              }
-            });
-          }
-        }
+      
 
         if (this._parentP == inv) {
           if (this._place < 3) {

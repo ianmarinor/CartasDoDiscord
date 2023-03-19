@@ -455,6 +455,7 @@ function fabricaDeCarta(
     cartaId: cargo,
     dmgBoss: true,
     isNormal: true,
+    _critico: false,
 
     removeBuff(n) {},
 
@@ -2567,7 +2568,13 @@ export let ammo = {
 
   add(n) {
     this.total += n;
+
+    if(this.total > 50){
+      this.total = 50
+    }
+
     this.ammoP(this.total);
+
   },
 
   use(n) {
