@@ -120,69 +120,19 @@ export function escolherIntegrante() {
   // seedObj = generateSeed(input);
   seedString = seedObj._seedString;
 
-  //
-  //
-  if (
-    seedString[1] == 1
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Gandalf");
-  } else if (
-    seedString[1] == 2
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Turu");
-  } else if (
-    seedString[1] == 3
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Nefesto");
-  } else if (
-    seedString[1] == 4
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Blackao");
-  } else if (
-    seedString[1] == 5
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Antonio");
-  } else if (
-    seedString[1] == 6
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Pedro");
-  } else if (
-    seedString[1] == 7
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Diuks Bay");
-  } else if (
-    seedString[1] == 8
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Twelve");
-  } else if (
-    seedString[1] == 9
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Junks");
-  } else if (
-    seedString[1] == 0
-    // &&
-    // seedString[2] == 0
-  ) {
-    return (integrante = "Murillo");
-  }
+  let integrantes = [
+    ["Gandalf", 0],
+    ["Turu", 1],
+    ["Nefesto", 2],
+    ["Blackao", 3],
+    ["Antonio", 4],
+    ["Pedro", 5],
+    ["Diuks Bay", 6],
+    ["Twelve", 7],
+    ["Junks", 8],
+    ["Murillo", 9],
+  ];
+  integrante = integrantes[seedString[1]];
 }
 
 //cidade
@@ -191,58 +141,20 @@ export function escolherIntegrante() {
 let cidade = "";
 
 function escolherCidade() {
-  //
-  if (
-    // seedString[4] == 0 &&
-    seedString[3] == 0
-  ) {
-    return (cidade = "de Caxias do Sul");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 1
-  ) {
-    return (cidade = "de Itapira");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 2
-  ) {
-    return (cidade = "de Ubatuba");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 3
-  ) {
-    return (cidade = "de Sao Jose Dos Pinhais");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 4
-  ) {
-    return (cidade = "do Rio de Janeiro");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 5
-  ) {
-    return (cidade = "de Maringá");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 6
-  ) {
-    return (cidade = "de Porto Alegre");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 7
-  ) {
-    return (cidade = "da Lapa");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 8
-  ) {
-    return (cidade = "de Jaraguá");
-  } else if (
-    // seedString[4] == 0 &&
-    seedString[3] == 9
-  ) {
-    return (cidade = "de Santo André");
-  }
+  let cidades = [
+    ["de Caxias do Sul", 0],
+    ["de Itapira", 1],
+    ["de Ubatuba", 2],
+    ["de S. José Dos Pinhais", 3],
+    ["do Rio de Janeiro", 4],
+    ["de Maringá", 5],
+    ["de Porto Alegre", 6],
+    ["da Lapa", 7],
+    ["de Jaraguá", 8],
+    ["de Santo André", 9],
+  ];
+
+  cidade = cidades[seedString[3]];
 }
 //CARGO
 //THIS FUNCTION WILL TAKE A SEED FROM FUNCTION ABOVE AND CHOOSE A ROLE
@@ -323,29 +235,30 @@ export function escolherVariante(x) {
     cargo != "carta-semcargo" &&
     cargo != "carta-people" &&
     cargo != "carta-people";
-  variante = "";
+
+  variante = ['',''];
   if (cartasQueNaoTemVariante) {
     if (seedString[14] == 4) {
       if (seedString[5] == 9 && seedString[6] == 0) {
-        return (variante = "farmacêutico");
+        return (variante = ["farmacêutico",0]);
       } else if (seedString[5] == 9 && seedString[6] == 1) {
-        return (variante = "bão");
+        return (variante = ["bão",1]);
       } else if (seedString[5] == 9 && seedString[6] == 2) {
-        return (variante = "apenas");
+        return (variante = ["apenas",2]);
       } else if (seedString[5] == 9 && seedString[6] == 3) {
-        return (variante = "fonte");
+        return (variante = ["fonte",3]);
       } else if (seedString[5] == 9 && seedString[6] == 4) {
-        return (variante = "ixqueiro");
+        return (variante = ["ixqueiro",4]);
       } else if (seedString[5] == 9 && seedString[6] == 5) {
-        return (variante = "abalo");
+        return (variante = ["abalo",5]);
       } else if (seedString[5] == 9 && seedString[6] == 6) {
-        return (variante = "grito");
+        return (variante = ["grito",6]);
       } else if (seedString[5] == 9 && seedString[6] == 7) {
-        return (variante = "dia");
+        return (variante = ["dia",7]);
       } else if (seedString[5] == 9 && seedString[6] == 8) {
-        return (variante = "quimico");
+        return (variante = ["quimico",8]);
       } else if (seedString[5] == 9 && seedString[6] == 9) {
-        return (variante = "pêra");
+        return (variante = ["pêra",9]);
       } else {
         // return (variante = "");
       }
@@ -422,144 +335,218 @@ export function escolherPoder(x, y) {
 
 //************************************************ */
 
-function fabricaDeCarta(
-  integrante,
-  cidade,
-  cargo,
-  poder,
-  variante,
-  especial,
-  seedObj
-) {
-  return {
-    _integrante: integrante,
-    _cidade: cidade,
-    _cargo: cargo,
-    energia: poder,
-    _variante: variante,
-    _especial: especial,
-    _seedobj: seedObj,
-    _thisCardP: false,
-    _place: false,
-    _parentP: false,
-    _parent: false,
-    _leftCard: false,
-    _rightCard: false,
-    _canBeDeleted: true,
-    _monarkFree: false,
-    _monarkReplaceble: true,
-    _despawn: false,
-    isInvisible: true,
-    hp: 0,
-    statusEmoji: false,
-    cartaId: cargo,
-    dmgBoss: true,
-    isNormal: true,
-    _critico: false,
+class fabricaDeCarta {
+  constructor(integrante, cidade, cargo, poder, variante, especial, seedObj) {
+    this._integrante = integrante[0];
+    this._cidade = cidade[0];
+    this._cargo = cargo;
+    this.energia = poder;
+    this.energiaNatural = poder;
+    this._variante = variante[0];
+    this._especial = especial;
+    this._seedobj = seedObj;
+    this._thisCardP = false;
+    this._place = false;
+    this._parentP = false;
+    this._parent = false;
+    this._leftCard = false;
+    this._rightCard = false;
+    this._canBeDeleted = true;
+    this._monarkFree = false;
+    this._monarkReplaceble = true;
+    this._despawn = false;
+    this.isInvisible = true;
+    this.hp = 0;
+    this.statusEmoji = false;
+    this.cartaId = cargo;
+    this.dmgBoss = true;
+    this.isNormal = true;
+    this._critico = false;
+    this._superCritico = false;
+    this._ultraCritico = false;
+    this._integranteArray = integrante;
+    this._cidadeArray = cidade;
+    this._varianteArray = variante;
 
-    removeBuff(n) {},
+    //dom
+    this._cargoP = false;
+    this._hpP = false;
+    this._nomeP = false;
+    this._cidadeP = false;
+  }
 
-    place() {
-      if (this == slotEspObj) {
-        this._parentP = slotEsp;
-        this._parent = slotEspObj;
-        this._place = 0;
-        this._thisCardP = this._parentP.children[this._place];
-        this.print();
-        return;
-      } else if (this == slotEspObj) {
-        this._parentP = slotEsp;
-        this._parent = slotEspObj;
-        this._place = 0;
-        this._thisCardP = this._parentP.children[this._place];
-        this.print();
-        return;
-      } else if (this == novaCarta) {
-        this._parentP = packP;
-        this._parent = novaCarta;
-        this._place = 0;
-        this._thisCardP = this._parentP.children[this._place];
-        this.print();
-        return;
+  removeBuff(n) {}
+  place() {
+
+
+     if (this == novaCarta) {
+      this._parentP = packP;
+      this._parent = novaCarta;
+      this._place = 0;
+      this._thisCardP = this._parentP.children[this._place];
+    }
+
+    for (let i = 0; i < 6; i++) {
+      if (this == invObj[i]) {
+        this._parent = invObj;
+        this._parentP = inv;
+        break;
       }
+    }
 
-      for (let i = 0; i < 6; i++) {
-        if (this == invObj[i]) {
-          this._parent = invObj;
-          this._parentP = inv;
-          break;
-        }
+    for (let i = 0; i < 4; i++) {
+      if (this == maoObj[i]) {
+        this._parent = maoObj;
+        this._parentP = mao;
+        break;
       }
+    }
 
-      for (let i = 0; i < 4; i++) {
-        if (this == maoObj[i]) {
-          this._parent = maoObj;
-          this._parentP = mao;
-          break;
-        }
-      }
+    if(this._parent != novaCarta){
 
       this._place = this._parent.indexOf(this);
-      this._thisCardP = this._parentP.children[this._place];
-      this._cargoP = this._thisCardP.children[2];
-      this._hpP = this._thisCardP.children[3].children[1];
+    }
 
-      if (this._place > 0) {
-        this._leftCard = this._parentP.children[this._place - 1];
-        this._leftCardIndex = this._place - 1;
-      } else {
-        this._leftCard = false;
-      }
+    this._thisCardP = this._parentP.children[this._place];
+    this._cargoP = this._thisCardP.children[2];
+    this._hpP = this._thisCardP.children[3].children[1];
+    this._nomeP = this._thisCardP.children[0].children[0];
+    this._varianteP = this._thisCardP.children[0].children[1];
+    this._cidadeP = this._thisCardP.children[0].children[2];
+    this._energiaP = this._thisCardP.children[3].children[0];
 
-      if (this._place < 5) {
-        this._rightCard = this._rightCard =
-          this._parentP.children[this._place + 1];
-        this._rightCardIndex = this._place + 1;
-      } else {
-        this._rightCard = false;
-      }
-      this.print();
-    },
+    if (this._place > 0) {
+      this._leftCard = this._parentP.children[this._place - 1];
+      this._leftCardIndex = this._place - 1;
+    } else {
+      this._leftCard = false;
+    }
 
-    firstPrint() {
-      ataqueP.innerHTML = this.energia + "⚡";
-    },
+    if (this._place < 5) {
+      this._rightCard = this._rightCard =
+        this._parentP.children[this._place + 1];
+      this._rightCardIndex = this._place + 1;
+    } else {
+      this._rightCard = false;
+    }
+    this.print();
+  }
 
-    print() {
-      let thisP = this._thisCardP;
-      let energia = this._parentP.children[this._place].children[3].children[0];
-      let statusEmoji = thisP.children[3].children[2];
+  firstPrint() {
+    ataqueP.innerHTML = this.energia + "⚡";
+  }
 
-      if (this.statusEmoji) {
-        statusEmoji.style.visibility = "visible";
-        statusEmoji.textContent = this.statusEmoji;
-      } else {
-        statusEmoji.style.visibility = "hidden";
-      }
+  print() {
+    if (!this._cfgDefaultAdded) {
+      this.cfgDefault();
+      this._cfgDefaultAdded = true;
+      console.log(5555555555555);
+    }
 
-      energia.textContent = this.energia + "⚡";
+    let thisP = this._thisCardP;
+    let energia = this._parentP.children[this._place].children[3].children[0];
+    let statusEmoji = thisP.children[3].children[2];
 
-      if (this._despawn != false) {
-        this._hpP.style.visibility = "visible";
-        this._hpP.textContent = this._despawn - 1 + "🏃";
-      }
-    },
+    if (this.statusEmoji) {
+      statusEmoji.style.visibility = "visible";
+      statusEmoji.textContent = this.statusEmoji;
+    } else {
+      statusEmoji.style.visibility = "hidden";
+    }
 
-    dmg() {
-      this.kill();
-    },
+    energia.textContent = this.energia + "⚡";
 
-    kill() {
-      if (!this._parentP) return;
-      if (this._parentP == inv) {
-        this._thisCardP.classList.add("morto");
-        setTimeout(() => elimCardInv(this._thisCardP), 210);
-      } else {
-        elimCardMao(this._thisCardP);
-      }
-      this._dead = true;
-    },
-  };
+    if (this._despawn != false) {
+      this._hpP.style.visibility = "visible";
+      this._hpP.textContent = this._despawn - 1 + "🏃";
+    }
+
+
+    if(this._critico){
+
+      this._nomeP.classList.add('critico') 
+      this._cidadeP.classList.add('critico') 
+      this._energiaP.classList.add('critico') 
+      
+    } else {
+
+
+      this._nomeP.classList.remove('critico') 
+      this._cidadeP.classList.remove('critico') 
+      this._energiaP.classList.remove('critico')
+
+    }
+
+    if(this._superCritico){
+
+      this._nomeP.classList.add('critico') 
+      this._varianteP.classList.add('critico') 
+      this._energiaP.classList.add('critico') 
+    } else {
+
+      this._nomeP.classList.remove('critico') 
+      this._varianteP.classList.remove('critico') 
+      this._energiaP.classList.remove('critico') 
+
+
+    }
+
+    if(this._superCritico && this._critico){
+      this._ultraCritico = true
+      this._thisCardP.classList.add('critico') 
+  } else {
+    this._ultraCritico = false
+    this._thisCardP.classList.remove('critico') 
+
+  }
+
+
+
+}
+  cfgDefault() {
+    this.criticoNatural();
+    this.superCriticoNatural()
+  }
+
+  criticoNatural() {
+    
+    if (this._integranteArray[1] == this._cidadeArray[1]) {
+      this._critico = true;
+      // this.energia *=2
+    } else {
+      this._critico = false
+    }
+
+  }
+
+  superCriticoNatural() {
+    
+    if (this._integranteArray[1] == this._varianteArray[1]) {
+      this._superCritico = true;
+      // this.energia *=3
+    } else {
+      this._superCritico = false
+    }
+
+  }
+
+
+
+
+  dmg() {
+    this.kill();
+  }
+
+  kill() {
+    if (!this._parentP) return;
+    if (this._parentP == inv) {
+      this._thisCardP.classList.add("morto");
+      setTimeout(() => elimCardInv(this._thisCardP), 210);
+    } else {
+      elimCardMao(this._thisCardP);
+    }
+    this._dead = true;
+  }
 }
 
 ////D O M
@@ -651,7 +638,7 @@ function colocarInfoNoWrap(a) {
     novaCarta = a;
     rodadas--;
   } else {
-    novaCarta = fabricaDeCarta(
+    novaCarta = new fabricaDeCarta(
       integrante,
       cidade,
       cargo,
@@ -707,7 +694,8 @@ function colocarInfoNoWrap(a) {
 
   nomeP.innerHTML = novaCarta._integrante.toUpperCase();
 
-  cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
+  // cidadeP.innerHTML = "&nbsp;" + novaCarta._cidade;
+  cidadeP.innerHTML = novaCarta._cidade;
 
   novaCarta.firstPrint();
 
@@ -791,7 +779,7 @@ function colocarInfoNoWrap(a) {
       seedP.style.color = "white";
     } else if (novaCarta._cargo === "carta-premiomarino") {
       cargoP.innerHTML =
-        "&nbsp;" + "&#127942; premio marino &#127942;".toUpperCase();
+        "&nbsp;" + "&#127942; <br> premio marino".toUpperCase();
       retratoP.style.border = "";
     } else if (novaCarta._cargo === "carta-monark") {
       cargoP.innerHTML = "&nbsp;" + "monark" + "&#128169;";
@@ -1462,125 +1450,124 @@ function critico() {
   //nome
   // seedString
   //
-  let corDoNome = cartaParaMover.children[0].children[0];
-  let corDaCidade = cartaParaMover.children[0].children[2];
+  // let corDoNome = cartaParaMover.children[0].children[0];
+  // let corDaCidade = cartaParaMover.children[0].children[2];
 
-  cartaParaMover.children[0].children[1].style.color = "";
-  //cidade
-  // cartaParaMover.children[0].children[0].style.color = "";
-  //cidade negrito
-  cartaParaMover.children[0].children[1].style.fontWeight = "";
-  cartaParaMover.classList.remove("critico");
-  //PODER
-  let poderTremer = cartaParaMover.children[3].children[0];
+  // cartaParaMover.children[0].children[1].style.color = "";
+  // //cidade
+  // // cartaParaMover.children[0].children[0].style.color = "";
+  // //cidade negrito
+  // cartaParaMover.children[0].children[1].style.fontWeight = "";
+  // cartaParaMover.classList.remove("critico");
+  // //PODER
+  // let poderTremer = cartaParaMover.children[3].children[0];
 
   function colocarCritico() {
-    corDaCidade.classList.add("critico");
-    corDoNome.classList.add("critico");
-    cartaParaMover.children[0].children[1].style.fontWeight = "bold";
-    poderTremer.classList.add("critico");
-    poderTremer.style.fontWeight = "bold";
-    poderTremer.innerHTML = parseInt(poderTremer.textContent) * 2 + "⚡";
+    // corDaCidade.classList.add("critico");
+    // corDoNome.classList.add("critico");
+    // cartaParaMover.children[0].children[1].style.fontWeight = "bold";
+    // poderTremer.classList.add("critico");
+    // poderTremer.style.fontWeight = "bold";
+    // poderTremer.innerHTML = parseInt(poderTremer.textContent) * 2 + "⚡";
   }
 
   function colocarUltraCritico() {
-    cartaParaMover.classList.add("critico");
-    varianteP.classList.add("critico");
-
-    poderTremer.classList.add("critico");
-    poderTremer.style.fontWeight = "bold";
-    poderTremer.innerHTML = parseInt(poderTremer.textContent) * 3 + "⚡";
+    // cartaParaMover.classList.add("critico");
+    // varianteP.classList.add("critico");
+    // poderTremer.classList.add("critico");
+    // poderTremer.style.fontWeight = "bold";
+    // poderTremer.innerHTML = parseInt(poderTremer.textContent) * 3 + "⚡";
   }
 
   //gandalf
-  if (
-    cartaParaMover.id != "carta-monark" &&
-    cartaParaMover.id != "carta-speaker"
-  ) {
-    if (seedString[1] == "1" && seedString[3] == "0") {
-      colocarCritico();
+  //   if (
+  //     cartaParaMover.id != "carta-monark" &&
+  //     cartaParaMover.id != "carta-speaker"
+  //   ) {
+  //     if (seedString[1] == "1" && seedString[3] == "0") {
+  //       colocarCritico();
 
-      if (variante == "farmacêutico") {
-        colocarUltraCritico();
-      }
-    }
+  //       if (variante == "farmacêutico") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
 
-    //turu
-    if (seedString[1] == "2" && seedString[3] == "1") {
-      colocarCritico();
+  //     //turu
+  //     if (seedString[1] == "2" && seedString[3] == "1") {
+  //       colocarCritico();
 
-      if (variante == "bão") {
-        colocarUltraCritico();
-      }
-    }
-    //nefesto
-    if (seedString[1] == "3" && seedString[3] == "2") {
-      colocarCritico();
+  //       if (variante == "bão") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
+  //     //nefesto
+  //     if (seedString[1] == "3" && seedString[3] == "2") {
+  //       colocarCritico();
 
-      if (variante == "apenas") {
-        colocarUltraCritico();
-      }
-    }
-    //blackao
-    if (seedString[1] == "4" && seedString[3] == "3") {
-      colocarCritico();
+  //       if (variante == "apenas") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
+  //     //blackao
+  //     if (seedString[1] == "4" && seedString[3] == "3") {
+  //       colocarCritico();
 
-      if (variante == "fonte") {
-        colocarUltraCritico();
-      }
-    }
-    //antonio
-    if (seedString[1] == "5" && seedString[3] == "4") {
-      colocarCritico();
+  //       if (variante == "fonte") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
+  //     //antonio
+  //     if (seedString[1] == "5" && seedString[3] == "4") {
+  //       colocarCritico();
 
-      if (variante == "ixqueiro") {
-        colocarUltraCritico();
-      }
-    }
-    //pedro
-    if (seedString[1] == "6" && seedString[3] == "5") {
-      colocarCritico();
+  //       if (variante == "ixqueiro") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
+  //     //pedro
+  //     if (seedString[1] == "6" && seedString[3] == "5") {
+  //       colocarCritico();
 
-      if (variante == "abalo") {
-        colocarUltraCritico();
-      }
-    }
-    //cesarino
-    if (seedString[1] == "7" && seedString[3] == "6") {
-      colocarCritico();
+  //       if (variante == "abalo") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
+  //     //cesarino
+  //     if (seedString[1] == "7" && seedString[3] == "6") {
+  //       colocarCritico();
 
-      if (variante == "grito") {
-        colocarUltraCritico();
-      }
-    }
-    //twelve
-    if (seedString[1] == "8" && seedString[3] == "7") {
-      colocarCritico();
+  //       if (variante == "grito") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
+  //     //twelve
+  //     if (seedString[1] == "8" && seedString[3] == "7") {
+  //       colocarCritico();
 
-      if (variante == "dia") {
-        colocarUltraCritico();
-      }
-    }
-    //junks
+  //       if (variante == "dia") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
+  //     //junks
 
-    //
+  //     //
 
-    if (seedString[1] == "9" && seedString[3] == "8") {
-      colocarCritico();
+  //     if (seedString[1] == "9" && seedString[3] == "8") {
+  //       colocarCritico();
 
-      if (variante == "quimico") {
-        colocarUltraCritico();
-      }
-    }
-    //murilo
-    if (seedString[1] == "0" && seedString[3] == "9") {
-      colocarCritico();
+  //       if (variante == "quimico") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
+  //     //murilo
+  //     if (seedString[1] == "0" && seedString[3] == "9") {
+  //       colocarCritico();
 
-      if (variante == "pêra") {
-        colocarUltraCritico();
-      }
-    }
-  }
+  //       if (variante == "pêra") {
+  //         colocarUltraCritico();
+  //       }
+  //     }
+  //   }
 }
 
 // //////////////////////////////////////////////
@@ -1820,7 +1807,6 @@ document.addEventListener("keydown", (event) => {
     console.log(boss ? boss : "BOSS NOT SPAWNED");
     console.groupEnd();
 
-
     console.group("MONEY");
     console.log(money);
     console.groupEnd();
@@ -2002,9 +1988,8 @@ function dmgBoss() {
     x.kill();
   }
 
-  if(energiaTotal > 0 && boss){
-
-      boss.dmg(Math.trunc(energiaTotal * multiplicador));
+  if (energiaTotal > 0 && boss) {
+    boss.dmg(Math.trunc(energiaTotal * multiplicador));
   }
 
   //DINHEIRO
@@ -2205,7 +2190,6 @@ function runEveryRound() {
     x._everyRoundMao ? x.everyRound() : false;
   });
   areObj.map((x) => {
-
     if (x.autoAtaque) {
       x.autoAtaque();
     }
@@ -2219,7 +2203,6 @@ function runEveryRound() {
     }
 
     arenaByRound();
-
   });
 }
 
@@ -2569,12 +2552,11 @@ export let ammo = {
   add(n) {
     this.total += n;
 
-    if(this.total > 50){
-      this.total = 50
+    if (this.total > 50) {
+      this.total = 50;
     }
 
     this.ammoP(this.total);
-
   },
 
   use(n) {
@@ -2619,16 +2601,15 @@ button.addEventListener("click", blockInv);
 let _wcoolDown = false;
 
 let wCooldown = () => {
-
-  let coolDownTime = 400
+  let coolDownTime = 400;
 
   _wcoolDown = true;
-  packP.children[0].style.opacity = 0.1
+  packP.children[0].style.opacity = 0.1;
 
-  setTimeout( ()=> {
-    _wcoolDown= false
-    packP.children[0].style.opacity = 1
-  } , coolDownTime);
+  setTimeout(() => {
+    _wcoolDown = false;
+    packP.children[0].style.opacity = 1;
+  }, coolDownTime);
 };
 
 document.addEventListener("keydown", (event) => {

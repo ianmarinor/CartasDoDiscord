@@ -1,5 +1,8 @@
 import { gerarNumero } from "./script.js"
 
+
+
+
 export function integrante(){
 
     let integrantes = [

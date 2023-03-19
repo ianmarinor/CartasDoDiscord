@@ -25,11 +25,11 @@ export let seedObj = {
 let getSeed = document.getElementById("getseed");
 // let button = document.getElementById("btn");
 
-let input = "";
+let input = '';
 function colocarInput() {
-  input = getSeed.value;
+  // input = 319049990752344
   
-  // input = 11111111331561567
+  input = 152352145222
 }
 
 const totalNumOfSeeds = 90000000000000000 + 2000000000000000000;
@@ -54,15 +54,23 @@ export function seed(seed, isReal, seedFalsa, isPutByPlayer,isMarket ) {
 export function generateSeed(input) {
   let seedReal =
     parseInt(input) >= 1000000000000000 &&
-    parseInt(input) <= 100000000000000000000;
-  //
-  //
-  //se for colocada um seed real
-if(seedComprada.includes(input)){
+                        
+    parseInt(input) <= 10000000000000000000;
+    //
+    //
+    //se for colocada um seed real
+    // if(seedComprada.includes(input)){
+      
+      //   return seed(parseInt(input), true, "", true, true)
+      
+      // } else 
+      
+      
+      
+      console.log('seedReal: ', seedReal);
+      console.log('input: ', input);
 
-  return seed(parseInt(input), true, "", true, true)
-
-} else if (input.length > 10) {
+if (input.length > 10) {
     if (seedReal) {
       // return parseInt(input);
 
@@ -102,11 +110,12 @@ if(seedComprada.includes(input)){
 // export let seedObj
 export function start() {
   colocarInput();
-   seedObj = generateSeed(input);
-  //  console.log('seedObj: ', seedObj)
+  seedObj = generateSeed(input);
+  console.log(seedObj);
+  console.trace()
 }
 
-seedObj = generateSeed(input);
+// seedObj = generateSeed(input);
 ;
 
   // console.log(numeroDeCartas);
