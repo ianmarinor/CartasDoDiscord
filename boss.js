@@ -56,10 +56,40 @@ class Boss {
     this._gotHitLastRound = [false, 0];
     this._CHN = document.createElement("audio");
     this._audioPoder = "bossPower.mp3";
-    this._audioHit = "bossHit.mp3";
+    this._audioHitDefault = "bossHit.mp3";
+    this._cartaP = false
+    this._imageHit = false
+    this._imageUlt = false
+    this._image = false
+    
+    
   }
 
+
+imageHit(){
+  if(this._imageHitCoolDown) return
+
+  let img = this._imageHit[gerarNumero(0, this._imageHit.length - 1 )]
+
+  console.log(this._cartaP);
+  this._cartaP.style.backgroundImage = img
+  this._cartaP.style.border = '4px dashed red'
+  this._cartaP.classList.remove('bossAnimation') 
+  this._imageHitCoolDown = true
+  
+  setTimeout(
+    ()=>  {
+    this._cartaP.style.backgroundImage = this._image 
+    this._cartaP.style.border = '5px solid red'
+    this._cartaP.classList.add('bossAnimation')
+    this._imageHitCoolDown = false
+  }
+  , 320)
+
+}
+
   dmg(n) {
+    if(this._isUlting) return
     this.health -= n;
     this.dmgTaken += n;
 
@@ -71,8 +101,17 @@ class Boss {
     } else {
       vol = 0.8;
     }
+
     this.antiSpam();
-    audioPlayer(this._audioHit, true, this._CHN, vol);
+    this.imageHit()
+    audioPlayer(this._audioHitDefault, false, this._CHN, vol);
+
+    if(per(20)){
+
+      let faixa = this._audioHit[gerarNumero(0, this._audioHit.length - 1)]
+      
+      audioPlayer(faixa, true, this._CHN);
+    }
     this.percentHealth = (this.health / this.fullHealth) * 100;
 
     if (this.health <= 0) {
@@ -179,51 +218,70 @@ function createMonark() {
 
   let monark = {
     _audioChuva: "trovao.mp3",
+    _audioSpawn: ['monarkSpawn.mp3','monarkSpawn1.mp3'],
+    _audioHit: ['monarkHit.mp3','monarkHit1.mp3'],
+    _audioUlt: ['monarkUlt.mp3'],
+    _audioVitorSpawn: ['vitorSpawn.mp3','vitorSpawn1.mp3'],
+    _image: 'url("pics/monark/1.PNG")',
+    _imageHit: ['url("pics/monark/hit1.PNG")', 'url("pics/monark/hit2.PNG")', 'url("pics/monark/hit3.PNG")', 'url("pics/monark/hit4.PNG")']  ,
+    _imageUlt: 'url("pics/monark/ult1.PNG")',
     carta() {
       bossRoomP.innerHTML = cartaBossMonark;
     },
 
     ult(absolute) {
+      let ultis = () => {
+        let sorteio = gerarNumero(0, 2);
 
-      let ultis = [
-        this.chuvaDeMonark,
-        this.liberdadeDeExpresao,
-        this.vitorMetaforando,
-      ];
+        if (sorteio == 0) {
+          this.chuvaDeMonark();
+        } else if (sorteio == 1) {
+          this.liberdadeDeExpresao();
+        } else {
+          this.vitorMetaforando();
+        }
+      };
 
-      let chance = 0;
+      let chance = 1;
 
       let porcentagemVida = (this.health / this.fullHealth) * 10;
       chance += 10 - porcentagemVida;
 
       if (chance > 100 || absolute) chance = 100;
-      console.log("*** ULTI CHANCE ***");
+      console.log("*** ULTI CHANCE ***", chance);
 
-      if (this._coolDown || this.hasTriggeredUltihasStarted) return;
+      if (this._coolDown || this.hasTriggeredUlti) return;
       if (!per(chance)) return;
 
-    
       let delayUltAfterRound = gerarNumero(5000, 12000)
-      let timeShaking = gerarNumero(750, 3200)
-      this.hasTriggeredUltihasStarted = true
+
+      //debug
       
+
+      let timeShaking = gerarNumero(1100, 3200);
+      this.hasTriggeredUlti = true;
+
       // DELAY TO START SHAKING
       setTimeout(() => {
-        
-        
         this.treme(true);
         audioPlayer(this._audioPoder, true, this._CHN, 0.2);
         this.coolDown(15000 - chance * 100);
-
+        this._cartaP.style.backgroundImage = this._imageUlt
+        this._isUlting = true
 
         // SHAKING DELAY
         setTimeout(() => {
           this.treme(false);
-          this.hasTriggeredUlti = false
-          ultis[gerarNumero(0, 2)]();
+          this.hasTriggeredUlti = false;
+          this._cartaP.style.backgroundImage = this._image
+          this._isUlting = false
+          
+
+          //debug
+          ultis();
+
+          
         }, timeShaking);
-
-
       }, delayUltAfterRound);
     },
 
@@ -239,12 +297,14 @@ function createMonark() {
           x.readyToAttack = true;
         }
       });
-
+      console.log("QUESTOOOOO", this);
       audioPlayer(this._audioChuva, true, this._CHN, 0.1);
     },
 
     vitorMetaforando() {
       spawnVitor(true);
+      let faixa = this._audioVitorSpawn[gerarNumero(0, this._audioVitorSpawn.length - 1)] 
+      audioPlayer(faixa,false,this._CHN)
     },
 
     liberdadeDeExpresao() {
@@ -282,6 +342,7 @@ let hasSpawned = false;
 
 export function spawnBoss() {
   if (rodadas >= 10 && !hasSpawned) {
+
     if (chosenBoss == "monark") {
       createMonark();
     } else {
@@ -293,6 +354,9 @@ export function spawnBoss() {
     boss.carta();
 
     hasSpawned = true;
+    audioPlayer(boss._audioSpawn[gerarNumero(0, (boss._audioSpawn.length - 1))],true,boss._CHN)
+    
+    boss._cartaP = bossRoomP.children[0]
   }
   // healthWrapP.className = 'aparecer'
 }

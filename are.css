@@ -1,9 +1,9 @@
 #vitor {
     background-image: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.9),
-        rgba(12, 3, 30, 0.6),
-        rgba(204, 202, 207, 0.9)
+        rgba(0, 0, 0, 0.8),
+        rgba(12, 3, 30, 0.5),
+        rgba(0, 0, 0, 0.8)
       ),
       url(/pics/vitorFundo.gif);
     /* background-image: url(/pics/fundoPremioMonark.gif); */
@@ -22,6 +22,6 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     font-family: tf2;
-    color: #000000;
-    border: 2px solid rgb(5, 56, 86);
+    color: #ffffff;
+    border: 4px solid rgb(255, 0, 0);
   }

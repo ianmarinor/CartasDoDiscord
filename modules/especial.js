@@ -388,27 +388,6 @@ class Especial {
         }
 
         //se houver especias
-      } else if (areObj.some((x) => x.tank && !x.isInvisible)) {
-        for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 9);
-
-          if (areObj[slot].tank && !areObj[slot].isInvisible) {
-            let vitima = areObj[slot];
-
-            vitima.dmg(dano);
-
-            classHit = "tank";
-            checkLeftRight(vitima);
-
-            // atacar por dano spread
-
-            this._dmgDone += dano;
-
-            return true;
-          }
-        }
-
-        //se houver especias
       } else if (areObj.some((x) => x.especial && !x.isInvisible)) {
         for (let i = 0; i < 1000; i++) {
           let slot = gerarNumero(0, 9);
@@ -420,11 +399,15 @@ class Especial {
 
             classHit = "especial";
             checkLeftRight(vitima);
+
+            // atacar por dano spread
+
             this._dmgDone += dano;
 
             return true;
           }
         }
+
 
         // caso haja mini bosses
       } else if (areObj.some((x) => x.miniBoss && !x.isInvisible)) {
@@ -716,7 +699,7 @@ class Especial {
 
     if (this._hasUlti != false) {
       ulti.textContent = this.ulti + "%";
-      this.ulti == 100 && !this.unableToAttack
+      this.ulti == 100 && !this.unableToAttack()
         ? (ulti.style.cursor = "pointer")
         : (ulti.style.cursor = "not-allowed");
     }
@@ -1093,7 +1076,7 @@ export let especiais = {
     _requiredCidade: true,
     cfg() {
       this.energia = gerarNumero(25, 50);
-      this.dano = gerarNumero(2, 5);
+      this.dano = gerarNumero(1, 3);
       this._energiaP.style.visibility = "hidden";
       this._cargoP.style.visibility = "hidden";
       this._cargoP.innerHTML =

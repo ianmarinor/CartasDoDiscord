@@ -259,7 +259,7 @@ class Inimigo {
     } else if (this.especial) {
       this._seloP.textContent = "⭐";
     } else if (this.miniBoss) {
-      this._seloP.textContent = "🦹🏼‍♂️";
+      this._seloP.textContent = "";
     } else {
       this._seloP.textContent = "";
     }
@@ -342,6 +342,9 @@ class Inimigo {
       this.kill();
       return;
     }
+
+    
+
 
     this._fullHp = false;
 
@@ -841,23 +844,26 @@ let metaforando = {
   emoji: "😵",
   cfg() {
     this.dano = gerarNumero(8, 17);
-    this._nomeP.style.fontSize = "80%";
-    this._nomeP.style.marginTop = "8px";
-    this._nomeP.style.marginBottom = "10px";
+    this._cargoP.style.fontSize = "80%";
+    this._cargoP.style.marginTop = "8px";
+    this._cargoP.style.marginBottom = "10px";
+    this._cargoP.textContent = 'METAFORANDO'
+    this._cargoP.style.marginBottom = '0px'
     this._retratoP.style.height = "80%";
 
-    this._cargoP.innerHTML =
-      '<progress style="width: 75%; border: none; background-color: red; color: black; height: 8px; width: 96%; transform: rotate(180deg) " value="0" max="700"> </progress>';
-    this._cidadeP.style.marginBottom = "2px";
+    this._nomeP.innerHTML =
+      '<progress style="border: none; background-color: red; color: black; height: 8px; width: 85%; transform: rotate(180deg) " value="0" max="700"> </progress>';
+    
+      this._nomeP.style.marginBottom = '10px'
 
-    let healthBar = this._cargoP.children[0];
+    let healthBar = this._nomeP.children[0];
     this._displayP.children[1].style.visibility = "hidden";
 
     healthBar.style.borderRadius = "8px";
   },
 
   tick() {
-    let healthBar = this._cargoP.children[0];
+    let healthBar = this._nomeP.children[0];
 
     healthBar.max = this.maxHealth;
     healthBar.value = this._dmgTaken;
@@ -1065,11 +1071,8 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    coolDown = false;
-    invObj[0]._stunned = true;
-    invObj[0]._stunnedWeight = 3;
-    // coolDown = false;
-    // spawnMenosCartas()
+    
+    boss.ult()
   }
 });
 
