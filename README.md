@@ -121,6 +121,10 @@
 - Will not work if at least one of `this._dead` or `this._fullHp` is true.
 
 ---
+🔹 `healRestore()`
+- Restore `this.hp` to `this.maxHealth`
+
+---
 🔹 `hideHp(x)`
   -If `x` not set will hide `this._hpP`.
   -If `x` equals `false`, will show `this._hpP`.

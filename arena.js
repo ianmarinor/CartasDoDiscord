@@ -343,9 +343,6 @@ class Inimigo {
       return;
     }
 
-    
-
-
     this._fullHp = false;
 
     this.hp -= n;
@@ -657,10 +654,9 @@ let menosCartas = {
   maxHealth: 30,
   dano: false,
   attackChance: 10,
-  especial: true,
 
   cfg() {
-    this.energia = gerarNumero(8, 23);
+    this.energia = gerarNumero(13, 29);
     if (per(0.1)) {
       this._cargoP.textContent = "EVIL";
       this.energia = gerarNumero(50, 86);
@@ -809,11 +805,10 @@ let dog = {
 
     if (vitor) {
       this.superCritico(true);
-      this._thisCardP.style.backgroundImage =  `linear-gradient(180deg,rgba(0, 0, 0, 0.9),rgba(12, 3, 30, 0.4),rgba(0, 0, 0, 0.7)),url('/pics/dogRetrato2.PNG')`
-      // this._thisCardP.style.backgroundImage = "url('/pics/dogRetrato2.PNG')"
+      this._thisCardP.style.backgroundImage = `linear-gradient(180deg,rgba(0, 0, 0, 0.9),rgba(12, 3, 30, 0.4),rgba(0, 0, 0, 0.7)),url('/pics/dogRetrato2.PNG')`;
+
       this._thisCardP.style.backgroundSize = "cover";
       this._nomeP.textContent = "DOG DO VITINHO";
-      // this._retratoP.style.backgroundSize = "100% 100%";
     }
   },
 
@@ -849,14 +844,14 @@ let metaforando = {
     this._cargoP.style.fontSize = "80%";
     this._cargoP.style.marginTop = "8px";
     this._cargoP.style.marginBottom = "10px";
-    this._cargoP.textContent = 'METAFORANDO'
-    this._cargoP.style.marginBottom = '0px'
+    this._cargoP.textContent = "METAFORANDO";
+    this._cargoP.style.marginBottom = "0px";
     this._retratoP.style.height = "80%";
 
     this._nomeP.innerHTML =
       '<progress style="border: none; background-color: red; color: black; height: 8px; width: 85%; transform: rotate(180deg) " value="0" max="700"> </progress>';
-    
-      this._nomeP.style.marginBottom = '10px'
+
+    this._nomeP.style.marginBottom = "10px";
 
     let healthBar = this._nomeP.children[0];
     this._displayP.children[1].style.visibility = "hidden";
@@ -877,10 +872,10 @@ let metaforando = {
       let stunTime = gerarNumero(8, 18);
       x._stunned = true;
       x._stunnedWeight = stunTime;
+      x.dmg(Math.trunc(this.danno / 3))
     });
 
-
-    hpPlayer.remove(this.dano)
+    hpPlayer.remove(this.dano);
   },
 };
 
@@ -971,8 +966,6 @@ export function spawnDog(n) {
 export function spawnVitor(n) {
   if (coolDown && !n) return;
 
-  
-
   let slot = gerarNumero(0, 9);
 
   secret.innerHTML = blueprintBuilder(
@@ -981,7 +974,7 @@ export function spawnVitor(n) {
     "url('pics/vitorRetrato.jpeg')"
   );
 
-  if (!areObj[slot].tank || !areObj[slot].miniBoss ) {
+  if (!areObj[slot].tank || !areObj[slot].miniBoss) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
   }
@@ -1044,7 +1037,7 @@ export function spawnMonark(n) {
 
   secret.innerHTML = monarkBluePrint;
 
-  if (areObj[slot].empty == true ) {
+  if (areObj[slot].empty == true) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(monark), monark);
   }
@@ -1073,9 +1066,8 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    
-    invObj[0]._stunned = true
-    invObj[0]._stunnedWeight = 3
+    invObj[0]._stunned = true;
+    invObj[0]._stunnedWeight = 3;
   }
 });
 
@@ -1099,7 +1091,7 @@ let chance;
 export function populateArena(_absolute) {
   let chanceNormal = 90;
 
-  chance = 5;
+  chance = 10;
 
   if (boss) {
     let porcentagemVida = Math.trunc((boss.health / boss.fullHealth) * 100);
@@ -1120,14 +1112,14 @@ export function populateArena(_absolute) {
   coolDown = false;
 
   if (per(chanceNormal)) {
-    let normaisArr = [spawnMonark, spawnMenosCartas];
+    let normaisArr = [spawnMonark, spawnDog ];
 
     let arrLenght = normaisArr.length;
 
     let rng = () => normaisArr[gerarNumero(0, arrLenght - 1)]();
     rng();
   } else {
-    let especiaisArr = [spawnTank, spawnCamarada, spawnDog];
+    let especiaisArr = [spawnTank, spawnCamarada, spawnMenosCartas];
 
     let rng = () => especiaisArr[gerarNumero(0, especiaisArr.length - 1)]();
     rng();

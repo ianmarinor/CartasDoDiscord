@@ -1818,6 +1818,11 @@ document.addEventListener("keydown", (event) => {
     console.group("BOSS");
     console.log(boss ? boss : "BOSS NOT SPAWNED");
     console.groupEnd();
+
+
+    console.group("MONEY");
+    console.log(money);
+    console.groupEnd();
   }
 });
 
@@ -1996,7 +2001,10 @@ function dmgBoss() {
     x.kill();
   }
 
-  boss && boss.dmg(Math.trunc(energiaTotal * multiplicador));
+  if(energiaTotal > 0 && boss){
+
+      boss.dmg(Math.trunc(energiaTotal * multiplicador));
+  }
 
   //DINHEIRO
 
@@ -2048,7 +2056,7 @@ function animateSell(start, plus) {
 
   let coinAu = "coin.mp3";
   let CHNCoin = document.createElement("audio");
-  audioPlayer(coinAu, true, CHNCoin, 0.5);
+  audioPlayer(coinAu, true, CHNCoin, 0.3);
 
   let timer = setInterval(function () {
     if (plus - x < 40) {
@@ -2058,7 +2066,7 @@ function animateSell(start, plus) {
       // ativarBtn()
     } else {
       x += increment;
-
+      money.addAbsolute(increment);
       moneyP.textContent = parseInt(moneyP.textContent) + increment;
       // ativarBtn()
     }
@@ -2605,7 +2613,7 @@ let _wcoolDown = false;
 
 let wCooldown = () => {
 
-  let coolDownTime = 800
+  let coolDownTime = 400
 
   _wcoolDown = true;
   packP.children[0].style.opacity = 0.1

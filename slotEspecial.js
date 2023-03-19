@@ -11,7 +11,8 @@ import {
   objToMao,
   emptyObj,
   money,
-  ammo
+  ammo,
+  audioPlayer
 } from "/script.js";
 import { gerarNumero, teste } from "./script.js";
 
@@ -433,8 +434,18 @@ function moveToMao(e) {
 
 
         if(slotEspObj[obj].raridade.nome = 'sangueAzul'){
-          ammo.add(gerarNumero(1,2))
+          ammo.add(1)
         }
+        if(slotEspObj[obj]._audioChosenFiles){
+          let carta = slotEspObj[obj]
+          if(carta._dead) return
+
+            let faixa = carta._sourceChosen + gerarNumero(1,carta._audioChosenFiles) + '.mp3'
+            audioPlayer(faixa,true, carta._CHN , 0.5)
+    
+          
+        }
+
 
         slotEspObj = [emptyObj,emptyObj,emptyObj];
 

@@ -27,6 +27,7 @@ import {
   packP,
   novaCarta,
   rodadas,
+  audioPlayer,
 } from "../script.js";
 import { boss } from "../boss.js";
 import { areObj } from "../arena.js";
@@ -125,12 +126,10 @@ class Especial {
     this._invHiddenButton = false;
     this._maoHiddenButton = true;
     this._poderUsing = false;
-    this._attacking = false
-
+    this._attacking = false;
 
     this._stunned = false;
-    this._stunWeight = false
-
+    this._stunWeight = false;
 
     this._exposto = false;
     this._barreira = 0;
@@ -164,6 +163,9 @@ class Especial {
     this._hpP = false;
     this._buttonP = false;
     this._seloP = false;
+
+    //AUDIO
+    this._CHN = document.createElement("audio");
   }
 
   ult() {}
@@ -243,10 +245,20 @@ class Especial {
   }
 
   buildUlt(n) {
+    if (this.ulti >= 100) return;
+
     this.ulti += n;
     if (this.ulti >= 100) {
       this.ulti = 100;
       this._cargoP.classList.add("critico");
+
+      if (this._audioUltiReadyFiles) {
+        let faixa =
+          this._sourceUltiReady +
+          gerarNumero(1, this._audioUltiReadyFiles) +
+          ".mp3";
+        audioPlayer(faixa, true, this._CHN, 0.5);
+      }
     }
 
     let ulti = inv.children[this._place].children[2];
@@ -275,8 +287,7 @@ class Especial {
   }
 
   ataque(dmg, ammO, _spread) {
-
-    if(this.unableToAttack()) return
+    if (this.unableToAttack()) return;
 
     let dano;
     let ammoUsage;
@@ -428,13 +439,10 @@ class Especial {
             return true;
           }
         }
-
-
-        
       }
 
-        // caso haja mini bosses
-       else if (areObj.some((x) => x.miniBoss && !x.isInvisible)) {
+      // caso haja mini bosses
+      else if (areObj.some((x) => x.miniBoss && !x.isInvisible)) {
         for (let i = 0; i < 1000; i++) {
           let slot = gerarNumero(0, 9);
 
@@ -452,8 +460,7 @@ class Especial {
         }
 
         // caso haja so normais
-      } 
-
+      }
     } else if (boss) {
       boss.dmg(dano);
       this._dmgDone += dano;
@@ -490,6 +497,10 @@ class Especial {
     }, delay);
   }
 
+  healthRestore() {
+    this.setHp(this.maxHealth);
+  }
+
   addBuff(n) {
     this._buff += n;
   }
@@ -502,17 +513,14 @@ class Especial {
     }
   }
 
-  unableToAttack(){
+  unableToAttack() {
+    let cantAttackCondition = this._stunned || this._dead;
 
-    let cantAttackCondition = this._stunned 
-
-    if(cantAttackCondition){
-      return true
+    if (cantAttackCondition) {
+      return true;
     } else {
-      return false
+      return false;
     }
-    
-
   }
 
   useBarrier(_damage) {
@@ -562,6 +570,8 @@ class Especial {
       this.explode();
       return;
     }
+
+    this._CHN.pause();
 
     if (this._parentP == inv) {
       elimCardInv(inv.children[this._place]);
@@ -637,38 +647,29 @@ class Especial {
 
   everyRoundDefault() {
     this.buildUltAuto();
-    this.removeStun()
-
+    this.removeStun();
   }
 
-  removeStun(){
+  removeStun() {
+    if (!this._stunned) return;
 
-    if(!this._stunned)return
+    this._stunnedWeight--;
+    if (this._stunnedWeight <= 1) {
+      this._stunned = false;
+      this._thisCardP.classList.remove("stunned");
 
-      this._stunnedWeight--
-      if(this._stunnedWeight <=1){
-
-        this._stunned = false
-        this._thisCardP.classList.remove('stunned')
-
-        if(this._notDefaultSelo){
-          this._exposto = false
-        }
-
-        setTimeout(
-          ()=>  this._thisCardP.classList.add('unstunned')
-
-          
-
-
-        ,1)
-
-        setTimeout(
-          ()=> this._thisCardP.classList.remove('unstunned')
-         ,1000)
+      if (this._notDefaultSelo) {
+        this._exposto = false;
       }
-  
 
+      setTimeout(
+        () => this._thisCardP.classList.add("unstunned"),
+
+        1
+      );
+
+      setTimeout(() => this._thisCardP.classList.remove("unstunned"), 1000);
+    }
   }
 
   tick() {}
@@ -698,16 +699,14 @@ class Especial {
     }
 
     //stunned
-    if(this._stunned){
-      this._thisCardP.classList.add('stunned')
+    if (this._stunned) {
+      this._thisCardP.classList.add("stunned");
 
-      if(!this._exposto){
-        this._exposto = true
-        this._notDefaultSelo = true
+      if (!this._exposto) {
+        this._exposto = true;
+        this._notDefaultSelo = true;
       }
-
-    } 
-
+    }
 
     let parentP = this._parentP;
 
@@ -767,7 +766,7 @@ class Especial {
         this._buttonP.style.opacity = 0.3;
         this._buttonP.style.cursor = "not-allowed";
       }
-    } else if (!this.unableToAttack()){
+    } else if (!this.unableToAttack()) {
       this._buttonP.innerHTML = "🔘";
       this._buttonP.style.opacity = 1;
       this._buttonP.style.cursor = "pointer";
@@ -777,7 +776,6 @@ class Especial {
       this._buttonP.style.cursor = "not-allowed";
     }
 
- 
     //estilo selo
     if (this._exposto) {
       this._seloP.textContent = "🎯";
@@ -786,9 +784,6 @@ class Especial {
     } else {
       this._seloP.textContent = "";
     }
-
-    
-   
 
     //warning low hp
 
@@ -818,6 +813,15 @@ class Especial {
       this._seedP2.classList.add("warning-card");
       this._seedP.style.visibility = "visible";
       this._seedP2.style.visibility = "visible";
+
+      if (!this.audioWarnedHealthLow && this._audioNeedHealingFiles) {
+        let faixa =
+          this._sourceNeedHealing +
+          gerarNumero(1, this._audioNeedHealingFiles) +
+          ".mp3";
+        audioPlayer(faixa, true, this._CHN, 0.5);
+        this.audioWarnedHealthLow = true;
+      }
     } else {
       this._hpP.style.color = this.prevColor;
       this._hpP.textContent = this._totalHp + "💚";
@@ -827,6 +831,8 @@ class Especial {
 
       this._seedP.style.visibility = "hidden";
       this._seedP2.style.visibility = "hidden";
+
+      this.audioWarnedHealthLow = false;
     }
   }
 
@@ -902,15 +908,16 @@ export let especiais = {
     tank: true,
 
     cfg() {
-      let energia = gerarNumero(79, 102);
+      let energia = gerarNumero(65, 82);
       this.energia = energia;
     },
 
     poder() {
-      if(this.unableToAttack()) return
+      if (this.unableToAttack()) return;
       let varianteTenica = inv.children[this._place];
       let botao = varianteTenica.children[3].children[2];
 
+      // buffa farms
       for (let j = 0; j < 6; j++) {
         let carta = invObj[j];
 
@@ -928,6 +935,15 @@ export let especiais = {
           this.giveAllyEmoji(carta);
         }
       }
+
+      // bufar especiais
+      invObj.map((x) => {
+        x.removeStun();
+
+        if (x.hashp) {
+          x.healthRestore();
+        }
+      });
 
       this.changeEmojiToDefault();
 
@@ -1005,7 +1021,7 @@ export let especiais = {
     },
 
     poder() {
-      if(this.unableToAttack()) return
+      if (this.unableToAttack()) return;
       if (this.dormindo) return;
 
       let speakerSono = () => {
@@ -1144,7 +1160,7 @@ export let especiais = {
     },
 
     poder() {
-      if(this.unableToAttack()) return
+      if (this.unableToAttack()) return;
       if (this.giveCard) {
         numCartas.add(this.energia);
         if (packP.children[0].id == "carta") {
@@ -1397,11 +1413,10 @@ export let especiais = {
             "<br>" +
             this._requiredIntegrante2.toUpperCase())
         : false;
-      
     },
 
     poder() {
-      if(this.unableToAttack()) return
+      if (this.unableToAttack()) return;
       function infectar() {
         areObj.map((x) => {
           if (x.empty) return;
@@ -1511,7 +1526,7 @@ export let especiais = {
     },
 
     ult() {
-      if(this.unableToAttack()) return
+      if (this.unableToAttack()) return;
       let spy = this._thisCardP;
       let spyWatch = this._cargoP;
       let botao = spy.children[3].children[2];
@@ -1619,7 +1634,7 @@ export let especiais = {
     },
 
     poder() {
-      if(this.unableToAttack()) return
+      if (this.unableToAttack()) return;
       if (ammo.total <= 0) {
         return;
       }
@@ -1686,7 +1701,7 @@ export let especiais = {
     _invHiddenButton: true,
 
     poder() {
-      if(this.unableToAttack()) return
+      if (this.unableToAttack()) return;
       this.areaAtack();
       this.kill();
     },
@@ -1826,7 +1841,7 @@ export let especiais = {
     poder() {
       if (this.unableToAttack()) return;
       this._poderUsing = true;
-      let ultiRate = () => gerarNumero(0, 1);
+      let ultiRate = () => gerarNumero(0, 2);
 
       let ammo = 1;
       let tiros = 3;
@@ -1947,7 +1962,7 @@ export let especiais = {
             if (!boss) return;
 
             let playJhinAu = (n) => {
-              let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.4];
+              let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.2];
 
               if (gerarNumero(1, n) == 1) {
                 setTimeout(function () {
@@ -2065,53 +2080,84 @@ export let especiais = {
     _hasUlti: true,
     tank: true,
     requireAmmo: true,
-    
+
+    //AUDIO FILES
+    _audioChosenFiles: 5,
+    _sourceChosen: "dva/chosen",
+
+    _audioUltingFiles: 2,
+    _sourceUlting: "dva/ulting",
+
+    _audioUltiReadyFiles: 2,
+    _sourceUltiReady: "dva/ultiReady",
+
+    _audioAttackingFiles: 10,
+    _sourceAttacking: "dva/attacking",
+
+    _audioNeedHealingFiles: 2,
+    _sourceNeedHealing: "dva/needHealing",
+
+    tick() {},
 
     cfg() {
       this.dano = gerarNumero(18, 23);
     },
 
     ult() {
+      if (this.ulti != 100 || this.unableToAttack()) return;
 
-      if(this.ulti != 100 || this.unableToAttack()) return
-
-      let dvaToMinidva = (energiaFromField) => {
+      let dvaToMinidva = () => {
         this._invHiddenButton = true;
         this.setHp(10);
         this.changeRetrato('url("/pics/dva.webp")');
         this.dmgBoss = true;
-        this.ulti = 0;
+        
         this._thisCardP.children[2].textContent = "";
         this.dano = 0;
         this._buff = 0;
-        this.energia = 1 + Math.trunc(energiaFromField * 1.2);
+        this.energia = 1 + this._dmgTaken;
         this._hasUlti = false;
         this.tank = false;
+        this._thisCardP.classList.remove('piscar')
       };
 
-      let ultiDmg = gerarNumero(750, 1185);
-      this.dano = ultiDmg;
-      let energiaTotal = 0;
+      this.ulti = 0;
+      this._cargoP.classList.remove("critico");
+      this.changeRetrato('url("/pics/dvaUlting.gif")')
+      this._retratoP.style.backgroundSize = '100% 100%'
+      let faixa =
+            this. _sourceUlting +
+            gerarNumero(1, this._audioUltingFiles) +
+            ".mp3";
+          audioPlayer(faixa, true, this._CHN, 0.5);
+      this._thisCardP.classList.add('piscar')
 
-      invObj.map((x) => {
-        if (x.dmgBoss) {
-          x.dmg(this.dano);
+      setTimeout(
+        
+        ()=> {
+
+          if(this._dead) return
+
+          let ultiDmg = gerarNumero(750, 1185);
+          this.dano = ultiDmg;
+    
+          areObj.map((x) => {
+            x.dmg(this.dano);
+            this._dmgDone += this.dano;
+          });
+    
+          if (boss) boss.dmg(this.dano);
           this._dmgDone += this.dano;
-          if (x._dead) {
-            energiaTotal += x.energia;
-          }
+    
+          dvaToMinidva();
+
         }
-      });
 
-      areObj.map((x) => {
-        x.dmg(this.dano);
-        this._dmgDone += this.dano;
-      });
+      ,2700)
 
-      if (boss) boss.dmg(this.dano);
-      this._dmgDone += this.dano;
+     
 
-      dvaToMinidva(energiaTotal);
+
     },
 
     poder() {
@@ -2119,6 +2165,14 @@ export let especiais = {
 
       if (this.ataque(false, undefined, [true, false])) {
         this.buildUlt(ultiRate());
+
+        if (per(20)) {
+          let faixa =
+            this._sourceAttacking +
+            gerarNumero(1, this._audioAttackingFiles) +
+            ".mp3";
+          audioPlayer(faixa, true, this._CHN, 0.5);
+        }
       }
     },
 
@@ -2256,12 +2310,21 @@ export let especiais = {
     },
 
     explode() {
-      
+      audioPlayer("creeper.mp3", false, this._CHN, 0.6);
+      if (this._dead) {
+        this._CHN.pause();
+        return;
+      }
+
       this.exploding = true;
       this.isInvisible = true;
       this._thisCardP.className = "piscar";
 
       setTimeout(() => {
+        if (this._dead) {
+          this._CHN.pause();
+          return;
+        }
         hpPlayer.remove(Math.trunc(this.dano / 3));
 
         if (this._leftCard) {

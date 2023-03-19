@@ -43,6 +43,8 @@ export function toMonark(_cartaObj, _despawnTime) {
   carta._canBeDeleted = false;
   if (_despawnTime) return;
   carta._despawn = gerarNumero(2, 8);
+  let poopCHN = document.createElement('audio')
+  audioPlayer('poop.mp3',false,poopCHN, 0.4)
 }
 
 class Boss {
