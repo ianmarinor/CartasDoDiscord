@@ -615,7 +615,6 @@ let monark = {
   },
 
   poder() {
-    
     let despawnTime;
 
     if (boss) {
@@ -633,15 +632,10 @@ let monark = {
     }
 
     // let slot = invObj[0]
-    setTimeout(
-      ()=>{
-        let slot = invObj[gerarNumero(0, 3)];
-        toMonark(slot)
-
-      },
-      250
-    )
-    
+    setTimeout(() => {
+      let slot = invObj[gerarNumero(0, 3)];
+      toMonark(slot, despawnTime);
+    }, 250);
   },
 };
 
@@ -759,14 +753,19 @@ let tank = {
   maxHealth: 400,
   dano: 130,
   attackChance: false,
-  ulti: 0,
+  ulti: 96,
   tank: true,
   _CHN: document.createElement("audio"),
 
   cfg() {
     this.dano = gerarNumero(200, 354);
 
-    this.audioSpawn(0.2);
+    this.audioSpawn(0.3);
+
+    if(per(70)){
+
+      audioPlayer("tank/tankSpawn.mp3", false, this._CHN, 0.2)
+    }
   },
 
   everyRound() {
@@ -774,15 +773,25 @@ let tank = {
 
     let ultiRate = gerarNumero(2, 4);
 
+    if (this.ulti >= 92) {
+      ultiRate = 1;
+    }
+
     this.ulti += ultiRate;
     this._cargoP.children[0].value = this.ulti;
 
     if (this.ulti >= 100) {
       this.readyToAttack = true;
+      this._doesAttack = true;
+      setTimeout(
+        () => audioPlayer("tank/tankUltReady.mp3", false, this._CHN, 0.3),
+
+        400
+      );
     }
   },
 
-  poder() {
+  primaryAttack() {
     invObj.map((x) => {
       x.dmg(this.dano);
     });
@@ -1071,7 +1080,7 @@ let ianCHN = document.createElement("audio");
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
     coolDown = false;
-    spawnMonark();
+    spawnTank();
   }
 });
 

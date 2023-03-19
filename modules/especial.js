@@ -950,6 +950,8 @@ export let especiais = {
         }
       });
 
+      hpPlayer.add(50)
+
       this.changeEmojiToDefault();
 
       this.dmgBoss = true;
@@ -1717,8 +1719,8 @@ export let especiais = {
         this.buffAdded = true;
       }
 
-      this.dano = this._dmgTaken + 1;
-      this.dano > 35 ? (this.dano = 35) : 0;
+      this.dano = 1 + Math.floor(this._dmgTaken / 20);
+      this.dano > 500 ? (this.dano = 500) : 0;
 
       let hasTuru = invObj.some((x) => x._cidade == "de Itapira");
       let hasItapira = invObj.some((x) => x._integrante == "Turu");

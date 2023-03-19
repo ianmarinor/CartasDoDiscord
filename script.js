@@ -2204,6 +2204,10 @@ function runEveryRound() {
     x._everyRoundMao ? x.everyRound() : false;
   });
   areObj.map((x) => {
+
+    if (x.autoAtaque) {
+      x.autoAtaque();
+    }
     x.defaultEveryRound ? x.defaultEveryRound() : 0;
 
     if (x.everyRound) {
@@ -2213,12 +2217,8 @@ function runEveryRound() {
       }
     }
 
-    x.everyRoundDefault ? x.everyRoundDefault() : false;
     arenaByRound();
 
-    if (x.autoAtaque) {
-      x.autoAtaque();
-    }
   });
 }
 
