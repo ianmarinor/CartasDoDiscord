@@ -239,8 +239,8 @@ function createMonark() {
 
     ult(absolute) {
       let ultis = () => {
-        // let sorteio = gerarNumero(0, 2);
-        let sorteio = 1
+        let sorteio = gerarNumero(0, 2);
+        // let sorteio = 1
 
         if (sorteio == 0) {
           this.chuvaDeMonark();
@@ -291,6 +291,9 @@ function createMonark() {
     },
 
     chuvaDeMonark() {
+
+      console.log("-------------CHUVA DE MONARK----------------");
+
       for (let i = 0; i < 100; i++) {
         spawnMonark(true);
       }
@@ -302,12 +305,12 @@ function createMonark() {
           x.readyToAttack = true;
         }
       });
-      console.log("QUESTOOOOO", this);
+      
       audioPlayer(this._audioChuva, true, this._CHN, 0.1);
     },
 
     vitorMetaforando() {
-
+      console.log("-------------METAFORANDO----------------");
       spawnVitor(true);
       let faixa =
         this._audioVitorSpawn[gerarNumero(0, this._audioVitorSpawn.length - 1)];
@@ -315,7 +318,7 @@ function createMonark() {
     },
 
     liberdadeDeExpresao() {
-
+      console.log("-------------liberdadeDeExpresao----------------");
       spawnLiberdade(true);
       let faixa =
         this._audioLiberdadeSpawn[gerarNumero(0, this._audioLiberdadeSpawn.length - 1)];
