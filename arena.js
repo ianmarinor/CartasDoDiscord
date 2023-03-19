@@ -593,23 +593,29 @@ let monark = {
   maxHealth: 10,
   dano: 5,
   emoji: "💩",
+  attackChance: 40,
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
 
     this.dano = gerarNumero(3, 7);
     this._despawn = gerarNumero(35, 45);
-    this.attackChance = 20;
 
-    if (per(50)) {
-      this.poder();
+    this.poder();
+  },
+
+  everyRound() {
+    if (this.readyToAttack) return;
+
+    if (per(33)) {
+      this._doesAttack = false;
+    } else {
+      this._doesAttack = true;
     }
   },
 
-  everyRound() {},
-
   poder() {
-    let slot = invObj[gerarNumero(0, 3)];
+    
     let despawnTime;
 
     if (boss) {
@@ -627,9 +633,15 @@ let monark = {
     }
 
     // let slot = invObj[0]
-    if (slot.isNormal) {
-      toMonark(slot);
-    }
+    setTimeout(
+      ()=>{
+        let slot = invObj[gerarNumero(0, 3)];
+        toMonark(slot)
+
+      },
+      250
+    )
+    
   },
 };
 
@@ -752,7 +764,7 @@ let tank = {
   _CHN: document.createElement("audio"),
 
   cfg() {
-    this.dano = gerarNumero(100, 211);
+    this.dano = gerarNumero(200, 354);
 
     this.audioSpawn(0.2);
   },
@@ -774,7 +786,7 @@ let tank = {
     invObj.map((x) => {
       x.dmg(this.dano);
     });
-    hpPlayer.remove(Math.trunc(this.dano / 3));
+    hpPlayer.remove(Math.trunc(this.dano / 4));
     this.kill(true);
   },
 };
@@ -833,7 +845,7 @@ let metaforando = {
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
-  attackChance: 4,
+  attackChance: 5,
   hp: 2000,
   maxHealth: 2000,
   dano: 20,
@@ -872,7 +884,13 @@ let metaforando = {
       let stunTime = gerarNumero(8, 18);
       x._stunned = true;
       x._stunnedWeight = stunTime;
-      x.dmg(Math.trunc(this.danno / 3))
+
+      let danoStun = Math.round(this.dano / 3);
+
+      console.log("danoStun: ", danoStun);
+      console.log("danoStun: ", this);
+
+      x.dmg(danoStun);
     });
 
     hpPlayer.remove(this.dano);
@@ -974,7 +992,7 @@ export function spawnVitor(n) {
     "url('pics/vitorRetrato.jpeg')"
   );
 
-  if (!areObj[slot].tank || !areObj[slot].miniBoss) {
+  if (!areObj[slot].tank && !areObj[slot].miniBoss) {
     are.replaceChild(secret.children[0], are.children[slot]);
     areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
   }
@@ -1053,7 +1071,7 @@ let ianCHN = document.createElement("audio");
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
     coolDown = false;
-    spawnDog();
+    spawnMonark();
   }
 });
 
@@ -1112,7 +1130,7 @@ export function populateArena(_absolute) {
   coolDown = false;
 
   if (per(chanceNormal)) {
-    let normaisArr = [spawnMonark, spawnDog ];
+    let normaisArr = [spawnMonark, spawnDog];
 
     let arrLenght = normaisArr.length;
 

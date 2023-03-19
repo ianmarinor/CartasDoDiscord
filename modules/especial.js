@@ -650,10 +650,11 @@ class Especial {
     this.removeStun();
   }
 
-  removeStun() {
+  removeStun(_absolute) {
     if (!this._stunned) return;
 
     this._stunnedWeight--;
+    if(_absolute) this._stunnedWeight = 1
     if (this._stunnedWeight <= 1) {
       this._stunned = false;
       this._thisCardP.classList.remove("stunned");
@@ -938,7 +939,11 @@ export let especiais = {
 
       // bufar especiais
       invObj.map((x) => {
-        x.removeStun();
+
+        if(x._stunned){
+
+          x.removeStun(true);
+        }
 
         if (x.hashp) {
           x.healthRestore();
