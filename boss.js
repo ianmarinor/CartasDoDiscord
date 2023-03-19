@@ -84,7 +84,7 @@ imageHit(){
     this._cartaP.classList.add('bossAnimation')
     this._imageHitCoolDown = false
   }
-  , 320)
+  , 450)
 
 }
 

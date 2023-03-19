@@ -2046,24 +2046,21 @@ function animateSell(start, plus) {
   var stepTime = Math.floor(50 / plus);
   let x = 0;
 
-  let timer = setInterval(function () {
-    let coinAu = ["coin.mp3", 0.04];
+  let coinAu = "coin.mp3";
+  let CHNCoin = document.createElement("audio");
+  audioPlayer(coinAu, true, CHNCoin, 0.5);
 
+  let timer = setInterval(function () {
     if (plus - x < 40) {
       x++;
       moneyP.textContent = parseInt(moneyP.textContent) + 1;
       money.addAbsolute(1);
-      snd(coinAu);
       // ativarBtn()
     } else {
       x += increment;
-      money.addAbsolute(increment);
+
       moneyP.textContent = parseInt(moneyP.textContent) + increment;
       // ativarBtn()
-
-      if (gerarNumero(1, 3) == 1) {
-        snd(coinAu);
-      }
     }
 
     ativarBtn();
@@ -2071,6 +2068,7 @@ function animateSell(start, plus) {
 
     if (x >= plus) {
       clearInterval(timer);
+      CHNCoin.pause();
     }
   }, stepTime);
 }
@@ -2602,12 +2600,28 @@ export function somaPontos() {}
 
 button.addEventListener("click", tudo);
 button.addEventListener("click", blockInv);
+
+let _wcoolDown = false;
+
+let wCooldown = () => {
+
+  let coolDownTime = 800
+
+  _wcoolDown = true;
+  packP.children[0].style.opacity = 0.1
+
+  setTimeout( ()=> {
+    _wcoolDown= false
+    packP.children[0].style.opacity = 1
+  } , coolDownTime);
+};
+
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyW") {
-    if (!getSeedChecked()) {
-      tudo();
-      blockInv();
-    }
+    if (_wcoolDown) return;
+
+    tudo();
+    wCooldown();
   }
 });
 
@@ -2620,8 +2634,9 @@ cartaParaMover.addEventListener("click", moverToCartaMao);
 document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
-      if (!getSeedChecked() && chosenCard == 0) {
+      if (!_wcoolDown && chosenCard == 0) {
         moverToCartaMao();
+        wCooldown();
       }
     }
   }
@@ -2667,7 +2682,7 @@ export function startGame2() {
   rodadas = 1;
   // resetBoss();
 
-  numCartas.set(50);
+  numCartas.set(100);
   vendas.set(50);
   hpPlayer.set(100);
   ammo.set(0);

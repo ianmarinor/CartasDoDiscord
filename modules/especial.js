@@ -408,9 +408,33 @@ class Especial {
           }
         }
 
+        // NORMAL
+      } else if (areObj.some((x) => !x.miniBoss && !x.isInvisible)) {
+        for (let i = 0; i < 1000; i++) {
+          let slot = gerarNumero(0, 9);
+
+          if (!areObj[slot].miniBoss && !areObj[slot].isInvisible) {
+            let vitima = areObj[slot];
+
+            vitima.dmg(dano);
+
+            classHit = "normal";
+            checkLeftRight(vitima);
+
+            // atacar por dano spread
+
+            this._dmgDone += dano;
+
+            return true;
+          }
+        }
+
+
+        
+      }
 
         // caso haja mini bosses
-      } else if (areObj.some((x) => x.miniBoss && !x.isInvisible)) {
+       else if (areObj.some((x) => x.miniBoss && !x.isInvisible)) {
         for (let i = 0; i < 1000; i++) {
           let slot = gerarNumero(0, 9);
 
@@ -428,24 +452,8 @@ class Especial {
         }
 
         // caso haja so normais
-      } else {
-        for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 9);
+      } 
 
-          if (!areObj[slot].isInvisible) {
-            let vitima = areObj[slot];
-
-            vitima.dmg(dano);
-
-            classHit = "normal";
-            checkLeftRight(vitima);
-
-            this._dmgDone += dano;
-
-            return true;
-          }
-        }
-      }
     } else if (boss) {
       boss.dmg(dano);
       this._dmgDone += dano;
@@ -642,6 +650,11 @@ class Especial {
 
         this._stunned = false
         this._thisCardP.classList.remove('stunned')
+
+        if(this._notDefaultSelo){
+          this._exposto = false
+        }
+
         setTimeout(
           ()=>  this._thisCardP.classList.add('unstunned')
 
@@ -687,6 +700,12 @@ class Especial {
     //stunned
     if(this._stunned){
       this._thisCardP.classList.add('stunned')
+
+      if(!this._exposto){
+        this._exposto = true
+        this._notDefaultSelo = true
+      }
+
     } 
 
 

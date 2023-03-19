@@ -809,9 +809,11 @@ let dog = {
 
     if (vitor) {
       this.superCritico(true);
-      this.changeRetrato("dogRetrato2.png");
+      this._thisCardP.style.backgroundImage =  `linear-gradient(180deg,rgba(0, 0, 0, 0.9),rgba(12, 3, 30, 0.4),rgba(0, 0, 0, 0.7)),url('/pics/dogRetrato2.PNG')`
+      // this._thisCardP.style.backgroundImage = "url('/pics/dogRetrato2.PNG')"
+      this._thisCardP.style.backgroundSize = "cover";
       this._nomeP.textContent = "DOG DO VITINHO";
-      this._retratoP.style.backgroundSize = "100% 100%";
+      // this._retratoP.style.backgroundSize = "100% 100%";
     }
   },
 
@@ -836,14 +838,14 @@ let metaforando = {
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
-  attackChance: 15,
+  attackChance: 4,
   hp: 2000,
   maxHealth: 2000,
   dano: 20,
   miniBoss: true,
   emoji: "😵",
   cfg() {
-    this.dano = gerarNumero(8, 17);
+    this.dano = gerarNumero(10, 23);
     this._cargoP.style.fontSize = "80%";
     this._cargoP.style.marginTop = "8px";
     this._cargoP.style.marginBottom = "10px";
@@ -1072,7 +1074,8 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
     
-    boss.ult()
+    invObj[0]._stunned = true
+    invObj[0]._stunnedWeight = 3
   }
 });
 
