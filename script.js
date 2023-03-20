@@ -1892,25 +1892,33 @@ let placarArena = {
   getEnergia() {
     this.energiaTotal = 0;
 
-    let multiplicador = parseFloat(1 + "." + this.cardsTotal);
+    let multiplicador = parseFloat(1 + "." + this.cardsTotal + (this.cardsTotal + 1));
     for (const x of invObj) {
       if (x.dmgBoss != true) {
         continue;
       }
       this.energiaTotal += x.energia;
     }
+    if(this.cardsTotal >1 ){
 
-    this.energiaTotal *= multiplicador;
+      this.energiaTotal *= multiplicador;
+    }
   },
 
   getDinheiro() {
     this.dinheiroTotal = 0;
 
+    let multiplicador = parseFloat(1 + "." + this.cardsTotal);
+
     for (const x of invObj) {
       if (x.dmgBoss != true) {
         continue;
       }
+      
       this.dinheiroTotal += x.energia;
+    }
+    if(this.cardsTotal >1 ){
+    this.dinheiroTotal *= multiplicador;
     }
   },
 
@@ -1936,7 +1944,7 @@ let placarArena = {
     if (this.coolDown) return;
 
     dmgBoss(this.energiaTotal);
-    money.add(this.dinheiroTotal);
+    money.add(Math.floor(this.dinheiroTotal));
     ammo.add(this.ammoTotal);
   },
 
@@ -1951,7 +1959,7 @@ let placarArena = {
     let placarAmmoP = document.getElementById("placarAmmo");
 
     placarDanoP.innerHTML = Math.trunc(this.energiaTotal);
-    placarMoneyP.innerHTML = this.dinheiroTotal;
+    placarMoneyP.innerHTML = Math.floor(this.dinheiroTotal)
     placarAmmoP.innerHTML = this.ammoTotal;
   },
 };

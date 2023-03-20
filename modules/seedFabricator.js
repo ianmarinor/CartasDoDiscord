@@ -113,7 +113,7 @@ export function start() {
   seedObj = generateSeed('122249095759994111'); // critico var
   seedObj = generateSeed('122349295759994111'); // superCritico var
   seedObj = generateSeed('122249295759994111'); // ultracritico
-  // seedObj = generateSeed(input);
+  seedObj = generateSeed(input);
   
   
 }
