@@ -114,6 +114,7 @@ class Especial {
     this.novoAtaqueStyle = card.novoAtaqueStyle;
 
     //defaults
+    this._level = false;
     this._dead = false;
     this._place = false;
     this._invEventAdded = false;
@@ -234,6 +235,16 @@ class Especial {
     }
 
     this.checkFullHp();
+  }
+
+  levelSetter(){
+
+
+
+    
+ 
+
+
   }
 
   setTotalHp() {
