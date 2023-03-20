@@ -133,6 +133,7 @@ export function escolherIntegrante() {
     ["Murillo", 9],
   ];
   integrante = integrantes[seedString[1]];
+  return integrantes[seedString[1]]
 }
 
 //cidade
@@ -297,7 +298,7 @@ export let pontoPoderRNGPremioMarino = () =>
 let pontoVarianteValor = 0;
 
 function pontoVariante() {
-  if (variante != "") {
+  if (variante[0] != "") {
     return (pontoVarianteValor = 4);
   } else {
     return (pontoVarianteValor = 1);
@@ -341,7 +342,7 @@ class fabricaDeCarta {
     this._cidade = cidade[0];
     this._cargo = cargo;
     this.energia = poder;
-    this.energiaNatural = poder;
+    // this.energiaNatural = poder;
     this._variante = variante[0];
     this._especial = especial;
     this._seedobj = seedObj;
@@ -433,19 +434,21 @@ class fabricaDeCarta {
   }
 
   firstPrint() {
-    ataqueP.innerHTML = this.energia + "⚡";
+    // ataqueP.innerHTML = this.energia + "⚡";
   }
 
   print() {
     if (!this._cfgDefaultAdded) {
       this.cfgDefault();
       this._cfgDefaultAdded = true;
-      console.log(5555555555555);
     }
 
+    this._energiaP.textContent =  this.energia + "⚡";
+
+
     let thisP = this._thisCardP;
-    let energia = this._parentP.children[this._place].children[3].children[0];
     let statusEmoji = thisP.children[3].children[2];
+
 
     if (this.statusEmoji) {
       statusEmoji.style.visibility = "visible";
@@ -454,7 +457,7 @@ class fabricaDeCarta {
       statusEmoji.style.visibility = "hidden";
     }
 
-    energia.textContent = this.energia + "⚡";
+    
 
     if (this._despawn != false) {
       this._hpP.style.visibility = "visible";
@@ -468,51 +471,40 @@ class fabricaDeCarta {
       this._cidadeP.classList.add('critico') 
       this._energiaP.classList.add('critico') 
       
-    } else {
-
-
-      this._nomeP.classList.remove('critico') 
-      this._cidadeP.classList.remove('critico') 
-      this._energiaP.classList.remove('critico')
-
-    }
+    } 
+    
 
     if(this._superCritico){
 
       this._nomeP.classList.add('critico') 
       this._varianteP.classList.add('critico') 
       this._energiaP.classList.add('critico') 
-    } else {
+    } 
+    
 
-      this._nomeP.classList.remove('critico') 
-      this._varianteP.classList.remove('critico') 
-      this._energiaP.classList.remove('critico') 
-
-
-    }
+    
 
     if(this._superCritico && this._critico){
       this._ultraCritico = true
       this._thisCardP.classList.add('critico') 
-  } else {
-    this._ultraCritico = false
-    this._thisCardP.classList.remove('critico') 
-
-  }
+  } 
 
 
 
 }
+
   cfgDefault() {
+    this.energiaNatural = this.energia;
     this.criticoNatural();
     this.superCriticoNatural()
+    // this._energiaP.textContent = this.energia + "⚡";
   }
 
   criticoNatural() {
     
     if (this._integranteArray[1] == this._cidadeArray[1]) {
       this._critico = true;
-      // this.energia *=2
+      this.energia *=2
     } else {
       this._critico = false
     }
@@ -521,9 +513,9 @@ class fabricaDeCarta {
 
   superCriticoNatural() {
     
-    if (this._integranteArray[1] == this._varianteArray[1]) {
+    if (this._integranteArray[1] === this._varianteArray[1]) {
       this._superCritico = true;
-      // this.energia *=3
+      this.energia *=3
     } else {
       this._superCritico = false
     }

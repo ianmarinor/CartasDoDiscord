@@ -6,8 +6,8 @@ let DEBUG = true
 let versaoHTML = document.getElementById("versao");
 let versao = "Alpha 1.6";
 versaoHTML.innerHTML = versao;
-console.log(new Date().toUTCString());
-console.log(versao);
+
+
 
 
 
@@ -67,8 +67,8 @@ export function generateSeed(input) {
       
       
       
-      console.log('seedReal: ', seedReal);
-      console.log('input: ', input);
+      
+      
 
 if (input.length > 10) {
     if (seedReal) {
@@ -110,15 +110,18 @@ if (input.length > 10) {
 // export let seedObj
 export function start() {
   colocarInput();
-  seedObj = generateSeed(input);
-  console.log(seedObj);
-  console.trace()
+  seedObj = generateSeed('122249095759994111'); // critico var
+  seedObj = generateSeed('122349295759994111'); // superCritico var
+  seedObj = generateSeed('122249295759994111'); // ultracritico
+  // seedObj = generateSeed(input);
+  
+  
 }
 
 // seedObj = generateSeed(input);
 ;
 
-  // console.log(numeroDeCartas);
+  // 
 
 
 // button.addEventListener("click", start);

@@ -1110,7 +1110,7 @@ export function spawnMonark(n) {
 
   start();
 
-  let monarkNome = escolherIntegrante();
+  let monarkNome = escolherIntegrante()[0];
   let monarkFoto;
 
   if (monarkNome === "Turu") {
