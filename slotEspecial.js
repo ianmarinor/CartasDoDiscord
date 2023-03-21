@@ -424,7 +424,7 @@ function moveToMao(e) {
   
 
   if (cartaEspecial.id && !myInterval) {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       if (mao.children[i].id == "mao" + i) {
         mao.replaceChild(cartaEspecial, mao.children[i]);
         limparEsp();

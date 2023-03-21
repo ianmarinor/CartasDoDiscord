@@ -176,7 +176,7 @@ export function triggerChuvaMonark() {
 
     for (let i = 0; i < 6; i++) {
       if (gerarNumero(1, 4) == 1) {
-        // moverCartaMonark(1, mao);
+       
       }
     }
     selectHandCard();

@@ -272,7 +272,6 @@ li {
 
   grid-area: hb;
   opacity: 0;
- 
 }
 #healthPoints,
 .healthPoints {
@@ -309,34 +308,29 @@ li {
 
 #healthPlayerWrap,
 #ammoWrap {
-  width: 232px;
+  width: 130px;
   display: flex;
-  grid-area: mao;
+  grid-area: dicas;
+  justify-content: end;
 
-  justify-content: flex-end;
   justify-self: start;
   align-self: start;
   /* background-color: #010101; */
   /* margin-left: 150px; */
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 #ammoWrap {
-  /* justify-self: end; */
-  /* margin-right: 150px; */
-  margin-top: 65px;
+  align-self: end;
 }
-#healthPlayerWrap {
-  /* margin-left: 110px; */
-  /* background-color: #010101; */
-}
+
 
 #healthPlayerWrap > *,
 #ammoWrap > * {
   width: 60px;
   font-size: 2.5em;
   color: wheat;
-  text-align: center;
+  text-align: end;
 }
 
 #healthPlayerBuff {
@@ -384,9 +378,8 @@ li {
   /* justify-self: end; */
   /* align-self: start; */
 
-flex-direction: row;
+  flex-direction: row;
 
- 
   grid-area: dicas;
 
   width: 320px;
@@ -407,10 +400,9 @@ flex-direction: row;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
 }
 
-#placarInimigoEfeito{
+#placarInimigoEfeito {
   margin-right: 7px;
 }
 
@@ -805,9 +797,6 @@ flex-direction: row;
   background-size: 280px 440px;
 }
 
-
-
-
 #abelha {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(pics/fundoAbelha.gif);
@@ -1081,7 +1070,7 @@ flex-direction: row;
   opacity: 0.8;
   /* transform: rotate(90deg); */
 }
-.seloAre{
+.seloAre {
   position: absolute;
   top: 2px;
   right: 2px;
@@ -1195,7 +1184,8 @@ flex-direction: row;
   font-size: 0.65em;
   opacity: 0.6;
 }
-.seedEsp2, .seedEsp {
+.seedEsp2,
+.seedEsp {
   border-radius: 10px;
   /* border-right:  1px solid red; */
   background-color: rgb(255, 0, 0);
@@ -1207,12 +1197,11 @@ flex-direction: row;
   transform: rotate(90deg);
   font-size: 0.65em;
   opacity: 0.8;
-  visibility:  hidden;
+  visibility: hidden;
 }
 
-.seedEsp{
+.seedEsp {
   left: 37%;
-
 }
 
 #btnContainer {
@@ -1337,14 +1326,17 @@ div[id^="empty-"] {
   align-self: center;
 
   height: 320px;
-  width: 870px;
+  width: 1330px;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr;
 
   justify-items: center;
   align-items: center;
+
+  /* visibility: hidden; */
+
 }
 
 #G,
