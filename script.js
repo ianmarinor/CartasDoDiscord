@@ -18,7 +18,7 @@ import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
 import { boss, spawnBoss, resetBoss } from "./boss.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Pre-Alpha 1.7";
+let versao = "LUCIO FIX";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}

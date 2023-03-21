@@ -818,6 +818,18 @@ class Especial {
     // if (this.tick) this.tick()
   }
 
+  ammoCheck(){
+    console.log(ammo.total);
+
+
+    if(ammo.total <= 0){
+      return false
+    } else {
+      return true
+    }
+
+  }
+
   lowHpWarning() {
     if (!this.hashp) return;
 
@@ -1871,15 +1883,20 @@ export let especiais = {
     },
 
     poder() {
-      if (this.unableToAttack() || ammo.total <= 0) return;
-      this._poderUsing = true;
+      if (this.unableToAttack() || this._poderUsing || !this.ammoCheck()) return;
+
+      this._poderUsing = true
+      
       let ultiRate = () => gerarNumero(0, 2);
 
       let ammo = 1;
       let tiros = 3;
 
       let weapon = () => {
+
+
         if (this._dead) return;
+        this._poderUsing = true;
         if (this.ataque(false, ammo)) {
           this.buildUlt(ultiRate());
         }
@@ -2663,6 +2680,14 @@ export function estoicoPE() {
 function tankCargo(emoji) {
   return gerarNumero(200, 350) + emoji;
 }
+
+function Main(){
+
+  
+
+}
+
+window.addEventListener("load", Main);
 
 // export function pontoSpeaker() {
 //   return Math.floor(Math.random() * 4 + 1);
