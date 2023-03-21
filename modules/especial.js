@@ -188,7 +188,7 @@ class Especial {
       }
     }
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       if (this == maoObj[i]) {
         this._parent = maoObj;
         this._parentP = mao;
@@ -815,7 +815,8 @@ class Especial {
 
     this.lowHpWarning();
 
-    // if (this.tick) this.tick()
+    
+
   }
 
   ammoCheck(){
@@ -967,7 +968,7 @@ export let especiais = {
         }
       }
 
-      for (let j = 0; j < 4; j++) {
+      for (let j = 0; j < 6; j++) {
         let carta = maoObj[j];
 
         if (carta.dmgBoss) {
@@ -2063,14 +2064,23 @@ export let especiais = {
                 // snd(hit);
                 // somDeath(350);
                 playJhinAu(1);
+                if(per(75)){
                 elimCardInv(atiradorP);
+              }
+
                 this.tiros--;
                 this.kill();
               } else {
                 this.aim == "boss"
                   ? boss.dmg(this.dano)
                   : this.ataque(false, false);
-                elimCardInv(atiradorP);
+
+                if(per(75)){
+
+                  elimCardInv(atiradorP);
+                }
+
+                
 
                 this.tiros--;
                 tirosString.textContent = this.tiros;
@@ -2341,8 +2351,8 @@ export let especiais = {
     },
 
     everyRound() {
-      if (this.exploding) return;
-
+      if (this.exploding || this._parentP != inv) return;
+      
       let chance = per(3.5);
 
       if (chance) {

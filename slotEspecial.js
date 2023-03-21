@@ -12,7 +12,7 @@ import {
   emptyObj,
   money,
   ammo,
-  audioPlayer
+  audioPlayer,
 } from "/script.js";
 import { gerarNumero, teste } from "./script.js";
 
@@ -37,7 +37,6 @@ let precoPrint = () => {
     "SANGUE AZUL <br />" + precoSangueAzul);
   let precoRainhaP = (btnRainha.innerHTML = "RAINHA <br />" + precoRainha);
 };
-
 
 precoPrint();
 
@@ -111,7 +110,6 @@ let increasePrice = (x) => {
 function comprarCampones() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoCampones) {
-
     colocarSlot(makeCampones(), 0);
     colocarSlot(makeCampones(), 1);
     colocarSlot(makeCampones(), 2);
@@ -128,7 +126,6 @@ function comprarCampones() {
 function comprarCavalheiro() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoCavalheiro) {
-
     colocarSlot(makeCavalheiro(), 0);
     colocarSlot(makeCavalheiro(), 1);
     colocarSlot(makeCavalheiro(), 2);
@@ -145,7 +142,6 @@ function comprarCavalheiro() {
 function comprarSangue() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoSangueAzul) {
-
     colocarSlot(makeSangueAzul(), 0);
     colocarSlot(makeSangueAzul(), 1);
     colocarSlot(makeSangueAzul(), 2);
@@ -161,7 +157,6 @@ function comprarSangue() {
 function comprarRainha() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoRainha) {
-
     colocarSlot(makeRainha(), 0);
     colocarSlot(makeRainha(), 1);
     colocarSlot(makeRainha(), 2);
@@ -176,7 +171,6 @@ function comprarRainha() {
 }
 
 const cartaEsp =
-
   '<div class="cartaEsp" data-card="especial" data-tankdead="false" data-dmgboss="" data-tier="" > ' +
   '<div class="nameAndCidadeWrapperEsp">' +
   '<p class="nomeEsp"></p>' +
@@ -193,8 +187,7 @@ const cartaEsp =
   "</div>" +
   '<p class="seedEsp"></p>' +
   '<p class="seloEsp"></p>' +
-  '<p class="seedEsp2"></p>'
-
+  '<p class="seedEsp2"></p>';
 
 let seedCampones;
 let seedmakeCavalheiro;
@@ -231,7 +224,7 @@ function makeCavalheiro() {
 
   seedmakeCavalheiro = specialSeed.join("");
   seedEspecial = seedmakeCavalheiro;
-  
+
   return seedmakeCavalheiro;
 }
 
@@ -246,7 +239,7 @@ function makeSangueAzul() {
 
   seedmakeSangueAzul = specialSeed.join("");
   seedEspecial = seedmakeSangueAzul;
-  
+
   return seedmakeSangueAzul;
 }
 
@@ -264,18 +257,10 @@ function makeRainha() {
 
   return seedmakeRainha;
 }
-export let slotEspObj
-function Main(){
-
-
-  slotEspObj =  [
-    emptyObj,
-    emptyObj,
-    emptyObj,
-  ]
+export let slotEspObj;
+function Main() {
+  slotEspObj = [emptyObj, emptyObj, emptyObj];
 }
-  
-
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
@@ -285,14 +270,10 @@ document.addEventListener("keydown", (event) => {
 
 export let slotEsp = document.getElementById("slotEsp");
 
-function colocarSlot(tipo,_slot) {
+function colocarSlot(tipo, _slot) {
+  let slot = _slot;
 
-
- 
-   let slot = _slot
-
-  
-
+  if(slotEspObj[slot]._bought) return
 
   btnCampones = document.getElementById("btnCampones");
   btnCavalheiro = document.getElementById("btnCavalheiro");
@@ -301,8 +282,6 @@ function colocarSlot(tipo,_slot) {
 
   let cartaEspecial = document.getElementById("slotEsp").children[slot];
 
-  
-  
   let nomeE = slotEsp.querySelectorAll(".nomeEsp")[slot];
   let retratoE = slotEsp.querySelectorAll(".retratoEsp")[slot];
   let cargoE = slotEsp.querySelectorAll(".cargoEsp")[slot];
@@ -386,6 +365,8 @@ function colocarSlot(tipo,_slot) {
 
   especial.print();
   // console.log('especial: ', especial);
+
+  cartaEspecial.style.opacity = "0.5";
 }
 
 btnCampones.addEventListener("click", function () {
@@ -407,51 +388,63 @@ let myInterval;
 slotEsp.addEventListener("click", moveToMao);
 let cartaEspecial;
 
-
-
 function moveToMao(e) {
+  cartaEspecial = e.target.offsetParent;
 
-  
+  let obj;
+  e.target.offsetParent == slotEsp.children[0] ? (obj = 0) : 0;
+  e.target.offsetParent == slotEsp.children[1] ? (obj = 1) : 0;
+  e.target.offsetParent == slotEsp.children[2] ? (obj = 2) : 0;
+
+  let cardObj = slotEspObj[obj];
+
+  if (!cardObj._bought) {
+    cardObj._bought = true;
+    cartaEspecial.style.opacity = "1";
+    limparEsp(obj);
+    console.log('CARTA COMPRADA ', cardObj);
+    return;
+  }
+
+ 
 
   // cartaEspecial = slotEsp.children[0].cloneNode(true)
-  cartaEspecial = e.target.offsetParent
-
-  let obj 
-  e.target.offsetParent == slotEsp.children[0] ? obj = 0 : 0
-  e.target.offsetParent == slotEsp.children[1] ? obj = 1 : 0
-  e.target.offsetParent == slotEsp.children[2] ? obj = 2 : 0
 
   
 
-  if (cartaEspecial.id && !myInterval) {
-    for (let i = 0; i < 6; i++) {
+  if (cartaEspecial.id && !myInterval && cardObj._bought) {
+    for (let i = 5; i > -1; i--) {
       if (mao.children[i].id == "mao" + i) {
-        mao.replaceChild(cartaEspecial, mao.children[i]);
-        limparEsp();
+        
         snd(novaCarta);
-
+        
         objToMao(i, slotEspObj[obj]);
-
-
-        if(slotEspObj[obj].raridade.nome = 'sangueAzul'){
-          ammo.add(1)
+        
+        if ((slotEspObj[obj].raridade.nome == "sangueAzul")) {
+          ammo.add(1);
         }
-        if(slotEspObj[obj]._audioChosenFiles){
-          let carta = slotEspObj[obj]
-          if(carta._dead) return
 
-            let faixa = carta._sourceChosen + gerarNumero(1,carta._audioChosenFiles) + '.mp3'
-            audioPlayer(faixa,true, carta._CHN , 0.5)
-    
+        limparEsp(null,obj)
+        mao.replaceChild(cartaEspecial, mao.children[i]);
+        console.log(obj , ' OBJETO NO MAO888888888888888888888888');
+
+        // AUDIO SELECAO
+        if (slotEspObj[obj]._audioChosenFiles) {
+          let carta = slotEspObj[obj];
+          if (carta._dead) return;
           
+          let faixa =
+          carta._sourceChosen +
+          gerarNumero(1, carta._audioChosenFiles) +
+          ".mp3";
+          audioPlayer(faixa, true, carta._CHN, 0.5);
         }
 
-
-        slotEspObj = [emptyObj,emptyObj,emptyObj];
+        
 
         break;
       } else {
-        // snd(naoAu)
+        
       }
     }
   }
@@ -459,26 +452,76 @@ function moveToMao(e) {
   selectHandCard();
 }
 
-export function limparEsp() {
+export function limparEsp(notDelet,YesDelet) {
+  teste.innerHTML = cartaEsp;
+  let emptyEspP0 = teste.children[0].cloneNode(true);
+  let emptyEspP1 = teste.children[0].cloneNode(true);
+  let emptyEspP2 = teste.children[0].cloneNode(true);
 
-  teste.innerHTML = cartaEsp 
-  let emptyEspP0 = teste.children[0].cloneNode(true)
-  let emptyEspP1 = teste.children[0].cloneNode(true)
-  let emptyEspP2 = teste.children[0].cloneNode(true)
-
-  // console.log('eeeeeeeeeee', emptyEspP);
-
-  slotEsp.innerHTML = ''
-
-  slotEsp.appendChild(emptyEspP0)
-  slotEsp.appendChild(emptyEspP1)
-  slotEsp.appendChild(emptyEspP2)
-
-  // slotEsp.replaceChild( emptyEspP0 , slotEsp.children[0])
-  // slotEsp.replaceChild( emptyEspP1 , slotEsp.children[1])
-  // slotEsp.replaceChild( emptyEspP2, slotEsp.children[2])
   
+
+  let slots = [
+    () => {
+      console.log('emptyEspP0: ', emptyEspP0);
+      // console.trace();
+      slotEsp.replaceChild(emptyEspP0, slotEsp.children[0]);
+    },
+
+
+    () => {
+      
+      console.log('emptyEspP1: ', emptyEspP1);
+      // console.trace()
+      slotEsp.replaceChild(emptyEspP1, slotEsp.children[1]);
+    },
+
+
+    () => {
+      
+      console.log('emptyEspP2: ', emptyEspP2);
+      // console.trace()
+      slotEsp.replaceChild(emptyEspP2, slotEsp.children[2]);
+    },
+  ];
+
   
+
+    for(let i=0;i<3;i++){
+  
+      
+
+        if(i == YesDelet){
+          console.log(YesDelet);
+          slots[i]()
+          slotEspObj[i] = emptyObj
+          console.log('---------', i,'----------');
+    
+        }
+      
+
+      
+
+        if(i != notDelet && notDelet != null && !slotEspObj[i]._bought){
+          slots[i]()
+          slotEspObj[i] = emptyObj
+    
+        }
+      
+    }
+  
+    // if(YesDelet){
+    //   slots[0]()
+    //   slotEspObj[0] = emptyObj
+    //   console.log('----------------');
+    // }
+  
+
+  // slotEsp.replaceChild(emptyEspP0, slotEsp.children[0]);
+  // slotEsp.replaceChild(emptyEspP1, slotEsp.children[1]);
+  // slotEsp.replaceChild(emptyEspP2, slotEsp.children[2]);
+
+  
+
   ativarBtn();
 }
 

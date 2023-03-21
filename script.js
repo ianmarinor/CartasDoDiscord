@@ -133,7 +133,7 @@ export function escolherIntegrante() {
     ["Murillo", 9],
   ];
   integrante = integrantes[seedString[1]];
-  return integrantes[seedString[1]]
+  return integrantes[seedString[1]];
 }
 
 //cidade
@@ -176,7 +176,6 @@ export function triggerChuvaMonark() {
 
     for (let i = 0; i < 6; i++) {
       if (gerarNumero(1, 4) == 1) {
-       
       }
     }
     selectHandCard();
@@ -237,29 +236,29 @@ export function escolherVariante(x) {
     cargo != "carta-people" &&
     cargo != "carta-people";
 
-  variante = ['',''];
+  variante = ["", ""];
   if (cartasQueNaoTemVariante) {
     if (seedString[14] == 4) {
       if (seedString[5] == 9 && seedString[6] == 0) {
-        return (variante = ["farmacêutico",0]);
+        return (variante = ["farmacêutico", 0]);
       } else if (seedString[5] == 9 && seedString[6] == 1) {
-        return (variante = ["bão",1]);
+        return (variante = ["bão", 1]);
       } else if (seedString[5] == 9 && seedString[6] == 2) {
-        return (variante = ["apenas",2]);
+        return (variante = ["apenas", 2]);
       } else if (seedString[5] == 9 && seedString[6] == 3) {
-        return (variante = ["fonte",3]);
+        return (variante = ["fonte", 3]);
       } else if (seedString[5] == 9 && seedString[6] == 4) {
-        return (variante = ["ixqueiro",4]);
+        return (variante = ["ixqueiro", 4]);
       } else if (seedString[5] == 9 && seedString[6] == 5) {
-        return (variante = ["abalo",5]);
+        return (variante = ["abalo", 5]);
       } else if (seedString[5] == 9 && seedString[6] == 6) {
-        return (variante = ["grito",6]);
+        return (variante = ["grito", 6]);
       } else if (seedString[5] == 9 && seedString[6] == 7) {
-        return (variante = ["dia",7]);
+        return (variante = ["dia", 7]);
       } else if (seedString[5] == 9 && seedString[6] == 8) {
-        return (variante = ["quimico",8]);
+        return (variante = ["quimico", 8]);
       } else if (seedString[5] == 9 && seedString[6] == 9) {
-        return (variante = ["pêra",9]);
+        return (variante = ["pêra", 9]);
       } else {
         // return (variante = "");
       }
@@ -378,9 +377,7 @@ class fabricaDeCarta {
 
   removeBuff(n) {}
   place() {
-
-
-     if (this == novaCarta) {
+    if (this == novaCarta) {
       this._parentP = packP;
       this._parent = novaCarta;
       this._place = 0;
@@ -395,7 +392,7 @@ class fabricaDeCarta {
       }
     }
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       if (this == maoObj[i]) {
         this._parent = maoObj;
         this._parentP = mao;
@@ -403,8 +400,7 @@ class fabricaDeCarta {
       }
     }
 
-    if(this._parent != novaCarta){
-
+    if (this._parent != novaCarta) {
       this._place = this._parent.indexOf(this);
     }
 
@@ -443,12 +439,10 @@ class fabricaDeCarta {
       this._cfgDefaultAdded = true;
     }
 
-    this._energiaP.textContent =  this.energia + "⚡";
-
+    this._energiaP.textContent = this.energia + "⚡";
 
     let thisP = this._thisCardP;
     let statusEmoji = thisP.children[3].children[2];
-
 
     if (this.statusEmoji) {
       statusEmoji.style.visibility = "visible";
@@ -457,73 +451,53 @@ class fabricaDeCarta {
       statusEmoji.style.visibility = "hidden";
     }
 
-    
-
     if (this._despawn != false) {
       this._hpP.style.visibility = "visible";
       this._hpP.textContent = this._despawn - 1 + "🏃";
     }
 
+    if (this._critico) {
+      this._nomeP.classList.add("critico");
+      this._cidadeP.classList.add("critico");
+      this._energiaP.classList.add("critico");
+    }
 
-    if(this._critico){
+    if (this._superCritico) {
+      this._nomeP.classList.add("critico");
+      this._varianteP.classList.add("critico");
+      this._energiaP.classList.add("critico");
+    }
 
-      this._nomeP.classList.add('critico') 
-      this._cidadeP.classList.add('critico') 
-      this._energiaP.classList.add('critico') 
-      
-    } 
-    
-
-    if(this._superCritico){
-
-      this._nomeP.classList.add('critico') 
-      this._varianteP.classList.add('critico') 
-      this._energiaP.classList.add('critico') 
-    } 
-    
-
-    
-
-    if(this._superCritico && this._critico){
-      this._ultraCritico = true
-      this._thisCardP.classList.add('critico') 
-  } 
-
-
-
-}
+    if (this._superCritico && this._critico) {
+      this._ultraCritico = true;
+      this._thisCardP.classList.add("critico");
+    }
+  }
 
   cfgDefault() {
     this.energiaNatural = this.energia;
     this.criticoNatural();
-    this.superCriticoNatural()
+    this.superCriticoNatural();
     // this._energiaP.textContent = this.energia + "⚡";
   }
 
   criticoNatural() {
-    
     if (this._integranteArray[1] == this._cidadeArray[1]) {
       this._critico = true;
-      this.energia *=2
+      this.energia *= 2;
     } else {
-      this._critico = false
+      this._critico = false;
     }
-
   }
 
   superCriticoNatural() {
-    
     if (this._integranteArray[1] === this._varianteArray[1]) {
       this._superCritico = true;
-      this.energia *=3
+      this.energia *= 3;
     } else {
-      this._superCritico = false
+      this._superCritico = false;
     }
-
   }
-
-
-
 
   dmg() {
     this.kill();
@@ -590,6 +564,8 @@ let mao0 = mao.children[0];
 let mao1 = mao.children[1];
 let mao2 = mao.children[2];
 let mao3 = mao.children[3];
+let mao4 = mao.children[4];
+let mao5 = mao.children[5];
 
 function zerarMoney() {
   moneyP.textContent = 0;
@@ -991,7 +967,7 @@ function verificarCartaParaMover() {
   seedDiferente = true;
 }
 
-for (let m = 0; m < 4; m++) {
+for (let m = 0; m < 6; m++) {
   let slotMao = "mao" + m;
   document.getElementById(slotMao).addEventListener("click", function () {
     moveToMao(m);
@@ -1018,7 +994,7 @@ export function moveToMao(i) {
 }
 
 function moverToCartaMao() {
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     if (mao.children[i].id == "mao" + i) {
       moveToMao(i);
       break;
@@ -1029,7 +1005,7 @@ function moverToCartaMao() {
 let chosenCard = 0;
 
 export function selectHandCard() {
-  for (let k = 0; k < 4; k++) {
+  for (let k = 0; k < 6; k++) {
     let mao = () => document.getElementById("mao");
 
     let slotMao = () => mao().children[k].id != "mao" + k;
@@ -1228,7 +1204,7 @@ function moverCartaMonark(x, place) {
         }
       }
 
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 6; i++) {
         if (this == maoObj[i]) {
           this._parent = maoObj;
           this._parentP = mao;
@@ -1388,7 +1364,7 @@ function moverCartaMonark(x, place) {
     if (place == inv) {
       num = gerarNumero(0, 5);
     } else if (place == mao) {
-      num = gerarNumero(0, 3);
+      num = gerarNumero(0, 5);
     } else if (place == are) {
       num = gerarNumero(0, 9);
     }
@@ -1595,7 +1571,7 @@ function criarBtn() {
     }
   }
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     let carta = maoObj[i];
 
     if (carta._maoEventAdded == false) {
@@ -1670,49 +1646,17 @@ export function elimCardMao(x) {
   } else if (x == mao.children[3]) {
     mao.replaceChild(mao3, x);
     slot = 3;
+  } else if (x == mao.children[4]) {
+    mao.replaceChild(mao4, x);
+    slot = 4;
+  } else if (x == mao.children[5]) {
+    mao.replaceChild(mao5, x);
+    slot = 5;
   }
 
   maoObj[slot] = emptyObj;
 
   return slot;
-}
-
-function dmgCard(dmg, card, place) {
-  if (card) {
-    let hp = card.children[3].children[1];
-    if (card.dataset.hashp == "true") {
-      hp.textContent = parseInt(hp.textContent) - dmg + "💚";
-
-      if (parseInt(hp.textContent) <= 0) {
-        if (place == "mao") {
-          elimCardMao(card);
-          snd(morte);
-        } else {
-          elimCardInv(card);
-          snd(morte);
-        }
-      }
-
-      efeitoDano(card);
-
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
-function healCard(heal, card) {
-  if (card) {
-    let hp = card.children[3].children[1];
-    if (card.dataset.hashp == "true") {
-      hp.textContent = parseInt(hp.textContent) + heal + "💚";
-
-      return true;
-    } else {
-      return false;
-    }
-  }
 }
 
 /****************************************** */
@@ -1755,7 +1699,14 @@ export let emptyObj = {
   everyRound() {},
 };
 
-export let maoObj = [emptyObj, emptyObj, emptyObj, emptyObj];
+export let maoObj = [
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj,
+  emptyObj,
+];
 
 export let invObj = [
   emptyObj,
@@ -1892,15 +1843,16 @@ let placarArena = {
   getEnergia() {
     this.energiaTotal = 0;
 
-    let multiplicador = parseFloat(1 + "." + this.cardsTotal + (this.cardsTotal + 1));
+    let multiplicador = parseFloat(
+      1 + "." + this.cardsTotal + (this.cardsTotal + 1)
+    );
     for (const x of invObj) {
       if (x.dmgBoss != true) {
         continue;
       }
       this.energiaTotal += x.energia;
     }
-    if(this.cardsTotal >1 ){
-
+    if (this.cardsTotal > 1) {
       this.energiaTotal *= multiplicador;
     }
   },
@@ -1914,11 +1866,11 @@ let placarArena = {
       if (x.dmgBoss != true) {
         continue;
       }
-      
+
       this.dinheiroTotal += x.energia;
     }
-    if(this.cardsTotal >1 ){
-    this.dinheiroTotal *= multiplicador;
+    if (this.cardsTotal > 1) {
+      this.dinheiroTotal *= multiplicador;
     }
   },
 
@@ -1959,7 +1911,7 @@ let placarArena = {
     let placarAmmoP = document.getElementById("placarAmmo");
 
     placarDanoP.innerHTML = Math.trunc(this.energiaTotal);
-    placarMoneyP.innerHTML = Math.floor(this.dinheiroTotal)
+    placarMoneyP.innerHTML = Math.floor(this.dinheiroTotal);
     placarAmmoP.innerHTML = this.ammoTotal;
   },
 };
@@ -2098,6 +2050,8 @@ function resetarDeck() {
   for (let i = 0; i < 6; i++) {
     elimCardInv(inv.children[i]);
   }
+
+  
 
   tudo();
   jaMovi = false;
@@ -2243,7 +2197,7 @@ function tick() {
       carta.tick ? carta.tick() : false;
     }
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       let carta = maoObj[i];
 
       carta.place();
@@ -2638,17 +2592,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-document.addEventListener("keydown", (event) => {
-  if (copyCard && false) {
-    if (event.code == teclaMoverVariasCartas) {
-      if (!getSeedChecked() && chosenCard == 0) {
-        for (let z = 0; z < 4; z++) {
-          moverToCartaMao();
-        }
-      }
-    }
-  }
-});
+
 
 inv.addEventListener("click", deletarDeck);
 
@@ -2666,13 +2610,26 @@ btnReset.addEventListener("click", resetarDeck);
 export function startGame2() {
   resetarDeck();
 
+ 
+
   mao.replaceChild(mao0, mao.children[0]);
   mao.replaceChild(mao1, mao.children[1]);
   mao.replaceChild(mao2, mao.children[2]);
   mao.replaceChild(mao3, mao.children[3]);
+  mao.replaceChild(mao4, mao.children[4]);
+  mao.replaceChild(mao5, mao.children[5]);
 
-  for (let i = 0; i < 4; i++) {
-    moverToCartaMao();
+
+
+
+  for (let i = 0; i < 6; i++) {
+
+    
+    if (per(50)){
+
+      moveToMao(i);
+    }
+    
     rodadas = 0;
   }
   rodadas = 1;
