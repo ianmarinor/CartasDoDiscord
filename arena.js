@@ -136,6 +136,7 @@ class Inimigo {
 
     //defaults
     this.empty = false;
+    this._level = false;
     this._hasdmg = true;
     this._dead = false;
     this._place = false;
@@ -200,6 +201,52 @@ class Inimigo {
     retrato.style.backgroundImage = "url('pics/" + img + "')";
   }
 
+  levelSetter(_level) {
+
+    
+
+    let life;
+    if (boss) {
+      life = boss.percentHealth;
+    } else {
+      life = 100;
+    }
+
+    let levels = [
+      [gerarNumero(76, 84), 1],
+      [gerarNumero(56, 64), 2],
+      [gerarNumero(34, 46), 3],
+      [gerarNumero(14, 26), 4],
+      [gerarNumero(0, 14), 5],
+    ];
+
+    for (const x of levels) {
+      if (x[0] < life) {
+        this._level = x[1];
+        break;
+      }
+    }
+
+    if (_level){
+      this._level = _level
+      this.levelCfg()
+    }
+
+    this.levelPrint()
+
+  }
+
+  levelCfg(){
+
+
+
+
+  }
+
+  cfgDefault() {
+    this.levelSetter();
+  }
+
   place() {
     this._parent = areObj;
     this._parentP = are;
@@ -231,6 +278,7 @@ class Inimigo {
     this._place = this._parent.indexOf(this);
     this._displayP = this._thisCardP.children[3];
     this._seloP = this._thisCardP.children[5];
+    this._levelP = this._thisCardP.children[6];
 
     if (this._place > 0) {
       this._leftCard = this._parentP.children[this._place - 1];
@@ -499,6 +547,9 @@ class Inimigo {
       hp.textContent = this.hp + this.emojiHp;
     }
 
+
+    
+
     if (this.readyToAttack) {
       this._thisCardP.classList.add("critico");
     } else {
@@ -515,6 +566,20 @@ class Inimigo {
       energia.classList.remove("critico");
     }
 
+    
+
+    if (!this._levelCfgAdded) {
+      this.levelCfg()
+      this.levelPrint()
+      this._levelCfgAdded = true;
+    }
+
+
+    if (!this._cfgDefaultAdded) {
+      this.cfgDefault();
+      this._cfgDefaultAdded = true;
+    }
+
     if (!this._cfgAdded) {
       this.cfg();
       this._cfgAdded = true;
@@ -529,8 +594,19 @@ class Inimigo {
     this.tick ? this.tick() : 0;
   }
 
-  cfg() {}
+  levelPrint(){
+
+    let emojis = ['','1️⃣','2️⃣', '3️⃣', '4️⃣', '5️⃣','6️⃣','7️⃣','8️⃣', '9️⃣','🔟']
+
+    this._levelP.textContent = emojis[this._level]
+    // this._levelP.textContent = 'adfdadg'
+
+  }
+
+
 }
+
+// cfg() {}
 
 export function elimCardAre(x) {
   let slot;
@@ -638,12 +714,9 @@ let monark = {
       let slot = invObj[gerarNumero(0, 3)];
       toMonark(slot, despawnTime);
     }, 250);
-
-      
-
-
   },
 };
+
 
 let menosCartas = {
   cartaId: "-cartas",
@@ -1155,6 +1228,7 @@ export function spawnMonark(n) {
     "</div>" +
     '<p class="seed"></p>' +
     '<p class="seloAre"></p>' +
+    '<p class="levelAre"></p>' +
     "</div>";
 
   let slot = gerarNumero(0, 9);

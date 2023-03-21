@@ -237,14 +237,28 @@ class Especial {
     this.checkFullHp();
   }
 
-  levelSetter(){
+  levelSetter() {
+    let life;
+    if (boss) {
+      life = boss.percentHealth;
+    } else {
+      life = 100;
+    }
 
+    let levels = [
+      [gerarNumero(76, 84), 1],
+      [gerarNumero(56, 64), 2],
+      [gerarNumero(34, 46), 3],
+      [gerarNumero(14, 26), 4],
+      [gerarNumero(0, 14), 5],
+    ];
 
-
-    
- 
-
-
+    for (const x of levels) {
+      if (x[0] < life) {
+        this._level = x[1];
+        break;
+      }
+    }
   }
 
   setTotalHp() {
@@ -665,7 +679,7 @@ class Especial {
     if (!this._stunned) return;
 
     this._stunnedWeight--;
-    if(_absolute) this._stunnedWeight = 1
+    if (_absolute) this._stunnedWeight = 1;
     if (this._stunnedWeight <= 1) {
       this._stunned = false;
       this._thisCardP.classList.remove("stunned");
@@ -871,6 +885,8 @@ class Especial {
       this._totalHp = this.hp + this._buff;
       this._hpP.textContent = this._totalHp + "💚";
     }
+
+    this.levelSetter();
   }
 
   integranteRequiredCard() {
@@ -950,9 +966,7 @@ export let especiais = {
 
       // bufar especiais
       invObj.map((x) => {
-
-        if(x._stunned){
-
+        if (x._stunned) {
           x.removeStun(true);
         }
 
@@ -961,7 +975,7 @@ export let especiais = {
         }
       });
 
-      hpPlayer.add(50)
+      hpPlayer.add(50);
 
       this.changeEmojiToDefault();
 
@@ -2129,53 +2143,45 @@ export let especiais = {
         this.setHp(10);
         this.changeRetrato('url("/pics/dva.webp")');
         this.dmgBoss = true;
-        
+
         this._thisCardP.children[2].textContent = "";
         this.dano = 0;
         this._buff = 0;
         this.energia = 1 + this._dmgTaken;
         this._hasUlti = false;
         this.tank = false;
-        this._thisCardP.classList.remove('piscar')
+        this._thisCardP.classList.remove("piscar");
       };
 
       this.ulti = 0;
       this._cargoP.classList.remove("critico");
-      this.changeRetrato('url("/pics/dvaUlting.gif")')
-      this._retratoP.style.backgroundSize = '100% 100%'
+      this.changeRetrato('url("/pics/dvaUlting.gif")');
+      this._retratoP.style.backgroundSize = "100% 100%";
       let faixa =
-            this. _sourceUlting +
-            gerarNumero(1, this._audioUltingFiles) +
-            ".mp3";
-          audioPlayer(faixa, true, this._CHN, 0.5);
-      this._thisCardP.classList.add('piscar')
+        this._sourceUlting + gerarNumero(1, this._audioUltingFiles) + ".mp3";
+      audioPlayer(faixa, true, this._CHN, 0.5);
+      this._thisCardP.classList.add("piscar");
 
       setTimeout(
-        
-        ()=> {
-
-          if(this._dead) return
+        () => {
+          if (this._dead) return;
 
           let ultiDmg = gerarNumero(750, 1185);
           this.dano = ultiDmg;
-    
+
           areObj.map((x) => {
             x.dmg(this.dano);
             this._dmgDone += this.dano;
           });
-    
+
           if (boss) boss.dmg(this.dano);
           this._dmgDone += this.dano;
-    
+
           dvaToMinidva();
+        },
 
-        }
-
-      ,2700)
-
-     
-
-
+        2700
+      );
     },
 
     poder() {
@@ -2360,8 +2366,6 @@ export let especiais = {
             this._rightObj.dmg(this.dano);
           }
         }
-
-      
 
         if (this._parentP == inv) {
           if (this._place < 3) {

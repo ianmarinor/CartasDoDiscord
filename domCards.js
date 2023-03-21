@@ -17,6 +17,7 @@ export let menosClickBlueprint =
   "</div>" +
   '<p class="seed"></p>' +
   '<p class="seloAre"></p>' +
+  '<p class="levelAre"></p>' +
   "</div>";
 
 let camaradaBPicture = "url('pics/retratoCamarada.gif')";
@@ -38,6 +39,7 @@ export let camaradaBlueprint =
   "</div>" +
   '<p class="seed"></p>' +
   '<p class="seloAre"></p>' +
+  '<p class="levelAre"></p>' +
   "</div>";
 
 let tankBPicture = "url('pics/tankRetrato.jpg')";
@@ -59,6 +61,7 @@ export let tankBlueprint =
   "</div>" +
   '<p class="seed"></p>' +
   '<p class="seloAre"></p>' +
+  '<p class="levelAre"></p>' +
   "</div>";
 
 let dogBPicture = "url('pics/dogRetrato.webp')";
@@ -82,6 +85,7 @@ export let dogBlueprint =
   "</div>" +
   '<p class="seed"></p>' +
   '<p class="seloAre"></p>' +
+  '<p class="levelAre"></p>' +
   "</div>";
 
 export function blueprintBuilder(_id, _name, _photo) {
@@ -113,6 +117,7 @@ export function blueprintBuilder(_id, _name, _photo) {
     "</div>" +
     '<p class="seed"></p>' +
     '<p class="seloAre"></p>' +
+    '<p class="levelAre"></p>' +
     "</div>";
 
     
