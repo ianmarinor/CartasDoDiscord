@@ -1871,7 +1871,7 @@ export let especiais = {
     },
 
     poder() {
-      if (this.unableToAttack()) return;
+      if (this.unableToAttack() || ammo.total <= 0) return;
       this._poderUsing = true;
       let ultiRate = () => gerarNumero(0, 2);
 
