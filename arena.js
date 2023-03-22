@@ -211,11 +211,12 @@ class Inimigo {
     }
 
     let levels = [
-      [gerarNumero(76, 84), 1],
-      [gerarNumero(56, 64), 2],
-      [gerarNumero(34, 46), 3],
+      [gerarNumero(65, 84), 1],
+      [gerarNumero(45, 64), 2],
+      [gerarNumero(27, 46), 3],
       [gerarNumero(14, 26), 4],
       [gerarNumero(0, 14), 5],
+      [-1, 5],
     ];
 
     for (const x of levels) {
@@ -236,7 +237,7 @@ class Inimigo {
   levelCfg() {}
 
   cfgDefault() {
-    this.levelSetter();
+    
   }
 
   place() {
@@ -555,6 +556,7 @@ class Inimigo {
     }
 
     if (!this._levelCfgAdded) {
+      this.levelSetter()
       this.levelCfg();
       this.levelPrint();
       this._levelCfgAdded = true;
@@ -658,18 +660,30 @@ let monark = {
   _despawn: 60,
   _audioSpawn: "monark.mp3",
   _CHN: document.createElement("audio"),
-  hp: 10,
-  maxHealth: 10,
+  hp: 20,
+  maxHealth: 20,
   dano: 5,
   emoji: "💩",
-  attackChance: 40,
+  attackChance: 10,
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
 
-    this.dano = gerarNumero(3, 7);
-    this._despawn = gerarNumero(35, 45);
   },
+  
+  levelCfg(){
+    
+    this._despawn = gerarNumero(35, 45);
+    this.dano = gerarNumero(3, 4);
+    
+
+    this.dano *= this._level
+    this.setHp(this.hp * this._level)
+    this.attackChance = this.attackChance * this._level
+
+
+  },
+
 
   everyRound() {
     if (this.readyToAttack) return;
@@ -1207,7 +1221,7 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    populateArena();
+    boss.dmg(2500);
   }
 });
 

@@ -199,7 +199,7 @@ export let countdown = {
       this._value--;
     }
     this.print();
-    console.log("numOfInimigos: ", this.numOfInimigos);
+    
   },
 
   valueSet(n) {
@@ -242,7 +242,7 @@ export let countdown = {
               rodadas = 5
             }
 
-            console.log('rodadas: ', rodadas);
+            
             return rodadas
 
           }
@@ -286,7 +286,7 @@ export let rDifficulty = {
   update() {
     if (!boss) return;
     this.value = 100 - boss.percentHealth;
-    // console.log('REGIONAL DIFFICULTY', this.value);
+    // 
     this.enemy()
   },
 
@@ -359,7 +359,7 @@ function createMonark() {
       chance += 10 - porcentagemVida;
 
       if (chance > 100 || absolute) chance = 100;
-      console.log("*** ULTI CHANCE ***", chance);
+      
 
       if (this._coolDown || this.hasTriggeredUlti) return;
       if (!per(chance)) return;
@@ -393,7 +393,7 @@ function createMonark() {
     },
 
     chuvaDeMonark() {
-      console.log("-------------CHUVA DE MONARK----------------");
+      
 
       for (let i = 0; i < 100; i++) {
         spawnMonark(true);
@@ -411,7 +411,7 @@ function createMonark() {
     },
 
     vitorMetaforando() {
-      console.log("-------------METAFORANDO----------------");
+      
       spawnVitor(true);
       let faixa =
         this._audioVitorSpawn[gerarNumero(0, this._audioVitorSpawn.length - 1)];
@@ -419,7 +419,7 @@ function createMonark() {
     },
 
     liberdadeDeExpresao() {
-      console.log("-------------liberdadeDeExpresao----------------");
+      
       spawnLiberdade(true);
       let faixa =
         this._audioLiberdadeSpawn[
