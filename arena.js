@@ -759,12 +759,12 @@ let menosCartas = {
 
   cfg() {
     
-    if (per(0.1)) {
+    if (per(0.10)) {
       this._cargoP.textContent = "EVIL";
       this.energia = this.energia * 10;
       this.changeRetrato("menosCartasEvil.gif");
       this.attackChance = this.energia;
-      this.setHp(this.energia * gerarNumero(2, 4));
+      this.setHp(this.energia * 2);
     }
 
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
@@ -795,16 +795,27 @@ let camarada = {
   hp: 30,
   maxHealth: 30,
   dano: false,
-  attackChance: 10,
+  attackChance: 8,
   especial: true,
   _canBeCritic: false,
   especial: true,
 
+levelCfg(){
+
+  
+    
+
+    this.setHp(this.hp * this._level)
+    this.attackChance = this.attackChance * this._level
+
+},
+
+
   cfg() {
-    this._energiaP.classList.add("critico");
+    
     this._energiaP.style.visibility = "hidden";
 
-    this._cargoP.textContent = "ARMA E SAUDE PARA TODOS";
+    this._cargoP.textContent = "ODIO DE CLASSE!!!";
     this._cargoP.style.fontSize = "65%";
     this.audioSpawn(0.5);
   },
@@ -845,16 +856,31 @@ let tank = {
   _audioSpawn: "tank.mp3",
   energia: "",
   emoji: "",
-  hp: 400,
-  maxHealth: 400,
+  hp: 150,
+  maxHealth: 150,
   dano: 130,
   attackChance: false,
   ulti: 0,
   tank: true,
   _CHN: document.createElement("audio"),
 
+
+  levelCfg(){
+
+    this.dano = gerarNumero(85, 97);
+    
+
+    this.dano *= this._level
+    this.setHp(this.hp * this._level)
+
+  },
+
+  
+
+
+
   cfg() {
-    this.dano = gerarNumero(200, 354);
+    
 
     this.audioSpawn(0.3);
 
@@ -911,9 +937,9 @@ let dog = {
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
   attackChance: 11,
-  hp: 25,
-  maxHealth: 25,
-  dano: 20,
+  hp: 17,
+  maxHealth: 17,
+  dano: 15,
   especial: true,
 
   tick() {
@@ -928,8 +954,22 @@ let dog = {
     }
   },
 
+  levelCfg(){
+
+    
+    this.dano = gerarNumero(12, 17);
+    
+
+    this.dano *= this._level
+    this.setHp(this.hp * this._level)
+    this.attackChance = this.attackChance * this._level
+
+
+  },
+
+
   cfg() {
-    this.dano = gerarNumero(21, 32);
+    
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
   },
 };
@@ -949,14 +989,28 @@ let metaforando = {
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
-  attackChance: 5,
-  hp: 950,
-  maxHealth: 950,
+  attackChance: 3,
+  hp: 500,
+  maxHealth: 500,
   dano: 20,
   miniBoss: true,
   emoji: "😵",
+
+
+  levelCfg(){
+
+    
+    this.dano = gerarNumero(3, 6);
+
+    this.dano *= this._level
+    this.setHp(this.hp * this._level)
+    this.attackChance = this.attackChance * this._level
+
+
+  },
+
+
   cfg() {
-    this.dano = gerarNumero(10, 23);
     this._cargoP.style.fontSize = "80%";
     this._cargoP.style.marginTop = "8px";
     this._cargoP.style.marginBottom = "10px";
@@ -1016,9 +1070,9 @@ let liberdade = {
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "",
-  attackChance: 10,
-  hp: 2000,
-  maxHealth: 2000,
+  attackChance: 5,
+  hp: 790,
+  maxHealth: 790,
   dano: 0,
   miniBoss: true,
   emoji: "",
@@ -1029,6 +1083,19 @@ let liberdade = {
 
     healthBar.max = this.maxHealth;
     healthBar.value = this._dmgTaken;
+  },
+
+
+  levelCfg(){
+
+    
+    this.dano = gerarNumero(5, 9);
+
+    this.dano *= this._level
+    this.setHp(this.hp * this._level)
+    this.attackChance = this.attackChance * this._level
+
+
   },
 
   cfg() {
@@ -1049,7 +1116,7 @@ let liberdade = {
 
     healthBar.style.borderRadius = "8px";
 
-    this.dano = gerarNumero(5, 16);
+    
   },
 
   poder() {
