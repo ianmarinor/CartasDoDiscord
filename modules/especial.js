@@ -1,4 +1,4 @@
-let DEBUG = false;
+
 import { seedRNG } from "./seedFabricator.js";
 import { integrante } from "../integrante.js";
 import { cidade } from "../cidade.js";
@@ -195,7 +195,7 @@ class Especial {
         break;
       }
     }
-    // console.log(this._parent);
+    // 
     this._place = this._parent.indexOf(this);
 
     this._thisCardP = this._parentP.children[this._place];
@@ -362,13 +362,13 @@ class Especial {
 
           if (left && !left.isInvisible) {
             left.dmg(danoSpread);
-            console.log("leftDAMAGES: ", left);
+            
             this._dmgDone += danoSpread;
           }
 
           if (right && !right.isInvisible) {
             right.dmg(danoSpread);
-            console.log("rightDAMAGED: ", right);
+            
             this._dmgDone += danoSpread;
           }
         }
@@ -716,7 +716,7 @@ class Especial {
     if (!this._cfgAdded) {
       this.cfg();
       this._cfgAdded = true;
-      // console.log(this);
+      // 
     }
 
     //stunned
@@ -815,7 +815,7 @@ class Especial {
   }
 
   ammoCheck(){
-    console.log(ammo.total);
+    
 
 
     if(ammo.total <= 0){
@@ -1277,7 +1277,7 @@ export let especiais = {
       let _dano = gerarNumero(7, 12);
       this.dano = _dano;
       this.onlyReadDmg = _dano;
-      console.log("this.onlyReadDmg: ", this.onlyReadDmg);
+      
     },
 
     tick() {
@@ -1295,14 +1295,14 @@ export let especiais = {
 
       if (numOfBees > 0) {
         this.dano = this.onlyReadDmg * numOfBees;
-        // console.log('this.onlyReadDmg: ', this.onlyReadDmg);
+        // 
       }
       this._numOfBees = 0;
       invObj.map((x) => {
         x.cartaId == "abelha" ? this._numOfBees++ : false;
       });
 
-      // console.log(this._numOfBees);
+      // 
     },
 
     everyRound() {
@@ -1315,7 +1315,7 @@ export let especiais = {
       };
 
       let dmgRate = this._numOfBees;
-      console.log("dmgRate: ", dmgRate);
+      
 
       if (turuInField()) {
         dmgRate *= gerarNumero(5, 7);
@@ -1943,7 +1943,7 @@ export let especiais = {
     ult() {
       if (this.unableToAttack()) return;
       this.aim == "boss" ? (this.aim = "are") : (this.aim = "boss");
-      console.log(this.aim);
+      
     },
 
     tick() {
@@ -2354,7 +2354,7 @@ export let especiais = {
 
     cfg() {
       let dano = gerarNumero(40, 85);
-      console.log(7777777777777);
+      
       this.dano = dano;
     },
 
@@ -2455,8 +2455,7 @@ export let especiais = {
   },
 };
 
-DEBUG && console.log("ESPECAIISMAISCARTAS", especiais.menosCartas);
-DEBUG && console.log("RARIDADES", raridades.campones);
+
 
 function objBinder(obj) {
   let newo = new Especial(obj);
@@ -2470,18 +2469,12 @@ let raridade = "";
 
 export function escolherEspecial(teste) {
   seedString = teste;
-  // console.log("seedString: ", seedString);
-
-  // seedString = seedObj._seedString
-
-  DEBUG && console.log("**SEEDSTRING NO MODULO**", seedString);
+  
 
   seed2 = seedString[2];
   seed3 = seedString[3];
 
-  // DEBUG && console.log("seedString no especial", seedString);
-  // DEBUG && console.log("seedString no especial", seedString[14]);
-  // DEBUG && console.log("seed3: ", seed3);
+  
 
   if (!raridades.semRaridade.rng()) {
     //RAINHA
@@ -2519,7 +2512,7 @@ export function escolherEspecial(teste) {
       //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
-      DEBUG && console.log(raridades.cavaleiro.rng());
+      
 
       let num;
 
@@ -2556,9 +2549,8 @@ export function escolherEspecial(teste) {
     especial = especiais.notSpecial;
   }
 
-  // DEBUG && console.log("TAMANHO SEED", seedObj._seedLength);
-  DEBUG && console.log("raridade modulo", raridade);
-  DEBUG && console.log("especial modulo", especial);
+
+   
 }
 
 function constrEspecial() {}
