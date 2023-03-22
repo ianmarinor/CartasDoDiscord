@@ -2225,7 +2225,7 @@ function tick() {
     novaCarta.place();
 
     hpPlayer.playerP();
-  }, 5);
+  }, 33);
 }
 
 function allMonark() {
