@@ -1,4 +1,3 @@
-
 import { seedRNG } from "./seedFabricator.js";
 import { integrante } from "../integrante.js";
 import { cidade } from "../cidade.js";
@@ -169,6 +168,7 @@ class Especial {
     this._CHN = document.createElement("audio");
   }
 
+  energiaPoder() {}
   ult() {}
 
   place() {
@@ -195,7 +195,7 @@ class Especial {
         break;
       }
     }
-    // 
+    //
     this._place = this._parent.indexOf(this);
 
     this._thisCardP = this._parentP.children[this._place];
@@ -362,13 +362,13 @@ class Especial {
 
           if (left && !left.isInvisible) {
             left.dmg(danoSpread);
-            
+
             this._dmgDone += danoSpread;
           }
 
           if (right && !right.isInvisible) {
             right.dmg(danoSpread);
-            
+
             this._dmgDone += danoSpread;
           }
         }
@@ -716,7 +716,7 @@ class Especial {
     if (!this._cfgAdded) {
       this.cfg();
       this._cfgAdded = true;
-      // 
+      //
     }
 
     //stunned
@@ -809,21 +809,14 @@ class Especial {
     //warning low hp
 
     this.lowHpWarning();
-
-    
-
   }
 
-  ammoCheck(){
-    
-
-
-    if(ammo.total <= 0){
-      return false
+  ammoCheck() {
+    if (ammo.total <= 0) {
+      return false;
     } else {
-      return true
+      return true;
     }
-
   }
 
   lowHpWarning() {
@@ -982,13 +975,11 @@ export let especiais = {
           x.healthRestore();
         }
 
-        if(x._cargo == 'carta-monark'){
-          x.energia = this.energia
-          x.dmgBoss = true
-          this.giveAllyEmoji(x)
+        if (x._cargo == "carta-monark") {
+          x.energia = this.energia;
+          x.dmgBoss = true;
+          this.giveAllyEmoji(x);
         }
-
-
       });
 
       hpPlayer.add(50);
@@ -1045,6 +1036,12 @@ export let especiais = {
     dmgBoss: false,
     dormindo: false,
     _invHiddenButton: true,
+
+    energiaPoder() {
+      this.dormindo = true;
+      let speakerSleepAu = ["speakerSleep.mp3"];
+      snd(speakerSleepAu);
+    },
 
     tick() {
       let varianteSpeaker = inv.children[this._place];
@@ -1277,7 +1274,6 @@ export let especiais = {
       let _dano = gerarNumero(7, 12);
       this.dano = _dano;
       this.onlyReadDmg = _dano;
-      
     },
 
     tick() {
@@ -1295,14 +1291,14 @@ export let especiais = {
 
       if (numOfBees > 0) {
         this.dano = this.onlyReadDmg * numOfBees;
-        // 
+        //
       }
       this._numOfBees = 0;
       invObj.map((x) => {
         x.cartaId == "abelha" ? this._numOfBees++ : false;
       });
 
-      // 
+      //
     },
 
     everyRound() {
@@ -1315,7 +1311,6 @@ export let especiais = {
       };
 
       let dmgRate = this._numOfBees;
-      
 
       if (turuInField()) {
         dmgRate *= gerarNumero(5, 7);
@@ -1477,7 +1472,6 @@ export let especiais = {
           x.previousBorder = x._thisCardP.style.border;
           x.previousDano = x.dano;
           x.previousEnergia = x.energia;
-          
 
           //tirar style
           x._thisCardP.style.backgroundColor = "black";
@@ -1557,6 +1551,9 @@ export let especiais = {
     dano: 0,
     _exposto: true,
     clockToVis: false,
+
+    
+
     cfg() {
       this.dano = gerarNumero(68, 85);
       this._cargoP.textContent = "⌚";
@@ -1692,7 +1689,7 @@ export let especiais = {
 
       retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
 
-      this.ataque() ? (this.energia += gerarNumero(5, 15)) : 0;
+      this.ataque() ? (this.energia += gerarNumero(5, 8)) : 0;
 
       let stabAu = ["stab.mp3", 0.1];
       snd(stabAu);
@@ -1887,18 +1884,17 @@ export let especiais = {
     },
 
     poder() {
-      if (this.unableToAttack() || this._poderUsing || !this.ammoCheck()) return;
+      if (this.unableToAttack() || this._poderUsing || !this.ammoCheck())
+        return;
 
-      this._poderUsing = true
-      
+      this._poderUsing = true;
+
       let ultiRate = () => gerarNumero(0, 2);
 
       let ammo = 1;
       let tiros = 3;
 
       let weapon = () => {
-
-
         if (this._dead) return;
         this._poderUsing = true;
         if (this.ataque(false, ammo)) {
@@ -1943,7 +1939,6 @@ export let especiais = {
     ult() {
       if (this.unableToAttack()) return;
       this.aim == "boss" ? (this.aim = "are") : (this.aim = "boss");
-      
     },
 
     tick() {
@@ -2067,9 +2062,9 @@ export let especiais = {
                 // snd(hit);
                 // somDeath(350);
                 playJhinAu(1);
-                if(per(75)){
-                elimCardInv(atiradorP);
-              }
+                if (per(75)) {
+                  elimCardInv(atiradorP);
+                }
 
                 this.tiros--;
                 this.kill();
@@ -2078,12 +2073,9 @@ export let especiais = {
                   ? boss.dmg(this.dano)
                   : this.ataque(false, false);
 
-                if(per(75)){
-
+                if (per(75)) {
                   elimCardInv(atiradorP);
                 }
-
-                
 
                 this.tiros--;
                 tirosString.textContent = this.tiros;
@@ -2166,11 +2158,9 @@ export let especiais = {
     },
 
     ult() {
-
       if (this.ulti != 100 || this.unableToAttack()) return;
       this._invHiddenButton = true;
       let dvaToMinidva = () => {
-        
         this.setHp(10);
         this.changeRetrato('url("/pics/dva.webp")');
         this.dmgBoss = true;
@@ -2184,7 +2174,7 @@ export let especiais = {
         this._thisCardP.classList.remove("piscar");
       };
 
-      this._ulting = true
+      this._ulting = true;
       this.ulti = 0;
       this._cargoP.classList.remove("critico");
       this.changeRetrato('url("/pics/dvaUlting.gif")');
@@ -2200,7 +2190,6 @@ export let especiais = {
       setTimeout(
         () => {
           if (this._dead) return;
-
 
           areObj.map((x) => {
             x.dmg(this.dano);
@@ -2218,7 +2207,7 @@ export let especiais = {
     },
 
     poder() {
-      if(this._ulting)return
+      if (this._ulting) return;
 
       let ultiRate = () => gerarNumero(2, 5);
 
@@ -2354,13 +2343,13 @@ export let especiais = {
 
     cfg() {
       let dano = gerarNumero(40, 85);
-      
+
       this.dano = dano;
     },
 
     everyRound() {
       if (this.exploding || this._parentP != inv) return;
-      
+
       let chance = per(3.5);
 
       if (chance) {
@@ -2455,8 +2444,6 @@ export let especiais = {
   },
 };
 
-
-
 function objBinder(obj) {
   let newo = new Especial(obj);
 
@@ -2469,12 +2456,9 @@ let raridade = "";
 
 export function escolherEspecial(teste) {
   seedString = teste;
-  
 
   seed2 = seedString[2];
   seed3 = seedString[3];
-
-  
 
   if (!raridades.semRaridade.rng()) {
     //RAINHA
@@ -2512,7 +2496,6 @@ export function escolherEspecial(teste) {
       //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
-      
 
       let num;
 
@@ -2548,9 +2531,6 @@ export function escolherEspecial(teste) {
     raridade = raridades.semRaridade;
     especial = especiais.notSpecial;
   }
-
-
-   
 }
 
 function constrEspecial() {}
@@ -2691,11 +2671,7 @@ function tankCargo(emoji) {
   return gerarNumero(200, 350) + emoji;
 }
 
-function Main(){
-
-  
-
-}
+function Main() {}
 
 window.addEventListener("load", Main);
 

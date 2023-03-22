@@ -236,9 +236,7 @@ class Inimigo {
 
   levelCfg() {}
 
-  cfgDefault() {
-    
-  }
+  cfgDefault() {}
 
   place() {
     this._parent = areObj;
@@ -529,7 +527,9 @@ class Inimigo {
       hp.textContent = this._totalHp + "❤️";
     }
 
-    if (this._hasdmg === true) {
+    if (this._hasdmg === true && this.miniBoss) {
+      energia.textContent = this.dano + "💚";
+    } else if (this._hasdmg === true) {
       energia.textContent = this.dano + "💀";
     } else {
       energia.textContent = this.energia + this.emoji;
@@ -556,7 +556,7 @@ class Inimigo {
     }
 
     if (!this._levelCfgAdded) {
-      this.levelSetter()
+      this.levelSetter();
       this.levelCfg();
       this.levelPrint();
       this._levelCfgAdded = true;
@@ -668,22 +668,16 @@ let monark = {
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
-
   },
-  
-  levelCfg(){
-    
+
+  levelCfg() {
     this._despawn = gerarNumero(35, 45);
     this.dano = gerarNumero(3, 4);
-    
 
-    this.dano *= this._level
-    this.setHp(this.hp * this._level)
-    this.attackChance = this.attackChance * this._level
-
-
+    this.dano *= this._level;
+    this.setHp(this.hp * this._level);
+    this.attackChance = this.attackChance * this._level;
   },
-
 
   everyRound() {
     if (this.readyToAttack) return;
@@ -744,22 +738,16 @@ let menosCartas = {
   dano: false,
   attackChance: 7,
 
-
-  levelCfg(){
-
-    
+  levelCfg() {
     this.energia = gerarNumero(8, 13);
-    
 
-    this.energia *= this._level
-    this.setHp(this.hp * this._level)
-    this.attackChance = this.attackChance * this._level
-
+    this.energia *= this._level;
+    this.setHp(this.hp * this._level);
+    this.attackChance = this.attackChance * this._level;
   },
 
   cfg() {
-    
-    if (per(0.10)) {
+    if (per(0.1)) {
       this._cargoP.textContent = "EVIL";
       this.energia = this.energia * 10;
       this.changeRetrato("menosCartasEvil.gif");
@@ -800,19 +788,12 @@ let camarada = {
   _canBeCritic: false,
   especial: true,
 
-levelCfg(){
-
-  
-    
-
-    this.setHp(this.hp * this._level)
-    this.attackChance = this.attackChance * this._level
-
-},
-
+  levelCfg() {
+    this.setHp(this.hp * this._level);
+    this.attackChance = this.attackChance * this._level;
+  },
 
   cfg() {
-    
     this._energiaP.style.visibility = "hidden";
 
     this._cargoP.textContent = "ODIO DE CLASSE!!!";
@@ -864,24 +845,14 @@ let tank = {
   tank: true,
   _CHN: document.createElement("audio"),
 
-
-  levelCfg(){
-
+  levelCfg() {
     this.dano = gerarNumero(85, 97);
-    
 
-    this.dano *= this._level
-    this.setHp(this.hp * this._level)
-
+    this.dano *= this._level;
+    this.setHp(this.hp * this._level);
   },
 
-  
-
-
-
   cfg() {
-    
-
     this.audioSpawn(0.3);
 
     if (per(70)) {
@@ -954,22 +925,15 @@ let dog = {
     }
   },
 
-  levelCfg(){
-
-    
+  levelCfg() {
     this.dano = gerarNumero(12, 17);
-    
 
-    this.dano *= this._level
-    this.setHp(this.hp * this._level)
-    this.attackChance = this.attackChance * this._level
-
-
+    this.dano *= this._level;
+    this.setHp(this.hp * this._level);
+    this.attackChance = this.attackChance * this._level;
   },
 
-
   cfg() {
-    
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
   },
 };
@@ -996,19 +960,13 @@ let metaforando = {
   miniBoss: true,
   emoji: "😵",
 
+  levelCfg() {
+    this.dano = gerarNumero(1, 3);
 
-  levelCfg(){
-
-    
-    this.dano = gerarNumero(3, 6);
-
-    this.dano *= this._level
-    this.setHp(this.hp * this._level)
-    this.attackChance = this.attackChance * this._level
-
-
+    this.dano *= this._level;
+    this.setHp(this.hp * this._level);
+    this.attackChance = this.attackChance * this._level;
   },
-
 
   cfg() {
     this._cargoP.style.fontSize = "80%";
@@ -1085,17 +1043,12 @@ let liberdade = {
     healthBar.value = this._dmgTaken;
   },
 
+  levelCfg() {
+    this.dano = gerarNumero(2, 5);
 
-  levelCfg(){
-
-    
-    this.dano = gerarNumero(5, 9);
-
-    this.dano *= this._level
-    this.setHp(this.hp * this._level)
-    this.attackChance = this.attackChance * this._level
-
-
+    this.dano *= this._level;
+    this.setHp(this.hp * this._level);
+    this.attackChance = this.attackChance * this._level;
   },
 
   cfg() {
@@ -1115,8 +1068,6 @@ let liberdade = {
     this._displayP.children[1].style.visibility = "hidden";
 
     healthBar.style.borderRadius = "8px";
-
-    
   },
 
   poder() {
@@ -1125,25 +1076,18 @@ let liberdade = {
 };
 
 export function spawnTank() {
-  
-
   inserirInimigoDomAndObject(tankBlueprint, tank);
 }
 
 export function spawnCamarada(n) {
-  
-
   inserirInimigoDomAndObject(camaradaBlueprint, camarada);
 }
 
 export function spawnMenosCartas(n) {
-  
   inserirInimigoDomAndObject(menosClickBlueprint, menosCartas);
 }
 
 export function spawnDog(n) {
- 
-
   if (n) {
     if (per(n)) {
     } else {
@@ -1154,63 +1098,25 @@ export function spawnDog(n) {
   inserirInimigoDomAndObject(dogBlueprint, dog);
 }
 
-export function spawnVitor(n) {
-  
-
-  let slot = gerarNumero(0, 9);
-
-  secret.innerHTML = blueprintBuilder(
-    "vitor",
-    "METAFORANDO",
-    "url('pics/vitorRetrato.jpeg')"
+export function spawnVitor() {
+  inserirmMiniBossDomAndObject(
+    blueprintBuilder("vitor", "METAFORANDO", "url('pics/vitorRetrato.jpeg')"),
+    metaforando
   );
-
-  if (!areObj[slot].tank && !areObj[slot].miniBoss) {
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
-  } else if (!areObj[slot].tank && !areObj[slot].miniBoss) {
-    slot = gerarNumero(0, 9);
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
-  } else if (!areObj[slot].tank && !areObj[slot].miniBoss) {
-    slot = gerarNumero(0, 9);
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
-  }
-
-  
 }
 
-export function spawnLiberdade(n) {
-  
-
-  let slot = gerarNumero(0, 9);
-
-  secret.innerHTML = blueprintBuilder(
-    "liberdade",
-    "LIBERDADE DE <br>EXPRESSÃO",
-    "url('pics/liberdadeRetrato.PNG')"
+export function spawnLiberdade() {
+  inserirmMiniBossDomAndObject(
+    blueprintBuilder(
+      "liberdade",
+      "LIBERDADE DE <br>EXPRESSÃO",
+      "url('pics/liberdadeRetrato.PNG')"
+    ),
+    liberdade
   );
-
-  if (!areObj[slot].tank && !areObj[slot].miniBoss) {
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
-  } else if (!areObj[slot].tank && !areObj[slot].miniBoss) {
-    slot = gerarNumero(0, 9);
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
-  } else if (!areObj[slot].tank && !areObj[slot].miniBoss) {
-    slot = gerarNumero(0, 9);
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
-  }
-
-  
 }
 
 export function spawnMonark(n) {
-  
-
   start();
 
   let monarkNome = escolherIntegrante()[0];
@@ -1283,25 +1189,53 @@ function inserirInimigoDomAndObject(blueprint, object) {
     if (areObj[slot].empty == true) {
       are.replaceChild(secret.children[0], are.children[slot]);
       areObj[slot] = Object.assign(new Inimigo(object), object);
-      
+
       break;
     }
   }
 }
 
+function inserirmMiniBossDomAndObject(blueprint, object) {
+  for (let i = 0; i < 100; i++) {
+    let slot = gerarNumero(0, 9);
+    secret.innerHTML = blueprint;
 
+    let thereIsEmpty = areObj.some((x) => x.empty);
 
+    if (thereIsEmpty) {
+      if (areObj[slot].empty) {
+        are.replaceChild(secret.children[0], are.children[slot]);
+
+        areObj[slot] = Object.assign(new Inimigo(object), object);
+
+        break;
+      }
+    } else {
+      if (!areObj[slot].miniBoss) {
+        are.replaceChild(secret.children[0], are.children[slot]);
+
+        areObj[slot] = Object.assign(new Inimigo(object), object);
+
+        break;
+      } else {
+        are.replaceChild(secret.children[0], are.children[slot]);
+
+        areObj[slot] = Object.assign(new Inimigo(object), object);
+        break;
+      }
+    }
+  }
+}
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    
-    spawnMenosCartas();
+    spawnLiberdade();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    boss.dmg(2500);
+    spawnVitor();
   }
 });
 
@@ -1330,8 +1264,6 @@ function Main() {
 }
 
 export function populateArena() {
-  
-
   let chanceNormal = 50;
 
   chanceNormal < 40 ? (chanceNormal = 40) : 0;

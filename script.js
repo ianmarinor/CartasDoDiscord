@@ -983,10 +983,11 @@ export function moveToMao(i) {
       packP.innerHTML = semCarta;
       numCartas.set(0);
       novaCarta = emptyObj;
+      countdown.decrease();
     } else if (packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
       maoObj[i] = novaCarta;
-
+      countdown.decrease();
       tudo();
     }
     selectHandCard();
@@ -1551,13 +1552,18 @@ function criarBtn() {
     if (!carta._invEventAdded) {
       let buttonWithEvent = inv.children[i].children[3].children[2];
       let cargo = inv.children[i].children[2];
+      let energia = inv.children[i].children[3].children[0];
 
       let cargoLimpo = cargo.cloneNode(true);
       let limpo = buttonWithEvent.cloneNode(true);
+      let energiaLimpo = energia.cloneNode(true);
+
 
       inv.children[i].replaceChild(cargoLimpo, cargo);
-
       inv.children[i].children[3].replaceChild(limpo, buttonWithEvent);
+      inv.children[i].children[3].replaceChild(energiaLimpo, energia);
+
+
 
       limpo.addEventListener("click", function () {
         if (invObj[i].poder) {
@@ -1566,6 +1572,7 @@ function criarBtn() {
       });
 
       cargoLimpo.addEventListener("click", () => carta.ult());
+      energiaLimpo.addEventListener("click", () => carta.energiaPoder())
 
       carta._invEventAdded = true;
     }
@@ -1831,11 +1838,15 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-let placarArena = {
+export let placarArena = {
   energiaTotal: 0,
   dinheiroTotal: 0,
   ammoTotal: 0,
+  bonusCards: 0,
+  storedCards: 0,
   cardsTotal: 0,
+
+
 
   getEnergia() {
     this.energiaTotal = 0;
@@ -1872,6 +1883,9 @@ let placarArena = {
   },
 
   getAmmo() {
+    
+    
+
     this.ammoTotal = 0;
 
     for (const x of invObj) {
@@ -1880,8 +1894,25 @@ let placarArena = {
       }
       this.ammoTotal += x.energia;
     }
-    this.ammoTotal = Math.trunc(this.ammoTotal / 43);
+    this.ammoTotal = Math.trunc(this.ammoTotal / 40);
   },
+
+  getBonusCard() {
+  
+    
+
+    for (const x of invObj) {
+      if (x.dmgBoss != true) {
+        continue;
+      }
+      this.bonusCards += x.energia;
+    }
+
+
+    this.bonusCards = Math.trunc(this.bonusCards / 48);
+  },
+
+  
 
   getNumberOfCards() {
     let num = 0;
@@ -1893,21 +1924,26 @@ let placarArena = {
     dmgBoss(this.energiaTotal);
     money.add(Math.floor(this.dinheiroTotal));
     ammo.add(this.ammoTotal);
+    numCartas.add(this.bonusCards) 
+
   },
 
   printP() {
     this.getEnergia();
     this.getDinheiro();
     this.getAmmo();
+    this.getBonusCard();
     this.getNumberOfCards();
 
     let placarDanoP = document.getElementById("placarDano");
     let placarMoneyP = document.getElementById("placarMoney");
     let placarAmmoP = document.getElementById("placarAmmo");
+    let placarBonusCards = document.getElementById("placarCard");
 
     placarDanoP.innerHTML = Math.trunc(this.energiaTotal);
     placarMoneyP.innerHTML = Math.floor(this.dinheiroTotal);
     placarAmmoP.innerHTML = this.ammoTotal;
+    placarBonusCards.innerHTML =  this.bonusCards
   },
 };
 
@@ -2102,7 +2138,7 @@ export function tudo() {
     blockInv();
     poderBoss();
     runEveryRound();
-    countdown.decrease();
+    
   } else {
   }
 }
@@ -2135,7 +2171,12 @@ function runEveryRound() {
 
     arenaByRound();
   });
+
+  rDifficulty.update()
+
+
 }
+
 
 function removeBuffAll() {
   setInterval(function () {
@@ -2203,7 +2244,7 @@ function tick() {
     novaCarta.place();
 
     hpPlayer.playerP();
-    rDifficulty.update()
+    
   }, 5);
 }
 
@@ -2484,9 +2525,7 @@ export let ammo = {
   add(n) {
     this.total += n;
 
-    if (this.total > 50) {
-      this.total = 50;
-    }
+    
 
     this.ammoP(this.total);
   },
@@ -2580,7 +2619,8 @@ document.addEventListener("keydown", (event) => {
     if (event.code == teclaMoverCarta) {
       if (!wCoolDown.status && chosenCard == 0) {
         moverToCartaMao();
-        // wCoolDown.enable(wCoolDown.time);
+        
+        
       }
     }
   }

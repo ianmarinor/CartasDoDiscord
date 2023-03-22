@@ -5,6 +5,8 @@ import {
   rodadas,
   tudo,
   wCoolDown,
+  placarArena,
+  numCartas
 } from "/script.js";
 import {
   spawnMonark,
@@ -132,7 +134,14 @@ class Boss {
     }
   }
 
-  antiSpam() {}
+  antiSpam() {
+
+    if(per(2)){
+      populateArena()
+    }
+
+
+  }
 
   heal(n) {
     this.health += n;
@@ -215,6 +224,22 @@ export let countdown = {
     let added = 0;
     let delay = gerarNumero(350, 900);
 
+    let enemiesRNG = ()=> {
+
+      if(per(80)){
+              
+        return gerarNumero(4,6)
+
+
+      } else if(per(50)){
+        return 10
+      } else {
+        return 1
+      }
+
+    }
+    this.numOfInimigosSet(enemiesRNG())
+
     wCoolDown.set(true);
     this._creatingDefense = true;
     this.print();
@@ -240,10 +265,11 @@ export let countdown = {
             if(per(75)){
               
               return gerarNumero(6,9)
+
             } else if(per(50)){
-              return gerarNumero(10,18)
+              return gerarNumero(10,15)
             } else {
-              return gerarNumero(2,5)
+              return gerarNumero(2,4)
             }
 
 
@@ -251,6 +277,7 @@ export let countdown = {
           }
 
           this.valueSet(rodadasCountDown());
+          
         }, 3500);
       }
 
@@ -290,30 +317,9 @@ export let rDifficulty = {
     if (!boss) return;
     this.value = 100 - boss.percentHealth;
     // 
-    this.enemy()
+
   },
 
-  enemy() {
-    let numOfEnemies = 0
-
-    let enemies = [
-      // DIFICULDADE     NUM. ENEMIES
-      
-      [gerarNumero(56, 75), gerarNumero(5, 8)],
-      [gerarNumero(34, 55), gerarNumero(3, 5)],
-      [gerarNumero(0, 34), gerarNumero(2, 4)],
-    ];
-
-    for (const x of enemies) {
-      if (x[0] < this.value) {
-        numOfEnemies = x[1];
-        
-        break;
-      }
-    }
-
-    countdown.numOfInimigosSet(numOfEnemies);
-  },
 };
 
 // LISTA DE BOSSES
