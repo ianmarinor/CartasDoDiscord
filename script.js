@@ -15,7 +15,7 @@ import { especial } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
-import { boss, spawnBoss, resetBoss } from "./boss.js";
+import { boss, spawnBoss, resetBoss, countdown, rDifficulty } from "./boss.js";
 
 let versaoHTML = document.getElementById("versao");
 let versao = "LUCIO FIX";
@@ -1837,9 +1837,6 @@ let placarArena = {
   ammoTotal: 0,
   cardsTotal: 0,
 
-  coolDown: false,
-  coolDownRate: 0,
-
   getEnergia() {
     this.energiaTotal = 0;
 
@@ -1893,8 +1890,6 @@ let placarArena = {
   },
 
   action() {
-    if (this.coolDown) return;
-
     dmgBoss(this.energiaTotal);
     money.add(Math.floor(this.dinheiroTotal));
     ammo.add(this.ammoTotal);
@@ -2051,8 +2046,6 @@ function resetarDeck() {
     elimCardInv(inv.children[i]);
   }
 
-  
-
   tudo();
   jaMovi = false;
 
@@ -2070,22 +2063,6 @@ function blockInv() {}
 
 function limparInput() {
   getSeed.value = "";
-}
-
-function passarCarta() {
-  snd(novaCartaAu);
-  start();
-  limparInput();
-  escolherIntegrante();
-  escolherCidade();
-  escolherCargo();
-  escolherVariante();
-  pontoVariante();
-  escolherPoder();
-  colocarInfoNoWrap();
-  critico();
-  copyCard = cartaParaMover.cloneNode(true);
-  ativarBtn();
 }
 
 export function tudo() {
@@ -2125,7 +2102,7 @@ export function tudo() {
     blockInv();
     poderBoss();
     runEveryRound();
-    populateArena();
+    countdown.decrease();
   } else {
   }
 }
@@ -2226,6 +2203,7 @@ function tick() {
     novaCarta.place();
 
     hpPlayer.playerP();
+    rDifficulty.update()
   }, 5);
 }
 
@@ -2552,26 +2530,42 @@ export function somaPontos() {}
 button.addEventListener("click", tudo);
 button.addEventListener("click", blockInv);
 
-let _wcoolDown = false;
+export let wCoolDown = {
+  status: false,
+  time: 320,
+  longTime: 2500,
 
-let wCooldown = () => {
-  let coolDownTime = 400;
+  enable(n) {
+    this.status = true;
+    this.print();
 
-  _wcoolDown = true;
-  packP.children[0].style.opacity = 0.1;
+    setTimeout(() => {
+      this.status = false;
+      console.log(this);
+      this.print();
+    }, n);
+  },
 
-  setTimeout(() => {
-    _wcoolDown = false;
-    packP.children[0].style.opacity = 1;
-  }, coolDownTime);
+  set(trigger) {
+    this.status = trigger;
+    this.print();
+  },
+
+  print() {
+    if (this.status == true) {
+      packP.children[0].style.opacity = 0.1;
+    } else {
+      packP.children[0].style.opacity = 1;
+    }
+  },
 };
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyW") {
-    if (_wcoolDown) return;
+    if (wCoolDown.status == true) return;
 
     tudo();
-    wCooldown();
+    // wCoolDown.enable(wCoolDown.time);
   }
 });
 
@@ -2584,15 +2578,13 @@ cartaParaMover.addEventListener("click", moverToCartaMao);
 document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
-      if (!_wcoolDown && chosenCard == 0) {
+      if (!wCoolDown.status && chosenCard == 0) {
         moverToCartaMao();
-        wCooldown();
+        // wCoolDown.enable(wCoolDown.time);
       }
     }
   }
 });
-
-
 
 inv.addEventListener("click", deletarDeck);
 
@@ -2610,8 +2602,6 @@ btnReset.addEventListener("click", resetarDeck);
 export function startGame2() {
   resetarDeck();
 
- 
-
   mao.replaceChild(mao0, mao.children[0]);
   mao.replaceChild(mao1, mao.children[1]);
   mao.replaceChild(mao2, mao.children[2]);
@@ -2619,17 +2609,11 @@ export function startGame2() {
   mao.replaceChild(mao4, mao.children[4]);
   mao.replaceChild(mao5, mao.children[5]);
 
-
-
-
   for (let i = 0; i < 6; i++) {
-
-    
-    if (per(50)){
-
+    if (per(50)) {
       moveToMao(i);
     }
-    
+
     rodadas = 0;
   }
   rodadas = 1;

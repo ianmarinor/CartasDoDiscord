@@ -12,6 +12,7 @@ import {
   money,
   rodadas,
   audioPlayer,
+  wCoolDown,
 } from "./script.js";
 import { boss, spawnBoss, resetBoss, toMonark } from "./boss.js";
 import {
@@ -132,7 +133,7 @@ class Inimigo {
     this.hashp = true;
     this.maxHealth = card.maxHealth;
     this.attackChance = 15;
-    this.isInvisible = true;
+    this.isInvisible = false;
 
     //defaults
     this.empty = false;
@@ -202,9 +203,6 @@ class Inimigo {
   }
 
   levelSetter(_level) {
-
-    
-
     let life;
     if (boss) {
       life = boss.percentHealth;
@@ -227,21 +225,15 @@ class Inimigo {
       }
     }
 
-    if (_level){
-      this._level = _level
-      this.levelCfg()
+    if (_level) {
+      this._level = _level;
+      this.levelCfg();
     }
 
-    this.levelPrint()
-
+    this.levelPrint();
   }
 
-  levelCfg(){
-
-
-
-
-  }
+  levelCfg() {}
 
   cfgDefault() {
     this.levelSetter();
@@ -374,7 +366,6 @@ class Inimigo {
     //devolver obj values
     this.hp = this.previousHp;
     this.maxHealth = this.previousMaxHealth;
-    this._money = Math.trunc(this._money / 2);
     this.dano = this.previousDano;
     this.energia = this.previousEnergia;
 
@@ -547,9 +538,6 @@ class Inimigo {
       hp.textContent = this.hp + this.emojiHp;
     }
 
-
-    
-
     if (this.readyToAttack) {
       this._thisCardP.classList.add("critico");
     } else {
@@ -566,14 +554,11 @@ class Inimigo {
       energia.classList.remove("critico");
     }
 
-    
-
     if (!this._levelCfgAdded) {
-      this.levelCfg()
-      this.levelPrint()
+      this.levelCfg();
+      this.levelPrint();
       this._levelCfgAdded = true;
     }
-
 
     if (!this._cfgDefaultAdded) {
       this.cfgDefault();
@@ -594,16 +579,24 @@ class Inimigo {
     this.tick ? this.tick() : 0;
   }
 
-  levelPrint(){
+  levelPrint() {
+    let emojis = [
+      "",
+      "1️⃣",
+      "2️⃣",
+      "3️⃣",
+      "4️⃣",
+      "5️⃣",
+      "6️⃣",
+      "7️⃣",
+      "8️⃣",
+      "9️⃣",
+      "🔟",
+    ];
 
-    let emojis = ['','1️⃣','2️⃣', '3️⃣', '4️⃣', '5️⃣','6️⃣','7️⃣','8️⃣', '9️⃣','🔟']
-
-    this._levelP.textContent = emojis[this._level]
+    this._levelP.textContent = emojis[this._level];
     // this._levelP.textContent = 'adfdadg'
-
   }
-
-
 }
 
 // cfg() {}
@@ -676,8 +669,6 @@ let monark = {
 
     this.dano = gerarNumero(3, 7);
     this._despawn = gerarNumero(35, 45);
-
-    this.poder();
   },
 
   everyRound() {
@@ -716,7 +707,6 @@ let monark = {
     }, 250);
   },
 };
-
 
 let menosCartas = {
   cartaId: "-cartas",
@@ -1040,71 +1030,25 @@ let liberdade = {
   },
 };
 
-export function spawnTank(n, _absolute) {
-  _absolute ? (coolDown = false) : 0;
-  if (coolDown) return;
+export function spawnTank() {
+  
 
-  if (n) {
-    if (per(n)) {
-    } else {
-      return;
-    }
-  }
-
-  let slot = gerarNumero(0, 9);
-
-  secret.innerHTML = tankBlueprint;
-
-  if (areObj[slot].empty == true) {
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(tank), tank);
-    areObj[slot].print();
-  }
+  inserirInimigoDomAndObject(tankBlueprint, tank);
 }
 
 export function spawnCamarada(n) {
-  if (coolDown) return;
-  if (n) {
-    if (per(n)) {
-    } else {
-      return;
-    }
-  }
+  
 
-  let slot = gerarNumero(0, 9);
-
-  secret.innerHTML = camaradaBlueprint;
-
-  if (areObj[slot].empty == true) {
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(camarada), camarada);
-  }
-  coolDown = true;
+  inserirInimigoDomAndObject(camaradaBlueprint, camarada);
 }
 
 export function spawnMenosCartas(n) {
-  if (coolDown) return;
-
-  if (n) {
-    if (per(n)) {
-    } else {
-      return;
-    }
-  }
-
-  let slot = gerarNumero(0, 9);
-
-  secret.innerHTML = menosClickBlueprint;
-
-  if (areObj[slot].empty == true) {
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(menosCartas), menosCartas);
-  }
-  coolDown = true;
+  
+  inserirInimigoDomAndObject(menosClickBlueprint, menosCartas);
 }
 
 export function spawnDog(n) {
-  if (coolDown) return;
+ 
 
   if (n) {
     if (per(n)) {
@@ -1113,19 +1057,11 @@ export function spawnDog(n) {
     }
   }
 
-  let slot = gerarNumero(0, 9);
-
-  secret.innerHTML = dogBlueprint;
-
-  if (areObj[slot].empty == true) {
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(dog), dog);
-  }
-  coolDown = true;
+  inserirInimigoDomAndObject(dogBlueprint, dog);
 }
 
 export function spawnVitor(n) {
-  if (coolDown && !n) return;
+  
 
   let slot = gerarNumero(0, 9);
 
@@ -1148,11 +1084,11 @@ export function spawnVitor(n) {
     areObj[slot] = Object.assign(new Inimigo(metaforando), metaforando);
   }
 
-  coolDown = true;
+  
 }
 
 export function spawnLiberdade(n) {
-  if (coolDown && !n) return;
+  
 
   let slot = gerarNumero(0, 9);
 
@@ -1175,11 +1111,11 @@ export function spawnLiberdade(n) {
     areObj[slot] = Object.assign(new Inimigo(liberdade), liberdade);
   }
 
-  coolDown = true;
+  
 }
 
 export function spawnMonark(n) {
-  if (coolDown && !n) return;
+  
 
   start();
 
@@ -1231,34 +1167,47 @@ export function spawnMonark(n) {
     '<p class="levelAre"></p>' +
     "</div>";
 
-  let slot = gerarNumero(0, 9);
+  // let slot = gerarNumero(0, 9);
 
-  secret.innerHTML = monarkBluePrint;
+  // secret.innerHTML = monarkBluePrint;
 
-  if (areObj[slot].empty == true) {
-    are.replaceChild(secret.children[0], are.children[slot]);
-    areObj[slot] = Object.assign(new Inimigo(monark), monark);
-  }
-  coolDown = true;
+  // if (areObj[slot].empty == true) {
+  //   are.replaceChild(secret.children[0], are.children[slot]);
+  //   areObj[slot] = Object.assign(new Inimigo(monark), monark);
+  // }
+
+  // coolDown = true;
+
+  inserirInimigoDomAndObject(monarkBluePrint, monark);
 }
-let coolDown = false;
 
-let mySrc = "trovao.mp3";
+function inserirInimigoDomAndObject(blueprint, object) {
+  for (let i = 0; i < 100; i++) {
+    let slot = gerarNumero(0, 9);
+    secret.innerHTML = blueprint;
 
-let monarkCHN = document.createElement("audio");
-let ianCHN = document.createElement("audio");
+    if (areObj[slot].empty == true) {
+      are.replaceChild(secret.children[0], are.children[slot]);
+      areObj[slot] = Object.assign(new Inimigo(object), object);
+      
+      break;
+    }
+  }
+}
+
+
+
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    coolDown = false;
+    
     spawnMonark();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    coolDown = false;
-    spawnLiberdade(true);
+    populateArena();
   }
 });
 
@@ -1285,29 +1234,13 @@ function Main() {
 
   return;
 }
-let chance;
-export function populateArena(_absolute) {
-  let chanceNormal = 90;
 
-  chance = 15;
+export function populateArena() {
+  
 
-  if (boss) {
-    let porcentagemVida = Math.trunc((boss.health / boss.fullHealth) * 100);
-    chance += 100 - porcentagemVida;
+  let chanceNormal = 50;
 
-    chanceNormal -= 100 - porcentagemVida;
-  }
-
-  chance += Math.trunc(rodadas / 25);
-
-  chance > 100 ? (chance = 100) : 0;
   chanceNormal < 40 ? (chanceNormal = 40) : 0;
-  _absolute ? (chance = 100) : 0;
-
-  if (!per(chance) && !_absolute) return;
-
-  if (!boss) return;
-  coolDown = false;
 
   if (per(chanceNormal)) {
     let normaisArr = [spawnMonark, spawnDog];

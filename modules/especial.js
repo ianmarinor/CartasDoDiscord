@@ -486,11 +486,6 @@ class Especial {
 
         // caso haja so normais
       }
-    } else if (boss) {
-      boss.dmg(dano);
-      this._dmgDone += dano;
-
-      return true;
     }
   }
 
@@ -986,6 +981,14 @@ export let especiais = {
         if (x.hashp) {
           x.healthRestore();
         }
+
+        if(x._cargo == 'carta-monark'){
+          x.energia = this.energia
+          x.dmgBoss = true
+          this.giveAllyEmoji(x)
+        }
+
+
       });
 
       hpPlayer.add(50);
@@ -1464,7 +1467,7 @@ export let especiais = {
       if (this.unableToAttack()) return;
       function infectar() {
         areObj.map((x) => {
-          if (x.empty) return;
+          if (x.empty || x.isInvisible) return;
 
           //salvar style
           x.previousCartaBackgroundColor = x._thisCardP.style.backgroundColor;
@@ -1474,6 +1477,7 @@ export let especiais = {
           x.previousBorder = x._thisCardP.style.border;
           x.previousDano = x.dano;
           x.previousEnergia = x.energia;
+          
 
           //tirar style
           x._thisCardP.style.backgroundColor = "black";
@@ -1489,7 +1493,6 @@ export let especiais = {
           //tirar obj values
           x.hp = 1;
           x.maxHealth = 1;
-          x._money *= 2;
           x.dano = 1;
           x.energia = 1;
 
@@ -2163,10 +2166,11 @@ export let especiais = {
     },
 
     ult() {
-      if (this.ulti != 100 || this.unableToAttack()) return;
 
+      if (this.ulti != 100 || this.unableToAttack()) return;
+      this._invHiddenButton = true;
       let dvaToMinidva = () => {
-        this._invHiddenButton = true;
+        
         this.setHp(10);
         this.changeRetrato('url("/pics/dva.webp")');
         this.dmgBoss = true;
@@ -2180,6 +2184,7 @@ export let especiais = {
         this._thisCardP.classList.remove("piscar");
       };
 
+      this._ulting = true
       this.ulti = 0;
       this._cargoP.classList.remove("critico");
       this.changeRetrato('url("/pics/dvaUlting.gif")');
@@ -2189,12 +2194,13 @@ export let especiais = {
       audioPlayer(faixa, true, this._CHN, 0.5);
       this._thisCardP.classList.add("piscar");
 
+      let ultiDmg = gerarNumero(750, 1185);
+      this.dano = ultiDmg;
+
       setTimeout(
         () => {
           if (this._dead) return;
 
-          let ultiDmg = gerarNumero(750, 1185);
-          this.dano = ultiDmg;
 
           areObj.map((x) => {
             x.dmg(this.dano);
@@ -2212,6 +2218,8 @@ export let especiais = {
     },
 
     poder() {
+      if(this._ulting)return
+
       let ultiRate = () => gerarNumero(2, 5);
 
       if (this.ataque(false, undefined, [true, false])) {

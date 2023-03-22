@@ -1,5 +1,11 @@
 import { gerarNumero, per, money, audioPlayer } from "./script.js";
-import { triggerChuvaMonark, startGame2, rodadas, tudo } from "/script.js";
+import {
+  triggerChuvaMonark,
+  startGame2,
+  rodadas,
+  tudo,
+  wCoolDown,
+} from "/script.js";
 import {
   spawnMonark,
   spawnVitor,
@@ -19,6 +25,7 @@ let pickMonark = document.getElementById("pickMonark");
 let protector = document.getElementById("protector");
 let main = document.getElementById("main");
 let testP = document.getElementById("test");
+let countdownP = document.getElementById("countdown");
 
 let cartaBossMonark =
   '<div id="cartaBossMonark" class="bossAnimation" data-card="boss"></div>';
@@ -26,33 +33,29 @@ let cartaBossMonark =
 // CONSTRUTOR BOSSES
 
 export function toMonark(_cartaObj, _despawnTime) {
-  
+  let carta = _cartaObj;
+  let cartaP = _cartaObj._thisCardP;
+  let cargo = _cartaObj._cargoP;
 
-      
-      let carta = _cartaObj;
-      let cartaP = _cartaObj._thisCardP;
-      let cargo = _cartaObj._cargoP;
-      
-      if(!carta.isNormal) return
+  if (!carta.isNormal) return;
 
-      // if (cartaP.id == "monark") return;
+  // if (cartaP.id == "monark") return;
 
-      cartaP.id = "monark";
-      cartaP.style.border = "1px solid black";
+  cartaP.id = "monark";
+  cartaP.style.border = "1px solid black";
 
-      cargo.textContent = "monark 💩";
+  cargo.textContent = "monark 💩";
 
-      carta.energia = 0;
-      carta._cargo = "carta-monark";
-      carta.dmgBoss = false;
-      carta._canBeDeleted = false;
-      carta._despawn = _despawnTime
-      if (_despawnTime) return;
-      carta._despawn = gerarNumero(2, 8);
-      let poopCHN = document.createElement("audio");
+  carta.energia = 0;
+  carta._cargo = "carta-monark";
+  carta.dmgBoss = false;
+  carta._canBeDeleted = false;
+  carta._despawn = _despawnTime;
+  if (_despawnTime) return;
+  carta._despawn = gerarNumero(2, 8);
+  let poopCHN = document.createElement("audio");
 
-      audioPlayer("poop.mp3", false, poopCHN, 0.4);
-    
+  audioPlayer("poop.mp3", false, poopCHN, 0.4);
 }
 
 class Boss {
@@ -78,7 +81,6 @@ class Boss {
 
     let img = this._imageHit[gerarNumero(0, this._imageHit.length - 1)];
 
-    
     this._cartaP.style.backgroundImage = img;
     this._cartaP.style.border = "4px dashed red";
     this._cartaP.classList.remove("bossAnimation");
@@ -130,33 +132,7 @@ class Boss {
     }
   }
 
-  antiSpam() {
-    let chance = (100 - this.percentHealth) / 25;
-
-    console.log(" *** ANTI - SPAM   *** chance: ", chance);
-
-    if (!per(chance)) {
-      console.log("********* AZAR *********");
-      return;
-    }
-    console.log("********* SOOOOORTEEE *********");
-    if (per(80)) {
-      populateArena(true);
-      areWakeUp();
-      
-    } else {
-      // this.ulti();
-      this.ult();
-     
-      areWakeUp();
-    }
-
-    if (this.percentHealth < 33 && per(100)) {
-      spawnTank(false, true);
-      areWakeUp();
-      
-    }
-  }
+  antiSpam() {}
 
   heal(n) {
     this.health += n;
@@ -210,11 +186,136 @@ class Boss {
   }
 }
 
+export let countdown = {
+  _value: 20,
+  _creatingDefense: false,
+  numOfInimigos: 1,
+
+  decrease() {
+    if (!boss) return;
+    if (this._value < 2) {
+      this.createDefense();
+    } else {
+      this._value--;
+    }
+    this.print();
+    console.log("numOfInimigos: ", this.numOfInimigos);
+  },
+
+  valueSet(n) {
+    this._value = n;
+    this.print();
+  },
+
+  numOfInimigosSet(n) {
+    this.numOfInimigos = n;
+  },
+
+  createDefense() {
+    let added = 0;
+    let delay = gerarNumero(350, 900);
+
+    wCoolDown.set(true);
+    this._creatingDefense = true;
+    this.print();
+
+    areObj.map((x) => {
+      if (x.empty || x.cartaId == 'tank') return;
+      x.readyToAttack = true;
+    });
+
+    let defense = setInterval(() => {
+      let stopCondition = this.numOfInimigos <= added;
+
+      if (stopCondition) {
+        clearInterval(defense);
+
+        setTimeout(() => {
+          wCoolDown.set(false);
+          this._creatingDefense = false;
+
+          
+          let rodadasCountDown = () => {
+            let rodadas
+            rodadas = Math.round((100 - rDifficulty.value) / 4)
+            if(rodadas<5){
+              rodadas = 5
+            }
+
+            console.log('rodadas: ', rodadas);
+            return rodadas
+
+          }
+
+          this.valueSet(rodadasCountDown());
+        }, 3500);
+      }
+
+      populateArena();
+
+      added++;
+    }, delay);
+  },
+  
+
+  print() {
+    if (!boss) return;
+
+    // if (this._value > 1) {
+    //   countdownP.classList.remove("critico");
+    //   countdownP.style.backgroundColor = "#FF5733";
+    // }
+
+    countdownP.textContent = this._value;
+    countdownP.style.opacity = 1;
+
+    if (this._creatingDefense) {
+      countdownP.textContent = "⚠️";
+      countdownP.classList.add("critico");
+      countdownP.style.backgroundColor = "#FF5733";
+    } else {
+      countdownP.style.backgroundColor = "#06845a";
+      countdownP.classList.remove("critico");
+    }
+  },
+};
+
+export let rDifficulty = {
+  value: 0,
+
+  update() {
+    if (!boss) return;
+    this.value = 100 - boss.percentHealth;
+    // console.log('REGIONAL DIFFICULTY', this.value);
+    this.enemy()
+  },
+
+  enemy() {
+    let numOfEnemies = 0
+
+    let enemies = [
+      // DIFICULDADE     NUM. ENEMIES
+      
+      [gerarNumero(56, 75), gerarNumero(5, 8)],
+      [gerarNumero(34, 55), gerarNumero(3, 5)],
+      [gerarNumero(0, 34), gerarNumero(2, 4)],
+    ];
+
+    for (const x of enemies) {
+      if (x[0] < this.value) {
+        numOfEnemies = x[1];
+        
+        break;
+      }
+    }
+
+    countdown.numOfInimigosSet(numOfEnemies);
+  },
+};
+
 // LISTA DE BOSSES
 
 export let boss;
-
-let probMonark;
 
 function createMonark() {
   let bossClass = new Boss(15000, 15000, "monark");
@@ -292,7 +393,6 @@ function createMonark() {
     },
 
     chuvaDeMonark() {
-
       console.log("-------------CHUVA DE MONARK----------------");
 
       for (let i = 0; i < 100; i++) {
@@ -306,7 +406,7 @@ function createMonark() {
           x.readyToAttack = true;
         }
       });
-      
+
       audioPlayer(this._audioChuva, true, this._CHN, 0.1);
     },
 
@@ -322,9 +422,10 @@ function createMonark() {
       console.log("-------------liberdadeDeExpresao----------------");
       spawnLiberdade(true);
       let faixa =
-        this._audioLiberdadeSpawn[gerarNumero(0, this._audioLiberdadeSpawn.length - 1)];
-      audioPlayer(faixa, false, this._CHN,0.5);
-
+        this._audioLiberdadeSpawn[
+          gerarNumero(0, this._audioLiberdadeSpawn.length - 1)
+        ];
+      audioPlayer(faixa, false, this._CHN, 0.5);
     },
   };
 

@@ -9,7 +9,20 @@
 }
 
 
-
+#countdown{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  width: 110px;
+  height: 90px;
+  color: aliceblue;
+  grid-area: boss;
+  justify-self: end;
+  align-self: end;
+  font-size: 4em;
+  background-color: #06845a;
+  border-radius: 5px;
+  text-align: center;
+  opacity: 0.2;
+}
 
 #vitor {
     background-image: linear-gradient(
