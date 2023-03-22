@@ -237,13 +237,13 @@ export let countdown = {
           
           let rodadasCountDown = () => {
             
-            if(per(80)){
+            if(per(75)){
               
-              return gerarNumero(5,13)
+              return gerarNumero(6,9)
             } else if(per(50)){
-              return gerarNumero(14,20)
+              return gerarNumero(10,18)
             } else {
-              return gerarNumero(3,4)
+              return gerarNumero(2,5)
             }
 
 
@@ -356,12 +356,12 @@ function createMonark() {
         }
       };
 
-      let chance = 6;
+      let chance = 1;
 
       let porcentagemVida = (this.health / this.fullHealth) * 10;
       chance += 10 - porcentagemVida;
 
-      if (chance > 25 || absolute) chance = 25;
+      if (chance > 20 || absolute) chance = 20;
       
 
       if (this._coolDown || this.hasTriggeredUlti) return;
