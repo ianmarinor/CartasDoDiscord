@@ -221,6 +221,11 @@ export let countdown = {
   },
 
   createDefense() {
+
+    let faixa = document.createElement('audio')
+
+    audioPlayer('trumpet.mp3',true,faixa)
+
     let added = 0;
     let delay = gerarNumero(350, 900);
 
@@ -244,11 +249,7 @@ export let countdown = {
     this._creatingDefense = true;
     this.print();
 
-    areObj.map((x) => {
-      if (x.empty || x.cartaId == 'tank') return;
-      x.readyToAttack = true;
-    });
-
+    
     let defense = setInterval(() => {
       let stopCondition = this.numOfInimigos <= added;
 

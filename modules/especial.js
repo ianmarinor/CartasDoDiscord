@@ -1936,15 +1936,10 @@ export let especiais = {
     aim: "are",
     atirador: false,
 
-    ult() {
-      if (this.unableToAttack()) return;
-      this.aim == "boss" ? (this.aim = "are") : (this.aim = "boss");
-    },
+    
 
     tick() {
-      this.aim == "boss"
-        ? (this._cargoP.style.color = "red")
-        : (this._cargoP.style.color = "#FFBC42");
+      
 
       if (invObj.some((x) => x.atiradorJhin)) {
         this.atirador = true;
@@ -2062,7 +2057,7 @@ export let especiais = {
                 // snd(hit);
                 // somDeath(350);
                 playJhinAu(1);
-                if (per(75)) {
+                if (per(25)) {
                   elimCardInv(atiradorP);
                 }
 
@@ -2073,7 +2068,7 @@ export let especiais = {
                   ? boss.dmg(this.dano)
                   : this.ataque(false, false);
 
-                if (per(75)) {
+                if (per(25)) {
                   elimCardInv(atiradorP);
                 }
 
@@ -2196,7 +2191,7 @@ export let especiais = {
             this._dmgDone += this.dano;
           });
 
-          if (boss) boss.dmg(this.dano);
+        
           this._dmgDone += this.dano;
 
           dvaToMinidva();
