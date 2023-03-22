@@ -739,16 +739,29 @@ let menosCartas = {
   _audioSpawn: "menosCartas.wav",
   energia: "",
   emoji: "🃏",
-  hp: 30,
-  maxHealth: 30,
+  hp: 22,
+  maxHealth: 22,
   dano: false,
-  attackChance: 10,
+  attackChance: 7,
+
+
+  levelCfg(){
+
+    
+    this.energia = gerarNumero(8, 13);
+    
+
+    this.energia *= this._level
+    this.setHp(this.hp * this._level)
+    this.attackChance = this.attackChance * this._level
+
+  },
 
   cfg() {
-    this.energia = gerarNumero(13, 29);
+    
     if (per(0.1)) {
       this._cargoP.textContent = "EVIL";
-      this.energia = gerarNumero(50, 86);
+      this.energia = this.energia * 10;
       this.changeRetrato("menosCartasEvil.gif");
       this.attackChance = this.energia;
       this.setHp(this.energia * gerarNumero(2, 4));
@@ -1215,7 +1228,7 @@ function inserirInimigoDomAndObject(blueprint, object) {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
     
-    spawnMonark();
+    spawnMenosCartas();
   }
 });
 
