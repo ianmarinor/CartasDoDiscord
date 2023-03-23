@@ -1552,8 +1552,6 @@ export let especiais = {
     _exposto: true,
     clockToVis: false,
 
-    
-
     cfg() {
       this.dano = gerarNumero(68, 85);
       this._cargoP.textContent = "⌚";
@@ -1757,7 +1755,7 @@ export let especiais = {
         this.buffAdded = true;
       }
 
-      this.dano = 1 + Math.floor(this._dmgTaken / 7);
+      this.dano = 1 + Math.floor(this._dmgTaken / 2);
       this.dano > 500 ? (this.dano = 500) : 0;
 
       let hasTuru = invObj.some((x) => x._cidade == "de Itapira");
@@ -1863,9 +1861,14 @@ export let especiais = {
           this.buildUlt(healValue);
           this._healingDone += healValue;
         }
+        if (!hpPlayer.isFull && per(80)) {
+          hpPlayer.add(healValue);
+          this._healingDone += healValue;
+          this.buildUlt(healValue);
+        }
       });
 
-      this.heal(healValue);
+      this.heal(healValue * 2);
     },
 
     ult() {
@@ -1936,11 +1939,7 @@ export let especiais = {
     aim: "are",
     atirador: false,
 
-    
-
     tick() {
-      
-
       if (invObj.some((x) => x.atiradorJhin)) {
         this.atirador = true;
       } else {
@@ -2179,7 +2178,7 @@ export let especiais = {
       audioPlayer(faixa, true, this._CHN, 0.5);
       this._thisCardP.classList.add("piscar");
 
-      let ultiDmg = gerarNumero(750, 1185);
+      let ultiDmg = gerarNumero(1110, 1580);
       this.dano = ultiDmg;
 
       setTimeout(
@@ -2191,7 +2190,6 @@ export let especiais = {
             this._dmgDone += this.dano;
           });
 
-        
           this._dmgDone += this.dano;
 
           dvaToMinidva();
@@ -2248,79 +2246,10 @@ export let especiais = {
     },
   },
 
-  tank: {
-    cartaId: "tank",
-    nome: "TANK",
-    raridade: raridades.campones,
-    _invHiddenButton: true,
-    energia: 0,
-
-    emoji: "💰",
-
-    retrato: 'url("/pics/tankRetrato.jpg")',
-
-    cargo: "",
-
-    hp: 520,
-    hashp: true,
-    maxHealth: 300,
-    dmgBoss: false,
-    money: 0,
-
-    tankToMoney() {
-      this._thisCardP.id = "tf2Money";
-      this._retratoP.style.backgroundImage = "url('pics/tankDeadRetrato.jpg')";
-      this._nomeP.textContent = "MONEY";
-
-      this._cargoP.style.visibility = "visible";
-
-      this.money = gerarNumero(767, 1215);
-      this._cargoP.innerHTML = this.money + "💰";
-
-      this.hashp = false;
-      this.hideHp();
-      this.tankDead = true;
-      this._invHiddenButton = false;
-    },
-
-    poder() {
-      money.add(this.money);
-      this.kill();
-    },
-
-    nomeStyle: {
-      fontSize: "210%",
-      fontFamily: "tf2",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px solid #cf6a32",
-      backgroundColor: "unset",
-    },
-    cargoStyle: {
-      fontFamily: "tf2",
-      fontSize: "200%",
-      visibility: "hidden",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "tf2",
-      visibility: "hidden",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "tf2",
-      visibility: "visible",
-    },
-  },
-
   creeper: {
     cartaId: "creeper",
     nome: "CREEPER",
-    raridade: raridades.campones,
+    raridade: raridades.cavaleiro,
     energia: 0,
     emoji: "",
     retrato: "url('pics/retratoCreeper.png')",
@@ -2437,13 +2366,66 @@ export let especiais = {
 
     // ataqueE: abelhaEnergia() + "🐝"
   },
-};
 
-function objBinder(obj) {
-  let newo = new Especial(obj);
 
-  return Object.assign(newo, obj);
+cabeca: {
+  cartaId: "cabeca",
+  nome: "",
+  raridade: raridades.campones,
+  energia: 0,
+  emoji: "",
+  retrato: "url('pics/retratoCreeper.png')",
+  cargo: "",
+  dmgBoss: false,
+  _canBeDeleted: false,
+  hashp: false,
+  _everyRoundMao: true,
+  _invHiddenButton: true,
+  _canBeSold: false,
+  dano: undefined,
+  exploding: false,
+  _monarkReplaceble: false,
+  _exposto: true,
+
+  cfg() {},
+
+  everyRound() {},
+
+  nomeStyle: {
+    fontSize: "180%",
+    fontFamily: "minecraft",
+    color: "#555555",
+  },
+
+  retratoStyle: {
+    border: "2px solid #164d0d",
+    backgroundColor: "",
+  },
+  cargoStyle: {
+    fontFamily: "",
+    fontSize: "170%",
+  },
+  ataqueStyle: {
+    color: "",
+    fontSize: "",
+    fontFamily: "",
+    visibility: "hidden",
+  },
+  novoAtaqueStyle: {
+    color: "",
+    fontSize: "",
+    fontFamily: "",
+    visibility: "hidden",
+  },
 }
+}
+
+
+  function objBinder(obj) {
+    let newo = new Especial(obj);
+
+    return Object.assign(newo, obj);
+  };
 
 export let especial = "";
 

@@ -49,6 +49,29 @@ export function areWakeUp() {
   });
 }
 
+export function progressBar(_value, _max, _bgColor, _progressColor) {
+  let value = _value;
+  let max = _max;
+
+  let bgColor = _bgColor;
+  let progressColor = _progressColor;
+
+  !bgColor ? (bgColor = "") : 0;
+  !progressColor ? (progressColor = "") : 0;
+
+  let width = (value / max) * 100 + "%";
+
+  let bar =
+    `<div id="bgProgress" style=" background-color:` +
+    bgColor +
+    `" > <div id="progressBar" style=" width:` +
+    width +
+    `; background-color:` +
+    progressColor +
+    `   "> </div> </div>`;
+  return bar;
+}
+
 export let areObj;
 
 let hasPlayed = false;
@@ -670,6 +693,8 @@ let monark = {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
   },
 
+  tick() {},
+
   levelCfg() {
     this._despawn = gerarNumero(35, 45);
     this.dano = gerarNumero(3, 4);
@@ -965,8 +990,6 @@ let metaforando = {
 
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
-    this.attackChance = this.attackChance * this._level;
-    this.attackChance > 25 ? this.attackChance = 25 : 0
   },
 
   cfg() {
@@ -977,22 +1000,15 @@ let metaforando = {
     this._cargoP.style.marginBottom = "0px";
     this._retratoP.style.height = "80%";
 
-    this._nomeP.innerHTML =
-      '<progress style="border: none; background-color: red; color: black; height: 8px; width: 85%; transform: rotate(180deg) " value="0" max="700"> </progress>';
-
-    this._nomeP.style.marginBottom = "10px";
-
-    let healthBar = this._nomeP.children[0];
     this._displayP.children[1].style.visibility = "hidden";
 
-    healthBar.style.borderRadius = "8px";
+    this._nomeP.style.margin = '20px  0px 5px'
+    
+
   },
 
   tick() {
-    let healthBar = this._nomeP.children[0];
-
-    healthBar.max = this.maxHealth;
-    healthBar.value = this._dmgTaken;
+    this._nomeP.innerHTML = progressBar(this.hp, this.maxHealth, "gray", "red");
   },
 
   poder() {
@@ -1049,8 +1065,6 @@ let liberdade = {
 
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
-    this.attackChance = this.attackChance * this._level;
-    this.attackChance > 25 ? this.attackChance = 25 : 0
   },
 
   cfg() {
@@ -1061,16 +1075,14 @@ let liberdade = {
     this._cargoP.style.marginBottom = "0px";
     this._retratoP.style.height = "80%";
 
-    this._nomeP.innerHTML =
-      '<progress style="border: none; background-color: red; color: black; height: 8px; width: 85%; transform: rotate(180deg) " value="0" max="700"> </progress>';
-
-    this._nomeP.style.marginBottom = "10px";
-
-    let healthBar = this._nomeP.children[0];
-    this._displayP.children[1].style.visibility = "hidden";
-
-    healthBar.style.borderRadius = "8px";
+    this._nomeP.style.margin = '20px  0px 5px'
+    this._hpP.style.visibility = 'hidden'
   },
+
+  tick() {
+    this._nomeP.innerHTML = progressBar(this.hp, this.maxHealth, "gray", "red");
+  },
+
 
   poder() {
     hpPlayer.remove(this.dano);
@@ -1231,13 +1243,13 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnLiberdade();
+    spawnVitor();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    spawnVitor();
+    spawnLiberdade();
   }
 });
 

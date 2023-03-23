@@ -1125,7 +1125,7 @@ li {
 .cargo {
   /* background-color: #37be49; */
   font-size: 1em;
-  transform: rotate(-10deg);
+  /* transform: rotate(-10deg); */
   margin: 10px;
 }
 .poder,

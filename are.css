@@ -8,6 +8,20 @@
 
 }
 
+#progressBar, #bgProgress{
+  height: 10px;
+  width:  108px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 2px;
+  
+}
+
+#bgProgress{
+  
+  background-color: rgb(47, 44, 44);
+  
+}
+
 
 #countdown{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
