@@ -234,8 +234,9 @@ export function escolherVariante(x) {
     cargo != "carta-monark" &&
     cargo != "carta-semcargo" &&
     cargo != "carta-people" &&
-    cargo != "carta-people";
-
+    cargo != "carta-people" &&
+    cargo != "carta-gentleman" 
+    
   variante = ["", ""];
   if (cartasQueNaoTemVariante) {
     if (seedString[14] == 4) {

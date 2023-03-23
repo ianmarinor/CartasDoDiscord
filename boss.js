@@ -233,13 +233,13 @@ export let countdown = {
 
       if(per(80)){
               
-        return gerarNumero(4,6)
+        return gerarNumero(8,9)
 
 
       } else if(per(50)){
         return 10
       } else {
-        return 1
+        return 6
       }
 
     }

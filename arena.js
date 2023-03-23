@@ -966,6 +966,7 @@ let metaforando = {
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
+    this.attackChance > 25 ? this.attackChance = 25 : 0
   },
 
   cfg() {
@@ -1049,6 +1050,7 @@ let liberdade = {
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
+    this.attackChance > 25 ? this.attackChance = 25 : 0
   },
 
   cfg() {
