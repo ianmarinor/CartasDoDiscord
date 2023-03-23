@@ -1255,8 +1255,7 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    invObj[0]._stunned = true;
-    invObj[0]._stunnedWeight = 3;
+    spawnDog()
   }
 });
 

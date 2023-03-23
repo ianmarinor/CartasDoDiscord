@@ -33,6 +33,46 @@ import { areObj } from "../arena.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
 
+function progressBar(_value, _max, _bgColor, _progressColor, _isBarrier) {
+  let value = _value;
+  let max = _max;
+
+  let bgColor = _bgColor;
+  let progressColor = _progressColor;
+
+  !bgColor ? (bgColor = "") : 0;
+  !progressColor ? (progressColor = "") : 0;
+
+  let width = (value / max) * 100 + "%";
+
+  let bar =
+    `<div id="bgProgressEsp" style=" background-color:` +
+    bgColor +
+    `" > <div id="progressBarEsp" style=" width:` +
+    width +
+    `; background-color:` +
+    progressColor +
+    `   "> </div> </div>`;
+
+  if (_isBarrier) {
+    bar += `<p style="display:inline;">🛡️</p>`;
+  }
+
+  return bar;
+}
+
+function efeitoDanoBarreira(carta) {
+
+  let source = 'shield'
+
+  let faixa =
+  source +
+    gerarNumero(1, 3) +
+    ".mp3";
+  audioPlayer(faixa, false, carta._CHN, 0.5);
+
+}
+
 let seed2 = seedString[2];
 let seed3 = seedString[3];
 
@@ -544,9 +584,9 @@ class Especial {
   }
 
   useBarrier(_damage) {
-    if (this._barreira > 0) {
+    if (this._barreira > 0 && this._barrieraActive) {
       this._barreira -= _damage;
-
+      efeitoDanoBarreira(this);
       this._mit += _damage;
       if (this._barreira <= 0) this._barreira = 0;
 
@@ -683,6 +723,10 @@ class Especial {
         this._exposto = false;
       }
 
+      if (this._notDefaultbarriera) {
+        this._barrieraActive = true;
+      }
+
       setTimeout(
         () => this._thisCardP.classList.add("unstunned"),
 
@@ -726,6 +770,10 @@ class Especial {
       if (!this._exposto) {
         this._exposto = true;
         this._notDefaultSelo = true;
+      }
+      if (this._barrieraActive) {
+        this._barrieraActive = false;
+        this._notDefaultbarriera = true;
       }
     }
 
@@ -2367,65 +2415,89 @@ export let especiais = {
     // ataqueE: abelhaEnergia() + "🐝"
   },
 
+  cabeca: {
+    cartaId: "cabeca",
+    nome: "CURTAS HEAD",
+    raridade: raridades.campones,
+    energia: 0,
+    emoji: "",
+    retrato: "url('pics/cabecaRetrato.png')",
+    cargo: "",
+    dmgBoss: false,
+    _invHiddenButton: true,
+    hashp: true,
+    hp: 50,
+    maxHealth: 50,
+    dano: undefined,
+    _exposto: true,
+    _barreira: 700,
+    _barrieraActive: true,
 
-cabeca: {
-  cartaId: "cabeca",
-  nome: "",
-  raridade: raridades.campones,
-  energia: 0,
-  emoji: "",
-  retrato: "url('pics/retratoCreeper.png')",
-  cargo: "",
-  dmgBoss: false,
-  _canBeDeleted: false,
-  hashp: false,
-  _everyRoundMao: true,
-  _invHiddenButton: true,
-  _canBeSold: false,
-  dano: undefined,
-  exploding: false,
-  _monarkReplaceble: false,
-  _exposto: true,
+    cfg() {
+      this._barreiraMax = this._barreira;
 
-  cfg() {},
+      this._cargoP.style.marginTop = "20px";
+      this._cargoP.style.fontSize = "1.30em";
+      this._nomeP.style.margin = "20px 0px 15px";
 
-  everyRound() {},
+      this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
 
-  nomeStyle: {
-    fontSize: "180%",
-    fontFamily: "minecraft",
-    color: "#555555",
-  },
+      this._cargoP.innerHTML = progressBar(
+        this._barreira,
+        this._barreiraMax,
+        "grey",
+        "#ffffff",
+        true
+      );
+    },
 
-  retratoStyle: {
-    border: "2px solid #164d0d",
-    backgroundColor: "",
+    tick() {
+      this._cargoP.innerHTML = progressBar(
+        this._barreira,
+        this._barreiraMax,
+        undefined,
+        undefined,
+        true
+      );
+    },
+
+    everyRound() {},
+
+    nomeStyle: {
+      fontSize: "180%",
+      fontFamily: "cabeca",
+      color: "#2457b6",
+    },
+
+    retratoStyle: {
+      border: "2px solid #044dde",
+      backgroundColor: "",
+    },
+    cargoStyle: {
+      fontFamily: "",
+      fontSize: "170%",
+      visibility: "visible",
+    },
+    ataqueStyle: {
+      color: "",
+      fontSize: "",
+      fontFamily: "",
+      visibility: "hidden",
+    },
+    novoAtaqueStyle: {
+      color: "#b0bfed",
+      fontSize: "140%",
+      fontFamily: "cabeca",
+      visibility: "visible",
+    },
   },
-  cargoStyle: {
-    fontFamily: "",
-    fontSize: "170%",
-  },
-  ataqueStyle: {
-    color: "",
-    fontSize: "",
-    fontFamily: "",
-    visibility: "hidden",
-  },
-  novoAtaqueStyle: {
-    color: "",
-    fontSize: "",
-    fontFamily: "",
-    visibility: "hidden",
-  },
+};
+
+function objBinder(obj) {
+  let newo = new Especial(obj);
+
+  return Object.assign(newo, obj);
 }
-}
-
-
-  function objBinder(obj) {
-    let newo = new Especial(obj);
-
-    return Object.assign(newo, obj);
-  };
 
 export let especial = "";
 
@@ -2498,10 +2570,12 @@ export function escolherEspecial(teste) {
 
       let num;
 
-      num = gerarNumero(1, 1);
+      num = gerarNumero(1, 2);
 
       if (num == 1) {
         especial = objBinder(especiais.maisCartas);
+      } else {
+        especial = objBinder(especiais.cabeca);
       }
     }
   } else {

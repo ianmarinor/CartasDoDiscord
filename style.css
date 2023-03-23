@@ -66,6 +66,13 @@ a:hover {
   font-family: "lol";
   src: url("/fonts/lol.ttf");
 }
+@font-face {
+  font-family: "cabeca";
+  src: url("/fonts/cabeca.ttf");
+}
+
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -1066,7 +1073,7 @@ li {
   position: absolute;
   top: 5px;
   right: 5px;
-  font-size: 20px;
+  font-size: 15px;
   opacity: 0.8;
   /* transform: rotate(90deg); */
 }
@@ -1125,9 +1132,17 @@ li {
 .cargo {
   /* background-color: #37be49; */
   font-size: 1em;
-  /* transform: rotate(-10deg); */
+  transform: rotate(-10deg);
   margin: 10px;
 }
+.cargoEsp {
+  display: flex;
+ width: 90%;
+ flex-direction: row-reverse;
+ justify-content: center;
+ align-items: center;
+}
+
 .poder,
 .poder-inimigo,
 .poderEsp {
