@@ -264,7 +264,7 @@ function Main() {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
-    console.log("slotEspObj: ", slotEspObj);
+    
   }
 });
 
@@ -293,11 +293,12 @@ function colocarSlot(tipo, _slot) {
 
   nomeE.classList.remove("float");
   cargoE.classList.remove("float");
-
+  nomeE.style.margin = 0
+  cargoE.style.margin = 0
   slotEsp.children[slot].id = especial.cartaId;
 
   //PERSONALIZADO
-  // console.log(cartaEspecial);
+  // 
 
   retratoE.style.visibility = "visible";
 
@@ -364,7 +365,7 @@ function colocarSlot(tipo, _slot) {
   slotEspObj[slot] = especial;
 
   especial.print();
-  // console.log('especial: ', especial);
+  // 
 
   cartaEspecial.style.opacity = "0.5";
 }
@@ -389,12 +390,22 @@ slotEsp.addEventListener("click", moveToMao);
 let cartaEspecial;
 
 function moveToMao(e) {
-  cartaEspecial = e.target.offsetParent;
+
+  
+  if(e.target.id == 'slotEsp') return
+
+  if(e.target.parentElement.id == 'slotEsp'){
+    
+    cartaEspecial = e.target
+  } else {
+    cartaEspecial = e.target.offsetParent;
+  }
+
 
   let obj;
-  e.target.offsetParent == slotEsp.children[0] ? (obj = 0) : 0;
-  e.target.offsetParent == slotEsp.children[1] ? (obj = 1) : 0;
-  e.target.offsetParent == slotEsp.children[2] ? (obj = 2) : 0;
+  cartaEspecial == slotEsp.children[0] ? (obj = 0) : 0;
+  cartaEspecial == slotEsp.children[1] ? (obj = 1) : 0;
+  cartaEspecial == slotEsp.children[2] ? (obj = 2) : 0;
 
   let cardObj = slotEspObj[obj];
 
@@ -402,7 +413,7 @@ function moveToMao(e) {
     cardObj._bought = true;
     cartaEspecial.style.opacity = "1";
     limparEsp(obj);
-    console.log('CARTA COMPRADA ', cardObj);
+    
     return;
   }
 
@@ -426,7 +437,7 @@ function moveToMao(e) {
 
         limparEsp(null,obj)
         mao.replaceChild(cartaEspecial, mao.children[i]);
-        console.log(obj , ' OBJETO NO MAO888888888888888888888888');
+        
 
         // AUDIO SELECAO
         if (slotEspObj[obj]._audioChosenFiles) {
@@ -462,24 +473,24 @@ export function limparEsp(notDelet,YesDelet) {
 
   let slots = [
     () => {
-      console.log('emptyEspP0: ', emptyEspP0);
-      // console.trace();
+      
+      // 
       slotEsp.replaceChild(emptyEspP0, slotEsp.children[0]);
     },
 
 
     () => {
       
-      console.log('emptyEspP1: ', emptyEspP1);
-      // console.trace()
+      
+      // 
       slotEsp.replaceChild(emptyEspP1, slotEsp.children[1]);
     },
 
 
     () => {
       
-      console.log('emptyEspP2: ', emptyEspP2);
-      // console.trace()
+      
+      // 
       slotEsp.replaceChild(emptyEspP2, slotEsp.children[2]);
     },
   ];
@@ -491,10 +502,10 @@ export function limparEsp(notDelet,YesDelet) {
       
 
         if(i == YesDelet){
-          console.log(YesDelet);
+          
           slots[i]()
           slotEspObj[i] = emptyObj
-          console.log('---------', i,'----------');
+          
     
         }
       
@@ -512,7 +523,7 @@ export function limparEsp(notDelet,YesDelet) {
     // if(YesDelet){
     //   slots[0]()
     //   slotEspObj[0] = emptyObj
-    //   console.log('----------------');
+    //   
     // }
   
 

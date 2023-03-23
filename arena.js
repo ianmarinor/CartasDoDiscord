@@ -321,7 +321,7 @@ class Inimigo {
     } else if (this.especial) {
       this._seloP.textContent = "⭐";
     } else if (this.miniBoss) {
-      this._seloP.textContent = "";
+      this._seloP.textContent = "🧙";
     } else {
       this._seloP.textContent = "";
     }

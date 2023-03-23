@@ -1735,7 +1735,7 @@ export let especiais = {
 
       retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
 
-      this.ataque() ? (this.energia += gerarNumero(5, 8)) : 0;
+      this.ataque() ? (this.energia += gerarNumero(3, 5)) : 0;
 
       let stabAu = ["stab.mp3", 0.1];
       snd(stabAu);
@@ -1803,7 +1803,7 @@ export let especiais = {
         this.buffAdded = true;
       }
 
-      this.dano = 1 + Math.floor(this._dmgTaken / 2);
+      this.dano = 1 + Math.floor(this._dmgTaken / 3.3);
       this.dano > 500 ? (this.dano = 500) : 0;
 
       let hasTuru = invObj.some((x) => x._cidade == "de Itapira");
@@ -1909,12 +1909,12 @@ export let especiais = {
           this.buildUlt(healValue);
           this._healingDone += healValue;
         }
-        if (!hpPlayer.isFull && per(80)) {
-          hpPlayer.add(healValue);
-          this._healingDone += healValue;
-          this.buildUlt(healValue);
-        }
       });
+      if (!hpPlayer.isFull && per(80)) {
+        hpPlayer.add(healValue);
+        this._healingDone += healValue;
+        this.buildUlt(healValue);
+      }
 
       this.heal(healValue * 2);
     },
@@ -2104,7 +2104,7 @@ export let especiais = {
                 // snd(hit);
                 // somDeath(350);
                 playJhinAu(1);
-                if (per(25)) {
+                if (per(50)) {
                   elimCardInv(atiradorP);
                 }
 
@@ -2430,7 +2430,7 @@ export let especiais = {
     maxHealth: 50,
     dano: undefined,
     _exposto: true,
-    _barreira: 700,
+    _barreira: 70,
     _barrieraActive: true,
 
     cfg() {

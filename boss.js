@@ -6,7 +6,7 @@ import {
   tudo,
   wCoolDown,
   placarArena,
-  numCartas
+  numCartas,
 } from "/script.js";
 import {
   spawnMonark,
@@ -135,12 +135,15 @@ class Boss {
   }
 
   antiSpam() {
+    let delay = gerarNumero(2000, 6500);
 
-    if(per(2)){
-      populateArena()
+    if (per(2)) {
+      setTimeout(
+        () => populateArena(),
+
+        delay
+      );
     }
-
-
   }
 
   heal(n) {
@@ -208,7 +211,6 @@ export let countdown = {
       this._value--;
     }
     this.print();
-    
   },
 
   valueSet(n) {
@@ -221,38 +223,31 @@ export let countdown = {
   },
 
   createDefense() {
+    let faixa = document.createElement("audio");
 
-    let faixa = document.createElement('audio')
-
-    audioPlayer('trumpet.mp3',true,faixa)
+    audioPlayer("trumpet.mp3", true, faixa);
 
     let added = 0;
-    let delay = gerarNumero(350, 900);
-
-    let enemiesRNG = ()=> {
-
-      if(per(80)){
-              
-        return gerarNumero(8,9)
-
-
-      } else if(per(50)){
-        return 10
+    
+    let enemiesRNG = () => {
+      if (per(80)) {
+        return gerarNumero(8, 9);
+      } else if (per(50)) {
+        return 10;
       } else {
-        return 6
+        return 6;
       }
-
-    }
-    this.numOfInimigosSet(enemiesRNG())
-
+    };
+    this.numOfInimigosSet(enemiesRNG());
+    
     wCoolDown.set(true);
     this._creatingDefense = true;
     this.print();
-
     
+    let delay = () => gerarNumero(350, 900);
     let defense = setInterval(() => {
       let stopCondition = this.numOfInimigos <= added;
-
+      
       if (stopCondition) {
         clearInterval(defense);
 
@@ -260,34 +255,25 @@ export let countdown = {
           wCoolDown.set(false);
           this._creatingDefense = false;
 
-          
           let rodadasCountDown = () => {
-            
-            if(per(75)){
-              
-              return gerarNumero(6,9)
-
-            } else if(per(50)){
-              return gerarNumero(10,15)
+            if (per(75)) {
+              return gerarNumero(6, 9);
+            } else if (per(50)) {
+              return gerarNumero(10, 15);
             } else {
-              return gerarNumero(2,4)
+              return gerarNumero(2, 4);
             }
-
-
-
-          }
+          };
 
           this.valueSet(rodadasCountDown());
-          
         }, 3500);
       }
 
       populateArena();
 
       added++;
-    }, delay);
+    }, delay());
   },
-  
 
   print() {
     if (!boss) return;
@@ -317,10 +303,8 @@ export let rDifficulty = {
   update() {
     if (!boss) return;
     this.value = 100 - boss.percentHealth;
-    // 
-
+    //
   },
-
 };
 
 // LISTA DE BOSSES
@@ -369,7 +353,6 @@ function createMonark() {
       chance += 10 - porcentagemVida;
 
       if (chance > 20 || absolute) chance = 20;
-      
 
       if (this._coolDown || this.hasTriggeredUlti) return;
       if (!per(chance)) return;
@@ -403,8 +386,6 @@ function createMonark() {
     },
 
     chuvaDeMonark() {
-      
-
       for (let i = 0; i < 100; i++) {
         spawnMonark(true);
       }
@@ -421,7 +402,6 @@ function createMonark() {
     },
 
     vitorMetaforando() {
-      
       spawnVitor(true);
       let faixa =
         this._audioVitorSpawn[gerarNumero(0, this._audioVitorSpawn.length - 1)];
@@ -429,7 +409,6 @@ function createMonark() {
     },
 
     liberdadeDeExpresao() {
-      
       spawnLiberdade(true);
       let faixa =
         this._audioLiberdadeSpawn[
