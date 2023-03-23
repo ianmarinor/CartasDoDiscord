@@ -6,7 +6,7 @@ export function cidade(){
         "de Caxias do Sul",
         "de Itapira",
         "de Ubatuba",
-        "de Sao Jose Dos Pinhais",
+        "de S. José Dos Pinhais",
         "do Rio de Janeiro",
         "de Maringá",
         "de Porto Alegre",

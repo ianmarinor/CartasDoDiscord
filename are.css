@@ -32,10 +32,10 @@
   justify-self: end;
   align-self: end;
   font-size: 4em;
-  background-color: #06845a;
+  background-color: #FF5733;
   border-radius: 5px;
   text-align: center;
-  opacity: 0.2;
+  visibility: hidden;
 }
 
 #vitor {

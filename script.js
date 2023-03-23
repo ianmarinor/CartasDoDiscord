@@ -1887,7 +1887,7 @@ export let placarArena = {
       }
       this.ammoTotal += x.energia;
     }
-    this.ammoTotal = Math.trunc(this.ammoTotal / 25);
+    this.ammoTotal = Math.trunc(this.ammoTotal / 27);
   },
 
   getBonusCard() {

@@ -135,9 +135,9 @@ class Boss {
   }
 
   antiSpam() {
-    let delay = gerarNumero(2000, 6500);
+    let delay = gerarNumero(750, 1250);
 
-    if (per(2)) {
+    if (per(4)) {
       setTimeout(
         () => populateArena(),
 
@@ -290,9 +290,10 @@ export let countdown = {
       countdownP.textContent = "⚠️";
       countdownP.classList.add("critico");
       countdownP.style.backgroundColor = "#FF5733";
+      countdownP.style.visibility = 'visible'
     } else {
-      countdownP.style.backgroundColor = "#06845a";
-      countdownP.classList.remove("critico");
+      countdownP.style.visibility = 'hidden'
+      
     }
   },
 };

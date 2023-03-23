@@ -409,7 +409,7 @@ function moveToMao(e) {
 
   let cardObj = slotEspObj[obj];
 
-  if (!cardObj._bought) {
+  if (!cardObj._bought && !cardObj.empty) {
     cardObj._bought = true;
     cartaEspecial.style.opacity = "1";
     limparEsp(obj);

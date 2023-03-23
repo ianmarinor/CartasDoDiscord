@@ -62,15 +62,10 @@ function progressBar(_value, _max, _bgColor, _progressColor, _isBarrier) {
 }
 
 function efeitoDanoBarreira(carta) {
+  let source = "shield";
 
-  let source = 'shield'
-
-  let faixa =
-  source +
-    gerarNumero(1, 3) +
-    ".mp3";
+  let faixa = source + gerarNumero(1, 3) + ".mp3";
   audioPlayer(faixa, false, carta._CHN, 0.5);
-
 }
 
 let seed2 = seedString[2];
@@ -2104,7 +2099,7 @@ export let especiais = {
                 // snd(hit);
                 // somDeath(350);
                 playJhinAu(1);
-                if (per(50)) {
+                if (per(75)) {
                   elimCardInv(atiradorP);
                 }
 
@@ -2426,8 +2421,8 @@ export let especiais = {
     dmgBoss: false,
     _invHiddenButton: true,
     hashp: true,
-    hp: 50,
-    maxHealth: 50,
+    hp: 5,
+    maxHealth: 5,
     dano: undefined,
     _exposto: true,
     _barreira: 70,
@@ -2452,13 +2447,18 @@ export let especiais = {
     },
 
     tick() {
-      this._cargoP.innerHTML = progressBar(
-        this._barreira,
-        this._barreiraMax,
-        undefined,
-        undefined,
-        true
-      );
+      if (this._barreira > 0) {
+        this._cargoP.innerHTML = progressBar(
+          this._barreira,
+          this._barreiraMax,
+          undefined,
+          undefined,
+          true
+        );
+      } else {
+        this._cargoP.style.visibility = 'hidden'
+        this._exposto = false
+      }
     },
 
     everyRound() {},
