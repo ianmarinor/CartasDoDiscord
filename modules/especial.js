@@ -2506,7 +2506,7 @@ export let especiais = {
     hp: 10,
     maxHealth: 10,
     dano: undefined,
-    _exposto: false,
+    _exposto: true,
     _barreira: 70,
     _barrieraActive: true,
     allyEmoji: '😎',
@@ -2525,7 +2525,7 @@ export let especiais = {
 
     if(blackaoInInv){
 
-      this._exposto = true
+      
       this._thisCardP.classList.add('critico')
       invObj.map(
         (x)=>{
@@ -2541,7 +2541,7 @@ export let especiais = {
       )
 
     } else {
-      this._exposto = false
+      
       this._thisCardP.classList.remove('critico')
     }
 

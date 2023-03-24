@@ -278,10 +278,7 @@ export let countdown = {
   print() {
     if (!boss) return;
 
-    // if (this._value > 1) {
-    //   countdownP.classList.remove("critico");
-    //   countdownP.style.backgroundColor = "#FF5733";
-    // }
+  
 
     countdownP.textContent = this._value;
     countdownP.style.opacity = 1;
@@ -292,7 +289,7 @@ export let countdown = {
       countdownP.style.backgroundColor = "#FF5733";
       countdownP.style.visibility = 'visible'
     } else {
-      countdownP.style.visibility = 'hidden'
+      // countdownP.style.visibility = 'hidden'
       
     }
   },

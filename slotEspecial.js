@@ -13,8 +13,10 @@ import {
   money,
   ammo,
   audioPlayer,
+  per
 } from "/script.js";
 import { gerarNumero, teste } from "./script.js";
+import { countdown } from "./boss.js";
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
@@ -264,7 +266,6 @@ function Main() {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
-    
   }
 });
 
@@ -273,7 +274,7 @@ export let slotEsp = document.getElementById("slotEsp");
 function colocarSlot(tipo, _slot) {
   let slot = _slot;
 
-  if(slotEspObj[slot]._bought) return
+  if (slotEspObj[slot]._bought) return;
 
   btnCampones = document.getElementById("btnCampones");
   btnCavalheiro = document.getElementById("btnCavalheiro");
@@ -293,12 +294,12 @@ function colocarSlot(tipo, _slot) {
 
   nomeE.classList.remove("float");
   cargoE.classList.remove("float");
-  nomeE.style.margin = 0
-  cargoE.style.margin = 0
+  nomeE.style.margin = 0;
+  cargoE.style.margin = 0;
   slotEsp.children[slot].id = especial.cartaId;
 
   //PERSONALIZADO
-  // 
+  //
 
   retratoE.style.visibility = "visible";
 
@@ -365,7 +366,7 @@ function colocarSlot(tipo, _slot) {
   slotEspObj[slot] = especial;
 
   especial.print();
-  // 
+  //
 
   cartaEspecial.style.opacity = "0.5";
 }
@@ -390,17 +391,13 @@ slotEsp.addEventListener("click", moveToMao);
 let cartaEspecial;
 
 function moveToMao(e) {
+  if (e.target.id == "slotEsp") return;
 
-  
-  if(e.target.id == 'slotEsp') return
-
-  if(e.target.parentElement.id == 'slotEsp'){
-    
-    cartaEspecial = e.target
+  if (e.target.parentElement.id == "slotEsp") {
+    cartaEspecial = e.target;
   } else {
     cartaEspecial = e.target.offsetParent;
   }
-
 
   let obj;
   cartaEspecial == slotEsp.children[0] ? (obj = 0) : 0;
@@ -413,49 +410,43 @@ function moveToMao(e) {
     cardObj._bought = true;
     cartaEspecial.style.opacity = "1";
     limparEsp(obj);
-    
+
     return;
   }
 
- 
-
   // cartaEspecial = slotEsp.children[0].cloneNode(true)
-
-  
 
   if (cartaEspecial.id && !myInterval && cardObj._bought) {
     for (let i = 5; i > -1; i--) {
       if (mao.children[i].id == "mao" + i) {
-        
         snd(novaCarta);
-        
+
         objToMao(i, slotEspObj[obj]);
-        
-        if ((slotEspObj[obj].raridade.nome == "sangueAzul")) {
+
+        if (slotEspObj[obj].raridade.nome == "sangueAzul") {
           ammo.add(1);
         }
 
-        limparEsp(null,obj)
+        limparEsp(null, obj);
         mao.replaceChild(cartaEspecial, mao.children[i]);
-        
+        if (per(20)) {
+          countdown.decrease();
+        }
 
         // AUDIO SELECAO
         if (slotEspObj[obj]._audioChosenFiles) {
           let carta = slotEspObj[obj];
           if (carta._dead) return;
-          
+
           let faixa =
-          carta._sourceChosen +
-          gerarNumero(1, carta._audioChosenFiles) +
-          ".mp3";
+            carta._sourceChosen +
+            gerarNumero(1, carta._audioChosenFiles) +
+            ".mp3";
           audioPlayer(faixa, true, carta._CHN, 0.5);
         }
 
-        
-
         break;
       } else {
-        
       }
     }
   }
@@ -463,75 +454,50 @@ function moveToMao(e) {
   selectHandCard();
 }
 
-export function limparEsp(notDelet,YesDelet) {
+export function limparEsp(notDelet, YesDelet) {
   teste.innerHTML = cartaEsp;
   let emptyEspP0 = teste.children[0].cloneNode(true);
   let emptyEspP1 = teste.children[0].cloneNode(true);
   let emptyEspP2 = teste.children[0].cloneNode(true);
 
-  
-
   let slots = [
     () => {
-      
-      // 
+      //
       slotEsp.replaceChild(emptyEspP0, slotEsp.children[0]);
     },
 
-
     () => {
-      
-      
-      // 
+      //
       slotEsp.replaceChild(emptyEspP1, slotEsp.children[1]);
     },
 
-
     () => {
-      
-      
-      // 
+      //
       slotEsp.replaceChild(emptyEspP2, slotEsp.children[2]);
     },
   ];
 
-  
-
-    for(let i=0;i<3;i++){
-  
-      
-
-        if(i == YesDelet){
-          
-          slots[i]()
-          slotEspObj[i] = emptyObj
-          
-    
-        }
-      
-
-      
-
-        if(i != notDelet && notDelet != null && !slotEspObj[i]._bought){
-          slots[i]()
-          slotEspObj[i] = emptyObj
-    
-        }
-      
+  for (let i = 0; i < 3; i++) {
+    if (i == YesDelet) {
+      slots[i]();
+      slotEspObj[i] = emptyObj;
     }
-  
-    // if(YesDelet){
-    //   slots[0]()
-    //   slotEspObj[0] = emptyObj
-    //   
-    // }
-  
+
+    if (i != notDelet && notDelet != null && !slotEspObj[i]._bought) {
+      slots[i]();
+      slotEspObj[i] = emptyObj;
+    }
+  }
+
+  // if(YesDelet){
+  //   slots[0]()
+  //   slotEspObj[0] = emptyObj
+  //
+  // }
 
   // slotEsp.replaceChild(emptyEspP0, slotEsp.children[0]);
   // slotEsp.replaceChild(emptyEspP1, slotEsp.children[1]);
   // slotEsp.replaceChild(emptyEspP2, slotEsp.children[2]);
-
-  
 
   ativarBtn();
 }

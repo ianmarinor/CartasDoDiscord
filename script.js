@@ -477,8 +477,7 @@ class fabricaDeCarta {
       }
     }
 
-    this.kill()
-
+    this.kill();
   }
 
   dmg() {}
@@ -1750,6 +1749,7 @@ export let emptyObj = {
   _monarkFree: false,
   hp: 0,
   _monarkReplaceble: true,
+  autoAtaque: false,
   place() {
     return false;
   },
@@ -1765,6 +1765,7 @@ export let emptyObj = {
   },
   removeBuff(n) {},
   everyRound() {},
+  getReady() {},
 };
 
 export let maoObj = [
@@ -2164,7 +2165,6 @@ export function tudo() {
       button.style.backgroundColor = "";
       button.innerHTML = "&#127381; PASSAR CARTA &#127381;";
     }
-    // vendas.update(+1);
 
     snd(novaCartaAu);
     start();
@@ -2187,6 +2187,10 @@ export function tudo() {
     blockInv();
     poderBoss();
     runEveryRound();
+
+    if (per(5)) {
+      countdown.decrease();
+    }
   } else {
   }
 }
@@ -2204,10 +2208,38 @@ function runEveryRound() {
   maoObj.map((x) => {
     x._everyRoundMao ? x.everyRound() : false;
   });
-  areObj.map((x) => {
-    if (x.autoAtaque) {
-      x.autoAtaque();
+
+  let juj = 0;
+
+  areObj.map((x, i) => {
+    if (x.autoAtaque && x.readyToAttack) {
+      wCoolDown.set(true);
+
+      function terimnarAtaque() {
+        setTimeout(() => {
+          wCoolDown.set(false);
+          x.getReady();
+        }, 800);
+      }
+
+      juj++;
+      setTimeout(() => {
+        if (x.autoAtaque) {
+          x.autoAtaque();
+
+          if (!areObj.some((x) => x.autoAtaque && x.readyToAttack)) {
+            terimnarAtaque();
+          }
+        }
+      }, juj * 350);
     }
+  });
+
+  if (!areObj.some((x) => x.autoAtaque && x.readyToAttack)) {
+    areObj.map((x) => x.getReady());
+  }
+
+  areObj.map((x) => {
     x.defaultEveryRound ? x.defaultEveryRound() : 0;
 
     if (x.everyRound) {
@@ -2692,6 +2724,7 @@ export function startGame2() {
   vendas.set(50);
   hpPlayer.set(100);
   ammo.set(0);
+  countdown.valueSet(20);
   tick();
   removeBuffAll();
 }

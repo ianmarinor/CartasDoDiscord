@@ -418,6 +418,15 @@ class Inimigo {
 
   everyRound() {}
 
+
+  getReady(){
+
+    if (per(this.attackChance)) {
+      this.readyToAttack = true;
+    }
+    
+  }
+
   autoAtaque() {
     if (this.readyToAttack) {
       if (this._doesAttack) {
@@ -426,11 +435,7 @@ class Inimigo {
         this.poder();
         this.readyToAttack = false;
       }
-    } else {
-      if (per(this.attackChance)) {
-        this.readyToAttack = true;
-      }
-    }
+    } 
   }
 
   primaryAttack() {
@@ -1014,7 +1019,11 @@ let metaforando = {
   poder() {
     invObj.map((x) => {
       if (x.isNormal || x.isInvisible) return;
-      let stunTime = gerarNumero(8, 18);
+      let stunTime = gerarNumero(1, 2);
+
+      stunTime *= this._level
+
+
       x._stunned = true;
       x._stunnedWeight = stunTime;
 
@@ -1243,19 +1252,19 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnVitor();
+    spawnMonark();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    spawnLiberdade();
+    spawnDog();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    invObj[0].poder()
+    boss.chuvaDeMonark()
   }
 });
 
