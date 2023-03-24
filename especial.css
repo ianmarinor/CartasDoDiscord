@@ -29,3 +29,29 @@
   color: #044dde;
   color: #b0bfed;
 }
+
+
+#julia {
+  background: linear-gradient(rgba(184, 78, 173, 0.9), rgba(184, 78, 173, 0.3), rgba(184, 78, 173, 0.9)),
+    /* url(pics/cabecaFundo.gif); */
+    /* url(https://thumbs.gfycat.com/BossyRespectfulElkhound-max-1mb.gif); */
+    /* url(https://i.gifer.com/origin/f3/f32b67d4642f47b3fa8a67287da72de1.gif); */
+    /* url(https://media0.giphy.com/media/vuVOaLoHGpNSnTLptb/giphy.gif); */
+    /* url(https://wallpapercave.com/uwp/uwp1468999.gif); */
+    url(https://i.gifer.com/ROo1.gif);
+
+    background-position: 100% 100%;
+
+  font-family: minecraft;
+  height: var(--tamanhoCartaHeight);
+  width: var(--tamanhoCartaWidth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  position: relative;
+  border: 3px solid #d013c3;
+  font-weight: 900;
+  
+}

@@ -121,7 +121,7 @@ export function comunistaPE() {
   }
 }
 
-class Especial {
+export class Especial {
   constructor(card) {
     //unique
     this.id = card.id;
@@ -2486,11 +2486,97 @@ export let especiais = {
     },
     novoAtaqueStyle: {
       color: "#b0bfed",
-      fontSize: "140%",
-      fontFamily: "cabeca",
+      fontSize: "",
+      fontFamily: "",
       visibility: "visible",
     },
   },
+
+  julia: {
+    cartaId: "julia",
+    nome: "Julia",
+    raridade: raridades.campones,
+    energia: 0,
+    emoji: "",
+    retrato: "url('pics/juliaRetrato.jfif')",
+    cargo: "",
+    dmgBoss: false,
+    _invHiddenButton: true,
+    hashp: true,
+    hp: 10,
+    maxHealth: 10,
+    dano: undefined,
+    _exposto: false,
+    _barreira: 70,
+    _barrieraActive: true,
+    allyEmoji: '😎',
+
+  cfg(){
+
+    this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
+    this._nomeP.style.marginTop = '20px'
+
+
+  },
+
+  tick(){
+
+    let blackaoInInv = invObj.some((x) => x._integrante == "Blackao");
+
+    if(blackaoInInv){
+
+      this._exposto = true
+      this._thisCardP.classList.add('critico')
+      invObj.map(
+        (x)=>{
+          if(x._integrante == "Blackao"){
+            this.giveAllyEmoji(x)
+            x.blackaoProtetor = true
+            x.dano = x.energia
+            x.dmgBoss = false
+    
+
+          }
+        }
+      )
+
+    } else {
+      this._exposto = false
+      this._thisCardP.classList.remove('critico')
+    }
+
+  },
+
+    nomeStyle: {
+      fontSize: "180%",
+      fontFamily: "julia",
+      color: "cyan",
+    },
+
+    retratoStyle: {
+      border: "2px solid #d013c3",
+      backgroundColor: "",
+    },
+    cargoStyle: {
+      fontFamily: "",
+      fontSize: "170%",
+      visibility: "visible",
+    },
+    ataqueStyle: {
+      color: "",
+      fontSize: "",
+      fontFamily: "",
+      visibility: "hidden",
+    },
+    novoAtaqueStyle: {
+      color: "cyan",
+      fontSize: "",
+      fontFamily: "",
+      visibility: "visible",
+    },
+  },
+
+
 };
 
 function objBinder(obj) {
@@ -2548,7 +2634,7 @@ export function escolherEspecial(teste) {
 
       let num;
 
-      num = gerarNumero(1, 5);
+      num = gerarNumero(1, 6);
 
       if (!true) {
         especial = objBinder(especiais.jhin);
@@ -2562,6 +2648,8 @@ export function escolherEspecial(teste) {
         especial = objBinder(especiais.jhin);
       } else if (num == 5) {
         especial = objBinder(especiais.abelha);
+      } else {
+        especial = objBinder(especiais.julia);
       }
 
       //CAMPONESES
@@ -2574,9 +2662,12 @@ export function escolherEspecial(teste) {
 
       if (num == 1) {
         especial = objBinder(especiais.maisCartas);
-      } else {
+      } else if(num == 2) {
         especial = objBinder(especiais.cabeca);
+      } else {
+        especial = objBinder(especiais.medikit);
       }
+
     }
   } else {
     raridade = raridades.semRaridade;

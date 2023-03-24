@@ -70,7 +70,10 @@ a:hover {
   font-family: "cabeca";
   src: url("/fonts/cabeca.ttf");
 }
-
+@font-face {
+  font-family: "julia";
+  src: url("/fonts/julia.ttf");
+}
 
 
 * {

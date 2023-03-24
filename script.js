@@ -11,7 +11,7 @@ import {
   arenaByRound,
 } from "./arena.js";
 
-import { especial } from "./modules/especial.js";
+import { especiais, especial, Especial } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
@@ -235,8 +235,8 @@ export function escolherVariante(x) {
     cargo != "carta-semcargo" &&
     cargo != "carta-people" &&
     cargo != "carta-people" &&
-    cargo != "carta-gentleman" 
-    
+    cargo != "carta-gentleman";
+
   variante = ["", ""];
   if (cartasQueNaoTemVariante) {
     if (seedString[14] == 4) {
@@ -368,6 +368,7 @@ class fabricaDeCarta {
     this._integranteArray = integrante;
     this._cidadeArray = cidade;
     this._varianteArray = variante;
+    this.dano = 0;
 
     //dom
     this._cargoP = false;
@@ -430,8 +431,60 @@ class fabricaDeCarta {
     this.print();
   }
 
-  firstPrint() {
-    // ataqueP.innerHTML = this.energia + "⚡";
+  firstPrint() {}
+
+  unableToAttack() {
+    return false;
+  }
+
+  poder() {
+    console.log("SEM PODER");
+  }
+
+  blackaoBoi() {
+    if (!this.blackaoProtetor) return;
+
+    let inimigo = () => {
+      let arr = [];
+
+      for (let i = 0; i < 100; i++) {
+        let slot = gerarNumero(0, 9);
+
+        if (!areObj[slot].empty && !areObj[slot].isInvisible) {
+          let vitima = areObj[slot];
+
+          arr.push(vitima);
+
+          arr.push(vitima._leftObj);
+          arr.push(vitima._leftObj._leftObj);
+
+          arr.push(vitima._rightObj);
+          arr.push(vitima._rightObj._rightObj);
+
+          console.log(arr);
+
+          return arr;
+        }
+      }
+      return false;
+    };
+
+    let _inimigo = inimigo();
+
+    for (const x of _inimigo) {
+      if (x) {
+        x.dmg(this.dano);
+      }
+    }
+
+    this.kill()
+
+  }
+
+  dmg() {}
+
+  useBarrier() {
+    return false;
   }
 
   print() {
@@ -440,7 +493,11 @@ class fabricaDeCarta {
       this._cfgDefaultAdded = true;
     }
 
-    this._energiaP.textContent = this.energia + "⚡";
+    if (this.dano == 0) {
+      this._energiaP.textContent = this.energia + "⚡";
+    } else {
+      this._energiaP.textContent = this.dano + "💥";
+    }
 
     let thisP = this._thisCardP;
     let statusEmoji = thisP.children[3].children[2];
@@ -472,6 +529,12 @@ class fabricaDeCarta {
     if (this._superCritico && this._critico) {
       this._ultraCritico = true;
       this._thisCardP.classList.add("critico");
+    }
+
+    //BLACKAO PROTETOR
+
+    if (this._integrante == "Blackao" && this.blackaoProtetor) {
+      this.poder = this.blackaoBoi;
     }
   }
 
@@ -2561,10 +2624,8 @@ export let wCoolDown = {
   print() {
     if (this.status) {
       packP.style.opacity = 0.1;
-      
     } else {
-      packP.style.opacity  = 1;
-      
+      packP.style.opacity = 1;
     }
   },
 };

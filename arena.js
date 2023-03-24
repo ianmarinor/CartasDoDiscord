@@ -1255,9 +1255,11 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    spawnDog()
+    invObj[0].poder()
   }
 });
+
+
 
 function Main() {
   areObj = [
