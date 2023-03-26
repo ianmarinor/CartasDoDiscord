@@ -9,6 +9,7 @@ import {
   populateArena,
   updatePlacarInimigo,
   arenaByRound,
+  arenaAtaque
 } from "./arena.js";
 
 import { especiais, especial, Especial } from "./modules/especial.js";
@@ -445,7 +446,7 @@ class fabricaDeCarta {
     if (!this.blackaoProtetor) return;
 
     let inimigo = () => {
-      let arr = [];
+      
 
       for (let i = 0; i < 100; i++) {
         let slot = gerarNumero(0, 9);
@@ -453,31 +454,37 @@ class fabricaDeCarta {
         if (!areObj[slot].empty && !areObj[slot].isInvisible) {
           let vitima = areObj[slot];
 
-          arr.push(vitima);
+          vitima.dmg(this.dano)
 
-          arr.push(vitima._leftObj);
-          arr.push(vitima._leftObj._leftObj);
+          setTimeout( ()=>{
 
-          arr.push(vitima._rightObj);
-          arr.push(vitima._rightObj._rightObj);
+            vitima._leftObj ? vitima._leftObj.dmg(this.dano) : 0
+            vitima._rightObj ? vitima._rightObj.dmg(this.dano) : 0
 
-          console.log(arr);
+          },  300)
+          
+          setTimeout( ()=>{
+          vitima._leftObj._leftObj ? vitima._leftObj._leftObj.dmg(this.dano) : 0
+          vitima._rightObj._rightObj ? vitima._rightObj._rightObj.dmg(this.dano) : 0
+          this.kill();
+        },  600)
+          return
 
-          return arr;
+        
         }
       }
       return false;
     };
 
-    let _inimigo = inimigo();
+   inimigo();
 
-    for (const x of _inimigo) {
-      if (x) {
-        x.dmg(this.dano);
-      }
-    }
+    // for (const x of _inimigo) {
+    //   if (x) {
+    //     x.dmg(this.dano);
+    //   }
+    // }
 
-    this.kill();
+    
   }
 
   dmg() {}
@@ -2211,33 +2218,37 @@ function runEveryRound() {
 
   let juj = 0;
 
-  areObj.map((x, i) => {
-    if (x.autoAtaque && x.readyToAttack) {
-      wCoolDown.set(true);
 
-      function terimnarAtaque() {
-        setTimeout(() => {
-          wCoolDown.set(false);
-          x.getReady();
-        }, 800);
-      }
 
-      juj++;
-      setTimeout(() => {
-        if (x.autoAtaque) {
-          x.autoAtaque();
+arenaAtaque()
 
-          if (!areObj.some((x) => x.autoAtaque && x.readyToAttack)) {
-            terimnarAtaque();
-          }
-        }
-      }, juj * 350);
-    }
-  });
+  // areObj.map((x, i) => {
+  //   if (x.autoAtaque && x.readyToAttack) {
+  //     wCoolDown.set(true);
 
-  if (!areObj.some((x) => x.autoAtaque && x.readyToAttack)) {
-    areObj.map((x) => x.getReady());
-  }
+  //     function terimnarAtaque() {
+  //       setTimeout(() => {
+  //         wCoolDown.set(false);
+  //         x.getReady();
+  //       }, 800);
+  //     }
+
+  //     juj++;
+  //     setTimeout(() => {
+  //       if (x.autoAtaque) {
+  //         x.autoAtaque();
+
+  //         if (!areObj.some((x) => x.autoAtaque && x.readyToAttack)) {
+  //           terimnarAtaque();
+  //         }
+  //       }
+  //     }, juj * 350);
+  //   }
+  // });
+
+  // if (!areObj.some((x) => x.autoAtaque && x.readyToAttack)) {
+  //   areObj.map((x) => x.getReady());
+  // }
 
   areObj.map((x) => {
     x.defaultEveryRound ? x.defaultEveryRound() : 0;
@@ -2278,7 +2289,7 @@ function tick() {
     ativarBtn();
     criarBtn();
     placarArena.printP();
-    updatePlacarInimigo();
+    updatePlacarInimigo(false);
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];

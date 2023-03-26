@@ -1,17 +1,14 @@
-let especial = {
-    cartaId: 'dva',
-    dano: 50,
-    custom(){ console.log(555555)},
 
-    print(){
-        console.log(2222222222222222)
-    }
+// let obj = {
+//     foo: 'bar'
+// }
 
-}
+// let objs1 = [obj]
 
-especial.custom()
-
-especial.custom = especial.print
+// let objs2 = []
 
 
-especial.custom()
+
+// console.log('objs1: ', objs1);
+// console.log( objs2 == true ? 'AAAAA' : 'BBBBB')
+

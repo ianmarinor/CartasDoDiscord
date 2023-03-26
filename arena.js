@@ -49,6 +49,65 @@ export function areWakeUp() {
   });
 }
 
+export function arenaAtaque() {
+  //QUEM ESTIVER PRONTO, ATAQUE
+
+  let prontosParaAtaque = [];
+
+  //COLOCAR CARTAS QUE ATACAM EM UMA ARRAY
+  areObj.map((x) => {
+    if (x.empty) return;
+    x.hasJustAttacked = false;
+    if (x.readyToAttack) {
+      prontosParaAtaque.push(x);
+    }
+  });
+
+  //ATACAR COM DELAY
+  
+  if (prontosParaAtaque == 0) {
+    fiquemProntos();
+  } else {
+
+    wCoolDown.set(true);
+  
+    let i = 0
+
+    let attackComDelay = setInterval(() => {
+
+      if (i > prontosParaAtaque.length - 1) {
+        console.log("acabou");
+        clearInterval(attackComDelay);
+        wCoolDown.set(false);
+        fiquemProntos();
+        return
+      }
+
+      prontosParaAtaque[i].autoAtaque();
+      console.log(prontosParaAtaque[i]._place, 'ESTA ATACANDO');
+      i++
+
+      
+
+    }, 350);
+
+
+  }
+
+    
+  
+
+  //FIQUEM PRONTOS, SE NAO ACABARAM DE ATACAR
+  function fiquemProntos() {
+    areObj.map((x) => {
+      x.getReady();
+    });
+    updatePlacarInimigo()
+  }
+
+  // updatePlacarInimigo()
+}
+
 export function progressBar(_value, _max, _bgColor, _progressColor) {
   let value = _value;
   let max = _max;
@@ -79,7 +138,7 @@ export function arenaByRound() {
   hasPlayed = false;
 }
 
-export function updatePlacarInimigo() {
+export function updatePlacarInimigo(_audio) {
   let drumAu = "alertaDano.mp3";
   let mGAu = "alertaDano2.mp3";
   let placarAudioChannel = document.createElement("audio");
@@ -114,7 +173,7 @@ export function updatePlacarInimigo() {
     placarInimigoWrap.style.opacity = "0.9";
     placarInimigoWrap.style.border = "solid 2px black";
 
-    if (hasPlayed) return;
+    if (hasPlayed || _audio === false ) return;
     audioPlayer(drumAu, true, placarAudioChannel);
     hasPlayed = true;
   } else if (dmgTotal > 19 || efeitos != "") {
@@ -134,7 +193,7 @@ export function updatePlacarInimigo() {
     if (efeitos != "") {
       placarInimigoWrap.children[1].children[0].innerHTML = efeitos;
     }
-    if (hasPlayed) return;
+    if (hasPlayed || _audio === false) return;
     audioPlayer(mGAu, true, placarAudioChannel, 0.85);
     hasPlayed = true;
   }
@@ -418,28 +477,28 @@ class Inimigo {
 
   everyRound() {}
 
-
-  getReady(){
-
-    if (per(this.attackChance)) {
+  getReady() {
+    if (per(this.attackChance) && !this.hasJustAttacked) {
       this.readyToAttack = true;
     }
-    
   }
 
   autoAtaque() {
     if (this.readyToAttack) {
       if (this._doesAttack) {
         this.primaryAttack();
+        this.hasJustAttacked = true;
       } else {
         this.poder();
+        this.hasJustAttacked = true;
         this.readyToAttack = false;
       }
-    } 
+    }
   }
 
   primaryAttack() {
     this.ataque(this.dano);
+    this.readyToAttack = false;
   }
 
   kill(absolute) {
@@ -465,7 +524,6 @@ class Inimigo {
 
     if (invAllEmpty) {
       hpPlayer.remove(dano);
-      this.readyToAttack = false;
     } else {
       //se houver  exposto
       if (invObj.some((x) => x._exposto && !x.isInvisible)) {
@@ -478,7 +536,7 @@ class Inimigo {
             vitima.dmg(dano);
 
             this._dmgDone += dano;
-            this.readyToAttack = false;
+
             return true;
           }
         }
@@ -493,7 +551,7 @@ class Inimigo {
             let vitima = invObj[slot];
             vitima.dmg(dano);
             this._dmgDone += dano;
-            this.readyToAttack = false;
+
             return true;
           }
         }
@@ -508,7 +566,7 @@ class Inimigo {
             let vitima = invObj[slot];
             vitima.dmg(dano);
             this._dmgDone += dano;
-            this.readyToAttack = false;
+
             return true;
           }
         }
@@ -523,7 +581,7 @@ class Inimigo {
             let vitima = invObj[slot];
             vitima.dmg(dano);
             this._dmgDone += dano;
-            this.readyToAttack = false;
+
             return true;
           }
         }
@@ -937,7 +995,7 @@ let dog = {
   _attackAtSpawn: false,
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
-  attackChance: 11,
+  attackChance: 15,
   hp: 17,
   maxHealth: 17,
   dano: 15,
@@ -1007,9 +1065,7 @@ let metaforando = {
 
     this._displayP.children[1].style.visibility = "hidden";
 
-    this._nomeP.style.margin = '20px  0px 5px'
-    
-
+    this._nomeP.style.margin = "20px  0px 5px";
   },
 
   tick() {
@@ -1021,8 +1077,7 @@ let metaforando = {
       if (x.isNormal || x.isInvisible) return;
       let stunTime = gerarNumero(1, 2);
 
-      stunTime *= this._level
-
+      stunTime *= this._level;
 
       x._stunned = true;
       x._stunnedWeight = stunTime;
@@ -1084,14 +1139,13 @@ let liberdade = {
     this._cargoP.style.marginBottom = "0px";
     this._retratoP.style.height = "80%";
 
-    this._nomeP.style.margin = '20px  0px 5px'
-    this._hpP.style.visibility = 'hidden'
+    this._nomeP.style.margin = "20px  0px 5px";
+    this._hpP.style.visibility = "hidden";
   },
 
   tick() {
     this._nomeP.innerHTML = progressBar(this.hp, this.maxHealth, "gray", "red");
   },
-
 
   poder() {
     hpPlayer.remove(this.dano);
@@ -1264,11 +1318,9 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    boss.chuvaDeMonark()
+    boss.chuvaDeMonark();
   }
 });
-
-
 
 function Main() {
   areObj = [

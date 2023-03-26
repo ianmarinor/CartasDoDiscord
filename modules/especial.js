@@ -592,6 +592,8 @@ export class Especial {
   }
 
   dmg(n) {
+    this.dmgReceived();
+
     if (this.useBarrier(n)) return;
 
     if (this.hashp == false) {
@@ -617,6 +619,8 @@ export class Especial {
       this.kill();
     }
   }
+
+  dmgReceived() {}
 
   kill(absolute) {
     if (!this._parentP) return;
@@ -2456,8 +2460,8 @@ export let especiais = {
           true
         );
       } else {
-        this._cargoP.style.visibility = 'hidden'
-        this._exposto = false
+        this._cargoP.style.visibility = "hidden";
+        this._exposto = false;
       }
     },
 
@@ -2503,49 +2507,40 @@ export let especiais = {
     dmgBoss: false,
     _invHiddenButton: true,
     hashp: true,
-    hp: 10,
-    maxHealth: 10,
+    hp: 25,
+    maxHealth: 25,
     dano: undefined,
-    _exposto: true,
-    _barreira: 70,
-    _barrieraActive: true,
-    allyEmoji: '😎',
+    // _exposto: true,
+    allyEmoji: "😎",
 
-  cfg(){
+    cfg() {
+      this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
+      this._nomeP.style.marginTop = "20px";
+    },
 
-    this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
-    this._nomeP.style.marginTop = '20px'
+    dmgReceived() {
+      let blackaoInInv = invObj.some((x) => x._integrante == "Blackao");
 
-
-  },
-
-  tick(){
-
-    let blackaoInInv = invObj.some((x) => x._integrante == "Blackao");
-
-    if(blackaoInInv){
-
-      
-      this._thisCardP.classList.add('critico')
-      invObj.map(
-        (x)=>{
-          if(x._integrante == "Blackao"){
-            this.giveAllyEmoji(x)
-            x.blackaoProtetor = true
-            x.dano = x.energia
-            x.dmgBoss = false
-    
-
+      if (blackaoInInv) {
+        this._thisCardP.classList.add("critico");
+        invObj.map((x) => {
+          if (x._integrante == "Blackao") {
+            this.giveAllyEmoji(x);
+            x.blackaoProtetor = true;
+            x.dano = x.energia;
+            x.dmgBoss = false;
           }
-        }
-      )
+        });
+      }
+    },
 
-    } else {
-      
-      this._thisCardP.classList.remove('critico')
-    }
+    tick() {
+      let blackaoInInv = invObj.some((x) => x._integrante == "Blackao");
 
-  },
+      if (!blackaoInInv) {
+        this._thisCardP.classList.remove("critico");
+      }
+    },
 
     nomeStyle: {
       fontSize: "180%",
@@ -2575,8 +2570,6 @@ export let especiais = {
       visibility: "visible",
     },
   },
-
-
 };
 
 function objBinder(obj) {
@@ -2662,12 +2655,11 @@ export function escolherEspecial(teste) {
 
       if (num == 1) {
         especial = objBinder(especiais.maisCartas);
-      } else if(num == 2) {
+      } else if (num == 2) {
         especial = objBinder(especiais.cabeca);
       } else {
         especial = objBinder(especiais.medikit);
       }
-
     }
   } else {
     raridade = raridades.semRaridade;
