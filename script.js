@@ -9,7 +9,7 @@ import {
   populateArena,
   updatePlacarInimigo,
   arenaByRound,
-  arenaAtaque
+  arenaAtaque,
 } from "./arena.js";
 
 import { especiais, especial, Especial } from "./modules/especial.js";
@@ -345,7 +345,7 @@ class fabricaDeCarta {
     this.energia = poder;
     // this.energiaNatural = poder;
     this._variante = variante[0];
-    this[integrante[0]] = integrante[0]
+    this[integrante[0]] = integrante[0];
     this._especial = especial;
     this._seedobj = seedObj;
     this._thisCardP = false;
@@ -443,10 +443,7 @@ class fabricaDeCarta {
     console.log("SEM PODER");
   }
 
-  blackaoBoi() {
-    
-    
-  }
+  blackaoBoi() {}
 
   dmg() {}
 
@@ -1006,6 +1003,8 @@ for (let m = 0; m < 6; m++) {
 }
 
 export function moveToMao(i) {
+  if (wCoolDown.status) return;
+
   if (copyCard.id != "carta") {
     if (numCartas.total <= 1 && packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
@@ -2179,11 +2178,7 @@ function runEveryRound() {
 
   let juj = 0;
 
-
-
-arenaAtaque()
-
-  
+  arenaAtaque();
 
   areObj.map((x) => {
     x.defaultEveryRound ? x.defaultEveryRound() : 0;
@@ -2360,7 +2355,7 @@ function poderBoss() {
   if (!boss) return;
 
   boss.ult();
-  boss.antiSpam()
+  boss.antiSpam();
 }
 
 export let numCartas = {
@@ -2627,9 +2622,7 @@ cartaParaMover.addEventListener("click", moverToCartaMao);
 document.addEventListener("keydown", (event) => {
   if (copyCard) {
     if (event.code == teclaMoverCarta) {
-      if (!wCoolDown.status && chosenCard == 0) {
-        moverToCartaMao();
-      }
+      moverToCartaMao();
     }
   }
 });

@@ -14,7 +14,7 @@ import {
   audioPlayer,
   wCoolDown,
 } from "./script.js";
-import { boss, spawnBoss, resetBoss, toMonark } from "./boss.js";
+import { boss, spawnBoss, resetBoss, toMonark, countdown } from "./boss.js";
 import {
   menosClickBlueprint,
   camaradaBlueprint,
@@ -1318,7 +1318,7 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    boss.chuvaDeMonark();
+    countdown.createDefense();
   }
 });
 

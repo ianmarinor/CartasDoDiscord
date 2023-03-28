@@ -850,11 +850,17 @@ export class Especial {
         this._buttonP.style.cursor = "not-allowed";
       }
     } else if (!this.unableToAttack()) {
-      this._buttonP.innerHTML = "🔘";
+      if (!this.customButtonEmoji) {
+        this._buttonP.innerHTML = "🔘";
+      }
+
       this._buttonP.style.opacity = 1;
       this._buttonP.style.cursor = "pointer";
     } else {
-      this._buttonP.innerHTML = "🔘";
+      if (!this.customButtonEmoji) {
+        this._buttonP.innerHTML = "🔘";
+      }
+
       this._buttonP.style.opacity = 0.3;
       this._buttonP.style.cursor = "not-allowed";
     }
@@ -1610,12 +1616,17 @@ export let especiais = {
     hashp: true,
     clockReady: true,
     isInvisible: false,
-    dano: 0,
+    dano: undefined,
     _exposto: true,
     clockToVis: false,
 
     cfg() {
-      this.dano = gerarNumero(68, 85);
+      this.dano = gerarNumero(120, 180);
+
+      if(per(0.1)){
+        this.dano = gerarNumero(410, 600)
+      }
+
       this._cargoP.textContent = "⌚";
       this._cargoP.style.fontSize = "2em";
     },
@@ -1671,7 +1682,7 @@ export let especiais = {
           retrato.classList.add("visible");
           spy.children[0].className = "vis";
           this._invHiddenButton = false;
-          retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
+          retrato.style.backgroundImage = this.retrato;
           this._energiaP = this.dano;
 
           let spyInvisAu = ["spyInvis.mp3", 0.3];
@@ -2209,7 +2220,7 @@ export let especiais = {
     tick() {},
 
     cfg() {
-      this.dano = gerarNumero(18, 23);
+      this.dano = gerarNumero(18, 35);
     },
 
     ult() {
@@ -2239,7 +2250,7 @@ export let especiais = {
       audioPlayer(faixa, true, this._CHN, 0.5);
       this._thisCardP.classList.add("piscar");
 
-      let ultiDmg = gerarNumero(1110, 1580);
+      let ultiDmg = gerarNumero(1900, 2100);
       this.dano = ultiDmg;
 
       setTimeout(
@@ -2523,7 +2534,9 @@ export let especiais = {
     maxHealth: 10,
     dano: 1,
     _invHiddenButton: true,
-    danoMaximoProgresso: 1500,
+    danoMaximoProgresso: 2000,
+
+    customButtonEmoji: true,
 
     //AUDIO FILES
     _audioDespawnFiles: 4,
@@ -2531,66 +2544,67 @@ export let especiais = {
 
     cfg() {
       //sombra nome
-
-      this.dano = gerarNumero(150, 900);
+      
+      this.dano = this.danoMaximoProgresso;
 
       this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
       this._nomeP.style.marginTop = "20px";
       this.hide(this._energiaP);
+      // this.hide(this._cargoP);
     },
 
-    increaseDmg() {
-      if (this.dano <= 300) {
-        this.dano += gerarNumero(60, 75);
-        // this.dano ++
-      } else {
-        this.dano += gerarNumero(333, 420);
-      }
+    confuseButton(trigger) {
+      let pixels = gerarNumero(0, 250) + "px ";
+      let pixelsRight = gerarNumero(0, 120) + "px ";
+      let fontRNG = gerarNumero(10, 20) + "px ";
 
-      if (this.dano >= this.danoMaximoProgresso) {
-        this.dano = this.danoMaximoProgresso;
-        this.increasing = true;
-      }
-    },
+      if (trigger == undefined || trigger === true) {
 
-    decreaseDmg() {
-      this.increasing = true;
 
-      if (this.dano <= 300) {
-        this.dano -= gerarNumero(60, 75);
+        this._hpP.style.opacity = '0'
+        this._buttonP.style.position = 'absolute'
+        this._buttonP.textContent = "👞";
+        this._buttonP.style.top = pixels;
+        this._buttonP.style.left = pixelsRight;
+        this._buttonP.style.fontSize = fontRNG;
+        
+
+      } else if (trigger === false) {
+        this._hpP.style.opacity = '1'
+        this._buttonP.style.position = 'static'
+        this._buttonP.textContent = "🔘";
+        this._buttonP.style.fontSize = '22.56px';
+        
+    }},
+
+    decreaseDmg(_numOfTwelves) {
+      // this.increasing = true;
+
+      let numofTwelves = _numOfTwelves
+
+      if (this.dano <= 500) {
+        this.dano -= Math.floor( gerarNumero(45, 60) / numofTwelves);
         // this.dano--
       } else {
-        this.dano -= gerarNumero(333, 420);
+        this.dano -= Math.floor(gerarNumero(175, 220) / numofTwelves);
       }
 
       if (this.dano <= 1) {
         this.dano = 1;
-        this.increasing = false;
       }
     },
 
     despawn(_dT) {
-      let numberOfTwelves = _dT;
-
-      let timesArr = [980, 1000, 1250, 1575, 1900];
-
-      let despawnTime = gerarNumero(
-        timesArr[numberOfTwelves - 1] / 1.5,
-        timesArr[numberOfTwelves - 1]
-      );
+      
+      if (this.stop || this.dano > 2) return;
 
       let faixa =
         this._sourceDespawn + gerarNumero(1, this._audioDespawnFiles) + ".mp3";
 
       this._thisCardP.classList.add("critico");
-
-      setTimeout(() => {
-        if (this.stop) return;
-
-        audioPlayer(faixa, false, this._CHN, 0.6);
-        this.kill();
-        invObj.map((x) => (x.Twelve ? x.kill() : 0));
-      }, despawnTime);
+      audioPlayer(faixa, false, this._CHN, 0.6);
+      this.kill();
+      invObj.map((x) => (x.Twelve ? x.kill() : 0));
     },
 
     poder() {
@@ -2599,6 +2613,9 @@ export let especiais = {
         this.kill();
       } else {
         if (this.unableToAttack()) return;
+
+        this.confuseButton(false);
+
         this.stop = true;
         this._thisCardP.classList.remove("critico");
         this._cargoP.innerHTML = progressBar(
@@ -2620,38 +2637,48 @@ export let especiais = {
       let hasTwelve = invObj.some((x) => x.Twelve);
 
       if (hasTwelve) {
+
+        
+
         this._invHiddenButton = false;
+        // this.hide(this._cargoP, false);
+        
       } else {
-        this._invHiddenButton = true;
+        
       }
 
-      if (hasTwelve && !this.despawnAdded) {
-        //conto quantos twelves
-        this.despawnAdded = true;
-        let numberOfTwelves = 0;
 
+
+      if (hasTwelve && !this.stop) {
+        
+        if(!this.isConfused){
+          this.confuseButton()
+          this.isConfused = true
+        }
+
+        let numberOfTwelves = 0;
         invObj.map((x) => {
           if (x.Twelve) {
             numberOfTwelves++;
           }
         });
 
-        this.despawn(numberOfTwelves);
+
+        this.despawn();
+        this.decreaseDmg(numberOfTwelves);
+
+      } else {
+        
       }
 
       if (this.stop) return;
+      
       this._cargoP.innerHTML = progressBar(
         this.dano,
         this.danoMaximoProgresso,
         "grey",
         "cyan"
       );
-
-      if (!this.increasing) {
-        this.increaseDmg();
-      } else {
-        this.decreaseDmg();
-      }
     },
 
     dmgReceived() {
@@ -2710,122 +2737,107 @@ export let especiais = {
     ulti: 0,
     retrato: 'url("/pics/sentryRetrato.PNG")',
     cargo: "",
-    hp: 50,
-    maxHealth: 50,
+    hp: 25,
+    maxHealth: 25,
     dmgBoss: false,
     hashp: true,
 
     dano: undefined,
     _exposto: true,
 
-    ammonition: 75,
+    ammonition: 30,
     ammonitionMax: undefined,
 
     active: false,
 
     cfg() {
-
-      this.dano = gerarNumero(13,19)
+      this.dano = gerarNumero(8, 12);
 
       this._nomeP.style.marginTop = "5px";
 
-      this.ammonitionMax = this.ammonition
+      this.ammonitionMax = this.ammonition;
 
       this._cargoP.innerHTML =
         progressBar(this.ammonition, this.ammonitionMax, "grey", "#cf6a32") +
         `<img width="25" height="25" src="/pics/ammo.PNG" style='display:inline; margin-right: 5px'>`;
 
-        this._cargoP.style.opacity = '0'
-      
+      this._cargoP.style.opacity = "0";
     },
 
     tick() {
-
       this._cargoP.innerHTML =
         progressBar(this.ammonition, this.ammonitionMax, "grey", "#cf6a32") +
         `<img width="25" height="25" src="/pics/ammo.PNG" style='display:inline; margin-right: 5px'>`;
 
-        this._cargoP.style.opacity = '1'
+      this._cargoP.style.opacity = "1";
 
-        if(this.active){
-          this._poderUsing = true;
-          this._thisCardP.classList.add('critico')
-        } else {
-          this._poderUsing = false;
-          this._thisCardP.classList.remove('critico')
-        }
-      
-      this.ammonition <0 ? this.ammonition = 0 : 0
-      
+      if (this.active) {
+        this._poderUsing = true;
+        this._thisCardP.classList.add("critico");
+      } else {
+        this._poderUsing = false;
+        this._thisCardP.classList.remove("critico");
+      }
 
+      this.ammonition < 0 ? (this.ammonition = 0) : 0;
     },
 
     ult() {},
 
     everyRound() {},
 
+    rocket() {
+      let rocketDmg = this.dano * gerarNumero(10, 25);
 
-    rocket(){
-
-      let rocketDmg = this.dano * gerarNumero(10,25)
-
-
-        this.ataque(rocketDmg,0,[true])
-
-
+      this.ataque(rocketDmg, 0, [true]);
     },
 
     tiro() {
+      let rocketLaunchCount = 0;
 
-      let rocketLaunchCount = 0
-
-
-      let launchRocket = () =>{
-        this.rocket()
-        this.ammonition -= gerarNumero(5,9)
-        rocketLaunchCount = 0
-        console.log('ROCKET LAUNCHED');
-      }
-
-
-      let fireSpeed = 175
-      
-      let tiros = setInterval(() => {
-        let noEnemy = areObj.every((x)=> x.empty)
+      let launchRocket = () => {
+        this.rocket();
+        this.ammonition -= gerarNumero(8, 12);
+        rocketLaunchCount = 0;
         
-        if (this.ammonition <= 0 ||  noEnemy) {
-          this.active = false
+      };
+
+      let fireSpeed = 175;
+
+      let tiros = setInterval(() => {
+        let noEnemy = areObj.every((x) => x.empty);
+
+        if (this.ammonition <= 0 || noEnemy) {
+          this.active = false;
           clearInterval(tiros);
           return;
         }
 
-        rocketLaunchCount == gerarNumero(12,20) ? launchRocket() : 0
-          
-        this.active = true
-        console.log('piu');
+        rocketLaunchCount == gerarNumero(12, 15) ? launchRocket() : 0;
+
+        this.active = true;
+        console.log("piu");
         this.ataque(this.dano, 0);
-        this.ammonition--
-        rocketLaunchCount++
-
-      },fireSpeed);
-
-
+        this.ammonition--;
+        rocketLaunchCount++;
+      }, fireSpeed);
     },
 
     poder() {
-      
-      if(ammo.total <= 0 || this.active || this.unableToAttack()){
-        return
+      if (ammo.total <= 0 || this.active || this.unableToAttack()) {
+        return;
       }
 
-      if(this.ammonition !=  this.ammonitionMax){
-        this.ammonition += gerarNumero(5,17)
-        this.ammonition >  this.ammonitionMax ?   this.ammonition  =  this.ammonitionMax : 0
+      if (this.ammonition != this.ammonitionMax) {
+        this.ammonition += gerarNumero(8, 15);
+        this.ammonition > this.ammonitionMax
+          ? (this.ammonition = this.ammonitionMax)
+          : 0;
       }
 
-      ammo.use(1)
+      ammo.use(1);
 
-      this.tiro()
+      this.tiro();
     },
 
     nomeStyle: {
@@ -2895,7 +2907,6 @@ export function escolherEspecial(teste) {
       let num;
 
       num = gerarNumero(1, 4);
-      
 
       if (!true) {
         especial = objBinder(especiais.dva);
@@ -2909,8 +2920,6 @@ export function escolherEspecial(teste) {
         especial = objBinder(especiais.sentry);
       }
 
-      
-
       //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
@@ -2918,7 +2927,6 @@ export function escolherEspecial(teste) {
       let num;
 
       num = gerarNumero(1, 6);
-    
 
       if (!true) {
         especial = objBinder(especiais.jhin);
@@ -2935,9 +2943,6 @@ export function escolherEspecial(teste) {
       } else {
         especial = objBinder(especiais.sapato);
       }
-
-      
-
 
       //CAMPONESES
     } else {

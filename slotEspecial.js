@@ -296,6 +296,7 @@ function colocarSlot(tipo, _slot) {
   cargoE.classList.remove("float");
   nomeE.style.margin = 0;
   cargoE.style.margin = 0;
+  cargoE.style.opacity = 1;
   slotEsp.children[slot].id = especial.cartaId;
 
   //PERSONALIZADO
