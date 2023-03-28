@@ -137,7 +137,7 @@ class Boss {
   antiSpam() {
     let delay = gerarNumero(750, 1250);
 
-    if (per(4)) {
+    if (per(10)) {
       setTimeout(
         () => populateArena(),
 

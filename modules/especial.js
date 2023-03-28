@@ -332,7 +332,7 @@ export class Especial {
 
   buildUltAuto() {
     if (this._hasUlti) {
-      per(33) ? this.buildUlt(1) : false;
+      per(20) ? this.buildUlt(1) : false;
     }
   }
 
