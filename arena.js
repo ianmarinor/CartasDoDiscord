@@ -825,6 +825,7 @@ let menosCartas = {
   maxHealth: 22,
   dano: false,
   attackChance: 7,
+  especial: true,
 
   levelCfg() {
     this.energia = gerarNumero(8, 13);
@@ -874,7 +875,7 @@ let camarada = {
   attackChance: 8,
   especial: true,
   _canBeCritic: false,
-  especial: true,
+  
 
   levelCfg() {
     this.setHp(this.hp * this._level);
@@ -975,7 +976,6 @@ let tank = {
     invObj.map((x) => {
       x.dmg(this.dano);
     });
-    hpPlayer.remove(Math.trunc(this.dano / 4));
     this.kill(true);
   },
 };
@@ -999,7 +999,7 @@ let dog = {
   hp: 17,
   maxHealth: 17,
   dano: 15,
-  especial: true,
+  
 
   tick() {
     let vitor = areObj.some((x) => x.cartaId == "vitor");
@@ -1306,7 +1306,7 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnMonark();
+    spawnTank();
   }
 });
 
@@ -1340,19 +1340,19 @@ function Main() {
 }
 
 export function populateArena() {
-  let chanceNormal = 50;
+  let chanceNormal = 70;
 
-  chanceNormal < 40 ? (chanceNormal = 40) : 0;
+  
 
   if (per(chanceNormal)) {
-    let normaisArr = [spawnMonark, spawnDog];
+    let normaisArr = [spawnMonark, spawnDog, spawnTank];
 
     let arrLenght = normaisArr.length;
 
     let rng = () => normaisArr[gerarNumero(0, arrLenght - 1)]();
     rng();
   } else {
-    let especiaisArr = [spawnTank, spawnCamarada, spawnMenosCartas];
+    let especiaisArr = [spawnCamarada, spawnMenosCartas];
 
     let rng = () => especiaisArr[gerarNumero(0, especiaisArr.length - 1)]();
     rng();

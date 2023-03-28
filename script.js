@@ -2183,33 +2183,7 @@ function runEveryRound() {
 
 arenaAtaque()
 
-  // areObj.map((x, i) => {
-  //   if (x.autoAtaque && x.readyToAttack) {
-  //     wCoolDown.set(true);
-
-  //     function terimnarAtaque() {
-  //       setTimeout(() => {
-  //         wCoolDown.set(false);
-  //         x.getReady();
-  //       }, 800);
-  //     }
-
-  //     juj++;
-  //     setTimeout(() => {
-  //       if (x.autoAtaque) {
-  //         x.autoAtaque();
-
-  //         if (!areObj.some((x) => x.autoAtaque && x.readyToAttack)) {
-  //           terimnarAtaque();
-  //         }
-  //       }
-  //     }, juj * 350);
-  //   }
-  // });
-
-  // if (!areObj.some((x) => x.autoAtaque && x.readyToAttack)) {
-  //   areObj.map((x) => x.getReady());
-  // }
+  
 
   areObj.map((x) => {
     x.defaultEveryRound ? x.defaultEveryRound() : 0;
@@ -2386,6 +2360,7 @@ function poderBoss() {
   if (!boss) return;
 
   boss.ult();
+  boss.antiSpam()
 }
 
 export let numCartas = {

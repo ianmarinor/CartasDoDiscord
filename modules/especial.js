@@ -2443,7 +2443,7 @@ export let especiais = {
     maxHealth: 5,
     dano: undefined,
     _exposto: true,
-    _barreira: 70,
+    _barreira: 35,
     _barrieraActive: true,
 
     cfg() {
@@ -2475,7 +2475,6 @@ export let especiais = {
         );
       } else {
         this._cargoP.style.visibility = "hidden";
-        this._exposto = false;
       }
     },
 
@@ -2533,17 +2532,14 @@ export let especiais = {
 
     cfg() {
       //sombra nome
+
+      this.dano = gerarNumero(150, 900)
+
       this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
       this._nomeP.style.marginTop = "20px";
       this.hide(this._energiaP);
 
-      // progresso
-      // this._cargoP.innerHTML = progressBar(
-      //   this.dano,
-      //   this.danoMaximoProgresso,
-      //   "grey",
-      //   "cyan"
-      // );
+    
     },
 
     increaseDmg() {
@@ -2617,7 +2613,6 @@ export let especiais = {
 
         this.ataque()
         this.kill()
-
 
       } else {
 

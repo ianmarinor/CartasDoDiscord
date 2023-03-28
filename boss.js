@@ -231,11 +231,11 @@ export let countdown = {
     
     let enemiesRNG = () => {
       if (per(80)) {
-        return gerarNumero(8, 9);
+        return gerarNumero(3, 5);
       } else if (per(50)) {
         return 10;
       } else {
-        return 6;
+        return 1;
       }
     };
     this.numOfInimigosSet(enemiesRNG());
@@ -257,11 +257,11 @@ export let countdown = {
 
           let rodadasCountDown = () => {
             if (per(75)) {
-              return gerarNumero(6, 9);
+              return gerarNumero(4, 6);
             } else if (per(50)) {
-              return gerarNumero(10, 15);
+              return gerarNumero(8, 12);
             } else {
-              return gerarNumero(2, 4);
+              return gerarNumero(1, 2);
             }
           };
 
