@@ -289,7 +289,7 @@ export let countdown = {
       countdownP.style.backgroundColor = "#FF5733";
       countdownP.style.visibility = 'visible'
     } else {
-      // countdownP.style.visibility = 'hidden'
+      countdownP.style.visibility = 'hidden'
       
     }
   },

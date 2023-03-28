@@ -2525,7 +2525,6 @@ export let especiais = {
     _invHiddenButton: true,
     danoMaximoProgresso: 1500,
 
-
     //AUDIO FILES
     _audioDespawnFiles: 4,
     _sourceDespawn: "sapato/sapato",
@@ -2533,27 +2532,20 @@ export let especiais = {
     cfg() {
       //sombra nome
 
-      this.dano = gerarNumero(150, 900)
+      this.dano = gerarNumero(150, 900);
 
       this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
       this._nomeP.style.marginTop = "20px";
       this.hide(this._energiaP);
-
-    
     },
 
     increaseDmg() {
-
-      if(this.dano <= 300){
-
+      if (this.dano <= 300) {
         this.dano += gerarNumero(60, 75);
         // this.dano ++
-
       } else {
-
         this.dano += gerarNumero(333, 420);
       }
-
 
       if (this.dano >= this.danoMaximoProgresso) {
         this.dano = this.danoMaximoProgresso;
@@ -2564,19 +2556,12 @@ export let especiais = {
     decreaseDmg() {
       this.increasing = true;
 
-      
-      
-      if(this.dano <= 300){
-
+      if (this.dano <= 300) {
         this.dano -= gerarNumero(60, 75);
         // this.dano--
-
       } else {
-
         this.dano -= gerarNumero(333, 420);
       }
-
-
 
       if (this.dano <= 1) {
         this.dano = 1;
@@ -2594,56 +2579,40 @@ export let especiais = {
         timesArr[numberOfTwelves - 1]
       );
 
-      let faixa = this._sourceDespawn + gerarNumero(1,this._audioDespawnFiles) + '.mp3'
+      let faixa =
+        this._sourceDespawn + gerarNumero(1, this._audioDespawnFiles) + ".mp3";
 
-      this._thisCardP.classList.add('critico')
+      this._thisCardP.classList.add("critico");
 
       setTimeout(() => {
         if (this.stop) return;
 
-        audioPlayer(faixa,false,this._CHN, 0.6)
+        audioPlayer(faixa, false, this._CHN, 0.6);
         this.kill();
-        invObj.map((x) => x.Twelve ? x.kill(): 0);
+        invObj.map((x) => (x.Twelve ? x.kill() : 0));
       }, despawnTime);
     },
 
     poder() {
-
-      if(this.stop == true){
-
-        this.ataque()
-        this.kill()
-
+      if (this.stop == true) {
+        this.ataque();
+        this.kill();
       } else {
+        if (this.unableToAttack()) return;
+        this.stop = true;
+        this._thisCardP.classList.remove("critico");
+        this._cargoP.innerHTML = progressBar(
+          this.dano,
+          this.danoMaximoProgresso,
+          "grey",
+          "green"
+        );
 
-        if(this.unableToAttack())return
-      this.stop = true;
-      this._thisCardP.classList.remove('critico')
-      this._cargoP.innerHTML = progressBar(
-        this.dano,
-        this.danoMaximoProgresso,
-        "grey",
-        "green"
-      );
-
-      
-
-
-      setTimeout(() => {
-        this.hide(this._cargoP);
-        this.hide(this._energiaP, false);
-      }, 1500);
-
-
+        setTimeout(() => {
+          this.hide(this._cargoP);
+          this.hide(this._energiaP, false);
+        }, 1500);
       }
-
-
-      
-
-
-     
-
-
     },
 
     tick() {
@@ -2729,6 +2698,163 @@ export let especiais = {
       visibility: "visible",
     },
   },
+
+  sentry: {
+    cartaId: "sentry",
+    nome: "SENTRY <br> GUN",
+    raridade: raridades.cavaleiro,
+    energia: 1,
+    requireAmmo: true,
+    emoji: "💥",
+    emojiHp: "",
+    ulti: 0,
+    retrato: 'url("/pics/sentryRetrato.PNG")',
+    cargo: "",
+    hp: 50,
+    maxHealth: 50,
+    dmgBoss: false,
+    hashp: true,
+
+    dano: undefined,
+    _exposto: true,
+
+    ammonition: 75,
+    ammonitionMax: undefined,
+
+    active: false,
+
+    cfg() {
+
+      this.dano = gerarNumero(13,19)
+
+      this._nomeP.style.marginTop = "5px";
+
+      this.ammonitionMax = this.ammonition
+
+      this._cargoP.innerHTML =
+        progressBar(this.ammonition, this.ammonitionMax, "grey", "#cf6a32") +
+        `<img width="25" height="25" src="/pics/ammo.PNG" style='display:inline; margin-right: 5px'>`;
+
+        this._cargoP.style.opacity = '0'
+      
+    },
+
+    tick() {
+
+      this._cargoP.innerHTML =
+        progressBar(this.ammonition, this.ammonitionMax, "grey", "#cf6a32") +
+        `<img width="25" height="25" src="/pics/ammo.PNG" style='display:inline; margin-right: 5px'>`;
+
+        this._cargoP.style.opacity = '1'
+
+        if(this.active){
+          this._poderUsing = true;
+          this._thisCardP.classList.add('critico')
+        } else {
+          this._poderUsing = false;
+          this._thisCardP.classList.remove('critico')
+        }
+      
+      this.ammonition <0 ? this.ammonition = 0 : 0
+      
+
+    },
+
+    ult() {},
+
+    everyRound() {},
+
+
+    rocket(){
+
+      let rocketDmg = this.dano * gerarNumero(10,25)
+
+
+        this.ataque(rocketDmg,0,[true])
+
+
+    },
+
+    tiro() {
+
+      let rocketLaunchCount = 0
+
+
+      let launchRocket = () =>{
+        this.rocket()
+        this.ammonition -= gerarNumero(5,9)
+        rocketLaunchCount = 0
+        console.log('ROCKET LAUNCHED');
+      }
+
+
+      let fireSpeed = 175
+      
+      let tiros = setInterval(() => {
+        let noEnemy = areObj.every((x)=> x.empty)
+        
+        if (this.ammonition <= 0 ||  noEnemy) {
+          this.active = false
+          clearInterval(tiros);
+          return;
+        }
+
+        rocketLaunchCount == gerarNumero(12,20) ? launchRocket() : 0
+          
+        this.active = true
+        console.log('piu');
+        this.ataque(this.dano, 0);
+        this.ammonition--
+        rocketLaunchCount++
+
+      },fireSpeed);
+
+
+    },
+
+    poder() {
+      
+      if(ammo.total <= 0 || this.active || this.unableToAttack()){
+        return
+      }
+
+      if(this.ammonition !=  this.ammonitionMax){
+        this.ammonition += gerarNumero(5,17)
+        this.ammonition >  this.ammonitionMax ?   this.ammonition  =  this.ammonitionMax : 0
+      }
+
+      ammo.use(1)
+
+      this.tiro()
+    },
+
+    nomeStyle: {
+      fontSize: "150%",
+      fontFamily: "tf2",
+      color: "",
+    },
+
+    retratoStyle: {
+      border: "2px solid #cf6a32",
+      backgroundColor: "unset",
+    },
+    cargoStyle: {
+      fontFamily: "",
+      fontSize: "",
+    },
+    ataqueStyle: {
+      color: "",
+      fontSize: "120%",
+      fontFamily: "tf2",
+      visibility: "",
+    },
+    novoAtaqueStyle: {
+      color: "",
+      fontSize: "120%",
+      fontFamily: "tf2",
+      visibility: "visible",
+    },
+  },
 };
 
 function objBinder(obj) {
@@ -2768,7 +2894,8 @@ export function escolherEspecial(teste) {
 
       let num;
 
-      num = gerarNumero(1, 3);
+      num = gerarNumero(1, 4);
+      num = gerarNumero(1, 2);
 
       if (!true) {
         especial = objBinder(especiais.dva);
@@ -2778,7 +2905,13 @@ export function escolherEspecial(teste) {
         especial = objBinder(especiais.dva);
       } else if (num == 3) {
         especial = objBinder(especiais.spy);
+      } else if (num == 4) {
+        especial = objBinder(especiais.sentry);
       }
+
+      if (true) {
+        especial = objBinder(especiais.sentry);
+      } 
 
       //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
@@ -2787,6 +2920,7 @@ export function escolherEspecial(teste) {
       let num;
 
       num = gerarNumero(1, 6);
+      num = gerarNumero(1, 2);
 
       if (!true) {
         especial = objBinder(especiais.jhin);
@@ -2803,6 +2937,13 @@ export function escolherEspecial(teste) {
       } else {
         especial = objBinder(especiais.sapato);
       }
+
+      if (num == 1) {
+        especial = objBinder(especiais.jhin);
+      }  else {
+        especial = objBinder(especiais.sapato);
+      }
+
 
       //CAMPONESES
     } else {

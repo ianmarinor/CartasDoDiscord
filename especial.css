@@ -56,3 +56,30 @@
   font-weight: 900;
   
 }
+#sentry {
+  
+
+  background-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.8),
+      rgba(12, 3, 30, 0.8)
+    ),
+    url(/pics/fundoSpy.gif);
+  
+  font-family: tf2;
+  height: var(--tamanhoCartaHeight);
+  width: var(--tamanhoCartaWidth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  position: relative;
+  font-weight: 900;
+  background-repeat: no-repeat;
+  background-size: COVER;
+  font-family: tf2;
+  color: #cf6a32;
+  /* color: #895538; */
+  border: 2px solid rgba(207, 106, 50, 1);
+}
