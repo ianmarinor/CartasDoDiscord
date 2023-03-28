@@ -37,6 +37,10 @@ function progressBar(_value, _max, _bgColor, _progressColor, _isBarrier) {
   let value = _value;
   let max = _max;
 
+  if (value > max) {
+    value = max;
+  }
+
   let bgColor = _bgColor;
   let progressColor = _progressColor;
 
@@ -745,6 +749,17 @@ export class Especial {
       this._hpP.style.visibility = "visible";
     } else {
       this._hpP.style.visibility = "hidden";
+    }
+  }
+
+  hide(_element, _trigger) {
+    let element = _element;
+    let trigger = _trigger;
+
+    if (trigger == undefined || trigger === true) {
+      element.style.visibility = "hidden";
+    } else if (trigger === false) {
+      element.style.visibility = "visible";
     }
   }
 
@@ -1792,7 +1807,7 @@ export let especiais = {
 
     poder() {
       if (this.unableToAttack()) return;
-      this.areaAtack();
+      this.ataque(this.dano, 0);
       this.kill();
     },
 
@@ -1802,8 +1817,7 @@ export let especiais = {
         this.buffAdded = true;
       }
 
-      this.dano = 1 + Math.floor(this._dmgTaken / 3.3);
-      this.dano > 500 ? (this.dano = 500) : 0;
+      this.dano = 1 + this._dmgTaken;
 
       let hasTuru = invObj.some((x) => x._cidade == "de Itapira");
       let hasItapira = invObj.some((x) => x._integrante == "Turu");
@@ -2496,26 +2510,184 @@ export let especiais = {
     },
   },
 
-  julia: {
-    cartaId: "julia",
-    nome: "Julia",
+  sapato: {
+    cartaId: "sapato",
+    nome: "SAPATO",
     raridade: raridades.campones,
     energia: 0,
     emoji: "",
-    retrato: "url('pics/juliaRetrato.jfif')",
+    retrato: "url('https://i.giphy.com/media/ZBhHpdFmSguZcktzyu/200w.webp')",
     cargo: "",
     dmgBoss: false,
-    _invHiddenButton: true,
     hashp: true,
-    hp: 25,
-    maxHealth: 25,
-    dano: undefined,
-    // _exposto: true,
-    allyEmoji: "😎",
+    hp: 10,
+    maxHealth: 10,
+    dano: 1,
+    _invHiddenButton: true,
+    danoMaximoProgresso: 1500,
+
+
+    //AUDIO FILES
+    _audioDespawnFiles: 4,
+    _sourceDespawn: "sapato/sapato",
 
     cfg() {
+      //sombra nome
       this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
       this._nomeP.style.marginTop = "20px";
+      this.hide(this._energiaP);
+
+      // progresso
+      // this._cargoP.innerHTML = progressBar(
+      //   this.dano,
+      //   this.danoMaximoProgresso,
+      //   "grey",
+      //   "cyan"
+      // );
+    },
+
+    increaseDmg() {
+
+      if(this.dano <= 300){
+
+        this.dano += gerarNumero(60, 75);
+        // this.dano ++
+
+      } else {
+
+        this.dano += gerarNumero(333, 420);
+      }
+
+
+      if (this.dano >= this.danoMaximoProgresso) {
+        this.dano = this.danoMaximoProgresso;
+        this.increasing = true;
+      }
+    },
+
+    decreaseDmg() {
+      this.increasing = true;
+
+      
+      
+      if(this.dano <= 300){
+
+        this.dano -= gerarNumero(60, 75);
+        // this.dano--
+
+      } else {
+
+        this.dano -= gerarNumero(333, 420);
+      }
+
+
+
+      if (this.dano <= 1) {
+        this.dano = 1;
+        this.increasing = false;
+      }
+    },
+
+    despawn(_dT) {
+      let numberOfTwelves = _dT;
+
+      let timesArr = [980, 1000, 1250, 1575, 1900];
+
+      let despawnTime = gerarNumero(
+        timesArr[numberOfTwelves - 1] / 1.5,
+        timesArr[numberOfTwelves - 1]
+      );
+
+      let faixa = this._sourceDespawn + gerarNumero(1,this._audioDespawnFiles) + '.mp3'
+
+      this._thisCardP.classList.add('critico')
+
+      setTimeout(() => {
+        if (this.stop) return;
+
+        audioPlayer(faixa,false,this._CHN, 0.6)
+        this.kill();
+        invObj.map((x) => x.Twelve ? x.kill(): 0);
+      }, despawnTime);
+    },
+
+    poder() {
+
+      if(this.stop == true){
+
+        this.ataque()
+        this.kill()
+
+
+      } else {
+
+        if(this.unableToAttack())return
+      this.stop = true;
+      this._thisCardP.classList.remove('critico')
+      this._cargoP.innerHTML = progressBar(
+        this.dano,
+        this.danoMaximoProgresso,
+        "grey",
+        "green"
+      );
+
+      
+
+
+      setTimeout(() => {
+        this.hide(this._cargoP);
+        this.hide(this._energiaP, false);
+      }, 1500);
+
+
+      }
+
+
+      
+
+
+     
+
+
+    },
+
+    tick() {
+      // VERIFICA SE TEM TWELVE
+      let hasTwelve = invObj.some((x) => x.Twelve);
+
+      if (hasTwelve) {
+        this._invHiddenButton = false;
+      } else {
+        this._invHiddenButton = true;
+      }
+
+      if (hasTwelve && !this.despawnAdded) {
+        //conto quantos twelves
+        this.despawnAdded = true;
+        let numberOfTwelves = 0;
+
+        invObj.map((x) => {
+          if (x.Twelve) {
+            numberOfTwelves++;
+          }
+        });
+
+        this.despawn(numberOfTwelves);
+      }
+
+      if (this.stop) return;
+      this._cargoP.innerHTML = progressBar(
+        this.dano,
+        this.danoMaximoProgresso,
+        "grey",
+        "cyan"
+      );
+
+      if (!this.increasing) {
+        this.increaseDmg();
+      } else {
+        this.decreaseDmg();
+      }
     },
 
     dmgReceived() {
@@ -2534,14 +2706,6 @@ export let especiais = {
       }
     },
 
-    tick() {
-      let blackaoInInv = invObj.some((x) => x._integrante == "Blackao");
-
-      if (!blackaoInInv) {
-        this._thisCardP.classList.remove("critico");
-      }
-    },
-
     nomeStyle: {
       fontSize: "180%",
       fontFamily: "julia",
@@ -2549,7 +2713,7 @@ export let especiais = {
     },
 
     retratoStyle: {
-      border: "2px solid #d013c3",
+      border: "2px solid cyan",
       backgroundColor: "",
     },
     cargoStyle: {
@@ -2558,10 +2722,10 @@ export let especiais = {
       visibility: "visible",
     },
     ataqueStyle: {
-      color: "",
+      color: "cyan",
       fontSize: "",
       fontFamily: "",
-      visibility: "hidden",
+      visibility: "visible",
     },
     novoAtaqueStyle: {
       color: "cyan",
@@ -2642,7 +2806,7 @@ export function escolherEspecial(teste) {
       } else if (num == 5) {
         especial = objBinder(especiais.abelha);
       } else {
-        especial = objBinder(especiais.julia);
+        especial = objBinder(especiais.sapato);
       }
 
       //CAMPONESES

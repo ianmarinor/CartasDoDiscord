@@ -31,16 +31,17 @@
 }
 
 
-#julia {
-  background: linear-gradient(rgba(184, 78, 173, 0.9), rgba(184, 78, 173, 0.3), rgba(184, 78, 173, 0.9)),
+#sapato {
+  background: linear-gradient(rgba(152, 78, 184, 0.9), rgba(184, 78, 173, 0.3), rgba(152, 78, 184, 0.9)),
     /* url(pics/cabecaFundo.gif); */
     /* url(https://thumbs.gfycat.com/BossyRespectfulElkhound-max-1mb.gif); */
     /* url(https://i.gifer.com/origin/f3/f32b67d4642f47b3fa8a67287da72de1.gif); */
     /* url(https://media0.giphy.com/media/vuVOaLoHGpNSnTLptb/giphy.gif); */
     /* url(https://wallpapercave.com/uwp/uwp1468999.gif); */
-    url(https://i.gifer.com/ROo1.gif);
+    /* url(https://i.gifer.com/ROo1.gif); */
+    url(https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmE1MGM3OTM3MjA2ZGI2MWE4ZjMwYWNjYmM0MTdiOGU1Nzg0NjMwYyZjdD1n/Qs3J0de5NYrle8gjER/giphy.gif);
 
-    background-position: 100% 100%;
+    background-position: cover;
 
   font-family: minecraft;
   height: var(--tamanhoCartaHeight);
@@ -51,7 +52,7 @@
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 3px solid #d013c3;
+  border: 3px solid rgb(5, 208, 208);
   font-weight: 900;
   
 }

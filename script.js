@@ -345,6 +345,7 @@ class fabricaDeCarta {
     this.energia = poder;
     // this.energiaNatural = poder;
     this._variante = variante[0];
+    this[integrante[0]] = integrante[0]
     this._especial = especial;
     this._seedobj = seedObj;
     this._thisCardP = false;
@@ -443,47 +444,7 @@ class fabricaDeCarta {
   }
 
   blackaoBoi() {
-    if (!this.blackaoProtetor) return;
-
-    let inimigo = () => {
-      
-
-      for (let i = 0; i < 100; i++) {
-        let slot = gerarNumero(0, 9);
-
-        if (!areObj[slot].empty && !areObj[slot].isInvisible) {
-          let vitima = areObj[slot];
-
-          vitima.dmg(this.dano)
-
-          setTimeout( ()=>{
-
-            vitima._leftObj ? vitima._leftObj.dmg(this.dano) : 0
-            vitima._rightObj ? vitima._rightObj.dmg(this.dano) : 0
-
-          },  300)
-          
-          setTimeout( ()=>{
-          vitima._leftObj._leftObj ? vitima._leftObj._leftObj.dmg(this.dano) : 0
-          vitima._rightObj._rightObj ? vitima._rightObj._rightObj.dmg(this.dano) : 0
-          this.kill();
-        },  600)
-          return
-
-        
-        }
-      }
-      return false;
-    };
-
-   inimigo();
-
-    // for (const x of _inimigo) {
-    //   if (x) {
-    //     x.dmg(this.dano);
-    //   }
-    // }
-
+    
     
   }
 
@@ -1958,7 +1919,7 @@ export let placarArena = {
       }
       this.ammoTotal += x.energia;
     }
-    this.ammoTotal = Math.trunc(this.ammoTotal / 27);
+    this.ammoTotal = Math.trunc(this.ammoTotal / 37);
   },
 
   getBonusCard() {
@@ -2332,7 +2293,7 @@ function tick() {
     novaCarta.place();
 
     hpPlayer.playerP();
-  }, 50);
+  }, 33);
 }
 
 function allMonark() {
