@@ -19,7 +19,7 @@ import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
 import { boss, spawnBoss, resetBoss, countdown, rDifficulty } from "./boss.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "LUCIO FIX";
+let versao = "teste sentry, cabeca, sapato";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
