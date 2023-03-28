@@ -2895,7 +2895,7 @@ export function escolherEspecial(teste) {
       let num;
 
       num = gerarNumero(1, 4);
-      num = gerarNumero(1, 2);
+      
 
       if (!true) {
         especial = objBinder(especiais.dva);
@@ -2909,9 +2909,7 @@ export function escolherEspecial(teste) {
         especial = objBinder(especiais.sentry);
       }
 
-      if (true) {
-        especial = objBinder(especiais.sentry);
-      } 
+      
 
       //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
@@ -2920,7 +2918,7 @@ export function escolherEspecial(teste) {
       let num;
 
       num = gerarNumero(1, 6);
-      num = gerarNumero(1, 2);
+    
 
       if (!true) {
         especial = objBinder(especiais.jhin);
@@ -2938,11 +2936,7 @@ export function escolherEspecial(teste) {
         especial = objBinder(especiais.sapato);
       }
 
-      if (num == 1) {
-        especial = objBinder(especiais.jhin);
-      }  else {
-        especial = objBinder(especiais.sapato);
-      }
+      
 
 
       //CAMPONESES
