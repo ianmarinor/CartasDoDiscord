@@ -1053,19 +1053,11 @@ let dog = {
 
   primaryAttack() {
     if (this.vitor) {
+      this.ataque(this.dano,)
       this.readyToAttack = false
-      let numOfAttack = 1;
+      
 
-      let atacks = setInterval(() => {
-
-        if (numOfAttack <= 0 || this._dead) {
-          clearInterval(atacks);
-        }
-
-        numOfAttack--
-        this.ataque()
-
-      }, 300);
+    
     } else {
       this.ataque();
       this.readyToAttack = false

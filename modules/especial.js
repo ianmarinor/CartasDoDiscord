@@ -1901,7 +1901,7 @@ export let especiais = {
 
     tick() {
       if (!this.buffAdded) {
-        this.addBuff(60);
+        this.addBuff(20);
         this.buffAdded = true;
       }
 
