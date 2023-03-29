@@ -437,7 +437,7 @@ export class Especial {
 
             this._dmgDone += dano;
 
-            return true;
+            return [true, vitima];
           }
         }
 
@@ -458,7 +458,7 @@ export class Especial {
 
             this._dmgDone += dano;
 
-            return true;
+            return [true, vitima];
           }
         }
 
@@ -479,7 +479,7 @@ export class Especial {
 
             this._dmgDone += dano;
 
-            return true;
+            return [true, vitima];
           }
         }
 
@@ -500,7 +500,7 @@ export class Especial {
 
             this._dmgDone += dano;
 
-            return true;
+            return [true, vitima];
           }
         }
       }
@@ -519,12 +519,14 @@ export class Especial {
             checkLeftRight(vitima);
             this._dmgDone += dano;
 
-            return true;
+            return [true, vitima];
           }
         }
-
-        // caso haja so normais
+      } else {
+        return false;
       }
+    } else {
+      return false;
     }
   }
 
@@ -1048,9 +1050,15 @@ export let especiais = {
           x.dmgBoss = true;
           this.giveAllyEmoji(x);
         }
+
+        if (x.cartaId == "sentry") {
+          x.ammonition = x.ammonitionMax;
+        }
       });
 
       hpPlayer.add(50);
+      ammo.add(10);
+      numCartas.add(50);
 
       this.changeEmojiToDefault();
 
@@ -1206,7 +1214,7 @@ export let especiais = {
 
   maisCartas: {
     cartaId: "especial-click",
-    nome: "CARTAS <br> & AMMO",
+    nome: "MAIS CARTAS",
     raridade: raridades.campones,
 
     energia: 15,
@@ -1224,19 +1232,10 @@ export let especiais = {
     _requiredCidade: true,
     cfg() {
       this.energia = gerarNumero(25, 50);
-      this.dano = gerarNumero(1, 3);
-      this._energiaP.style.visibility = "hidden";
+      
+      this._nomeP.style.marginTop = '7px'
       this._cargoP.style.visibility = "hidden";
-      this._cargoP.innerHTML =
-        "+" +
-        this.energia +
-        "🃏  " +
-        this._requiredIntegrante +
-        "<br>" +
-        "+" +
-        this.dano +
-        "⚔️  " +
-        this._requiredCidade;
+      this._cargoP.innerHTML = this._requiredIntegrante 
     },
 
     tick() {
@@ -1247,27 +1246,15 @@ export let especiais = {
       let hasIntegrante = invObj.some(
         (x) => x._integrante == this._requiredIntegrante
       );
-      let hasCidade = invObj.some((x) => x._cidade == this._requiredCidade);
+     
 
-      if (hasIntegrante && hasCidade) {
+       if (hasIntegrante) {
         this._invHiddenButton = false;
         this._thisCardP.classList.add("critico");
-        this.giveAmmo = true;
         this.giveCard = true;
-      } else if (hasIntegrante) {
-        this._invHiddenButton = false;
-        this._thisCardP.classList.remove("critico");
-        this.giveAmmo = false;
-        this.giveCard = true;
-      } else if (hasCidade) {
-        this._invHiddenButton = false;
-        this._thisCardP.classList.remove("critico");
-        this.giveAmmo = true;
-        this.giveCard = false;
       } else {
         this._invHiddenButton = true;
         this._thisCardP.classList.remove("critico");
-        this.giveAmmo = false;
         this.giveCard = false;
       }
     },
@@ -1281,9 +1268,6 @@ export let especiais = {
         }
       }
 
-      if (this.giveAmmo) {
-        ammo.add(this.dano);
-      }
 
       this.kill();
     },
@@ -1296,7 +1280,7 @@ export let especiais = {
     },
 
     retratoStyle: {
-      border: "",
+      border: "2px solid #0000ff",
       backgroundColor: "",
     },
     cargoStyle: {
@@ -1317,7 +1301,92 @@ export let especiais = {
     },
   },
 
-  menosCartas: {},
+  maisAmmo: {
+    cartaId: "maisAmmo",
+    nome: "MAIS MUNIÇÃO",
+    raridade: raridades.campones,
+
+    energia: 15,
+
+    emoji: "⚔️",
+    retrato: "url('pics/maisAmmoRetrato.gif')",
+    cargo: "",
+
+    hp: 10,
+    maxHealth: 10,
+    hashp: true,
+    dmgBoss: false,
+    _requiredIntegrante: true,
+    _invHiddenButton: true,
+    cfg() {
+      this.energia = gerarNumero(2, 7);
+      
+      this._nomeP.style.marginTop = '7px'
+     
+      this._cargoP.style.visibility = "hidden";
+      this._cargoP.innerHTML = this._requiredIntegrante 
+    },
+
+    tick() {
+      if (this._parentP == inv) {
+        this._cargoP.style.visibility = "visible";
+      }
+
+      let hasIntegrante = invObj.some(
+        (x) => x._integrante == this._requiredIntegrante
+      );
+     
+
+       if (hasIntegrante) {
+        this._invHiddenButton = false;
+        this._thisCardP.classList.add("critico");
+        this.giveCard = true;
+      } else {
+        this._invHiddenButton = true;
+        this._thisCardP.classList.remove("critico");
+        this.giveCard = false;
+      }
+    },
+
+    poder() {
+      if (this.unableToAttack()) return;
+      if (this.giveCard) {
+        ammo.add(this.energia);
+        
+      }
+
+
+      this.kill();
+    },
+
+    // ataqueE: bonusCartasPE()
+    nomeStyle: {
+      fontSize: "130%",
+      fontFamily: "",
+      color: "",
+    },
+
+    retratoStyle: {
+      border: "2px solid #dea710",
+      backgroundColor: "",
+    },
+    cargoStyle: {
+      fontFamily: "",
+      fontSize: "",
+    },
+    ataqueStyle: {
+      color: "",
+      fontSize: "",
+      fontFamily: "",
+      visibility: "",
+    },
+    novoAtaqueStyle: {
+      color: "",
+      fontSize: "",
+      fontFamily: "",
+      visibility: "visible",
+    },
+  },
 
   abelha: {
     cartaId: "abelha",
@@ -1622,9 +1691,15 @@ export let especiais = {
 
     cfg() {
       this.dano = gerarNumero(120, 180);
+      this._nomeP.style.marginTop = "5px";
 
-      if(per(0.1)){
-        this.dano = gerarNumero(410, 600)
+      if (per(0.1)) {
+        this.dano = gerarNumero(410, 600);
+        this.retrato = 'url("/pics/spyRareRetrato.PNG")';
+        this.changeRetrato(this.retrato);
+
+        this._retratoP.style.border = "2px solid lime";
+        this._thisCardP.style.border = "2px solid lime";
       }
 
       this._cargoP.textContent = "⌚";
@@ -1810,21 +1885,23 @@ export let especiais = {
     retrato: "url('pics/estoicoRetrato.jpg')",
     cargo: "",
     dmgBoss: false,
-    dano: 1,
-    hp: 60,
-    maxHealth: 60,
+    dano: 100,
+    hp: 80,
+    maxHealth: 80,
     hashp: true,
-    _invHiddenButton: true,
+    // _invHiddenButton: true,
 
     poder() {
       if (this.unableToAttack()) return;
-      this.ataque(this.dano, 0);
+
+      this.ataque(this.dano,0,[true,this.dano])
+
       this.kill();
     },
 
     tick() {
       if (!this.buffAdded) {
-        this.addBuff(40);
+        this.addBuff(60);
         this.buffAdded = true;
       }
 
@@ -1836,7 +1913,7 @@ export let especiais = {
       if (hasTuru || hasItapira) {
         this._invHiddenButton = false;
       } else {
-        this._invHiddenButton = true;
+        // this._invHiddenButton = true;
       }
     },
 
@@ -2194,8 +2271,8 @@ export let especiais = {
     dmgBoss: false,
     ulti: 0,
     dano: 10,
-    hp: 55,
-    maxHealth: 55,
+    hp: 65,
+    maxHealth: 65,
     hashp: true,
     _hasUlti: true,
     tank: true,
@@ -2544,7 +2621,7 @@ export let especiais = {
 
     cfg() {
       //sombra nome
-      
+
       this.dano = this.danoMaximoProgresso;
 
       this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
@@ -2559,31 +2636,27 @@ export let especiais = {
       let fontRNG = gerarNumero(10, 20) + "px ";
 
       if (trigger == undefined || trigger === true) {
-
-
-        this._hpP.style.opacity = '0'
-        this._buttonP.style.position = 'absolute'
+        this._hpP.style.opacity = "0";
+        this._buttonP.style.position = "absolute";
         this._buttonP.textContent = "👞";
         this._buttonP.style.top = pixels;
         this._buttonP.style.left = pixelsRight;
         this._buttonP.style.fontSize = fontRNG;
-        
-
       } else if (trigger === false) {
-        this._hpP.style.opacity = '1'
-        this._buttonP.style.position = 'static'
+        this._hpP.style.opacity = "1";
+        this._buttonP.style.position = "static";
         this._buttonP.textContent = "🔘";
-        this._buttonP.style.fontSize = '22.56px';
-        
-    }},
+        this._buttonP.style.fontSize = "22.56px";
+      }
+    },
 
     decreaseDmg(_numOfTwelves) {
       // this.increasing = true;
 
-      let numofTwelves = _numOfTwelves
+      let numofTwelves = _numOfTwelves;
 
       if (this.dano <= 500) {
-        this.dano -= Math.floor( gerarNumero(45, 60) / numofTwelves);
+        this.dano -= Math.floor(gerarNumero(45, 60) / numofTwelves);
         // this.dano--
       } else {
         this.dano -= Math.floor(gerarNumero(175, 220) / numofTwelves);
@@ -2595,7 +2668,6 @@ export let especiais = {
     },
 
     despawn(_dT) {
-      
       if (this.stop || this.dano > 2) return;
 
       let faixa =
@@ -2637,23 +2709,15 @@ export let especiais = {
       let hasTwelve = invObj.some((x) => x.Twelve);
 
       if (hasTwelve) {
-
-        
-
         this._invHiddenButton = false;
         // this.hide(this._cargoP, false);
-        
       } else {
-        
       }
 
-
-
       if (hasTwelve && !this.stop) {
-        
-        if(!this.isConfused){
-          this.confuseButton()
-          this.isConfused = true
+        if (!this.isConfused) {
+          this.confuseButton();
+          this.isConfused = true;
         }
 
         let numberOfTwelves = 0;
@@ -2663,16 +2727,13 @@ export let especiais = {
           }
         });
 
-
         this.despawn();
         this.decreaseDmg(numberOfTwelves);
-
       } else {
-        
       }
 
       if (this.stop) return;
-      
+
       this._cargoP.innerHTML = progressBar(
         this.dano,
         this.danoMaximoProgresso,
@@ -2799,7 +2860,6 @@ export let especiais = {
         this.rocket();
         this.ammonition -= gerarNumero(8, 12);
         rocketLaunchCount = 0;
-        
       };
 
       let fireSpeed = 175;
@@ -2950,14 +3010,14 @@ export function escolherEspecial(teste) {
 
       let num;
 
-      num = gerarNumero(1, 2);
+      num = gerarNumero(1, 3);
 
       if (num == 1) {
         especial = objBinder(especiais.maisCartas);
       } else if (num == 2) {
         especial = objBinder(especiais.cabeca);
-      } else {
-        especial = objBinder(especiais.medikit);
+      } else if (num == 3) {
+        especial = objBinder(especiais.maisAmmo);
       }
     }
   } else {

@@ -83,3 +83,24 @@
   /* color: #895538; */
   border: 2px solid rgba(207, 106, 50, 1);
 }
+
+#maisAmmo {
+  /* font-family: 'verdana'; */
+
+  /* background-image: url(pics/click.webp); */
+  background-color: #949219;
+  height: var(--tamanhoCartaHeight);
+  width: var(--tamanhoCartaWidth);
+  /* font-size: 2em; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  position: relative;
+  border: 2px solid #ffbb00;
+  font-weight: 900;
+  color: rgb(0, 0, 0);
+  background-repeat: no-repeat;
+  background-size: 280px 440px;
+}

@@ -10,6 +10,7 @@ import {
   updatePlacarInimigo,
   arenaByRound,
   arenaAtaque,
+  smokeOnInv,
 } from "./arena.js";
 
 import { especiais, especial, Especial } from "./modules/especial.js";
@@ -2163,6 +2164,9 @@ export function tudo() {
 }
 
 function runEveryRound() {
+
+
+  // ************* INV ****************
   invObj.map((x) => {
     x.everyRound ? x.everyRound() : false;
     x.everyRoundDefault ? x.everyRoundDefault() : false;
@@ -2172,6 +2176,16 @@ function runEveryRound() {
       x._despawn <= 1 ? x.kill() : 0;
     }
   });
+
+  smokeOnInv.weight > 0 ? smokeOnInv.weight-- : 0
+  if(smokeOnInv.weight <= 0 && smokeOnInv.status === true){
+    smokeOnInv.weight = 0
+    smokeOnInv.smoke(false)
+  }
+
+
+
+
   maoObj.map((x) => {
     x._everyRoundMao ? x.everyRound() : false;
   });

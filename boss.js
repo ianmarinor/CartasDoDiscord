@@ -336,7 +336,7 @@ function createMonark() {
         let sorteio = gerarNumero(0, 2);
         // let sorteio = 1
 
-        if (sorteio == 0) {
+        if (true) {
           this.chuvaDeMonark();
         } else if (sorteio == 1) {
           this.liberdadeDeExpresao();
@@ -387,12 +387,18 @@ function createMonark() {
       for (let i = 0; i < 100; i++) {
         spawnMonark(true);
       }
-
+      let notAttacked = true
       areObj.map((x) => {
         if (x.cartaId == "monark") {
           x.isInvisible = false;
-          x.ataque();
+          x.poder();
           x.readyToAttack = true;
+          
+          if(notAttacked){
+            x.ataque(gerarNumero(50 , 120))
+            notAttacked = false
+          }
+
         }
       });
 

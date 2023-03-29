@@ -29,6 +29,7 @@ export const are = document.getElementById("are");
 const secret = document.getElementById("test");
 const placarInimigoDano = document.getElementById("placarInimigoDano");
 const placarInimigoWrap = document.getElementById("placarInimigoWrap");
+const smokeP = document.getElementById("smoke");
 
 const empty0 = are.children[0];
 const empty1 = are.children[1];
@@ -40,6 +41,60 @@ const empty6 = are.children[6];
 const empty7 = are.children[7];
 const empty8 = are.children[8];
 const empty9 = are.children[9];
+
+export let smokeOnInv = {
+  status: false,
+  weight: 0,
+
+  smoke(_trigger, _weight) {
+    if (_trigger == undefined) {
+      return;
+    }
+
+    let weight = _weight;
+    let appearing = false;
+    let disappearing = false;
+
+    if (_trigger === true && this.status === false) {
+      this.status = undefined;
+      smokeP.style.display = "block";
+
+      let opacityValue = 10;
+      appearing = true;
+
+      let animationSmoke = setInterval(() => {
+        if (opacityValue == 99 || disappearing) {
+          clearInterval(animationSmoke);
+          appearing = false;
+          this.status = true;
+          smokeP.style.opacity = "0." + opacityValue;
+          this.weight = weight;
+        }
+
+        smokeP.style.opacity = "0." + opacityValue;
+        opacityValue++;
+      }, 35);
+    } else if (_trigger === false && this.status === true) {
+      this.status = undefined;
+      let opacityValue = 99;
+      disappearing = true;
+
+      let animationSmoke = setInterval(() => {
+        if (opacityValue == 10 || appearing) {
+          clearInterval(animationSmoke);
+          disappearing = false;
+          this.status = false;
+          smokeP.style.opacity = "0." + opacityValue;
+          smokeP.style.display = "none";
+        }
+        smokeP.style.opacity = "0." + opacityValue;
+        opacityValue--;
+      }, 35);
+
+      console.log(this);
+    }
+  },
+};
 
 export function areWakeUp() {
   areObj.map((x) => {
@@ -64,45 +119,35 @@ export function arenaAtaque() {
   });
 
   //ATACAR COM DELAY
-  
+
   if (prontosParaAtaque == 0) {
     fiquemProntos();
   } else {
-
     wCoolDown.set(true);
-  
-    let i = 0
+
+    let i = 0;
 
     let attackComDelay = setInterval(() => {
-
       if (i > prontosParaAtaque.length - 1) {
         console.log("acabou");
         clearInterval(attackComDelay);
         wCoolDown.set(false);
         fiquemProntos();
-        return
+        return;
       }
 
       prontosParaAtaque[i].autoAtaque();
-      console.log(prontosParaAtaque[i]._place, 'ESTA ATACANDO');
-      i++
-
-      
-
+      console.log(prontosParaAtaque[i]._place, "ESTA ATACANDO");
+      i++;
     }, 350);
-
-
   }
-
-    
-  
 
   //FIQUEM PRONTOS, SE NAO ACABARAM DE ATACAR
   function fiquemProntos() {
     areObj.map((x) => {
       x.getReady();
     });
-    updatePlacarInimigo()
+    updatePlacarInimigo();
   }
 
   // updatePlacarInimigo()
@@ -173,7 +218,7 @@ export function updatePlacarInimigo(_audio) {
     placarInimigoWrap.style.opacity = "0.9";
     placarInimigoWrap.style.border = "solid 2px black";
 
-    if (hasPlayed || _audio === false ) return;
+    if (hasPlayed || _audio === false) return;
     audioPlayer(drumAu, true, placarAudioChannel);
     hasPlayed = true;
   } else if (dmgTotal > 19 || efeitos != "") {
@@ -750,7 +795,7 @@ let monark = {
   maxHealth: 20,
   dano: 5,
   emoji: "💩",
-  attackChance: 10,
+  attackChance: 15,
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
@@ -768,13 +813,7 @@ let monark = {
   },
 
   everyRound() {
-    if (this.readyToAttack) return;
-
-    if (per(33)) {
-      this._doesAttack = false;
-    } else {
-      this._doesAttack = true;
-    }
+    
   },
 
   poder() {
@@ -875,7 +914,6 @@ let camarada = {
   attackChance: 8,
   especial: true,
   _canBeCritic: false,
-  
 
   levelCfg() {
     this.setHp(this.hp * this._level);
@@ -995,21 +1033,42 @@ let dog = {
   _attackAtSpawn: false,
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
-  attackChance: 15,
+  attackChance: 33,
   hp: 17,
   maxHealth: 17,
   dano: 15,
-  
 
   tick() {
     let vitor = areObj.some((x) => x.cartaId == "vitor");
 
     if (vitor) {
-      this.superCritico(true);
+      this.vitor = true;
+      this.critico(true);
       this._thisCardP.style.backgroundImage = `linear-gradient(180deg,rgba(0, 0, 0, 0.9),rgba(12, 3, 30, 0.4),rgba(0, 0, 0, 0.7)),url('/pics/dogRetrato2.PNG')`;
 
       this._thisCardP.style.backgroundSize = "cover";
       this._nomeP.textContent = "DOG DO VITINHO";
+    }
+  },
+
+  primaryAttack() {
+    if (this.vitor) {
+      this.readyToAttack = false
+      let numOfAttack = 1;
+
+      let atacks = setInterval(() => {
+
+        if (numOfAttack <= 0 || this._dead) {
+          clearInterval(atacks);
+        }
+
+        numOfAttack--
+        this.ataque()
+
+      }, 300);
+    } else {
+      this.ataque();
+      this.readyToAttack = false
     }
   },
 
@@ -1041,7 +1100,7 @@ let metaforando = {
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
-  attackChance: 3,
+  attackChance: 7,
   hp: 500,
   maxHealth: 500,
   dano: 20,
@@ -1152,6 +1211,108 @@ let liberdade = {
   },
 };
 
+let smoke = {
+  cartaId: "smokeCard",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 75,
+  _attackAtSpawn: false,
+  _doesAttack: false,
+  _audioSpawn: "",
+  attackChance: 20,
+  hp: 15,
+  maxHealth: 15,
+  dano: 1,
+  especial: true,
+  emoji: "🌫️",
+  smokeWeight: 2,
+
+  tick() {},
+
+  levelCfg() {
+    this.dano *= this._level;
+
+    this.setHp(this.hp * this._level);
+    this.smokeWeight *= this._level;
+  },
+
+  cfg() {
+    this._retratoP.style.border = "1px solid #de9b35";
+    this._nomeP.style.marginTop = "6px";
+  },
+
+  tick() {},
+
+  poder() {
+    smokeOnInv.smoke(true, this.smokeWeight);
+    setTimeout(() => {
+      this.kill();
+    }, 250);
+  },
+};
+
+let awp = {
+  cartaId: "awp",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 15,
+  _attackAtSpawn: false,
+  _doesAttack: true,
+  _audioSpawn: "",
+  attackChance: 9,
+  hp: 20,
+  maxHealth: 20,
+  dano: 35,
+  emoji: "",
+  asiimov: false,
+
+  tick() {},
+
+  levelCfg() {
+    if (per(0.5)) {
+      this.asiimov = true;
+    }
+
+    this.asiimov
+      ? (this.dano = gerarNumero(80, 120))
+      : (this.dano = gerarNumero(30, 40));
+
+    this.dano *= this._level;
+    this.setHp(this.hp * this._level);
+  },
+
+  cfg() {
+    if (this.asiimov) {
+      this._retratoP.style.backgroundImage = "url('/pics/awpAsiimov.png')";
+      this._thisCardP.style.backgroundImage = "url('/pics/asiimovFundo.jpg')";
+      this._thisCardP.style.backgroundImage = "url('/pics/asiimovFundo.jpg')";
+      this._thisCardP.style.border = "2px solid red";
+      this._retratoP.style.border = "1px solid red";
+    }
+    this._retratoP.style.border = "1px solid #de9b35";
+    this._retratoP.style.backgroundSize = "100% 100%";
+    this._nomeP.style.marginTop = "6px";
+  },
+
+  tick() {},
+
+  poder() {},
+};
+
 export function spawnTank() {
   inserirInimigoDomAndObject(tankBlueprint, tank);
 }
@@ -1190,6 +1351,20 @@ export function spawnLiberdade() {
       "url('pics/liberdadeRetrato.PNG')"
     ),
     liberdade
+  );
+}
+
+export function spawnSmoke() {
+  inserirmMiniBossDomAndObject(
+    blueprintBuilder("smokeCard", "SMOKE", "url('pics/smokeRetrato.PNG')"),
+    smoke
+  );
+}
+
+export function spawnAwp() {
+  inserirmMiniBossDomAndObject(
+    blueprintBuilder("awp", "AWP", "url('pics/awpRetrato.PNG')"),
+    awp
   );
 }
 
@@ -1306,19 +1481,19 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnTank();
+    boss.ult();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    spawnDog();
+    spawnVitor();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    countdown.createDefense();
+    smokeOnInv.smoke(true, 5);
   }
 });
 
@@ -1341,8 +1516,6 @@ function Main() {
 
 export function populateArena() {
   let chanceNormal = 70;
-
-  
 
   if (per(chanceNormal)) {
     let normaisArr = [spawnMonark, spawnDog, spawnTank];

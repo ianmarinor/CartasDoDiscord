@@ -1,0 +1,16 @@
+#smoke{
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 1322px;
+    height: 312px;
+    background-image: url(/pics/smoke.png);
+    background-image: url(https://gifimgs.com/res/0323/6424402a54ec6866441751.gif);
+    background-position: cover;
+    background-repeat:no-repeat;
+    /* border-radius: 5px; */
+    z-index: 5;
+    opacity: 0;
+    display: none;
+  
+  }

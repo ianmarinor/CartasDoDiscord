@@ -375,6 +375,7 @@ li {
 }
 #wrapAndInv {
   /* background-color: green; */
+  position: relative;
   display: flex;
   grid-area: inv;
 
@@ -769,7 +770,7 @@ li {
   /* font-family: 'verdana'; */
 
   /* background-image: url(pics/click.webp); */
-  background-color: #7878de;
+  background-color: #626dcd;
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
   /* font-size: 2em; */
@@ -779,7 +780,7 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #2d2ddd;
+  border: 2px solid #0000ff;
   font-weight: 900;
   color: rgb(0, 0, 0);
   background-repeat: no-repeat;
@@ -1297,6 +1298,7 @@ p {
 
 #wrapAndAre {
   grid-area: are;
+  position: relative;
 }
 
 #are {
