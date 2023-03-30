@@ -20,7 +20,7 @@ import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
 import { boss, spawnBoss, resetBoss, countdown, rDifficulty } from "./boss.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "teste2";
+let versao = "SMOKE FIX";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
