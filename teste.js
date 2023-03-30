@@ -1,48 +1,68 @@
+// let inv = [
+//   {
+//     cargo: "semCargo",
+//   },
+  
+  
+// ];
+
+// let counts = {
+
+//     'semCargo': 5,
+//     'people': 0,
+//     'gentleman': 2,
+//     'nobre': 0,
+//     'lord': 0,
+//     'ministro': 3,
+//     'primeMinister': 0,
+//     'premioMarino': 0,
+
+// };
+
+// inv.forEach((x) => {
+//   // cria um atributo de nome 'x.cargo' que é (inicialmente undefined)
+//   // Esse atributo recem criado tem o valor dele mesmo (se true) mais 1
+//   // se o valor é false, será 0 + 1
+//   counts[x.cargo] = counts[x.cargo]  + 1;
+// });
+
+// // console.log(counts);
 
 
 
+// let arr = Object.entries(counts);
+
+// // console.log(counts)
+// console.log(arr);
 
 
+// let vencedorNum = arr[0]
+// let vencedor
 
-class PorbWeapon {
-    constructor(_weaponName,_prob,_sellPrice){
-        this.nameWeapon = _weaponName 
-        this.precoCraft = 0.44
-        this.prob = _prob
-        this.sellPrice = _sellPrice
+// for(let i =0 ; i<8; i++){
+    
+//     let conco = arr[i][1]
+//     let concorrente = arr[i]
 
-    }
+//     // se campeao for menor **OU IGUAL** troca de campeao
+//    if(vencedorNum >= conco){
+    
+//    } else {
+//     vencedorNum = conco
+//     vencedor = concorrente
 
-    getSuitability(){
+//     //multiplicador
+//     if(vencedorNum > 1){
 
-        let suit = (((this.prob * this.precoCraft) - this.sellPrice)* -1).toFixed(2)
+//         concorrente.push((i + 1) * (vencedorNum - 1)) 
+//     } else {    
+//         concorrente.push(1)
+//     }
+//    }
 
+//     // console.log(conco);
+// }
 
-        console.group()
-        console.log(this.nameWeapon + ' -> ' + suit);
-        console.groupEnd()
-    }
-
-
-}
-
-//                                   nome          probabilidade craft    preço
-const sharpDresser = new PorbWeapon('Sharp Dresser',     6 ,              3.44)
-const napalmer = new PorbWeapon('Napalmer',6 , 3.88)
-const awperHand = new PorbWeapon('Awper Hand',8 , 4.22)
-const threeRunBlade = new PorbWeapon('Three Run Blade',12 , 2)
-const quackenbirdth = new PorbWeapon('Quackenbirdth',3 , 2.11)
-
-
-let weapons = [
-    sharpDresser,
-    napalmer,
-    awperHand,
-    threeRunBlade,
-    quackenbirdth
-]
-
-for (const x of weapons) {
-    x.getSuitability()
-}
-
+// console.log('vencedor: ', vencedor);
+// let multiplicador = vencedor[2]
+// console.log('multiplicador: ', multiplicador);

@@ -205,21 +205,21 @@ export function escolherCargo(x) {
     seedString[13] == 9 &&
     seedString[8] > 4
   ) {
-    cargo = "carta-premiomarino";
+    cargo = ["carta-premiomarino", "Premio Marino"];
   } else if (seedString[11] == 1 && seedString[12] == 8) {
-    cargo = "carta-primeminister";
+    cargo = ["carta-primeminister", "Prime Minister"];
   } else if (seedString[12] == 7 && seedString[11] >= 5) {
-    cargo = "carta-ministro";
+    cargo = ["carta-ministro", "Ministro"];
   } else if (seedString[12] == 6 && seedString[11] >= 3) {
-    cargo = "carta-lord";
+    cargo = ["carta-lord", "Lord"];
   } else if (seedString[13] >= 8 && seedString[12] > 2) {
-    cargo = "carta-nobre";
+    cargo = ["carta-nobre", "Nobre"];
   } else if (seedString[13] >= 7) {
-    cargo = "carta-gentleman";
+    cargo = ["carta-gentleman", "Gentleman"];
   } else if (seedString[11] > 4 && seedString[12] > 1) {
-    cargo = "carta-people";
+    cargo = ["carta-people", "People"];
   } else {
-    cargo = "carta-semcargo";
+    cargo = ["carta-semcargo", "Sem Cargo"];
   }
 
   return cargo;
@@ -315,23 +315,23 @@ export function escolherPoder(x, y) {
     pontoVarianteValor = y;
   }
 
-  if (cargo == "carta-semcargo") {
+  if (cargo[0] == "carta-semcargo") {
     return (poder = pontoPoderSemCargo() * pontoVarianteValor);
-  } else if (cargo == "carta-people") {
+  } else if (cargo[0] == "carta-people") {
     return (poder = pontoPoderPeople() * pontoVarianteValor);
-  } else if (cargo == "carta-gentleman") {
+  } else if (cargo[0] == "carta-gentleman") {
     return (poder = pontoPoderGentleman() * pontoVarianteValor);
-  } else if (cargo == "carta-monark") {
+  } else if (cargo[0] == "carta-monark") {
     return (poder = pontoPoderMonark());
-  } else if (cargo == "carta-nobre") {
+  } else if (cargo[0] == "carta-nobre") {
     return (poder = pontoPoderNobre() * pontoVarianteValor);
-  } else if (cargo == "carta-lord") {
+  } else if (cargo[0] == "carta-lord") {
     return (poder = pontoPoderLord() * pontoVarianteValor);
-  } else if (cargo == "carta-ministro") {
+  } else if (cargo[0] == "carta-ministro") {
     return (poder = pontoPoderMinistro() * pontoVarianteValor);
-  } else if (cargo == "carta-primeminister") {
+  } else if (cargo[0] == "carta-primeminister") {
     return (poder = pontoPoderPrimeMinister() * pontoVarianteValor);
-  } else if (cargo == "carta-premiomarino") {
+  } else if (cargo[0] == "carta-premiomarino") {
     return (poder = pontoPoderRNGPremioMarino() * pontoVarianteValor);
   }
 }
@@ -342,7 +342,8 @@ class fabricaDeCarta {
   constructor(integrante, cidade, cargo, poder, variante, especial, seedObj) {
     this._integrante = integrante[0];
     this._cidade = cidade[0];
-    this._cargo = cargo;
+    this._cargoArr = cargo;
+    this._cargo = this._cargoArr[0];
     this.energia = poder;
     // this.energiaNatural = poder;
     this._variante = variante[0];
@@ -362,7 +363,7 @@ class fabricaDeCarta {
     this.isInvisible = true;
     this.hp = 0;
     this.statusEmoji = false;
-    this.cartaId = cargo;
+    this.cartaId = this._cargo;
     this.dmgBoss = true;
     this.isNormal = true;
     this._critico = false;
@@ -1794,7 +1795,6 @@ document.addEventListener("keydown", (event) => {
     console.group("GLOBAL STATS");
     console.log(globalStats);
     console.groupEnd();
-
   }
 });
 
@@ -1881,78 +1881,119 @@ export let placarArena = {
   storedCards: 0,
   cardsTotal: 0,
 
+  getMultiplicador() {
+
+    let counts = {
+      'Sem Cargo': 0,
+      'People': 0,
+      'Gentleman': 0,
+      'Nobre': 0,
+      'Lord': 0,
+      'Ministro': 0,
+      'Prime Minister': 0,
+      'Premio Marino': 0,
+    };
+
+    invObj.forEach((x) => {
+      if(!x._cargoArr) return
+      counts[x._cargoArr[1]] = counts[x._cargoArr[1]] + 1;
+    });
+
+    console.log(counts);
+
+    let arr = Object.entries(counts);
+
+    
+    // console.log(arr);
+
+    let vencedorNum = arr[0];
+    let vencedor;
+
+    for (let i = 0; i < 8; i++) {
+      let conco = arr[i][1];
+      let concorrente = arr[i];
+
+      // se campeao for menor **OU IGUAL** troca de campeao
+      if (vencedorNum >= conco) {
+      } else {
+        vencedorNum = conco;
+        vencedor = concorrente;
+
+        //multiplicador
+        if (vencedorNum > 2) {
+          concorrente.push((i + 1) * (vencedorNum - 1));
+        } else {
+          concorrente.push(1);
+          vencedor[0] = ''
+        }
+      }
+
+      // console.log(conco);
+    }
+
+    console.log("vencedor: ", vencedor);
+    let multiplicador = vencedor[2];
+    
+
+    return vencedor
+  },
+
   getEnergia() {
     this.energiaTotal = 0;
 
-    let multiplicador = 1
-     
-    if(this.cardsTotal == 2){
-      multiplicador = 1.3
-    } else if (this.cardsTotal == 3){
-      multiplicador = 1.7
-    } else if (this.cardsTotal == 4){
-      multiplicador = 2
-    }
-
-      
     for (const x of invObj) {
       if (x.dmgBoss != true) {
         continue;
       }
       this.energiaTotal += x.energia;
     }
-    if (this.cardsTotal > 1) {
-      this.energiaTotal *= multiplicador;
-    }
+
+    this.energiaTotal *=  this.getMultiplicador()[2]
+
   },
 
   getDinheiro() {
     this.dinheiroTotal = 0;
 
-    let multiplicador = 1
+    // for (const x of invObj) {
+    //   if (x.dmgBoss != true) {
+    //     continue;
+    //   }
 
-    if(this.cardsTotal == 2){
-      multiplicador = 1.2
-    } else if (this.cardsTotal == 3){
-      multiplicador = 1.4
-    } else if (this.cardsTotal == 4){
-      multiplicador = 1.6
-    }
+  // }
+    this.dinheiroTotal = this.energiaTotal
 
-
-    for (const x of invObj) {
-      if (x.dmgBoss != true) {
-        continue;
-      }
-
-      this.dinheiroTotal += x.energia;
-    }
-    if (this.cardsTotal > 1) {
-      this.dinheiroTotal *= multiplicador;
-    }
+    
   },
 
   getAmmo() {
     this.ammoTotal = 0;
 
-    for (const x of invObj) {
-      if (x.dmgBoss != true) {
-        continue;
-      }
-      this.ammoTotal += x.energia;
-    }
-    this.ammoTotal = Math.trunc(this.ammoTotal / 37);
+    // for (const x of invObj) {
+    //   if (x.dmgBoss != true) {
+    //     continue;
+    //   }
+    //   this.ammoTotal += x.energia;
+    // }
+
+    // this.ammoTotal = Math.trunc(this.ammoTotal / 37);
+
+    this.ammoTotal = Math.trunc(this.energiaTotal / 70)
   },
 
   getBonusCard() {
-    for (const x of invObj) {
-      if (x.dmgBoss != true) {
-        continue;
-      }
-      this.bonusCards += x.energia;
-    }
+    // for (const x of invObj) {
+    //   if (x.dmgBoss != true) {
+    //     continue;
+    //   }
+    //   this.bonusCards += x.energia;
+    // }
 
-    this.bonusCards = Math.trunc(this.bonusCards / 48);
+    // this.bonusCards = Math.trunc(this.bonusCards / 48);
+
+    this.bonusCards = Math.trunc(this.energiaTotal / 100)
+
+
   },
 
   getNumberOfCards() {
@@ -1969,6 +2010,7 @@ export let placarArena = {
   },
 
   printP() {
+    
     this.getEnergia();
     this.getDinheiro();
     this.getAmmo();
@@ -1976,11 +2018,19 @@ export let placarArena = {
     this.getNumberOfCards();
 
     let placarDanoP = document.getElementById("placarDano");
+    let placarDanoMulti = document.getElementById("emojiPlacarDano");
     let placarMoneyP = document.getElementById("placarMoney");
     let placarAmmoP = document.getElementById("placarAmmo");
     let placarBonusCards = document.getElementById("placarCard");
 
-    // placarDanoP.innerHTML = Math.trunc(this.energiaTotal);
+    if(this.getMultiplicador()[2] != 1 ){
+
+      placarDanoP.innerHTML = this.getMultiplicador()[0].toUpperCase() + ' x' + this.getMultiplicador()[2]
+    } else {
+      placarDanoP.innerHTML = 'NO COMBO'
+    }
+    
+
     placarMoneyP.innerHTML = Math.floor(this.dinheiroTotal);
     placarAmmoP.innerHTML = this.ammoTotal;
     placarBonusCards.innerHTML = this.bonusCards;
@@ -2054,10 +2104,10 @@ function animateSell(start, plus) {
 
   let increment;
 
-  if (plus > 200) {
-    increment = 12;
+  if (plus > 800) {
+    increment = 150;
   } else {
-    increment = 1;
+    increment = 75;
   }
 
   var stepTime = Math.floor(50 / plus);
@@ -2144,7 +2194,7 @@ function limparInput() {
 export function tudo() {
   // VOLTAR A CONDICAO PRA (totalClicks > 0)
 
-  if (numCartas.total > 1) {
+  if (numCartas.total >= 1) {
     rodadas++;
 
     if (numCartas.total <= 0) {
@@ -2186,8 +2236,6 @@ export function tudo() {
 }
 
 function runEveryRound() {
-
-
   // ************* INV ****************
   invObj.map((x) => {
     x.everyRound ? x.everyRound() : false;
@@ -2199,14 +2247,11 @@ function runEveryRound() {
     }
   });
 
-  smokeOnInv.weight > 0 ? smokeOnInv.weight-- : 0
-  if(smokeOnInv.weight <= 0 && smokeOnInv.status === true){
-    smokeOnInv.weight = 0
-    smokeOnInv.smoke(false)
+  smokeOnInv.weight > 0 ? smokeOnInv.weight-- : 0;
+  if (smokeOnInv.weight <= 0 && smokeOnInv.status === true) {
+    smokeOnInv.weight = 0;
+    smokeOnInv.smoke(false);
   }
-
-
-
 
   maoObj.map((x) => {
     x._everyRoundMao ? x.everyRound() : false;
@@ -2418,7 +2463,6 @@ export let numCartas = {
 
   print() {
     if (this.total == 0) {
-      
       arenaP.textContent = " ⚠️ SUAS CARTAS ACABARAM ⚠️ ";
       arenaP.classList.add("warning-cards");
     } else if (this.total < 16) {
@@ -2432,13 +2476,11 @@ export let numCartas = {
       arenaP.classList.remove("warning-cards");
     }
     //cronometro
-    if(this.total == 0){
-      timer.start()
+    if (this.total == 0) {
+      timer.start();
     } else {
-      timer.pause()
+      timer.pause();
     }
-
-
   },
 };
 
@@ -2743,81 +2785,60 @@ export let audioPlayer = (_src, _abort, _CHN, _volume) => {
   // console.log(monarkCHN.paused);
 };
 
-let timerP = document.getElementsByClassName('crono')[0]
+let timerP = document.getElementsByClassName("crono")[0];
 
-let timerInterval
+let timerInterval;
 
 export let timer = {
+  seconds: 20,
+  milliseconds: 0,
+  running: false,
 
-    seconds: 20,
-    milliseconds: 0,
-    running: false,
+  start() {
+    if (this.running || this.cronoEnded()) return;
+    this.running = true;
+    timerInterval = setInterval(() => {
+      this.milliseconds--;
 
-
-
-    start(){
-      if(this.running || this.cronoEnded())return
-      this.running = true
-      timerInterval = setInterval(
-        ()=>{
-
-
-          this.milliseconds--
-          
-          if(this.milliseconds == -1){
-            this.milliseconds = 9
-            this.seconds--
-
-          }
-          if(this.cronoEnded()){
-            console.log('para para para');
-              this.pause()
-              playerDead()
-           }
-
-          
-          this.print()
-          
-          // console.log( this.seconds + '.' + this.milliseconds  );
-          console.log( this.milliseconds  );
-        }, 100
-      )
-
-
-
-    },
-
-    pause(){
-      if(!this.running)return
-      this.running = false
-      clearInterval(timerInterval)
-
-
-    },
-
-    cronoEnded(){
-      return this.seconds == 0 && this.milliseconds == 0
-    },
-
-    print(){
-
-      timerP.innerHTML = '⌛ ' + this.seconds + '.' + this.milliseconds  + ' ⌛' 
-
-      if(this.seconds < 10){
-        timerP.classList.add("warning-cards")
+      if (this.milliseconds == -1) {
+        this.milliseconds = 9;
+        this.seconds--;
+      }
+      if (this.cronoEnded()) {
+        console.log("para para para");
+        this.pause();
+        playerDead();
       }
 
+      this.print();
+
+      // console.log( this.seconds + '.' + this.milliseconds  );
+      console.log(this.milliseconds);
+    }, 100);
+  },
+
+  pause() {
+    if (!this.running) return;
+    this.running = false;
+    clearInterval(timerInterval);
+  },
+
+  cronoEnded() {
+    return this.seconds == 0 && this.milliseconds == 0;
+  },
+
+  print() {
+    timerP.innerHTML = "⌛ " + this.seconds + "." + this.milliseconds + " ⌛";
+
+    if (this.seconds < 10) {
+      timerP.classList.add("warning-cards");
     }
-
-
-}
+  },
+};
 
 export let globalStats = {
-
   totalDmgDelt: 0,
-
-}
-
+};
 
 // LIST BINDS
 //  1, 2, 3, 4 ---> USAR CARTAS NO DECK

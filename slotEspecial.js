@@ -25,10 +25,10 @@ let btnSangue = document.getElementById("btnSangue");
 let btnRainha = document.getElementById("btnRainha");
 let inv = document.getElementById("inv");
 
-let precoCampones = 100;
-let precoCavalheiro = 115;
-let precoSangueAzul = 400;
-let precoRainha = 2000;
+let precoCampones = 3000;
+let precoCavalheiro = 5000;
+let precoSangueAzul = 16000;
+let precoRainha = 100000;
 
 let precoPrint = () => {
   let precoCamponesP = (btnCampones.innerHTML =
@@ -120,7 +120,7 @@ function comprarCampones() {
     ativarBtn();
     snd(audio);
     precoCampones += increasePrice(precoCampones);
-    precoCampones >= 300 ? (precoCampones = 300) : false;
+    precoCampones >= 6000 ? (precoCampones = 6000) : false;
   }
   precoPrint();
 }
@@ -137,7 +137,7 @@ function comprarCavalheiro() {
     ativarBtn();
     snd(audio);
     precoCavalheiro += increasePrice(precoCavalheiro);
-    precoCavalheiro >= 500 ? (precoCavalheiro = 500) : false;
+    precoCavalheiro >= 10000 ? (precoCavalheiro = 10000) : false;
   }
   precoPrint();
 }
@@ -152,7 +152,7 @@ function comprarSangue() {
     ativarBtn();
     snd(audio);
     precoSangueAzul += increasePrice(precoSangueAzul);
-    precoSangueAzul >= 800 ? (precoSangueAzul = 800) : false;
+    precoSangueAzul >= 32000 ? (precoSangueAzul = 32000) : false;
   }
   precoPrint();
 }
@@ -167,7 +167,7 @@ function comprarRainha() {
     ativarBtn();
     snd(audio);
     precoRainha += increasePrice(precoRainha);
-    precoRainha >= 8000 ? (precoRainha = 8000) : false;
+    precoRainha >= 200000 ? (precoRainha = 200000) : false;
   }
   precoPrint();
 }
