@@ -233,11 +233,11 @@ export function escolherVariante(x) {
   }
 
   let cartasQueNaoTemVariante =
-    cargo != "carta-monark" &&
-    cargo != "carta-semcargo" &&
-    cargo != "carta-people" &&
-    cargo != "carta-people" &&
-    cargo != "carta-gentleman";
+    cargo[0] != "carta-monark" &&
+    cargo[0] != "carta-semcargo" &&
+    cargo[0] != "carta-people" &&
+    cargo[0] != "carta-people" &&
+    cargo[0] != "carta-gentleman";
 
   variante = ["", ""];
   if (cartasQueNaoTemVariante) {
@@ -1899,7 +1899,7 @@ export let placarArena = {
       counts[x._cargoArr[1]] = counts[x._cargoArr[1]] + 1;
     });
 
-    console.log(counts);
+    // console.log(counts);
 
     let arr = Object.entries(counts);
 
@@ -1931,7 +1931,7 @@ export let placarArena = {
       // console.log(conco);
     }
 
-    console.log("vencedor: ", vencedor);
+    // console.log("vencedor: ", vencedor);
     let multiplicador = vencedor[2];
     
 
