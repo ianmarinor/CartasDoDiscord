@@ -112,9 +112,9 @@ class Boss {
 
     this.antiSpam();
     this.imageHit();
-    audioPlayer(this._audioHitDefault, false, this._CHN, vol);
+    // audioPlayer(this._audioHitDefault, false, this._CHN, vol);
 
-    if (per(20)) {
+    if (per(5)) {
       let faixa = this._audioHit[gerarNumero(0, this._audioHit.length - 1)];
 
       audioPlayer(faixa, true, this._CHN);
@@ -135,7 +135,7 @@ class Boss {
   }
 
   antiSpam() {
-    let delay = gerarNumero(750, 1250);
+    let delay = gerarNumero(750, 1800);
 
     if (per(10)) {
       setTimeout(
@@ -336,7 +336,7 @@ function createMonark() {
         let sorteio = gerarNumero(0, 2);
         // let sorteio = 1
 
-        if (true) {
+        if (sorteio == 0) {
           this.chuvaDeMonark();
         } else if (sorteio == 1) {
           this.liberdadeDeExpresao();

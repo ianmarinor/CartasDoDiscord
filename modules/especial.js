@@ -400,15 +400,15 @@ export class Especial {
             : (danoSpread = Math.trunc(dano / spreadBaseDmg));
 
           if (left && !left.isInvisible) {
-            left.dmg(danoSpread);
+           ;
 
-            this._dmgDone += danoSpread;
+            this._dmgDone +=  left.dmg(danoSpread)[0]
           }
 
           if (right && !right.isInvisible) {
-            right.dmg(danoSpread);
+            
 
-            this._dmgDone += danoSpread;
+            this._dmgDone += right.dmg(danoSpread);
           }
         }
       };
@@ -429,13 +429,13 @@ export class Especial {
           if (areObj[slot]._exposto && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            vitima.dmg(dano);
+           this._dmgDone += vitima.dmg(dano)[0]
 
             checkLeftRight(vitima);
 
             // atacar por dano spread
 
-            this._dmgDone += dano;
+            
 
             return [true, vitima];
           }
@@ -449,14 +449,14 @@ export class Especial {
           if (areObj[slot].tank && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            vitima.dmg(dano);
+            this._dmgDone += vitima.dmg(dano)[0]
 
             classHit = "tank";
             checkLeftRight(vitima);
 
             // atacar por dano spread
 
-            this._dmgDone += dano;
+            
 
             return [true, vitima];
           }
@@ -470,14 +470,14 @@ export class Especial {
           if (areObj[slot].especial && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            vitima.dmg(dano);
+            this._dmgDone += vitima.dmg(dano)[0]
 
             classHit = "especial";
             checkLeftRight(vitima);
 
             // atacar por dano spread
 
-            this._dmgDone += dano;
+            
 
             return [true, vitima];
           }
@@ -491,14 +491,14 @@ export class Especial {
           if (!areObj[slot].miniBoss && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            vitima.dmg(dano);
+            this._dmgDone += vitima.dmg(dano)[0]
 
             classHit = "normal";
             checkLeftRight(vitima);
 
             // atacar por dano spread
 
-            this._dmgDone += dano;
+            
 
             return [true, vitima];
           }
@@ -513,11 +513,11 @@ export class Especial {
           if (areObj[slot].miniBoss && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            vitima.dmg(dano);
+            this._dmgDone += vitima.dmg(dano)[0]
 
             classHit = "miniBoss";
             checkLeftRight(vitima);
-            this._dmgDone += dano;
+           
 
             return [true, vitima];
           }
@@ -1731,9 +1731,11 @@ export let especiais = {
           retrato.classname = "invisible";
           spy.children[0].className = "invis";
 
-          this._energiaP.textContent = this.energia;
+
+          // this._energiaP.textContent = this.energia;
 
           this._invHiddenButton = true;
+
           retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
           let spyInvisAu = ["spyInvis.mp3", 0.2];
@@ -1743,7 +1745,7 @@ export let especiais = {
           this.clockReady = false;
           this.isInvisible = true;
           this._monarkFree = true;
-          this.dmgBoss = true;
+          // this.dmgBoss = true;
           this.changeEmojiToDefault();
           this.exposto(false);
         };
@@ -1758,7 +1760,7 @@ export let especiais = {
           spy.children[0].className = "vis";
           this._invHiddenButton = false;
           retrato.style.backgroundImage = this.retrato;
-          this._energiaP = this.dano;
+          // this._energiaP = this.dano;
 
           let spyInvisAu = ["spyInvis.mp3", 0.3];
           snd(spyInvisAu);
@@ -1768,7 +1770,7 @@ export let especiais = {
           this.clockToVis = false;
           this.clockReady = false;
 
-          this.dmgBoss = false;
+          // this.dmgBoss = false;
           this.setEmoji(this._defaultEmojiDano);
           this.exposto();
         };
@@ -1889,7 +1891,7 @@ export let especiais = {
     hp: 80,
     maxHealth: 80,
     hashp: true,
-    // _invHiddenButton: true,
+    _invHiddenButton: true,
 
     poder() {
       if (this.unableToAttack()) return;
@@ -1913,7 +1915,7 @@ export let especiais = {
       if (hasTuru || hasItapira) {
         this._invHiddenButton = false;
       } else {
-        // this._invHiddenButton = true;
+        this._invHiddenButton = true;
       }
     },
 
@@ -1993,7 +1995,7 @@ export let especiais = {
     },
 
     cfg() {
-      this.dano = gerarNumero(3, 6);
+      this.dano = gerarNumero(6, 12);
     },
 
     everyRound() {
@@ -2003,7 +2005,7 @@ export let especiais = {
         this.buildUlt(1);
       }
 
-      let healValue = gerarNumero(2, 4);
+      let healValue = gerarNumero(4, 7);
       invObj.map((x) => {
         if (x.hashp && per(80) && !x._fullHp) {
           x.heal(healValue);
@@ -2297,7 +2299,7 @@ export let especiais = {
     tick() {},
 
     cfg() {
-      this.dano = gerarNumero(18, 35);
+      this.dano = gerarNumero(38, 55);
     },
 
     ult() {
@@ -2351,7 +2353,7 @@ export let especiais = {
     poder() {
       if (this._ulting) return;
 
-      let ultiRate = () => gerarNumero(2, 5);
+      let ultiRate = () => gerarNumero(2, 9);
 
       if (this.ataque(false, undefined, [true, false])) {
         this.buildUlt(ultiRate());
@@ -2806,7 +2808,7 @@ export let especiais = {
     dano: undefined,
     _exposto: true,
 
-    ammonition: 30,
+    ammonition: 50,
     ammonitionMax: undefined,
 
     active: false,
@@ -2845,7 +2847,17 @@ export let especiais = {
 
     ult() {},
 
-    everyRound() {},
+    everyRound() {
+
+    
+
+      if (this.ammonition != this.ammonitionMax) {
+        this.ammonition += gerarNumero(1, 3);
+        this.ammonition > this.ammonitionMax
+          ? (this.ammonition = this.ammonitionMax)
+          : 0;
+      }
+    },
 
     rocket() {
       let rocketDmg = this.dano * gerarNumero(10, 25);
@@ -2884,16 +2896,11 @@ export let especiais = {
     },
 
     poder() {
-      if (ammo.total <= 0 || this.active || this.unableToAttack()) {
+      if (ammo.total <= 0 || this.active || this.unableToAttack() || this.ammonition <= 0) {
         return;
       }
 
-      if (this.ammonition != this.ammonitionMax) {
-        this.ammonition += gerarNumero(8, 15);
-        this.ammonition > this.ammonitionMax
-          ? (this.ammonition = this.ammonitionMax)
-          : 0;
-      }
+      
 
       ammo.use(1);
 

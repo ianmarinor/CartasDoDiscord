@@ -471,7 +471,7 @@ li {
   opacity: 0.5;
 }
 
-.arena {
+.arena, .crono {
   height: 40px;
   margin: 0.1em;
   font-size: 1.5em;
@@ -480,9 +480,14 @@ li {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   /* font-family: blackao; */
   grid-area: cartas;
-  align-self: center;
+  align-self: end;
   text-align: center;
 }
+.crono {
+  align-self: start;
+
+}
+
 
 #store {
   grid-area: dinheiro;
@@ -1331,6 +1336,12 @@ div[id^="empty-"] {
   display: block;
   opacity: 0.5;
 }
+
+#empty5,
+#empty6 {
+  background-color: #02001f;
+}
+
 #action1,
 #action2,
 #action3,

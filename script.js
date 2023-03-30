@@ -603,7 +603,7 @@ zerarMoney();
 
 function debug() {
   money.set(99999);
-  numCartas.set(999);
+  numCartas.set(10);
   hpPlayer.set(100);
   hpPlayer.addBuff(5000);
   ammo.set(10);
@@ -1790,6 +1790,11 @@ document.addEventListener("keydown", (event) => {
     console.group("MONEY");
     console.log(money);
     console.groupEnd();
+
+    console.group("GLOBAL STATS");
+    console.log(globalStats);
+    console.groupEnd();
+
   }
 });
 
@@ -1879,9 +1884,17 @@ export let placarArena = {
   getEnergia() {
     this.energiaTotal = 0;
 
-    let multiplicador = parseFloat(
-      1 + "." + this.cardsTotal + (this.cardsTotal + 1)
-    );
+    let multiplicador = 1
+     
+    if(this.cardsTotal == 2){
+      multiplicador = 1.3
+    } else if (this.cardsTotal == 3){
+      multiplicador = 1.7
+    } else if (this.cardsTotal == 4){
+      multiplicador = 2
+    }
+
+      
     for (const x of invObj) {
       if (x.dmgBoss != true) {
         continue;
@@ -1896,7 +1909,16 @@ export let placarArena = {
   getDinheiro() {
     this.dinheiroTotal = 0;
 
-    let multiplicador = parseFloat(1 + "." + this.cardsTotal);
+    let multiplicador = 1
+
+    if(this.cardsTotal == 2){
+      multiplicador = 1.2
+    } else if (this.cardsTotal == 3){
+      multiplicador = 1.4
+    } else if (this.cardsTotal == 4){
+      multiplicador = 1.6
+    }
+
 
     for (const x of invObj) {
       if (x.dmgBoss != true) {
@@ -1958,7 +1980,7 @@ export let placarArena = {
     let placarAmmoP = document.getElementById("placarAmmo");
     let placarBonusCards = document.getElementById("placarCard");
 
-    placarDanoP.innerHTML = Math.trunc(this.energiaTotal);
+    // placarDanoP.innerHTML = Math.trunc(this.energiaTotal);
     placarMoneyP.innerHTML = Math.floor(this.dinheiroTotal);
     placarAmmoP.innerHTML = this.ammoTotal;
     placarBonusCards.innerHTML = this.bonusCards;
@@ -1990,7 +2012,7 @@ function dmgBoss() {
   }
 
   if (energiaTotal > 0 && boss) {
-    boss.dmg(Math.trunc(energiaTotal * multiplicador));
+    // boss.dmg(Math.trunc(energiaTotal * multiplicador));
   }
 
   //DINHEIRO
@@ -2396,6 +2418,7 @@ export let numCartas = {
 
   print() {
     if (this.total == 0) {
+      
       arenaP.textContent = " ⚠️ SUAS CARTAS ACABARAM ⚠️ ";
       arenaP.classList.add("warning-cards");
     } else if (this.total < 16) {
@@ -2408,6 +2431,14 @@ export let numCartas = {
       arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
       arenaP.classList.remove("warning-cards");
     }
+    //cronometro
+    if(this.total == 0){
+      timer.start()
+    } else {
+      timer.pause()
+    }
+
+
   },
 };
 
@@ -2711,6 +2742,82 @@ export let audioPlayer = (_src, _abort, _CHN, _volume) => {
 
   // console.log(monarkCHN.paused);
 };
+
+let timerP = document.getElementsByClassName('crono')[0]
+
+let timerInterval
+
+export let timer = {
+
+    seconds: 20,
+    milliseconds: 0,
+    running: false,
+
+
+
+    start(){
+      if(this.running || this.cronoEnded())return
+      this.running = true
+      timerInterval = setInterval(
+        ()=>{
+
+
+          this.milliseconds--
+          
+          if(this.milliseconds == -1){
+            this.milliseconds = 9
+            this.seconds--
+
+          }
+          if(this.cronoEnded()){
+            console.log('para para para');
+              this.pause()
+              playerDead()
+           }
+
+          
+          this.print()
+          
+          // console.log( this.seconds + '.' + this.milliseconds  );
+          console.log( this.milliseconds  );
+        }, 100
+      )
+
+
+
+    },
+
+    pause(){
+      if(!this.running)return
+      this.running = false
+      clearInterval(timerInterval)
+
+
+    },
+
+    cronoEnded(){
+      return this.seconds == 0 && this.milliseconds == 0
+    },
+
+    print(){
+
+      timerP.innerHTML = '⌛ ' + this.seconds + '.' + this.milliseconds  + ' ⌛' 
+
+      if(this.seconds < 10){
+        timerP.classList.add("warning-cards")
+      }
+
+    }
+
+
+}
+
+export let globalStats = {
+
+  totalDmgDelt: 0,
+
+}
+
 
 // LIST BINDS
 //  1, 2, 3, 4 ---> USAR CARTAS NO DECK
