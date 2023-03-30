@@ -1529,7 +1529,7 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    timer.start();
+    spawnSmoke();
   }
 });
 
