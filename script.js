@@ -203,20 +203,20 @@ export function escolherCargo(x) {
     seedString[11] == 9 &&
     seedString[12] == 9 &&
     seedString[13] == 9 &&
-    seedString[8] > 4
+    seedString[8] > 4 
   ) {
     cargo = ["carta-premiomarino", "Premio Marino"];
-  } else if (seedString[11] == 1 && seedString[12] == 8) {
+  } else if (seedString[11] == 1 && seedString[12] == 8 ) {
     cargo = ["carta-primeminister", "Prime Minister"];
   } else if (seedString[12] == 7 && seedString[11] >= 5) {
     cargo = ["carta-ministro", "Ministro"];
-  } else if (seedString[12] == 6 && seedString[11] >= 3) {
+  } else if (seedString[12] == 6 && seedString[11] >= 3 ) {
     cargo = ["carta-lord", "Lord"];
-  } else if (seedString[13] >= 8 && seedString[12] > 2) {
+  } else if (seedString[13] >= 8 && seedString[12] > 2 ) {
     cargo = ["carta-nobre", "Nobre"];
-  } else if (seedString[13] >= 7) {
+  } else if (seedString[13] >= 7  ) {
     cargo = ["carta-gentleman", "Gentleman"];
-  } else if (seedString[11] > 4 && seedString[12] > 1) {
+  } else if (seedString[11] > 4 && seedString[12] > 1  ) {
     cargo = ["carta-people", "People"];
   } else {
     cargo = ["carta-semcargo", "Sem Cargo"];
@@ -240,9 +240,9 @@ export function escolherVariante(x) {
     cargo[0] != "carta-gentleman";
 
   variante = ["", ""];
-  if (cartasQueNaoTemVariante) {
-    if (seedString[14] == 4) {
-      if (seedString[5] == 9 && seedString[6] == 0) {
+  if (cartasQueNaoTemVariante ) {
+    if (seedString[14] == 4 ) {
+      if (seedString[5] == 9  && seedString[6] == 0 ) {
         return (variante = ["farmacêutico", 0]);
       } else if (seedString[5] == 9 && seedString[6] == 1) {
         return (variante = ["bão", 1]);
@@ -604,7 +604,7 @@ zerarMoney();
 
 function debug() {
   money.set(99999);
-  numCartas.set(10);
+  numCartas.set(100);
   hpPlayer.set(100);
   hpPlayer.addBuff(5000);
   ammo.set(10);
@@ -761,24 +761,31 @@ function colocarInfoNoWrap(a) {
     } else if (novaCarta._cargo === "carta-gentleman") {
       cargoP.innerHTML = "&nbsp;" + "gentleman".toUpperCase();
       retratoP.style.border = "";
+
     } else if (novaCarta._cargo === "carta-ministro") {
-      cargoP.innerHTML = "&nbsp;" + "ministro".toUpperCase() + "👨‍⚖️";
-      retratoP.style.border = "";
+      cargoP.innerHTML = "&nbsp;" +  "👨‍⚖️ <br>" + "ministro".toUpperCase()
+      retratoP.style.border = "2px solid #000000";
+
+
     } else if (novaCarta._cargo === "carta-lord") {
-      cargoP.innerHTML = "&nbsp;" + "lord".toUpperCase() + "👑";
-      retratoP.style.border = "";
+      cargoP.innerHTML = "&nbsp;" +  "👑 <br>" + "lord".toUpperCase()
+      retratoP.style.border = "2px solid #000000";
+
+
     } else if (novaCarta._cargo === "carta-nobre") {
-      cargoP.innerHTML = "&nbsp;" + "nobre".toUpperCase() + "💙";
+      cargoP.innerHTML = "&nbsp;" +  "nobre".toUpperCase() ;
       retratoP.style.border = "";
+
+
     } else if (novaCarta._cargo === "carta-primeminister") {
-      cargoP.innerHTML = "&nbsp;" + "prime minister".toUpperCase() + "💪";
+      cargoP.innerHTML = "&nbsp;" +   "💪 <br>" + "prime minister".toUpperCase() ;
       cargoP.style.backgroundImage = "pics/wrapPremioMarino.webp";
-      retratoP.style.border = "";
+      retratoP.style.border = "1px solid #afacac";
       seedP.style.color = "white";
     } else if (novaCarta._cargo === "carta-premiomarino") {
       cargoP.innerHTML =
         "&nbsp;" + "&#127942; <br> premio marino".toUpperCase();
-      retratoP.style.border = "";
+      retratoP.style.border = "1px solid #eee8e8";
     } else if (novaCarta._cargo === "carta-monark") {
       cargoP.innerHTML = "&nbsp;" + "monark" + "&#128169;";
       retratoP.style.border = "";
@@ -1921,7 +1928,8 @@ export let placarArena = {
 
         //multiplicador
         if (vencedorNum > 2) {
-          concorrente.push((i + 1) * (vencedorNum - 1));
+          let rankCard = (i + 1) / 6
+          concorrente.push( (  (rankCard  * vencedorNum) + 1).toFixed(2) ) ;
         } else {
           concorrente.push(1);
           vencedor[0] = ''
@@ -1931,10 +1939,10 @@ export let placarArena = {
       // console.log(conco);
     }
 
-    // console.log("vencedor: ", vencedor);
+    console.log("vencedor: ", vencedor);
     let multiplicador = vencedor[2];
     
-
+    
     return vencedor
   },
 
@@ -2104,10 +2112,10 @@ function animateSell(start, plus) {
 
   let increment;
 
-  if (plus > 800) {
-    increment = 150;
+  if (plus > 500) {
+    increment = 35;
   } else {
-    increment = 75;
+    increment = 8;
   }
 
   var stepTime = Math.floor(50 / plus);

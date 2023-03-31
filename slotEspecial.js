@@ -25,10 +25,10 @@ let btnSangue = document.getElementById("btnSangue");
 let btnRainha = document.getElementById("btnRainha");
 let inv = document.getElementById("inv");
 
-let precoCampones = 750;
-let precoCavalheiro = 1500;
-let precoSangueAzul = 4500;
-let precoRainha = 20000;
+let precoCampones = 150;
+let precoCavalheiro = 300;
+let precoSangueAzul = 650;
+let precoRainha = 4000;
 
 let precoPrint = () => {
   let precoCamponesP = (btnCampones.innerHTML =
@@ -106,6 +106,8 @@ let increasePrice = (x) => {
 
   let increaseRate = gerarNumero(30, 42);
 
+  
+
   return Math.trunc(x / increaseRate);
 };
 
@@ -120,7 +122,7 @@ function comprarCampones() {
     ativarBtn();
     snd(audio);
     precoCampones += increasePrice(precoCampones);
-    precoCampones >= 6000 ? (precoCampones = 6000) : false;
+    precoCampones >= 300 ? (precoCampones = 300) : false;
   }
   precoPrint();
 }
@@ -137,7 +139,7 @@ function comprarCavalheiro() {
     ativarBtn();
     snd(audio);
     precoCavalheiro += increasePrice(precoCavalheiro);
-    precoCavalheiro >= 10000 ? (precoCavalheiro = 10000) : false;
+    precoCavalheiro >= 600 ? (precoCavalheiro = 600) : false;
   }
   precoPrint();
 }
@@ -152,7 +154,7 @@ function comprarSangue() {
     ativarBtn();
     snd(audio);
     precoSangueAzul += increasePrice(precoSangueAzul);
-    precoSangueAzul >= 32000 ? (precoSangueAzul = 32000) : false;
+    precoSangueAzul >= 1300 ? (precoSangueAzul = 1300) : false;
   }
   precoPrint();
 }
@@ -167,7 +169,7 @@ function comprarRainha() {
     ativarBtn();
     snd(audio);
     precoRainha += increasePrice(precoRainha);
-    precoRainha >= 200000 ? (precoRainha = 200000) : false;
+    precoRainha >= 8000? (precoRainha = 8000) : false;
   }
   precoPrint();
 }

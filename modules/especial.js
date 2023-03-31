@@ -1054,6 +1054,12 @@ export let especiais = {
         if (x.cartaId == "sentry") {
           x.ammonition = x.ammonitionMax;
         }
+
+        if (x._barreira != undefined) {
+          x._barreira = x._barreiraMax
+        }
+
+
       });
 
       hpPlayer.add(50);
@@ -2563,6 +2569,7 @@ export let especiais = {
           undefined,
           true
         );
+        this._cargoP.style.visibility = "visible";
       } else {
         this._cargoP.style.visibility = "hidden";
       }

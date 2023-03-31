@@ -1,9 +1,9 @@
 :root {
   --monark: #411a12;
-  --semCargo: #b0b0b6f4;
-  --people: #be3737f2;
-  --gentleman: #d49f09;
-  --nobre: #8888f1;
+  --semCargo: #bababa;
+  --people: #d38a8a;
+  --gentleman: #e3ba48;
+  --nobre: #7070ee;
   --lord: #ee17ad;
   --lideDaOposicao: #ff4400;
   --ministro: #2bd6d6;
@@ -426,7 +426,7 @@ li {
 #placarArena {
   /* background-color: green; */
 
-  width: 400px;
+  width: 1333px;
 
   display: flex;
 
@@ -440,13 +440,14 @@ li {
   display: flex;
   font-size: 0.7em;
   color: wheat;
+  /* width: 150px; */
 }
 
 #placarDano{
   color: rgb(158, 143, 47);
   /* transform: rotate(13deg); */
   text-align: start;
-  width: 180px;
+  width: 750px;
   /* background-color: #020101; */
   font-size: 1.8em;
 
@@ -593,7 +594,9 @@ li {
 }
 
 #carta-premiomarino {
-  background-image: url(pics/wrapPremioMarino.webp);
+  background: linear-gradient(rgba(238, 238, 59, 0.9)  , rgb(0, 0,0, 0.2), rgba(238, 238, 59, 0.9) ), 
+  url(pics/wrapPremioMarino.gif);
+  /* url(https://slm-assets.secondlife.com/assets/24653811/original/HgwB-gg.gif?1570100147); */
   /* background-color: var(--premioMarino); */
   /* background: radial-gradient(circle, rgba(252,213,3,1) 40%, rgba(200,232,57,1) 87%); */
   height: var(--tamanhoCartaHeight);
@@ -604,15 +607,16 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 2px solid #9511a7;
+  border: 3px solid #fd8f2f;
   font-weight: 900;
   color: rgb(0, 0, 0);
-  /* background-size: contain; */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 #carta-primeminister {
   background-color: var(--primeMinister);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgb(127, 125, 125));
+  background: linear-gradient( to top left,  rgb(1, 0, 0) 20%,  rgb(63, 63, 63) ,  rgba(1, 0, 0) 80%);
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
   display: flex;
@@ -621,8 +625,8 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  color: #afacac;
-  border: 2px solid #afacac;
+  color: #eee8e8;
+  border: 2px solid #eee8e8;
 }
 
 #carta-ministro {
@@ -641,7 +645,7 @@ li {
   border-radius: 15px;
   position: relative;
   color: #020101;
-  border: 2px solid #020101;
+  border: 2px solid #000000;
 }
 
 #carta-lord {
@@ -660,6 +664,7 @@ li {
   border-radius: 15px;
   position: relative;
   color: #090909;
+
   border: 2px solid #020101;
 }
 

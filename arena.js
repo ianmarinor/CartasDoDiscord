@@ -500,9 +500,13 @@ class Inimigo {
     this.infected = false;
   }
 
+  didHit(){
+
+  }
+
   dmg(n, absolute) {
     if (this.isInvisible && !absolute) return;
-    //
+    this.didHit()
     
 
     if (this.hashp == false) {
@@ -1123,7 +1127,7 @@ let metaforando = {
   _attackAtSpawn: true,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
-  attackChance: 8,
+  attackChance: 0,
   hp: 500,
   maxHealth: 500,
   dano: 20,
@@ -1155,6 +1159,7 @@ let metaforando = {
   },
 
   poder() {
+    if(this._dead)return
     invObj.map((x) => {
       if (x.isNormal || x.isInvisible) return;
       let stunTime = gerarNumero(1, 2);
@@ -1174,6 +1179,22 @@ let metaforando = {
 
     hpPlayer.remove(this.dano);
   },
+
+
+  didHit(){
+
+    if(this.readyToAttack){
+
+      this.poder()
+
+    } else {
+      if (per(70)) return
+      this.readyToAttack = true
+    }
+
+
+  }
+
 };
 
 let liberdade = {
@@ -1191,7 +1212,7 @@ let liberdade = {
   _attackAtSpawn: true,
   _doesAttack: false,
   _audioSpawn: "",
-  attackChance: 12,
+  attackChance: 0,
   hp: 790,
   maxHealth: 790,
   dano: 0,
@@ -1230,8 +1251,26 @@ let liberdade = {
   },
 
   poder() {
+    if(this._dead)return
     hpPlayer.remove(this.dano);
   },
+
+
+  didHit(){
+
+    if(this.readyToAttack){
+
+      this.poder()
+
+    } else {
+      if (per(80)) return
+      this.readyToAttack = true
+    }
+
+
+
+  }
+
 };
 
 let smoke = {
@@ -1390,14 +1429,14 @@ export function spawnLiberdade() {
 }
 
 export function spawnSmoke() {
-  inserirmMiniBossDomAndObject(
+  inserirInimigoDomAndObject(
     blueprintBuilder("smokeCard", "SMOKE", "url('pics/smokeRetrato.PNG')"),
     smoke
   );
 }
 
 export function spawnAwp() {
-  inserirmMiniBossDomAndObject(
+  inserirInimigoDomAndObject(
     blueprintBuilder("awp", "AWP", "url('pics/awpRetrato.PNG')"),
     awp
   );
@@ -1535,7 +1574,7 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    timer.pause();
+    boss.chuvaDeMonark();
   }
 });
 
