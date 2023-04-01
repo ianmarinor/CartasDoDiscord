@@ -543,7 +543,7 @@ class Inimigo {
 
     this.hp -= n;
 
-    let multiplicadorBossDano = 2;
+    let multiplicadorBossDano = 1.8;
 
     if (boss) {
       boss.dmg(Math.floor(danoRealRecebido / multiplicadorBossDano));
@@ -1186,16 +1186,19 @@ let metaforando = {
     hpPlayer.remove(this.dano);
 
     this.readyToAttack = false;
-    this._uber = true;
+    this._uber = false;
   },
 
   didHit() {
+
+    
+
     if (per(80) || this.readyToAttack) return;
 
     this.readyToAttack = true;
     this._uber = true;
 
-    setTimeout(() => this.poder(), 5000);
+    setTimeout(() => this.poder(), coolDownTreme);
   },
 };
 
@@ -1263,12 +1266,13 @@ let liberdade = {
   },
 
   didHit() {
+    let coolDownTreme = gerarNumero(320 , 1000)
     if (per(80) || this.readyToAttack) return;
 
     this.readyToAttack = true;
     this._uber = true;
 
-    setTimeout(() => this.poder(), 5000);
+    setTimeout(() => this.poder(), coolDownTreme);
   },
 };
 let smoke = {
@@ -1512,6 +1516,8 @@ function inserirInimigoDomAndObject(blueprint, object) {
       }
 
       return areObj[slot];
+    } else {
+      return false
     }
   }
 }

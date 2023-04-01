@@ -2315,7 +2315,7 @@ export let especiais = {
         this.setHp(10);
         this.changeRetrato('url("/pics/dva.webp")');
         this.dmgBoss = true;
-
+        this._stunned = false
         this._thisCardP.children[2].textContent = "";
         this.dano = 0;
         this._buff = 0;

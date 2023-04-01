@@ -608,7 +608,7 @@ function debug() {
   numCartas.set(100);
   hpPlayer.set(100);
   hpPlayer.addBuff(5000);
-  ammo.set(10);
+  ammo.set(100);
 }
 
 document.addEventListener("keydown", (event) => {
@@ -1173,7 +1173,7 @@ let hit = ["hit.mp3", 0.2];
 export function efeitoDano(carta) {
   // console.trace();
   // console.log(carta);
-
+if(carta._dead)return
   let heart = carta._thisCardP.children[3].children[1];
   let cartaP = carta._thisCardP;
 
@@ -2644,7 +2644,7 @@ export let hpPlayer = {
 export let ammo = {
   total: 0,
   ammoUsed: 0,
-  max: 50,
+  max: 100,
 
   add(n) {
     this.total += n;
@@ -2672,8 +2672,25 @@ export let ammo = {
 
   ammoP(n) {
     ammoP.textContent = n;
+
+    if(this.total == this.max){
+      color(ammoP, 'lime')
+    } else if(this.total <1 ) {
+      color(ammoP, 'red')
+    } else {
+      color(ammoP, 'wheat')
+    }
+
   },
 };
+
+function color(_element, _color){
+
+  _element.style.color = _color
+
+}
+
+
 
 function playerDead() {
   let rodadasStats = document.getElementById("rodadasStats");

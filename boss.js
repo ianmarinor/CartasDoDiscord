@@ -140,7 +140,14 @@ class Boss {
 
     if (per(10)) {
       setTimeout(
-        () => populateArena().isInvisible = true,
+        () => {
+
+          let obj =  populateArena()
+
+          obj ? obj.isInvisible = true : 0
+         
+        
+        },
 
         delay
       );
@@ -224,6 +231,9 @@ export let countdown = {
   },
 
   createDefense() {
+
+    if(this._creatingDefense) return
+
     let faixa = document.createElement("audio");
 
     audioPlayer("trumpet.mp3", true, faixa);
