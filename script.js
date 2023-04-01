@@ -2790,7 +2790,7 @@ export function startGame2() {
   hpPlayer.set(100);
   ammo.set(5);
   countdown.valueSet(20);
-  money.set(300)
+  money.set(200)
   tick();
   removeBuffAll();
 }

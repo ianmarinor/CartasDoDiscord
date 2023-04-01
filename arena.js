@@ -1026,11 +1026,19 @@ let tank = {
   },
 
   cfg() {
+
+
+    
+
     this.audioSpawn(0.3);
 
     if (per(70)) {
       audioPlayer("tank/tankSpawn.mp3", false, this._CHN, 0.2);
     }
+  },
+
+  tick(){
+    this._cargoP.innerHTML = progressBar(this.ulti, 60, "gray", "#cf6a32")
   },
 
   everyRound() {
@@ -1043,7 +1051,7 @@ let tank = {
     }
 
     this.ulti += ultiRate;
-    this._cargoP.children[0].value = this.ulti;
+    
 
     if (this.ulti >= 60) {
       this.readyToAttack = true;
@@ -1191,7 +1199,7 @@ let metaforando = {
 
   didHit() {
 
-    
+    let coolDownTreme = gerarNumero(320 , 1000)
 
     if (per(80) || this.readyToAttack) return;
 
