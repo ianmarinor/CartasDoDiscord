@@ -631,11 +631,19 @@ li {
 
 #carta-ministro {
   background-color: var(--ministro);
+
+
   background: linear-gradient(
     180deg,
     rgba(43, 214, 214, 1) 18%,
     rgba(43, 145, 214, 1) 61%
   );
+
+  background: linear-gradient( to top left, rgba(43, 145, 214, 1) 20%,  rgba(43, 214, 214, 1) ,rgba(43, 145, 214, 1) 80%);
+
+
+
+
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
   display: flex;
@@ -645,7 +653,7 @@ li {
   border-radius: 15px;
   position: relative;
   color: #020101;
-  border: 2px solid #000000;
+  border: 3px solid rgb(13, 1, 104);
 }
 
 #carta-lord {

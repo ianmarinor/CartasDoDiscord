@@ -605,7 +605,7 @@ zerarMoney();
 
 function debug() {
   money.set(99999);
-  numCartas.set(100);
+  numCartas.set(10);
   hpPlayer.set(100);
   hpPlayer.addBuff(5000);
   ammo.set(100);
@@ -765,7 +765,7 @@ function colocarInfoNoWrap(a) {
 
     } else if (novaCarta._cargo === "carta-ministro") {
       cargoP.innerHTML = "&nbsp;" +  "👨‍⚖️ <br>" + "ministro".toUpperCase()
-      retratoP.style.border = "2px solid #000000";
+      retratoP.style.border = "2px solid rgb(13, 1, 104)";
 
 
     } else if (novaCarta._cargo === "carta-lord") {
@@ -1174,6 +1174,7 @@ export function efeitoDano(carta) {
   // console.trace();
   // console.log(carta);
 if(carta._dead)return
+if(!carta._thisCardP)return
   let heart = carta._thisCardP.children[3].children[1];
   let cartaP = carta._thisCardP;
 
@@ -2454,7 +2455,7 @@ function poderBoss() {
   if (!boss) return;
 
   boss.ult();
-  boss.antiSpam();
+  boss.summon();
 }
 
 export let numCartas = {
@@ -2829,7 +2830,7 @@ let timerP = document.getElementsByClassName("crono")[0];
 let timerInterval;
 
 export let timer = {
-  seconds: 20,
+  seconds: 35,
   milliseconds: 0,
   running: false,
 
@@ -2860,6 +2861,7 @@ export let timer = {
     if (!this.running) return;
     this.running = false;
     clearInterval(timerInterval);
+    this.print()
   },
 
   cronoEnded() {
@@ -2869,8 +2871,10 @@ export let timer = {
   print() {
     timerP.innerHTML = "⌛ " + this.seconds + "." + this.milliseconds + " ⌛";
 
-    if (this.seconds < 10) {
+    if (this.running) {
       timerP.classList.add("warning-cards");
+    } else {
+      timerP.classList.remove("warning-cards")
     }
   },
 };

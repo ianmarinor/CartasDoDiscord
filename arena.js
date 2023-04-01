@@ -98,7 +98,7 @@ export let smokeOnInv = {
 
 export function areWakeUp() {
   areObj.map((x) => {
-    if (!x.empty && x.cartaId != "tank" && !x.miniBoss) {
+    if (!x.empty && x.cartaId != "tank" && !x.miniBoss && !x.isInvisible) {
       x.readyToAttack = true;
     }
   });

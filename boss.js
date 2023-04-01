@@ -137,6 +137,7 @@ class Boss {
 
   antiSpam() {
     let delay = gerarNumero(750, 1800);
+    let chance = 13
 
     if (per(13)) {
       setTimeout(
@@ -152,6 +153,38 @@ class Boss {
         delay
       );
     }
+  }
+
+  summon(){
+
+    let delay = gerarNumero(750, 1800);
+    let chance 
+
+    if(rDifficulty.value > 50){
+
+    chance = 5
+
+    } else {
+
+      chance = 10
+
+    }
+
+    if (per(chance)) {
+      setTimeout(
+        () => {
+
+          let obj =  populateArena()
+
+          obj ? obj.isInvisible = true : 0
+         
+        
+        },
+
+        delay
+      );
+    }
+
   }
 
   heal(n) {
@@ -209,7 +242,7 @@ class Boss {
 export let countdown = {
   _value: 20,
   _creatingDefense: false,
-  numOfInimigos: 1,
+  numOfInimigos: 10,
 
   decrease() {
     if (!boss) return;
@@ -249,7 +282,7 @@ export let countdown = {
         return 3;
       }
     };
-    this.numOfInimigosSet(enemiesRNG());
+    // this.numOfInimigosSet(enemiesRNG());
     
     wCoolDown.set(true);
     this._creatingDefense = true;
