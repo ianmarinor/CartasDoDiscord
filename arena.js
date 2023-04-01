@@ -16,7 +16,7 @@ import {
   globalStats,
   timer,
 } from "./script.js";
-import { boss, spawnBoss, resetBoss, toMonark, countdown } from "./boss.js";
+import { boss, spawnBoss, resetBoss, toMonark, countdown, rDifficulty } from "./boss.js";
 import {
   menosClickBlueprint,
   camaradaBlueprint,
@@ -543,7 +543,11 @@ class Inimigo {
 
     this.hp -= n;
 
-    let multiplicadorBossDano = 1.8;
+    let multiplicadorBossDano = 2.5;
+
+    if(rDifficulty.value > 33){
+      multiplicadorBossDano = 3.5
+    }
 
     if (boss) {
       boss.dmg(Math.floor(danoRealRecebido / multiplicadorBossDano));
@@ -1014,6 +1018,7 @@ let tank = {
   dano: 130,
   attackChance: false,
   ulti: 0,
+  maxUlti: false,
   tank: true,
   _CHN: document.createElement("audio"),
   _attackAtSpawn: false,
@@ -1023,6 +1028,9 @@ let tank = {
 
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
+
+    this.maxUlti = this._level * 10 
+
   },
 
   cfg() {
@@ -1038,22 +1046,22 @@ let tank = {
   },
 
   tick(){
-    this._cargoP.innerHTML = progressBar(this.ulti, 60, "gray", "#cf6a32")
+    this._cargoP.innerHTML = progressBar(this.ulti, this.maxUlti, "gray", "#cf6a32")
   },
 
   everyRound() {
-    if (this.ulti >= 60) return;
+    if (this.ulti >= this.maxUlti) return;
 
-    let ultiRate = gerarNumero(2, 4);
+    let ultiRate = gerarNumero(2, 3);
 
-    if (this.ulti >= 52) {
+    if (this.ulti - this.maxUlti <= 3) {
       ultiRate = 1;
     }
 
     this.ulti += ultiRate;
     
 
-    if (this.ulti >= 60) {
+    if (this.ulti >= this.maxUlti) {
       this.readyToAttack = true;
       this._doesAttack = true;
       setTimeout(
@@ -1199,9 +1207,9 @@ let metaforando = {
 
   didHit() {
 
-    let coolDownTreme = gerarNumero(320 , 1000)
+    let coolDownTreme = gerarNumero(1000 , 2100)
 
-    if (per(80) || this.readyToAttack) return;
+    if (per(70) || this.readyToAttack) return;
 
     this.readyToAttack = true;
     this._uber = true;
@@ -1226,8 +1234,8 @@ let liberdade = {
   _doesAttack: false,
   _audioSpawn: "",
   attackChance: 0,
-  hp: 790,
-  maxHealth: 790,
+  hp: 1000,
+  maxHealth: 1000,
   dano: 0,
   miniBoss: true,
   emoji: "",
@@ -1274,8 +1282,8 @@ let liberdade = {
   },
 
   didHit() {
-    let coolDownTreme = gerarNumero(320 , 1000)
-    if (per(80) || this.readyToAttack) return;
+    let coolDownTreme = gerarNumero(1000, 2100)
+    if (per(60) || this.readyToAttack) return;
 
     this.readyToAttack = true;
     this._uber = true;

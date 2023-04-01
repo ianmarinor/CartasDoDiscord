@@ -138,7 +138,7 @@ class Boss {
   antiSpam() {
     let delay = gerarNumero(750, 1800);
 
-    if (per(10)) {
+    if (per(13)) {
       setTimeout(
         () => {
 
@@ -242,11 +242,11 @@ export let countdown = {
     
     let enemiesRNG = () => {
       if (per(80)) {
-        return gerarNumero(3, 5);
-      } else if (per(50)) {
         return 10;
+      } else if (per(50)) {
+        return 9;
       } else {
-        return 1;
+        return 3;
       }
     };
     this.numOfInimigosSet(enemiesRNG());
