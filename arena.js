@@ -14,7 +14,7 @@ import {
   audioPlayer,
   wCoolDown,
   globalStats,
-  timer
+  timer,
 } from "./script.js";
 import { boss, spawnBoss, resetBoss, toMonark, countdown } from "./boss.js";
 import {
@@ -92,16 +92,14 @@ export let smokeOnInv = {
         smokeP.style.opacity = "0." + opacityValue;
         opacityValue--;
       }, 35);
-
-      console.log(this);
     }
   },
 };
 
 export function areWakeUp() {
   areObj.map((x) => {
-    if (!x.empty) {
-      x.isInvisible = false;
+    if (!x.empty && x.cartaId != "tank" && !x.miniBoss) {
+      x.readyToAttack = true;
     }
   });
 }
@@ -131,7 +129,6 @@ export function arenaAtaque() {
 
     let attackComDelay = setInterval(() => {
       if (i > prontosParaAtaque.length - 1) {
-        console.log("acabou");
         clearInterval(attackComDelay);
         wCoolDown.set(false);
         fiquemProntos();
@@ -139,7 +136,7 @@ export function arenaAtaque() {
       }
 
       prontosParaAtaque[i].autoAtaque();
-      console.log(prontosParaAtaque[i]._place, "ESTA ATACANDO");
+
       i++;
     }, 350);
   }
@@ -500,14 +497,11 @@ class Inimigo {
     this.infected = false;
   }
 
-  didHit(){
-
-  }
+  didHit() {}
 
   dmg(n, absolute) {
     if (this.isInvisible && !absolute) return;
-    this.didHit()
-    
+    this.didHit();
 
     if (this.hashp == false) {
       this.kill();
@@ -516,27 +510,23 @@ class Inimigo {
 
     this._fullHp = false;
 
-    let danoRealRecebido
+    let danoRealRecebido;
 
-    if(n>this.hp){
-
-      danoRealRecebido = this.hp
-      this._dmgTaken += this.hp
-
+    if (n > this.hp) {
+      danoRealRecebido = this.hp;
+      this._dmgTaken += this.hp;
     } else {
-      danoRealRecebido = n
+      danoRealRecebido = n;
       this._dmgTaken += n;
     }
 
-    globalStats.totalDmgDelt += this._dmgTaken
+    globalStats.totalDmgDelt += this._dmgTaken;
 
     this.hp -= n;
 
-
-    if(boss){
-      boss.dmg( Math.floor(danoRealRecebido / 3))
+    if (boss) {
+      boss.dmg(Math.floor(danoRealRecebido / 3));
     }
-
 
     this._totalHp = this.hp;
 
@@ -545,9 +535,8 @@ class Inimigo {
       this.hp = 0;
       this.kill();
     }
-    
-    return [this._dmgTaken]
 
+    return [this._dmgTaken];
   }
 
   everyRound() {}
@@ -559,7 +548,7 @@ class Inimigo {
   }
 
   autoAtaque() {
-    if (this.readyToAttack) {
+    if (this.readyToAttack && !this.miniBoss) {
       if (this._doesAttack) {
         this.primaryAttack();
         this.hasJustAttacked = true;
@@ -840,13 +829,9 @@ let monark = {
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
-
-
   },
 
-  everyRound() {
-    
-  },
+  everyRound() {},
 
   poder() {
     let despawnTime;
@@ -941,10 +926,10 @@ let camarada = {
   _audioSpawn: "comunaShort.mp3",
   energia: "",
   emoji: "☭",
-  hp: 30,
-  maxHealth: 30,
+  hp: 35,
+  maxHealth: 35,
   dano: false,
-  attackChance: 15,
+  attackChance: 18,
   especial: true,
   _canBeCritic: false,
   _attackAtSpawn: true,
@@ -952,31 +937,37 @@ let camarada = {
   levelCfg() {
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
+
+    this.healValue = gerarNumero(80, 125);
+
+    this.healValue = this.healValue * this._level;
   },
 
   cfg() {
     this._energiaP.style.visibility = "hidden";
 
-    this._cargoP.textContent = "ODIO DE CLASSE!!!";
+    let frases = [
+      "ODIO DE CLASSE!!!",
+      "MAIS MÉDICOS",
+      "SAÚDE PARA TODOS  <br> TRABALHADORES!",
+      "RESISTAM CAMARADAS!",
+      "HASTA LA VICTORIA!"
+    ]
+
+    this._cargoP.innerHTML =  frases[gerarNumero(0, frases.length - 1)];
     this._cargoP.style.fontSize = "65%";
     this.audioSpawn(0.5);
   },
 
   poder() {
-    let healAmount = gerarNumero(80, 125);
-
     setTimeout(() => {
       areObj.map((x) => {
         if (x.empty || x.isInvisible) return;
 
-        if (x.cartaId != "camarada" && x.cartaId != "tank") {
-          x.readyToAttack = true;
-        }
-
-        x.heal(healAmount);
+        x.heal(this.healValue);
       });
 
-      boss && boss.heal(healAmount);
+      boss && boss.heal(this.healValue);
     }, 50);
   },
 };
@@ -1088,14 +1079,11 @@ let dog = {
 
   primaryAttack() {
     if (this.vitor) {
-      this.ataque(this.dano,)
-      this.readyToAttack = false
-      
-
-    
+      this.ataque(this.dano);
+      this.readyToAttack = false;
     } else {
       this.ataque();
-      this.readyToAttack = false
+      this.readyToAttack = false;
     }
   },
 
@@ -1159,7 +1147,7 @@ let metaforando = {
   },
 
   poder() {
-    if(this._dead)return
+    if (this._dead) return;
     invObj.map((x) => {
       if (x.isNormal || x.isInvisible) return;
       let stunTime = gerarNumero(1, 2);
@@ -1171,30 +1159,17 @@ let metaforando = {
 
       let danoStun = Math.round(this.dano / 3);
 
-      console.log("danoStun: ", danoStun);
-      console.log("danoStun: ", this);
-
       x.dmg(danoStun);
     });
 
     hpPlayer.remove(this.dano);
   },
 
+  didHit() {
+    if (per(70)) return;
 
-  didHit(){
-
-    if(this.readyToAttack){
-
-      this.poder()
-
-    } else {
-      if (per(70)) return
-      this.readyToAttack = true
-    }
-
-
-  }
-
+    this.poder();
+  },
 };
 
 let liberdade = {
@@ -1251,26 +1226,25 @@ let liberdade = {
   },
 
   poder() {
-    if(this._dead)return
-    hpPlayer.remove(this.dano);
+    if (this._dead || this.isAttacking) return;
+
+    this.readyToAttack = true;
+    this.isAttacking = true
+    setTimeout(() => {
+      if (this._dead) return;
+      
+      hpPlayer.remove(this.dano);
+
+      areWakeUp();
+      this.readyToAttack = false;
+      this.isAttacking = false
+    }, 5000);
   },
 
-
-  didHit(){
-
-    if(this.readyToAttack){
-
-      this.poder()
-
-    } else {
-      if (per(80)) return
-      this.readyToAttack = true
-    }
-
-
-
-  }
-
+  didHit() {
+    if (per(80)) return;
+    this.poder();
+  },
 };
 
 let smoke = {
@@ -1302,12 +1276,10 @@ let smoke = {
     this.dano *= this._level;
 
     this.setHp(this.hp * this._level);
-   
   },
 
   cfg() {
-
-    this.smokeWeight = gerarNumero(1,4)
+    this.smokeWeight = gerarNumero(1, 4);
     this._retratoP.style.border = "1px solid #de9b35";
     this._nomeP.style.marginTop = "6px";
   },
@@ -1315,7 +1287,7 @@ let smoke = {
   tick() {},
 
   poder() {
-    if(smokeOnInv.status == true || smokeOnInv.status == undefined) return
+    if (smokeOnInv.status == true || smokeOnInv.status == undefined) return;
     smokeOnInv.smoke(true, this.smokeWeight);
     setTimeout(() => {
       this.kill();
@@ -1348,21 +1320,16 @@ let awp = {
   tick() {},
 
   levelCfg() {
-    if (per(0.10)) {
+    if (per(0.1)) {
       this.asiimov = true;
     }
 
+    this.dano = gerarNumero(30, 40);
 
-
-
-    (this.dano = gerarNumero(30, 40));
-
-    if(this.asiimov){
-
-      this.dano = gerarNumero(200, 300)
-      this.setHp(40)
+    if (this.asiimov) {
+      this.dano = gerarNumero(200, 300);
+      this.setHp(40);
     }
-    
 
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
@@ -1377,7 +1344,7 @@ let awp = {
       this._thisCardP.style.border = "2px solid red";
       this._retratoP.style.border = "1px solid red";
       this._nomeP.innerHTML = "AWP <br> REDLINE";
-    } 
+    }
     this._retratoP.style.backgroundSize = "100% 100%";
     this._nomeP.style.marginTop = "6px";
   },
@@ -1516,8 +1483,8 @@ function inserirInimigoDomAndObject(blueprint, object) {
       are.replaceChild(secret.children[0], are.children[slot]);
       areObj[slot] = Object.assign(new Inimigo(object), object);
 
-      if(per(33) && areObj[slot]._attackAtSpawn){
-        areObj[slot].readyToAttack = true
+      if (per(33) && areObj[slot]._attackAtSpawn) {
+        areObj[slot].readyToAttack = true;
       }
 
       break;
@@ -1537,8 +1504,8 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
         are.replaceChild(secret.children[0], are.children[slot]);
 
         areObj[slot] = Object.assign(new Inimigo(object), object);
-        if(per(20) && areObj[slot]._attackAtSpawn){
-          areObj[slot].readyToAttack = true
+        if (per(20) && areObj[slot]._attackAtSpawn) {
+          areObj[slot].readyToAttack = true;
         }
 
         break;
@@ -1548,8 +1515,8 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
         are.replaceChild(secret.children[0], are.children[slot]);
 
         areObj[slot] = Object.assign(new Inimigo(object), object);
-        if(per(20) && areObj[slot]._attackAtSpawn){
-          areObj[slot].readyToAttack = true
+        if (per(20) && areObj[slot]._attackAtSpawn) {
+          areObj[slot].readyToAttack = true;
         }
 
         break;
@@ -1557,8 +1524,8 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
         are.replaceChild(secret.children[0], are.children[slot]);
 
         areObj[slot] = Object.assign(new Inimigo(object), object);
-        if(per(20) && areObj[slot]._attackAtSpawn){
-          areObj[slot].readyToAttack = true
+        if (per(20) && areObj[slot]._attackAtSpawn) {
+          areObj[slot].readyToAttack = true;
         }
         break;
       }
@@ -1568,19 +1535,19 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnSmoke();
+    spawnAwp();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    boss.chuvaDeMonark();
+    spawnLiberdade();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    spawnAwp()
+    spawnTank();
   }
 });
 
@@ -1605,14 +1572,14 @@ export function populateArena() {
   let chanceNormal = 80;
 
   if (per(chanceNormal)) {
-    let normaisArr = [spawnMonark, spawnDog, spawnTank,spawnAwp];
+    let normaisArr = [spawnMonark, spawnDog, spawnTank, spawnAwp];
 
     let arrLenght = normaisArr.length;
 
     let rng = () => normaisArr[gerarNumero(0, arrLenght - 1)]();
     rng();
   } else {
-    let especiaisArr = [spawnCamarada, spawnMenosCartas,spawnSmoke];
+    let especiaisArr = [spawnCamarada, spawnMenosCartas, spawnSmoke];
 
     let rng = () => especiaisArr[gerarNumero(0, especiaisArr.length - 1)]();
     rng();

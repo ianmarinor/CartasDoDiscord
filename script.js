@@ -1899,11 +1899,20 @@ export let placarArena = {
       'Ministro': 0,
       'Prime Minister': 0,
       'Premio Marino': 0,
+      'Joker': 0,
     };
 
     invObj.forEach((x) => {
+
+      if(x.especial && x.dmgBoss){
+        counts['Joker']++ 
+      }
+
       if(!x._cargoArr) return
       counts[x._cargoArr[1]] = counts[x._cargoArr[1]] + 1;
+
+      
+
     });
 
     // console.log(counts);
@@ -1913,23 +1922,35 @@ export let placarArena = {
     
     // console.log(arr);
 
-    let vencedorNum = arr[0];
+    let desafiante = arr[0];
+
+
+    // console.log('desafiante: ', desafiante);
+
     let vencedor;
 
     for (let i = 0; i < 8; i++) {
       let conco = arr[i][1];
       let concorrente = arr[i];
+      let numJokers = arr[arr.length - 1][1]
 
       // se campeao for menor **OU IGUAL** troca de campeao
-      if (vencedorNum >= conco) {
+      if (desafiante >= conco) {
+
+
       } else {
-        vencedorNum = conco;
+        desafiante = conco;
         vencedor = concorrente;
 
         //multiplicador
-        if (vencedorNum > 2) {
+        if (desafiante + numJokers > 2) {
           let rankCard = (i + 1) / 6
-          concorrente.push( (  (rankCard  * vencedorNum) + 1).toFixed(2) ) ;
+          // adicionar joker
+        //  console.log('numJokers: ', numJokers);
+
+        //  desafiante += numJokers
+
+          concorrente.push( (  (rankCard  * (desafiante + numJokers)) + 1).toFixed(2) ) ;
         } else {
           concorrente.push(1);
           vencedor[0] = ''
@@ -1939,8 +1960,8 @@ export let placarArena = {
       // console.log(conco);
     }
 
-    console.log("vencedor: ", vencedor);
-    let multiplicador = vencedor[2];
+    // console.log("vencedor: ", vencedor);
+    
     
     
     return vencedor

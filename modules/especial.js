@@ -1250,7 +1250,7 @@ export let especiais = {
       }
 
       let hasIntegrante = invObj.some(
-        (x) => x._integrante == this._requiredIntegrante
+        (x) => x._integrante == this._requiredIntegrante && !x.isMonark
       );
      
 
@@ -1339,7 +1339,7 @@ export let especiais = {
       }
 
       let hasIntegrante = invObj.some(
-        (x) => x._integrante == this._requiredIntegrante
+        (x) => x._integrante == this._requiredIntegrante  && !x.isMonark
       );
      
 

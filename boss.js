@@ -45,6 +45,7 @@ export function toMonark(_cartaObj, _despawnTime) {
   cartaP.style.backgroundImage = 'none'
   cartaP.id = "monark";
   cartaP.style.border = "1px solid black";
+  carta.isMonark = true
 
   cargo.textContent = "monark 💩";
 
