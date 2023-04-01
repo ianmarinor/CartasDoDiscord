@@ -2884,9 +2884,9 @@ export let especiais = {
       let fireSpeed = 175;
 
       let tiros = setInterval(() => {
-        let noEnemy = areObj.every((x) => x.empty);
+        let noEnemy = areObj.every((x) => x.isInvisible);
 
-        if (this.ammonition <= 0 || noEnemy) {
+        if (this.ammonition <= 0 || noEnemy || this.unableToAttack()) {
           this.active = false;
           clearInterval(tiros);
           return;

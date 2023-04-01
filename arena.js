@@ -104,6 +104,20 @@ export function areWakeUp() {
   });
 }
 
+export function areReveal() {
+  areObj.map((x) => {
+    if (x.isInvisible && !x.empty) {
+      if (x._attackAtSpawn) {
+        x.readyToAttack = true;
+        console.log(x);
+      }
+
+      x.isInvisible = false;
+    }
+  });
+  updatePlacarInimigo();
+}
+
 export function arenaAtaque() {
   //QUEM ESTIVER PRONTO, ATAQUE
 
@@ -111,7 +125,7 @@ export function arenaAtaque() {
 
   //COLOCAR CARTAS QUE ATACAM EM UMA ARRAY
   areObj.map((x) => {
-    if (x.empty) return;
+    if (x.empty || x.isInvisible) return;
     x.hasJustAttacked = false;
     if (x.readyToAttack) {
       prontosParaAtaque.push(x);
@@ -144,6 +158,7 @@ export function arenaAtaque() {
   //FIQUEM PRONTOS, SE NAO ACABARAM DE ATACAR
   function fiquemProntos() {
     areObj.map((x) => {
+      if (x.isInvisible) return;
       x.getReady();
     });
     updatePlacarInimigo();
@@ -281,6 +296,7 @@ class Inimigo {
     this._canBeCritic = true;
     this._poderUsing = false;
     this._despawn = false;
+    this._uber = false;
 
     this._rightCard = false;
     this._leftCard = false;
@@ -500,8 +516,11 @@ class Inimigo {
   didHit() {}
 
   dmg(n, absolute) {
-    if (this.isInvisible && !absolute) return;
-    this.didHit();
+    if (this.isInvisible  && !absolute) return [0];
+
+    efeitoDano(this);
+
+    if (this._uber && !absolute) return [0];
 
     if (this.hashp == false) {
       this.kill();
@@ -524,18 +543,19 @@ class Inimigo {
 
     this.hp -= n;
 
+    let multiplicadorBossDano = 2;
+
     if (boss) {
-      boss.dmg(Math.floor(danoRealRecebido / 3));
+      boss.dmg(Math.floor(danoRealRecebido / multiplicadorBossDano));
     }
 
     this._totalHp = this.hp;
 
-    efeitoDano(this);
     if (this._totalHp <= 0) {
       this.hp = 0;
       this.kill();
     }
-
+    this.didHit();
     return [this._dmgTaken];
   }
 
@@ -548,7 +568,7 @@ class Inimigo {
   }
 
   autoAtaque() {
-    if (this.readyToAttack && !this.miniBoss) {
+    if (this.readyToAttack && !this.miniBoss && !this.isInvisible) {
       if (this._doesAttack) {
         this.primaryAttack();
         this.hasJustAttacked = true;
@@ -949,12 +969,12 @@ let camarada = {
     let frases = [
       "ODIO DE CLASSE!!!",
       "MAIS MÉDICOS",
-      "SAÚDE PARA TODOS  <br> TRABALHADORES!",
+      "SAÚDE PARA TODOS!",
       "RESISTAM CAMARADAS!",
-      "HASTA LA VICTORIA!"
-    ]
+      "HASTA LA VICTORIA!",
+    ];
 
-    this._cargoP.innerHTML =  frases[gerarNumero(0, frases.length - 1)];
+    this._cargoP.innerHTML = frases[gerarNumero(0, frases.length - 1)];
     this._cargoP.style.fontSize = "65%";
     this.audioSpawn(0.5);
   },
@@ -1148,6 +1168,7 @@ let metaforando = {
 
   poder() {
     if (this._dead) return;
+
     invObj.map((x) => {
       if (x.isNormal || x.isInvisible) return;
       let stunTime = gerarNumero(1, 2);
@@ -1163,12 +1184,18 @@ let metaforando = {
     });
 
     hpPlayer.remove(this.dano);
+
+    this.readyToAttack = false;
+    this._uber = true;
   },
 
   didHit() {
-    if (per(70)) return;
+    if (per(80) || this.readyToAttack) return;
 
-    this.poder();
+    this.readyToAttack = true;
+    this._uber = true;
+
+    setTimeout(() => this.poder(), 5000);
   },
 };
 
@@ -1226,27 +1253,24 @@ let liberdade = {
   },
 
   poder() {
-    if (this._dead || this.isAttacking) return;
+    if (this._dead) return;
 
-    this.readyToAttack = true;
-    this.isAttacking = true
-    setTimeout(() => {
-      if (this._dead) return;
-      
-      hpPlayer.remove(this.dano);
+    hpPlayer.remove(this.dano);
 
-      areWakeUp();
-      this.readyToAttack = false;
-      this.isAttacking = false
-    }, 5000);
+    areWakeUp();
+    this.readyToAttack = false;
+    this._uber = false;
   },
 
   didHit() {
-    if (per(80)) return;
-    this.poder();
+    if (per(80) || this.readyToAttack) return;
+
+    this.readyToAttack = true;
+    this._uber = true;
+
+    setTimeout(() => this.poder(), 5000);
   },
 };
-
 let smoke = {
   cartaId: "smokeCard",
   _place: false,
@@ -1355,15 +1379,15 @@ let awp = {
 };
 
 export function spawnTank() {
-  inserirInimigoDomAndObject(tankBlueprint, tank);
+  return inserirInimigoDomAndObject(tankBlueprint, tank);
 }
 
 export function spawnCamarada(n) {
-  inserirInimigoDomAndObject(camaradaBlueprint, camarada);
+  return inserirInimigoDomAndObject(camaradaBlueprint, camarada);
 }
 
 export function spawnMenosCartas(n) {
-  inserirInimigoDomAndObject(menosClickBlueprint, menosCartas);
+  return inserirInimigoDomAndObject(menosClickBlueprint, menosCartas);
 }
 
 export function spawnDog(n) {
@@ -1374,18 +1398,18 @@ export function spawnDog(n) {
     }
   }
 
-  inserirInimigoDomAndObject(dogBlueprint, dog);
+  return inserirInimigoDomAndObject(dogBlueprint, dog);
 }
 
 export function spawnVitor() {
-  inserirmMiniBossDomAndObject(
+  return inserirmMiniBossDomAndObject(
     blueprintBuilder("vitor", "METAFORANDO", "url('pics/vitorRetrato.jpeg')"),
     metaforando
   );
 }
 
 export function spawnLiberdade() {
-  inserirmMiniBossDomAndObject(
+  return inserirmMiniBossDomAndObject(
     blueprintBuilder(
       "liberdade",
       "LIBERDADE DE <br>EXPRESSÃO",
@@ -1396,14 +1420,14 @@ export function spawnLiberdade() {
 }
 
 export function spawnSmoke() {
-  inserirInimigoDomAndObject(
+  return inserirInimigoDomAndObject(
     blueprintBuilder("smokeCard", "SMOKE", "url('pics/smokeRetrato.PNG')"),
     smoke
   );
 }
 
 export function spawnAwp() {
-  inserirInimigoDomAndObject(
+  return inserirInimigoDomAndObject(
     blueprintBuilder("awp", "AWP", "url('pics/awpRetrato.PNG')"),
     awp
   );
@@ -1471,7 +1495,7 @@ export function spawnMonark(n) {
 
   // coolDown = true;
 
-  inserirInimigoDomAndObject(monarkBluePrint, monark);
+  return inserirInimigoDomAndObject(monarkBluePrint, monark);
 }
 
 function inserirInimigoDomAndObject(blueprint, object) {
@@ -1484,10 +1508,10 @@ function inserirInimigoDomAndObject(blueprint, object) {
       areObj[slot] = Object.assign(new Inimigo(object), object);
 
       if (per(33) && areObj[slot]._attackAtSpawn) {
-        areObj[slot].readyToAttack = true;
+        // areObj[slot].readyToAttack = true;
       }
 
-      break;
+      return areObj[slot];
     }
   }
 }
@@ -1505,10 +1529,10 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
         areObj[slot] = Object.assign(new Inimigo(object), object);
         if (per(20) && areObj[slot]._attackAtSpawn) {
-          areObj[slot].readyToAttack = true;
+          // areObj[slot].readyToAttack = true;
         }
 
-        break;
+        return areObj[slot];
       }
     } else {
       if (!areObj[slot].miniBoss) {
@@ -1516,18 +1540,18 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
         areObj[slot] = Object.assign(new Inimigo(object), object);
         if (per(20) && areObj[slot]._attackAtSpawn) {
-          areObj[slot].readyToAttack = true;
+          // areObj[slot].readyToAttack = true;
         }
 
-        break;
+        return areObj[slot];
       } else {
         are.replaceChild(secret.children[0], are.children[slot]);
 
         areObj[slot] = Object.assign(new Inimigo(object), object);
         if (per(20) && areObj[slot]._attackAtSpawn) {
-          areObj[slot].readyToAttack = true;
+          // areObj[slot].readyToAttack = true;
         }
-        break;
+        return areObj[slot];
       }
     }
   }
@@ -1535,19 +1559,21 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnAwp();
+    spawnSmoke();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    spawnLiberdade();
+    // spawnLiberdade();
+    console.log("spawnLiberdade(): ", spawnLiberdade());
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    spawnTank();
+    // spawnTank();
+    console.log("spawnTank();: ", spawnTank());
   }
 });
 
@@ -1577,12 +1603,14 @@ export function populateArena() {
     let arrLenght = normaisArr.length;
 
     let rng = () => normaisArr[gerarNumero(0, arrLenght - 1)]();
-    rng();
+    return rng();
+    return console.log("8888888888888888888888 ", rng());
   } else {
     let especiaisArr = [spawnCamarada, spawnMenosCartas, spawnSmoke];
 
     let rng = () => especiaisArr[gerarNumero(0, especiaisArr.length - 1)]();
-    rng();
+    return rng();
+    return console.log("8888888888888888888888 ", rng());
   }
 }
 

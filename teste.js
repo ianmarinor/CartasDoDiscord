@@ -1,5 +1,24 @@
 
-let foo = ['ian',10]
-let bar = ['ian',8]
+let obj = {
 
-console.log(foo > 2);
+    nome: 'ian'
+
+}
+
+function foo(){
+    return obj
+}
+
+let arr = [
+
+    
+]
+
+
+function bar(_obj){
+    arr.push(_obj)
+
+    return _obj
+}
+console.log( bar(foo()) );
+console.log( arr );

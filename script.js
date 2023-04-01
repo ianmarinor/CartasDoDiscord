@@ -11,6 +11,7 @@ import {
   arenaByRound,
   arenaAtaque,
   smokeOnInv,
+  areReveal,
 } from "./arena.js";
 
 import { especiais, especial, Especial } from "./modules/especial.js";
@@ -1998,27 +1999,13 @@ export let placarArena = {
   getAmmo() {
     this.ammoTotal = 0;
 
-    // for (const x of invObj) {
-    //   if (x.dmgBoss != true) {
-    //     continue;
-    //   }
-    //   this.ammoTotal += x.energia;
-    // }
-
-    // this.ammoTotal = Math.trunc(this.ammoTotal / 37);
+    
 
     this.ammoTotal = Math.trunc(this.energiaTotal / 70)
   },
 
   getBonusCard() {
-    // for (const x of invObj) {
-    //   if (x.dmgBoss != true) {
-    //     continue;
-    //   }
-    //   this.bonusCards += x.energia;
-    // }
-
-    // this.bonusCards = Math.trunc(this.bonusCards / 48);
+   
 
     this.bonusCards = Math.trunc(this.energiaTotal / 100)
 
@@ -2295,13 +2282,15 @@ function runEveryRound() {
 
     if (x.everyRound) {
       x.everyRound();
-      if (!x.empty) {
-        x.isInvisible = false;
-      }
+      
+     
+
     }
 
     arenaByRound();
   });
+
+  areReveal()
 
   rDifficulty.update();
 }
@@ -2655,10 +2644,13 @@ export let hpPlayer = {
 export let ammo = {
   total: 0,
   ammoUsed: 0,
+  max: 50,
 
   add(n) {
     this.total += n;
 
+    this.total > this.max ? this.total = this.max : 0
+    
     this.ammoP(this.total);
   },
 
@@ -2779,8 +2771,9 @@ export function startGame2() {
   numCartas.set(100);
   vendas.set(50);
   hpPlayer.set(100);
-  ammo.set(0);
+  ammo.set(5);
   countdown.valueSet(20);
+  money.set(300)
   tick();
   removeBuffAll();
 }

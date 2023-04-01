@@ -140,7 +140,7 @@ class Boss {
 
     if (per(10)) {
       setTimeout(
-        () => populateArena(),
+        () => populateArena().isInvisible = true,
 
         delay
       );
