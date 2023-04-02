@@ -828,7 +828,7 @@ let monark = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 5,
+  _money: 3,
   _attackAtSpawn: true,
   _doesAttack: true,
   _despawn: 60,
@@ -853,6 +853,9 @@ let monark = {
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
+
+
+    this._money =  this._money * this._level 
   },
 
   everyRound() {},
@@ -895,7 +898,7 @@ let menosCartas = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 7,
+  _money: 5,
   _doesAttack: false,
   _hasdmg: false,
   _audioSpawn: "menosCartas.wav",
@@ -914,6 +917,7 @@ let menosCartas = {
     this.energia *= this._level;
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
+    this._money =  this._money * this._level 
   },
 
   cfg() {
@@ -965,6 +969,7 @@ let camarada = {
     this.healValue = gerarNumero(80, 125);
 
     this.healValue = this.healValue * this._level;
+    this._money =  this._money * this._level 
   },
 
   cfg() {
@@ -1007,7 +1012,7 @@ let tank = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 150,
+  _money: 50,
   _doesAttack: false,
   _hasdmg: true,
   _audioSpawn: "tank.mp3",
@@ -1018,7 +1023,7 @@ let tank = {
   dano: 130,
   attackChance: false,
   ulti: 0,
-  maxUlti: false,
+  maxUlti: 50,
   tank: true,
   _CHN: document.createElement("audio"),
   _attackAtSpawn: false,
@@ -1029,7 +1034,8 @@ let tank = {
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
 
-    this.maxUlti = this._level * 10 
+    this.maxUlti = Math.trunc(this.maxUlti / this._level)
+    this._money =  this._money *this._level 
 
   },
 
@@ -1091,7 +1097,7 @@ let dog = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 9,
+  _money: 7,
   _attackAtSpawn: true,
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
@@ -1110,9 +1116,11 @@ let dog = {
 
       this._thisCardP.style.backgroundSize = "cover";
       this._nomeP.textContent = "DOG DO VITINHO";
+
+      
     }
   },
-
+  
   primaryAttack() {
     if (this.vitor) {
       this.ataque(this.dano);
@@ -1122,8 +1130,9 @@ let dog = {
       this.readyToAttack = false;
     }
   },
-
+  
   levelCfg() {
+    this._money =  this._money * this._level 
     this.dano = gerarNumero(12, 17);
 
     this.dano *= this._level;
@@ -1147,7 +1156,7 @@ let metaforando = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 350,
+  _money: 450,
   _attackAtSpawn: true,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
@@ -1182,6 +1191,10 @@ let metaforando = {
     this._nomeP.innerHTML = progressBar(this.hp, this.maxHealth, "gray", "red");
   },
 
+  everyRound(){
+    this.didHit()
+  },
+
   poder() {
     if (this._dead) return;
 
@@ -1200,6 +1213,7 @@ let metaforando = {
     });
 
     hpPlayer.remove(this.dano);
+    spawnDog()
 
     this.readyToAttack = false;
     this._uber = false;
@@ -1290,6 +1304,11 @@ let liberdade = {
 
     setTimeout(() => this.poder(), coolDownTreme);
   },
+
+  everyRound(){
+    this.didHit()
+  }
+
 };
 let smoke = {
   cartaId: "smokeCard",
@@ -1581,7 +1600,7 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnSmoke();
+    spawnDog();
   }
 });
 

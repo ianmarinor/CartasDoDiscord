@@ -2072,7 +2072,7 @@ export let especiais = {
 
       let multiShot = setInterval(() => {
         weapon();
-      }, 300);
+      }, 220);
     },
   },
 
@@ -2807,15 +2807,15 @@ export let especiais = {
     ulti: 0,
     retrato: 'url("/pics/sentryRetrato.PNG")',
     cargo: "",
-    hp: 25,
-    maxHealth: 25,
+    hp: 35,
+    maxHealth: 35,
     dmgBoss: false,
     hashp: true,
 
     dano: undefined,
     _exposto: true,
 
-    ammonition: 50,
+    ammonition: 75,
     ammonitionMax: undefined,
 
     active: false,
@@ -2859,7 +2859,7 @@ export let especiais = {
     
 
       if (this.ammonition != this.ammonitionMax) {
-        this.ammonition += gerarNumero(1, 3);
+        this.ammonition += gerarNumero(3, 6);
         this.ammonition > this.ammonitionMax
           ? (this.ammonition = this.ammonitionMax)
           : 0;
