@@ -1,24 +1,9 @@
-
-let obj = {
-
-    nome: 'ian'
-
-}
-
-function foo(){
-    return obj
-}
-
-let arr = [
-
-    
-]
+console.log(1111111111111);
 
 
-function bar(_obj){
-    arr.push(_obj)
+fetch("http://localhost:3000/players")
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error(error));
 
-    return _obj
-}
-console.log( bar(foo()) );
-console.log( arr );
+

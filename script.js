@@ -2853,7 +2853,7 @@ export let timer = {
       this.print();
 
       // console.log( this.seconds + '.' + this.milliseconds  );
-      console.log(this.milliseconds);
+      // console.log(this.milliseconds);
     }, 100);
   },
 
