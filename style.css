@@ -17,8 +17,12 @@
   --tamanhoCartaInimigoWidth: 128px;
   --tamanhoCartaInimigoHeight: 190px;
 
-  --heigthCartaBoss: 230px;
-  --widthCartaBoss: 145px;
+
+  --tamanhoCartaInimigoWidth: 190px;
+  --tamanhoCartaInimigoHeight: 295px;
+
+  --heigthCartaBoss: 170px;
+  --widthCartaBoss: 120px;
   /* CELULAR */
 
   --cartaWidthCelular: 110px;
@@ -85,11 +89,20 @@ a:hover {
 }
 body {
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   background-color: #121212;
   overflow-y: hidden;
   user-select: none;
+}
+
+.minigame{
+
+  top: calc(50% - 315px );
+  left: calc(50% - 500px );
+  position: absolute;
+
 }
 
 #protector,
@@ -176,7 +189,6 @@ main {
   height: 100%;
   display: inline-grid;
   grid-template-areas:
-    "ha hb hc"
     "c boss d"
     " e are  f"
     "b inv texto"
@@ -195,7 +207,7 @@ main {
 
   grid-template-columns: 0.9fr 2fr 1.1fr;
 
-  grid-template-rows: 0.2fr 0.6fr 0.6fr 1.1fr 0.1fr 1fr;
+  grid-template-rows:  0.6fr 0.6fr 1.1fr 0.1fr 1fr;
 
   background-image: linear-gradient(
       360deg,
@@ -241,23 +253,28 @@ li {
 
 #bossRoom {
   grid-area: boss;
-  width: 575px;
-  height: 250px;
-  background-color: rgb(85, 71, 71);
+  width: 450px;
+  height: 180px;
+
+  /* background-color: rgb(85, 71, 71);
   border: 10px rgb(38, 40, 42) solid;
   background-image: linear-gradient(
       180deg,
       rgba(24, 23, 23, 0.2),
       rgba(46, 44, 49, 0.7)
     ),
-    url(pics/bossBg.png);
+    url(pics/bossBg.png); */
 
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 
-  align-self: start;
+  align-self: center;
+  
+  
+
+  justify-self: start;
 }
 
 #cartaBossMonark {
@@ -278,10 +295,11 @@ li {
   justify-content: center;
   align-items: center;
 
-  justify-self: center;
+  justify-self: end;
 
-  grid-area: hb;
+  grid-area: boss;
   opacity: 0;
+  margin-right: 100px;
 }
 #healthPoints,
 .healthPoints {
@@ -309,6 +327,7 @@ li {
   background: #9d0909;
   height: 100%;
   width: 100%;
+  
 }
 
 #dicas {
@@ -328,6 +347,7 @@ li {
   /* background-color: #010101; */
   /* margin-left: 150px; */
   /* margin-top: 10px; */
+  
 }
 
 #ammoWrap {
@@ -1113,8 +1133,14 @@ li {
   position: absolute;
   top: 2px;
   right: 2px;
-  font-size: 10px;
+  font-size: 15px;
   opacity: 1;
+
+  top: 4px;
+  right: 4px;
+  font-size: 17px;
+  opacity: 1;
+
 }
 
 .nome,
@@ -1124,9 +1150,9 @@ li {
   font-size: 150%;
 }
 
-.nome-inimigo {
+/* .nome-inimigo {
   font-size: 100%;
-}
+} */
 
 /* .nome1, .nome2 , .nome3 , .nome4  , .nome5, .nome6 {
   
@@ -1189,10 +1215,10 @@ li {
   justify-content: space-between;
   margin-bottom: 12px;
 }
-.poder-inimigo {
+/* .poder-inimigo {
   font-size: 0.75em;
   width: 96%;
-}
+} */
 
 .ataqueEsp,
 .ataque {
@@ -1330,9 +1356,9 @@ p {
 }
 
 #are {
-  height: 200px;
+  /* height: 200px; */
   background-color: #411c2a9c;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 1fr;
   gap: 5px;
 }

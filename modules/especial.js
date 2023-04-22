@@ -1,4 +1,4 @@
-import { seedRNG } from "./seedFabricator.js";
+import { seedRNG, start } from "./seedFabricator.js";
 import { integrante } from "../integrante.js";
 import { cidade } from "../cidade.js";
 import { slotEspObj, slotEsp } from "../slotEspecial.js";
@@ -27,11 +27,15 @@ import {
   novaCarta,
   rodadas,
   audioPlayer,
+  mainOpaque,
 } from "../script.js";
 import { boss } from "../boss.js";
 import { areObj } from "../arena.js";
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
+
+const mainP = document.getElementById("main");
+const bodyP = document.getElementsByTagName("body")[0];
 
 function progressBar(_value, _max, _bgColor, _progressColor, _isBarrier) {
   let value = _value;
@@ -400,14 +404,10 @@ export class Especial {
             : (danoSpread = Math.trunc(dano / spreadBaseDmg));
 
           if (left && !left.isInvisible) {
-           ;
-
-            this._dmgDone +=  left.dmg(danoSpread)[0]
+            this._dmgDone += left.dmg(danoSpread)[0];
           }
 
           if (right && !right.isInvisible) {
-            
-
             this._dmgDone += right.dmg(danoSpread);
           }
         }
@@ -424,18 +424,16 @@ export class Especial {
       //se houver  exposto
       if (areObj.some((x) => x._exposto && !x.isInvisible)) {
         for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 9);
+          let slot = gerarNumero(0, 5);
 
           if (areObj[slot]._exposto && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-           this._dmgDone += vitima.dmg(dano)[0]
+            this._dmgDone += vitima.dmg(dano)[0];
 
             checkLeftRight(vitima);
 
             // atacar por dano spread
-
-            
 
             return [true, vitima];
           }
@@ -444,19 +442,17 @@ export class Especial {
         //se houver tank
       } else if (areObj.some((x) => x.tank && !x.isInvisible)) {
         for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 9);
+          let slot = gerarNumero(0, 5);
 
           if (areObj[slot].tank && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            this._dmgDone += vitima.dmg(dano)[0]
+            this._dmgDone += vitima.dmg(dano)[0];
 
             classHit = "tank";
             checkLeftRight(vitima);
 
             // atacar por dano spread
-
-            
 
             return [true, vitima];
           }
@@ -465,19 +461,17 @@ export class Especial {
         //se houver especias
       } else if (areObj.some((x) => x.especial && !x.isInvisible)) {
         for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 9);
+          let slot = gerarNumero(0, 5);
 
           if (areObj[slot].especial && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            this._dmgDone += vitima.dmg(dano)[0]
+            this._dmgDone += vitima.dmg(dano)[0];
 
             classHit = "especial";
             checkLeftRight(vitima);
 
             // atacar por dano spread
-
-            
 
             return [true, vitima];
           }
@@ -486,19 +480,17 @@ export class Especial {
         // NORMAL
       } else if (areObj.some((x) => !x.miniBoss && !x.isInvisible)) {
         for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 9);
+          let slot = gerarNumero(0, 5);
 
           if (!areObj[slot].miniBoss && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            this._dmgDone += vitima.dmg(dano)[0]
+            this._dmgDone += vitima.dmg(dano)[0];
 
             classHit = "normal";
             checkLeftRight(vitima);
 
             // atacar por dano spread
-
-            
 
             return [true, vitima];
           }
@@ -508,16 +500,15 @@ export class Especial {
       // caso haja mini bosses
       else if (areObj.some((x) => x.miniBoss && !x.isInvisible)) {
         for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 9);
+          let slot = gerarNumero(0, 5);
 
           if (areObj[slot].miniBoss && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            this._dmgDone += vitima.dmg(dano)[0]
+            this._dmgDone += vitima.dmg(dano)[0];
 
             classHit = "miniBoss";
             checkLeftRight(vitima);
-           
 
             return [true, vitima];
           }
@@ -575,7 +566,8 @@ export class Especial {
   }
 
   unableToAttack() {
-    let cantAttackCondition = this._stunned || this._dead;
+    let cantAttackCondition =
+      this._stunned || this._dead || this._attackDisable;
 
     if (cantAttackCondition) {
       return true;
@@ -1056,10 +1048,8 @@ export let especiais = {
         }
 
         if (x._barreira != undefined) {
-          x._barreira = x._barreiraMax
+          x._barreira = x._barreiraMax;
         }
-
-
       });
 
       hpPlayer.add(50);
@@ -1238,10 +1228,10 @@ export let especiais = {
     _requiredCidade: true,
     cfg() {
       this.energia = gerarNumero(25, 50);
-      
-      this._nomeP.style.marginTop = '7px'
+
+      this._nomeP.style.marginTop = "7px";
       this._cargoP.style.visibility = "hidden";
-      this._cargoP.innerHTML = this._requiredIntegrante 
+      this._cargoP.innerHTML = this._requiredIntegrante;
     },
 
     tick() {
@@ -1252,9 +1242,8 @@ export let especiais = {
       let hasIntegrante = invObj.some(
         (x) => x._integrante == this._requiredIntegrante && !x.isMonark
       );
-     
 
-       if (hasIntegrante) {
+      if (hasIntegrante) {
         this._invHiddenButton = false;
         this._thisCardP.classList.add("critico");
         this.giveCard = true;
@@ -1273,7 +1262,6 @@ export let especiais = {
           tudo();
         }
       }
-
 
       this.kill();
     },
@@ -1326,11 +1314,11 @@ export let especiais = {
     _invHiddenButton: true,
     cfg() {
       this.energia = gerarNumero(2, 7);
-      
-      this._nomeP.style.marginTop = '7px'
-     
+
+      this._nomeP.style.marginTop = "7px";
+
       this._cargoP.style.visibility = "hidden";
-      this._cargoP.innerHTML = this._requiredIntegrante 
+      this._cargoP.innerHTML = this._requiredIntegrante;
     },
 
     tick() {
@@ -1339,11 +1327,10 @@ export let especiais = {
       }
 
       let hasIntegrante = invObj.some(
-        (x) => x._integrante == this._requiredIntegrante  && !x.isMonark
+        (x) => x._integrante == this._requiredIntegrante && !x.isMonark
       );
-     
 
-       if (hasIntegrante) {
+      if (hasIntegrante) {
         this._invHiddenButton = false;
         this._thisCardP.classList.add("critico");
         this.giveCard = true;
@@ -1358,9 +1345,7 @@ export let especiais = {
       if (this.unableToAttack()) return;
       if (this.giveCard) {
         ammo.add(this.energia);
-        
       }
-
 
       this.kill();
     },
@@ -1737,7 +1722,6 @@ export let especiais = {
           retrato.classname = "invisible";
           spy.children[0].className = "invis";
 
-
           // this._energiaP.textContent = this.energia;
 
           this._invHiddenButton = true;
@@ -1893,16 +1877,15 @@ export let especiais = {
     retrato: "url('pics/estoicoRetrato.jpg')",
     cargo: "",
     dmgBoss: false,
-    dano: 100,
+    dano: 1,
     hp: 80,
     maxHealth: 80,
     hashp: true,
-    _invHiddenButton: true,
 
     poder() {
       if (this.unableToAttack()) return;
 
-      this.ataque(this.dano,0,[true,this.dano])
+      this.ataque(this.dano, 0, [true, this.dano]);
 
       this.kill();
     },
@@ -1914,15 +1897,6 @@ export let especiais = {
       }
 
       this.dano = 1 + this._dmgTaken;
-
-      let hasTuru = invObj.some((x) => x._cidade == "de Itapira");
-      let hasItapira = invObj.some((x) => x._integrante == "Turu");
-
-      if (hasTuru || hasItapira) {
-        this._invHiddenButton = false;
-      } else {
-        this._invHiddenButton = true;
-      }
     },
 
     nomeStyle: {
@@ -2089,7 +2063,7 @@ export let especiais = {
     retrato: "url('pics/retratoJhin.jpg')",
     dmgboss: false,
     tiros: 4,
-    dano: 0,
+    dano: 4,
     hp: 10,
     hashp: true,
     maxHealth: 10,
@@ -2097,27 +2071,31 @@ export let especiais = {
     atirador: false,
 
     tick() {
-      if (invObj.some((x) => x.atiradorJhin)) {
-        this.atirador = true;
-      } else {
-        this.atirador = false;
-      }
+      this.setDmg();
+    },
 
-      if (this.atirador && this.tiros > 1) {
-        invObj.map((x) => {
-          x.atiradorJhin ? (this.dano = x.energia * 4) : 0;
-        });
-      } else if (this.atirador && this.tiros == 1) {
-        invObj.map((x) => {
-          x.atiradorJhin ? (this.dano = x.energia * 8) : 0;
-        });
-      } else {
-        this.dano = 4;
+    setDmg() {
+      this.dano = 4;
+
+      let somaEnergia = 0;
+
+      invObj.map((x) => {
+        if (x.Gandalf && x.dmgBoss) {
+          somaEnergia += x.energia * 2;
+        } else if (x.dmgBoss) {
+          somaEnergia += x.energia;
+        }
+      });
+
+      this.dano += somaEnergia;
+      if (this.tiros == 1) {
+        this.dano *= 4;
       }
     },
 
     poder() {
       if (this.unableToAttack()) return;
+
       let jhin = this._thisCardP;
       let tiros = this.tiros;
       let tirosString = jhin.children[2];
@@ -2136,109 +2114,186 @@ export let especiais = {
           }
         };
 
-        if (
-          atirador._cargo != "carta-monark" &&
-          nome == "Gandalf" &&
-          checkTiros()
-        ) {
-          //se nao tiver atirador, escolha atirador
+        let playJhinAu = (n) => {
+          let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.2];
 
-          if (!this.atirador) {
-            atirador.statusEmoji = this.allyEmoji;
-            atirador.atiradorJhin = true;
-
-            let jhinEscolhaAu = ["jhinEscolha.mp3", 0.3];
-            let ultiJhinAu = ["ultiJhin.mp3", 0.2];
-
-            snd(jhinEscolhaAu);
-            snd(ultiJhinAu);
-
-            this.atirador = true;
-
-            break;
-            //se tiver atirador
-          } else {
-            if (!boss) return;
-
-            let playJhinAu = (n) => {
-              let jhinAu = ["jhin" + gerarNumero(1, 9) + ".mp3", 0.2];
-
-              if (gerarNumero(1, n) == 1) {
-                setTimeout(function () {
-                  snd(jhinAu);
-                }, 800);
-              }
-            };
-
-            if (checkTiros()) {
-              if (tiros == 4) {
-                let countAu = ["jhinConta1.mp3", 0.2];
-                snd(countAu);
-                // snd(hit);
-                // somDeath(350);
-                playJhinAu(3);
-              }
-
-              if (tiros == 3) {
-                let countAu = ["jhinConta2.mp3", 0.2];
-                snd(countAu);
-                // snd(hit);
-                // somDeath(350);
-              }
-
-              if (tiros == 2) {
-                let countAu = ["jhinConta3.mp3", 0.2];
-                snd(countAu);
-
-                tirosString.classList.add("critico");
-                // snd(hit);
-                // somDeath(350);
-              }
-
-              //TIROS
-              // TULTIMO TIRO MULTIPLICA POR 4
-              if (tiros == 1) {
-                this.aim == "boss"
-                  ? boss.dmg(this.dano)
-                  : this.ataque(false, false);
-
-                atirador.statusEmoji = "";
-                atirador.atiradorJhin = false;
-
-                tirosString.textContent = "";
-                this._invHiddenButton = true;
-
-                let countAu = ["jhinConta4.mp3", 0.2];
-                snd(countAu);
-                // snd(hit);
-                // somDeath(350);
-                playJhinAu(1);
-                if (per(75)) {
-                  elimCardInv(atiradorP);
-                }
-
-                this.tiros--;
-                this.kill();
-              } else {
-                this.aim == "boss"
-                  ? boss.dmg(this.dano)
-                  : this.ataque(false, false);
-
-                if (per(25)) {
-                  elimCardInv(atiradorP);
-                }
-
-                this.tiros--;
-                tirosString.textContent = this.tiros;
-              }
-
-              break;
-            }
+          if (gerarNumero(1, n) == 1) {
+            setTimeout(function () {
+              snd(jhinAu);
+            }, 800);
           }
+        };
+
+        if (checkTiros()) {
+          if (tiros == 4) {
+            let countAu = ["jhinConta1.mp3", 0.2];
+            snd(countAu);
+
+            playJhinAu(3);
+          }
+
+          if (tiros == 3) {
+            let countAu = ["jhinConta2.mp3", 0.2];
+            snd(countAu);
+          }
+
+          if (tiros == 2) {
+            let countAu = ["jhinConta3.mp3", 0.2];
+            snd(countAu);
+
+            tirosString.classList.add("critico");
+          }
+
+          //TIROS
+          // TULTIMO TIRO MULTIPLICA POR 4
+          if (tiros == 1) {
+            tirosString.textContent = "";
+            this._invHiddenButton = true;
+
+            let countAu = ["jhinConta4.mp3", 0.2];
+            snd(countAu);
+
+            this.ataque();
+            playJhinAu(1);
+            this.tiros--;
+            this.kill();
+          } else {
+            this.tiros--;
+            tirosString.textContent = this.tiros;
+            this.ataque();
+          }
+
+          this._attackDisable = true;
+          setTimeout((x) => {
+            this._attackDisable = false;
+          }, 1200);
+
+          let cardComEnergia = [];
+
+          invObj.map((x) => {
+            if (x.dmgBoss) {
+              cardComEnergia.push(x);
+            }
+          });
+
+          let cartaMaxima = Math.max(...cardComEnergia.map((x) => x.energia));
+
+          for(let i = 0; i<6;i++){
+
+            let x = invObj[i]
+
+            if (x.energia && x.dmgBoss && x.energia == cartaMaxima) {
+              x.kill();
+
+              return;
+            }
+
+
+
+          }
+
+          // invObj.map((x) => {
+            
+          // });
+
           break;
         }
+
+        break;
       }
     },
+
+    //     poder() {
+    //       let minigame = document.createElement("div");
+    //       let startMiniGame = () => {
+    //         minigame.id = "minigame-jhin";
+    //         minigame.classList.add("minigame");
+    //         bodyP.appendChild(minigame);
+    //         let bullet = document.createElement("div");
+    //         mainOpaque(true);
+
+    //         function getAngleFromClient(event) {
+    //           const speed = 400;
+    // console.log(event);
+    //           const updateDivPosition = (_angle) => {
+
+    //             // posiçao atual da div
+    //             const divX = bullet.offsetLeft;
+    //             // console.log('divX: ', divX);
+    //             const divY = bullet.offsetTop;
+
+    //             const radians = _angle;
+
+    //             // Calcula a posição da próxima atualizaçãotendo o angulo como base
+    //             const nextX = divX + (Math.cos(radians) * speed) / 60; // 60 vezes por segundo
+    //             const nextY = divY + (Math.sin(radians) * speed) / 60; // 60 vezes por segundo
+    //             // const nextX = divX + Math.cos(radians)
+    //             // const nextY = divY + Math.sin(radians)
+
+    //             // aplicaÇao da posiÇao ao DOM
+    //             bullet.style.left = `${nextX}px`;
+    //             bullet.style.top = `${nextY}px`;
+
+    //             if(divX > 900 || divY <= 0 ){
+    //               clearInterval(id)
+    //               bullet.style.left = `${70}px`;
+    //               bullet.style.top = `${606}px`;
+    //               console.log('VOLTOU');
+    //             }
+
+    //             let angulo = rad * 180 / Math.PI
+    //   console.log('angulo: ', angulo);
+
+    //           };
+
+    //           // bullet position
+    //           // const divX = bullet.offsetLeft + bullet.offsetWidth / 2;
+    //           // const divY = bullet.offsetTop + bullet.offsetHeight / 2;
+    //           const divX = bullet.offsetLeft
+    //           console.log('divX: ', divX);
+    //           const divY = bullet.offsetTop
+    //           console.log('divY: ', divY);
+
+    //           // click position
+    //           const clientX = event.layerX;
+    //           console.log('clientX: ', clientX);
+    //           const clientY = event.layerY;
+    //           console.log('clientY: ', clientY);
+
+    //           // distancia entre clique e div
+    //           const diffX = clientX - divX;
+    //           const diffY = clientY - divY;
+
+    //           // calculo do radiano entre clique e div
+    //           let rad = Math.atan2(diffY, diffX);
+
+    //           let id = setInterval(
+    //             () => {
+    //               updateDivPosition(0.78);
+
+    //             },
+
+    //             // 1000 / 60
+    //             16
+    //           );
+    //         }
+
+    //         let shoot = () => {
+    //           bullet.id = "minigame-jhin-bullet";
+    //           minigame.appendChild(bullet);
+
+    //           minigame.addEventListener("click", getAngleFromClient);
+    //         };
+    //         shoot();
+    //       };
+
+    //       let endMiniGame = () => {
+    //         mainOpaque(false);
+    //         minigame.remove();
+    //       };
+
+    //       startMiniGame();
+    //     },
 
     nomeStyle: {
       fontSize: "250%",
@@ -2315,7 +2370,7 @@ export let especiais = {
         this.setHp(10);
         this.changeRetrato('url("/pics/dva.webp")');
         this.dmgBoss = true;
-        this._stunned = false
+        this._stunned = false;
         this._thisCardP.children[2].textContent = "";
         this.dano = 0;
         this._buff = 0;
@@ -2456,39 +2511,7 @@ export let especiais = {
         }
         hpPlayer.remove(Math.trunc(this.dano / 3));
 
-        if (this._leftCard) {
-          if (this._leftObj._enemy) {
-            this._leftObj.hp.remove(this.dano);
-          } else {
-            this._leftObj.dmg(this.dano);
-          }
-        }
-
-        if (this._rightCard) {
-          if (this._rightObj._enemy) {
-            this._rightObj.hp.remove(this.dano);
-          } else {
-            this._rightObj.dmg(this.dano);
-          }
-        }
-
-        if (this._parentP == inv) {
-          if (this._place < 3) {
-            areObj.map((x) => {
-              if (x._place < 5) {
-                x.dmg(this.dano);
-              }
-            });
-          }
-
-          if (this._place > 2) {
-            areObj.map((x) => {
-              if (x._place > 4) {
-                x.dmg(this.dano);
-              }
-            });
-          }
-        }
+        this.areaAtack();
 
         this.kill();
       }, 2600);
@@ -2619,7 +2642,7 @@ export let especiais = {
     hp: 10,
     maxHealth: 10,
     dano: 1,
-    _invHiddenButton: true,
+    _invHiddenButton: false,
     danoMaximoProgresso: 2000,
 
     customButtonEmoji: true,
@@ -2717,19 +2740,19 @@ export let especiais = {
       // VERIFICA SE TEM TWELVE
       let hasTwelve = invObj.some((x) => x.Twelve);
 
-      if (hasTwelve) {
-        this._invHiddenButton = false;
-        // this.hide(this._cargoP, false);
-      } else {
-      }
+      // if (hasTwelve) {
+      //   this._invHiddenButton = false;
+      //   // this.hide(this._cargoP, false);
+      // } else {
+      // }
 
-      if (hasTwelve && !this.stop) {
+      if (this._parentP == inv && !this.stop) {
         if (!this.isConfused) {
           this.confuseButton();
           this.isConfused = true;
         }
 
-        let numberOfTwelves = 0;
+        let numberOfTwelves = 1;
         invObj.map((x) => {
           if (x.Twelve) {
             numberOfTwelves++;
@@ -2749,22 +2772,6 @@ export let especiais = {
         "grey",
         "cyan"
       );
-    },
-
-    dmgReceived() {
-      let blackaoInInv = invObj.some((x) => x._integrante == "Blackao");
-
-      if (blackaoInInv) {
-        this._thisCardP.classList.add("critico");
-        invObj.map((x) => {
-          if (x._integrante == "Blackao") {
-            this.giveAllyEmoji(x);
-            x.blackaoProtetor = true;
-            x.dano = x.energia;
-            x.dmgBoss = false;
-          }
-        });
-      }
     },
 
     nomeStyle: {
@@ -2855,9 +2862,6 @@ export let especiais = {
     ult() {},
 
     everyRound() {
-
-    
-
       if (this.ammonition != this.ammonitionMax) {
         this.ammonition += gerarNumero(3, 6);
         this.ammonition > this.ammonitionMax
@@ -2903,11 +2907,14 @@ export let especiais = {
     },
 
     poder() {
-      if (ammo.total <= 0 || this.active || this.unableToAttack() || this.ammonition <= 0) {
+      if (
+        ammo.total <= 0 ||
+        this.active ||
+        this.unableToAttack() ||
+        this.ammonition <= 0
+      ) {
         return;
       }
-
-      
 
       ammo.use(1);
 
@@ -3002,7 +3009,7 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 6);
 
-      if (!true) {
+      if (true) {
         especial = objBinder(especiais.jhin);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);

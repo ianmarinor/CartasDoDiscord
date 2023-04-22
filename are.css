@@ -1,19 +1,16 @@
 
-
-
-
 .levelAre{
   position: absolute;
-  top: 2px;
-  left: 2px;
-  font-size: 12px;
+  top: 4px;
+  left: 4px;
+  font-size: 17px;
   opacity: 1;
 
 }
 
 #progressBar, #bgProgress{
-  height: 10px;
-  width:  108px;
+  height: 15px;
+  width:  158px;
   background-color: rgb(255, 255, 255);
   border-radius: 2px;
   

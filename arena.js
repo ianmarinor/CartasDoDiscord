@@ -393,7 +393,7 @@ class Inimigo {
       this._leftCard = false;
     }
 
-    if (this._place < 9) {
+    if (this._place < 5) {
       this._rightCard = this._place + 1;
     } else {
       this._rightCard = false;
@@ -423,7 +423,7 @@ class Inimigo {
       this._leftObj = false;
     }
 
-    if (this._place < 9) {
+    if (this._place < 5) {
       this._rightCard = this._parentP.children[this._place + 1];
       this._rightCardIndex = this._place + 1;
       this._rightObj = this._parent[this._place + 1];
@@ -860,6 +860,11 @@ let monark = {
 
   everyRound() {},
 
+  didHit(){
+this.poder()
+  },
+
+
   poder() {
     let despawnTime;
 
@@ -1271,13 +1276,13 @@ let liberdade = {
 
   cfg() {
     this._cargoP.style.fontSize = "80%";
-    this._cargoP.style.marginTop = "8px";
+    this._cargoP.style.marginTop = "14px";
     this._cargoP.style.marginBottom = "10px";
     this._cargoP.textContent = "LIBERDADE DE EXPRESSÃO";
     this._cargoP.style.marginBottom = "0px";
     this._retratoP.style.height = "80%";
 
-    this._nomeP.style.margin = "20px  0px 5px";
+    this._nomeP.style.margin = "30px  0px 5px";
     this._hpP.style.visibility = "hidden";
   },
 
@@ -1523,23 +1528,16 @@ export function spawnMonark(n) {
     '<p class="levelAre"></p>' +
     "</div>";
 
-  // let slot = gerarNumero(0, 9);
-
-  // secret.innerHTML = monarkBluePrint;
-
-  // if (areObj[slot].empty == true) {
-  //   are.replaceChild(secret.children[0], are.children[slot]);
-  //   areObj[slot] = Object.assign(new Inimigo(monark), monark);
-  // }
-
-  // coolDown = true;
+  
 
   return inserirInimigoDomAndObject(monarkBluePrint, monark);
 }
 
 function inserirInimigoDomAndObject(blueprint, object) {
   for (let i = 0; i < 100; i++) {
-    let slot = gerarNumero(0, 9);
+
+    // aqui
+    let slot = gerarNumero(0, 5);
     secret.innerHTML = blueprint;
 
     if (areObj[slot].empty == true) {
@@ -1559,7 +1557,9 @@ function inserirInimigoDomAndObject(blueprint, object) {
 
 function inserirmMiniBossDomAndObject(blueprint, object) {
   for (let i = 0; i < 100; i++) {
-    let slot = gerarNumero(0, 9);
+
+    //aqui
+    let slot = gerarNumero(0, 5);
     secret.innerHTML = blueprint;
 
     let thereIsEmpty = areObj.some((x) => x.empty);
@@ -1619,6 +1619,8 @@ document.addEventListener("keydown", (event) => {
 });
 
 function Main() {
+
+  // aqui
   areObj = [
     emptyObj,
     emptyObj,
@@ -1626,10 +1628,7 @@ function Main() {
     emptyObj,
     emptyObj,
     emptyObj,
-    emptyObj,
-    emptyObj,
-    emptyObj,
-    emptyObj,
+    
   ];
 
   return;

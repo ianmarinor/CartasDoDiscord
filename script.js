@@ -605,7 +605,7 @@ zerarMoney();
 
 function debug() {
   money.set(99999);
-  numCartas.set(10);
+  numCartas.set(100);
   hpPlayer.set(100);
   hpPlayer.addBuff(5000);
   ammo.set(100);
@@ -616,6 +616,17 @@ document.addEventListener("keydown", (event) => {
     debug();
   }
 });
+
+
+export function mainOpaque(_trigger){
+
+  _trigger == undefined || _trigger ? main.style.opacity = 0.1 : main.style.opacity = 1
+
+  
+
+  
+
+}
 
 //div poder
 let ataqueP = document.querySelector(".ataque");
@@ -2305,7 +2316,7 @@ function removeBuffAll() {
     invObj.map((x) => x.removeBuff(debuffRate));
   }, 900);
 }
-
+const tickRate = 16
 function tick() {
   if (!TICK) return;
 
@@ -2343,7 +2354,7 @@ function tick() {
       }
     }
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 6; i++) {
       let carta = areObj[i];
 
       if (carta.print) {
@@ -2362,7 +2373,7 @@ function tick() {
     novaCarta.place();
 
     hpPlayer.playerP();
-  }, 33);
+  }, 16);
 }
 
 function allMonark() {
