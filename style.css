@@ -188,12 +188,14 @@ section {
 main {
   height: 100%;
   display: inline-grid;
+  
   grid-template-areas:
     "c boss d"
     " e are  f"
     "b inv texto"
     "cartas  dicas dinheiro"
     "baralho mao especial";
+
   align-items: center;
   justify-items: center;
   flex-direction: column;
@@ -212,10 +214,11 @@ main {
   background-image: linear-gradient(
       360deg,
       rgba(28, 7, 102, 1) 10%,
-      rgba(56, 44, 68, 0.8) 70%
+      rgba(37, 2, 71, 0.8) 70%
     ),
     /* url(https://cutewallpaper.org/21/1920-x-1080-gif/Wahoo-GIF-Find-Share-on-GIPHY.gif); */
-      url(pics/bg.gif);
+      /* url(pics/bg.gif) */
+      ;
   background-size: cover;
 
   display: none;

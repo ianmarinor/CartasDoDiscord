@@ -1,4 +1,4 @@
-import { gerarNumero, per, money, audioPlayer } from "./script.js";
+import { gerarNumero, per, money, audioPlayer, ammo } from "./script.js";
 import {
   triggerChuvaMonark,
   startGame2,
@@ -7,6 +7,7 @@ import {
   wCoolDown,
   placarArena,
   numCartas,
+  mainOpaque
 } from "/script.js";
 import {
   spawnMonark,
@@ -14,8 +15,10 @@ import {
   areObj,
   populateArena,
   areWakeUp,
+  areFull,
 } from "/arena.js";
-import { spawnLiberdade, spawnTank } from "./arena.js";
+import { spawnLiberdade, spawnTank, areNoEnemies } from "./arena.js";
+import { wavePool } from "./waves.js";
 
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
@@ -28,6 +31,7 @@ let protector = document.getElementById("protector");
 let main = document.getElementById("main");
 let testP = document.getElementById("test");
 let countdownP = document.getElementById("countdown");
+let bodyP = document.getElementsByTagName('body')[0]
 
 let cartaBossMonark =
   '<div id="cartaBossMonark" class="bossAnimation" data-card="boss"></div>';
@@ -42,10 +46,10 @@ export function toMonark(_cartaObj, _despawnTime) {
   if (!carta.isNormal) return;
 
   // if (cartaP.id == "monark") return;
-  cartaP.style.backgroundImage = 'none'
+  cartaP.style.backgroundImage = "none";
   cartaP.id = "monark";
   cartaP.style.border = "1px solid black";
-  carta.isMonark = true
+  carta.isMonark = true;
 
   cargo.textContent = "monark 💩";
 
@@ -126,28 +130,25 @@ class Boss {
       this.health = 0;
 
       bossDead();
-      return animatebossHealth(n);
+      // return animatebossHealth(n);
 
       //   return (bossHealthP.value = this.health);
     } else {
       //   return (bossHealthP.value = this.health);
-      return animatebossHealth(n);
+      // return animatebossHealth(n);
     }
   }
 
   antiSpam() {
     let delay = gerarNumero(750, 1800);
-    let chance = 13
+    let chance = 13;
 
-    if (per(13)) {
+    if (false) {
       setTimeout(
         () => {
+          let obj = populateArena();
 
-          let obj =  populateArena()
-
-          obj ? obj.isInvisible = true : 0
-         
-        
+          obj ? (obj.isInvisible = true) : 0;
         },
 
         delay
@@ -155,45 +156,32 @@ class Boss {
     }
   }
 
-  summon(){
-
-    let delay = gerarNumero(750, 1800);
-    let chance 
-
-    if(rDifficulty.value > 50){
-
-    chance = 5
-
-    } else {
-
-      chance = 10
-
-    }
-
-    if (per(chance)) {
-      setTimeout(
-        () => {
-
-          let obj =  populateArena()
-
-          obj ? obj.isInvisible = true : 0
-         
-        
-        },
-
-        delay
-      );
-    }
-
+  summon() {
+    // let delay = gerarNumero(750, 1800);
+    // let chance
+    // if(rDifficulty.value > 50){
+    // chance = 5
+    // } else {
+    //   chance = 10
+    // }
+    // if (per(chance)) {
+    //   setTimeout(
+    //     () => {
+    //       let obj =  populateArena()
+    //       obj ? obj.isInvisible = true : 0
+    //     },
+    //     delay
+    //   );
+    // }
   }
 
   heal(n) {
     this.health += n;
     if (this.health > this.fullHealth) {
       this.health = this.fullHealth;
-      animatebossHealth();
+      // animatebossHealth();
     }
-    animatebossHealth();
+    // animatebossHealth();
   }
 
   set(n) {
@@ -239,103 +227,148 @@ class Boss {
   }
 }
 
-export let countdown = {
-  _value: 20,
-  _creatingDefense: false,
-  numOfInimigos: 10,
-
-  decrease() {
-    if (!boss) return;
-    if (this._value < 2) {
-      this.createDefense();
-    } else {
-      this._value--;
-    }
-    this.print();
-  },
-
-  valueSet(n) {
-    this._value = n;
-    this.print();
-  },
-
-  numOfInimigosSet(n) {
-    this.numOfInimigos = n;
-  },
-
-  createDefense() {
-
-    if(this._creatingDefense) return
-
-    let faixa = document.createElement("audio");
-
-    audioPlayer("trumpet.mp3", true, faixa);
-
-    let added = 0;
-    
-    let enemiesRNG = () => {
-      if (per(80)) {
-        return 10;
-      } else if (per(50)) {
-        return 9;
-      } else {
-        return 3;
-      }
-    };
-    // this.numOfInimigosSet(enemiesRNG());
-    
-    wCoolDown.set(true);
-    this._creatingDefense = true;
-    this.print();
-    
-    let delay = () => gerarNumero(350, 900);
-    let defense = setInterval(() => {
-      let stopCondition = this.numOfInimigos <= added;
-      
-      if (stopCondition) {
-        clearInterval(defense);
-
-        setTimeout(() => {
-          wCoolDown.set(false);
-          this._creatingDefense = false;
-
-          let rodadasCountDown = () => {
-            if (per(75)) {
-              return gerarNumero(4, 6);
-            } else if (per(50)) {
-              return gerarNumero(8, 12);
-            } else {
-              return gerarNumero(1, 2);
-            }
-          };
-
-          this.valueSet(rodadasCountDown());
-        }, 3500);
-      }
-
-      populateArena();
-
-      added++;
-    }, delay());
-  },
-
-  print() {
-    if (!boss) return;
-
+export let wave = {
+  id: 0,
+  enemies: undefined,
+  enemiesSpawned: undefined,
+  enemiesToGo: undefined,
+  enemiesKilled: 0,
+  waveOn: false,
+  lastWave: false,
   
 
-    countdownP.textContent = this._value;
-    countdownP.style.opacity = 1;
+  // toda rodada essa função é chamada
+  getWave() {
+    if (!boss) return;
 
-    if (this._creatingDefense) {
-      countdownP.textContent = "⚠️";
-      countdownP.classList.add("critico");
-      countdownP.style.backgroundColor = "#FF5733";
-      countdownP.style.visibility = 'visible'
+    // se a wave estiver acontecendo
+    if (this.waveOn) {
+      this.run();
+
+    // se a wave não estiver acontecendo chame uma wave do pool
     } else {
-      countdownP.style.visibility = 'hidden'
+      //pega a wave do pol
       
+      this.numOfWaves = wavePool[0].numOfWaves
+      this.id++;
+
+      if(this.numOfWaves == this.id){
+        this.lastWave = true
+      }
+      
+      
+
+
+      this.enemies = wavePool[this.id ].enemiesTotal;
+      this.enemiesSpawned = 0;
+      this.enemiesToGo = this.enemies;
+      this.waveOn = true;
+      this.enemiesKilled = 0;
+      this.money = wavePool[this.id ].money
+      this.cards = wavePool[this.id ].cards
+      this.ammo = wavePool[this.id ].ammo
+
+
+      console.log(this);
     }
+  },
+
+  run() {
+    //se acabou a onda
+    if (this.enemiesToGo <= 0) {
+      if (!areNoEnemies()) return;
+      this.waveOn = false;
+
+      console.log(this);
+      console.log("WAVE ENDED");
+      
+      return;
+      // se nao acabou a onda e tem espaço
+    } else if (!areFull()) {
+      let waveObj = wavePool[this.id];
+
+      waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
+      this.enemiesSpawned++;
+      this.enemiesToGo--;
+      console.log(this);
+      console.log("enemy added");
+    } else {
+      console.log(this);
+      console.log("no space");
+    }
+  },
+
+  popUpVictory(){
+    mainOpaque()
+
+    let popUpP = document.createElement("div");
+    popUpP.id = "popup-victory";
+    bodyP.appendChild(popUpP)
+
+  },
+
+  popUpSuccess() {
+
+    if(this.lastWave){
+      this.popUpVictory()
+      return
+
+    }
+
+    // pop up que indica vitoria da wave
+    mainOpaque()
+
+    let popUpP = document.createElement("div");
+    popUpP.id = "popup-success-wave";
+    bodyP.appendChild(popUpP);
+
+    let button = document.createElement("button")
+    button.id = 'popup-success-btn'
+    popUpP.appendChild(button);
+    button.addEventListener('click', ()=>{
+      console.log(this);
+      money.add(this.money)
+      ammo.add(this.ammo)
+      numCartas.add(this.cards)
+
+      if(this.lastWave){
+        this.popUpVictory()
+      } else {
+
+        this.getWave()
+      }
+
+
+      popUpP.remove()
+      mainOpaque(false)
+    })
+
+
+    let wavepassed = document.createElement("div")
+    wavepassed.id = 'popup-success-wavepassed'
+    popUpP.appendChild(wavepassed);
+    wavepassed.innerHTML = 'ONDA ' + this.id+ ' COMPLETADA'
+
+    let reward = document.createElement("div")
+    reward.id = 'popup-success-reward'
+    popUpP.appendChild(reward);
+    // reward.innerHTML = 'ONDA ' + this.id+ ' COMPLETADA'
+
+    let moneyP = document.createElement("div")
+    moneyP.id = 'popup-success-moneyP'
+    reward.appendChild(moneyP);
+    moneyP.innerHTML = '💰' + this.money
+
+    let ammoP = document.createElement("div")
+    ammoP.id = 'popup-success-ammoP'
+    reward.appendChild(ammoP);
+    ammoP.innerHTML = '⚔️' + this.ammo
+
+    let cardsP = document.createElement("div")
+    cardsP.id = 'popup-success-cardsP'
+    reward.appendChild(cardsP);
+    cardsP.innerHTML = '🃏' + this.cards
+
   },
 };
 
@@ -431,18 +464,17 @@ function createMonark() {
       for (let i = 0; i < 100; i++) {
         spawnMonark(true);
       }
-      let notAttacked = true
+      let notAttacked = true;
       areObj.map((x) => {
         if (x.cartaId == "monark") {
           x.isInvisible = false;
           x.poder();
           x.readyToAttack = true;
-          
-          if(notAttacked){
-            x.ataque(gerarNumero(50 , 120))
-            notAttacked = false
-          }
 
+          if (notAttacked) {
+            x.ataque(gerarNumero(50, 120));
+            notAttacked = false;
+          }
         }
       });
 
@@ -502,7 +534,7 @@ export function spawnBoss() {
       return false;
     }
 
-    healthPointsP.textContent = boss.health;
+    // healthPointsP.textContent = wave.enemiesToGo;
     healthWrapP.classList.add("aparecer");
     boss.carta();
 
@@ -522,10 +554,12 @@ export function spawnBoss() {
 
 function bossDead() {}
 
-function animatebossHealth() {
-  let style = (boss.health / boss.fullHealth) * 100 + "%";
+export function animatebossHealth() {
+  if (!boss) return;
+  let style = Math.abs((wave.enemiesKilled / wave.enemies) * 100 - 100) + "%";
+  // console.log('style: ', style);
 
-  healthPointsP.textContent = boss.health;
+  healthPointsP.textContent = "ONDA #" + wave.id;
 
   progressP.style.width = style;
 }

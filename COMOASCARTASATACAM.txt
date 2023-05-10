@@ -1,0 +1,23 @@
+Possibilidades de como as cartas atacarão.
+
+1.  SOMENTE SE ATACADAS
+- Elas nascem visiveis a cada passar de carta (se for muito comum pode se adicionar uma per)
+- Elas são totalmento neutras, ou seja, somente atacam se alguma carta do deck for atacada.
+- Quando alguma carta do deck for atacada, elas serão escolhidas por sua probabilidade de ataque e entrarão na animação de ataque.
+- Depois de um tempo especifico atacarão.
+
+
+-- PROS --
++ Mais organizado.
++ Mais estratégico.
++ Mais facil de implementar e manter
+
+-- CONS --
+- Muito op para o jogador que poderá comprar quantas cartas quiser sem nunca precisar atacar
+- Jogo mais lento 
+
+--Possiveis soluções:
+A. Criar uma obrigação ao jogador de atacar as cartas.
+B. Talvez adicionando cartas extras como prêmio ao matar um inimigo.
+C. Ter um número especifico de cartas para cada onda que se zera no final.
+

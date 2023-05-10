@@ -1,0 +1,56 @@
+#minigame-sapato {
+  position: absolute;
+  border: 3px solid #ffbd42bc;
+
+  width: 1000px;
+  height: 630px;
+
+  background-color: rgb(72, 69, 69);
+  /* background-image: url(/pics/minigameSapato/bg3.PNG); */
+
+  background-size: cover;
+  /* background-position: cover; */
+  background-repeat: no-repeat;
+}
+
+#twelve-pic {
+  position: absolute;
+  top: -85px;
+
+  width: 75px;
+  height: 75px;
+  background-image: url(/pics/twelve.PNG);
+
+  background-size: cover;
+  border: 2px solid #ffbd42bc;
+}
+
+#number-twelves {
+  position: absolute;
+  left: 80px;
+  top: -50px;
+  width: 100px;
+  height: 100px;
+  color: #ffbd42bc;
+
+  font-size: 35px;
+}
+#sapatinho {
+    position: absolute;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+
+#dano-sapato{
+    position: absolute;
+    width: 200px;
+    height: 75px;
+    text-align: start;
+    color: #f1a417;;
+    font-size: 52px;
+    left: -5px;
+    
+    top: 630px;
+
+}

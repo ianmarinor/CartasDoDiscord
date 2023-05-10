@@ -16,7 +16,14 @@ import {
   globalStats,
   timer,
 } from "./script.js";
-import { boss, spawnBoss, resetBoss, toMonark, countdown, rDifficulty } from "./boss.js";
+import {
+  boss,
+  spawnBoss,
+  resetBoss,
+  toMonark,
+  wave,
+  rDifficulty,
+} from "./boss.js";
 import {
   menosClickBlueprint,
   camaradaBlueprint,
@@ -25,7 +32,8 @@ import {
   blueprintBuilder,
 } from "./domCards.js";
 import { start } from "./modules/seedFabricator.js";
-import { seedComprada } from "./modules/seedsCompradas.js";
+import { wavePool} from "./waves.js";
+
 
 export const are = document.getElementById("are");
 const secret = document.getElementById("test");
@@ -116,6 +124,14 @@ export function areReveal() {
     }
   });
   updatePlacarInimigo();
+}
+
+export function areNoEnemies(){
+  return areObj.every((x)=> x.empty)
+}
+
+export function areFull(){
+  return areObj.every((x)=> !x.empty)
 }
 
 export function arenaAtaque() {
@@ -516,7 +532,7 @@ class Inimigo {
   didHit() {}
 
   dmg(n, absolute) {
-    if (this.isInvisible  && !absolute) return [0];
+    if (this.isInvisible && !absolute) return [0];
 
     efeitoDano(this);
 
@@ -545,8 +561,8 @@ class Inimigo {
 
     let multiplicadorBossDano = 2.5;
 
-    if(rDifficulty.value > 33){
-      multiplicadorBossDano = 3.5
+    if (rDifficulty.value > 33) {
+      multiplicadorBossDano = 3.5;
     }
 
     if (boss) {
@@ -597,6 +613,15 @@ class Inimigo {
 
     elimCardAre(this._thisCardP);
     this._dead = true;
+
+    if(!this.miniBoss){
+
+      wave.enemiesKilled++
+      if(wave.enemiesKilled >= wave.enemies){
+        // pop up victory
+        wave.popUpSuccess()
+      }
+    }
   }
 
   ataque(dmg) {
@@ -834,8 +859,8 @@ let monark = {
   _despawn: 60,
   _audioSpawn: "monark.mp3",
   _CHN: document.createElement("audio"),
-  hp: 20,
-  maxHealth: 20,
+  hp: 30,
+  maxHealth: 30,
   dano: 5,
   emoji: "💩",
   attackChance: 20,
@@ -854,16 +879,14 @@ let monark = {
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
 
-
-    this._money =  this._money * this._level 
+    this._money = this._money * this._level;
   },
 
   everyRound() {},
 
-  didHit(){
-this.poder()
+  didHit() {
+    this.poder();
   },
-
 
   poder() {
     let despawnTime;
@@ -884,11 +907,19 @@ this.poder()
       despawnTime = false;
     }
 
-    // let slot = invObj[0]
-    setTimeout(() => {
-      let slot = invObj[gerarNumero(0, 3)];
-      toMonark(slot, despawnTime);
-    }, 250);
+    let temNormal = invObj.some((x) => x.isNormal);
+
+    if (temNormal) {
+      for (let i = 0; i < 99; i++) {
+        let slot = invObj[gerarNumero(0, 5)];
+        if (slot.isNormal && !slot.isMonark) {
+          setTimeout(() => {
+            toMonark(slot, despawnTime);
+          }, 250);
+          break;
+        }
+      }
+    }
   },
 };
 
@@ -909,8 +940,8 @@ let menosCartas = {
   _audioSpawn: "menosCartas.wav",
   energia: "",
   emoji: "🃏",
-  hp: 22,
-  maxHealth: 22,
+  hp: 33,
+  maxHealth: 33,
   dano: false,
   attackChance: 50,
   especial: true,
@@ -922,7 +953,7 @@ let menosCartas = {
     this.energia *= this._level;
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
-    this._money =  this._money * this._level 
+    this._money = this._money * this._level;
   },
 
   cfg() {
@@ -959,8 +990,8 @@ let camarada = {
   _audioSpawn: "comunaShort.mp3",
   energia: "",
   emoji: "☭",
-  hp: 35,
-  maxHealth: 35,
+  hp: 50,
+  maxHealth: 50,
   dano: false,
   attackChance: 18,
   especial: true,
@@ -974,7 +1005,7 @@ let camarada = {
     this.healValue = gerarNumero(80, 125);
 
     this.healValue = this.healValue * this._level;
-    this._money =  this._money * this._level 
+    this._money = this._money * this._level;
   },
 
   cfg() {
@@ -1023,8 +1054,8 @@ let tank = {
   _audioSpawn: "tank.mp3",
   energia: "",
   emoji: "",
-  hp: 200,
-  maxHealth: 200,
+  hp: 300,
+  maxHealth: 300,
   dano: 130,
   attackChance: false,
   ulti: 0,
@@ -1039,16 +1070,11 @@ let tank = {
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
 
-    this.maxUlti = Math.trunc(this.maxUlti / this._level)
-    this._money =  this._money *this._level 
-
+    this.maxUlti = Math.trunc(this.maxUlti / this._level);
+    this._money = this._money * this._level;
   },
 
   cfg() {
-
-
-    
-
     this.audioSpawn(0.3);
 
     if (per(70)) {
@@ -1056,8 +1082,13 @@ let tank = {
     }
   },
 
-  tick(){
-    this._cargoP.innerHTML = progressBar(this.ulti, this.maxUlti, "gray", "#cf6a32")
+  tick() {
+    this._cargoP.innerHTML = progressBar(
+      this.ulti,
+      this.maxUlti,
+      "gray",
+      "#cf6a32"
+    );
   },
 
   everyRound() {
@@ -1070,7 +1101,6 @@ let tank = {
     }
 
     this.ulti += ultiRate;
-    
 
     if (this.ulti >= this.maxUlti) {
       this.readyToAttack = true;
@@ -1107,8 +1137,8 @@ let dog = {
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
   attackChance: 33,
-  hp: 17,
-  maxHealth: 17,
+  hp: 26,
+  maxHealth: 26,
   dano: 15,
 
   tick() {
@@ -1121,11 +1151,9 @@ let dog = {
 
       this._thisCardP.style.backgroundSize = "cover";
       this._nomeP.textContent = "DOG DO VITINHO";
-
-      
     }
   },
-  
+
   primaryAttack() {
     if (this.vitor) {
       this.ataque(this.dano);
@@ -1135,9 +1163,9 @@ let dog = {
       this.readyToAttack = false;
     }
   },
-  
+
   levelCfg() {
-    this._money =  this._money * this._level 
+    this._money = this._money * this._level;
     this.dano = gerarNumero(12, 17);
 
     this.dano *= this._level;
@@ -1196,8 +1224,8 @@ let metaforando = {
     this._nomeP.innerHTML = progressBar(this.hp, this.maxHealth, "gray", "red");
   },
 
-  everyRound(){
-    this.didHit()
+  everyRound() {
+    this.didHit();
   },
 
   poder() {
@@ -1218,15 +1246,14 @@ let metaforando = {
     });
 
     hpPlayer.remove(this.dano);
-    spawnDog()
+    spawnDog();
 
     this.readyToAttack = false;
     this._uber = false;
   },
 
   didHit() {
-
-    let coolDownTreme = gerarNumero(1000 , 2100)
+    let coolDownTreme = gerarNumero(1000, 2100);
 
     if (per(70) || this.readyToAttack) return;
 
@@ -1301,7 +1328,7 @@ let liberdade = {
   },
 
   didHit() {
-    let coolDownTreme = gerarNumero(1000, 2100)
+    let coolDownTreme = gerarNumero(1000, 2100);
     if (per(60) || this.readyToAttack) return;
 
     this.readyToAttack = true;
@@ -1310,10 +1337,9 @@ let liberdade = {
     setTimeout(() => this.poder(), coolDownTreme);
   },
 
-  everyRound(){
-    this.didHit()
-  }
-
+  everyRound() {
+    this.didHit();
+  },
 };
 let smoke = {
   cartaId: "smokeCard",
@@ -1331,8 +1357,8 @@ let smoke = {
   _doesAttack: false,
   _audioSpawn: "",
   attackChance: 20,
-  hp: 15,
-  maxHealth: 15,
+  hp: 21,
+  maxHealth: 21,
   dano: 1,
   especial: true,
   emoji: "🌫️",
@@ -1379,8 +1405,8 @@ let awp = {
   _doesAttack: true,
   _audioSpawn: "",
   attackChance: 12,
-  hp: 20,
-  maxHealth: 20,
+  hp: 30,
+  maxHealth: 30,
   dano: 35,
   emoji: "",
   asiimov: false,
@@ -1528,14 +1554,12 @@ export function spawnMonark(n) {
     '<p class="levelAre"></p>' +
     "</div>";
 
-  
-
   return inserirInimigoDomAndObject(monarkBluePrint, monark);
 }
 
 function inserirInimigoDomAndObject(blueprint, object) {
-  for (let i = 0; i < 100; i++) {
 
+  for (let i = 0; i < 100; i++) {
     // aqui
     let slot = gerarNumero(0, 5);
     secret.innerHTML = blueprint;
@@ -1544,20 +1568,16 @@ function inserirInimigoDomAndObject(blueprint, object) {
       are.replaceChild(secret.children[0], are.children[slot]);
       areObj[slot] = Object.assign(new Inimigo(object), object);
 
-      if (per(33) && areObj[slot]._attackAtSpawn) {
-        // areObj[slot].readyToAttack = true;
-      }
-
+      
       return areObj[slot];
     } else {
-      return false
+      // return false;
     }
   }
 }
 
 function inserirmMiniBossDomAndObject(blueprint, object) {
   for (let i = 0; i < 100; i++) {
-
     //aqui
     let slot = gerarNumero(0, 5);
     secret.innerHTML = blueprint;
@@ -1600,7 +1620,10 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnDog();
+    // console.log(wavePool);
+    // wavePool[0].enemies[gerarNumero(0 , 1)]();
+    wave.popUpSuccess()
+    console.log('wave: ', areNoEnemies());
   }
 });
 
@@ -1619,17 +1642,8 @@ document.addEventListener("keydown", (event) => {
 });
 
 function Main() {
-
   // aqui
-  areObj = [
-    emptyObj,
-    emptyObj,
-    emptyObj,
-    emptyObj,
-    emptyObj,
-    emptyObj,
-    
-  ];
+  areObj = [emptyObj, emptyObj, emptyObj, emptyObj, emptyObj, emptyObj];
 
   return;
 }
@@ -1644,13 +1658,13 @@ export function populateArena() {
 
     let rng = () => normaisArr[gerarNumero(0, arrLenght - 1)]();
     return rng();
-    return console.log("8888888888888888888888 ", rng());
+    
   } else {
     let especiaisArr = [spawnCamarada, spawnMenosCartas, spawnSmoke];
 
     let rng = () => especiaisArr[gerarNumero(0, especiaisArr.length - 1)]();
     return rng();
-    return console.log("8888888888888888888888 ", rng());
+    
   }
 }
 

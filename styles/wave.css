@@ -1,0 +1,83 @@
+#popup-success-wave,#popup-victory {
+  position: absolute;
+  border: 3px solid #ffbd42bc;
+  width: 700px;
+  height: 400px;
+  background-color: rgb(72, 69, 69);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  left: calc( 50% - 350px );
+  top: calc( 50% - 200px );
+  
+}
+
+#popup-victory{
+  width: 920px;
+  height: 700px;
+
+  left: calc( 50% - 460px );
+  top: calc( 50% - 350px );
+
+}
+
+#popup-success-btn{
+  position: absolute;
+  width: 70px;
+  height: 40px;
+  background-color: rgb(163, 17, 17);
+
+  left: calc( 50% - 35px );
+  top: calc( 92% - 20px );
+
+
+}
+#popup-success-wavepassed{
+  position: absolute;
+  width: 400px;
+  height: 120px;
+  /* background-color: rgb(41, 163, 17); */
+  left: calc( 50% - 200px );
+  top: 20px;
+
+  font-size: 50px;
+  text-align: center;
+}
+
+
+#popup-success-reward{
+  position: absolute;
+  width: 650px;
+  height: 50px;
+  /* background-color: rgb(41, 163, 17); */
+
+  left: calc( 50% - 325px );
+  top: calc( 75% - 45px );
+
+  font-size: 50px;
+  text-align: center;
+
+  display: flex;
+  justify-content: space-between;
+
+}
+
+#popup-success-moneyP, #popup-success-ammoP, #popup-success-cardsP{
+  height: 100%;
+  width: 30%;
+}
+
+
+#popup-success-moneyP{
+  /* background-color: rgb(163, 17, 17); */
+
+ 
+}
+
+#popup-success-ammoP{
+  /* background-color: rgb(163, 156, 17); */
+}
+
+#popup-success-cardsP{
+  /* background-color: rgb(143, 17, 163); */
+}

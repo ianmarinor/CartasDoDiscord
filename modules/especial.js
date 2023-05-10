@@ -186,6 +186,7 @@ export class Especial {
     this._buff = 0;
     this._mit = 0;
     this._dmgTaken = 0;
+    this._lastDmgTaken = 0;
     this._dmgDone = 0;
     this._healingDone = 0;
     this._hasUlti = false;
@@ -589,10 +590,16 @@ export class Especial {
     return false;
   }
 
+  didHit() {}
+
   dmg(n) {
     this.dmgReceived();
 
     if (this.useBarrier(n)) return;
+
+    this._dmgTaken += n;
+    this._lastDmgTaken = n;
+    this.didHit();
 
     if (this.hashp == false) {
       efeitoDano(this);
@@ -601,7 +608,6 @@ export class Especial {
     }
 
     this._buff -= n;
-    this._dmgTaken += n;
     if (this._buff > 0) {
       this.setTotalHp();
       return;
@@ -662,7 +668,7 @@ export class Especial {
     retrato.style.backgroundImage = img;
   }
 
-  activateButtonForCardId(_cartaId, _arena) {
+  activateButtonForSpeaker(_cartaId, _arena) {
     let arena;
     if (_arena == undefined) {
       arena = areObj;
@@ -675,9 +681,15 @@ export class Especial {
       (x) => x.cartaId == cartaId && !x.isInvisible
     );
 
-    matchingCards
-      ? (this._invHiddenButton = false)
-      : (this._invHiddenButton = true);
+    let hasInvMonark = invObj.some((x) => x.isMonark && x._despawn > 1);
+
+    if (matchingCards || hasInvMonark) {
+      this._invHiddenButton = false;
+      return true;
+    } else {
+      this._invHiddenButton = true;
+      return false;
+    }
   }
 
   disableButton(_trigger, _element) {
@@ -1134,7 +1146,7 @@ export let especiais = {
         this.dmgBoss = false;
       }
 
-      this.activateButtonForCardId("monark");
+      this.activateButtonForSpeaker("monark");
     },
 
     poder() {
@@ -1158,7 +1170,16 @@ export let especiais = {
 
       for (let j = 0; j < 10; j++) {
         let vitima = areObj[j];
-        if (areObj[j].cartaId != "monark" || vitima.isInvisible) continue;
+        let matchingCards = areObj.some(
+          (x) => x.cartaId == "monark" && !x.isInvisible
+        );
+
+        if (
+          !matchingCards ||
+          areObj[j].cartaId != "monark" ||
+          vitima.isInvisible
+        )
+          continue;
         if (!this.dormindo) {
           this.energia += gerarNumero(2, 12);
           vitima.kill();
@@ -1169,10 +1190,24 @@ export let especiais = {
           let speakerSleepAu = ["speakerSleep.mp3"];
           snd(speakerSleepAu);
           this.dmgBoss = true;
-
           break;
         }
       }
+
+      if (this.dormindo) return;
+      invObj.map((x) => {
+        if (x.isMonark && x._despawn) {
+          x._despawn -= 1;
+          if (x._despawn < 2) {
+            this.energia += gerarNumero(2, 12);
+            x.kill();
+          }
+        }
+
+      });
+
+
+
     },
 
     everyRound() {
@@ -1396,10 +1431,10 @@ export let especiais = {
     hp: 10,
     maxHealth: 10,
     hashp: true,
-    dano: 9,
+    dano: 15,
 
     cfg() {
-      let _dano = gerarNumero(7, 12);
+      let _dano = gerarNumero(12, 16);
       this.dano = _dano;
       this.onlyReadDmg = _dano;
     },
@@ -1425,8 +1460,6 @@ export let especiais = {
       invObj.map((x) => {
         x.cartaId == "abelha" ? this._numOfBees++ : false;
       });
-
-      //
     },
 
     everyRound() {
@@ -1878,16 +1911,21 @@ export let especiais = {
     cargo: "",
     dmgBoss: false,
     dano: 1,
-    hp: 80,
-    maxHealth: 80,
+    hp: 60,
+    maxHealth: 60,
     hashp: true,
+    dmgEstoico: 0,
 
     poder() {
       if (this.unableToAttack()) return;
 
       this.ataque(this.dano, 0, [true, this.dano]);
 
-      this.kill();
+      this.dano = 1;
+    },
+
+    didHit() {
+      this.dano += this._lastDmgTaken;
     },
 
     tick() {
@@ -1896,7 +1934,11 @@ export let especiais = {
         this.buffAdded = true;
       }
 
-      this.dano = 1 + this._dmgTaken;
+      if (this.dano <= 1) {
+        this._attackDisable = true;
+      } else {
+        this._attackDisable = false;
+      }
     },
 
     nomeStyle: {
@@ -2178,22 +2220,18 @@ export let especiais = {
 
           let cartaMaxima = Math.max(...cardComEnergia.map((x) => x.energia));
 
-          for(let i = 0; i<6;i++){
-
-            let x = invObj[i]
+          for (let i = 0; i < 6; i++) {
+            let x = invObj[i];
 
             if (x.energia && x.dmgBoss && x.energia == cartaMaxima) {
               x.kill();
 
               return;
             }
-
-
-
           }
 
           // invObj.map((x) => {
-            
+
           // });
 
           break;
@@ -2641,137 +2679,192 @@ export let especiais = {
     hashp: true,
     hp: 10,
     maxHealth: 10,
-    dano: 1,
+    dano: 1200,
     _invHiddenButton: false,
-    danoMaximoProgresso: 2000,
-
+    numOfTwelves: 0,
     customButtonEmoji: true,
 
     //AUDIO FILES
     _audioDespawnFiles: 4,
     _sourceDespawn: "sapato/sapato",
 
+    tick() {
+      this.numOfTwelves = 0;
+
+      invObj.map((x) => {
+        if (x.Twelve && !x.isMonark) {
+          this.numOfTwelves++;
+        }
+      });
+
+      if (!this.minigameCompleted && !this.IsMiniGameOn) {
+        this.dano = (this.numOfTwelves + 1) * 12 * 100;
+      }
+    },
+
     cfg() {
       //sombra nome
 
-      this.dano = this.danoMaximoProgresso;
-
       this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
       this._nomeP.style.marginTop = "20px";
-      this.hide(this._energiaP);
+      // this.hide(this._energiaP);
       // this.hide(this._cargoP);
     },
 
-    confuseButton(trigger) {
-      let pixels = gerarNumero(0, 250) + "px ";
-      let pixelsRight = gerarNumero(0, 120) + "px ";
-      let fontRNG = gerarNumero(10, 20) + "px ";
+    miniGameSapato() {
+      let minigame = document.getElementById("minigame-sapato");
 
-      if (trigger == undefined || trigger === true) {
-        this._hpP.style.opacity = "0";
-        this._buttonP.style.position = "absolute";
-        this._buttonP.textContent = "👞";
-        this._buttonP.style.top = pixels;
-        this._buttonP.style.left = pixelsRight;
-        this._buttonP.style.fontSize = fontRNG;
-      } else if (trigger === false) {
-        this._hpP.style.opacity = "1";
-        this._buttonP.style.position = "static";
-        this._buttonP.textContent = "🔘";
-        this._buttonP.style.fontSize = "22.56px";
-      }
+      let spawnSapato = () => {
+        let y = gerarNumero(50, 600) + "px";
+        let x = gerarNumero(50, 920) + "px";
+        let fontRNG = gerarNumero(10, 20) + "px";
+
+        let sapatinhoP = document.createElement("div");
+        sapatinhoP.id = "sapatinho";
+        sapatinhoP.textContent = "👞";
+        sapatinhoP.style.top = y;
+        sapatinhoP.style.left = x;
+
+        minigame.appendChild(sapatinhoP);
+
+        let sapatinhoOnClick = () => {
+          clearInterval(this.decay);
+          let danoP = document.getElementById("dano-sapato");
+          danoP.classList.remove("piscar");
+          this.minigameCompleted = true;
+          this.hide(this._energiaP, false);
+        };
+
+        sapatinhoP.addEventListener("click", sapatinhoOnClick);
+      };
+
+      let decreaseDmg = () => {
+        let minigame = document.getElementById("minigame-sapato");
+
+        let danoP = document.createElement("div");
+        danoP.id = "dano-sapato";
+        danoP.textContent = "💥" + this.dano;
+        minigame.appendChild(danoP);
+        danoP.classList.add("piscar");
+
+        let decayRate = 8;
+
+        this.decay = setInterval(() => {
+          this.dano -= 12;
+          danoP.textContent = "💥" + this.dano;
+
+          if (this.dano <= 24) {
+            clearInterval(this.decay);
+            this.dano = (this.numOfTwelves + 1) * 12;
+            danoP.textContent = "💥" + this.dano;
+            danoP.classList.remove("piscar");
+            this.minigameCompleted = true;
+            this.hide(this._energiaP, false);
+          }
+        }, decayRate);
+      };
+
+      let twelvePic = document.createElement("div");
+      twelvePic.id = "twelve-pic";
+
+      minigame.appendChild(twelvePic);
+
+      let numOfTwelvesP = document.createElement("div");
+      minigame.appendChild(numOfTwelvesP);
+      numOfTwelvesP.id = "number-twelves";
+
+      numOfTwelvesP.textContent = "x" + this.numOfTwelves;
+
+      spawnSapato();
+      decreaseDmg();
     },
 
-    decreaseDmg(_numOfTwelves) {
-      // this.increasing = true;
+    endMiniGame(event) {
+      if (!this.IsMiniGameOn) return;
 
-      let numofTwelves = _numOfTwelves;
+      let minigame = document.getElementById("minigame-sapato");
 
-      if (this.dano <= 500) {
-        this.dano -= Math.floor(gerarNumero(45, 60) / numofTwelves);
-        // this.dano--
-      } else {
-        this.dano -= Math.floor(gerarNumero(175, 220) / numofTwelves);
+      this.IsMiniGameOn = false;
+      mainOpaque(false);
+      minigame.remove();
+
+      clearInterval(this.decay);
+
+      if (!this.minigameCompleted) {
+        this.dano = (this.numOfTwelves + 1) * 12;
       }
 
-      if (this.dano <= 1) {
-        this.dano = 1;
-      }
-    },
-
-    despawn(_dT) {
-      if (this.stop || this.dano > 2) return;
-
-      let faixa =
-        this._sourceDespawn + gerarNumero(1, this._audioDespawnFiles) + ".mp3";
-
-      this._thisCardP.classList.add("critico");
-      audioPlayer(faixa, false, this._CHN, 0.6);
-      this.kill();
-      invObj.map((x) => (x.Twelve ? x.kill() : 0));
+      this.minigameCompleted = true;
+      this.hide(this._energiaP, false);
+      bodyP.removeEventListener("click", (event) => {
+        if (
+          event.target.id == "minigame-sapato" ||
+          event.target.id == "sapatinho"
+        )
+          return;
+        this.endMiniGame();
+      });
+      console.log("REMOVED MINIGAME");
     },
 
     poder() {
-      if (this.stop == true) {
-        this.ataque();
-        this.kill();
+      if (this.unableToAttack()) return;
+
+      if (!this.minigameCompleted) {
+        this.IsMiniGameOn = true;
+        let minigame = document.createElement("div");
+        let startMiniGame = () => {
+          minigame.id = "minigame-sapato";
+          minigame.classList.add("minigame");
+          bodyP.appendChild(minigame);
+
+          minigame = document.getElementById("minigame-sapato");
+
+          minigame.style.backgroundImage = `url("/pics/minigameSapato/bg${gerarNumero(
+            1,
+            13
+          )}.PNG")`;
+          // minigame.style.backgroundImage = 'url("/pics/minigameSapato/bg1.PNG")'
+
+          let bullet = document.createElement("div");
+          mainOpaque(true);
+
+          setTimeout(
+            () => {
+              document.addEventListener("keydown", (event) => {
+                if (event.key != "Escape") return;
+                this.endMiniGame();
+              });
+            },
+
+            1
+          );
+
+          this.miniGameSapato();
+
+          console.log("STARTED MINIGAME");
+        };
+
+        startMiniGame();
       } else {
-        if (this.unableToAttack()) return;
-
-        this.confuseButton(false);
-
-        this.stop = true;
-        this._thisCardP.classList.remove("critico");
-        this._cargoP.innerHTML = progressBar(
-          this.dano,
-          this.danoMaximoProgresso,
-          "grey",
-          "green"
-        );
-
-        setTimeout(() => {
-          this.hide(this._cargoP);
-          this.hide(this._energiaP, false);
-        }, 1500);
-      }
-    },
-
-    tick() {
-      // VERIFICA SE TEM TWELVE
-      let hasTwelve = invObj.some((x) => x.Twelve);
-
-      // if (hasTwelve) {
-      //   this._invHiddenButton = false;
-      //   // this.hide(this._cargoP, false);
-      // } else {
-      // }
-
-      if (this._parentP == inv && !this.stop) {
-        if (!this.isConfused) {
-          this.confuseButton();
-          this.isConfused = true;
+        this.ataque();
+        this.dmg(this.maxHealth - 1);
+        this.dano = Math.trunc(this.dano / 6);
+        if (this.dano <= 12) {
+          this.dano = 12;
         }
 
-        let numberOfTwelves = 1;
-        invObj.map((x) => {
-          if (x.Twelve) {
-            numberOfTwelves++;
+        if (this.numOfTwelves > 0) {
+          for (let i = 0; i < 6; i++) {
+            let carta = invObj[i];
+
+            if (carta.Twelve) {
+              carta.kill();
+              return;
+            }
           }
-        });
-
-        this.despawn();
-        this.decreaseDmg(numberOfTwelves);
-      } else {
+        }
       }
-
-      if (this.stop) return;
-
-      this._cargoP.innerHTML = progressBar(
-        this.dano,
-        this.danoMaximoProgresso,
-        "grey",
-        "cyan"
-      );
     },
 
     nomeStyle: {
@@ -3009,8 +3102,8 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 6);
 
-      if (true) {
-        especial = objBinder(especiais.jhin);
+      if (!true) {
+        especial = objBinder(especiais.sapato);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);
       } else if (num == 2) {

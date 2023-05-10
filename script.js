@@ -18,7 +18,7 @@ import { especiais, especial, Especial } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
-import { boss, spawnBoss, resetBoss, countdown, rDifficulty } from "./boss.js";
+import { boss, spawnBoss, resetBoss, wave, rDifficulty, animatebossHealth } from "./boss.js";
 
 let versaoHTML = document.getElementById("versao");
 let versao = "SMOKE FIX";
@@ -620,8 +620,20 @@ document.addEventListener("keydown", (event) => {
 
 export function mainOpaque(_trigger){
 
-  _trigger == undefined || _trigger ? main.style.opacity = 0.1 : main.style.opacity = 1
+ 
 
+  if( _trigger == undefined || _trigger ){
+    //fica opaco
+    main.style.opacity = 0.1
+    main.style.pointerEvents = 'none'
+    wCoolDown.set(true)
+
+  } else {
+    //volta ao normal
+    main.style.opacity = 1
+    main.style.pointerEvents = 'auto'
+    wCoolDown.set(false)
+  }
   
 
   
@@ -1034,11 +1046,11 @@ export function moveToMao(i) {
       packP.innerHTML = semCarta;
       numCartas.set(0);
       novaCarta = emptyObj;
-      countdown.decrease();
+      // countdown.decrease();
     } else if (packP.children[0].id != "carta") {
       mao.replaceChild(copyCard, mao.children[i]);
       maoObj[i] = novaCarta;
-      countdown.decrease();
+      // countdown.decrease();
       tudo();
     }
     selectHandCard();
@@ -2256,9 +2268,8 @@ export function tudo() {
     poderBoss();
     runEveryRound();
 
-    if (per(5)) {
-      countdown.decrease();
-    }
+    wave.getWave()
+    
   } else {
   }
 }
@@ -2373,6 +2384,7 @@ function tick() {
     novaCarta.place();
 
     hpPlayer.playerP();
+    animatebossHealth()
   }, 16);
 }
 
@@ -2801,8 +2813,8 @@ export function startGame2() {
   vendas.set(50);
   hpPlayer.set(100);
   ammo.set(5);
-  countdown.valueSet(20);
-  money.set(200)
+  // countdown.valueSet(20);
+  money.set(0)
   tick();
   removeBuffAll();
 }

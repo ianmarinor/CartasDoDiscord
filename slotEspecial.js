@@ -16,7 +16,7 @@ import {
   per
 } from "/script.js";
 import { gerarNumero, teste } from "./script.js";
-import { countdown } from "./boss.js";
+import { wave } from "./boss.js";
 
 let moneyP = document.getElementById("money");
 let btnCampones = document.getElementById("btnCampones");
@@ -143,9 +143,11 @@ function comprarCavalheiro() {
   }
   precoPrint();
 }
-function comprarSangue() {
+
+
+function comprarSangue(_absolute) {
   let audio = ["campones.wav", 0.3];
-  if (money.total >= precoSangueAzul) {
+  if (money.total >= precoSangueAzul || _absolute) {
     colocarSlot(makeSangueAzul(), 0);
     colocarSlot(makeSangueAzul(), 1);
     colocarSlot(makeSangueAzul(), 2);
@@ -158,6 +160,8 @@ function comprarSangue() {
   }
   precoPrint();
 }
+
+
 function comprarRainha() {
   let audio = ["campones.wav", 0.3];
   if (money.total >= precoRainha) {
@@ -263,7 +267,12 @@ function makeRainha() {
 }
 export let slotEspObj;
 function Main() {
+
   slotEspObj = [emptyObj, emptyObj, emptyObj];
+  comprarSangue(true)
+
+
+
 }
 
 document.addEventListener("keydown", (event) => {
@@ -433,7 +442,7 @@ function moveToMao(e) {
         limparEsp(null, obj);
         mao.replaceChild(cartaEspecial, mao.children[i]);
         if (per(20)) {
-          countdown.decrease();
+          // countdown.decrease();
         }
 
         // AUDIO SELECAO
