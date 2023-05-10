@@ -25,10 +25,10 @@ let btnSangue = document.getElementById("btnSangue");
 let btnRainha = document.getElementById("btnRainha");
 let inv = document.getElementById("inv");
 
-let precoCampones = 175;
-let precoCavalheiro = 350;
-let precoSangueAzul = 1250;
-let precoRainha = 5500;
+let precoCampones = 50;
+let precoCavalheiro = 125;
+let precoSangueAzul = 250;
+let precoRainha = 1250;
 
 let precoPrint = () => {
   let precoCamponesP = (btnCampones.innerHTML =

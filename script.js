@@ -1969,11 +1969,9 @@ export let placarArena = {
 
         //multiplicador
         if (desafiante + numJokers > 2) {
-          let rankCard = (i + 1) / 6
-          // adicionar joker
-        //  console.log('numJokers: ', numJokers);
-
-        //  desafiante += numJokers
+          // let rankCard = (i + 1) / 6
+          let rankCard = (i + 1) / 24
+         
 
           concorrente.push( (  (rankCard  * (desafiante + numJokers)) + 1).toFixed(2) ) ;
         } else {
@@ -2385,6 +2383,9 @@ function tick() {
 
     hpPlayer.playerP();
     animatebossHealth()
+
+    wave.tick()
+
   }, 16);
 }
 
@@ -2809,7 +2810,7 @@ export function startGame2() {
   rodadas = 1;
   // resetBoss();
 
-  numCartas.set(100);
+  numCartas.set(50);
   vendas.set(50);
   hpPlayer.set(100);
   ammo.set(5);

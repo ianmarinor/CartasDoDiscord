@@ -2913,7 +2913,7 @@ export let especiais = {
     hashp: true,
 
     dano: undefined,
-    _exposto: true,
+    // _exposto: true,
 
     ammonition: 75,
     ammonitionMax: undefined,

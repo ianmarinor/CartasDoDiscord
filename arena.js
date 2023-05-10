@@ -32,8 +32,7 @@ import {
   blueprintBuilder,
 } from "./domCards.js";
 import { start } from "./modules/seedFabricator.js";
-import { wavePool} from "./waves.js";
-
+import { wavePool } from "./waves.js";
 
 export const are = document.getElementById("are");
 const secret = document.getElementById("test");
@@ -104,6 +103,10 @@ export let smokeOnInv = {
   },
 };
 
+export function areDidHit() {
+  arenaAtaque();
+}
+
 export function areWakeUp() {
   areObj.map((x) => {
     if (!x.empty && x.cartaId != "tank" && !x.miniBoss && !x.isInvisible) {
@@ -126,12 +129,16 @@ export function areReveal() {
   updatePlacarInimigo();
 }
 
-export function areNoEnemies(){
-  return areObj.every((x)=> x.empty)
+export function areNoEnemies() {
+  return areObj.every((x) => x.empty);
 }
 
-export function areFull(){
-  return areObj.every((x)=> !x.empty)
+export function areFull() {
+  return areObj.every((x) => !x.empty);
+}
+
+export function areEmpty() {
+  return areObj.every((x) => x.empty);
 }
 
 export function arenaAtaque() {
@@ -326,6 +333,8 @@ class Inimigo {
     this._exposto = false;
     this.tank = false;
 
+    this.isPartOfWave = true;
+
     //audio
     this._CHN = document.createElement("audio");
 
@@ -361,40 +370,46 @@ class Inimigo {
   }
 
   levelSetter(_level) {
-    let life;
-    if (boss) {
-      life = boss.percentHealth;
+    // let life = wave.progress
+    // console.log('life: ', life);
+
+    if (wave.enemiesLevel) {
+      this._level = gerarNumero(wave.enemiesLevel[0], wave.enemiesLevel[1]);
     } else {
-      life = 100;
+      this._level = 1;
     }
 
-    let levels = [
-      [gerarNumero(65, 84), 1],
-      [gerarNumero(45, 64), 2],
-      [gerarNumero(27, 46), 3],
-      [gerarNumero(14, 26), 4],
-      [gerarNumero(0, 14), 5],
-      [-1, 5],
-    ];
+    // let levels = [
+    //   [gerarNumero(65, 84), 5],
+    //   [gerarNumero(45, 64), 4],
+    //   [gerarNumero(27, 46), 3],
+    //   [gerarNumero(14, 26), 2],
+    //   [gerarNumero(0, 14), 1],
+    //   [-1, 1],
+    // ];
 
-    for (const x of levels) {
-      if (x[0] < life) {
-        this._level = x[1];
-        break;
-      }
-    }
+    // for (const x of levels) {
+    //   if (x[0] < life) {
+    //     this._level = x[1];
+    //     break;
+    //   }
+    // }
 
-    if (_level) {
-      this._level = _level;
-      this.levelCfg();
-    }
+    // if (_level) {
+    //   this._level = _level;
+    //   this.levelCfg();
+    // }
 
     this.levelPrint();
   }
 
   levelCfg() {}
 
-  cfgDefault() {}
+  cfgDefault() {
+    if (this.miniBoss) {
+      this.isPartOfWave = false;
+    }
+  }
 
   place() {
     this._parent = areObj;
@@ -576,6 +591,7 @@ class Inimigo {
       this.kill();
     }
     this.didHit();
+    areDidHit();
     return [this._dmgTaken];
   }
 
@@ -614,13 +630,14 @@ class Inimigo {
     elimCardAre(this._thisCardP);
     this._dead = true;
 
-    if(!this.miniBoss){
+    if (this.isPartOfWave) {
+      wave.enemiesKilled++;
+      wave.overallEnemiesKilled++;
+    }
 
-      wave.enemiesKilled++
-      if(wave.enemiesKilled >= wave.enemies){
-        // pop up victory
-        wave.popUpSuccess()
-      }
+    if (wave.enemiesKilled >= wave.enemies && areEmpty()) {
+      // pop up victory
+      wave.popUpSuccess();
     }
   }
 
@@ -1114,9 +1131,15 @@ let tank = {
   },
 
   primaryAttack() {
+
+  
+    this.ataque()
     invObj.map((x) => {
-      x.dmg(this.dano);
+      x.dmg(Math.trunc(this.dano / 5));
     });
+
+    hpPlayer.remove(Math.trunc(this.dano / 10));
+
     this.kill(true);
   },
 };
@@ -1137,6 +1160,7 @@ let dog = {
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
   attackChance: 33,
+  isPartOfWave: false,
   hp: 26,
   maxHealth: 26,
   dano: 15,
@@ -1198,7 +1222,7 @@ let metaforando = {
   maxHealth: 500,
   dano: 20,
   miniBoss: true,
-  emoji: "😵",
+  emoji: "🐕",
 
   levelCfg() {
     this.dano = gerarNumero(3, 6);
@@ -1231,25 +1255,27 @@ let metaforando = {
   poder() {
     if (this._dead) return;
 
-    invObj.map((x) => {
-      if (x.isNormal || x.isInvisible) return;
-      let stunTime = gerarNumero(1, 2);
+    // atordoar inimigos
 
-      stunTime *= this._level;
+    // invObj.map((x) => {
+    //   if (x.isNormal || x.isInvisible) return;
+    //   let stunTime = gerarNumero(1, 2);
 
-      x._stunned = true;
-      x._stunnedWeight = stunTime;
+    //   stunTime *= this._level;
 
-      let danoStun = Math.round(this.dano / 3);
+    //   x._stunned = true;
+    //   x._stunnedWeight = stunTime;
 
-      x.dmg(danoStun);
-    });
+    //   let danoStun = Math.round(this.dano / 3);
+
+    //   x.dmg(danoStun);
+    // });
 
     hpPlayer.remove(this.dano);
     spawnDog();
 
     this.readyToAttack = false;
-    this._uber = false;
+    // this._uber = false;
   },
 
   didHit() {
@@ -1258,7 +1284,7 @@ let metaforando = {
     if (per(70) || this.readyToAttack) return;
 
     this.readyToAttack = true;
-    this._uber = true;
+    // this._uber = true;
 
     setTimeout(() => this.poder(), coolDownTreme);
   },
@@ -1324,7 +1350,7 @@ let liberdade = {
 
     areWakeUp();
     this.readyToAttack = false;
-    this._uber = false;
+    // this._uber = false;
   },
 
   didHit() {
@@ -1332,7 +1358,7 @@ let liberdade = {
     if (per(60) || this.readyToAttack) return;
 
     this.readyToAttack = true;
-    this._uber = true;
+    // this._uber = true;
 
     setTimeout(() => this.poder(), coolDownTreme);
   },
@@ -1558,7 +1584,6 @@ export function spawnMonark(n) {
 }
 
 function inserirInimigoDomAndObject(blueprint, object) {
-
   for (let i = 0; i < 100; i++) {
     // aqui
     let slot = gerarNumero(0, 5);
@@ -1568,7 +1593,6 @@ function inserirInimigoDomAndObject(blueprint, object) {
       are.replaceChild(secret.children[0], are.children[slot]);
       areObj[slot] = Object.assign(new Inimigo(object), object);
 
-      
       return areObj[slot];
     } else {
       // return false;
@@ -1599,6 +1623,7 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
       if (!areObj[slot].miniBoss) {
         are.replaceChild(secret.children[0], are.children[slot]);
 
+        areObj[slot].kill();
         areObj[slot] = Object.assign(new Inimigo(object), object);
         if (per(20) && areObj[slot]._attackAtSpawn) {
           // areObj[slot].readyToAttack = true;
@@ -1606,13 +1631,12 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
         return areObj[slot];
       } else {
-        are.replaceChild(secret.children[0], are.children[slot]);
-
-        areObj[slot] = Object.assign(new Inimigo(object), object);
-        if (per(20) && areObj[slot]._attackAtSpawn) {
-          // areObj[slot].readyToAttack = true;
-        }
-        return areObj[slot];
+        // are.replaceChild(secret.children[0], are.children[slot]);
+        // areObj[slot] = Object.assign(new Inimigo(object), object);
+        // if (per(20) && areObj[slot]._attackAtSpawn) {
+        //   // areObj[slot].readyToAttack = true;
+        // }
+        // return areObj[slot];
       }
     }
   }
@@ -1622,15 +1646,15 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
     // console.log(wavePool);
     // wavePool[0].enemies[gerarNumero(0 , 1)]();
-    wave.popUpSuccess()
-    console.log('wave: ', areNoEnemies());
+    wave.popUpSuccess();
+    console.log("wave: ", areNoEnemies());
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     // spawnLiberdade();
-    console.log("spawnLiberdade(): ", spawnLiberdade());
+    console.log("spawnLiberdade(): ", spawnVitor());
   }
 });
 
@@ -1658,13 +1682,11 @@ export function populateArena() {
 
     let rng = () => normaisArr[gerarNumero(0, arrLenght - 1)]();
     return rng();
-    
   } else {
     let especiaisArr = [spawnCamarada, spawnMenosCartas, spawnSmoke];
 
     let rng = () => especiaisArr[gerarNumero(0, especiaisArr.length - 1)]();
     return rng();
-    
   }
 }
 

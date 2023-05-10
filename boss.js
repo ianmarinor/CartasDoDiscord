@@ -17,7 +17,7 @@ import {
   areWakeUp,
   areFull,
 } from "/arena.js";
-import { spawnLiberdade, spawnTank, areNoEnemies } from "./arena.js";
+import { spawnLiberdade, spawnTank, areNoEnemies, areEmpty } from "./arena.js";
 import { wavePool } from "./waves.js";
 
 let bossHealthP = document.getElementById("hb");
@@ -235,7 +235,21 @@ export let wave = {
   enemiesKilled: 0,
   waveOn: false,
   lastWave: false,
+  overallEnemiesKilled: 0,
+  overallEnemies: 0,
+  progress: 0,
+  enemiesLevel: [],
   
+
+  tick(){
+    this.getProgress()
+  },
+
+  getProgress(){
+
+    this.progress = this.overallEnemiesKilled / this.overallEnemies * 100
+
+  },
 
   // toda rodada essa função é chamada
   getWave() {
@@ -248,7 +262,11 @@ export let wave = {
     // se a wave não estiver acontecendo chame uma wave do pool
     } else {
       //pega a wave do pol
-      
+      if(!areEmpty()) return
+
+      wavePool[0].start()
+
+      this.overallEnemies = wavePool[0].totalNumOfEnemies 
       this.numOfWaves = wavePool[0].numOfWaves
       this.id++;
 
@@ -258,7 +276,7 @@ export let wave = {
       
       
 
-
+      this.enemiesLevel = wavePool[this.id ].level
       this.enemies = wavePool[this.id ].enemiesTotal;
       this.enemiesSpawned = 0;
       this.enemiesToGo = this.enemies;
@@ -267,6 +285,7 @@ export let wave = {
       this.money = wavePool[this.id ].money
       this.cards = wavePool[this.id ].cards
       this.ammo = wavePool[this.id ].ammo
+      this.spawnChance = wavePool[this.id ].spawnChance
 
 
       console.log(this);
@@ -284,7 +303,7 @@ export let wave = {
       
       return;
       // se nao acabou a onda e tem espaço
-    } else if (!areFull()) {
+    } else if (!areFull() && per(this.spawnChance) ) {
       let waveObj = wavePool[this.id];
 
       waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
@@ -410,7 +429,7 @@ function createMonark() {
 
     ult(absolute) {
       let ultis = () => {
-        let sorteio = gerarNumero(0, 2);
+        let sorteio = gerarNumero(1, 2);
         // let sorteio = 1
 
         if (sorteio == 0) {
