@@ -444,9 +444,10 @@ function createMonark() {
       let chance = 1;
 
       let porcentagemVida = (this.health / this.fullHealth) * 10;
-      chance += 10 - porcentagemVida;
+      chance = wave.progress;
 
-      if (chance > 20 || absolute) chance = 20;
+      if (chance > 15 || absolute) chance = 15;
+      console.log('chance: ', chance);
 
       if (this._coolDown || this.hasTriggeredUlti) return;
       if (!per(chance)) return;

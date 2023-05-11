@@ -103,8 +103,15 @@ export let smokeOnInv = {
   },
 };
 
-export function areDidHit() {
-  arenaAtaque();
+export function areDidHit(_dmgDealer) {
+
+  if(_dmgDealer && _dmgDealer.cartaId == 'sentry' && per(80)) return
+
+  setTimeout(
+    ()=>arenaAtaque(),920
+  )
+  ;
+
 }
 
 export function areWakeUp() {
@@ -546,9 +553,10 @@ class Inimigo {
 
   didHit() {}
 
-  dmg(n, absolute) {
+  dmg(n, absolute, _dmgDealer) {
     if (this.isInvisible && !absolute) return [0];
 
+    
     efeitoDano(this);
 
     if (this._uber && !absolute) return [0];
@@ -590,8 +598,11 @@ class Inimigo {
       this.hp = 0;
       this.kill();
     }
-    this.didHit();
-    areDidHit();
+    this.didHit(_dmgDealer);
+    areDidHit(_dmgDealer);
+
+    console.log();
+
     return [this._dmgTaken];
   }
 
@@ -663,7 +674,7 @@ class Inimigo {
           if (invObj[slot]._exposto && !invObj[slot].isInvisible) {
             let vitima = invObj[slot];
 
-            vitima.dmg(dano);
+            vitima.dmg(dano, false, this);
 
             this._dmgDone += dano;
 
@@ -679,7 +690,7 @@ class Inimigo {
 
           if (carta.tank && !carta.isInvisible) {
             let vitima = invObj[slot];
-            vitima.dmg(dano);
+            vitima.dmg(dano, false, this);
             this._dmgDone += dano;
 
             return true;
@@ -694,7 +705,7 @@ class Inimigo {
 
           if (carta.especial && !carta.isInvisible) {
             let vitima = invObj[slot];
-            vitima.dmg(dano);
+            vitima.dmg(dano, false, this);
             this._dmgDone += dano;
 
             return true;
@@ -709,7 +720,7 @@ class Inimigo {
 
           if (!carta.isInvisible) {
             let vitima = invObj[slot];
-            vitima.dmg(dano);
+            vitima.dmg(dano, false, this);
             this._dmgDone += dano;
 
             return true;
@@ -876,11 +887,11 @@ let monark = {
   _despawn: 60,
   _audioSpawn: "monark.mp3",
   _CHN: document.createElement("audio"),
-  hp: 30,
-  maxHealth: 30,
+  hp: 10,
+  maxHealth: 10,
   dano: 5,
   emoji: "💩",
-  attackChance: 20,
+  attackChance: 33,
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
@@ -889,7 +900,7 @@ let monark = {
   tick() {},
 
   levelCfg() {
-    this._despawn = gerarNumero(35, 45);
+    this._despawnTime = gerarNumero(3, 8) * this._level;
     this.dano = gerarNumero(3, 4);
 
     this.dano *= this._level;
@@ -901,8 +912,12 @@ let monark = {
 
   everyRound() {},
 
-  didHit() {
-    this.poder();
+  didHit(_dmgDealer) {
+    if(_dmgDealer.cartaId == 'sentry' && per(85)) return
+    setTimeout(
+
+      ()=>{!this._dead && this.poder()}, 100
+    )
   },
 
   poder() {
@@ -931,8 +946,11 @@ let monark = {
         let slot = invObj[gerarNumero(0, 5)];
         if (slot.isNormal && !slot.isMonark) {
           setTimeout(() => {
-            toMonark(slot, despawnTime);
+            toMonark(slot, this._despawnTime);
           }, 250);
+          break;
+        } else if (slot.isNormal && slot.isMonark) {
+          slot._despawn += this._despawnTime;
           break;
         }
       }
@@ -965,7 +983,7 @@ let menosCartas = {
   _attackAtSpawn: false,
 
   levelCfg() {
-    this.energia = gerarNumero(8, 13);
+    this.energia = gerarNumero(3, 8);
 
     this.energia *= this._level;
     this.setHp(this.hp * this._level);
@@ -987,6 +1005,7 @@ let menosCartas = {
 
   poder() {
     numCartas.remove(this.energia);
+    this.ataque(1);
   },
 };
 
@@ -1010,7 +1029,7 @@ let camarada = {
   hp: 50,
   maxHealth: 50,
   dano: false,
-  attackChance: 18,
+  attackChance: false,
   especial: true,
   _canBeCritic: false,
   _attackAtSpawn: true,
@@ -1019,7 +1038,7 @@ let camarada = {
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
 
-    this.healValue = gerarNumero(80, 125);
+    this.healValue = gerarNumero(15, 35);
 
     this.healValue = this.healValue * this._level;
     this._money = this._money * this._level;
@@ -1041,16 +1060,40 @@ let camarada = {
     this.audioSpawn(0.5);
   },
 
+  tick() {
+    if (!this.hasStartedPoder) {
+      this.poder();
+      this.hasStartedPoder = true;
+    }
+  },
+
   poder() {
-    setTimeout(() => {
+    let timer = 3500;
+
+    let borderBlink = () => {
+      this._thisCardP.style.border = "5px solid cyan";
+
+      setTimeout(() => {
+        this._thisCardP.style.border = "2px solid red";
+      }, 850);
+    };
+
+    
+
+    let healing = setInterval(() => {
+
+
+      if(this._dead){
+        clearInterval(healing)
+      }
+
       areObj.map((x) => {
-        if (x.empty || x.isInvisible) return;
-
-        x.heal(this.healValue);
+        if (!x.empty) {
+          x.heal(this.healValue);
+        }
       });
-
-      boss && boss.heal(this.healValue);
-    }, 50);
+      borderBlink();
+    }, timer);
   },
 };
 
@@ -1065,7 +1108,7 @@ let tank = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 50,
+  _money: 30,
   _doesAttack: false,
   _hasdmg: true,
   _audioSpawn: "tank.mp3",
@@ -1131,9 +1174,7 @@ let tank = {
   },
 
   primaryAttack() {
-
-  
-    this.ataque()
+    this.ataque();
     invObj.map((x) => {
       x.dmg(Math.trunc(this.dano / 5));
     });
@@ -1155,22 +1196,22 @@ let dog = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 7,
+  _money: 10,
   _attackAtSpawn: true,
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
   attackChance: 33,
   isPartOfWave: false,
-  hp: 26,
-  maxHealth: 26,
-  dano: 15,
+  hp: 50,
+  maxHealth: 50,
+  dano: 8,
 
   tick() {
     let vitor = areObj.some((x) => x.cartaId == "vitor");
 
     if (vitor) {
       this.vitor = true;
-      this.critico(true);
+      // this.critico(true);
       this._thisCardP.style.backgroundImage = `linear-gradient(180deg,rgba(0, 0, 0, 0.9),rgba(12, 3, 30, 0.4),rgba(0, 0, 0, 0.7)),url('/pics/dogRetrato2.PNG')`;
 
       this._thisCardP.style.backgroundSize = "cover";
@@ -1190,7 +1231,7 @@ let dog = {
 
   levelCfg() {
     this._money = this._money * this._level;
-    this.dano = gerarNumero(12, 17);
+    this.dano = gerarNumero(5, 8);
 
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
@@ -1213,10 +1254,11 @@ let metaforando = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 450,
+  _money: 100,
   _attackAtSpawn: true,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
+  _exposto: true,
   attackChance: 0,
   hp: 500,
   maxHealth: 500,
@@ -1249,30 +1291,28 @@ let metaforando = {
   },
 
   everyRound() {
-    this.didHit();
+    // this.didHit();
   },
 
   poder() {
     if (this._dead) return;
 
-    // atordoar inimigos
-
-    // invObj.map((x) => {
-    //   if (x.isNormal || x.isInvisible) return;
-    //   let stunTime = gerarNumero(1, 2);
-
-    //   stunTime *= this._level;
-
-    //   x._stunned = true;
-    //   x._stunnedWeight = stunTime;
-
-    //   let danoStun = Math.round(this.dano / 3);
-
-    //   x.dmg(danoStun);
-    // });
 
     hpPlayer.remove(this.dano);
-    spawnDog();
+
+    let dogsOnAre = areObj.some((x) => x.cartaId == "dog");
+
+    if (!dogsOnAre) {
+      spawnDog();
+    } else {
+
+      areObj.map(
+        (x)=>{
+          x.cartaId == 'dog' ? x.heal(5) : 0
+        }
+      )
+
+    }
 
     this.readyToAttack = false;
     // this._uber = false;
@@ -1281,7 +1321,7 @@ let metaforando = {
   didHit() {
     let coolDownTreme = gerarNumero(1000, 2100);
 
-    if (per(70) || this.readyToAttack) return;
+    if (per(65) || this.readyToAttack) return;
 
     this.readyToAttack = true;
     // this._uber = true;
@@ -1301,7 +1341,7 @@ let liberdade = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 700,
+  _money: 100,
   _attackAtSpawn: true,
   _doesAttack: false,
   _audioSpawn: "",
@@ -1348,12 +1388,13 @@ let liberdade = {
 
     hpPlayer.remove(this.dano);
 
-    areWakeUp();
+    // areWakeUp();
     this.readyToAttack = false;
     // this._uber = false;
   },
 
-  didHit() {
+  didHit(_dmgDealer) {
+    if(_dmgDealer.cartaId == 'sentry' && per(85)) return
     let coolDownTreme = gerarNumero(1000, 2100);
     if (per(60) || this.readyToAttack) return;
 
@@ -1364,7 +1405,7 @@ let liberdade = {
   },
 
   everyRound() {
-    this.didHit();
+    // this.didHit();
   },
 };
 let smoke = {
@@ -1378,7 +1419,7 @@ let smoke = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 75,
+  _money: 5,
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "",
@@ -1431,8 +1472,8 @@ let awp = {
   _doesAttack: true,
   _audioSpawn: "",
   attackChance: 12,
-  hp: 30,
-  maxHealth: 30,
+  hp: 10,
+  maxHealth: 10,
   dano: 35,
   emoji: "",
   asiimov: false,
@@ -1654,7 +1695,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     // spawnLiberdade();
-    console.log("spawnLiberdade(): ", spawnVitor());
+    console.log("spawnLiberdade(): ", spawnLiberdade());
   }
 });
 

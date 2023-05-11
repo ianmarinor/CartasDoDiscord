@@ -281,6 +281,20 @@ export class Especial {
     this.checkFullHp();
   }
 
+  critico(trigger) {
+    if (trigger == undefined || trigger) {
+      if (!this._canBeCritic || this._critico || this._superCritico) return;
+      this._critico = true;
+      this.dano *= 2;
+      this.energia *= 2;
+    } else if (trigger == false) {
+      if (!this._critico) return;
+      this._critico = false;
+      this.dano = Math.trunc(this.dano / 2);
+      this.energia = Math.trunc(this.energia / 2);
+    }
+  }
+
   levelSetter() {
     let life;
     if (boss) {
@@ -343,7 +357,7 @@ export class Especial {
 
   areaAtack() {
     areObj.map((x) => {
-      !x.isInvisible ? x.dmg(this.dano) : 0;
+      !x.isInvisible ? x.dmg(this.dano, false, this) : 0;
     });
   }
 
@@ -382,6 +396,8 @@ export class Especial {
     }
     ammo.use(ammoUsage);
 
+    console.trace();
+
     // se nao estiver vazio ve quem ta dentro
     // caso esteja vai para o Boss
     if (areObj.some((x) => !x.isInvisible)) {
@@ -405,11 +421,11 @@ export class Especial {
             : (danoSpread = Math.trunc(dano / spreadBaseDmg));
 
           if (left && !left.isInvisible) {
-            this._dmgDone += left.dmg(danoSpread)[0];
+            this._dmgDone += left.dmg(danoSpread, false, this)[0];
           }
 
           if (right && !right.isInvisible) {
-            this._dmgDone += right.dmg(danoSpread);
+            this._dmgDone += right.dmg(danoSpread, false, this);
           }
         }
       };
@@ -430,7 +446,7 @@ export class Especial {
           if (areObj[slot]._exposto && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            this._dmgDone += vitima.dmg(dano)[0];
+            this._dmgDone += vitima.dmg(dano, false, this)[0];
 
             checkLeftRight(vitima);
 
@@ -448,7 +464,7 @@ export class Especial {
           if (areObj[slot].tank && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            this._dmgDone += vitima.dmg(dano)[0];
+            this._dmgDone += vitima.dmg(dano, false, this)[0];
 
             classHit = "tank";
             checkLeftRight(vitima);
@@ -467,7 +483,7 @@ export class Especial {
           if (areObj[slot].especial && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            this._dmgDone += vitima.dmg(dano)[0];
+            this._dmgDone += vitima.dmg(dano, false, this)[0];
 
             classHit = "especial";
             checkLeftRight(vitima);
@@ -486,7 +502,7 @@ export class Especial {
           if (!areObj[slot].miniBoss && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            this._dmgDone += vitima.dmg(dano)[0];
+            this._dmgDone += vitima.dmg(dano, false, this)[0];
 
             classHit = "normal";
             checkLeftRight(vitima);
@@ -506,7 +522,7 @@ export class Especial {
           if (areObj[slot].miniBoss && !areObj[slot].isInvisible) {
             let vitima = areObj[slot];
 
-            this._dmgDone += vitima.dmg(dano)[0];
+            this._dmgDone += vitima.dmg(dano, false, this)[0];
 
             classHit = "miniBoss";
             checkLeftRight(vitima);
@@ -577,6 +593,13 @@ export class Especial {
     }
   }
 
+  coolDown(_time) {
+    this._attackDisable = true;
+    setTimeout(() => {
+      this._attackDisable = false;
+    }, _time);
+  }
+
   useBarrier(_damage) {
     if (this._barreira > 0 && this._barrieraActive) {
       this._barreira -= _damage;
@@ -606,6 +629,8 @@ export class Especial {
       this.kill();
       return;
     }
+
+    if (this._uber) return;
 
     this._buff -= n;
     if (this._buff > 0) {
@@ -1122,6 +1147,7 @@ export let especiais = {
     _invHiddenButton: true,
 
     energiaPoder() {
+      if (this.dormindo) return;
       this.dormindo = true;
       let speakerSleepAu = ["speakerSleep.mp3"];
       snd(speakerSleepAu);
@@ -1153,8 +1179,10 @@ export let especiais = {
       if (this.unableToAttack()) return;
       if (this.dormindo) return;
 
+      this.coolDown(350);
+
       let speakerSono = () => {
-        let highRiskSleep = gerarNumero(110, 255);
+        let highRiskSleep = gerarNumero(220, 500);
         let caraCoroa = per(90);
         let normalChance = per(15);
 
@@ -1181,7 +1209,7 @@ export let especiais = {
         )
           continue;
         if (!this.dormindo) {
-          this.energia += gerarNumero(2, 12);
+          this.energia += gerarNumero(8, 48);
           vitima.kill();
           let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.3];
           snd(order);
@@ -1195,19 +1223,15 @@ export let especiais = {
       }
 
       if (this.dormindo) return;
+
+      this.limpou = false;
       invObj.map((x) => {
-        if (x.isMonark && x._despawn) {
-          x._despawn -= 1;
-          if (x._despawn < 2) {
-            this.energia += gerarNumero(2, 12);
-            x.kill();
-          }
+        if (x.isMonark && x._despawn && !this.limpou) {
+          this.energia += x._despawn;
+          x.kill();
+          this.limpou;
         }
-
       });
-
-
-
     },
 
     everyRound() {
@@ -1418,7 +1442,7 @@ export let especiais = {
     cartaId: "abelha",
     nome: "ABELHA",
     raridade: raridades.sangueAzul,
-    _invHiddenButton: true,
+    _invHiddenButton: false,
 
     energia: 0,
 
@@ -1434,7 +1458,7 @@ export let especiais = {
     dano: 15,
 
     cfg() {
-      let _dano = gerarNumero(12, 16);
+      let _dano = gerarNumero(16, 24);
       this.dano = _dano;
       this.onlyReadDmg = _dano;
     },
@@ -1454,7 +1478,6 @@ export let especiais = {
 
       if (numOfBees > 0) {
         this.dano = this.onlyReadDmg * numOfBees;
-        //
       }
       this._numOfBees = 0;
       invObj.map((x) => {
@@ -1462,7 +1485,7 @@ export let especiais = {
       });
     },
 
-    everyRound() {
+    poison(trigger) {
       let turuInField = () => {
         if (!invObj.some((x) => x._integrante == "Turu")) {
           return false;
@@ -1471,21 +1494,43 @@ export let especiais = {
         }
       };
 
-      let dmgRate = this._numOfBees;
+      let poisonDmg = 2;
 
       if (turuInField()) {
-        dmgRate *= gerarNumero(5, 7);
+        poisonDmg = 8;
       }
 
-      if (this._numOfBees > 0) {
-        this.dmg(dmgRate);
+      let timer = 1200;
+
+      this.poisonInterval = setInterval(() => {
+        if (this._dead || trigger === false) {
+          clearInterval(this.poisonInterval);
+        }
+
+        this.dmg(poisonDmg);
+      }, timer);
+    },
+
+    poder() {
+      
+
+      let timer = 1200
+
+      if (this._attacking) {
+        clearInterval(this.attackInterval);
+        this._attacking = false;
+        return;
       }
+      this.poison();
+      this.attackInterval = setInterval(() => {
+        this._attacking = true;
 
-      let delayAttack = gerarNumero(400, 920);
+        if (this._dead) {
+          clearInterval(this.attackInterval);
+        }
 
-      setTimeout(() => {
-        this.ataque(false, 0);
-      }, delayAttack);
+        this.ataque(this.dano);
+      }, timer);
     },
 
     nomeStyle: {
@@ -1703,8 +1748,8 @@ export let especiais = {
     retrato: 'url("/pics/spyRetrato.webp")',
     cargo: "",
     hashp: false,
-    hp: 5,
-    maxHealth: 5,
+    hp: 10,
+    maxHealth: 10,
     dmgBoss: false,
     hashp: true,
     clockReady: true,
@@ -1714,16 +1759,16 @@ export let especiais = {
     clockToVis: false,
 
     cfg() {
-      this.dano = gerarNumero(120, 180);
+      this.dano = gerarNumero(180, 240);
       this._nomeP.style.marginTop = "5px";
 
       if (per(0.1)) {
-        this.dano = gerarNumero(410, 600);
+        this.dano = gerarNumero(520, 760);
         this.retrato = 'url("/pics/spyRareRetrato.PNG")';
         this.changeRetrato(this.retrato);
 
-        this._retratoP.style.border = "2px solid lime";
-        this._thisCardP.style.border = "2px solid lime";
+        this._retratoP.style.border = "3px solid lime";
+        this._thisCardP.style.border = "3px solid lime";
       }
 
       this._cargoP.textContent = "⌚";
@@ -1737,6 +1782,15 @@ export let especiais = {
       } else {
         this._cargoP.style.cursor = "not-allowed";
         this._cargoP.style.opacity = "0.1";
+      }
+    },
+
+    didHit() {
+      if (this.clockReady && !this.isInvisible) {
+        console.log("ativar relogio");
+        this._uber = true;
+        this.hasBeenHit = true;
+        this.ult();
       }
     },
 
@@ -1761,13 +1815,14 @@ export let especiais = {
 
           retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
 
-          let spyInvisAu = ["spyInvis.mp3", 0.2];
+          let spyInvisAu = ["deadRing.mp3", 0.3];
           snd(spyInvisAu);
 
           this.clockToVis = true;
           this.clockReady = false;
           this.isInvisible = true;
           this._monarkFree = true;
+          this.hasBeenHit = false;
           // this.dmgBoss = true;
           this.changeEmojiToDefault();
           this.exposto(false);
@@ -1798,7 +1853,7 @@ export let especiais = {
           this.exposto();
         };
 
-        if (this.clockReady) {
+        if (this.clockReady && this.hasBeenHit) {
           invis();
         } else if (this.isInvisible) {
           vis();
@@ -1832,7 +1887,7 @@ export let especiais = {
 
         this.clockToVis = false;
         this.clockReady = false;
-
+        this._uber = false;
         this.dmgBoss = false;
         this.setEmoji(this._defaultEmojiDano);
         this.exposto();
@@ -1851,6 +1906,7 @@ export let especiais = {
 
     poder() {
       if (this.unableToAttack()) return;
+
       if (ammo.total <= 0) {
         return;
       }
@@ -1869,6 +1925,8 @@ export let especiais = {
         let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3", 0.2];
         snd(spyAu);
       }
+
+      this.coolDown(550);
     },
 
     nomeStyle: {
@@ -1911,8 +1969,8 @@ export let especiais = {
     cargo: "",
     dmgBoss: false,
     dano: 1,
-    hp: 60,
-    maxHealth: 60,
+    hp: 80,
+    maxHealth: 80,
     hashp: true,
     dmgEstoico: 0,
 
@@ -1939,6 +1997,13 @@ export let especiais = {
       } else {
         this._attackDisable = false;
       }
+
+      let hasTuruInInv = invObj.map((x) => {
+        if (x.Turu && !x.hasHelpedEstoico) {
+          this.addBuff(20);
+          x.hasHelpedEstoico = true;
+        }
+      });
     },
 
     nomeStyle: {
@@ -1985,8 +2050,8 @@ export let especiais = {
     _hasUlti: true,
     ulti: 0,
 
-    hp: 10,
-    maxHealth: 10,
+    hp: 15,
+    maxHealth: 15,
     hashp: true,
 
     nomeStyle: {
@@ -2021,15 +2086,10 @@ export let especiais = {
     },
 
     everyRound() {
-      if (!hpPlayer.isFull && per(50)) {
-        hpPlayer.add(1);
-        this._healingDone += 1;
-        this.buildUlt(1);
-      }
+      let healValue = gerarNumero(5, 8);
 
-      let healValue = gerarNumero(4, 7);
       invObj.map((x) => {
-        if (x.hashp && per(80) && !x._fullHp) {
+        if (x.hashp && !x._fullHp) {
           x.heal(healValue);
           this.buildUlt(healValue);
           this._healingDone += healValue;
@@ -2047,7 +2107,7 @@ export let especiais = {
     ult() {
       if (this._parentP != inv) return;
 
-      let buff = gerarNumero(125, 180);
+      let buff = gerarNumero(180, 225);
       if (this.ulti != 100 || this.unableToAttack()) return;
 
       invObj.map(function (x) {
@@ -2136,7 +2196,10 @@ export let especiais = {
     },
 
     poder() {
-      if (this.unableToAttack()) return;
+      if (this.unableToAttack()) {
+        console.log(this + " NOT ABLE TO ATTACK");
+        return;
+      }
 
       let jhin = this._thisCardP;
       let tiros = this.tiros;
@@ -2196,6 +2259,7 @@ export let especiais = {
             snd(countAu);
 
             this.ataque();
+            console.log("DANO DO JHIN " + this.dano);
             playJhinAu(1);
             this.tiros--;
             this.kill();
@@ -2203,6 +2267,8 @@ export let especiais = {
             this.tiros--;
             tirosString.textContent = this.tiros;
             this.ataque();
+
+            console.log("DANO DO JHIN " + this.dano);
           }
 
           this._attackDisable = true;
@@ -2223,7 +2289,7 @@ export let especiais = {
           for (let i = 0; i < 6; i++) {
             let x = invObj[i];
 
-            if (x.energia && x.dmgBoss && x.energia == cartaMaxima) {
+            if (x.energia && x.dmgBoss && x.energia == cartaMaxima && per(0)) {
               x.kill();
 
               return;
@@ -2240,98 +2306,6 @@ export let especiais = {
         break;
       }
     },
-
-    //     poder() {
-    //       let minigame = document.createElement("div");
-    //       let startMiniGame = () => {
-    //         minigame.id = "minigame-jhin";
-    //         minigame.classList.add("minigame");
-    //         bodyP.appendChild(minigame);
-    //         let bullet = document.createElement("div");
-    //         mainOpaque(true);
-
-    //         function getAngleFromClient(event) {
-    //           const speed = 400;
-    // console.log(event);
-    //           const updateDivPosition = (_angle) => {
-
-    //             // posiçao atual da div
-    //             const divX = bullet.offsetLeft;
-    //             // console.log('divX: ', divX);
-    //             const divY = bullet.offsetTop;
-
-    //             const radians = _angle;
-
-    //             // Calcula a posição da próxima atualizaçãotendo o angulo como base
-    //             const nextX = divX + (Math.cos(radians) * speed) / 60; // 60 vezes por segundo
-    //             const nextY = divY + (Math.sin(radians) * speed) / 60; // 60 vezes por segundo
-    //             // const nextX = divX + Math.cos(radians)
-    //             // const nextY = divY + Math.sin(radians)
-
-    //             // aplicaÇao da posiÇao ao DOM
-    //             bullet.style.left = `${nextX}px`;
-    //             bullet.style.top = `${nextY}px`;
-
-    //             if(divX > 900 || divY <= 0 ){
-    //               clearInterval(id)
-    //               bullet.style.left = `${70}px`;
-    //               bullet.style.top = `${606}px`;
-    //               console.log('VOLTOU');
-    //             }
-
-    //             let angulo = rad * 180 / Math.PI
-    //   console.log('angulo: ', angulo);
-
-    //           };
-
-    //           // bullet position
-    //           // const divX = bullet.offsetLeft + bullet.offsetWidth / 2;
-    //           // const divY = bullet.offsetTop + bullet.offsetHeight / 2;
-    //           const divX = bullet.offsetLeft
-    //           console.log('divX: ', divX);
-    //           const divY = bullet.offsetTop
-    //           console.log('divY: ', divY);
-
-    //           // click position
-    //           const clientX = event.layerX;
-    //           console.log('clientX: ', clientX);
-    //           const clientY = event.layerY;
-    //           console.log('clientY: ', clientY);
-
-    //           // distancia entre clique e div
-    //           const diffX = clientX - divX;
-    //           const diffY = clientY - divY;
-
-    //           // calculo do radiano entre clique e div
-    //           let rad = Math.atan2(diffY, diffX);
-
-    //           let id = setInterval(
-    //             () => {
-    //               updateDivPosition(0.78);
-
-    //             },
-
-    //             // 1000 / 60
-    //             16
-    //           );
-    //         }
-
-    //         let shoot = () => {
-    //           bullet.id = "minigame-jhin-bullet";
-    //           minigame.appendChild(bullet);
-
-    //           minigame.addEventListener("click", getAngleFromClient);
-    //         };
-    //         shoot();
-    //       };
-
-    //       let endMiniGame = () => {
-    //         mainOpaque(false);
-    //         minigame.remove();
-    //       };
-
-    //       startMiniGame();
-    //     },
 
     nomeStyle: {
       fontSize: "250%",
@@ -2372,8 +2346,8 @@ export let especiais = {
     dmgBoss: false,
     ulti: 0,
     dano: 10,
-    hp: 65,
-    maxHealth: 65,
+    hp: 100,
+    maxHealth: 100,
     hashp: true,
     _hasUlti: true,
     tank: true,
@@ -2404,6 +2378,7 @@ export let especiais = {
     ult() {
       if (this.ulti != 100 || this.unableToAttack()) return;
       this._invHiddenButton = true;
+      this._uber = true;
       let dvaToMinidva = () => {
         this.setHp(10);
         this.changeRetrato('url("/pics/dva.webp")');
@@ -2436,7 +2411,7 @@ export let especiais = {
           if (this._dead) return;
 
           areObj.map((x) => {
-            x.dmg(this.dano);
+            x.dmg(this.dano, false, this);
             this._dmgDone += this.dano;
           });
 
@@ -2450,6 +2425,8 @@ export let especiais = {
     },
 
     poder() {
+      if (this.unableToAttack()) return;
+
       if (this._ulting) return;
 
       let ultiRate = () => gerarNumero(2, 9);
@@ -2465,6 +2442,7 @@ export let especiais = {
           audioPlayer(faixa, true, this._CHN, 0.5);
         }
       }
+      this.coolDown(650);
     },
 
     nomeStyle: {
@@ -2677,9 +2655,9 @@ export let especiais = {
     cargo: "",
     dmgBoss: false,
     hashp: true,
-    hp: 10,
-    maxHealth: 10,
-    dano: 1200,
+    hp: 12,
+    maxHealth: 12,
+    dano: 12,
     _invHiddenButton: false,
     numOfTwelves: 0,
     customButtonEmoji: true,
@@ -2689,182 +2667,35 @@ export let especiais = {
     _sourceDespawn: "sapato/sapato",
 
     tick() {
-      this.numOfTwelves = 0;
-
       invObj.map((x) => {
-        if (x.Twelve && !x.isMonark) {
-          this.numOfTwelves++;
+        if (x.Twelve && !x.isMonark && !x.hasHelpedSapato) {
+          this.addBuff(6);
+          this.heal(2);
+          x.hasHelpedSapato = true;
         }
       });
-
-      if (!this.minigameCompleted && !this.IsMiniGameOn) {
-        this.dano = (this.numOfTwelves + 1) * 12 * 100;
-      }
     },
 
     cfg() {
-      //sombra nome
-
-      this._nomeP.style.textShadow = "-3px 6px 14px rgba(22,48,52,0.51)";
-      this._nomeP.style.marginTop = "20px";
-      // this.hide(this._energiaP);
-      // this.hide(this._cargoP);
+      this._nomeP.style.marginTop = "10px";
     },
 
-    miniGameSapato() {
-      let minigame = document.getElementById("minigame-sapato");
-
-      let spawnSapato = () => {
-        let y = gerarNumero(50, 600) + "px";
-        let x = gerarNumero(50, 920) + "px";
-        let fontRNG = gerarNumero(10, 20) + "px";
-
-        let sapatinhoP = document.createElement("div");
-        sapatinhoP.id = "sapatinho";
-        sapatinhoP.textContent = "👞";
-        sapatinhoP.style.top = y;
-        sapatinhoP.style.left = x;
-
-        minigame.appendChild(sapatinhoP);
-
-        let sapatinhoOnClick = () => {
-          clearInterval(this.decay);
-          let danoP = document.getElementById("dano-sapato");
-          danoP.classList.remove("piscar");
-          this.minigameCompleted = true;
-          this.hide(this._energiaP, false);
-        };
-
-        sapatinhoP.addEventListener("click", sapatinhoOnClick);
-      };
-
-      let decreaseDmg = () => {
-        let minigame = document.getElementById("minigame-sapato");
-
-        let danoP = document.createElement("div");
-        danoP.id = "dano-sapato";
-        danoP.textContent = "💥" + this.dano;
-        minigame.appendChild(danoP);
-        danoP.classList.add("piscar");
-
-        let decayRate = 8;
-
-        this.decay = setInterval(() => {
-          this.dano -= 12;
-          danoP.textContent = "💥" + this.dano;
-
-          if (this.dano <= 24) {
-            clearInterval(this.decay);
-            this.dano = (this.numOfTwelves + 1) * 12;
-            danoP.textContent = "💥" + this.dano;
-            danoP.classList.remove("piscar");
-            this.minigameCompleted = true;
-            this.hide(this._energiaP, false);
-          }
-        }, decayRate);
-      };
-
-      let twelvePic = document.createElement("div");
-      twelvePic.id = "twelve-pic";
-
-      minigame.appendChild(twelvePic);
-
-      let numOfTwelvesP = document.createElement("div");
-      minigame.appendChild(numOfTwelvesP);
-      numOfTwelvesP.id = "number-twelves";
-
-      numOfTwelvesP.textContent = "x" + this.numOfTwelves;
-
-      spawnSapato();
-      decreaseDmg();
-    },
-
-    endMiniGame(event) {
-      if (!this.IsMiniGameOn) return;
-
-      let minigame = document.getElementById("minigame-sapato");
-
-      this.IsMiniGameOn = false;
-      mainOpaque(false);
-      minigame.remove();
-
-      clearInterval(this.decay);
-
-      if (!this.minigameCompleted) {
-        this.dano = (this.numOfTwelves + 1) * 12;
-      }
-
-      this.minigameCompleted = true;
-      this.hide(this._energiaP, false);
-      bodyP.removeEventListener("click", (event) => {
-        if (
-          event.target.id == "minigame-sapato" ||
-          event.target.id == "sapatinho"
-        )
-          return;
-        this.endMiniGame();
-      });
-      console.log("REMOVED MINIGAME");
+    everyRound() {
+      this.heal(2);
     },
 
     poder() {
       if (this.unableToAttack()) return;
 
-      if (!this.minigameCompleted) {
-        this.IsMiniGameOn = true;
-        let minigame = document.createElement("div");
-        let startMiniGame = () => {
-          minigame.id = "minigame-sapato";
-          minigame.classList.add("minigame");
-          bodyP.appendChild(minigame);
+      this.ataque(this.dano, 0);
+      this.coolDown(1000);
 
-          minigame = document.getElementById("minigame-sapato");
-
-          minigame.style.backgroundImage = `url("/pics/minigameSapato/bg${gerarNumero(
-            1,
-            13
-          )}.PNG")`;
-          // minigame.style.backgroundImage = 'url("/pics/minigameSapato/bg1.PNG")'
-
-          let bullet = document.createElement("div");
-          mainOpaque(true);
-
-          setTimeout(
-            () => {
-              document.addEventListener("keydown", (event) => {
-                if (event.key != "Escape") return;
-                this.endMiniGame();
-              });
-            },
-
-            1
-          );
-
-          this.miniGameSapato();
-
-          console.log("STARTED MINIGAME");
-        };
-
-        startMiniGame();
-      } else {
-        this.ataque();
-        this.dmg(this.maxHealth - 1);
-        this.dano = Math.trunc(this.dano / 6);
-        if (this.dano <= 12) {
-          this.dano = 12;
-        }
-
-        if (this.numOfTwelves > 0) {
-          for (let i = 0; i < 6; i++) {
-            let carta = invObj[i];
-
-            if (carta.Twelve) {
-              carta.kill();
-              return;
-            }
-          }
-        }
+      this.dano += this.hp - 1;
+      if (this.dano > 1200) {
+        this.dano = 1200;
       }
+
+      this.dmg(this.hp - 1);
     },
 
     nomeStyle: {
@@ -2907,13 +2738,13 @@ export let especiais = {
     ulti: 0,
     retrato: 'url("/pics/sentryRetrato.PNG")',
     cargo: "",
-    hp: 35,
-    maxHealth: 35,
+    hp: 60,
+    maxHealth: 60,
     dmgBoss: false,
     hashp: true,
 
     dano: undefined,
-    // _exposto: true,
+    _exposto: true,
 
     ammonition: 75,
     ammonitionMax: undefined,
@@ -2921,7 +2752,7 @@ export let especiais = {
     active: false,
 
     cfg() {
-      this.dano = gerarNumero(8, 12);
+      this.dano = gerarNumero(12, 18);
 
       this._nomeP.style.marginTop = "5px";
 
@@ -2932,6 +2763,8 @@ export let especiais = {
         `<img width="25" height="25" src="/pics/ammo.PNG" style='display:inline; margin-right: 5px'>`;
 
       this._cargoP.style.opacity = "0";
+
+      this.selfHealing();
     },
 
     tick() {
@@ -2953,6 +2786,20 @@ export let especiais = {
     },
 
     ult() {},
+
+    selfHealing() {
+      let time = 780;
+      let healAmount = 12;
+
+      let autoHeal = setInterval(() => {
+        if (this._dead) {
+          clearInterval(autoHeal);
+        }
+        if (this.active) {
+          this.heal(healAmount);
+        }
+      }, time);
+    },
 
     everyRound() {
       if (this.ammonition != this.ammonitionMax) {
