@@ -27,6 +27,8 @@ import {
   animatebossHealth,
 } from "./boss.js";
 
+import {marketObj, closeMarket, openMarket}  from "./market.js"
+
 let versaoHTML = document.getElementById("versao");
 let versao = "SMOKE FIX";
 versaoHTML.innerHTML = versao;
@@ -588,7 +590,7 @@ let placarP = document.getElementById("placarDano");
 let placarWrapP = document.getElementById("placarDanoWrap");
 
 let mao = document.getElementById("mao");
-let moneyP = document.getElementById("money");
+export let moneyP = document.getElementById("money");
 let vendasP = document.getElementById("vendas");
 let bossRoomP = document.getElementById("bossRoom");
 let hpPlayerBuffP = document.getElementById("healthPlayerBuff");
@@ -2087,7 +2089,7 @@ function dmgBoss() {
 }
 
 document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyE") {
+  if (event.code == "KeyS") {
     venderCarta();
   }
 });
@@ -2868,6 +2870,15 @@ export let timer = {
 export let globalStats = {
   totalDmgDelt: 0,
 };
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyE") {
+    if(marketObj.active){
+      closeMarket()
+    }
+  }
+});
+
 
 // COMMAND PROMP
 

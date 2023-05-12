@@ -1,0 +1,13 @@
+#market {
+    position: absolute;
+    border: 1px solid #52ff42bc;
+    width: 1000px;
+    height: 700px;
+    background-color: rgb(72, 69, 69);
+    background-size: cover;
+    background-repeat: no-repeat;
+  
+    left: calc( 50% - 500px );
+    top: calc( 50% - 350px );
+    
+  }

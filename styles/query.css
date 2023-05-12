@@ -1,6 +1,16 @@
 @media screen and (max-width: 1920px) {
-    main {
-      /* opacity: 0; */
-      width: 1920px;
-    }
+  
+
+  main {
+    opacity: 1;
+    width: 1920px;
+    height: 1080px;
+
+    grid-template-columns: 15% 70% 15%;
+    grid-template-rows: 4% 29% 33% 5% 29%;
+    
   }
+
+  
+
+}
