@@ -1,7 +1,6 @@
 var TICK = true;
 
 import { seedObj, start } from "./modules/seedFabricator.js";
-
 import {
   are,
   areObj,
@@ -2259,11 +2258,11 @@ function runEveryRound() {
     }
   });
 
-  smokeOnInv.weight > 0 ? smokeOnInv.weight-- : 0;
-  if (smokeOnInv.weight <= 0 && smokeOnInv.status === true) {
-    smokeOnInv.weight = 0;
-    smokeOnInv.smoke(false);
-  }
+  // smokeOnInv.weight > 0 ? smokeOnInv.weight-- : 0;
+  // if (smokeOnInv.weight <= 0 && smokeOnInv.status === true) {
+  //   smokeOnInv.weight = 0;
+  //   smokeOnInv.smoke(false);
+  // }
 
   maoObj.map((x) => {
     x._everyRoundMao ? x.everyRound() : false;
@@ -2692,7 +2691,7 @@ function playerDead() {
   main.style.display = "none";
 
   rodadasStats.innerHTML = "RODADAS: " + rodadas;
-  bossDmgTakenStats.innerHTML = "DANO BOSS RECEBIDO " + boss.dmgTaken;
+  // bossDmgTakenStats.innerHTML = "DANO BOSS RECEBIDO " + boss.dmgTaken;
   playerDmgTakenStats.innerHTML = "DANO JOGADOR RECEBIDO " + hpPlayer.dmgTaken;
 }
 

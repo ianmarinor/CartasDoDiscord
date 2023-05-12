@@ -1194,7 +1194,15 @@ export let especiais = {
         }
       };
 
+      let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.3];
+
       speakerSono();
+      
+      if(this.cleanArena() && !this.dormindo) {
+        snd(order);
+        return
+      }
+
 
       for (let j = 0; j < 10; j++) {
         let vitima = areObj[j];
@@ -1211,7 +1219,7 @@ export let especiais = {
         if (!this.dormindo) {
           this.energia += gerarNumero(8, 48);
           vitima.kill();
-          let order = ["speaker" + gerarNumero(1, 2) + ".mp3", 0.3];
+          
           snd(order);
           break;
         } else {
@@ -1221,17 +1229,24 @@ export let especiais = {
           break;
         }
       }
+    },
 
-      if (this.dormindo) return;
+    cleanArena() {
+      for (let i = 0; i < 100; i++) {
+        let slot = gerarNumero(0, 5);
+        let carta = invObj[slot];
+        let monarkAlly = "carta-monark";
 
-      this.limpou = false;
-      invObj.map((x) => {
-        if (x.isMonark && x._despawn && !this.limpou) {
-          this.energia += x._despawn;
-          x.kill();
-          this.limpou;
+        if (carta._cargo == monarkAlly) {
+          let despawn = carta._despawn;
+
+          this.energia += despawn;
+          carta.kill();
+          console.log('ELIMINEI MONARK');
+          return true
+
         }
-      });
+      }
     },
 
     everyRound() {
@@ -1290,7 +1305,6 @@ export let especiais = {
 
       this._nomeP.style.marginTop = "7px";
       // this._cargoP.style.visibility = "hidden";
-      
     },
 
     tick() {
@@ -1375,9 +1389,6 @@ export let especiais = {
       this.energia = gerarNumero(2, 7);
 
       this._nomeP.style.marginTop = "7px";
-
-      
-      
     },
 
     tick() {
@@ -1513,9 +1524,7 @@ export let especiais = {
     },
 
     poder() {
-      
-
-      let timer = 1200
+      let timer = 1200;
 
       if (this._attacking || this._dead) {
         clearInterval(this.attackInterval);

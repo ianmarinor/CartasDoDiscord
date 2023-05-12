@@ -58,11 +58,11 @@ export function toMonark(_cartaObj, _despawnTime) {
   carta.dmgBoss = false;
   carta._canBeDeleted = false;
   carta._despawn = _despawnTime;
+  let poopCHN = document.createElement("audio");
+  audioPlayer("poop.mp3", false, poopCHN, 0.4);
   if (_despawnTime) return;
   carta._despawn = gerarNumero(2, 8);
-  let poopCHN = document.createElement("audio");
 
-  audioPlayer("poop.mp3", false, poopCHN, 0.4);
 }
 
 class Boss {

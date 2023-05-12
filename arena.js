@@ -55,6 +55,12 @@ export let smokeOnInv = {
   status: false,
   weight: 0,
 
+  coolDown() {
+    let smokeTime = 18000;
+
+    setTimeout(() => this.smoke(false), smokeTime);
+  },
+
   smoke(_trigger, _weight) {
     if (_trigger == undefined) {
       return;
@@ -78,6 +84,7 @@ export let smokeOnInv = {
           this.status = true;
           smokeP.style.opacity = "0." + opacityValue;
           this.weight = weight;
+          this.coolDown();
         }
 
         smokeP.style.opacity = "0." + opacityValue;
@@ -224,7 +231,7 @@ export function arenaByRound() {
 }
 
 export function updatePlacarInimigo(_audio) {
-  return
+  return;
   let drumAu = "alertaDano.mp3";
   let mGAu = "alertaDano2.mp3";
   let placarAudioChannel = document.createElement("audio");
@@ -383,8 +390,6 @@ class Inimigo {
     } else {
       this._level = 1;
     }
-
-    
 
     this.levelPrint();
   }
@@ -607,9 +612,14 @@ class Inimigo {
     this.ataque(this.dano);
     this.readyToAttack = false;
   }
+  didKill(){
 
+  }
   kill(absolute) {
     if (!this._parentP) return;
+
+    this.didKill();
+
     if (!absolute) {
       money.add(this._money);
     }
@@ -626,6 +636,7 @@ class Inimigo {
       // pop up victory
       wave.popUpSuccess();
     }
+    
   }
 
   ataque(dmg) {
@@ -748,15 +759,12 @@ class Inimigo {
       this._thisCardP.classList.remove("critico");
     }
 
-    if (this._coolDownNatural && !this.coolDownStarted) {
+    if (this._coolDownNatural && !this.coolDownStarted && !this._dead) {
       this._coolDown = this._coolDownNatural;
-      
+
       this.startCoolDown();
-      this.coolDownStarted = true
+      this.coolDownStarted = true;
     }
-
-    
-
 
     if (this._critico || this._superCritico) {
       energia.classList.add("critico");
@@ -799,21 +807,18 @@ class Inimigo {
 
     let oneSec = 1000;
     let timer = setInterval(() => {
-
-      if(this._coolDown > 4){
-        this.readyToAttack = false
-        
+      if (this._coolDown > 4) {
+        this.readyToAttack = false;
       } else {
-        this.readyToAttack = true
-        
+        this.readyToAttack = true;
       }
 
-      if(this._coolDown == 4){
-        audioPlayer(drumAu, true, placarAudioChannel)
+      if (this._coolDown == 4) {
+        audioPlayer(drumAu, true, placarAudioChannel);
       }
       if (this._coolDown <= 1) {
         this._coolDown = this._coolDownNatural;
-        this.autoAtaque()
+        this.autoAtaque();
       }
 
       if (this._dead) {
@@ -822,7 +827,6 @@ class Inimigo {
 
       this._coolDown--;
       moneyP.textContent = this._coolDown;
-
     }, oneSec);
   }
 
@@ -931,11 +935,8 @@ let monark = {
 
   everyRound() {},
 
-  didHit(_dmgDealer) {
-    if (_dmgDealer.cartaId == "sentry" && per(85)) return;
-    setTimeout(() => {
-      !this._dead && this.poder();
-    }, 100);
+  didKill() {
+    this.poder();
   },
 
   poder() {
@@ -999,7 +1000,6 @@ let menosCartas = {
   attackChance: 15,
   especial: true,
   _attackAtSpawn: false,
-  
 
   levelCfg() {
     this.energia = gerarNumero(3, 8);
@@ -1080,13 +1080,9 @@ let camarada = {
     this.audioSpawn(0.5);
   },
 
-  tick() {
-    
-  },
+  tick() {},
 
   poder() {
-    
-
     let borderBlink = () => {
       this._thisCardP.style.border = "5px solid cyan";
 
@@ -1101,10 +1097,6 @@ let camarada = {
       }
     });
     borderBlink();
-
-
-
-    
   },
 };
 
@@ -1135,6 +1127,7 @@ let tank = {
   _CHN: document.createElement("audio"),
   _attackAtSpawn: false,
   _coolDownNatural: false,
+  _doesAttack: true,
 
   levelCfg() {
     this.dano = gerarNumero(85, 97);
@@ -1144,6 +1137,8 @@ let tank = {
 
     this.maxUlti = Math.trunc(this.maxUlti / this._level);
     this._money = this._money * this._level;
+
+   
   },
 
   cfg() {
@@ -1161,10 +1156,40 @@ let tank = {
       "gray",
       "#cf6a32"
     );
+
+      if(this._coolDownNatural){
+
+        this._cargoP.innerHTML = progressBar(
+          this.ulti,
+          this.maxUlti,
+          "gray",
+          "red"
+        );
+
+      }
+
+    if(!this.hasStartedWalking){
+
+      this.walk()
+      this.hasStartedWalking = true
+    }
+
+
   },
 
-  everyRound() {
-    if (this.ulti >= this.maxUlti) return;
+  walk() {
+    this.interval = setInterval(() => this.primaryAttack(), 2420);
+  },
+
+  primaryAttack() {
+    if (this.ulti >= this.maxUlti) {
+      this._coolDownNatural = 11;
+      this._doesAttack = false;
+      clearInterval(this.interval);
+      audioPlayer("tank/tankUltReady.mp3", false, this._CHN, 0.3)
+      
+      return;
+    }
 
     let ultiRate = gerarNumero(2, 3);
 
@@ -1175,25 +1200,23 @@ let tank = {
     this.ulti += ultiRate;
 
     if (this.ulti >= this.maxUlti) {
-      this.readyToAttack = true;
-      this._doesAttack = true;
-      setTimeout(
-        () => audioPlayer("tank/tankUltReady.mp3", false, this._CHN, 0.3),
-
-        400
-      );
+      this.ulti = this.maxUlti;
     }
   },
 
-  primaryAttack() {
+  poder() {
+    console.log('kaboom');
     this.ataque();
     invObj.map((x) => {
       x.dmg(Math.trunc(this.dano / 5));
     });
 
-    hpPlayer.remove(Math.trunc(this.dano / 10));
+    
 
     this.kill(true);
+
+    console.trace();
+    
   },
 };
 
@@ -1328,7 +1351,7 @@ let metaforando = {
   },
 
   didHit() {
-    return
+    return;
     let coolDownTreme = gerarNumero(1000, 2100);
 
     if (per(65) || this.readyToAttack) return;
@@ -1404,7 +1427,7 @@ let liberdade = {
   },
 
   didHit(_dmgDealer) {
-    return
+    return;
     if (_dmgDealer.cartaId == "sentry" && per(85)) return;
     let coolDownTreme = gerarNumero(1000, 2100);
     if (per(60) || this.readyToAttack) return;
@@ -1441,7 +1464,7 @@ let smoke = {
   especial: true,
   emoji: "🌫️",
   smokeWeight: 2,
-  _coolDownNatural: 12,
+  _coolDownNatural: 6,
 
   tick() {},
 
@@ -1707,7 +1730,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     // spawnLiberdade();
-    console.log("spawnLiberdade(): ", spawnLiberdade());
+    console.log("spawnLiberdade(): ", spawnMonark());
   }
 });
 
