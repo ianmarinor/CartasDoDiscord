@@ -104,14 +104,10 @@ export let smokeOnInv = {
 };
 
 export function areDidHit(_dmgDealer) {
+  return;
+  if (_dmgDealer && _dmgDealer.cartaId == "sentry" && per(80)) return;
 
-  if(_dmgDealer && _dmgDealer.cartaId == 'sentry' && per(80)) return
-
-  setTimeout(
-    ()=>arenaAtaque(),920
-  )
-  ;
-
+  setTimeout(() => arenaAtaque(), 920);
 }
 
 export function areWakeUp() {
@@ -228,6 +224,7 @@ export function arenaByRound() {
 }
 
 export function updatePlacarInimigo(_audio) {
+  return
   let drumAu = "alertaDano.mp3";
   let mGAu = "alertaDano2.mp3";
   let placarAudioChannel = document.createElement("audio");
@@ -341,6 +338,7 @@ class Inimigo {
     this.tank = false;
 
     this.isPartOfWave = true;
+    this._coolDownNatural = 35;
 
     //audio
     this._CHN = document.createElement("audio");
@@ -378,34 +376,15 @@ class Inimigo {
 
   levelSetter(_level) {
     // let life = wave.progress
-    // console.log('life: ', life);
+    console.log(wave.enemiesLevel);
 
-    if (wave.enemiesLevel) {
+    if (boss) {
       this._level = gerarNumero(wave.enemiesLevel[0], wave.enemiesLevel[1]);
     } else {
       this._level = 1;
     }
 
-    // let levels = [
-    //   [gerarNumero(65, 84), 5],
-    //   [gerarNumero(45, 64), 4],
-    //   [gerarNumero(27, 46), 3],
-    //   [gerarNumero(14, 26), 2],
-    //   [gerarNumero(0, 14), 1],
-    //   [-1, 1],
-    // ];
-
-    // for (const x of levels) {
-    //   if (x[0] < life) {
-    //     this._level = x[1];
-    //     break;
-    //   }
-    // }
-
-    // if (_level) {
-    //   this._level = _level;
-    //   this.levelCfg();
-    // }
+    
 
     this.levelPrint();
   }
@@ -556,7 +535,6 @@ class Inimigo {
   dmg(n, absolute, _dmgDealer) {
     if (this.isInvisible && !absolute) return [0];
 
-    
     efeitoDano(this);
 
     if (this._uber && !absolute) return [0];
@@ -615,13 +593,11 @@ class Inimigo {
   }
 
   autoAtaque() {
-    if (this.readyToAttack && !this.miniBoss && !this.isInvisible) {
+    if (!this.isInvisible) {
       if (this._doesAttack) {
         this.primaryAttack();
-        this.hasJustAttacked = true;
       } else {
         this.poder();
-        this.hasJustAttacked = true;
         this.readyToAttack = false;
       }
     }
@@ -772,9 +748,15 @@ class Inimigo {
       this._thisCardP.classList.remove("critico");
     }
 
-    if (this._money) {
-      moneyP.textContent = this._money + "💰";
+    if (this._coolDownNatural && !this.coolDownStarted) {
+      this._coolDown = this._coolDownNatural;
+      
+      this.startCoolDown();
+      this.coolDownStarted = true
     }
+
+    
+
 
     if (this._critico || this._superCritico) {
       energia.classList.add("critico");
@@ -806,6 +788,39 @@ class Inimigo {
     }
 
     this.tick ? this.tick() : 0;
+  }
+
+  startCoolDown() {
+    let parentP = this._parentP;
+    let moneyP = parentP.children[this._place].children[3].children[2];
+    let drumAu = "alertaDano.mp3";
+    let placarAudioChannel = document.createElement("audio");
+    if (!this._coolDownNatural) return;
+
+    let oneSec = 1000;
+    let timer = setInterval(() => {
+
+      if(this._coolDown > 4){
+        this.readyToAttack = false
+        
+      } else {
+        this.readyToAttack = true
+        audioPlayer(drumAu, true, placarAudioChannel)
+      }
+
+      if (this._coolDown <= 1) {
+        this._coolDown = this._coolDownNatural;
+        this.autoAtaque()
+      }
+
+      if (this._dead) {
+        clearInterval(timer);
+      }
+
+      this._coolDown--;
+      moneyP.textContent = this._coolDown;
+
+    }, oneSec);
   }
 
   levelPrint() {
@@ -892,6 +907,7 @@ let monark = {
   dano: 5,
   emoji: "💩",
   attackChance: 15,
+  _coolDownNatural: 15,
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
@@ -913,11 +929,10 @@ let monark = {
   everyRound() {},
 
   didHit(_dmgDealer) {
-    if(_dmgDealer.cartaId == 'sentry' && per(85)) return
-    setTimeout(
-
-      ()=>{!this._dead && this.poder()}, 100
-    )
+    if (_dmgDealer.cartaId == "sentry" && per(85)) return;
+    setTimeout(() => {
+      !this._dead && this.poder();
+    }, 100);
   },
 
   poder() {
@@ -981,6 +996,7 @@ let menosCartas = {
   attackChance: 15,
   especial: true,
   _attackAtSpawn: false,
+  
 
   levelCfg() {
     this.energia = gerarNumero(3, 8);
@@ -1033,6 +1049,7 @@ let camarada = {
   especial: true,
   _canBeCritic: false,
   _attackAtSpawn: true,
+  _coolDownNatural: 7,
 
   levelCfg() {
     this.setHp(this.hp * this._level);
@@ -1061,14 +1078,11 @@ let camarada = {
   },
 
   tick() {
-    if (!this.hasStartedPoder) {
-      this.poder();
-      this.hasStartedPoder = true;
-    }
+    
   },
 
   poder() {
-    let timer = 3500;
+    
 
     let borderBlink = () => {
       this._thisCardP.style.border = "5px solid cyan";
@@ -1078,22 +1092,16 @@ let camarada = {
       }, 850);
     };
 
-    
-
-    let healing = setInterval(() => {
-
-
-      if(this._dead){
-        clearInterval(healing)
+    areObj.map((x) => {
+      if (!x.empty) {
+        x.heal(this.healValue);
       }
+    });
+    borderBlink();
 
-      areObj.map((x) => {
-        if (!x.empty) {
-          x.heal(this.healValue);
-        }
-      });
-      borderBlink();
-    }, timer);
+
+
+    
   },
 };
 
@@ -1123,6 +1131,7 @@ let tank = {
   tank: true,
   _CHN: document.createElement("audio"),
   _attackAtSpawn: false,
+  _coolDownNatural: false,
 
   levelCfg() {
     this.dano = gerarNumero(85, 97);
@@ -1205,6 +1214,7 @@ let dog = {
   hp: 50,
   maxHealth: 50,
   dano: 8,
+  _coolDownNatural: 12,
 
   tick() {
     let vitor = areObj.some((x) => x.cartaId == "vitor");
@@ -1297,7 +1307,6 @@ let metaforando = {
   poder() {
     if (this._dead) return;
 
-
     hpPlayer.remove(this.dano);
 
     let dogsOnAre = areObj.some((x) => x.cartaId == "dog");
@@ -1305,13 +1314,10 @@ let metaforando = {
     if (!dogsOnAre) {
       spawnDog();
     } else {
-
-      areObj.map(
-        (x)=>{
-          x.cartaId == 'dog' ? x.heal(5) : 0
-        }
-      )
-
+      areObj.map((x) => {
+        x.cartaId == "dog" ? x.heal(5) : 0;
+      });
+      spawnDog();
     }
 
     this.readyToAttack = false;
@@ -1319,6 +1325,7 @@ let metaforando = {
   },
 
   didHit() {
+    return
     let coolDownTreme = gerarNumero(1000, 2100);
 
     if (per(65) || this.readyToAttack) return;
@@ -1394,7 +1401,8 @@ let liberdade = {
   },
 
   didHit(_dmgDealer) {
-    if(_dmgDealer.cartaId == 'sentry' && per(85)) return
+    return
+    if (_dmgDealer.cartaId == "sentry" && per(85)) return;
     let coolDownTreme = gerarNumero(1000, 2100);
     if (per(60) || this.readyToAttack) return;
 
@@ -1430,6 +1438,7 @@ let smoke = {
   especial: true,
   emoji: "🌫️",
   smokeWeight: 2,
+  _coolDownNatural: 12,
 
   tick() {},
 
@@ -1477,7 +1486,7 @@ let awp = {
   dano: 35,
   emoji: "",
   asiimov: false,
-
+  _coolDownNatural: 20,
   tick() {},
 
   levelCfg() {
@@ -1702,7 +1711,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
     // spawnTank();
-    console.log("spawnTank();: ", spawnTank());
+    console.log("spawnTank();: ", spawnCamarada());
   }
 });
 

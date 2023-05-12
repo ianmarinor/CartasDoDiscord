@@ -2232,6 +2232,8 @@ export function tudo() {
     copyCard = cartaParaMover.cloneNode(true);
     ativarBtn();
 
+  
+
     numCartas.remove(1);
     spawnBoss();
 
@@ -2269,7 +2271,7 @@ function runEveryRound() {
 
   
 
-  arenaAtaque();
+  // arenaAtaque();
 
   areObj.map((x) => {
     x.defaultEveryRound ? x.defaultEveryRound() : 0;

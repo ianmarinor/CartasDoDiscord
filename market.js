@@ -4,6 +4,7 @@ import { slotEsp } from "./slotEspecial.js";
 let bodyP = document.getElementsByTagName('body')[0]
 let moneyP = document.getElementById('store')
 let popUpP = document.createElement("div");
+let btnDisplay = document.getElementById('btnEspecial')
 
 export let marketObj = {
     active: false,
@@ -27,7 +28,9 @@ export function openMarket(){
     console.log('ABRIU MERCADO');
 
     popUpP.appendChild(slotEsp)
+    popUpP.appendChild(btnDisplay)
     slotEsp.style.display = 'flex'
+    btnDisplay.style.display = 'flex'
     marketObj.on(true)
 }
 
@@ -35,6 +38,7 @@ export function closeMarket(){
 popUpP.remove()
 marketObj.on(false)
 slotEsp.style.display = 'none'
+btnDisplay.style.display = 'none'
 mainOpaque(false)
 }
 
