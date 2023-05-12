@@ -1476,10 +1476,20 @@ export let especiais = {
     },
 
     tick() {
-      if (this.buffAdded) {
-      } else {
-        this.buffAdded = true;
-        this.addBuff(15);
+
+      // if (this.buffAdded) {
+      // } else {
+      //   this.buffAdded = true;
+      //   this.addBuff(15);
+      // }
+
+      if (this._dead) {
+        clearInterval(this.attackInterval);
+        return
+      }
+      if (this._dead) {
+        clearInterval(this.poisonInterval);
+        return
       }
 
       let numOfBees = 0;
@@ -1491,6 +1501,7 @@ export let especiais = {
       if (numOfBees > 0) {
         this.dano = this.onlyReadDmg * numOfBees;
       }
+
       this._numOfBees = 0;
       invObj.map((x) => {
         x.cartaId == "abelha" ? this._numOfBees++ : false;
@@ -1498,6 +1509,7 @@ export let especiais = {
     },
 
     poison(trigger) {
+
       let turuInField = () => {
         if (!invObj.some((x) => x._integrante == "Turu")) {
           return false;
@@ -1517,6 +1529,7 @@ export let especiais = {
       this.poisonInterval = setInterval(() => {
         if (this._dead || trigger === false) {
           clearInterval(this.poisonInterval);
+          return
         }
 
         this.dmg(poisonDmg);
@@ -1524,19 +1537,32 @@ export let especiais = {
     },
 
     poder() {
+
+
+      if(this.unableToAttack())return
       let timer = 1200;
+
+      
+
 
       if (this._attacking || this._dead) {
         clearInterval(this.attackInterval);
         this._attacking = false;
         return;
       }
+
       this.poison();
+
+      this._invHiddenButton = true
+      this.ataque(this.dano);
+
+
       this.attackInterval = setInterval(() => {
         this._attacking = true;
 
         if (this._dead) {
           clearInterval(this.attackInterval);
+          return
         }
 
         this.ataque(this.dano);
@@ -2748,21 +2774,21 @@ export let especiais = {
     ulti: 0,
     retrato: 'url("/pics/sentryRetrato.PNG")',
     cargo: "",
-    hp: 60,
-    maxHealth: 60,
+    hp: 40,
+    maxHealth: 40,
     dmgBoss: false,
     hashp: true,
 
     dano: undefined,
     _exposto: true,
 
-    ammonition: 75,
+    ammonition: 80,
     ammonitionMax: undefined,
 
     active: false,
 
     cfg() {
-      this.dano = gerarNumero(12, 18);
+      this.dano = gerarNumero(8, 12);
 
       this._nomeP.style.marginTop = "5px";
 
@@ -2798,6 +2824,7 @@ export let especiais = {
     ult() {},
 
     selfHealing() {
+      return
       let time = 780;
       let healAmount = 12;
 
