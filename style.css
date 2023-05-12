@@ -105,6 +105,10 @@ body {
 
 }
 
+#prompt{
+  grid-area: f;
+}
+
 #protector,
 #end {
   display: flex;
@@ -209,7 +213,7 @@ main {
 
   grid-template-columns: 0.9fr 2fr 1.1fr;
 
-  grid-template-rows:  0.6fr 0.6fr 1.1fr 0.1fr 1fr;
+  grid-template-rows:  1fr 1.1fr 1.1fr 0.1fr 1fr;
 
   background-image: linear-gradient(
       360deg,
@@ -278,6 +282,7 @@ li {
   
 
   justify-self: start;
+  display: none;
 }
 
 #cartaBossMonark {
@@ -294,15 +299,15 @@ li {
 
 .bossHealthWrap {
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   justify-content: center;
   align-items: center;
 
-  justify-self: end;
+  justify-self: center;
 
   grid-area: boss;
   opacity: 0;
-  margin-right: 100px;
+  /* margin-right: 100px; */
 }
 #healthPoints,
 .healthPoints {
@@ -353,9 +358,7 @@ li {
   
 }
 
-#ammoWrap {
-  align-self: end;
-}
+
 
 
 #healthPlayerWrap > *,
@@ -364,6 +367,11 @@ li {
   font-size: 2.5em;
   color: wheat;
   text-align: end;
+}
+
+#ammoWrap {
+  align-self: end;
+  justify-self: end;
 }
 
 #healthPlayerBuff {
@@ -389,7 +397,7 @@ li {
 }
 
 #descr {
-  grid-area: c;
+  grid-area: e;
   height: 60px;
   font-size: 0.6em;
   align-self: center;
@@ -425,6 +433,7 @@ li {
   background-color: #b81a156f;
   border: #020101 solid 2px;
   /* transform: rotate(90deg); */
+  display: none;
 }
 
 #placarInimigoDano {
@@ -1348,7 +1357,7 @@ p {
   grid-template-rows: 1fr;
   gap: 10px;
   overflow: hidden;
-  border: #f43ad563 double 3px;
+  border: #f43ad563 solid 3px;
   text-align: center;
   border-radius: 1px;
 }
@@ -1694,3 +1703,9 @@ div[id^="empty-"] {
     opacity: 1;
   }
 }
+
+/* @media screen and (max-width: 1920px) {
+  main {
+    opacity: 0;
+  }
+} */

@@ -355,6 +355,7 @@ export let wave = {
       } else {
 
         this.getWave()
+        this.getWave()
       }
 
 

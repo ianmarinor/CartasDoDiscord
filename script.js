@@ -2622,7 +2622,7 @@ export let hpPlayer = {
     } else {
       hpPlayerP.style.color = "red";
       hpPlayerEmojiP.innerHTML = "💔";
-      hpPlayerWrapP.className = "pulsar";
+      hpPlayerWrapP.className = "warning-cards";
     }
 
     if (this.buff > 0) {

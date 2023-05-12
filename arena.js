@@ -891,7 +891,7 @@ let monark = {
   maxHealth: 10,
   dano: 5,
   emoji: "💩",
-  attackChance: 33,
+  attackChance: 15,
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
@@ -978,7 +978,7 @@ let menosCartas = {
   hp: 33,
   maxHealth: 33,
   dano: false,
-  attackChance: 50,
+  attackChance: 15,
   especial: true,
   _attackAtSpawn: false,
 
@@ -1200,7 +1200,7 @@ let dog = {
   _attackAtSpawn: true,
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
-  attackChance: 33,
+  attackChance: 15,
   isPartOfWave: false,
   hp: 50,
   maxHealth: 50,
@@ -1423,7 +1423,7 @@ let smoke = {
   _attackAtSpawn: false,
   _doesAttack: false,
   _audioSpawn: "",
-  attackChance: 20,
+  attackChance: 15,
   hp: 21,
   maxHealth: 21,
   dano: 1,
@@ -1471,7 +1471,7 @@ let awp = {
   _attackAtSpawn: true,
   _doesAttack: true,
   _audioSpawn: "",
-  attackChance: 12,
+  attackChance: 10,
   hp: 10,
   maxHealth: 10,
   dano: 35,

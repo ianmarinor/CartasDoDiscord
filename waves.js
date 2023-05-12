@@ -32,7 +32,7 @@ export let wavePool = [
 
   {
     id: 1,
-    enemiesTotal: 6,
+    enemiesTotal: 2,
     enemies: [spawnMonark, spawnMenosCartas, spawnCamarada],
     level: [1, 1],
     money: 50,
@@ -65,13 +65,13 @@ export let wavePool = [
 
   {
     id: 4,
-    enemiesTotal: 60,
+    enemiesTotal: 55,
     enemies: [spawnMonark],
     level: [1, 4],
     money: 200,
     ammo: 10,
     cards: 10,
-    spawnChance: 95,
+    spawnChance: 80,
   },
 
   {

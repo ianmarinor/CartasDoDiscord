@@ -1289,13 +1289,13 @@ export let especiais = {
       this.energia = gerarNumero(25, 50);
 
       this._nomeP.style.marginTop = "7px";
-      this._cargoP.style.visibility = "hidden";
-      this._cargoP.innerHTML = this._requiredIntegrante;
+      // this._cargoP.style.visibility = "hidden";
+      
     },
 
     tick() {
       if (this._parentP == inv) {
-        this._cargoP.style.visibility = "visible";
+        this._cargoP.innerHTML = this._requiredIntegrante;
       }
 
       let hasIntegrante = invObj.some(
@@ -1376,13 +1376,14 @@ export let especiais = {
 
       this._nomeP.style.marginTop = "7px";
 
-      this._cargoP.style.visibility = "hidden";
-      this._cargoP.innerHTML = this._requiredIntegrante;
+      
+      
     },
 
     tick() {
       if (this._parentP == inv) {
-        this._cargoP.style.visibility = "visible";
+        // this._cargoP.style.visibility = "visible";
+        this._cargoP.innerHTML = this._requiredIntegrante;
       }
 
       let hasIntegrante = invObj.some(
@@ -1458,7 +1459,7 @@ export let especiais = {
     dano: 15,
 
     cfg() {
-      let _dano = gerarNumero(16, 24);
+      let _dano = gerarNumero(24, 30);
       this.dano = _dano;
       this.onlyReadDmg = _dano;
     },
@@ -1467,7 +1468,7 @@ export let especiais = {
       if (this.buffAdded) {
       } else {
         this.buffAdded = true;
-        this.addBuff(30);
+        this.addBuff(15);
       }
 
       let numOfBees = 0;
@@ -1516,7 +1517,7 @@ export let especiais = {
 
       let timer = 1200
 
-      if (this._attacking) {
+      if (this._attacking || this._dead) {
         clearInterval(this.attackInterval);
         this._attacking = false;
         return;
@@ -1847,7 +1848,7 @@ export let especiais = {
 
           this.clockToVis = false;
           this.clockReady = false;
-
+          this._uber = false;
           // this.dmgBoss = false;
           this.setEmoji(this._defaultEmojiDano);
           this.exposto();
@@ -2258,7 +2259,7 @@ export let especiais = {
             let countAu = ["jhinConta4.mp3", 0.2];
             snd(countAu);
 
-            this.ataque();
+            this.ataque(this.dano, 0);
             console.log("DANO DO JHIN " + this.dano);
             playJhinAu(1);
             this.tiros--;
@@ -2266,7 +2267,7 @@ export let especiais = {
           } else {
             this.tiros--;
             tirosString.textContent = this.tiros;
-            this.ataque();
+            this.ataque(this.dano, 0);
 
             console.log("DANO DO JHIN " + this.dano);
           }
