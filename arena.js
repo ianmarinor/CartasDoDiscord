@@ -805,9 +805,12 @@ class Inimigo {
         
       } else {
         this.readyToAttack = true
-        audioPlayer(drumAu, true, placarAudioChannel)
+        
       }
 
+      if(this._coolDown == 4){
+        audioPlayer(drumAu, true, placarAudioChannel)
+      }
       if (this._coolDown <= 1) {
         this._coolDown = this._coolDownNatural;
         this.autoAtaque()
