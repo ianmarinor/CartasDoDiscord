@@ -110,6 +110,32 @@ export let smokeOnInv = {
   },
 };
 
+let arenaTarget = 0
+
+export function chooseTargetArena() {
+  let pool = [];
+
+  
+    areObj[arenaTarget]._exposto = false
+  
+
+
+  areObj.map((x) => {
+    
+      pool.push(x._targetPoint);
+    
+  });
+
+  arenaTarget = pool.indexOf(Math.max(...pool));
+  console.log(pool);
+  console.log("target: ", arenaTarget);
+
+  if(!areObj[arenaTarget].empty){
+    areObj[arenaTarget]._exposto = true
+  }
+  
+}
+
 export function areDidHit(_dmgDealer) {
   return;
   if (_dmgDealer && _dmgDealer.cartaId == "sentry" && per(80)) return;
@@ -346,6 +372,7 @@ class Inimigo {
 
     this.isPartOfWave = true;
     this._coolDownNatural = 35;
+    this._targetPoint = 50;
 
     //audio
     this._CHN = document.createElement("audio");
@@ -457,12 +484,6 @@ class Inimigo {
 
     if (this._exposto) {
       this._seloP.textContent = "🎯";
-    } else if (this.tank) {
-      this._seloP.textContent = "🛡️";
-    } else if (this.especial) {
-      this._seloP.textContent = "⭐";
-    } else if (this.miniBoss) {
-      this._seloP.textContent = "🧙";
     } else {
       this._seloP.textContent = "";
     }
@@ -612,9 +633,7 @@ class Inimigo {
     this.ataque(this.dano);
     this.readyToAttack = false;
   }
-  didKill(){
-
-  }
+  didKill() {}
   kill(absolute) {
     if (!this._parentP) return;
 
@@ -636,7 +655,6 @@ class Inimigo {
       // pop up victory
       wave.popUpSuccess();
     }
-    
   }
 
   ataque(dmg) {
@@ -848,6 +866,24 @@ class Inimigo {
     this._levelP.textContent = emojis[this._level];
     // this._levelP.textContent = 'adfdadg'
   }
+
+  targetPointSetter(_targetPoint) {
+
+    if (per(50)) {
+      this._targetPoint = _targetPoint + gerarNumero(0, 12);
+    } else {
+      this._targetPoint = _targetPoint - gerarNumero(0, 12);
+    }
+
+    if (this._targetPoint > 1000) {
+      this._targetPoint = 1000;
+    } else if (this._targetPoint < 1) {
+      this._targetPoint = 1;
+    }
+
+
+
+  }
 }
 
 // cfg() {}
@@ -918,6 +954,7 @@ let monark = {
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
+    this.targetPointSetter(300);
   },
 
   tick() {},
@@ -933,7 +970,9 @@ let monark = {
     this._money = this._money * this._level;
   },
 
-  everyRound() {},
+  everyRound() {
+
+  },
 
   didKill() {
     this.poder();
@@ -1137,8 +1176,6 @@ let tank = {
 
     this.maxUlti = Math.trunc(this.maxUlti / this._level);
     this._money = this._money * this._level;
-
-   
   },
 
   cfg() {
@@ -1157,24 +1194,19 @@ let tank = {
       "#cf6a32"
     );
 
-      if(this._coolDownNatural){
-
-        this._cargoP.innerHTML = progressBar(
-          this.ulti,
-          this.maxUlti,
-          "gray",
-          "red"
-        );
-
-      }
-
-    if(!this.hasStartedWalking){
-
-      this.walk()
-      this.hasStartedWalking = true
+    if (this._coolDownNatural) {
+      this._cargoP.innerHTML = progressBar(
+        this.ulti,
+        this.maxUlti,
+        "gray",
+        "red"
+      );
     }
 
-
+    if (!this.hasStartedWalking) {
+      this.walk();
+      this.hasStartedWalking = true;
+    }
   },
 
   walk() {
@@ -1186,8 +1218,8 @@ let tank = {
       this._coolDownNatural = 11;
       this._doesAttack = false;
       clearInterval(this.interval);
-      audioPlayer("tank/tankUltReady.mp3", false, this._CHN, 0.3)
-      
+      audioPlayer("tank/tankUltReady.mp3", false, this._CHN, 0.3);
+
       return;
     }
 
@@ -1205,18 +1237,15 @@ let tank = {
   },
 
   poder() {
-    console.log('kaboom');
+    console.log("kaboom");
     this.ataque();
     invObj.map((x) => {
       x.dmg(Math.trunc(this.dano / 5));
     });
 
-    
-
     this.kill(true);
 
     console.trace();
-    
   },
 };
 
@@ -1737,7 +1766,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
     // spawnTank();
-    console.log("spawnTank();: ", spawnCamarada());
+    console.log("spawnTank();: ", chooseTargetArena());
   }
 });
 

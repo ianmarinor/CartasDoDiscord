@@ -457,81 +457,8 @@ export class Especial {
         }
 
         //se houver tank
-      } else if (areObj.some((x) => x.tank && !x.isInvisible)) {
-        for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 5);
-
-          if (areObj[slot].tank && !areObj[slot].isInvisible) {
-            let vitima = areObj[slot];
-
-            this._dmgDone += vitima.dmg(dano, false, this)[0];
-
-            classHit = "tank";
-            checkLeftRight(vitima);
-
-            // atacar por dano spread
-
-            return [true, vitima];
-          }
-        }
-
-        //se houver especias
-      } else if (areObj.some((x) => x.especial && !x.isInvisible)) {
-        for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 5);
-
-          if (areObj[slot].especial && !areObj[slot].isInvisible) {
-            let vitima = areObj[slot];
-
-            this._dmgDone += vitima.dmg(dano, false, this)[0];
-
-            classHit = "especial";
-            checkLeftRight(vitima);
-
-            // atacar por dano spread
-
-            return [true, vitima];
-          }
-        }
-
-        // NORMAL
-      } else if (areObj.some((x) => !x.miniBoss && !x.isInvisible)) {
-        for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 5);
-
-          if (!areObj[slot].miniBoss && !areObj[slot].isInvisible) {
-            let vitima = areObj[slot];
-
-            this._dmgDone += vitima.dmg(dano, false, this)[0];
-
-            classHit = "normal";
-            checkLeftRight(vitima);
-
-            // atacar por dano spread
-
-            return [true, vitima];
-          }
-        }
-      }
-
-      // caso haja mini bosses
-      else if (areObj.some((x) => x.miniBoss && !x.isInvisible)) {
-        for (let i = 0; i < 1000; i++) {
-          let slot = gerarNumero(0, 5);
-
-          if (areObj[slot].miniBoss && !areObj[slot].isInvisible) {
-            let vitima = areObj[slot];
-
-            this._dmgDone += vitima.dmg(dano, false, this)[0];
-
-            classHit = "miniBoss";
-            checkLeftRight(vitima);
-
-            return [true, vitima];
-          }
-        }
       } else {
-        return false;
+        false
       }
     } else {
       return false;

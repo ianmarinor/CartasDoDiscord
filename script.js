@@ -11,6 +11,7 @@ import {
   arenaAtaque,
   smokeOnInv,
   areReveal,
+  chooseTargetArena
 } from "./arena.js";
 
 import { especiais, especial, Especial } from "./modules/especial.js";
@@ -1743,6 +1744,7 @@ export let emptyObj = {
   hp: 0,
   _monarkReplaceble: true,
   autoAtaque: false,
+  _targetPoint: 0,
   place() {
     return false;
   },
@@ -2311,6 +2313,7 @@ function tick() {
     criarBtn();
     placarArena.printP();
     updatePlacarInimigo(false);
+    chooseTargetArena()
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];
