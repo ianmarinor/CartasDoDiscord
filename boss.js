@@ -630,8 +630,8 @@ function openMap(_mission) {
 
       wave.setPool(campanha.levels[i])
       if(campanha.levels[i][0].locked)return
-      chooseMonark()
-      closeMap()
+      // chooseMonark()
+      // closeMap()
       current = i
       console.log('current: ', current);
     })
