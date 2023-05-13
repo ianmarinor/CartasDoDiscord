@@ -31,7 +31,7 @@ import {
 import {marketObj, closeMarket, openMarket}  from "./market.js"
 
 let versaoHTML = document.getElementById("versao");
-let versao = "SMOKE FIX";
+let versao = "Alpha 1.0";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
