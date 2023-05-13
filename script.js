@@ -2288,6 +2288,38 @@ function runEveryRound() {
 
   rDifficulty.update();
 }
+let invTarget = 0
+
+export function chooseTargetInv() {
+  let pool = [];
+
+  
+    invObj[invTarget]._exposto = false
+  
+
+
+  invObj.map((x) => {
+
+    if(!x.empty && !x.isInvisible &&  !x.isNormal){
+
+      pool.push(x._targetPoint);
+    } else {
+      pool.push(0)
+    }
+
+    
+  });
+
+  invTarget = pool.indexOf(Math.max(...pool));
+  // console.log(pool);
+  // console.log("target: ", invTarget);
+
+  if(!invObj[invTarget].empty && !invObj[invTarget].isInvisible &&  !invObj[invTarget].isNormal){
+    invObj[invTarget]._exposto = true
+  }
+  
+  
+}
 
 function removeBuffAll() {
   setInterval(function () {
@@ -2314,6 +2346,7 @@ function tick() {
     placarArena.printP();
     updatePlacarInimigo(false);
     chooseTargetArena()
+    chooseTargetInv()
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];

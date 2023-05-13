@@ -195,6 +195,7 @@ export class Especial {
     this._everyRoundMao = false;
     this._requiredIntegrante = false;
     this._requiredIntegrante2 = false;
+    this._targetPoint = 500;
 
     //DOM
     this._thisCardP = false;
@@ -316,6 +317,19 @@ export class Especial {
         this._level = x[1];
         break;
       }
+    }
+  }
+
+  targetPointSetter(_targetPoint) {
+
+    if (per(50)) {
+      this._targetPoint = _targetPoint + gerarNumero(0, 12);
+    } else {
+      this._targetPoint = _targetPoint - gerarNumero(0, 12);
+    }
+
+     if (this._targetPoint < 1) {
+      this._targetPoint = 1;
     }
   }
 
@@ -826,9 +840,7 @@ export class Especial {
     //estilo selo
     if (this._exposto) {
       this._seloP.textContent = "🎯";
-    } else if (this.tank) {
-      this._seloP.textContent = "🛡️";
-    } else {
+    }  else {
       this._seloP.textContent = "";
     }
 
@@ -1073,6 +1085,10 @@ export let especiais = {
     dormindo: false,
     _invHiddenButton: true,
 
+    cfg(){
+      this.targetPointSetter(500)
+    },
+
     energiaPoder() {
       if (this.dormindo) return;
       this.dormindo = true;
@@ -1232,6 +1248,7 @@ export let especiais = {
 
       this._nomeP.style.marginTop = "7px";
       // this._cargoP.style.visibility = "hidden";
+      this.targetPointSetter(580)
     },
 
     tick() {
@@ -1316,6 +1333,7 @@ export let especiais = {
       this.energia = gerarNumero(2, 7);
 
       this._nomeP.style.marginTop = "7px";
+      this.targetPointSetter(570)
     },
 
     tick() {
@@ -1400,6 +1418,7 @@ export let especiais = {
       let _dano = gerarNumero(24, 30);
       this.dano = _dano;
       this.onlyReadDmg = _dano;
+      this.targetPointSetter(100)
     },
 
     tick() {
@@ -1718,7 +1737,6 @@ export let especiais = {
     clockReady: true,
     isInvisible: false,
     dano: undefined,
-    _exposto: true,
     clockToVis: false,
 
     cfg() {
@@ -1736,6 +1754,8 @@ export let especiais = {
 
       this._cargoP.textContent = "⌚";
       this._cargoP.style.fontSize = "2em";
+
+      this.targetPointSetter(758)
     },
 
     tick() {
@@ -1937,6 +1957,10 @@ export let especiais = {
     hashp: true,
     dmgEstoico: 0,
 
+    cfg(){
+      this.targetPointSetter(660)
+    },
+
     poder() {
       if (this.unableToAttack()) return;
 
@@ -2046,6 +2070,7 @@ export let especiais = {
 
     cfg() {
       this.dano = gerarNumero(6, 12);
+      this.targetPointSetter(320)
     },
 
     everyRound() {
@@ -2137,6 +2162,10 @@ export let especiais = {
 
     tick() {
       this.setDmg();
+    },
+
+    cfg(){
+      this.targetPointSetter(550)
     },
 
     setDmg() {
@@ -2336,6 +2365,7 @@ export let especiais = {
 
     cfg() {
       this.dano = gerarNumero(38, 55);
+      this.targetPointSetter(650)
     },
 
     ult() {
@@ -2454,12 +2484,12 @@ export let especiais = {
     dano: undefined,
     exploding: false,
     _monarkReplaceble: false,
-    _exposto: true,
 
     cfg() {
       let dano = gerarNumero(40, 85);
 
       this.dano = dano;
+      this.targetPointSetter(790)
     },
 
     everyRound() {
@@ -2540,7 +2570,6 @@ export let especiais = {
     hp: 5,
     maxHealth: 5,
     dano: undefined,
-    _exposto: true,
     _barreira: 35,
     _barrieraActive: true,
 
@@ -2560,6 +2589,9 @@ export let especiais = {
         "#ffffff",
         true
       );
+
+      this.targetPointSetter(750)
+
     },
 
     tick() {
@@ -2641,6 +2673,7 @@ export let especiais = {
 
     cfg() {
       this._nomeP.style.marginTop = "10px";
+      this.targetPointSetter(310)
     },
 
     everyRound() {
@@ -2707,7 +2740,6 @@ export let especiais = {
     hashp: true,
 
     dano: undefined,
-    _exposto: true,
 
     ammonition: 80,
     ammonitionMax: undefined,
@@ -2727,7 +2759,8 @@ export let especiais = {
 
       this._cargoP.style.opacity = "0";
 
-      this.selfHealing();
+      // this.selfHealing();
+      this.targetPointSetter(675)
     },
 
     tick() {

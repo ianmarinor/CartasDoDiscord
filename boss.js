@@ -18,7 +18,7 @@ import {
   areFull,
 } from "/arena.js";
 import { spawnLiberdade, spawnTank, areNoEnemies, areEmpty } from "./arena.js";
-import { wavePool } from "./waves.js";
+import {  testePool, missOne } from "./waves.js";
 
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
@@ -27,6 +27,7 @@ let bossRoomP = document.getElementById("bossRoom");
 let healthWrapP = document.querySelector(".bossHealthWrap");
 let bossP = () => bossRoomP.children[0];
 let pickMonark = document.getElementById("pickMonark");
+let pickVelha = document.getElementById("pickVelha");
 let protector = document.getElementById("protector");
 let main = document.getElementById("main");
 let testP = document.getElementById("test");
@@ -226,6 +227,8 @@ class Boss {
     this.everyRoundDefault();
   }
 }
+
+let wavePool = testePool
 
 export let wave = {
   id: 0,
@@ -544,6 +547,7 @@ function chooseMonark() {
 }
 
 pickMonark.addEventListener("click", chooseMonark);
+pickVelha.addEventListener("click", chooseMonark);
 
 let hasSpawned = false;
 
@@ -580,7 +584,7 @@ export function animatebossHealth() {
   let style = Math.abs((wave.enemiesKilled / wave.enemies) * 100 - 100) + "%";
   // console.log('style: ', style);
 
-  healthPointsP.textContent = "ONDA #" + wave.id;
+  healthPointsP.textContent = "ONDA " + wave.id + ' DE ' + wave.numOfWaves;
 
   progressP.style.width = style;
 }

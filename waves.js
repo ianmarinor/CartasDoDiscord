@@ -10,7 +10,7 @@ import {
   spawnVitor,
 } from "./arena.js";
 
-export let wavePool = [
+export let missOne = [
   {
     notWave: true,
     numOfWaves: 5,
@@ -18,7 +18,7 @@ export let wavePool = [
     totalNumOfEnemies: 0,
 
     getNumOfEnemies() {
-      wavePool.map((x) => {
+      missOne.map((x) => {
         if (!x.notWave) {
           this.totalNumOfEnemies += x.enemiesTotal;
         }
@@ -83,5 +83,38 @@ export let wavePool = [
     ammo: 10,
     cards: 10,
     spawnChance: 60,
+  },
+];
+
+export let testePool = [
+
+  {
+    notWave: true,
+    numOfWaves: 5,
+    progress: 0,
+    totalNumOfEnemies: 0,
+
+    getNumOfEnemies() {
+      testePool.map((x) => {
+        if (!x.notWave) {
+          this.totalNumOfEnemies += x.enemiesTotal;
+        }
+      });
+    },
+
+    start() {
+      this.getNumOfEnemies();
+    },
+  },
+
+  {
+    id: 1,
+    enemiesTotal: 60,
+    enemies: [spawnMonark, spawnMenosCartas, spawnCamarada, spawnAwp, spawnDog, spawnTank, spawnVitor, spawnLiberdade],
+    level: [1, 1],
+    money: 50,
+    ammo: 5,
+    cards: 10,
+    spawnChance: 100,
   },
 ];

@@ -32,7 +32,7 @@ import {
   blueprintBuilder,
 } from "./domCards.js";
 import { start } from "./modules/seedFabricator.js";
-import { wavePool } from "./waves.js";
+// import { wavePool } from "./waves.js";
 
 export const are = document.getElementById("are");
 const secret = document.getElementById("test");
@@ -127,8 +127,8 @@ export function chooseTargetArena() {
   });
 
   arenaTarget = pool.indexOf(Math.max(...pool));
-  console.log(pool);
-  console.log("target: ", arenaTarget);
+  // console.log(pool);
+  // console.log("target: ", arenaTarget);
 
   if(!areObj[arenaTarget].empty){
     areObj[arenaTarget]._exposto = true
@@ -372,7 +372,7 @@ class Inimigo {
 
     this.isPartOfWave = true;
     this._coolDownNatural = 35;
-    this._targetPoint = 50;
+    this._targetPoint = 500;
 
     //audio
     this._CHN = document.createElement("audio");
@@ -875,9 +875,7 @@ class Inimigo {
       this._targetPoint = _targetPoint - gerarNumero(0, 12);
     }
 
-    if (this._targetPoint > 1000) {
-      this._targetPoint = 1000;
-    } else if (this._targetPoint < 1) {
+     if (this._targetPoint < 1) {
       this._targetPoint = 1;
     }
 
@@ -954,7 +952,7 @@ let monark = {
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
-    this.targetPointSetter(300);
+    this.targetPointSetter(350);
   },
 
   tick() {},
@@ -1059,6 +1057,7 @@ let menosCartas = {
     }
 
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
+    this.targetPointSetter(445)
   },
 
   poder() {
@@ -1117,6 +1116,7 @@ let camarada = {
     this._cargoP.innerHTML = frases[gerarNumero(0, frases.length - 1)];
     this._cargoP.style.fontSize = "65%";
     this.audioSpawn(0.5);
+    this.targetPointSetter(550)
   },
 
   tick() {},
@@ -1184,6 +1184,7 @@ let tank = {
     if (per(70)) {
       audioPlayer("tank/tankSpawn.mp3", false, this._CHN, 0.2);
     }
+    this.targetPointSetter(700)
   },
 
   tick() {
@@ -1305,6 +1306,7 @@ let dog = {
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
+    this.targetPointSetter(300)
   },
 };
 
@@ -1323,7 +1325,6 @@ let metaforando = {
   _attackAtSpawn: true,
   _doesAttack: false,
   _audioSpawn: "dog.mp3",
-  _exposto: true,
   attackChance: 0,
   hp: 500,
   maxHealth: 500,
@@ -1349,6 +1350,7 @@ let metaforando = {
     this._displayP.children[1].style.visibility = "hidden";
 
     this._nomeP.style.margin = "20px  0px 5px";
+    this.targetPointSetter(750)
   },
 
   tick() {
@@ -1413,7 +1415,6 @@ let liberdade = {
   dano: 0,
   miniBoss: true,
   emoji: "",
-  _exposto: true,
 
   tick() {
     let healthBar = this._nomeP.children[0];
@@ -1439,6 +1440,7 @@ let liberdade = {
 
     this._nomeP.style.margin = "30px  0px 5px";
     this._hpP.style.visibility = "hidden";
+    this.targetPointSetter(850)
   },
 
   tick() {
@@ -1507,6 +1509,7 @@ let smoke = {
     this.smokeWeight = gerarNumero(1, 4);
     this._retratoP.style.border = "1px solid #de9b35";
     this._nomeP.style.marginTop = "6px";
+    this.targetPointSetter(150)
   },
 
   tick() {},
@@ -1572,6 +1575,7 @@ let awp = {
     }
     this._retratoP.style.backgroundSize = "100% 100%";
     this._nomeP.style.marginTop = "6px";
+    this.targetPointSetter(250)
   },
 
   tick() {},
