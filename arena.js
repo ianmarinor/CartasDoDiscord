@@ -418,6 +418,14 @@ class Inimigo {
       this._level = 1;
     }
 
+    if(this.miniBoss){
+     if(per(15)){
+      this._level = 4 
+     } else {
+      this._level = gerarNumero(1,3)
+     }
+    }
+
     this.levelPrint();
   }
 
