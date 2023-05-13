@@ -546,6 +546,9 @@ function chooseMonark() {
   startGame();
 }
 
+
+
+
 pickMonark.addEventListener("click", chooseMonark);
 pickVelha.addEventListener("click", chooseMonark);
 
