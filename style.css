@@ -84,7 +84,7 @@ a:hover {
 
 @font-face {
   font-family: "imperio";
-  src: url("/fonts/imperio.otf");
+  src: url("/fonts/imperio.ttf");
 }
 
 
@@ -128,44 +128,50 @@ body {
   align-items: center;
   justify-content: space-around;
   background-color: #0b663f;
+  
 }
 
 #pickMonark,
 #pickVelha,
 #pick {
-  margin: 0;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 500px;
-  height: 150px;
-
-  border-radius: 20px;
-
-  background-color: rgba(255, 255, 255, 0.735);
-
   
+
+  align-self: center;
+  justify-self: center;
 
   
 
 }
 
-#pickMonark > *,
-#pickVelha > *,
+/* #pickMonark > *, */
+
+/* #pickVelha > *,
 #pick > * {
   width: 500px;
   font-family: imperio;
   font-size: 0.55em;
   color: #010101d1;
   text-align: center;
-  /* background-color: rgba(186, 5, 5, 0.735); */
+} */
+
+#pickMonark:hover {
+  cursor: pointer;
+  opacity: 0.5;
 }
 
-#pickMonark:hover, #pickVelha:hover {
-  background-color: rgba(181, 181, 181, 0.735);
+#protectorWrap{
+  width: 1200px;
+  height: 750px;
+  display: grid;
+
+  grid-template-areas:
+    "1 2 3"
+    "4 5 6"
+    ;
+
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 33% 33% 33%
+
 }
 
 #end {
@@ -228,11 +234,11 @@ main {
   justify-items: center;
   flex-direction: column;
 
-  background-color: #083535;
+  background-color: #1d6060;
   background: linear-gradient(
-    360deg,
-    rgba(28, 7, 102, 0.649) 0%,
-    rgba(39, 13, 65, 0.649) 46%
+    180deg,
+    rgba(79, 236, 225, 0.649) 0%,
+    rgba(35, 118, 117, 0.649) 46%
   );
 
   
@@ -250,11 +256,7 @@ main {
   /* opacity: 0; */
 }
 
-a {
-  /* background-color: black; */
-  font-size: 100px;
-  margin-left: 120px;
-}
+
 a:last-of-type:hover,
 a:last-of-type {
   color: rgba(15, 12, 182, 0.147);
@@ -532,7 +534,7 @@ li {
   height: 100px;
   width: 100px;
   border-radius: 100%;
-  background-color: #090909;
+  background-color: #0909093a;
   opacity: 0.5;
 }
 
@@ -1361,17 +1363,17 @@ p {
 
 #pack {
   grid-area: especial;
-  border: 5px double rgba(80, 80, 98, 0.578);
-  background-color: #060e3c5e;
+  /* border: 5px double rgba(80, 80, 98, 0.578); */
+  /* background-color: #060e3c5e; */
   align-self: center;
 }
 
 #inv,
 #are {
   /* grid-area: inv; */
-  height: 302px;
+  height: 306px;
   width: 1330px;
-  background-color: #2424279c;
+  background-color: #24242744;
 
   display: grid;
   justify-items: center;
@@ -1380,9 +1382,9 @@ p {
   grid-template-rows: 1fr;
   gap: 10px;
   overflow: hidden;
-  border: #f43ad563 solid 3px;
+  border: #00000063 solid 3px;
   text-align: center;
-  border-radius: 1px;
+  border-radius: 10px;
 }
 
 #wrapAndAre {
@@ -1393,7 +1395,7 @@ p {
 #are {
   width: 1200px;
   /* height: 260px; */
-  background-color: #411c2a9c;
+  /* background-color: #411c2a9c; */
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 1fr;
   gap: 5px;
@@ -1417,15 +1419,12 @@ div[id^="empty-"] {
   height: 100px;
   width: 100px;
   border-radius: 50px;
-  background-color: #090909;
+  background-color: #0909092b;
   display: block;
   opacity: 0.5;
 }
 
-#empty5,
-#empty6 {
-  background-color: #02001f;
-}
+
 
 #action1,
 #action2,
@@ -1437,12 +1436,12 @@ div[id^="empty-"] {
 }
 #mao {
   grid-area: mao;
-  border: 3px solid rgba(30, 178, 183, 0.38);
-  background-color: #2f444465;
+  /* border: 3px solid rgba(30, 178, 183, 0.38); */
+  /* background-color: #2f444413; */
   align-self: center;
 
   height: 305px;
-  width: 1330px;
+  width: 1270px;
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;

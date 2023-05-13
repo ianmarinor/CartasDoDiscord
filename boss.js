@@ -7,7 +7,7 @@ import {
   wCoolDown,
   placarArena,
   numCartas,
-  mainOpaque
+  mainOpaque,
 } from "/script.js";
 import {
   spawnMonark,
@@ -18,7 +18,7 @@ import {
   areFull,
 } from "/arena.js";
 import { spawnLiberdade, spawnTank, areNoEnemies, areEmpty } from "./arena.js";
-import {  testePool, missOne } from "./waves.js";
+import { testePool, missOne, imperio } from "./waves.js";
 
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
@@ -32,7 +32,7 @@ let protector = document.getElementById("protector");
 let main = document.getElementById("main");
 let testP = document.getElementById("test");
 let countdownP = document.getElementById("countdown");
-let bodyP = document.getElementsByTagName('body')[0]
+let bodyP = document.getElementsByTagName("body")[0];
 
 let cartaBossMonark =
   '<div id="cartaBossMonark" class="bossAnimation" data-card="boss"></div>';
@@ -63,7 +63,6 @@ export function toMonark(_cartaObj, _despawnTime) {
   audioPlayer("poop.mp3", false, poopCHN, 0.4);
   if (_despawnTime) return;
   carta._despawn = gerarNumero(2, 8);
-
 }
 
 class Boss {
@@ -228,9 +227,10 @@ class Boss {
   }
 }
 
-let wavePool = testePool
+
 
 export let wave = {
+  pool: undefined,
   id: 0,
   enemies: undefined,
   enemiesSpawned: undefined,
@@ -242,16 +242,17 @@ export let wave = {
   overallEnemies: 0,
   progress: 0,
   enemiesLevel: [],
-  
 
-  tick(){
-    this.getProgress()
+  tick() {
+    this.getProgress();
   },
 
-  getProgress(){
+  getProgress() {
+    this.progress = (this.overallEnemiesKilled / this.overallEnemies) * 100;
+  },
 
-    this.progress = this.overallEnemiesKilled / this.overallEnemies * 100
-
+  setPool(_pool) {
+    this.pool = _pool;
   },
 
   // toda rodada essa função é chamada
@@ -262,34 +263,31 @@ export let wave = {
     if (this.waveOn) {
       this.run();
 
-    // se a wave não estiver acontecendo chame uma wave do pool
+      // se a wave não estiver acontecendo chame uma wave do pool
     } else {
       //pega a wave do pol
-      if(!areEmpty()) return
+      if (!areEmpty()) return;
 
-      wavePool[0].start()
+      this.pool[0].start();
 
-      this.overallEnemies = wavePool[0].totalNumOfEnemies 
-      this.numOfWaves = wavePool[0].numOfWaves
+      this.overallEnemies = this.pool[0].totalNumOfEnemies;
+      this.numOfWaves = this.pool[0].numOfWaves;
       this.id++;
 
-      if(this.numOfWaves == this.id){
-        this.lastWave = true
+      if (this.numOfWaves == this.id) {
+        this.lastWave = true;
       }
-      
-      
 
-      this.enemiesLevel = wavePool[this.id ].level
-      this.enemies = wavePool[this.id ].enemiesTotal;
+      this.enemiesLevel = this.pool[this.id].level;
+      this.enemies = this.pool[this.id].enemiesTotal;
       this.enemiesSpawned = 0;
       this.enemiesToGo = this.enemies;
       this.waveOn = true;
       this.enemiesKilled = 0;
-      this.money = wavePool[this.id ].money
-      this.cards = wavePool[this.id ].cards
-      this.ammo = wavePool[this.id ].ammo
-      this.spawnChance = wavePool[this.id ].spawnChance
-
+      this.money = this.pool[this.id].money;
+      this.cards = this.pool[this.id].cards;
+      this.ammo = this.pool[this.id].ammo;
+      this.spawnChance = this.pool[this.id].spawnChance;
 
       console.log(this);
     }
@@ -303,11 +301,11 @@ export let wave = {
 
       console.log(this);
       console.log("WAVE ENDED");
-      
+
       return;
       // se nao acabou a onda e tem espaço
-    } else if (!areFull() && per(this.spawnChance) ) {
-      let waveObj = wavePool[this.id];
+    } else if (!areFull() && per(this.spawnChance)) {
+      let waveObj = this.pool[this.id];
 
       waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
       this.enemiesSpawned++;
@@ -320,78 +318,93 @@ export let wave = {
     }
   },
 
-  popUpVictory(){
-    mainOpaque()
+  popUpVictory() {
+    mainOpaque();
 
     let popUpP = document.createElement("div");
     popUpP.id = "popup-victory";
-    bodyP.appendChild(popUpP)
+    bodyP.appendChild(popUpP);
+
+    let button = document.createElement("button");
+    button.id = "popup-victory-btn";
+    popUpP.appendChild(button);
+    button.addEventListener("click", () => {
+
+      if(current + 1 <= 9){
+      
+        console.log(current + 1);
+        campanha.levels[ parseInt(current) + 1][0].locked = false
+        // console.log(imperio);
+
+      }
+      localStorage.setItem("mySave", JSON.stringify(campanha))
+      console.log(' ----------- THERE IS SAVE ----------- ');
+     console.log(JSON.parse(localStorage.getItem('mySave')));
+    //  console.log(campanha);
+     console.log(' ----------- THERE IS SAVE ----------- ');
+      window.location.assign('index.html')
+      
+    });
 
   },
 
   popUpSuccess() {
-
-    if(this.lastWave){
-      this.popUpVictory()
-      return
-
+    if (this.lastWave) {
+      this.popUpVictory();
+      return;
     }
 
     // pop up que indica vitoria da wave
-    mainOpaque()
+    mainOpaque();
 
     let popUpP = document.createElement("div");
     popUpP.id = "popup-success-wave";
     bodyP.appendChild(popUpP);
 
-    let button = document.createElement("button")
-    button.id = 'popup-success-btn'
+    let button = document.createElement("button");
+    button.id = "popup-success-btn";
     popUpP.appendChild(button);
-    button.addEventListener('click', ()=>{
+    button.addEventListener("click", () => {
       console.log(this);
-      money.add(this.money)
-      ammo.add(this.ammo)
-      numCartas.add(this.cards)
+      money.add(this.money);
+      ammo.add(this.ammo);
+      numCartas.add(this.cards);
 
-      if(this.lastWave){
-        this.popUpVictory()
+      if (this.lastWave) {
+        this.popUpVictory();
       } else {
-
-        this.getWave()
-        this.getWave()
+        this.getWave();
+        this.getWave();
       }
 
+      popUpP.remove();
+      mainOpaque(false);
+    });
 
-      popUpP.remove()
-      mainOpaque(false)
-    })
-
-
-    let wavepassed = document.createElement("div")
-    wavepassed.id = 'popup-success-wavepassed'
+    let wavepassed = document.createElement("div");
+    wavepassed.id = "popup-success-wavepassed";
     popUpP.appendChild(wavepassed);
-    wavepassed.innerHTML = 'ONDA ' + this.id+ ' COMPLETADA'
+    wavepassed.innerHTML = "ONDA " + this.id + " COMPLETADA";
 
-    let reward = document.createElement("div")
-    reward.id = 'popup-success-reward'
+    let reward = document.createElement("div");
+    reward.id = "popup-success-reward";
     popUpP.appendChild(reward);
     // reward.innerHTML = 'ONDA ' + this.id+ ' COMPLETADA'
 
-    let moneyP = document.createElement("div")
-    moneyP.id = 'popup-success-moneyP'
+    let moneyP = document.createElement("div");
+    moneyP.id = "popup-success-moneyP";
     reward.appendChild(moneyP);
-    moneyP.innerHTML = '💰' + this.money
+    moneyP.innerHTML = "💰" + this.money;
 
-    let ammoP = document.createElement("div")
-    ammoP.id = 'popup-success-ammoP'
+    let ammoP = document.createElement("div");
+    ammoP.id = "popup-success-ammoP";
     reward.appendChild(ammoP);
-    ammoP.innerHTML = '⚔️' + this.ammo
+    ammoP.innerHTML = "⚔️" + this.ammo;
 
-    let cardsP = document.createElement("div")
-    cardsP.id = 'popup-success-cardsP'
+    let cardsP = document.createElement("div");
+    cardsP.id = "popup-success-cardsP";
     reward.appendChild(cardsP);
-    cardsP.innerHTML = '🃏' + this.cards
-
+    cardsP.innerHTML = "🃏" + this.cards;
   },
 };
 
@@ -451,7 +464,7 @@ function createMonark() {
       chance = wave.progress;
 
       if (chance > 15 || absolute) chance = 15;
-      console.log('chance: ', chance);
+      console.log("chance: ", chance);
 
       if (this._coolDown || this.hasTriggeredUlti) return;
       if (!per(chance)) return;
@@ -545,12 +558,92 @@ function chooseMonark() {
   chosenBoss = "monark";
   startGame();
 }
+let popUpP = document.createElement("div");
+
+export let map = {
+  active: false,
+
+  close(){
+    closeMap()
+  }
+
+}
+
+function closeMap(){
+  popUpP.remove()
+  mainOpaque(false)
+  map.active = false
+}
+let campanha
+function openMap(_mission) {
+ 
+  if(JSON.parse(localStorage.getItem('mySave'))){
+     campanha = JSON.parse(localStorage.getItem('mySave'))
+     console.log(' ----------- THERE IS SAVE ----------- ');
+     console.log(JSON.parse(localStorage.getItem('mySave')));
+     console.log(' ----------- THERE IS SAVE ----------- ');
+
+  } else {
+     campanha = _mission
+     console.log(' NO SAVE ');
+
+  }
 
 
+  map.active = true
+  popUpP.id = "map";
+  // let missionWrapP = document.getElementById('missionsWrap')
+  let mapP = document.getElementById("map");
 
+  bodyP.appendChild(popUpP);
+  mainOpaque();
 
-pickMonark.addEventListener("click", chooseMonark);
-pickVelha.addEventListener("click", chooseMonark);
+  popUpP.style.backgroundColor = campanha.bgColor;
+  // console.log(missionWrapP);
+
+  for (let i = 0; i < 10; i++) {
+    let index = i + 1;
+    let slot = document.getElementById("mission-" + index);
+    popUpP.appendChild(slot);
+
+    slot.children[0].style.backgroundImage = _mission.setMissionPics(index)
+    slot.children[0].style.width = '128px'
+    slot.children[0].style.height = '128px'
+    slot.children[0].style.marginTop = '8px'
+    slot.children[0].style.marginBottom = '8px'
+    slot.children[0].style.border = '1px solid' + campanha.bgColor
+    slot.children[0].style.backgroundSize = 'cover' 
+    
+    slot.children[1].innerHTML = campanha.levels[i][0].name
+    slot.children[1].style.fontFamily = campanha.fontFamily
+    slot.children[1].style.fontSize = campanha.fontSize
+
+    if(campanha.levels[i][0].locked){
+      slot.style.opacity = 0.6
+      slot.children[2].innerHTML = '🔒'
+    } else {
+      slot.style.opacity = 1
+      slot.children[2].innerHTML = ''
+    }
+
+    slot.addEventListener('click',()=>{
+
+      wave.setPool(campanha.levels[i])
+      if(campanha.levels[i][0].locked)return
+      chooseMonark()
+      closeMap()
+      current = i
+      console.log('current: ', current);
+    })
+    // console.log(_mission);
+  }
+}
+let current
+pickMonark.addEventListener("click", () => {
+  openMap(imperio);
+});
+
+// pickVelha.addEventListener("click", chooseMonark);
 
 let hasSpawned = false;
 
@@ -587,7 +680,7 @@ export function animatebossHealth() {
   let style = Math.abs((wave.enemiesKilled / wave.enemies) * 100 - 100) + "%";
   // console.log('style: ', style);
 
-  healthPointsP.textContent = "ONDA " + wave.id + ' DE ' + wave.numOfWaves;
+  healthPointsP.textContent = "ONDA " + wave.id + " DE " + wave.numOfWaves;
 
   progressP.style.width = style;
 }

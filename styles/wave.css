@@ -21,7 +21,7 @@
 
 }
 
-#popup-success-btn{
+#popup-success-btn, #popup-victory-btn{
   position: absolute;
   width: 70px;
   height: 40px;

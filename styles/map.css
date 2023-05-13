@@ -1,0 +1,78 @@
+#map {
+    position: absolute;
+    border: 1px solid #4304afbc;
+    border: 1px solid #333f81;
+    width: 1200px;
+    height: 800px;
+    background-color: rgb(72, 69, 69);
+    background-size: cover;
+    background-repeat: no-repeat;
+  
+    left: calc( 50% - 600px );
+    top: calc( 50% - 400px );
+    /* z-index: 10; */
+
+
+    display: grid;
+
+    grid-template-areas:
+      "a b c d e"
+      "f g h i j"
+      ;
+  
+      grid-template-rows: 50% 50%;
+      grid-template-columns: 20% 20% 20% 20% 20%
+
+
+     
+
+  }
+
+  
+
+  #mission-1{
+    grid-area: a;
+  }
+  #mission-2{
+    grid-area: b;
+  }
+  #mission-3{
+    grid-area: c;
+  }
+  #mission-4{
+    grid-area: d;
+  }
+  #mission-5{
+    grid-area: e;
+  }
+  #mission-6{
+    grid-area: f;
+  }
+  #mission-7{
+    grid-area: g;
+  }
+  #mission-8{
+    grid-area: h;
+  }
+  #mission-9{
+    grid-area: i;
+  }
+  #mission-10{
+    grid-area: j;
+  }
+
+  div[id^="mission-"] {
+    height: 300px;
+    width: 200px;
+    background-color: blueviolet;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    align-self: center;
+    justify-self: center;
+    font-family: lol;
+  }
+
+  

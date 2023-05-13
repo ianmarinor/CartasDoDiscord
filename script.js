@@ -25,6 +25,7 @@ import {
   wave,
   rDifficulty,
   animatebossHealth,
+  map
 } from "./boss.js";
 
 import {marketObj, closeMarket, openMarket}  from "./market.js"
@@ -2912,6 +2913,9 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyE") {
     if(marketObj.active){
       closeMarket()
+    }
+    if(map.active){
+      map.close()
     }
   }
 });
