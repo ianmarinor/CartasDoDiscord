@@ -468,7 +468,7 @@ function createMonark() {
       console.log("chance: ", chance);
 
 
-      chance = 5
+      chance = 4
       if (this._coolDown || this.hasTriggeredUlti) return;
       if (!per(chance)) return;
 
