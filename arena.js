@@ -1227,7 +1227,11 @@ let tank = {
       this._coolDownNatural = 11;
       this._doesAttack = false;
       clearInterval(this.interval);
-      audioPlayer("tank/tankUltReady.mp3", false, this._CHN, 0.3);
+
+      if(!this._dead){
+
+        audioPlayer("tank/tankUltReady.mp3", false, this._CHN, 0.3);
+      }
 
       return;
     }
@@ -1401,6 +1405,8 @@ let metaforando = {
     setTimeout(() => this.poder(), coolDownTreme);
   },
 };
+
+
 
 let liberdade = {
   cartaId: "liberdade",

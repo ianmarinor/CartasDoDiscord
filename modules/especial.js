@@ -1511,7 +1511,7 @@ export let especiais = {
           return
         }
 
-        this.ataque(this.dano);
+        this.ataque(this.dano, 0);
       }, timer);
     },
 
@@ -2656,6 +2656,7 @@ export let especiais = {
     _invHiddenButton: false,
     numOfTwelves: 0,
     customButtonEmoji: true,
+    requireAmmo:false,
 
     //AUDIO FILES
     _audioDespawnFiles: 4,
@@ -2665,7 +2666,7 @@ export let especiais = {
       invObj.map((x) => {
         if (x.Twelve && !x.isMonark && !x.hasHelpedSapato) {
           this.addBuff(6);
-          this.heal(2);
+          this.heal(12);
           x.hasHelpedSapato = true;
         }
       });
@@ -2677,7 +2678,7 @@ export let especiais = {
     },
 
     everyRound() {
-      this.heal(2);
+      
     },
 
     poder() {
@@ -2691,7 +2692,7 @@ export let especiais = {
         this.dano = 1200;
       }
 
-      this.dmg(this.hp - 1);
+      this.dmg(5);
     },
 
     nomeStyle: {
