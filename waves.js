@@ -34,85 +34,7 @@ export let imperio = {
         name: 'BUONGIORNO',
         completed: false,
         locked: false,
-
-        getNumOfEnemies() {
-          missOne.map((x) => {
-            if (!x.notWave) {
-              this.totalNumOfEnemies += x.enemiesTotal;
-            }
-          });
-        },
-
-        start() {
-          this.getNumOfEnemies();
-        },
-      },
-
-      {
-        id: 1,
-        enemiesTotal: 2,
-        enemies: [spawnMonark, spawnMenosCartas, spawnCamarada],
-        level: [1, 1],
-        money: 50,
-        ammo: 5,
-        cards: 10,
-        spawnChance: 100,
-      },
-
-      {
-        id: 2,
-        enemiesTotal: 2,
-        enemies: [spawnTank],
-        level: [1, 3],
-        money: 75,
-        ammo: 10,
-        cards: 15,
-        spawnChance: 100,
-      },
-
-      {
-        id: 3,
-        enemiesTotal: 2,
-        enemies: [spawnAwp, spawnSmoke],
-        level: [1, 2],
-        money: 200,
-        ammo: 10,
-        cards: 10,
-        spawnChance: 100,
-      },
-
-      {
-        id: 4,
-        enemiesTotal: 2,
-        enemies: [spawnMonark],
-        level: [1, 4],
-        money: 200,
-        ammo: 10,
-        cards: 10,
-        spawnChance: 100,
-      },
-
-      {
-        id: 5,
-        enemiesTotal: 2,
-        enemies: [spawnCamarada, spawnTank],
-        level: [3, 5],
-        money: 200,
-        ammo: 10,
-        cards: 10,
-        spawnChance: 100,
-      },
-    ],
-    // NIVEL 2
-    [
-      {
-        notWave: true,
-        numOfWaves: 5,
-        progress: 0,
-        totalNumOfEnemies: 0,
-        name: 'ATOS',
-        completed: false,
-        locked: true,
+        active: true,
 
         getNumOfEnemies() {
           missOne.map((x) => {
@@ -130,57 +52,163 @@ export let imperio = {
       {
         id: 1,
         enemiesTotal: 6,
-        enemies: [spawnMonark, spawnMenosCartas, spawnCamarada],
+        enemies: [spawnMonark, spawnMenosCartas],
         level: [1, 1],
-        money: 50,
+        money: 150,
         ammo: 5,
         cards: 10,
         spawnChance: 20,
+        name: 'GENESIS'
       },
 
       {
         id: 2,
-        enemiesTotal: 3,
-        enemies: [spawnTank],
-        level: [1, 3],
-        money: 75,
-        ammo: 10,
-        cards: 15,
-        spawnChance: 50,
+        enemiesTotal: 12,
+        enemies: [spawnAwp, spawnSmoke],
+        level: [1, 2],
+        money: 100,
+        ammo: 5,
+        cards: 5,
+        spawnChance: 90,
+        name: 'EMBOSCADA'
       },
 
       {
         id: 3,
-        enemiesTotal: 10,
-        enemies: [spawnAwp, spawnSmoke],
-        level: [1, 2],
-        money: 200,
-        ammo: 10,
-        cards: 10,
-        spawnChance: 33,
+        enemiesTotal: 60,
+        enemies: [spawnMonark],
+        level: [1, 5],
+        money: 75,
+        ammo: 1,
+        cards: 5,
+        spawnChance: 100,
+        name: 'CHUVA DE MONARK'
       },
 
       {
         id: 4,
+        enemiesTotal: 15,
+        enemies: [spawnMenosCartas, spawnSmoke],
+        level: [5, 5],
+        money: 200,
+        ammo: 15,
+        cards: 25,
+        spawnChance: 5,
+        name: 'DESERTO'
+      },
+
+
+      {
+        id: 5,
         enemiesTotal: 20,
-        enemies: [spawnMonark],
-        level: [1, 4],
+        enemies: [spawnCamarada, spawnTank],
+        level: [2, 4],
         money: 200,
         ammo: 10,
         cards: 10,
-        spawnChance: 80,
+        spawnChance: 90,
+        name: 'REVOLUÇÃO DOS TANKS'
+      },
+    ],
+    // NIVEL 2
+    [
+      {
+        notWave: true,
+        numOfWaves: 6,
+        progress: 0,
+        totalNumOfEnemies: 0,
+        name: 'ATOS',
+        completed: false,
+        locked: true,
+        active: true,
+
+        getNumOfEnemies() {
+          missOne.map((x) => {
+            if (!x.notWave) {
+              this.totalNumOfEnemies += x.enemiesTotal;
+            }
+          });
+        },
+
+        start() {
+          this.getNumOfEnemies();
+        },
+      },
+
+      {
+        id: 1,
+        enemiesTotal: 15,
+        enemies: [spawnAwp, spawnCamarada],
+        level: [5, 5],
+        money: 200,
+        ammo: 15,
+        cards: 25,
+        spawnChance: 2,
+        name: 'RAZORBACK'
+      },
+
+      
+
+      {
+        id: 2,
+        enemiesTotal: 15,
+        enemies: [spawnMenosCartas, spawnSmoke],
+        level: [5, 5],
+        money: 200,
+        ammo: 15,
+        cards: 25,
+        spawnChance: 2,
+        name: 'DESERTO II'
+      },
+
+      {
+        id: 3,
+        enemiesTotal: 18,
+        enemies: [spawnMenosCartas, spawnCamarada],
+        level: [3, 4],
+        money: 50,
+        ammo: 5,
+        cards: 30,
+        spawnChance: 95,
+        name: 'ROUBO'
+      },
+
+      {
+        id: 4,
+        enemiesTotal: 25,
+        enemies: [spawnCamarada, spawnTank],
+        level: [3, 3],
+        money: 200,
+        ammo: 10,
+        cards: 10,
+        spawnChance: 90,
+        name: 'REVOLUÇÃO DOS TANKS II'
       },
 
       {
         id: 5,
-        enemiesTotal: 18,
-        enemies: [spawnCamarada, spawnTank],
-        level: [3, 5],
+        enemiesTotal: 30,
+        enemies: [spawnCamarada, spawnTank, spawnSmoke, spawnAwp, spawnMonark, spawnMenosCartas],
+        level: [2, 5],
         money: 200,
         ammo: 10,
         cards: 10,
-        spawnChance: 60,
+        spawnChance: 90,
+        name: 'FEIJOADA COMPLETA'
       },
+
+      {
+        id: 6,
+        enemiesTotal: 70,
+        enemies: [spawnMonark],
+        level: [4, 5],
+        money: 75,
+        ammo: 5,
+        cards: 5,
+        spawnChance: 80,
+        name: 'CHUVA DE MONARK II'
+      },
+
     ],
     // NIVEL 3
     [
@@ -192,6 +220,8 @@ export let imperio = {
         name: 'BRIGAS',
         completed: false,
         locked: true,
+        active: false,
+        
 
         getNumOfEnemies() {
           missOne.map((x) => {
@@ -208,24 +238,26 @@ export let imperio = {
 
       {
         id: 1,
-        enemiesTotal: 6,
-        enemies: [spawnMonark, spawnMenosCartas, spawnCamarada],
-        level: [1, 1],
-        money: 50,
+        enemiesTotal: 40,
+        enemies: [spawnMenosCartas],
+        level: [3, 4],
+        money: 100,
         ammo: 5,
-        cards: 10,
-        spawnChance: 20,
+        cards: 20,
+        spawnChance: 95,
+        name: 'ROUBO II'
       },
 
       {
         id: 2,
-        enemiesTotal: 3,
-        enemies: [spawnTank],
+        enemiesTotal: 40,
+        enemies: [spawnSmoke,spawnSmoke,spawnCamarada,spawnMonark],
         level: [1, 3],
-        money: 75,
-        ammo: 10,
-        cards: 15,
+        money: 100,
+        ammo: 5,
+        cards: 20,
         spawnChance: 50,
+        name: 'NEBLINA'
       },
 
       {

@@ -75,4 +75,11 @@
     font-family: lol;
   }
 
-  
+  .selected:hover{
+    /* background-color: rgb(103, 10, 224); */
+    position: absolute;
+    margin-bottom: 40px;
+    cursor: pointer;
+    border: 1px solid yellow;
+
+  }

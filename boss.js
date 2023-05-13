@@ -288,6 +288,7 @@ export let wave = {
       this.cards = this.pool[this.id].cards;
       this.ammo = this.pool[this.id].ammo;
       this.spawnChance = this.pool[this.id].spawnChance;
+      this.name = this.pool[this.id].name
 
       console.log(this);
     }
@@ -621,19 +622,26 @@ function openMap(_mission) {
     if(campanha.levels[i][0].locked){
       slot.style.opacity = 0.6
       slot.children[2].innerHTML = '🔒'
+      // slot.style.cursor = 'default'
     } else {
       slot.style.opacity = 1
       slot.children[2].innerHTML = ''
+      // slot.style.cursor = 'pointer'
+      slot.classList.add('selected')
     }
 
     slot.addEventListener('click',()=>{
 
-      wave.setPool(campanha.levels[i])
-      if(campanha.levels[i][0].locked)return
-      // chooseMonark()
-      // closeMap()
+      if(campanha.levels[i][0].locked || campanha.levels[i][0].active == false )return
+      wave.setPool(_mission.levels[i])
+      chooseMonark()
+      closeMap()
       current = i
       console.log('current: ', current);
+
+      
+
+
     })
     // console.log(_mission);
   }
@@ -675,11 +683,14 @@ export function spawnBoss() {
 
 function bossDead() {}
 
+let waveNameP = document.getElementById('wave-name')
 export function animatebossHealth() {
   if (!boss) return;
   let style = Math.abs((wave.enemiesKilled / wave.enemies) * 100 - 100) + "%";
   // console.log('style: ', style);
 
+
+  waveNameP.textContent = wave.name
   healthPointsP.textContent = "ONDA " + wave.id + " DE " + wave.numOfWaves;
 
   progressP.style.width = style;
