@@ -102,7 +102,7 @@ body {
   /* display: flex; */
   /* flex-direction: column; */
   background-color: #121212;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
   user-select: none;
   justify-content: center;
 }
@@ -133,6 +133,7 @@ body {
 
 #pickMonark,
 #pickVelha,
+#pickTeste,
 #pick {
   
 
@@ -224,7 +225,7 @@ main {
     "dinheiro dicas da"
     "especial mao ad";
 
-    grid-template-columns: 15% 70% 15%;
+    grid-template-columns: 23% 70% 7%;
     grid-template-rows:  0.1fr 1fr 1fr 0.1fr 1fr;
 
     /* grid-template-rows: 20% 20% 20% 20% 20%; */
@@ -252,7 +253,7 @@ main {
       /* url(pics/bg.gif) */
       ;
   background-size: cover;
-  /* overflow-y: hidden; */
+  overflow-x: hidden;
   /* opacity: 0; */
 }
 
@@ -396,7 +397,8 @@ li {
 
 #ammoWrap {
   align-self: end;
-  justify-self: end;
+  justify-self: start;
+  margin-left: 97px;
 }
 
 #healthPlayerBuff {
@@ -540,9 +542,9 @@ li {
 }
 
 .arena, .crono {
-  height: 40px;
+  height: 25px;
   margin: 0.1em;
-  font-size: 1.5em;
+  font-size: 1.4em;
   color: wheat;
   text-align: center;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
@@ -550,10 +552,14 @@ li {
   grid-area: dinheiro;
   align-self: end;
   text-align: center;
+  width: 350px;
 }
 .crono {
-  align-self: start;
-
+  height: 40px;
+  font-size: 1.5em;
+  grid-area: texto;
+  align-self: end;
+  width: 120px;
 }
 
 

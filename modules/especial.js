@@ -867,6 +867,10 @@ export class Especial {
     //warning low hp
 
     this.lowHpWarning();
+
+    if (this._parentP == mao) {
+      this.tickMao();
+    }
   }
 
   ammoCheck() {
@@ -876,7 +880,7 @@ export class Especial {
       return true;
     }
   }
-
+  tickMao() {}
   lowHpWarning() {
     if (!this.hashp) return;
 
@@ -1302,11 +1306,14 @@ export let especiais = {
       this.targetPointSetter(580);
     },
 
-    tick() {
-      if (this._parentP == inv) {
+    tickMao() {
+      if (!this.integranteShowed) {
+        this.integranteShowed = true;
         this._cargoP.innerHTML = this._requiredIntegrante;
       }
+    },
 
+    tick() {
       let hasIntegrante = invObj.some(
         (x) => x._integrante == this._requiredIntegrante && !x.isMonark
       );
@@ -1387,12 +1394,14 @@ export let especiais = {
       this.targetPointSetter(570);
     },
 
-    tick() {
-      if (this._parentP == inv) {
-        // this._cargoP.style.visibility = "visible";
+    tickMao() {
+      if (!this.integranteShowed) {
+        this.integranteShowed = true;
         this._cargoP.innerHTML = this._requiredIntegrante;
       }
+    },
 
+    tick() {
       let hasIntegrante = invObj.some(
         (x) => x._integrante == this._requiredIntegrante && !x.isMonark
       );
@@ -1680,13 +1689,15 @@ export let especiais = {
 
     tick() {
       this.integranteRequiredCard();
+    },
 
-      this._parentP == inv
-        ? (this._cargoP.innerHTML =
-            this._requiredIntegrante.toUpperCase() +
-            "<br>" +
-            this._requiredIntegrante2.toUpperCase())
-        : false;
+    tickMao() {
+      
+
+      this._cargoP.innerHTML =
+        this._requiredIntegrante.toUpperCase() +
+        "<br>" +
+        this._requiredIntegrante2.toUpperCase();
     },
 
     poder() {
@@ -2440,7 +2451,7 @@ export let especiais = {
 
     cfg() {
       this.dano = gerarNumero(38, 55);
-      this.targetPointSetter(650);
+      this.targetPointSetter(680);
     },
 
     ult() {
@@ -2459,6 +2470,7 @@ export let especiais = {
         this._hasUlti = false;
         this.tank = false;
         this._thisCardP.classList.remove("piscar");
+        this.targetPointSetter(400);
       };
 
       this._invHiddenButton = true;

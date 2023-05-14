@@ -2514,15 +2514,20 @@ export let numCartas = {
     if (this.total == 0) {
       arenaP.textContent = " ⚠️ SUAS CARTAS ACABARAM ⚠️ ";
       arenaP.classList.add("warning-cards");
+      arenaP.style.fontSize = '1.1em'
+
     } else if (this.total < 16) {
       arenaP.textContent =
         " ⚠️ VOCÊ TEM SOMENTE " +
         this.total +
         (this.total == 1 ? " CARTA ⚠️" : " CARTAS ⚠️ ");
       arenaP.classList.add("warning-cards");
+      arenaP.style.fontSize = '1em'
     } else {
       arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
       arenaP.classList.remove("warning-cards");
+      arenaP.style.fontSize = '1.4em'
+      
     }
     //cronometro
     if (this.total == 0) {
@@ -2885,7 +2890,7 @@ export let timer = {
       if (this.cronoEnded()) {
         console.log("para para para");
         this.pause();
-        playerDead();
+        // playerDead();
       }
 
       this.print();

@@ -8,6 +8,13 @@ let btnDisplay = document.getElementById('btnEspecial')
 
 export let marketObj = {
     active: false,
+    _canBeOpened: false,
+
+    canBeOpened(_trigger){
+
+      this._canBeOpened = _trigger
+
+    },
 
     on(_trigger){
 
@@ -45,7 +52,7 @@ mainOpaque(false)
 moneyP.addEventListener('click', openMarket)
 document.addEventListener("keydown", (event) => {
     if (event.code == "KeyN") {
-      if(!marketObj.active){
+      if(!marketObj.active && marketObj._canBeOpened){
         openMarket()
       } else {
         closeMarket()

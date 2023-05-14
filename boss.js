@@ -17,8 +17,9 @@ import {
   areWakeUp,
   areFull,
 } from "/arena.js";
-import { spawnLiberdade, spawnTank, areNoEnemies, areEmpty } from "./arena.js";
+import { spawnLiberdade, spawnTank, areEnemiesFromWave, areEmpty } from "./arena.js";
 import { missOne, imperio, campanhaTeste } from "./waves.js";
+import { marketObj } from "./market.js";
 
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
@@ -270,6 +271,16 @@ export let wave = {
 
     this.summonTimeout = setTimeout(() => {
 
+      if(per(this.bossSpawnChance) && this.bossTotal > 0){
+
+
+        waveObj.boss[gerarNumero(0, waveObj.boss.length - 1)]();
+        this.bossTotal--
+        this.isSpawning = false
+        console.log("BOSS ADICIONADO");
+        return
+      }
+
       console.log('tempo de spawn', time);
       waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
       this.enemiesSpawned++;
@@ -294,7 +305,7 @@ export let wave = {
     // se a wave nao estiver carregada, carregue-a
     if (!this.waveLoaded) {
       //pega a wave da missao na memoria
-      if (!areEmpty()) return;
+      
       healthWrapP.classList.add("aparecer");
 
       this.overallEnemies = this.mission.totalNumOfEnemies;
@@ -327,6 +338,16 @@ export let wave = {
       this.spawnChance = this.mission.waves[this.id].spawnChance;
       this.name = this.mission.waves[this.id].name;
 
+      if(this.mission.waves[this.id].boss){
+
+        
+
+          this.boss = this.mission.waves[this.id].boss
+          this.bossTotal = this.mission.waves[this.id].bossTotal
+          this.bossLevel = this.mission.waves[this.id].bossLevel
+          this.bossSpawnChance = this.mission.waves[this.id].bossSpawnChance
+      }
+
       if (this.numOfWaves <= this.id + 1) {
         this.lastWave = true;
         console.log("THIS IS THE LASTWAVE");
@@ -353,7 +374,7 @@ export let wave = {
 
     //se acabou a onda
     if (this.enemiesToGo <= 0) {
-      if (!areNoEnemies()) {
+      if (areEnemiesFromWave()) {
         console.log(" 0 mobs para spawnar, mas faltam mobs para matar ");
         return;
       }
@@ -421,8 +442,10 @@ export let wave = {
       this.ended = true;
       return;
 
-      // pop up que indica vitoria da wave
-    } else if (!hasMobFromWave && this.enemiesToGo <= 0) {
+    } 
+    
+    // pop up que indica vitoria da wave
+    if (!hasMobFromWave && this.enemiesToGo <= 0 && !this.lastWave) {
       mainOpaque();
       this.ended = true;
       // console.trace();
@@ -712,6 +735,7 @@ function openMap(_campain) {
       closeMap();
       current = i;
       console.log("current: ", current);
+      marketObj.canBeOpened(true)
     });
     // console.log(_campain);
   }

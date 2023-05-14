@@ -178,8 +178,8 @@ export function areReveal() {
   updatePlacarInimigo();
 }
 
-export function areNoEnemies() {
-  return areObj.every((x) => x.empty);
+export function areEnemiesFromWave() {
+  return areObj.some((x) => x.isPartOfWave);
 }
 
 export function areFull() {
@@ -432,11 +432,7 @@ class Inimigo {
     }
 
     if(this.miniBoss){
-     if(per(15)){
-      this._level = 4 
-     } else {
-      this._level = gerarNumero(1,3)
-     }
+     this._level = gerarNumero(wave.bossLevel[0],wave.bossLevel[1])
     }
 
     this.levelPrint();
@@ -1784,7 +1780,7 @@ document.addEventListener("keydown", (event) => {
     // console.log(wavePool);
     // wavePool[0].enemies[gerarNumero(0 , 1)]();
     // wave.popUpSuccess();
-    console.log("wave: ", areNoEnemies());
+   
   }
 });
 
@@ -1805,8 +1801,17 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyK") {
     if(debug.on){
-      arenaKill()
-      console.log('killl arena');
+      // arenaKill()
+      // console.log('killl arena');
+
+      areObj.map(
+        (x)=>{
+          if(!x.empty && !x.miniBoss){
+            x.kill()
+          }
+        }
+      )
+
     }
     
   }

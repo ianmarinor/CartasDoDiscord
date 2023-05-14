@@ -67,20 +67,26 @@ export let campanhaTeste = {
 
       waves: [
         {
-          enemiesTotal: 12,
+          enemiesTotal: 15,
           enemies: [spawnMonark, spawnMenosCartas],
           level: [1, 1],
+
+          boss:[spawnLiberdade],
+          bossTotal: 1,
+          bossLevel: [4,5],
+          bossSpawnChance: 50,
+
           money: 150,
           ammo: 5,
           cards: 10,
           spawnChance: 20,
           name: "GENESIS",
           timeBeforeNextWave: [5, 7],
-          spawnTime: [4, 7],
+          spawnTime: [0.5, 1],
         },
 
         {
-          enemiesTotal: 18,
+          enemiesTotal: 3,
           enemies: [spawnAwp, spawnSmoke],
           level: [1, 1],
           money: 100,
@@ -89,7 +95,7 @@ export let campanhaTeste = {
           spawnChance: 90,
           name: "EMBOSCADA",
           timeBeforeNextWave: [10, 11],
-          spawnTime: [2, 5],
+          spawnTime: [2, 2],
         },
 
         {
@@ -105,7 +111,7 @@ export let campanhaTeste = {
           spawnTime: [0.5, 3],
         },
         {
-          enemiesTotal: 50,
+          enemiesTotal: 3,
           enemies: [spawnMonark],
           level: [1, 5],
           money: 75,
@@ -143,12 +149,15 @@ export let imperio = {
       completed: false,
       locked: false,
       active: true,
-
+    
       waves: [
         {
           enemiesTotal: 18,
           enemies: [spawnMonark, spawnTank, spawnMenosCartas],
+          boss:[],
+          bossTotal: 0,
           level: [1, 1],
+          bossLevel: [],
           money: 150,
           ammo: 5,
           cards: 10,
@@ -161,6 +170,9 @@ export let imperio = {
         {
           enemiesTotal: 12,
           enemies: [spawnAwp, spawnSmoke],
+          boss:[],
+          bossTotal: 0,
+          bossLevel: [],
           level: [1, 1],
           money: 100,
           ammo: 5,
@@ -174,6 +186,9 @@ export let imperio = {
         {
           enemiesTotal: 30,
           enemies: [spawnMonark],
+          boss:[],
+          bossTotal: 0,
+          bossLevel: [],
           level: [1, 2],
           money: 75,
           ammo: 1,
@@ -188,6 +203,12 @@ export let imperio = {
           enemiesTotal: 6,
           enemies: [spawnMenosCartas, spawnSmoke],
           level: [5, 5],
+          
+          boss:[spawnLiberdade],
+          bossTotal: 3,
+          bossLevel: [1,1],
+          bossSpawnChance: 20,
+
           money: 200,
           ammo: 15,
           cards: 25,
@@ -201,6 +222,12 @@ export let imperio = {
           enemiesTotal: 30,
           enemies: [spawnCamarada, spawnTank],
           level: [1, 3],
+
+          boss:[spawnVitor],
+          bossTotal: 1,
+          bossLevel: [1,1],
+          bossSpawnChance: 10,
+
           money: 200,
           ammo: 10,
           cards: 10,
@@ -232,6 +259,13 @@ export let imperio = {
           cards: 25,
           spawnChance: 20,
           name: "RAZORBACK",
+          spawnTime: [5, 10],
+
+          boss:[spawnLiberdade],
+          bossTotal: 2,
+          bossLevel: [1,2],
+          bossSpawnChance: 10,
+          timeBeforeNextWave: [1, 3],
         },
 
         {
@@ -244,6 +278,12 @@ export let imperio = {
           spawnChance: 2,
           name: "DESERTO II",
           spawnTime: [3, 6],
+
+          boss:[spawnLiberdade, spawnVitor],
+          bossTotal: 4,
+          bossLevel: [1,1],
+          bossSpawnChance: 5,
+          timeBeforeNextWave: [11, 13],
         },
 
         {
@@ -256,6 +296,7 @@ export let imperio = {
           spawnChance: 95,
           name: "ROUBO",
           spawnTime: [5, 12],
+          timeBeforeNextWave: [3,20],
         },
 
         {
@@ -268,10 +309,16 @@ export let imperio = {
           spawnChance: 90,
           name: "REVOLUÇÃO DOS TANKS II",
           spawnTime: [3, 13],
+
+          boss:[spawnLiberdade],
+          bossTotal: 4,
+          bossLevel: [1,2],
+          bossSpawnChance: 10,
+          timeBeforeNextWave: [30,90],
         },
 
         {
-          enemiesTotal: 30,
+          enemiesTotal: 40,
           enemies: [
             spawnCamarada,
             spawnTank,
@@ -286,6 +333,14 @@ export let imperio = {
           cards: 10,
           spawnChance: 90,
           name: "FEIJOADA COMPLETA",
+
+          boss:[spawnLiberdade,spawnVitor],
+          bossTotal: 3,
+          bossLevel: [1,1],
+          bossSpawnChance: 10,
+          spawnTime: [7, 20],
+          timeBeforeNextWave: [30,35],
+
         },
 
         {
@@ -297,6 +352,7 @@ export let imperio = {
           cards: 5,
           spawnChance: 80,
           name: "CHUVA DE MONARK II",
+          spawnTime: [0.5, 5],
         },
       ],
     },
