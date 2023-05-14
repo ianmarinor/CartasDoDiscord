@@ -29,8 +29,9 @@ import {
   audioPlayer,
   mainOpaque,
 } from "../script.js";
-import { boss } from "../boss.js";
+import { boss, wave } from "../boss.js";
 import { areObj } from "../arena.js";
+
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
 
@@ -3004,6 +3005,10 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 2);
 
+      if(wave.campain.id == 1 && wave.mission.levelId < 1){
+        num = 1
+      }
+
       if (num == 1) {
         especial = objBinder(especiais.tenica);
       } else if (num == 2) {
@@ -3018,6 +3023,11 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 4);
 
+      if(wave.campain.id == 1 && wave.mission.levelId < 1){
+        num = 2
+      }
+
+
       if (!true) {
         especial = objBinder(especiais.dva);
       } else if (num == 1) {
@@ -3030,6 +3040,7 @@ export function escolherEspecial(teste) {
         especial = objBinder(especiais.sentry);
       }
 
+
       //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
       raridade = raridades.cavaleiro;
@@ -3037,6 +3048,12 @@ export function escolherEspecial(teste) {
       let num;
 
       num = gerarNumero(1, 6);
+
+
+      if(wave.campain.id == 1 && wave.mission.levelId < 1){
+        num = 3
+      }
+
 
       if (!true) {
         especial = objBinder(especiais.sapato);
@@ -3054,6 +3071,8 @@ export function escolherEspecial(teste) {
         especial = objBinder(especiais.sapato);
       }
 
+      
+
       //CAMPONESES
     } else {
       raridade = raridades.campones;
@@ -3061,6 +3080,10 @@ export function escolherEspecial(teste) {
       let num;
 
       num = gerarNumero(1, 3);
+
+      if(wave.campain.id == 1 && wave.mission.levelId < 2){
+        num = 1
+      }
 
       if (num == 1) {
         especial = objBinder(especiais.maisCartas);
@@ -3075,6 +3098,8 @@ export function escolherEspecial(teste) {
     especial = especiais.notSpecial;
   }
 }
+
+
 
 function constrEspecial() {}
 

@@ -1775,11 +1775,12 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
   }
 }
 
+
+
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    // console.log(wavePool);
-    // wavePool[0].enemies[gerarNumero(0 , 1)]();
-    // wave.popUpSuccess();
+    
+    
    
   }
 });

@@ -3,7 +3,7 @@ export let menosClickBlueprint =
   '<div id="-click" class="monark">' +
   '<div class="nameAndCidadeWrapper">' +
   '<p class="nome-inimigo">' +
-  "- CARTAS -" +
+  "ROUBA-CARTAS" +
   "</p>" +
   "</div>" +
   '<div class="retrato" style="display: block; background-image: ' +

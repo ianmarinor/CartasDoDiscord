@@ -159,22 +159,7 @@ class Boss {
   }
 
   summon() {
-    // let delay = gerarNumero(750, 1800);
-    // let chance
-    // if(rDifficulty.value > 50){
-    // chance = 5
-    // } else {
-    //   chance = 10
-    // }
-    // if (per(chance)) {
-    //   setTimeout(
-    //     () => {
-    //       let obj =  populateArena()
-    //       obj ? obj.isInvisible = true : 0
-    //     },
-    //     delay
-    //   );
-    // }
+   
   }
 
   heal(n) {
@@ -254,8 +239,9 @@ export let wave = {
     this.progress = (this.overallEnemiesKilled / this.overallEnemies) * 100;
   },
 
-  setPool(_pool) {
+  setPool(_pool,_campain) {
     this.mission = _pool;
+    this.campain = _campain
   },
 
   startSpawning() {
@@ -337,6 +323,8 @@ export let wave = {
       this.ammo = this.mission.waves[this.id].ammo;
       this.spawnChance = this.mission.waves[this.id].spawnChance;
       this.name = this.mission.waves[this.id].name;
+      this.bannedCard = this.mission.waves[this.id].bannedCard
+      this.levelId = this.mission.levelId
 
       if(this.mission.waves[this.id].boss){
 
@@ -730,7 +718,7 @@ function openMap(_campain) {
         loadedCampain.levels[i].active == false
       )
         return;
-      wave.setPool(_campain.levels[i]);
+      wave.setPool(_campain.levels[i],_campain);
       chooseMonark();
       closeMap();
       current = i;

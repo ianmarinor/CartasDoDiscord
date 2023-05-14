@@ -1,5 +1,8 @@
 @media screen and (max-width: 1920px) {
-  
+  body {
+    display: none;
+    opacity: 0;
+  }
 
   main {
     opacity: 1;
@@ -7,17 +10,13 @@
     height: 1200px;
 
     grid-template-areas:
-    "d boss ca"
-    "f are ac"
-    "texto inv sa"
-    "dinheiro dicas da"
-    "especial mao ad";
+      "d boss ca"
+      "f are ac"
+      "texto inv sa"
+      "dinheiro dicas da"
+      "especial mao ad";
 
     grid-template-columns: 23% 70% 7%;
-    grid-template-rows:  0.1fr 1fr 1fr 0.1fr 1fr;
-    
+    grid-template-rows: 0.1fr 1fr 1fr 0.1fr 1fr;
   }
-
-  
-
 }

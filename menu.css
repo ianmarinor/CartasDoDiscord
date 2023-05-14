@@ -16,7 +16,7 @@ main {
 }
 a {
   /* background-color: black; */
-  font-size: 100px;
+  font-size: 50px;
   margin-left: 120px;
 }
 a:last-of-type:hover,
@@ -28,8 +28,8 @@ a:last-of-type {
   /* font-family: 'verdana'; */
 
   background-image: url(pics/fundoTenica.gif);
-  height: calc(var(--tamanhoCartaHeight) * 3);
-  width: calc(var(--tamanhoCartaWidth) * 3);
+  height: calc(var(--tamanhoCartaHeight) * 2.1);
+  width: calc(var(--tamanhoCartaWidth) * 2.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +38,7 @@ a:last-of-type {
   position: relative;
   border: 2px solid #dde630;
   font-weight: 900;
-  font-size: 126%;
+  font-size: 100%;
   color: rgb(0, 0, 0);
   background-repeat: no-repeat;
   background-size: cover;
@@ -61,8 +61,8 @@ a:last-of-type {
     url(pics/fundoCreeper.png);
 
   font-family: minecraft;
-  height: calc(var(--tamanhoCartaHeight) * 3);
-  width: calc(var(--tamanhoCartaWidth) * 3);
+  height: calc(var(--tamanhoCartaHeight) * 2.1);
+  width: calc(var(--tamanhoCartaWidth) * 2.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,8 +86,8 @@ a:last-of-type {
 }
 #spy{
  
-  height: calc(var(--tamanhoCartaHeight) * 3);
-  width: calc(var(--tamanhoCartaWidth) * 3);
+  height: calc(var(--tamanhoCartaHeight) * 2.1);
+  width: calc(var(--tamanhoCartaWidth) * 2.1);
   background-repeat: no-repeat;
   background-size: cover;
   transform: rotate(8deg);
@@ -95,6 +95,6 @@ a:last-of-type {
 }
 
 #spy > *{
-  font-size: 2em;
+  font-size: 1.8em;
 }
 

@@ -12,6 +12,8 @@ import {
   smokeOnInv,
   areReveal,
   chooseTargetArena,
+  spawnLiberdade,
+  spawnVitor
 } from "./arena.js";
 
 import { especiais, especial, Especial } from "./modules/especial.js";

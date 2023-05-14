@@ -37,9 +37,21 @@ class Campanha {
       missão.waves.map((x, i) => (x.id = i));
     }
   }
+
+  getLevelId(){
+    for (let i = 0; i < this.levels.length; i++) {
+      let missão = this.levels[i];
+      
+      missão.levelId = i
+      
+    }
+  }
+  
+
   start() {
     this.getNumberOfEnemies();
     this.getNumberOfWaves();
+    this.getLevelId();
   }
 }
 
@@ -48,6 +60,7 @@ export let campanhaTeste = {
   bgColor: "white",
   fontFamily: "lol",
   fontSize: "2em",
+  campainId: 0,
 
   setMissionPics(_index) {
     return 'url("/pics/imperio/' + _index + '.png")';
@@ -83,6 +96,8 @@ export let campanhaTeste = {
           name: "GENESIS",
           timeBeforeNextWave: [5, 7],
           spawnTime: [0.5, 1],
+
+          bannedCard:[],
         },
 
         {
@@ -133,6 +148,7 @@ export let imperio = {
   bgColor: "#333f81",
   fontFamily: "imperio",
   fontSize: "2em",
+  id: 1,
 
   setMissionPics(_index) {
     return 'url("/pics/imperio/' + _index + '.png")';
@@ -152,8 +168,8 @@ export let imperio = {
     
       waves: [
         {
-          enemiesTotal: 18,
-          enemies: [spawnMonark, spawnTank, spawnMenosCartas],
+          enemiesTotal: 12,
+          enemies: [spawnMonark, spawnMenosCartas],
           boss:[],
           bossTotal: 0,
           level: [1, 1],
@@ -163,8 +179,8 @@ export let imperio = {
           cards: 10,
           spawnChance: 20,
           name: "GENESIS",
-          spawnTime: [7, 13],
-          timeBeforeNextWave: [7, 12],
+          spawnTime: [15, 30],
+          timeBeforeNextWave: [12, 25],
         },
 
         {
@@ -179,23 +195,23 @@ export let imperio = {
           cards: 5,
           spawnChance: 90,
           name: "EMBOSCADA",
-          spawnTime: [3, 8],
-          timeBeforeNextWave: [2, 7],
+          spawnTime: [80, 10],
+          timeBeforeNextWave: [10, 17],
         },
 
         {
-          enemiesTotal: 30,
+          enemiesTotal: 20,
           enemies: [spawnMonark],
           boss:[],
           bossTotal: 0,
           bossLevel: [],
-          level: [1, 2],
+          level: [1, 1],
           money: 75,
           ammo: 1,
           cards: 5,
           spawnChance: 100,
           name: "CHUVA DE MONARK",
-          spawnTime: [0.5, 4],
+          spawnTime: [2, 6],
           timeBeforeNextWave: [20, 40],
         },
 
@@ -214,14 +230,14 @@ export let imperio = {
           cards: 25,
           spawnChance: 5,
           name: "DESERTO",
-          spawnTime: [15, 30],
-          timeBeforeNextWave: [3, 7],
+          spawnTime: [20, 40],
+          timeBeforeNextWave: [10, 17],
         },
 
         {
-          enemiesTotal: 30,
+          enemiesTotal: 15,
           enemies: [spawnCamarada, spawnTank],
-          level: [1, 3],
+          level: [1, 1],
 
           boss:[spawnVitor],
           bossTotal: 1,
@@ -233,7 +249,7 @@ export let imperio = {
           cards: 10,
           spawnChance: 90,
           name: "REVOLUÇÃO DOS TANKS",
-          spawnTime: [2.5, 9],
+          spawnTime: [11, 20],
         },
       ],
     },

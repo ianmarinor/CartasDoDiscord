@@ -1,2 +1,13 @@
 
+@media screen and (max-width: 1000px) {
   
+
+    body {
+      overflow-y: visible;
+      height: 100%;
+      width: 100%;
+    }
+  
+    
+  
+  }
