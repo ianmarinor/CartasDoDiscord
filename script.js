@@ -31,7 +31,7 @@ import {
 import { marketObj, closeMarket, openMarket } from "./market.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alpha 1.0.3";
+let versao = "Alfa 1.2";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -2890,7 +2890,7 @@ export let timer = {
       if (this.cronoEnded()) {
         console.log("para para para");
         this.pause();
-        // playerDead();
+        playerDead();
       }
 
       this.print();
