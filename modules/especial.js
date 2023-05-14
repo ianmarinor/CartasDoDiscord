@@ -1833,6 +1833,11 @@ export let especiais = {
         this._thisCardP.style.border = "3px solid lime";
       }
 
+      if(true){
+        this.dano = gerarNumero(11000, 15000)
+        this.setHp(999)
+      }
+
       this._cargoP.textContent = "⌚";
       this._cargoP.style.fontSize = "2em";
 

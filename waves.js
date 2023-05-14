@@ -67,7 +67,7 @@ export let imperio = {
 
       waves: [
         {
-          enemiesTotal: 6,
+          enemiesTotal: 3,
           enemies: [spawnMonark, spawnMenosCartas],
           level: [1, 1],
           money: 150,
@@ -75,10 +75,11 @@ export let imperio = {
           cards: 10,
           spawnChance: 20,
           name: "GENESIS",
+          timeBeforeNextWave:[10,15]
         },
 
         {
-          enemiesTotal: 12,
+          enemiesTotal:3,
           enemies: [spawnAwp, spawnSmoke],
           level: [1, 2],
           money: 100,
@@ -86,10 +87,11 @@ export let imperio = {
           cards: 5,
           spawnChance: 90,
           name: "EMBOSCADA",
+          timeBeforeNextWave:[10,15]
         },
 
         {
-          enemiesTotal: 60,
+          enemiesTotal: 3,
           enemies: [spawnMonark],
           level: [1, 5],
           money: 75,
@@ -97,10 +99,11 @@ export let imperio = {
           cards: 5,
           spawnChance: 100,
           name: "CHUVA DE MONARK",
+          timeBeforeNextWave:[6,9]
         },
 
         {
-          enemiesTotal: 15,
+          enemiesTotal: 3,
           enemies: [spawnMenosCartas, spawnSmoke],
           level: [5, 5],
           money: 200,
@@ -108,10 +111,11 @@ export let imperio = {
           cards: 25,
           spawnChance: 5,
           name: "DESERTO",
+          timeBeforeNextWave:[5,10]
         },
 
         {
-          enemiesTotal: 20,
+          enemiesTotal: 3,
           enemies: [spawnCamarada, spawnTank],
           level: [2, 4],
           money: 200,
@@ -119,6 +123,7 @@ export let imperio = {
           cards: 10,
           spawnChance: 90,
           name: "REVOLUÇÃO DOS TANKS",
+          
         },
       ],
     },

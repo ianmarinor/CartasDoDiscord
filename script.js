@@ -2253,7 +2253,11 @@ export function tudo() {
     poderBoss();
     runEveryRound();
 
-    wave.getWave();
+    
+    if( rodadas == 10){
+      wave.getWave()
+    }
+    
   } else {
   }
 }
@@ -2399,7 +2403,7 @@ function tick() {
     novaCarta.place();
 
     hpPlayer.playerP();
-    animatebossHealth();
+    
 
     wave.tick();
   }, 16);

@@ -18,7 +18,7 @@ import {
   areFull,
 } from "/arena.js";
 import { spawnLiberdade, spawnTank, areNoEnemies, areEmpty } from "./arena.js";
-import {  missOne, imperio } from "./waves.js";
+import { missOne, imperio } from "./waves.js";
 
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
@@ -227,8 +227,6 @@ class Boss {
   }
 }
 
-
-
 export let wave = {
   mission: undefined,
   id: -1,
@@ -236,14 +234,16 @@ export let wave = {
   enemiesSpawned: undefined,
   enemiesToGo: undefined,
   enemiesKilled: 0,
-  waveOn: false,
+  waveLoaded: false,
   lastWave: false,
   overallEnemiesKilled: 0,
   overallEnemies: 0,
   progress: 0,
   enemiesLevel: [],
+  timeBeforeNextWave: 5000,
 
   tick() {
+    animatebossHealth();
     this.getProgress();
   },
 
@@ -255,58 +255,86 @@ export let wave = {
     this.mission = _pool;
   },
 
+  startSpawning() {
+    this.isSpawning = true;
+
+    let spawnTime = 500;
+
+    this.summonInterval = setInterval(() => {
+      this.run();
+      // console.log("TENTEI SUMMONAR UM MOB");
+    }, spawnTime);
+
+    // console.log("ESTA SPAWNANDO MOBS");
+  },
+
+  betweenWavesCoolDown() {
+    setTimeout(() => {
+      this.getWave();
+    }, this.timeBeforeNextWave);
+  },
+
   // toda rodada essa função é chamada
   getWave() {
-    console.log('LOEADED MISSIO' + this);
-    if (!boss) return;
-
-    // se a wave estiver acontecendo
-    if (this.waveOn) {
-      this.run();
-
-      // se a wave não estiver acontecendo chame uma wave do pool
-    } else {
-      //pega a wave do pol
+    // se a wave nao estiver carregada, carregue-a
+    if (!this.waveLoaded) {
+      //pega a wave da missao na memoria
       if (!areEmpty()) return;
-
-      // this.mission[0].start();
+      healthWrapP.classList.add("aparecer");
 
       this.overallEnemies = this.mission.totalNumOfEnemies;
       this.numOfWaves = this.mission.numOfWaves;
       this.id++;
 
-      if (this.numOfWaves == this.id) {
-        this.lastWave = true;
+      let timeBeforeArr = this.mission.waves[this.id].timeBeforeNextWave;
+      if (!timeBeforeArr) {
+        timeBeforeArr = [10, 15];
       }
+
+      this.timeBeforeNextWave =
+        gerarNumero(timeBeforeArr[0], timeBeforeArr[1]) * 1000;
 
       this.enemiesLevel = this.mission.waves[this.id].level;
       this.enemies = this.mission.waves[this.id].enemiesTotal;
       this.enemiesSpawned = 0;
       this.enemiesToGo = this.enemies;
-      this.waveOn = true;
+      this.waveLoaded = true;
       this.enemiesKilled = 0;
       this.money = this.mission.waves[this.id].money;
       this.cards = this.mission.waves[this.id].cards;
       this.ammo = this.mission.waves[this.id].ammo;
       this.spawnChance = this.mission.waves[this.id].spawnChance;
-      this.name = this.mission.waves[this.id].name
+      this.name = this.mission.waves[this.id].name;
 
+      console.log("ACABEI DE PEGAR UMA NOVA ONDA DA MISSAO COM getWave()");
       console.log(this);
+      if (this.numOfWaves <= this.id + 1) {
+        this.lastWave = true;
+        console.log("THIS IS THE LASTWAVE");
+      }
+
+      wave.startSpawning();
     }
   },
 
   run() {
     //se acabou a onda
     if (this.enemiesToGo <= 0) {
-      if (!areNoEnemies()) return;
-      this.waveOn = false;
-
+      if (!areNoEnemies()) {
+        console.log(" 0 mobs para spawnar, mas faltam mobs para matar ");
+        return;
+      }
+      this.waveLoaded = false;
+      clearInterval(this.summonInterval);
+      this.isSpawning = false;
       console.log(this);
+      healthWrapP.classList.remove("aparecer");
+
       console.log("WAVE ENDED");
 
       return;
       // se nao acabou a onda e tem espaço
-    } else if (!areFull() && per(this.spawnChance)) {
+    } else if (!areFull()) {
       let waveObj = this.mission.waves[this.id];
 
       waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
@@ -321,6 +349,7 @@ export let wave = {
   },
 
   popUpVictory() {
+    clearInterval(this.summonInterval);
     mainOpaque();
 
     let popUpP = document.createElement("div");
@@ -331,84 +360,83 @@ export let wave = {
     button.id = "popup-victory-btn";
     popUpP.appendChild(button);
     button.addEventListener("click", () => {
-
-      if(current + 1 <= 9){
-        window.location.assign('index.html')
-
-        
-      
+      if (current + 1 <= 9) {
         console.log(current + 1);
-        loadedCampain.levels[ parseInt(current) + 1][0].locked = false
+        loadedCampain.levels[parseInt(current) + 1].locked = false;
+        window.location.assign("index.html");
         // console.log(imperio);
-
       }
-      localStorage.setItem("mySave", JSON.stringify(loadedCampain))
-      console.log(' ----------- THERE IS SAVE ----------- ');
-     console.log(JSON.parse(localStorage.getItem('mySave')));
-    //  console.log(loadedCampain);
-     console.log(' ----------- THERE IS SAVE ----------- ');
-      
+      localStorage.setItem("mySave", JSON.stringify(loadedCampain));
+      console.log(" ----------- THERE IS SAVE ----------- ");
+      console.log(JSON.parse(localStorage.getItem("mySave")));
+      //  console.log(loadedCampain);
+      console.log(" ----------- THERE IS SAVE ----------- ");
     });
-
   },
 
   popUpSuccess() {
-    if (this.lastWave) {
+
+    if(this.ended)return
+    
+    let hasMobFromWave = areObj.some((x) => x.isPartOfWave);
+
+    // popUpFimDoJogo
+    if (this.lastWave && areEmpty()) {
       this.popUpVictory();
+      this.ended = true
       return;
+
+      // pop up que indica vitoria da wave
+    } else if (!hasMobFromWave && this.enemiesToGo <= 0) {
+      mainOpaque();
+      this.ended = true
+      console.trace();
+
+      let popUpP = document.createElement("div");
+      popUpP.id = "popup-success-wave";
+      bodyP.appendChild(popUpP);
+
+      let button = document.createElement("button");
+      button.id = "popup-success-btn";
+      popUpP.appendChild(button);
+      button.addEventListener("click", () => {
+        console.log(this);
+        money.add(this.money);
+        ammo.add(this.ammo);
+        numCartas.add(this.cards);
+
+        popUpP.remove();
+        this.betweenWavesCoolDown();
+        mainOpaque(false);
+        this.ended = false
+      });
+
+      let wavepassed = document.createElement("div");
+      wavepassed.id = "popup-success-wavepassed";
+      popUpP.appendChild(wavepassed);
+      let onda = this.id + 1;
+      wavepassed.innerHTML = "ONDA " + onda + " COMPLETADA";
+
+      let reward = document.createElement("div");
+      reward.id = "popup-success-reward";
+      popUpP.appendChild(reward);
+      // reward.innerHTML = 'ONDA ' + this.id+ ' COMPLETADA'
+
+      let moneyP = document.createElement("div");
+      moneyP.id = "popup-success-moneyP";
+      reward.appendChild(moneyP);
+      moneyP.innerHTML = "💰" + this.money;
+
+      let ammoP = document.createElement("div");
+      ammoP.id = "popup-success-ammoP";
+      reward.appendChild(ammoP);
+      ammoP.innerHTML = "⚔️" + this.ammo;
+
+      let cardsP = document.createElement("div");
+      cardsP.id = "popup-success-cardsP";
+      reward.appendChild(cardsP);
+      cardsP.innerHTML = "🃏" + this.cards;
     }
-
-    // pop up que indica vitoria da wave
-    mainOpaque();
-
-    let popUpP = document.createElement("div");
-    popUpP.id = "popup-success-wave";
-    bodyP.appendChild(popUpP);
-
-    let button = document.createElement("button");
-    button.id = "popup-success-btn";
-    popUpP.appendChild(button);
-    button.addEventListener("click", () => {
-      console.log(this);
-      money.add(this.money);
-      ammo.add(this.ammo);
-      numCartas.add(this.cards);
-
-      if (this.lastWave) {
-        this.popUpVictory();
-      } else {
-        this.getWave();
-        this.getWave();
-      }
-
-      popUpP.remove();
-      mainOpaque(false);
-    });
-
-    let wavepassed = document.createElement("div");
-    wavepassed.id = "popup-success-wavepassed";
-    popUpP.appendChild(wavepassed);
-    wavepassed.innerHTML = "ONDA " + this.id + " COMPLETADA";
-
-    let reward = document.createElement("div");
-    reward.id = "popup-success-reward";
-    popUpP.appendChild(reward);
-    // reward.innerHTML = 'ONDA ' + this.id+ ' COMPLETADA'
-
-    let moneyP = document.createElement("div");
-    moneyP.id = "popup-success-moneyP";
-    reward.appendChild(moneyP);
-    moneyP.innerHTML = "💰" + this.money;
-
-    let ammoP = document.createElement("div");
-    ammoP.id = "popup-success-ammoP";
-    reward.appendChild(ammoP);
-    ammoP.innerHTML = "⚔️" + this.ammo;
-
-    let cardsP = document.createElement("div");
-    cardsP.id = "popup-success-cardsP";
-    reward.appendChild(cardsP);
-    cardsP.innerHTML = "🃏" + this.cards;
   },
 };
 
@@ -449,6 +477,7 @@ function createMonark() {
     },
 
     ult(absolute) {
+      return;
       let ultis = () => {
         let sorteio = gerarNumero(1, 2);
         // let sorteio = 1
@@ -470,8 +499,7 @@ function createMonark() {
       if (chance > 15 || absolute) chance = 15;
       console.log("chance: ", chance);
 
-
-      chance = 4
+      chance = 4;
       if (this._coolDown || this.hasTriggeredUlti) return;
       if (!per(chance)) return;
 
@@ -569,36 +597,31 @@ let popUpP = document.createElement("div");
 export let map = {
   active: false,
 
-  close(){
-    closeMap()
-  }
+  close() {
+    closeMap();
+  },
+};
 
+function closeMap() {
+  popUpP.remove();
+  mainOpaque(false);
+  map.active = false;
 }
-
-function closeMap(){
-  popUpP.remove()
-  mainOpaque(false)
-  map.active = false
-}
-let loadedCampain
+let loadedCampain;
 
 function openMap(_campain) {
-  console.log('ABRIR O MAPA');
- 
-  if(JSON.parse(localStorage.getItem('mySave'))){
-     loadedCampain = JSON.parse(localStorage.getItem('mySave'))
-     console.log(' ----------- THIS IS MY loadedCampain SAVE  ----------- ');
-     console.log(JSON.parse(localStorage.getItem('mySave')));
-     
+  console.log("ABRIR O MAPA");
 
+  if (JSON.parse(localStorage.getItem("mySave"))) {
+    loadedCampain = JSON.parse(localStorage.getItem("mySave"));
+    console.log(" ----------- THIS IS MY loadedCampain SAVE  ----------- ");
+    console.log(JSON.parse(localStorage.getItem("mySave")));
   } else {
-     loadedCampain = _campain
-     console.log(' NO SAVE JUST CREATED NEW');
-
+    loadedCampain = _campain;
+    console.log(" NO SAVE JUST CREATED NEW");
   }
 
-
-  map.active = true
+  map.active = true;
   popUpP.id = "map";
   // let missionWrapP = document.getElementById('missionsWrap')
   let mapP = document.getElementById("map");
@@ -614,46 +637,45 @@ function openMap(_campain) {
     let slot = document.getElementById("mission-" + index);
     popUpP.appendChild(slot);
 
-    slot.children[0].style.backgroundImage = _campain.setMissionPics(index)
-    slot.children[0].style.width = '128px'
-    slot.children[0].style.height = '128px'
-    slot.children[0].style.marginTop = '8px'
-    slot.children[0].style.marginBottom = '8px'
-    slot.children[0].style.border = '1px solid' + loadedCampain.bgColor
-    slot.children[0].style.backgroundSize = 'cover' 
-    
-    slot.children[1].innerHTML = loadedCampain.levels[i].name
-    slot.children[1].style.fontFamily = loadedCampain.fontFamily
-    slot.children[1].style.fontSize = loadedCampain.fontSize
+    slot.children[0].style.backgroundImage = _campain.setMissionPics(index);
+    slot.children[0].style.width = "128px";
+    slot.children[0].style.height = "128px";
+    slot.children[0].style.marginTop = "8px";
+    slot.children[0].style.marginBottom = "8px";
+    slot.children[0].style.border = "1px solid" + loadedCampain.bgColor;
+    slot.children[0].style.backgroundSize = "cover";
 
-    if(loadedCampain.levels[i].locked){
-      slot.style.opacity = 0.6
-      slot.children[2].innerHTML = '🔒'
+    slot.children[1].innerHTML = loadedCampain.levels[i].name;
+    slot.children[1].style.fontFamily = loadedCampain.fontFamily;
+    slot.children[1].style.fontSize = loadedCampain.fontSize;
+
+    if (loadedCampain.levels[i].locked) {
+      slot.style.opacity = 0.6;
+      slot.children[2].innerHTML = "🔒";
       // slot.style.cursor = 'default'
     } else {
-      slot.style.opacity = 1
-      slot.children[2].innerHTML = ''
+      slot.style.opacity = 1;
+      slot.children[2].innerHTML = "";
       // slot.style.cursor = 'pointer'
-      slot.classList.add('selected')
+      slot.classList.add("selected");
     }
 
-    slot.addEventListener('click',()=>{
-
-      if(loadedCampain.levels[i].locked || loadedCampain.levels[i].active == false )return
-      wave.setPool(_campain.levels[i])
-      chooseMonark()
-      closeMap()
-      current = i
-      console.log('current: ', current);
-
-      
-
-
-    })
+    slot.addEventListener("click", () => {
+      if (
+        loadedCampain.levels[i].locked ||
+        loadedCampain.levels[i].active == false
+      )
+        return;
+      wave.setPool(_campain.levels[i]);
+      chooseMonark();
+      closeMap();
+      current = i;
+      console.log("current: ", current);
+    });
     // console.log(_campain);
   }
 }
-let current
+let current;
 pickMonark.addEventListener("click", () => {
   openMap(imperio);
 });
@@ -671,7 +693,7 @@ export function spawnBoss() {
     }
 
     // healthPointsP.textContent = wave.enemiesToGo;
-    healthWrapP.classList.add("aparecer");
+    // healthWrapP.classList.add("aparecer");
     boss.carta();
 
     hasSpawned = true;
@@ -690,15 +712,19 @@ export function spawnBoss() {
 
 function bossDead() {}
 
-let waveNameP = document.getElementById('wave-name')
+let waveNameP = document.getElementById("wave-name");
 export function animatebossHealth() {
-  if (!boss) return;
+  if (!wave.waveLoaded) {
+    return;
+  }
+
   let style = Math.abs((wave.enemiesKilled / wave.enemies) * 100 - 100) + "%";
   // console.log('style: ', style);
 
+  waveNameP.textContent = wave.name;
+  let waveNum = wave.id + 1;
 
-  waveNameP.textContent = wave.name
-  healthPointsP.textContent = "ONDA " + wave.id + " DE " + wave.numOfWaves;
+  healthPointsP.textContent = "ONDA " + waveNum + " DE " + wave.numOfWaves;
 
   progressP.style.width = style;
 }

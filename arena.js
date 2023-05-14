@@ -672,10 +672,11 @@ class Inimigo {
       wave.overallEnemiesKilled++;
     }
 
-    if (wave.enemiesKilled >= wave.enemies && areEmpty()) {
+    
+
       // pop up victory
       wave.popUpSuccess();
-    }
+    
   }
 
   ataque(dmg) {
@@ -1782,7 +1783,7 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
     // console.log(wavePool);
     // wavePool[0].enemies[gerarNumero(0 , 1)]();
-    wave.popUpSuccess();
+    // wave.popUpSuccess();
     console.log("wave: ", areNoEnemies());
   }
 });
