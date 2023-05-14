@@ -423,7 +423,7 @@ class Inimigo {
 
   levelSetter(_level) {
     // let life = wave.progress
-    console.log(wave.enemiesLevel);
+    // console.log(wave.enemiesLevel);
 
     if (boss) {
       this._level = gerarNumero(wave.enemiesLevel[0], wave.enemiesLevel[1]);
@@ -1537,7 +1537,7 @@ let smoke = {
     this.smokeWeight = gerarNumero(1, 4);
     this._retratoP.style.border = "1px solid #de9b35";
     this._nomeP.style.marginTop = "6px";
-    this.targetPointSetter(150)
+    this.targetPointSetter(200)
   },
 
   tick() {},
@@ -1572,11 +1572,11 @@ let awp = {
   dano: 35,
   emoji: "",
   asiimov: false,
-  _coolDownNatural: 20,
+  _coolDownNatural: 15,
   tick() {},
 
   levelCfg() {
-    if (per(0.1)) {
+    if (per(0.2)) {
       this.asiimov = true;
     }
 
@@ -1584,7 +1584,7 @@ let awp = {
 
     if (this.asiimov) {
       this.dano = gerarNumero(200, 300);
-      this.setHp(40);
+      this.setHp(50);
     }
 
     this.dano *= this._level;
@@ -1603,7 +1603,7 @@ let awp = {
     }
     this._retratoP.style.backgroundSize = "100% 100%";
     this._nomeP.style.marginTop = "6px";
-    this.targetPointSetter(250)
+    this.targetPointSetter(175)
   },
 
   tick() {},

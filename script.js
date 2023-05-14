@@ -11,7 +11,7 @@ import {
   arenaAtaque,
   smokeOnInv,
   areReveal,
-  chooseTargetArena
+  chooseTargetArena,
 } from "./arena.js";
 
 import { especiais, especial, Especial } from "./modules/especial.js";
@@ -25,10 +25,10 @@ import {
   wave,
   rDifficulty,
   animatebossHealth,
-  map
+  map,
 } from "./boss.js";
 
-import {marketObj, closeMarket, openMarket}  from "./market.js"
+import { marketObj, closeMarket, openMarket } from "./market.js";
 
 let versaoHTML = document.getElementById("versao");
 let versao = "Alpha 1.0.3";
@@ -613,20 +613,18 @@ function zerarMoney() {
 }
 zerarMoney();
 
-  export let  debug ={
-    on: false,
+export let debug = {
+  on: false,
 
-    start(){
-      money.set(99999);
-      numCartas.set(100);
-      hpPlayer.set(100);
-      hpPlayer.addBuff(5000);
-      ammo.set(100);
-      this.on = true
-    }
-  }
-
-
+  start() {
+    money.set(99999);
+    numCartas.set(100);
+    hpPlayer.set(100);
+    hpPlayer.addBuff(5000);
+    ammo.set(100);
+    this.on = true;
+  },
+};
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyM") {
@@ -1634,8 +1632,8 @@ function criarBtn() {
       });
 
       cargoLimpo.addEventListener("click", () => carta.ult());
-      energiaLimpo.addEventListener("click", () =>{ 
-        carta.energiaPoderDefault()
+      energiaLimpo.addEventListener("click", () => {
+        carta.energiaPoderDefault();
       });
 
       carta._invEventAdded = true;
@@ -2243,8 +2241,6 @@ export function tudo() {
     copyCard = cartaParaMover.cloneNode(true);
     ativarBtn();
 
-  
-
     numCartas.remove(1);
     spawnBoss();
 
@@ -2253,11 +2249,9 @@ export function tudo() {
     poderBoss();
     runEveryRound();
 
-    
-    if( rodadas == 10){
-      wave.getWave()
+    if (rodadas == 10) {
+      wave.getWave();
     }
-    
   } else {
   }
 }
@@ -2284,8 +2278,6 @@ function runEveryRound() {
     x._everyRoundMao ? x.everyRound() : false;
   });
 
-  
-
   // arenaAtaque();
 
   areObj.map((x) => {
@@ -2302,37 +2294,32 @@ function runEveryRound() {
 
   rDifficulty.update();
 }
-let invTarget = 0
+let invTarget = 0;
 
 export function chooseTargetInv() {
   let pool = [];
 
-  
-    invObj[invTarget]._exposto = false
-  
-
+  invObj[invTarget]._exposto = false;
 
   invObj.map((x) => {
-
-    if(!x.empty && !x.isInvisible &&  !x.isNormal){
-
+    if (!x.empty && !x.isInvisible && !x.isNormal) {
       pool.push(x._targetPoint);
     } else {
-      pool.push(0)
+      pool.push(0);
     }
-
-    
   });
 
   invTarget = pool.indexOf(Math.max(...pool));
   // console.log(pool);
   // console.log("target: ", invTarget);
 
-  if(!invObj[invTarget].empty && !invObj[invTarget].isInvisible &&  !invObj[invTarget].isNormal){
-    invObj[invTarget]._exposto = true
+  if (
+    !invObj[invTarget].empty &&
+    !invObj[invTarget].isInvisible &&
+    !invObj[invTarget].isNormal
+  ) {
+    invObj[invTarget]._exposto = true;
   }
-  
-  
 }
 
 function removeBuffAll() {
@@ -2359,8 +2346,8 @@ function tick() {
     criarBtn();
     placarArena.printP();
     updatePlacarInimigo(false);
-    chooseTargetArena()
-    chooseTargetInv()
+    chooseTargetArena();
+    chooseTargetInv();
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];
@@ -2403,7 +2390,6 @@ function tick() {
     novaCarta.place();
 
     hpPlayer.playerP();
-    
 
     wave.tick();
   }, 16);
@@ -2778,6 +2764,8 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+
+
 // BIND MOVER COM TECLA
 let teclaMoverCarta = "KeyD";
 let teclaMoverVariasCartas = "KeyF";
@@ -2791,6 +2779,17 @@ document.addEventListener("keydown", (event) => {
     }
   }
 });
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyR") {
+    if (wCoolDown.status == true && !copyCard) return;
+
+    for (let i = 0; i < 6; i++) {
+      moverToCartaMao()
+    }
+  }
+});
+
 
 inv.addEventListener("click", deletarDeck);
 
@@ -2924,34 +2923,27 @@ export let globalStats = {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyE") {
-    if(marketObj.active){
-      closeMarket()
+    if (marketObj.active) {
+      closeMarket();
     }
-    if(map.active){
-      map.close()
+    if (map.active) {
+      map.close();
     }
   }
 });
-
 
 // COMMAND PROMP
 
-
-
-let promptP = document.getElementById('prompt')
+let promptP = document.getElementById("prompt");
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyU") {
-    COM(promptP.value)
-    
+    COM(promptP.value);
   }
 });
 
-function COM(x){
-  
-  eval(x)
+function COM(x) {
+  eval(x);
 }
-
-
 
 // LIST BINDS
 //  1, 2, 3, 4 ---> USAR CARTAS NO DECK
