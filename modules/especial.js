@@ -2782,7 +2782,7 @@ export let especiais = {
         this.dano = 1200;
       }
 
-      // this.dmg(5);
+      this.dmg(5);
       this.coolDown(350);
     },
 
