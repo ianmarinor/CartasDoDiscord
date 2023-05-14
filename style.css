@@ -105,6 +105,7 @@ body {
   /* overflow-y: hidden; */
   user-select: none;
   justify-content: center;
+  overflow: hidden;
 }
 
 .minigame{
@@ -253,7 +254,7 @@ main {
       /* url(pics/bg.gif) */
       ;
   background-size: cover;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   /* opacity: 0; */
 }
 
@@ -396,9 +397,9 @@ li {
 }
 
 #ammoWrap {
-  align-self: end;
+  align-self: start;
   justify-self: start;
-  margin-left: 97px;
+  margin-left: 150px;
 }
 
 #healthPlayerBuff {
@@ -564,7 +565,7 @@ li {
 
 
 #store {
-  grid-area: da;
+  grid-area: dicas;
   width: 195px;
   display: flex;
   justify-content: center;
@@ -572,11 +573,12 @@ li {
   align-items: center;
   /* margin-bottom: 75px; */
   align-self: end;
-  justify-self: center;
+  justify-self: end;
 }
 #moneyWrap {
   display: flex;
   font-size: 30px;
+  
 }
 
 #vendas,

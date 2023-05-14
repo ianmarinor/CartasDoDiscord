@@ -3,11 +3,18 @@
 
   main {
     opacity: 1;
-    width: 1920px;
-    height: 1080px;
+    width: 1600px;
+    height: 1200px;
 
-    grid-template-columns: 15% 70% 15%;
-    grid-template-rows: 4% 29% 33% 5% 29%;
+    grid-template-areas:
+    "d boss ca"
+    "f are ac"
+    "texto inv sa"
+    "dinheiro dicas da"
+    "especial mao ad";
+
+    grid-template-columns: 23% 70% 7%;
+    grid-template-rows:  0.1fr 1fr 1fr 0.1fr 1fr;
     
   }
 

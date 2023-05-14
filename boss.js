@@ -736,6 +736,7 @@ function openMap(_campain) {
       current = i;
       console.log("current: ", current);
       marketObj.canBeOpened(true)
+      bodyP.style.overflowY = 'visible'
     });
     // console.log(_campain);
   }
