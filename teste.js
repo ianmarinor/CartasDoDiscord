@@ -1,39 +1,57 @@
+class Campanha {
+  constructor(_Campanha) {}
 
-let rein = {
-    targetPoint: 2
+  getnumberOfEnemies() {
+    let somaDosInimigos = 0;
+
+    // para cada **MISSÃO**
+    for (let i = 0; i < this.levels.length; i++) {
+      let missão = this.levels[i];
+
+      missão.numberOfEnemies = missão.waves.reduce(
+        (sum, wave) => sum + wave.enemies,
+
+        0
+      );
+    }
+  }
 }
 
-let road = {
-    targetPoint: 4
-}
+let foo = {
+  bgColor: "red",
 
-let dva ={
-    targetPoint: 6
-}
+  levels: [
+    {
+      // criar metodo aqui
+      numberOfEnemies: undefined,
+      waves: [
+        { enemies: 1 },
+        { enemies: 3 },
+        { enemies: 5 },
+        { enemies: 1 },
+        { enemies: 1 },
+        { enemies: 1 },
+        { enemies: 1 },
+      ],
+    },
 
-let team = [rein,road,dva]
+    {
+      numberOfEnemies: undefined,
+      waves: [
+        { enemies: 45 },
+        { enemies: 3 },
+        { enemies: 5 },
+        { enemies: 10 },
+        { enemies: 1 },
+        { enemies: 1 },
+        { enemies: 60 },
+      ],
+    },
+  ],
+};
 
-let target
+let campanhaPronta = Object.assign(new Campanha(foo), foo);
 
-function chooseTarget(){
+// campanhaPronta.start();
 
-    let pool = []
-
-    team.map(
-        (x)=>{
-
-            if(!x.empty){
-                pool.push(x.targetPoint)
-                
-            }
-
-        }
-    )
-
-    target = pool.indexOf(Math.max(...pool))
-    console.log(pool);
-    console.log('target: ', target);
-    
-    
-}
-chooseTarget()
+// console.log("campanhaPronta: ", campanhaPronta);

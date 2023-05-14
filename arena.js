@@ -15,6 +15,7 @@ import {
   wCoolDown,
   globalStats,
   timer,
+  debug
 } from "./script.js";
 import {
   boss,
@@ -149,6 +150,18 @@ export function areWakeUp() {
       x.readyToAttack = true;
     }
   });
+}
+
+export function arenaKill(){
+
+  areObj.map(
+    (x)=>{
+      if(!x.empty){
+        x.kill()
+      }
+    }
+  )
+
 }
 
 export function areReveal() {
@@ -1785,6 +1798,16 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
     // spawnTank();
     console.log("spawnTank();: ", chooseTargetArena());
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyK") {
+    if(debug.on){
+      arenaKill()
+      console.log('killl arena');
+    }
+    
   }
 });
 

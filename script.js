@@ -613,17 +613,24 @@ function zerarMoney() {
 }
 zerarMoney();
 
-function debug() {
-  money.set(99999);
-  numCartas.set(100);
-  hpPlayer.set(100);
-  hpPlayer.addBuff(5000);
-  ammo.set(100);
-}
+  export let  debug ={
+    on: false,
+
+    start(){
+      money.set(99999);
+      numCartas.set(100);
+      hpPlayer.set(100);
+      hpPlayer.addBuff(5000);
+      ammo.set(100);
+      this.on = true
+    }
+  }
+
+
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyM") {
-    debug();
+    debug.start();
   }
 });
 
@@ -1627,7 +1634,9 @@ function criarBtn() {
       });
 
       cargoLimpo.addEventListener("click", () => carta.ult());
-      energiaLimpo.addEventListener("click", () => carta.energiaPoder());
+      energiaLimpo.addEventListener("click", () =>{ 
+        carta.energiaPoderDefault()
+      });
 
       carta._invEventAdded = true;
     }

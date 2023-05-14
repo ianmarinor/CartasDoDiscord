@@ -18,7 +18,7 @@ import {
   areFull,
 } from "/arena.js";
 import { spawnLiberdade, spawnTank, areNoEnemies, areEmpty } from "./arena.js";
-import { testePool, missOne, imperio } from "./waves.js";
+import {  missOne, imperio } from "./waves.js";
 
 let bossHealthP = document.getElementById("hb");
 let progressP = document.getElementById("progress");
@@ -230,8 +230,8 @@ class Boss {
 
 
 export let wave = {
-  pool: undefined,
-  id: 0,
+  mission: undefined,
+  id: -1,
   enemies: undefined,
   enemiesSpawned: undefined,
   enemiesToGo: undefined,
@@ -252,11 +252,12 @@ export let wave = {
   },
 
   setPool(_pool) {
-    this.pool = _pool;
+    this.mission = _pool;
   },
 
   // toda rodada essa função é chamada
   getWave() {
+    console.log('LOEADED MISSIO' + this);
     if (!boss) return;
 
     // se a wave estiver acontecendo
@@ -268,27 +269,27 @@ export let wave = {
       //pega a wave do pol
       if (!areEmpty()) return;
 
-      this.pool[0].start();
+      // this.mission[0].start();
 
-      this.overallEnemies = this.pool[0].totalNumOfEnemies;
-      this.numOfWaves = this.pool[0].numOfWaves;
+      this.overallEnemies = this.mission.totalNumOfEnemies;
+      this.numOfWaves = this.mission.numOfWaves;
       this.id++;
 
       if (this.numOfWaves == this.id) {
         this.lastWave = true;
       }
 
-      this.enemiesLevel = this.pool[this.id].level;
-      this.enemies = this.pool[this.id].enemiesTotal;
+      this.enemiesLevel = this.mission.waves[this.id].level;
+      this.enemies = this.mission.waves[this.id].enemiesTotal;
       this.enemiesSpawned = 0;
       this.enemiesToGo = this.enemies;
       this.waveOn = true;
       this.enemiesKilled = 0;
-      this.money = this.pool[this.id].money;
-      this.cards = this.pool[this.id].cards;
-      this.ammo = this.pool[this.id].ammo;
-      this.spawnChance = this.pool[this.id].spawnChance;
-      this.name = this.pool[this.id].name
+      this.money = this.mission.waves[this.id].money;
+      this.cards = this.mission.waves[this.id].cards;
+      this.ammo = this.mission.waves[this.id].ammo;
+      this.spawnChance = this.mission.waves[this.id].spawnChance;
+      this.name = this.mission.waves[this.id].name
 
       console.log(this);
     }
@@ -306,7 +307,7 @@ export let wave = {
       return;
       // se nao acabou a onda e tem espaço
     } else if (!areFull() && per(this.spawnChance)) {
-      let waveObj = this.pool[this.id];
+      let waveObj = this.mission.waves[this.id];
 
       waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
       this.enemiesSpawned++;
@@ -332,18 +333,20 @@ export let wave = {
     button.addEventListener("click", () => {
 
       if(current + 1 <= 9){
+        window.location.assign('index.html')
+
+        
       
         console.log(current + 1);
-        campanha.levels[ parseInt(current) + 1][0].locked = false
+        loadedCampain.levels[ parseInt(current) + 1][0].locked = false
         // console.log(imperio);
 
       }
-      localStorage.setItem("mySave", JSON.stringify(campanha))
+      localStorage.setItem("mySave", JSON.stringify(loadedCampain))
       console.log(' ----------- THERE IS SAVE ----------- ');
      console.log(JSON.parse(localStorage.getItem('mySave')));
-    //  console.log(campanha);
+    //  console.log(loadedCampain);
      console.log(' ----------- THERE IS SAVE ----------- ');
-      window.location.assign('index.html')
       
     });
 
@@ -577,18 +580,20 @@ function closeMap(){
   mainOpaque(false)
   map.active = false
 }
-let campanha
-function openMap(_mission) {
+let loadedCampain
+
+function openMap(_campain) {
+  console.log('ABRIR O MAPA');
  
   if(JSON.parse(localStorage.getItem('mySave'))){
-     campanha = JSON.parse(localStorage.getItem('mySave'))
-     console.log(' ----------- THERE IS SAVE ----------- ');
+     loadedCampain = JSON.parse(localStorage.getItem('mySave'))
+     console.log(' ----------- THIS IS MY loadedCampain SAVE  ----------- ');
      console.log(JSON.parse(localStorage.getItem('mySave')));
-     console.log(' ----------- THERE IS SAVE ----------- ');
+     
 
   } else {
-     campanha = _mission
-     console.log(' NO SAVE ');
+     loadedCampain = _campain
+     console.log(' NO SAVE JUST CREATED NEW');
 
   }
 
@@ -601,7 +606,7 @@ function openMap(_mission) {
   bodyP.appendChild(popUpP);
   mainOpaque();
 
-  popUpP.style.backgroundColor = campanha.bgColor;
+  popUpP.style.backgroundColor = loadedCampain.bgColor;
   // console.log(missionWrapP);
 
   for (let i = 0; i < 10; i++) {
@@ -609,19 +614,19 @@ function openMap(_mission) {
     let slot = document.getElementById("mission-" + index);
     popUpP.appendChild(slot);
 
-    slot.children[0].style.backgroundImage = _mission.setMissionPics(index)
+    slot.children[0].style.backgroundImage = _campain.setMissionPics(index)
     slot.children[0].style.width = '128px'
     slot.children[0].style.height = '128px'
     slot.children[0].style.marginTop = '8px'
     slot.children[0].style.marginBottom = '8px'
-    slot.children[0].style.border = '1px solid' + campanha.bgColor
+    slot.children[0].style.border = '1px solid' + loadedCampain.bgColor
     slot.children[0].style.backgroundSize = 'cover' 
     
-    slot.children[1].innerHTML = campanha.levels[i][0].name
-    slot.children[1].style.fontFamily = campanha.fontFamily
-    slot.children[1].style.fontSize = campanha.fontSize
+    slot.children[1].innerHTML = loadedCampain.levels[i].name
+    slot.children[1].style.fontFamily = loadedCampain.fontFamily
+    slot.children[1].style.fontSize = loadedCampain.fontSize
 
-    if(campanha.levels[i][0].locked){
+    if(loadedCampain.levels[i].locked){
       slot.style.opacity = 0.6
       slot.children[2].innerHTML = '🔒'
       // slot.style.cursor = 'default'
@@ -634,8 +639,8 @@ function openMap(_mission) {
 
     slot.addEventListener('click',()=>{
 
-      if(campanha.levels[i][0].locked || campanha.levels[i][0].active == false )return
-      wave.setPool(_mission.levels[i])
+      if(loadedCampain.levels[i].locked || loadedCampain.levels[i].active == false )return
+      wave.setPool(_campain.levels[i])
       chooseMonark()
       closeMap()
       current = i
@@ -645,7 +650,7 @@ function openMap(_mission) {
 
 
     })
-    // console.log(_mission);
+    // console.log(_campain);
   }
 }
 let current

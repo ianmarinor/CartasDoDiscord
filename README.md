@@ -103,6 +103,18 @@
     -  If `this.totalHp` less the 0, runs `kill()`
 
 ---
+🔹 `energiaPoder()`
+
+  - Will hear the `.ataque` element when pressed.
+   
+---
+🔹 `energiaDorment(_trigger)`
+
+  - Will make the `_energiaDorment` tag `true` or `false`
+  - If the tag is `true`, `this` will be `!bossDmg`
+   
+
+---
 🔹 `everyRoundDefault()`
   - Will run every round with pre-set actions for every card.
 
