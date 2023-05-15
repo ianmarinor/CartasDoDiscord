@@ -1308,7 +1308,7 @@ let rouba = {
 
     for (let i = 0; i < 8; i++) {
       invObj.map((x) => {
-        if (!x.empty && x._cargoArr[2] == i && !this.roubei) {
+        if (!x.empty && x.isNormal && x._cargoArr[2] == i && !this.roubei) {
           this.roubei = true;
           x.kill();
           this._coolDown = 100;
@@ -1503,7 +1503,7 @@ let dog = {
         }
       )
 
-        
+
       
     }
   },
