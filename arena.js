@@ -373,7 +373,7 @@ class Inimigo {
     // let life = wave.progress
     // console.log(wave.enemiesLevel);
 
-    if (boss) {
+    if (wave.bossLevel) {
       this._level = gerarNumero(wave.enemiesLevel[0], wave.enemiesLevel[1]);
     } else {
       this._level = 1;
@@ -2148,7 +2148,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
     // spawnTank();
-    spawnRouba();
+    spawnMonark();
   }
 });
 
