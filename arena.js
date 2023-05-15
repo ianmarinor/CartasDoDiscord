@@ -57,7 +57,7 @@ export let smokeOnInv = {
   weight: 0,
 
   coolDown() {
-    let smokeTime = 18000;
+    let smokeTime = 12000;
 
     setTimeout(() => this.smoke(false), smokeTime);
   },
@@ -1277,6 +1277,7 @@ let rouba = {
   _attackAtSpawn: false,
   _coolDownNatural: 3,
   _doesAttack: false,
+  isPartOfWave: false,
 
   //AUDIO FILES
   _audioUltFiles: 8,
@@ -1332,7 +1333,7 @@ let rouba = {
       }
 
       if (i == 7 && !this.roubei) {
-        this.kill(true)
+        this.kill(true);
         break;
       }
     }
@@ -1470,10 +1471,10 @@ let dog = {
   _audioSpawn: "dog.mp3",
   attackChance: 15,
   isPartOfWave: false,
-  hp: 50,
-  maxHealth: 50,
+  hp: 30,
+  maxHealth: 30,
   dano: 8,
-  _coolDownNatural: 12,
+  _coolDownNatural: 5,
 
   tick() {
     let vitor = areObj.some((x) => x.cartaId == "vitor");
@@ -1489,27 +1490,35 @@ let dog = {
   },
 
   primaryAttack() {
-    if (this.vitor) {
-      this.ataque(this.dano);
-      this.readyToAttack = false;
-    } else {
-      this.ataque();
-      this.readyToAttack = false;
+   
+    
+
+    if (this.ataque(this.dano)) {
+     
+      areObj.map(
+        (x)=>{
+          if(x.cartaId == 'vitor'){
+            x.heal(this.dano);
+          }
+        }
+      )
+
+        
+      
     }
   },
 
   levelCfg() {
-    this._money = this._money * this._level;
-    this.dano = gerarNumero(5, 8);
+    this._level = this.vitorLevel;
+    this.dano = 20;
 
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
-    this.attackChance = this.attackChance * this._level;
   },
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
-    this.targetPointSetter(300);
+    this.targetPointSetter(715);
   },
 };
 
@@ -1534,9 +1543,10 @@ let metaforando = {
   dano: 20,
   miniBoss: true,
   emoji: "🐕",
+  _coolDownNatural: 12,
 
   levelCfg() {
-    this.dano = gerarNumero(3, 6);
+    this.dano = 3;
 
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
@@ -1548,12 +1558,12 @@ let metaforando = {
     this._cargoP.style.marginBottom = "10px";
     this._cargoP.textContent = "METAFORANDO";
     this._cargoP.style.marginBottom = "0px";
-    this._retratoP.style.height = "80%";
+    this._retratoP.style.height = "60%";
 
     this._displayP.children[1].style.visibility = "hidden";
 
-    this._nomeP.style.margin = "20px  0px 5px";
-    this.targetPointSetter(750);
+    this._nomeP.style.marginTop = "30px";
+    this.targetPointSetter(705);
   },
 
   tick() {
@@ -1569,19 +1579,7 @@ let metaforando = {
 
     hpPlayer.remove(this.dano);
 
-    let dogsOnAre = areObj.some((x) => x.cartaId == "dog");
-
-    if (!dogsOnAre) {
-      spawnDog();
-    } else {
-      areObj.map((x) => {
-        x.cartaId == "dog" ? x.heal(5) : 0;
-      });
-      spawnDog();
-    }
-
-    this.readyToAttack = false;
-    // this._uber = false;
+    spawnDog({ vitorLevel: this._level });
   },
 
   didHit() {
@@ -1698,7 +1696,12 @@ let smoke = {
   especial: true,
   emoji: "🌫️",
   smokeWeight: 2,
-  _coolDownNatural: 6,
+  _coolDownNatural: 4,
+  isPartOfWave: false,
+
+  //AUDIO FILES
+  _audioUltFiles: 1,
+  _sourceUlt: "smoke/ulting",
 
   tick() {},
 
@@ -1720,6 +1723,10 @@ let smoke = {
   poder() {
     if (smokeOnInv.status == true || smokeOnInv.status == undefined) return;
     smokeOnInv.smoke(true, this.smokeWeight);
+
+    let faixa = this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".mp3";
+    audioPlayer(faixa, false, this._CHN, 0.1);
+
     setTimeout(() => {
       this.kill();
     }, 250);
@@ -1949,14 +1956,7 @@ export function spawnMenosCartas(n) {
 }
 
 export function spawnDog(n) {
-  if (n) {
-    if (per(n)) {
-    } else {
-      return;
-    }
-  }
-
-  return inserirInimigoDomAndObject(dogBlueprint, dog);
+  return inserirInimigoDomAndObject(dogBlueprint, Object.assign(dog, n));
 }
 
 export function spawnVitor() {
@@ -2141,7 +2141,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     // spawnLiberdade();
-    invObj[0].removeStun();
+    spawnVitor();
   }
 });
 

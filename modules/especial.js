@@ -1603,77 +1603,6 @@ export let especiais = {
     // ataqueE: abelhaEnergia() + "🐝"
   },
 
-  blackaoCamarada: {
-    cartaId: "comunista",
-    nome: "BLACKAO COMUNISTA",
-    raridade: raridades.sangueAzul,
-
-    energia: 0,
-
-    emoji: "☭",
-    allyEmoji: "☭",
-
-    retrato: "url('pics/retratoCamarada.gif')",
-
-    cargo: "",
-
-    hp: 50,
-    hashp: true,
-    maxHealth: 50,
-    dmgBoss: false,
-
-    cfg() {
-      if (this._cfgAdded) return;
-      let x = [111, 222, 333];
-      this.energia = x[gerarNumero(0, 2)];
-      this._cfgAdded = true;
-    },
-
-    poder() {
-      if (!invObj.some((x) => x._integrante == "Blackao")) return;
-      if (invObj.some((x) => x._integrante == "Nefesto")) return;
-
-      for (let i = 0; i < invObj.length; i++) {
-        let aliado = invObj[i];
-        let aliadoP = aliado._thisCardP;
-
-        if (aliado.isNormal) {
-          aliado.energia += this.energia;
-          this.giveAllyEmoji(aliado);
-
-          this.kill();
-        }
-      }
-    },
-
-    // ataqueE: comunistaPE() + "☭"
-    nomeStyle: {
-      fontSize: "140%",
-      fontFamily: "blackao",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px solid #ff0000",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
-    },
-  },
 
   premioMonark: {
     cartaId: "premiomonark",
@@ -2257,7 +2186,7 @@ export let especiais = {
     },
 
     cfg() {
-      this.targetPointSetter(550);
+      this.targetPointSetter(650);
     },
 
     setDmg() {
