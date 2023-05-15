@@ -472,7 +472,7 @@ export let imperio = {
       name: "MICROFONE",
       completed: false,
       locked: true,
-      active: false,
+      active: true,
 
       waves: [
 
@@ -480,9 +480,9 @@ export let imperio = {
           enemiesTotal: 50,
           enemies: [spawnSmoke],
           level: [2, 5],
-          money: 200,
+          money: 100,
           ammo: 10,
-          cards: 20,
+          cards: 5,
           name: "SIR NUKESALOT",
           spawnTime: [1.5, 2.5],
           timeBeforeNextWave: [1, 5],
@@ -498,7 +498,7 @@ export let imperio = {
           enemiesTotal: 12,
           enemies: [spawnSmoke, spawnTank],
           level: [2, 5],
-          money: 200,
+          money: 350,
           ammo: 10,
           cards: 20,
           name: "SÃO PAULO",
@@ -512,9 +512,9 @@ export let imperio = {
           enemiesTotal: 5,
           enemies: [spawnTank],
           level: [1, 3],
-          money: 200,
-          ammo: 10,
-          cards: 20,
+          money: 350,
+          ammo: 30,
+          cards: 50,
           name: "PEDRA",
           spawnTime: [3, 8],
           timeBeforeNextWave: [10, 12],
@@ -531,11 +531,11 @@ export let imperio = {
           enemies: [spawnMonark],
           level: [1, 5],
           money: 200,
-          ammo: 10,
+          ammo: 30,
           cards: 20,
           name: "PSEUDOCIÊNCIA",
           spawnTime: [3, 8],
-          timeBeforeNextWave: [10, 12],
+          timeBeforeNextWave: [8, 10],
 
           boss: [spawnVitor],
           bossTotal: 3,
@@ -554,6 +554,20 @@ export let imperio = {
           cards: 20,
           name: "CHUVA DE MONARK",
           spawnTime: [1, 3],
+          timeBeforeNextWave: [25, 40],
+
+        },
+
+        {
+          enemiesTotal: 48,
+          enemies: [spawnCamarada],
+          level: [2, 3],
+          money: 200,
+          ammo: 10,
+          cards: 20,
+          name: "REVOLUÇÃO",
+          spawnTime: [1, 5],
+          
 
         },
 
@@ -570,7 +584,7 @@ export let imperio = {
       name: "RISADA",
       completed: false,
       locked: true,
-
+      active: false,
       waves: [],
     },
 

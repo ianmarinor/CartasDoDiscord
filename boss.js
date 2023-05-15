@@ -804,6 +804,7 @@ function patch(){
 
  let save = JSON.parse(localStorage.getItem("mySave"))
  save.levels[2].active = true
+ save.levels[3].active = true
  localStorage.setItem("mySave", JSON.stringify(save))
  
  console.log(JSON.parse(localStorage.getItem("mySave")));
