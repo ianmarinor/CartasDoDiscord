@@ -803,6 +803,8 @@ document.addEventListener("keydown", (event) => {
 function patch(){
 
  let save = JSON.parse(localStorage.getItem("mySave"))
+
+ if(!save)return
  save.levels[2].active = true
  save.levels[3].active = true
  localStorage.setItem("mySave", JSON.stringify(save))
