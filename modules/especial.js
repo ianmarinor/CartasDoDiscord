@@ -704,12 +704,12 @@ export class Especial {
   stun(_stunnedCooldown) {
     if (this._stunned || this.isInvisible || this._uber ) return;
 
+    this._stunned = true
     this.dmg(1)
     this._thisCardP.classList.add("stunned");
 
     this._targetPoint += 1200;
     this._stunnedCooldown = _stunnedCooldown;
-    this._stunned = true
     if (this._barrieraActive) {
       this._barrieraActive = false;
       this._notDefaultbarriera = true;
@@ -1719,8 +1719,8 @@ export let especiais = {
     retrato: 'url("/pics/spyRetrato.webp")',
     cargo: "",
     hashp: false,
-    hp: 6,
-    maxHealth: 6,
+    hp: 3,
+    maxHealth: 3,
     dmgBoss: false,
     hashp: true,
     clockReady: true,
@@ -1830,9 +1830,9 @@ export let especiais = {
           this.exposto();
         };
 
-        if (this.clockReady && this.hasBeenHit) {
+        if (this.clockReady && this.hasBeenHit && !this.unableToAttack()) {
           invis();
-        } else if (this.isInvisible) {
+        } else if (this.isInvisible && !this.unableToAttack()) {
           vis();
         }
       };
@@ -2953,27 +2953,7 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 4);
 
-      //MISSAO IMPERIO
-      if (wave.campain.id == 1) {
-        if (wave.mission.levelId < 1) {
-          num = 4;
-        }
-        if (wave.mission.levelId > 0) {
-          num = gerarNumero(3, 4);
-        }
-
-        if (wave.mission.levelId > 2) {
-          num = gerarNumero(2, 4);
-        }
-
-        if (wave.mission.levelId > 3) {
-          num = gerarNumero(2, 4);
-        }
-
-        if (wave.mission.levelId > 4) {
-          num = gerarNumero(1, 4);
-        }
-      }
+  
 
       if (!true) {
         especial = objBinder(especiais.dva);

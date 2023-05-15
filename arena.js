@@ -801,7 +801,7 @@ class Inimigo {
       }
 
       if (this._coolDown == 4) {
-        audioPlayer(drumAu, true, placarAudioChannel);
+        audioPlayer(drumAu, true, placarAudioChannel, 0.3);
       }
       if (this._coolDown <= 1) {
         this._coolDown = this._coolDownNatural;
@@ -1059,7 +1059,7 @@ let camarada = {
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
 
-    this.healValue = gerarNumero(15, 35);
+    this.healValue = 20;
 
     this.healValue = this.healValue * this._level;
     this._money = this._money * this._level;
@@ -1212,7 +1212,10 @@ let lux = {
     this._doesAttack = true;
 
     invObj.map((x) => {
-      x.dmg(this.dano);
+      if(!x.isNormal){
+        x.dmg(this.dano);
+
+      }
     });
 
     this._coolDown = this._coolDownNatural;
@@ -1308,7 +1311,7 @@ let rouba = {
 
     for (let i = 0; i < 8; i++) {
       invObj.map((x) => {
-        if (!x.empty && x._cargoArr[2] == i && !this.roubei) {
+        if (!x.empty && x.isNormal && x._cargoArr[2] == i && !this.roubei) {
           this.roubei = true;
           x.kill();
           this._coolDown = 100;
@@ -1503,7 +1506,7 @@ let dog = {
         }
       )
 
-        
+
       
     }
   },
@@ -1858,7 +1861,10 @@ let ramattra = {
       } else {
         console.log("dei dano");
         invObj.map((x) => {
-          x.dmg(Math.trunc(this.dano / 10));
+          if(!x.isNormal){
+
+            x.dmg(Math.trunc(this.dano / 10));
+          }
         });
       }
     }, areaAtackFrequency);
@@ -1896,9 +1902,9 @@ let stalin = {
     this._level = 5;
 
     this.dano = 7;
-    this.setHp(this.hp * this._level);
-    this.healValue = gerarNumero(45, 110);
-    this.healValue = this.healValue * this._level;
+    this.setHp(4000);
+    this.healValue = 360
+    
   },
 
   cfg() {
@@ -2133,22 +2139,22 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 }
 
 document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyZ") {
+    spawnCamarada();z
+  }
+});
+
+document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    invObj[0].stun(5);
+    // spawnLiberdade();
+    spawnRouba();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    // spawnLiberdade();
-    spawnVitor();
-  }
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyZ") {
     // spawnTank();
-    spawnMonark();
+    spawnRouba();
   }
 });
 
