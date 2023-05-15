@@ -130,6 +130,7 @@ export function comunistaPE() {
   }
 }
 
+
 export class Especial {
   constructor(card) {
     //unique

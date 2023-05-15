@@ -792,6 +792,7 @@ class Inimigo {
     let placarAudioChannel = document.createElement("audio");
     if (!this._coolDownNatural) return;
 
+    
     let oneSec = 1000;
     let timer = setInterval(() => {
       if (this._coolDown > 4) {
