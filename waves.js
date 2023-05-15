@@ -380,7 +380,87 @@ export let imperio = {
       locked: true,
       active: false,
 
-      waves: [],
+      waves: [
+        {
+          enemiesTotal: 18,
+          enemies: [spawnMonark, spawnAwp, spawnCamarada],
+          level: [1, 3],
+          money: 20,
+          ammo: 5,
+          cards: 5,
+          name: "FRENESIA",
+          spawnTime: [1.5, 4.5],
+          timeBeforeNextWave: [10, 12],
+        },
+       
+        {
+          enemiesTotal: 24,
+          enemies: [spawnMonark],
+          level: [2, 4],
+          money: 150,
+          ammo: 7,
+          cards: 5,
+          name: "CHUVA DE MONARK",
+          spawnTime: [0.5, 1.5],
+          timeBeforeNextWave: [5, 6],
+        },
+
+        {
+          enemiesTotal: 6,
+          enemies: [spawnTank],
+          level: [1, 1],
+          money: 150,
+          ammo: 7,
+          cards: 5,
+          name: "TANK YOU",
+          spawnTime: [3, 9],
+          timeBeforeNextWave: [5, 5],
+        },
+
+        {
+          enemiesTotal: 6,
+          enemies: [spawnTank],
+          level: [1, 1],
+          money: 150,
+          ammo: 7,
+          cards: 5,
+          name: "TANK YOU",
+          spawnTime: [3, 9],
+          timeBeforeNextWave: [5, 5],
+        },
+
+        {
+          enemiesTotal: 30,
+          enemies: [spawnTank, spawnCamarada, spawnSmoke],
+          level: [2, 3],
+          money: 500,
+          ammo: 15,
+          cards: 15,
+          name: "TÁ FÁCIL?",
+          spawnTime: [0.5, 6],
+          timeBeforeNextWave: [5, 5],
+        },
+
+        {
+          enemiesTotal: 18,
+          enemies: [spawnCamarada],
+          level: [1, 1],
+          money: 500,
+          ammo: 15,
+          cards: 15,
+          name: "REVOLUCÃO",
+          spawnTime: [0.5, 6],
+          timeBeforeNextWave: [5, 5],
+
+          boss: [spawnLiberdade],
+          bossTotal: 3,
+          bossLevel: [1, 1],
+          bossSpawnChance: 20,
+
+        },
+
+
+      ],
     },
 
     // NIVEL 4
