@@ -412,7 +412,7 @@ export let wave = {
 
         let proximaMissao = loadedCampain.levels[parseInt(current) + 1]
         if(proximaMissao){
-          proximaMissao.locked = false;
+          // proximaMissao.locked = false;
         }
         
         window.location.assign("index.html");
@@ -708,6 +708,7 @@ function openMap(_campain) {
     slot.children[1].style.fontFamily = loadedCampain.fontFamily;
     slot.children[1].style.fontSize = loadedCampain.fontSize;
     slot.style.display = 'flex'
+
     if (loadedCampain.levels[i].locked) {
       slot.style.opacity = 0.6;
       slot.children[2].innerHTML = "🔒";
