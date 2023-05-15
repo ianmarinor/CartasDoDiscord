@@ -87,7 +87,6 @@ export let smokeOnInv = {
           this.weight = weight;
           this.coolDown();
         }
-
         smokeP.style.opacity = "0." + opacityValue;
         opacityValue++;
       }, 35);
@@ -116,7 +115,6 @@ let arenaTarget = 0;
 export function arenaTick() {
   camaradaToStalin()
 }
-
 
 
 export function chooseTargetArena() {
@@ -1535,6 +1533,82 @@ let awp = {
   poder() {},
 };
 
+let ramattra = {
+  cartaId: "ramattra",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 15,
+  _attackAtSpawn: true,
+  _doesAttack: true,
+  _audioSpawn: "",
+  attackChance: 10,
+  hp: 100,
+  maxHealth: 100,
+  dano: 35,
+  emoji: "",
+  _coolDownNatural: 4,
+
+  tick() {
+    
+    if(!this.areaDmgStarted){
+      this.areaDmg()
+      this.areaDmgStarted = true
+    }
+
+  },
+
+  levelCfg() {
+   
+    this.dano = 18
+
+
+    this.dano *= this._level;
+    this.setHp(this.hp * this._level);
+  },
+
+  cfg() {
+    this._retratoP.style.border = "2px solid #530ba5";
+    
+    this._retratoP.style.backgroundSize = "100% 100%";
+    this._nomeP.style.marginTop = "23px";
+    this.targetPointSetter(175);
+  },
+
+  areaDmg(){
+    if(this._dead)return
+    let areaAtackFrequency = 810
+
+     this.areaDmgInterval = setInterval(
+      ()=>{
+
+        if(this._dead){
+          clearInterval(this.areaDmgInterval)
+        } else {
+          console.log('dei dano');
+          invObj.map(
+            (x)=>{
+              x.dmg(Math.trunc(this.dano / 10))
+            }
+          )
+        }
+
+        
+      }
+     ,areaAtackFrequency)
+  },
+
+  
+
+  poder() {},
+};
+
 let stalin = {
   cartaId: "stalin",
   _place: false,
@@ -1546,7 +1620,7 @@ let stalin = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 100,
+  _money: 500,
   _attackAtSpawn: true,
   _doesAttack: false,
   _audioSpawn: "",
@@ -1659,6 +1733,8 @@ export function spawnStalin() {
   );
 }
 
+
+
 export function spawnSmoke() {
   return inserirInimigoDomAndObject(
     blueprintBuilder("smokeCard", "SMOKE", "url('pics/smokeRetrato.PNG')"),
@@ -1670,6 +1746,13 @@ export function spawnAwp() {
   return inserirInimigoDomAndObject(
     blueprintBuilder("awp", "AWP", "url('pics/awpRetrato.PNG')"),
     awp
+  );
+}
+
+export function spawnRamattra() {
+  return inserirInimigoDomAndObject(
+    blueprintBuilder("ramattra", "RAMATTRA", "url('pics/ramattraRetrato.PNG')"),
+    ramattra
   );
 }
 
@@ -1788,7 +1871,7 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnStalin();
+    spawnRamattra();
   }
 });
 
@@ -1877,7 +1960,7 @@ if(revolution == true)return
 
   if (allCamarada) {
     revolution = true
-    console.log("TODOS CAMARADA");
+    // console.log("TODOS CAMARADA");
 
     buffCamarada()
     audioPlayer(faixa, true, CHNStalin, 0.2)
@@ -1893,7 +1976,7 @@ if(revolution == true)return
 
     
   } else {
-    console.log("NÃO TODOS CAMARADA");
+    // console.log("NÃO TODOS CAMARADA");
   }
 }
 

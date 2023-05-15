@@ -567,7 +567,7 @@ export class Especial {
 
   dmg(n) {
     this.dmgReceived();
-
+    if(this.isInvisible)return
     if (this.useBarrier(n)) return;
 
     this._dmgTaken += n;
