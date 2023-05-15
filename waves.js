@@ -157,7 +157,7 @@ export let imperio = {
         {
           enemiesTotal: 30,
           enemies: [spawnMonark],
-
+          level: [4, 5],
 
           boss: [spawnVitor, spawnLiberdade],
           bossTotal: 1,
@@ -210,7 +210,7 @@ export let imperio = {
         {
           enemiesTotal: 118,
           enemies: [spawnCamarada],
-          level: [1, 1],
+          level: [1, 2],
 
           money: 200,
           ammo: 10,

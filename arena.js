@@ -1059,7 +1059,7 @@ let camarada = {
     this.setHp(this.hp * this._level);
     this.attackChance = this.attackChance * this._level;
 
-    this.healValue = gerarNumero(15, 35);
+    this.healValue = 20;
 
     this.healValue = this.healValue * this._level;
     this._money = this._money * this._level;
@@ -1902,9 +1902,9 @@ let stalin = {
     this._level = 5;
 
     this.dano = 7;
-    this.setHp(this.hp * this._level);
-    this.healValue = gerarNumero(45, 110);
-    this.healValue = this.healValue * this._level;
+    this.setHp(4000);
+    this.healValue = 360
+    
   },
 
   cfg() {
@@ -2140,7 +2140,7 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    spawnRamattra();
+    spawnCamarada();z
   }
 });
 

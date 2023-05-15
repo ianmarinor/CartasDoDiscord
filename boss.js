@@ -261,6 +261,10 @@ export let wave = {
 
     this.summonTimeout = setTimeout(() => {
 
+      if(this.boss){
+
+      
+
       if(per(this.bossSpawnChance) && this.bossTotal && this.boss){
 
 
@@ -270,7 +274,8 @@ export let wave = {
         this.isSpawning = false
         console.log("BOSS ADICIONADO");
         return
-      } else {
+      } 
+    }else {
         console.log('NÃO TEM BOSS NESSA ONDA');
       }
 
