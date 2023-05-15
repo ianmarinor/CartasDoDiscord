@@ -261,7 +261,8 @@ export let wave = {
 
     this.summonTimeout = setTimeout(() => {
 
-      if(per(this.bossSpawnChance) && this.bossTotal > 0){
+      if(per(this.bossSpawnChance) && this.bossTotal && this.boss){
+
 
 
         waveObj.boss[gerarNumero(0, waveObj.boss.length - 1)]();
@@ -269,6 +270,8 @@ export let wave = {
         this.isSpawning = false
         console.log("BOSS ADICIONADO");
         return
+      } else {
+        console.log('NÃO TEM BOSS NESSA ONDA');
       }
 
       console.log('tempo de spawn', time);
@@ -807,6 +810,7 @@ function patch(){
  if(!save)return
  save.levels[2].active = true
  save.levels[3].active = true
+ save.levels[4].active = true
  localStorage.setItem("mySave", JSON.stringify(save))
  
  console.log(JSON.parse(localStorage.getItem("mySave")));

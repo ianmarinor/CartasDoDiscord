@@ -33,7 +33,7 @@ import {
 import { marketObj, closeMarket, openMarket } from "./market.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alfa 1.2.4";
+let versao = "Alfa 1.2.5";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -2824,6 +2824,7 @@ export function startGame2() {
   for (let i = 0; i < 6; i++) {
     if (per(50)) {
       moveToMao(i);
+      console.log('movendo a carta');
     }
 
     rodadas = 0;

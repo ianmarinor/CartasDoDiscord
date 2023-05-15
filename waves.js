@@ -78,63 +78,18 @@ export let campanhaTeste = {
 
       waves: [
         {
-          enemiesTotal: 15,
-          enemies: [spawnMonark, spawnMenosCartas],
-          level: [1, 1],
-
-          boss: [spawnLiberdade],
-          bossTotal: 1,
-          bossLevel: [4, 5],
-          bossSpawnChance: 50,
-
-          money: 150,
-          ammo: 5,
-          cards: 10,
-          spawnChance: 20,
-          name: "GENESIS",
-          timeBeforeNextWave: [5, 7],
-          spawnTime: [0.5, 1],
-
-          bannedCard: [],
-        },
-
-        {
-          enemiesTotal: 3,
-          enemies: [spawnAwp, spawnSmoke],
-          level: [1, 1],
-          money: 100,
-          ammo: 5,
-          cards: 5,
-          spawnChance: 90,
-          name: "EMBOSCADA",
-          timeBeforeNextWave: [10, 11],
-          spawnTime: [2, 2],
-        },
-
-        {
-          enemiesTotal: 3,
+          enemiesTotal: 80,
           enemies: [spawnMonark],
-          level: [1, 5],
-          money: 75,
-          ammo: 1,
-          cards: 5,
-          spawnChance: 100,
+          level: [1, 3],
+          money: 200,
+          ammo: 10,
+          cards: 20,
           name: "CHUVA DE MONARK",
-          timeBeforeNextWave: [5, 7],
-          spawnTime: [0.5, 3],
+          spawnTime: [1, 3],
+          timeBeforeNextWave: [25, 40],
+
         },
-        {
-          enemiesTotal: 3,
-          enemies: [spawnMonark],
-          level: [1, 5],
-          money: 75,
-          ammo: 1,
-          cards: 5,
-          spawnChance: 100,
-          name: "CHUVA DE MONARK",
-          timeBeforeNextWave: [5, 7],
-          spawnTime: [0.5, 1.5],
-        },
+    
       ],
     },
   ],
@@ -527,7 +482,7 @@ export let imperio = {
         },
 
         {
-          enemiesTotal: 5,
+          enemiesTotal: 25,
           enemies: [spawnMonark],
           level: [1, 5],
           money: 200,
@@ -584,8 +539,162 @@ export let imperio = {
       name: "RISADA",
       completed: false,
       locked: true,
-      active: false,
-      waves: [],
+      active: true,
+      waves: [
+
+        {
+          enemiesTotal: 30,
+          enemies: [spawnMonark, spawnAwp],
+          level: [3, 5],
+          money: 5,
+          ammo: 5,
+          cards: 1,
+          name: "LIBERDADE!",
+          spawnTime: [5, 10],
+          timeBeforeNextWave: [8, 10],
+
+          boss: [spawnVitor, spawnLiberdade],
+          bossTotal: 7,
+          bossLevel: [1, 1],
+          bossSpawnChance: 50,
+
+        },
+
+
+        {
+          enemiesTotal: 23,
+          enemies: [spawnAwp],
+          level: [3, 5],
+          money: 25,
+          ammo: 1,
+          cards: 5,
+          name: "Mick Mundy",
+          spawnTime: [2, 6],
+          timeBeforeNextWave: [20, 35],
+
+          boss: [ spawnLiberdade],
+          bossTotal: 3,
+          bossLevel: [1, 2],
+          bossSpawnChance: 10,
+
+        },
+
+        {
+          enemiesTotal: 40,
+          enemies: [spawnCamarada, spawnTank],
+          level: [3, 5],
+          money: 10,
+          ammo: 5,
+          cards: 5,
+          name: "REVOLUÇÃO DOS TANKS",
+          spawnTime: [2, 12],
+          timeBeforeNextWave: [8, 10],
+
+          boss: [ spawnLiberdade],
+          bossTotal: 10,
+          bossLevel: [2, 3],
+          bossSpawnChance: 10,
+
+        },
+
+        {
+          enemiesTotal: 60,
+          enemies: [spawnSmoke ],
+          level: [4, 5],
+          money: 15,
+          ammo: 1,
+          cards: 5,
+          name: "UM TRUQUE...",
+          spawnTime: [2, 8],
+          timeBeforeNextWave: [8, 10],
+
+          boss: [ spawnVitor],
+          bossTotal: 15,
+          bossLevel: [1, 2],
+          bossSpawnChance: 40,
+
+        },
+
+        {
+          enemiesTotal: 40,
+          enemies: [spawnMonark, spawnCamarada, spawnTank, spawnMenosCartas, spawnSmoke, spawnAwp],
+          level: [4, 5],
+          money: 10,
+          ammo: 1,
+          cards: 1,
+          name: "UMA FEIJOADA COMPLETA",
+          spawnTime: [2, 8],
+          timeBeforeNextWave: [15, 30],
+
+
+          boss: [ spawnVitor, spawnLiberdade],
+          bossTotal: 15,
+          bossLevel: [1, 2],
+          bossSpawnChance: 20,
+
+        },
+
+
+        {
+          enemiesTotal: 40,
+          enemies: [spawnSmoke, spawnAwp],
+          level: [4, 5],
+          money: 20,
+          ammo: 1,
+          cards: 3,
+          name: "EMBOSCADA",
+          spawnTime: [2, 10],
+          timeBeforeNextWave: [15, 30],
+
+
+          boss: [ spawnLiberdade],
+          bossTotal: 8,
+          bossLevel: [2, 4],
+          bossSpawnChance: 33,
+
+        },
+
+        {
+          enemiesTotal: 45,
+          enemies: [spawnTank, spawnCamarada],
+          level: [4, 5],
+          money: 7,
+          ammo: 4,
+          cards: 1,
+          name: "REVOLUÇÃO DOS TANKS",
+          spawnTime: [2, 10],
+          timeBeforeNextWave: [15, 30],
+
+
+          boss: [spawnLiberdade],
+          bossTotal: 10,
+          bossLevel: [1, 2],
+          bossSpawnChance: 50,
+
+        },
+
+        {
+          enemiesTotal: 60,
+          enemies: [spawnMonark],
+          level: [5, 5],
+          money: 50,
+          ammo: 5,
+          cards: 20,
+          name: "CHUVA DE MONARK",
+          spawnTime: [0.5, 1],
+          
+
+
+          boss: [spawnVitor],
+          bossTotal: 4,
+          bossLevel: [3, 5],
+          bossSpawnChance: 10,
+
+        },
+
+
+
+      ],
     },
 
     // NIVEL 6
