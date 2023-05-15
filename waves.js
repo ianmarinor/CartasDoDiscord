@@ -472,8 +472,93 @@ export let imperio = {
       name: "MICROFONE",
       completed: false,
       locked: true,
+      active: false,
 
-      waves: [],
+      waves: [
+
+        {
+          enemiesTotal: 50,
+          enemies: [spawnSmoke],
+          level: [2, 5],
+          money: 200,
+          ammo: 10,
+          cards: 20,
+          name: "SIR NUKESALOT",
+          spawnTime: [1.5, 2.5],
+          timeBeforeNextWave: [1, 5],
+
+          boss: [spawnLiberdade],
+          bossTotal: 5,
+          bossLevel: [1, 1],
+          bossSpawnChance: 15,
+
+        },
+
+        {
+          enemiesTotal: 12,
+          enemies: [spawnSmoke, spawnTank],
+          level: [2, 5],
+          money: 200,
+          ammo: 10,
+          cards: 20,
+          name: "SÃO PAULO",
+          spawnTime: [3, 8],
+          timeBeforeNextWave: [10, 12],
+
+
+        },
+
+        {
+          enemiesTotal: 5,
+          enemies: [spawnTank],
+          level: [1, 3],
+          money: 200,
+          ammo: 10,
+          cards: 20,
+          name: "PEDRA",
+          spawnTime: [3, 8],
+          timeBeforeNextWave: [10, 12],
+
+          boss: [spawnLiberdade],
+          bossTotal: 5,
+          bossLevel: [1, 1],
+          bossSpawnChance: 50,
+
+        },
+
+        {
+          enemiesTotal: 5,
+          enemies: [spawnMonark],
+          level: [1, 5],
+          money: 200,
+          ammo: 10,
+          cards: 20,
+          name: "PSEUDOCIÊNCIA",
+          spawnTime: [3, 8],
+          timeBeforeNextWave: [10, 12],
+
+          boss: [spawnVitor],
+          bossTotal: 3,
+          bossLevel: [1, 1],
+          bossSpawnChance: 33,
+
+        },
+
+
+        {
+          enemiesTotal: 80,
+          enemies: [spawnMonark],
+          level: [1, 3],
+          money: 200,
+          ammo: 10,
+          cards: 20,
+          name: "CHUVA DE MONARK",
+          spawnTime: [1, 3],
+
+        },
+
+
+      ],
     },
 
     // NIVEL 5
