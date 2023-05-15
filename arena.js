@@ -1149,8 +1149,7 @@ let lux = {
 
     this.retratoBorder("3px solid #bbbb14");
 
-    this.hide(this._energiaP)
-    
+    this.hide(this._energiaP);
   },
 
   tick() {
@@ -1219,7 +1218,7 @@ let lux = {
     this._coolDown = this._coolDownNatural;
     this._doesAttack = true;
     this.aboutToUlt = false;
-    this._displayP.children[2].style.color = 'white'
+    this._displayP.children[2].style.color = "white";
   },
 
   primaryAttack() {
@@ -1229,30 +1228,114 @@ let lux = {
       this._coolDown = 4;
       this.aboutToUlt = true;
 
-      this._displayP.children[2].style.color = 'red'
-      this.hide(this._energiaP, false)
-      
+      this._displayP.children[2].style.color = "red";
+      this.hide(this._energiaP, false);
     }
 
     console.log("ATAQUEI");
     // stun aqui
 
-    invObj.map(
-      (x)=>{
-        if(x._exposto){
-          x.stun(5)
-        }
+    invObj.map((x) => {
+      if (x._exposto) {
+        x.stun(5);
       }
-    )
-
+    });
   },
 
   poder() {
-    let faixa =
-        this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".mp3";
-      audioPlayer(faixa, true, this._CHN, 0.5);
+    let faixa = this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".mp3";
+    audioPlayer(faixa, true, this._CHN, 0.5);
     this.ult();
-    this.hide(this._energiaP)
+    this.hide(this._energiaP);
+  },
+};
+
+let rouba = {
+  cartaId: "rouba",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 5,
+  _doesAttack: false,
+  _hasdmg: true,
+  energia: "",
+  emoji: "",
+  hp: 10,
+  maxHealth: 10,
+  dano: 1,
+  attackChance: false,
+  ulti: 0,
+  maxUlti: 50,
+  tank: true,
+  _CHN: document.createElement("audio"),
+  _attackAtSpawn: false,
+  _coolDownNatural: 3,
+  _doesAttack: false,
+
+  //AUDIO FILES
+  _audioUltFiles: 8,
+  _sourceUlt: "rouba/ulting",
+
+  levelCfg() {},
+
+  cfg() {
+    this._nomeP.style.marginTop = "30px";
+    this._nomeP.style.fontSize = "115%";
+    this._retratoP.style.marginBottom = "0px";
+    this._retratoP.style.marginTop = "0px";
+
+    this.hide(this._energiaP);
+
+    this.targetPointSetter(70);
+
+    // this._thisCardP.style.backgroundImage = 'url("/pics/roubaFundo2.gif")'
+
+    this.hide(this._nomeP);
+    this.hide(this._retratoP);
+  },
+
+  tick() {},
+
+  poder() {
+    let faixa = this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".ogg";
+
+    for (let i = 0; i < 8; i++) {
+      invObj.map((x) => {
+        if (!x.empty && x._cargoArr[2] == i && !this.roubei) {
+          this.roubei = true;
+          x.kill();
+          this._coolDown = 100;
+
+          this.hide(this._displayP.children[2]);
+          this._thisCardP.style.backgroundImage = 'url("pics/roubaFundo2.gif")';
+
+          this.hide(this._nomeP, false);
+          this.hide(this._retratoP, false);
+
+          this.setHp(500);
+
+          audioPlayer(faixa, true, this._CHN, 0.5);
+
+          setTimeout((x) => {
+            this.kill(true);
+          }, 1700);
+        }
+      });
+      if (this.roubei) {
+        break;
+      }
+
+      if (i == 7 && !this.roubei) {
+        this.kill(true)
+        break;
+      }
+    }
   },
 };
 
@@ -1929,6 +2012,13 @@ export function spawnLux() {
   );
 }
 
+export function spawnRouba() {
+  return inserirInimigoDomAndObject(
+    blueprintBuilder("rouba", "O ROUBA-PIADAS", "url('pics/roubaRetrato.PNG')"),
+    rouba
+  );
+}
+
 export function spawnMonark(n) {
   start();
 
@@ -2044,21 +2134,21 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    invObj[0].stun(5)
+    invObj[0].stun(5);
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     // spawnLiberdade();
-    invObj[0].removeStun()
+    invObj[0].removeStun();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
     // spawnTank();
-    spawnRamattra();
+    spawnRouba();
   }
 });
 

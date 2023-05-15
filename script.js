@@ -219,21 +219,21 @@ export function escolherCargo(x) {
     seedString[13] == 9 &&
     seedString[8] > 4
   ) {
-    cargo = ["carta-premiomarino", "Premio Marino"];
+    cargo = ["carta-premiomarino", "Premio Marino", 0];
   } else if (seedString[11] == 1 && seedString[12] == 8) {
-    cargo = ["carta-primeminister", "Prime Minister"];
+    cargo = ["carta-primeminister", "Prime Minister", 1];
   } else if (seedString[12] == 7 && seedString[11] >= 5) {
-    cargo = ["carta-ministro", "Ministro"];
+    cargo = ["carta-ministro", "Ministro", 2];
   } else if (seedString[12] == 6 && seedString[11] >= 3) {
-    cargo = ["carta-lord", "Lord"];
+    cargo = ["carta-lord", "Lord", 3];
   } else if (seedString[13] >= 8 && seedString[12] > 2) {
-    cargo = ["carta-nobre", "Nobre"];
+    cargo = ["carta-nobre", "Nobre", 4];
   } else if (seedString[13] >= 7) {
-    cargo = ["carta-gentleman", "Gentleman"];
+    cargo = ["carta-gentleman", "Gentleman", 5];
   } else if (seedString[11] > 4 && seedString[12] > 1) {
-    cargo = ["carta-people", "People"];
+    cargo = ["carta-people", "People", 6];
   } else {
-    cargo = ["carta-semcargo", "Sem Cargo"];
+    cargo = ["carta-semcargo", "Sem Cargo", 7];
   }
 
   return cargo;
