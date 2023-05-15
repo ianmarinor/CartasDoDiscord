@@ -33,7 +33,7 @@ import {
 import { marketObj, closeMarket, openMarket } from "./market.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alfa 1.2.1";
+let versao = "Alfa 1.2.2";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}

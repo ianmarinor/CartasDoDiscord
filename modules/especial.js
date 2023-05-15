@@ -3054,11 +3054,11 @@ export function escolherEspecial(teste) {
       if (!true) {
         especial = objBinder(especiais.dva);
       } else if (num == 1) {
-        especial = objBinder(especiais.spy);
+        especial = objBinder(especiais.lucio);
       } else if (num == 2) {
         especial = objBinder(especiais.dva);
       } else if (num == 3) {
-        especial = objBinder(especiais.lucio);
+        especial = objBinder(especiais.spy);
       } else if (num == 4) {
         especial = objBinder(especiais.sentry);
       }
