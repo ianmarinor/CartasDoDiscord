@@ -113,9 +113,8 @@ export let smokeOnInv = {
 let arenaTarget = 0;
 
 export function arenaTick() {
-  camaradaToStalin()
+  camaradaToStalin();
 }
-
 
 export function chooseTargetArena() {
   let pool = [];
@@ -592,6 +591,7 @@ class Inimigo {
   kill(absolute) {
     if (!this._parentP) return;
 
+    this._CHN.pause()
     this.didKill();
 
     if (!absolute) {
@@ -1555,56 +1555,54 @@ let ramattra = {
   emoji: "",
   _coolDownNatural: 4,
 
+  //AUDIO FILES
+  _audioSpawnFiles: 1,
+  _sourceSpawn: "ramattra/spawn",
+
   tick() {
-    
-    if(!this.areaDmgStarted){
-      this.areaDmg()
-      this.areaDmgStarted = true
+    if (!this.areaDmgStarted) {
+      this.areaDmg();
+      this.areaDmgStarted = true;
     }
 
+    if (this._dead) {
+      this._CHN.pause();
+      console.log(88888888888);
+    }
   },
 
   levelCfg() {
-   
-    this.dano = 18
-
-
+    this.dano = 20;
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
   },
 
   cfg() {
+    let faixa =
+      this._sourceSpawn + gerarNumero(1, this._audioSpawnFiles) + ".mp3";
+    audioPlayer(faixa, true, this._CHN, 0.5);
+
     this._retratoP.style.border = "2px solid #530ba5";
-    
     this._retratoP.style.backgroundSize = "100% 100%";
     this._nomeP.style.marginTop = "23px";
     this.targetPointSetter(175);
   },
 
-  areaDmg(){
-    if(this._dead)return
-    let areaAtackFrequency = 810
+  areaDmg() {
+    if (this._dead) return;
+    let areaAtackFrequency = 810;
 
-     this.areaDmgInterval = setInterval(
-      ()=>{
-
-        if(this._dead){
-          clearInterval(this.areaDmgInterval)
-        } else {
-          console.log('dei dano');
-          invObj.map(
-            (x)=>{
-              x.dmg(Math.trunc(this.dano / 10))
-            }
-          )
-        }
-
-        
+    this.areaDmgInterval = setInterval(() => {
+      if (this._dead) {
+        clearInterval(this.areaDmgInterval);
+      } else {
+        console.log("dei dano");
+        invObj.map((x) => {
+          x.dmg(Math.trunc(this.dano / 10));
+        });
       }
-     ,areaAtackFrequency)
+    }, areaAtackFrequency);
   },
-
-  
 
   poder() {},
 };
@@ -1656,9 +1654,9 @@ let stalin = {
     this.targetPointSetter(450);
   },
 
-  didKill(){
-    revolution = false
-    CHNStalin.pause()
+  didKill() {
+    revolution = false;
+    CHNStalin.pause();
   },
 
   tick() {
@@ -1732,8 +1730,6 @@ export function spawnStalin() {
     stalin
   );
 }
-
-
 
 export function spawnSmoke() {
   return inserirInimigoDomAndObject(
@@ -1896,9 +1892,10 @@ document.addEventListener("keydown", (event) => {
       // console.log('killl arena');
 
       areObj.map((x) => {
-        if (!x.empty 
+        if (
+          !x.empty
           // && !x.miniBoss
-          ) {
+        ) {
           x.kill();
         }
       });
@@ -1930,51 +1927,41 @@ export function populateArena() {
     return rng();
   }
 }
-let revolution
+let revolution;
 let CHNStalin = document.createElement("audio");
 function camaradaToStalin() {
+  if (revolution == true) return;
 
+  let faixa = "stalinSpawnMusic.mp3";
 
-if(revolution == true)return
-
-  
-  let faixa = 'stalinSpawnMusic.mp3'
-
-  let allCamarada = areObj.every((x)=> x.cartaId == 'camarada')
+  let allCamarada = areObj.every((x) => x.cartaId == "camarada");
   const killCamarada = () => {
-    areObj.map((x)=>{
-      if(x.cartaId == 'camarada'){
-        x.kill()
+    areObj.map((x) => {
+      if (x.cartaId == "camarada") {
+        x.kill();
       }
-    })
-  }
+    });
+  };
 
   const buffCamarada = () => {
-    areObj.map((x)=>{
-      if(x.cartaId == 'camarada'){
-        x.setHp(9000)
+    areObj.map((x) => {
+      if (x.cartaId == "camarada") {
+        x.setHp(9000);
       }
-    })
-  }
- 
+    });
+  };
 
   if (allCamarada) {
-    revolution = true
+    revolution = true;
     // console.log("TODOS CAMARADA");
 
-    buffCamarada()
-    audioPlayer(faixa, true, CHNStalin, 0.2)
-    setTimeout(
-      ()=>{
-        if(!allCamarada) return
-        killCamarada();
-        spawnStalin()
-        
-      }, 3500
-    )
-    
-
-    
+    buffCamarada();
+    audioPlayer(faixa, true, CHNStalin, 0.2);
+    setTimeout(() => {
+      if (!allCamarada) return;
+      killCamarada();
+      spawnStalin();
+    }, 3500);
   } else {
     // console.log("NÃO TODOS CAMARADA");
   }
