@@ -867,6 +867,7 @@ li {
 
   /* background-image: url(pics/click.webp); */
   background-color: #626dcd;
+  background-color: #949219;
   height: var(--tamanhoCartaHeight);
   width: var(--tamanhoCartaWidth);
   /* font-size: 2em; */
@@ -877,6 +878,7 @@ li {
   border-radius: 15px;
   position: relative;
   border: 2px solid #0000ff;
+  border: 2px solid #ffbb00;
   font-weight: 900;
   color: rgb(0, 0, 0);
   background-repeat: no-repeat;

@@ -2836,7 +2836,7 @@ export function startGame2() {
   hpPlayer.set(100);
   ammo.set(5);
   // countdown.valueSet(20);
-  money.set(0);
+  money.set(125);
   tick();
   removeBuffAll();
 }

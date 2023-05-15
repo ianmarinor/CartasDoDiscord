@@ -1350,7 +1350,8 @@ export let especiais = {
     },
 
     retratoStyle: {
-      border: "2px solid #0000ff",
+      border: "2px solid #dea710",
+
       backgroundColor: "",
     },
     cargoStyle: {
@@ -1373,12 +1374,12 @@ export let especiais = {
 
   maisAmmo: {
     cartaId: "maisAmmo",
-    nome: "MAIS MUNIÇÃO",
+    nome: "MAIS MANA",
     raridade: raridades.campones,
 
     energia: 15,
 
-    emoji: "⚔️",
+    emoji: "💧",
     retrato: "url('pics/maisAmmoRetrato.gif')",
     cargo: "",
 
@@ -1435,7 +1436,7 @@ export let especiais = {
     },
 
     retratoStyle: {
-      border: "2px solid #dea710",
+      border: "2px solid #0000ff",
       backgroundColor: "",
     },
     cargoStyle: {
@@ -1693,8 +1694,6 @@ export let especiais = {
     },
 
     tickMao() {
-      
-
       this._cargoP.innerHTML =
         this._requiredIntegrante.toUpperCase() +
         "<br>" +
@@ -1785,8 +1784,8 @@ export let especiais = {
     retrato: 'url("/pics/spyRetrato.webp")',
     cargo: "",
     hashp: false,
-    hp: 10,
-    maxHealth: 10,
+    hp: 6,
+    maxHealth: 6,
     dmgBoss: false,
     hashp: true,
     clockReady: true,
@@ -2756,9 +2755,9 @@ export let especiais = {
       invObj.map((x) => {
         if (x.Twelve && !x.isMonark && !x.hasHelpedSapato) {
           if (this._fullHp) {
-            this.heal(12);
-          } else {
             this.addBuff(12);
+          } else {
+            this.heal(12);
           }
 
           x.hasHelpedSapato = true;
@@ -3005,8 +3004,14 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 2);
 
-      if(wave.campain.id == 1 && wave.mission.levelId < 1){
+      if (wave.campain.id == 1){ 
+        if(wave.mission.levelId < 8) {
         num = 1
+        }
+
+        if(wave.mission.levelId > 7) {
+          num = gerarNumero(1,2)
+          }
       }
 
       if (num == 1) {
@@ -3016,30 +3021,47 @@ export function escolherEspecial(teste) {
       }
 
       //SANGUE AZUL
-    } else if (raridades.sangueAzul.rng()) {
+    } else if (raridades.sangueAzul.rng()){
       raridade = raridades.sangueAzul;
 
       let num;
 
       num = gerarNumero(1, 4);
 
-      if(wave.campain.id == 1 && wave.mission.levelId < 1){
-        num = 2
-      }
+      //MISSAO IMPERIO
+      if (wave.campain.id == 1) {
+        if (wave.mission.levelId < 1) {
+          num = 4;
+        }
+        if (wave.mission.levelId > 0) {
+          num = gerarNumero(3,4)
+        }
 
+        if(wave.mission.levelId > 2){
+          num = gerarNumero(2,4)
+        }
+
+        if(wave.mission.levelId > 3){
+          num = gerarNumero(2,4)
+        }
+
+        if(wave.mission.levelId > 4){
+          num = gerarNumero(1,4)
+        }
+
+      }
 
       if (!true) {
         especial = objBinder(especiais.dva);
       } else if (num == 1) {
-        especial = objBinder(especiais.lucio);
+        especial = objBinder(especiais.spy);
       } else if (num == 2) {
         especial = objBinder(especiais.dva);
       } else if (num == 3) {
-        especial = objBinder(especiais.spy);
+        especial = objBinder(especiais.lucio);
       } else if (num == 4) {
         especial = objBinder(especiais.sentry);
       }
-
 
       //CAVALEIRO
     } else if (raridades.cavaleiro.rng()) {
@@ -3049,11 +3071,29 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 6);
 
-
-      if(wave.campain.id == 1 && wave.mission.levelId < 1){
-        num = 3
+      if (wave.campain.id == 1) {
+      if(wave.mission.levelId < 1) {
+        num = 6;
+      } 
+      if (wave.mission.levelId > 0){
+        num = gerarNumero(3,4)
       }
 
+      if (wave.mission.levelId > 1){
+        num = gerarNumero(3,5)
+      }
+
+      if (wave.mission.levelId > 5){
+        num = gerarNumero(2,6)
+      }
+
+      if (wave.mission.levelId > 6){
+        num = gerarNumero(1,6)
+      }
+
+      
+
+    }
 
       if (!true) {
         especial = objBinder(especiais.sapato);
@@ -3062,16 +3102,14 @@ export function escolherEspecial(teste) {
       } else if (num == 2) {
         especial = objBinder(especiais.estoicoTuru);
       } else if (num == 3) {
-        especial = objBinder(especiais.creeper);
-      } else if (num == 4) {
-        especial = objBinder(especiais.jhin);
-      } else if (num == 5) {
         especial = objBinder(especiais.abelha);
-      } else {
+      } else if (num == 4) {
         especial = objBinder(especiais.sapato);
+      } else if (num == 5) {
+        especial = objBinder(especiais.jhin);
+      } else if (num == 6) {
+        especial = objBinder(especiais.creeper);
       }
-
-      
 
       //CAMPONESES
     } else {
@@ -3081,16 +3119,21 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 3);
 
-      if(wave.campain.id == 1 && wave.mission.levelId < 2){
-        num = 1
+      if (wave.campain.id == 1) {
+        if (wave.mission.levelId < 2) {
+          num = gerarNumero(1, 2);
+        } 
+        if (wave.mission.levelId > 4) {
+          num = gerarNumero(1, 3);
+        }
       }
 
       if (num == 1) {
         especial = objBinder(especiais.maisCartas);
       } else if (num == 2) {
-        especial = objBinder(especiais.cabeca);
-      } else if (num == 3) {
         especial = objBinder(especiais.maisAmmo);
+      } else if (num == 3) {
+        especial = objBinder(especiais.cabeca);
       }
     }
   } else {
@@ -3098,8 +3141,6 @@ export function escolherEspecial(teste) {
     especial = especiais.notSpecial;
   }
 }
-
-
 
 function constrEspecial() {}
 

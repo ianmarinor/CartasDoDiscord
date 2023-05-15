@@ -269,7 +269,7 @@ export let slotEspObj;
 function Main() {
 
   slotEspObj = [emptyObj, emptyObj, emptyObj];
-  comprarSangue(true)
+  // comprarSangue(true)
 
 
 
