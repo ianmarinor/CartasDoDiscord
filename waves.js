@@ -378,7 +378,7 @@ export let imperio = {
       name: "BRIGAS",
       completed: false,
       locked: true,
-      active: false,
+      active: true,
 
       waves: [
         {
