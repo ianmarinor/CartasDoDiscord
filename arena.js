@@ -801,7 +801,7 @@ class Inimigo {
       }
 
       if (this._coolDown == 4) {
-        audioPlayer(drumAu, true, placarAudioChannel);
+        audioPlayer(drumAu, true, placarAudioChannel, 0.3);
       }
       if (this._coolDown <= 1) {
         this._coolDown = this._coolDownNatural;
