@@ -1212,7 +1212,10 @@ let lux = {
     this._doesAttack = true;
 
     invObj.map((x) => {
-      x.dmg(this.dano);
+      if(!x.isNormal){
+        x.dmg(this.dano);
+
+      }
     });
 
     this._coolDown = this._coolDownNatural;
@@ -1858,7 +1861,10 @@ let ramattra = {
       } else {
         console.log("dei dano");
         invObj.map((x) => {
-          x.dmg(Math.trunc(this.dano / 10));
+          if(!x.isNormal){
+
+            x.dmg(Math.trunc(this.dano / 10));
+          }
         });
       }
     }, areaAtackFrequency);
@@ -2133,22 +2139,22 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 }
 
 document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyZ") {
+    spawnRamattra();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    invObj[0].stun(5);
+    // spawnLiberdade();
+    spawnRouba();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
-    // spawnLiberdade();
-    spawnVitor();
-  }
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyZ") {
     // spawnTank();
-    spawnRouba();
+    spawnLux();
   }
 });
 
