@@ -35,6 +35,10 @@ let main = document.getElementById("main");
 let testP = document.getElementById("test");
 let countdownP = document.getElementById("countdown");
 let bodyP = document.getElementsByTagName("body")[0];
+// let playButtonP = document.getElementById("play-button")
+
+
+
 
 let cartaBossMonark =
   '<div id="cartaBossMonark" class="bossAnimation" data-card="boss"></div>';
@@ -795,3 +799,21 @@ document.addEventListener("keydown", (event) => {
     location.reload();
   }
 });
+
+function patch(){
+
+ let save = JSON.parse(localStorage.getItem("mySave"))
+ save.levels[2].active = true
+ localStorage.setItem("mySave", JSON.stringify(save))
+ 
+ console.log(JSON.parse(localStorage.getItem("mySave")));
+
+  
+
+
+
+}
+
+window.onload = (event) => {
+  patch()
+};
