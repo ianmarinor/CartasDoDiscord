@@ -17,7 +17,7 @@ import {
   arenaTick
 } from "./arena.js";
 
-import { especiais, especial, Especial } from "./modules/especial.js";
+import { especiais, especial, Especial, especialCoolDown, especialTick } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
@@ -2352,6 +2352,7 @@ function tick() {
     chooseTargetArena();
     chooseTargetInv();
     arenaTick();
+    especialTick()
     
 
     for (let i = 0; i < 6; i++) {
@@ -2398,6 +2399,35 @@ function tick() {
 
     wave.tick();
   }, 16);
+}
+
+let globalCoolDownInterval
+let gamePaused = false
+function globalCoolDown(){
+
+  let i = 0
+
+  let coolDown = 1000
+
+
+  setInterval(
+    ()=>{
+
+      if(gamePaused){
+      } else {
+
+        especialCoolDown()
+
+
+
+        console.log(i++);
+      }
+      
+
+    },coolDown)
+
+
+
 }
 
 function allMonark() {
@@ -2842,6 +2872,7 @@ export function startGame2() {
   // countdown.valueSet(20);
   money.set(125);
   tick();
+  globalCoolDown()
   removeBuffAll();
 }
 

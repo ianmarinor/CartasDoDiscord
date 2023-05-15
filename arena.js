@@ -354,6 +354,21 @@ class Inimigo {
     retrato.style.backgroundImage = "url('pics/" + img + "')";
   }
 
+  retratoBorder(_newBorder) {
+    this._retratoP.style.border = _newBorder;
+  }
+
+  hide(_element, _trigger) {
+    let element = _element;
+    let trigger = _trigger;
+
+    if (trigger == undefined || trigger === true) {
+      element.style.visibility = "hidden";
+    } else if (trigger === false) {
+      element.style.visibility = "visible";
+    }
+  }
+
   levelSetter(_level) {
     // let life = wave.progress
     // console.log(wave.enemiesLevel);
@@ -576,6 +591,7 @@ class Inimigo {
     if (!this.isInvisible) {
       if (this._doesAttack) {
         this.primaryAttack();
+        this.readyToAttack = false;
       } else {
         this.poder();
         this.readyToAttack = false;
@@ -591,7 +607,7 @@ class Inimigo {
   kill(absolute) {
     if (!this._parentP) return;
 
-    this._CHN.pause()
+    this._CHN.pause();
     this.didKill();
 
     if (!absolute) {
@@ -1083,6 +1099,160 @@ let camarada = {
       }
     });
     borderBlink();
+  },
+};
+
+let lux = {
+  cartaId: "lux",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 30,
+  _doesAttack: false,
+  _hasdmg: true,
+  _audioSpawn: "tank.mp3",
+  energia: "",
+  emoji: "",
+  hp: 25,
+  maxHealth: 25,
+  dano: 130,
+  attackChance: false,
+  ulti: 0,
+  maxUlti: 50,
+  tank: true,
+  _CHN: document.createElement("audio"),
+  _attackAtSpawn: false,
+  _coolDownNatural: 11,
+  _doesAttack: true,
+
+  //AUDIO FILES
+  _audioUltFiles: 15,
+  _sourceUlt: "lux/ulting",
+
+  levelCfg() {
+    this.dano = 90;
+    this.dano *= this._level;
+    this.setHp(this.hp * this._level);
+
+    this.maxUlti = Math.trunc(this.maxUlti / this._level);
+    this._money = this._money * this._level;
+  },
+
+  cfg() {
+    this.targetPointSetter(700);
+
+    this.retratoBorder("3px solid #bbbb14");
+
+    this.hide(this._energiaP)
+    
+  },
+
+  tick() {
+    this._cargoP.innerHTML = progressBar(
+      this.ulti,
+      this.maxUlti,
+      "gray",
+      "#bbbb14"
+    );
+
+    if (this.aboutToUlt) {
+      this._cargoP.innerHTML = progressBar(
+        this.ulti,
+        this.maxUlti,
+        "gray",
+        "red"
+      );
+    }
+
+    let walkTime = 970;
+    // walkTime = 120
+    if (!this.hasStartedWalking) {
+      this.interval = setInterval(() => {
+        if (this._dead) {
+          clearInterval(this.interval);
+        } else {
+          this.walk();
+        }
+      }, walkTime);
+
+      this.hasStartedWalking = true;
+    }
+  },
+
+  walk() {
+    if (this.ulti >= this.maxUlti) {
+      return;
+    }
+
+    let ultiRate = gerarNumero(2, 3);
+
+    if (this.ulti - this.maxUlti <= 3) {
+      ultiRate = 1;
+    }
+
+    this.ulti += ultiRate;
+
+    if (this.ulti >= this.maxUlti) {
+      this.ulti = this.maxUlti;
+    }
+  },
+  ult() {
+    console.log("ULTEI");
+
+    this.ulti = 0;
+    this._coolDown = this._coolDownNatural;
+    this._doesAttack = true;
+
+    this._coolDown = this._coolDownNatural;
+    this._doesAttack = true;
+
+    invObj.map((x) => {
+      x.dmg(this.dano);
+    });
+
+    this._coolDown = this._coolDownNatural;
+    this._doesAttack = true;
+    this.aboutToUlt = false;
+    this._displayP.children[2].style.color = 'white'
+  },
+
+  primaryAttack() {
+    if (this.ulti >= this.maxUlti) {
+      // ulta aqui
+      this._doesAttack = false;
+      this._coolDown = 4;
+      this.aboutToUlt = true;
+
+      this._displayP.children[2].style.color = 'red'
+      this.hide(this._energiaP, false)
+      
+    }
+
+    console.log("ATAQUEI");
+    // stun aqui
+
+    invObj.map(
+      (x)=>{
+        if(x._exposto){
+          x.stun(5)
+        }
+      }
+    )
+
+  },
+
+  poder() {
+    let faixa =
+        this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".mp3";
+      audioPlayer(faixa, true, this._CHN, 0.5);
+    this.ult();
+    this.hide(this._energiaP)
   },
 };
 
@@ -1752,6 +1922,13 @@ export function spawnRamattra() {
   );
 }
 
+export function spawnLux() {
+  return inserirInimigoDomAndObject(
+    blueprintBuilder("lux", "LUX", "url('pics/luxRetrato.PNG')"),
+    lux
+  );
+}
+
 export function spawnMonark(n) {
   start();
 
@@ -1867,21 +2044,21 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    spawnRamattra();
+    invObj[0].stun(5)
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     // spawnLiberdade();
-    console.log("spawnLiberdade(): ", spawnMonark());
+    invObj[0].removeStun()
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
     // spawnTank();
-    console.log("spawnTank();: ", spawnCamarada());
+    spawnRamattra();
   }
 });
 

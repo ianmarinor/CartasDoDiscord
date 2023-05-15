@@ -48,6 +48,34 @@
 
   }
 
+  .fadeImage{
+    animation: morto 220ms;
+  }
+
+  @keyframes fadeImage{
+
+    0% {
+      background-image: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 1),
+        rgba(81, 155, 234, 0.1),
+        rgb(0, 0, 1)
+      ),
+      url(/pics/luxFundo.gif);
+    }
+  
+    100% {
+      background-image: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 1),
+        rgba(81, 155, 234, 0.1),
+        rgb(0, 0, 1)
+      ),
+      url(/pics/luxUlting.gif);
+    }
+  }
+
+
   @keyframes piscar{
 
     0% {

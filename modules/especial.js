@@ -332,7 +332,7 @@ export class Especial {
     }
   }
 
-  targetPointSetter(_targetPoint) {
+  targetPointSetter(_targetPoint, _onlySurface) {
     if (per(50)) {
       this._targetPoint = _targetPoint + gerarNumero(0, 12);
     } else {
@@ -341,6 +341,10 @@ export class Especial {
 
     if (this._targetPoint < 1) {
       this._targetPoint = 1;
+    }
+
+    if (!_onlySurface) {
+      this._targetPointNatural = this._targetPoint;
     }
   }
 
@@ -567,7 +571,7 @@ export class Especial {
 
   dmg(n) {
     this.dmgReceived();
-    if(this.isInvisible)return
+    if (this.isInvisible) return;
     if (this.useBarrier(n)) return;
 
     this._dmgTaken += n;
@@ -691,37 +695,47 @@ export class Especial {
 
   everyRoundDefault() {
     this.buildUltAuto();
-    this.removeStun();
   }
 
   energiaDorment(_trigger) {
     this._energiaDorment = _trigger;
   }
-  removeStun(_absolute) {
-    if (!this._stunned) return;
 
-    this._stunnedWeight--;
-    if (_absolute) this._stunnedWeight = 1;
-    if (this._stunnedWeight <= 1) {
-      this._stunned = false;
-      this._thisCardP.classList.remove("stunned");
+  stun(_stunnedCooldown) {
+    if (this._stunned || this.isInvisible || this._uber ) return;
 
-      if (this._notDefaultSelo) {
-        this._exposto = false;
-      }
+    this.dmg(1)
+    this._thisCardP.classList.add("stunned");
 
-      if (this._notDefaultbarriera) {
-        this._barrieraActive = true;
-      }
-
-      setTimeout(
-        () => this._thisCardP.classList.add("unstunned"),
-
-        1
-      );
-
-      setTimeout(() => this._thisCardP.classList.remove("unstunned"), 1000);
+    this._targetPoint += 1200;
+    this._stunnedCooldown = _stunnedCooldown;
+    this._stunned = true
+    if (this._barrieraActive) {
+      this._barrieraActive = false;
+      this._notDefaultbarriera = true;
     }
+  }
+
+  removeStun(_absolute) {
+    if (!this._stunned && this._stunnedCooldown <= 0) return;
+
+    this._stunned = false;
+    this._stunnedCooldown = 0;
+    this._thisCardP.classList.remove("stunned");
+
+    this.targetPointSetter(this._targetPointNatural, true);
+
+    if (this._notDefaultbarriera) {
+      this._barrieraActive = true;
+    }
+
+    setTimeout(
+      () => this._thisCardP.classList.add("unstunned"),
+
+      1
+    );
+
+    setTimeout(() => this._thisCardP.classList.remove("unstunned"), 1000);
   }
 
   tick() {}
@@ -763,16 +777,6 @@ export class Especial {
 
     //stunned
     if (this._stunned) {
-      this._thisCardP.classList.add("stunned");
-
-      if (!this._exposto) {
-        this._exposto = true;
-        this._notDefaultSelo = true;
-      }
-      if (this._barrieraActive) {
-        this._barrieraActive = false;
-        this._notDefaultbarriera = true;
-      }
     }
 
     let parentP = this._parentP;
@@ -1687,7 +1691,9 @@ export let especiais = {
     _requiredIntegrante: true,
     _requiredIntegrante2: true,
     _invHiddenButton: true,
-    cfg() {},
+    cfg() {
+      this.targetPointSetter(200);
+    },
 
     tick() {
       this.integranteRequiredCard();
@@ -3004,16 +3010,6 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 2);
 
-      if (wave.campain.id == 1){ 
-        if(wave.mission.levelId < 8) {
-        num = 1
-        }
-
-        if(wave.mission.levelId > 7) {
-          num = gerarNumero(1,2)
-          }
-      }
-
       if (num == 1) {
         especial = objBinder(especiais.tenica);
       } else if (num == 2) {
@@ -3021,7 +3017,7 @@ export function escolherEspecial(teste) {
       }
 
       //SANGUE AZUL
-    } else if (raridades.sangueAzul.rng()){
+    } else if (raridades.sangueAzul.rng()) {
       raridade = raridades.sangueAzul;
 
       let num;
@@ -3034,21 +3030,20 @@ export function escolherEspecial(teste) {
           num = 4;
         }
         if (wave.mission.levelId > 0) {
-          num = gerarNumero(3,4)
+          num = gerarNumero(3, 4);
         }
 
-        if(wave.mission.levelId > 2){
-          num = gerarNumero(2,4)
+        if (wave.mission.levelId > 2) {
+          num = gerarNumero(2, 4);
         }
 
-        if(wave.mission.levelId > 3){
-          num = gerarNumero(2,4)
+        if (wave.mission.levelId > 3) {
+          num = gerarNumero(2, 4);
         }
 
-        if(wave.mission.levelId > 4){
-          num = gerarNumero(1,4)
+        if (wave.mission.levelId > 4) {
+          num = gerarNumero(1, 4);
         }
-
       }
 
       if (!true) {
@@ -3070,30 +3065,6 @@ export function escolherEspecial(teste) {
       let num;
 
       num = gerarNumero(1, 6);
-
-      if (wave.campain.id == 1) {
-      if(wave.mission.levelId < 1) {
-        num = 6;
-      } 
-      if (wave.mission.levelId > 0){
-        num = gerarNumero(3,4)
-      }
-
-      if (wave.mission.levelId > 1){
-        num = gerarNumero(3,5)
-      }
-
-      if (wave.mission.levelId > 5){
-        num = gerarNumero(2,6)
-      }
-
-      if (wave.mission.levelId > 6){
-        num = gerarNumero(1,6)
-      }
-
-      num = 1
-
-    }
 
       if (!true) {
         especial = objBinder(especiais.sapato);
@@ -3118,15 +3089,6 @@ export function escolherEspecial(teste) {
       let num;
 
       num = gerarNumero(1, 3);
-
-      if (wave.campain.id == 1) {
-        if (wave.mission.levelId < 2) {
-          num = gerarNumero(1, 2);
-        } 
-        if (wave.mission.levelId > 4) {
-          num = gerarNumero(1, 3);
-        }
-      }
 
       if (num == 1) {
         especial = objBinder(especiais.maisCartas);
@@ -3268,6 +3230,29 @@ export let lucioEfeito = {
   rodadas: 0,
   efeito: lucio(),
 };
+
+export function especialCoolDown() {
+
+  invObj.map(
+    (x)=>{
+
+      if(x._stunnedCooldown > 0){
+        x._stunnedCooldown --
+      } else {
+        if(!x.empty && x._stunned)
+        x.removeStun()
+      }
+
+
+
+    }
+  )
+
+}
+
+export function especialTick() {
+  
+}
 
 function estoico() {}
 function lucio() {}
