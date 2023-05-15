@@ -13,7 +13,8 @@ import {
   areReveal,
   chooseTargetArena,
   spawnLiberdade,
-  spawnVitor
+  spawnVitor,
+  arenaTick
 } from "./arena.js";
 
 import { especiais, especial, Especial } from "./modules/especial.js";
@@ -2350,6 +2351,8 @@ function tick() {
     updatePlacarInimigo(false);
     chooseTargetArena();
     chooseTargetInv();
+    arenaTick();
+    
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];

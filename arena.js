@@ -15,7 +15,7 @@ import {
   wCoolDown,
   globalStats,
   timer,
-  debug
+  debug,
 } from "./script.js";
 import {
   boss,
@@ -111,30 +111,30 @@ export let smokeOnInv = {
   },
 };
 
-let arenaTarget = 0
+let arenaTarget = 0;
+
+export function arenaTick() {
+  camaradaToStalin()
+}
+
+
 
 export function chooseTargetArena() {
   let pool = [];
 
-  
-    areObj[arenaTarget]._exposto = false
-  
-
+  areObj[arenaTarget]._exposto = false;
 
   areObj.map((x) => {
-    
-      pool.push(x._targetPoint);
-    
+    pool.push(x._targetPoint);
   });
 
   arenaTarget = pool.indexOf(Math.max(...pool));
   // console.log(pool);
   // console.log("target: ", arenaTarget);
 
-  if(!areObj[arenaTarget].empty){
-    areObj[arenaTarget]._exposto = true
+  if (!areObj[arenaTarget].empty) {
+    areObj[arenaTarget]._exposto = true;
   }
-  
 }
 
 export function areDidHit(_dmgDealer) {
@@ -152,16 +152,12 @@ export function areWakeUp() {
   });
 }
 
-export function arenaKill(){
-
-  areObj.map(
-    (x)=>{
-      if(!x.empty){
-        x.kill()
-      }
+export function arenaKill() {
+  areObj.map((x) => {
+    if (!x.empty) {
+      x.kill();
     }
-  )
-
+  });
 }
 
 export function areReveal() {
@@ -269,67 +265,7 @@ export function arenaByRound() {
   hasPlayed = false;
 }
 
-export function updatePlacarInimigo(_audio) {
-  return;
-  let drumAu = "alertaDano.mp3";
-  let mGAu = "alertaDano2.mp3";
-  let placarAudioChannel = document.createElement("audio");
-  let dmgTotal = 0;
-
-  let efeitos = "";
-
-  areObj.map((x) => {
-    if (x._doesAttack && x.readyToAttack) {
-      dmgTotal += x.dano;
-    } else if (!x._doesAttack && x.readyToAttack) {
-      // efeitos = efeitos + "<br>" + x.emoji;
-      efeitos = efeitos + x.emoji;
-    }
-  });
-
-  placarInimigoWrap.children[1].children[0].innerHTML = "";
-  placarInimigoDano.children[0].textContent = dmgTotal;
-  if (dmgTotal == 0 && efeitos == "") {
-    placarInimigoDano.style.opacity = "0.2";
-    placarInimigoDano.children[1].style.opacity = "0.6";
-    placarInimigoDano.children[0].style.color = "wheat";
-    placarInimigoWrap.style.backgroundColor = "green";
-    placarInimigoWrap.style.opacity = "0.2";
-    placarInimigoWrap.style.border = "solid 1px black";
-    hasPlayed = false;
-  } else if (dmgTotal < 20 && efeitos == "") {
-    placarInimigoDano.style.opacity = "0.9";
-    placarInimigoDano.children[1].style.opacity = "0.6";
-    placarInimigoDano.children[0].style.color = "black";
-    placarInimigoWrap.style.backgroundColor = "#dfa506";
-    placarInimigoWrap.style.opacity = "0.9";
-    placarInimigoWrap.style.border = "solid 2px black";
-
-    if (hasPlayed || _audio === false) return;
-    audioPlayer(drumAu, true, placarAudioChannel);
-    hasPlayed = true;
-  } else if (dmgTotal > 19 || efeitos != "") {
-    placarInimigoWrap.style.backgroundColor = "red";
-    placarInimigoWrap.style.opacity = "1";
-    placarInimigoWrap.style.border = "solid 3px yellow";
-
-    if (dmgTotal != 0) {
-      placarInimigoDano.style.opacity = "1";
-      placarInimigoDano.children[1].style.opacity = "1";
-      placarInimigoDano.children[0].style.color = "wheat";
-    } else {
-      placarInimigoDano.style.opacity = "0.2";
-      placarInimigoDano.children[1].style.opacity = "0.6";
-      placarInimigoDano.children[0].style.color = "wheat";
-    }
-    if (efeitos != "") {
-      placarInimigoWrap.children[1].children[0].innerHTML = efeitos;
-    }
-    if (hasPlayed || _audio === false) return;
-    audioPlayer(mGAu, true, placarAudioChannel, 0.85);
-    hasPlayed = true;
-  }
-}
+export function updatePlacarInimigo(_audio) {}
 
 class Inimigo {
   constructor(card) {
@@ -431,8 +367,12 @@ class Inimigo {
       this._level = 1;
     }
 
-    if(this.miniBoss){
-     this._level = gerarNumero(wave.bossLevel[0],wave.bossLevel[1])
+    if (this.miniBoss) {
+      if (wave.bossLevel) {
+        this._level = gerarNumero(wave.bossLevel[0], wave.bossLevel[1]);
+      } else {
+        this._level = gerarNumero(1, 5);
+      }
     }
 
     this.levelPrint();
@@ -668,11 +608,8 @@ class Inimigo {
       wave.overallEnemiesKilled++;
     }
 
-    
-
-      // pop up victory
-      wave.popUpSuccess();
-    
+    // pop up victory
+    wave.popUpSuccess();
   }
 
   ataque(dmg) {
@@ -778,7 +715,7 @@ class Inimigo {
     }
 
     if (this._hasdmg === true && this.miniBoss) {
-      energia.textContent = this.dano + "💚";
+      energia.textContent = this.dano + "🗡️";
     } else if (this._hasdmg === true) {
       energia.textContent = this.dano + "💀";
     } else {
@@ -886,19 +823,15 @@ class Inimigo {
   }
 
   targetPointSetter(_targetPoint) {
-
     if (per(50)) {
       this._targetPoint = _targetPoint + gerarNumero(0, 12);
     } else {
       this._targetPoint = _targetPoint - gerarNumero(0, 12);
     }
 
-     if (this._targetPoint < 1) {
+    if (this._targetPoint < 1) {
       this._targetPoint = 1;
     }
-
-
-
   }
 }
 
@@ -986,9 +919,7 @@ let monark = {
     this._money = this._money * this._level;
   },
 
-  everyRound() {
-
-  },
+  everyRound() {},
 
   didKill() {
     this.poder();
@@ -1075,7 +1006,7 @@ let menosCartas = {
     }
 
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
-    this.targetPointSetter(445)
+    this.targetPointSetter(445);
   },
 
   poder() {
@@ -1108,7 +1039,7 @@ let camarada = {
   especial: true,
   _canBeCritic: false,
   _attackAtSpawn: true,
-  _coolDownNatural: 7,
+  _coolDownNatural: 6,
 
   levelCfg() {
     this.setHp(this.hp * this._level);
@@ -1134,7 +1065,7 @@ let camarada = {
     this._cargoP.innerHTML = frases[gerarNumero(0, frases.length - 1)];
     this._cargoP.style.fontSize = "65%";
     this.audioSpawn(0.5);
-    this.targetPointSetter(550)
+    this.targetPointSetter(550);
   },
 
   tick() {},
@@ -1202,7 +1133,7 @@ let tank = {
     if (per(70)) {
       audioPlayer("tank/tankSpawn.mp3", false, this._CHN, 0.2);
     }
-    this.targetPointSetter(700)
+    this.targetPointSetter(700);
   },
 
   tick() {
@@ -1238,8 +1169,7 @@ let tank = {
       this._doesAttack = false;
       clearInterval(this.interval);
 
-      if(!this._dead){
-
+      if (!this._dead) {
         audioPlayer("tank/tankUltReady.mp3", false, this._CHN, 0.3);
       }
 
@@ -1328,7 +1258,7 @@ let dog = {
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.1);
-    this.targetPointSetter(300)
+    this.targetPointSetter(300);
   },
 };
 
@@ -1372,7 +1302,7 @@ let metaforando = {
     this._displayP.children[1].style.visibility = "hidden";
 
     this._nomeP.style.margin = "20px  0px 5px";
-    this.targetPointSetter(750)
+    this.targetPointSetter(750);
   },
 
   tick() {
@@ -1415,8 +1345,6 @@ let metaforando = {
     setTimeout(() => this.poder(), coolDownTreme);
   },
 };
-
-
 
 let liberdade = {
   cartaId: "liberdade",
@@ -1464,7 +1392,7 @@ let liberdade = {
 
     this._nomeP.style.margin = "30px  0px 5px";
     this._hpP.style.visibility = "hidden";
-    this.targetPointSetter(850)
+    this.targetPointSetter(850);
   },
 
   tick() {
@@ -1533,7 +1461,7 @@ let smoke = {
     this.smokeWeight = gerarNumero(1, 4);
     this._retratoP.style.border = "1px solid #de9b35";
     this._nomeP.style.marginTop = "6px";
-    this.targetPointSetter(200)
+    this.targetPointSetter(200);
   },
 
   tick() {},
@@ -1599,12 +1527,88 @@ let awp = {
     }
     this._retratoP.style.backgroundSize = "100% 100%";
     this._nomeP.style.marginTop = "6px";
-    this.targetPointSetter(175)
+    this.targetPointSetter(175);
   },
 
   tick() {},
 
   poder() {},
+};
+
+let stalin = {
+  cartaId: "stalin",
+  _place: false,
+  _parentP: false,
+  _parent: false,
+  _thisCardP: false,
+  _leftCard: false,
+  _rightCard: false,
+  _enemy: true,
+  _canBeDeleted: false,
+  _cfgAdded: false,
+  _money: 100,
+  _attackAtSpawn: true,
+  _doesAttack: false,
+  _audioSpawn: "",
+  attackChance: 0,
+  hp: 800,
+  maxHealth: 800,
+  dano: 0,
+  miniBoss: true,
+  emoji: "",
+  _coolDownNatural: 11,
+
+  tick() {},
+
+  levelCfg() {
+    this._level = 5;
+
+    this.dano = 7;
+    this.setHp(this.hp * this._level);
+    this.healValue = gerarNumero(45, 110);
+    this.healValue = this.healValue * this._level;
+  },
+
+  cfg() {
+    this._cargoP.style.fontSize = "150%";
+    this._cargoP.style.marginTop = "5px";
+    this._cargoP.style.marginBottom = "10px";
+    this._cargoP.textContent = "STALIN";
+    this._cargoP.style.marginBottom = "0px";
+    this._retratoP.style.height = "80%";
+
+    this._nomeP.style.margin = "30px  0px 5px";
+    this._hpP.style.visibility = "hidden";
+    this.targetPointSetter(450);
+  },
+
+  didKill(){
+    revolution = false
+    CHNStalin.pause()
+  },
+
+  tick() {
+    this._nomeP.innerHTML = progressBar(this.hp, this.maxHealth, "gray", "red");
+  },
+
+  poder() {
+    let borderBlink = () => {
+      this._thisCardP.style.border = "6px solid cyan";
+
+      setTimeout(() => {
+        this._thisCardP.style.border = "4px solid red";
+      }, 850);
+    };
+
+    areObj.map((x) => {
+      if (!x.empty) {
+        x.heal(this.healValue);
+      }
+    });
+    borderBlink();
+
+    hpPlayer.remove(this.dano);
+  },
 };
 
 export function spawnTank() {
@@ -1645,6 +1649,13 @@ export function spawnLiberdade() {
       "url('pics/liberdadeRetrato.PNG')"
     ),
     liberdade
+  );
+}
+
+export function spawnStalin() {
+  return inserirmMiniBossDomAndObject(
+    blueprintBuilder("stalin", "STALIN", "url('pics/stalinRetrato.gif')"),
+    stalin
   );
 }
 
@@ -1775,13 +1786,9 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
   }
 }
 
-
-
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
-    
-    
-   
+    spawnStalin();
   }
 });
 
@@ -1795,26 +1802,24 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
     // spawnTank();
-    console.log("spawnTank();: ", chooseTargetArena());
+    console.log("spawnTank();: ", spawnCamarada());
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyK") {
-    if(debug.on){
+    if (debug.on) {
       // arenaKill()
       // console.log('killl arena');
 
-      areObj.map(
-        (x)=>{
-          if(!x.empty && !x.miniBoss){
-            x.kill()
-          }
+      areObj.map((x) => {
+        if (!x.empty 
+          // && !x.miniBoss
+          ) {
+          x.kill();
         }
-      )
-
+      });
     }
-    
   }
 });
 
@@ -1840,6 +1845,55 @@ export function populateArena() {
 
     let rng = () => especiaisArr[gerarNumero(0, especiaisArr.length - 1)]();
     return rng();
+  }
+}
+let revolution
+let CHNStalin = document.createElement("audio");
+function camaradaToStalin() {
+
+
+if(revolution == true)return
+
+  
+  let faixa = 'stalinSpawnMusic.mp3'
+
+  let allCamarada = areObj.every((x)=> x.cartaId == 'camarada')
+  const killCamarada = () => {
+    areObj.map((x)=>{
+      if(x.cartaId == 'camarada'){
+        x.kill()
+      }
+    })
+  }
+
+  const buffCamarada = () => {
+    areObj.map((x)=>{
+      if(x.cartaId == 'camarada'){
+        x.setHp(9000)
+      }
+    })
+  }
+ 
+
+  if (allCamarada) {
+    revolution = true
+    console.log("TODOS CAMARADA");
+
+    buffCamarada()
+    audioPlayer(faixa, true, CHNStalin, 0.2)
+    setTimeout(
+      ()=>{
+        if(!allCamarada) return
+        killCamarada();
+        spawnStalin()
+        
+      }, 3500
+    )
+    
+
+    
+  } else {
+    console.log("NÃO TODOS CAMARADA");
   }
 }
 

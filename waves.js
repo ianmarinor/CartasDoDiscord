@@ -707,7 +707,47 @@ export let imperio = {
       completed: false,
       locked: true,
 
-      waves: [],
+      waves: [
+        {
+          enemiesTotal: 15,
+          enemies: [spawnCamarada],
+          level: [5, 5],
+          money: 7,
+          ammo: 4,
+          cards: 1,
+          name: "DA RESISTÊNCIA",
+          spawnTime: [5, 10],
+          timeBeforeNextWave: [15, 30],
+
+
+          boss: [spawnLiberdade],
+          bossTotal: 15,
+          bossLevel: [3, 5],
+          bossSpawnChance: 50,
+
+        },
+
+        {
+          enemiesTotal: 15,
+          enemies: [spawnCamarada],
+          level: [5, 5],
+          money: 7,
+          ammo: 4,
+          cards: 1,
+          name: "DA RESISTÊNCIA",
+          spawnTime: [5, 10],
+          timeBeforeNextWave: [15, 30],
+
+
+          boss: [spawnLiberdade],
+          bossTotal: 15,
+          bossLevel: [3, 5],
+          bossSpawnChance: 50,
+
+        },
+
+
+      ],
     },
 
     // NIVEL 7

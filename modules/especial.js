@@ -3091,7 +3091,7 @@ export function escolherEspecial(teste) {
         num = gerarNumero(1,6)
       }
 
-      
+      num = 1
 
     }
 
