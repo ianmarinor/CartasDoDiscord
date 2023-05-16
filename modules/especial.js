@@ -1547,7 +1547,8 @@ export let especiais = {
         }
       };
 
-      let poisonDmg = 1;
+      let poisonDmg = this.numOfBees
+
 
       if (turuInField()) {
         poisonDmg = 8;
