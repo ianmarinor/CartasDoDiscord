@@ -1547,7 +1547,7 @@ export let especiais = {
         }
       };
 
-      let poisonDmg = this.numOfBees
+      let poisonDmg = this._numOfBees
 
 
       if (turuInField()) {
