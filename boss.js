@@ -47,6 +47,12 @@ let cartaBossMonark =
 
 // CONSTRUTOR BOSSES
 
+
+
+bodyP.ondragstart = () => {
+  return false;
+};
+
 export function toMonark(_cartaObj, _despawnTime) {
   let carta = _cartaObj;
   let cartaP = _cartaObj._thisCardP;

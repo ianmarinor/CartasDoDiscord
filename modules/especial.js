@@ -2126,17 +2126,15 @@ export let especiais = {
       });
       
         hpPlayer.add(this.healPlayerValue);
-        this._healingDone += this.healValue;
-        this.buildUlt(this.healValue);
-      
-
+        // this._healingDone += this.healValue;
+        
       this.heal(this.healValue * 2);
     },
 
     ult() {
       if (this._parentP != inv) return;
 
-      let buff = gerarNumero(180, 225);
+      let buff = 210
       if (this.ulti != 100 || this.unableToAttack()) return;
 
       invObj.map(function (x) {
@@ -2146,6 +2144,11 @@ export let especiais = {
       });
       this.ulti = 0;
       this._cargoP.classList.remove("critico");
+
+
+
+
+
     },
 
     poder() {
