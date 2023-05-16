@@ -14,10 +14,16 @@ import {
   chooseTargetArena,
   spawnLiberdade,
   spawnVitor,
-  arenaTick
+  arenaTick,
 } from "./arena.js";
 
-import { especiais, especial, Especial, especialCoolDown, especialTick } from "./modules/especial.js";
+import {
+  especiais,
+  especial,
+  Especial,
+  especialCoolDown,
+  especialTick,
+} from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
 import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
@@ -34,7 +40,7 @@ import {
 import { marketObj, closeMarket, openMarket } from "./market.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Pre - Alfa 1.3.0";
+let versao = "Pre - Alfa 1.3.1";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
@@ -1063,6 +1069,7 @@ function moverToCartaMao() {
   for (let i = 0; i < 6; i++) {
     if (mao.children[i].id == "mao" + i) {
       moveToMao(i);
+      console.log("ssss");
       break;
     } else {
     }
@@ -2352,8 +2359,7 @@ function tick() {
     chooseTargetArena();
     chooseTargetInv();
     arenaTick();
-    especialTick()
-    
+    especialTick();
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];
@@ -2401,33 +2407,21 @@ function tick() {
   }, 16);
 }
 
-let globalCoolDownInterval
-let gamePaused = false
-function globalCoolDown(){
+let globalCoolDownInterval;
+let gamePaused = false;
+function globalCoolDown() {
+  let i = 0;
 
-  let i = 0
+  let coolDown = 1000;
 
-  let coolDown = 1000
+  setInterval(() => {
+    if (gamePaused) {
+    } else {
+      especialCoolDown();
 
-
-  setInterval(
-    ()=>{
-
-      if(gamePaused){
-      } else {
-
-        especialCoolDown()
-
-
-
-        console.log(i++);
-      }
-      
-
-    },coolDown)
-
-
-
+      // console.log(i++);
+    }
+  }, coolDown);
 }
 
 function allMonark() {
@@ -2549,20 +2543,18 @@ export let numCartas = {
     if (this.total == 0) {
       arenaP.textContent = " ⚠️ SUAS CARTAS ACABARAM ⚠️ ";
       arenaP.classList.add("warning-cards");
-      arenaP.style.fontSize = '1.1em'
-
+      arenaP.style.fontSize = "1.1em";
     } else if (this.total < 16) {
       arenaP.textContent =
         " ⚠️ VOCÊ TEM SOMENTE " +
         this.total +
         (this.total == 1 ? " CARTA ⚠️" : " CARTAS ⚠️ ");
       arenaP.classList.add("warning-cards");
-      arenaP.style.fontSize = '1em'
+      arenaP.style.fontSize = "1em";
     } else {
       arenaP.textContent = "VOCÊ TEM " + this.total + " CARTAS";
       arenaP.classList.remove("warning-cards");
-      arenaP.style.fontSize = '1.4em'
-      
+      arenaP.style.fontSize = "1.4em";
     }
     //cronometro
     if (this.total == 0) {
@@ -2804,8 +2796,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-
-
 // BIND MOVER COM TECLA
 let teclaMoverCarta = "KeyD";
 let teclaMoverVariasCartas = "KeyF";
@@ -2825,11 +2815,10 @@ document.addEventListener("keydown", (event) => {
     if (wCoolDown.status == true && !copyCard) return;
 
     for (let i = 0; i < 6; i++) {
-      moverToCartaMao()
+      moverToCartaMao();
     }
   }
 });
-
 
 inv.addEventListener("click", deletarDeck);
 
@@ -2853,27 +2842,25 @@ export function startGame2() {
   mao.replaceChild(mao3, mao.children[3]);
   mao.replaceChild(mao4, mao.children[4]);
   mao.replaceChild(mao5, mao.children[5]);
+  numCartas.set(50);
 
-  for (let i = 0; i < 6; i++) {
-    if (per(50)) {
-      moveToMao(i);
-      console.log('movendo a carta');
-    }
-
-    rodadas = 0;
-  }
   rodadas = 1;
   // resetBoss();
 
-  numCartas.set(50);
   vendas.set(50);
   hpPlayer.set(100);
   ammo.set(5);
   // countdown.valueSet(20);
   money.set(125);
   tick();
-  globalCoolDown()
+  globalCoolDown();
   removeBuffAll();
+  wCoolDown.set(false);
+  for (let i = 0; i < 6; i++) {
+    moveToMao(i);
+
+    rodadas = 0;
+  }
 }
 
 document.addEventListener("contextmenu", function () {
@@ -2980,6 +2967,12 @@ let promptP = document.getElementById("prompt");
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyU") {
     COM(promptP.value);
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyV") {
+    console.log(rodadas);
   }
 });
 

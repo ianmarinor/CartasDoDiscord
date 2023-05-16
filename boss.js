@@ -17,7 +17,12 @@ import {
   areWakeUp,
   areFull,
 } from "/arena.js";
-import { spawnLiberdade, spawnTank, areEnemiesFromWave, areEmpty } from "./arena.js";
+import {
+  spawnLiberdade,
+  spawnTank,
+  areEnemiesFromWave,
+  areEmpty,
+} from "./arena.js";
 import { missOne, imperio, campanhaTeste } from "./waves.js";
 import { marketObj } from "./market.js";
 
@@ -36,9 +41,6 @@ let testP = document.getElementById("test");
 let countdownP = document.getElementById("countdown");
 let bodyP = document.getElementsByTagName("body")[0];
 // let playButtonP = document.getElementById("play-button")
-
-
-
 
 let cartaBossMonark =
   '<div id="cartaBossMonark" class="bossAnimation" data-card="boss"></div>';
@@ -162,9 +164,7 @@ class Boss {
     }
   }
 
-  summon() {
-   
-  }
+  summon() {}
 
   heal(n) {
     this.health += n;
@@ -236,65 +236,56 @@ export let wave = {
   tick() {
     animatebossHealth();
     this.getProgress();
-    this.run()
+    this.run();
   },
 
   getProgress() {
     this.progress = (this.overallEnemiesKilled / this.overallEnemies) * 100;
   },
 
-  setPool(_pool,_campain) {
+  setPool(_pool, _campain) {
     this.mission = _pool;
-    this.campain = _campain
+    this.campain = _campain;
   },
 
   startSpawning() {
     let waveObj = this.mission.waves[this.id];
     this.isSpawning = true;
 
-    this.spawnTime[0]*1000
-    this.spawnTime[1]*1000
+    this.spawnTime[0] * 1000;
+    this.spawnTime[1] * 1000;
 
-    let spawnTimeMulti = [this.spawnTime[0]*1000, this.spawnTime[1]*1000 ]
-    let time =  gerarNumero(spawnTimeMulti[0], spawnTimeMulti[1]);
-   
+    let spawnTimeMulti = [this.spawnTime[0] * 1000, this.spawnTime[1] * 1000];
+    let time = gerarNumero(spawnTimeMulti[0], spawnTimeMulti[1]);
 
     this.summonTimeout = setTimeout(() => {
-
-      if(this.boss){
-
-      
-
-      if(per(this.bossSpawnChance) && this.bossTotal && this.boss){
-
-
-
-        waveObj.boss[gerarNumero(0, waveObj.boss.length - 1)]();
-        this.bossTotal--
-        this.isSpawning = false
-        console.log("BOSS ADICIONADO");
-        return
-      } 
-    }else {
-        console.log('NÃO TEM BOSS NESSA ONDA');
+      if (this.boss) {
+        if (per(this.bossSpawnChance) && this.bossTotal && this.boss) {
+          waveObj.boss[gerarNumero(0, waveObj.boss.length - 1)]();
+          this.bossTotal--;
+          this.isSpawning = false;
+          console.log("BOSS ADICIONADO");
+          return;
+        }
+      } else {
+        console.log("NÃO TEM BOSS NESSA ONDA");
       }
 
-      console.log('tempo de spawn', time);
+      console.log("tempo de spawn", time);
       waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
       this.enemiesSpawned++;
       this.enemiesToGo--;
-      this.isSpawning = false
+      this.isSpawning = false;
       console.log("INIMIGO ADICIONADO");
     }, time);
   },
 
   betweenWavesCoolDown() {
-
-    console.log('COOL DOWN ANTES DA PROXIMA ONDA COMEÇADO');
+    console.log("COOL DOWN ANTES DA PROXIMA ONDA COMEÇADO");
 
     setTimeout(() => {
       this.getWave();
-      console.log('COOL DOWN ANTES DA PROXIMA ONDA TERMINADO');
+      console.log("COOL DOWN ANTES DA PROXIMA ONDA TERMINADO");
     }, this.timeBeforeNextWave);
   },
 
@@ -303,7 +294,7 @@ export let wave = {
     // se a wave nao estiver carregada, carregue-a
     if (!this.waveLoaded) {
       //pega a wave da missao na memoria
-      
+
       healthWrapP.classList.add("aparecer");
 
       this.overallEnemies = this.mission.totalNumOfEnemies;
@@ -318,11 +309,10 @@ export let wave = {
       this.timeBeforeNextWave =
         gerarNumero(timeBeforeArr[0], timeBeforeArr[1]) * 1000;
 
-        this.spawnTime = this.mission.waves[this.id].spawnTime;
+      this.spawnTime = this.mission.waves[this.id].spawnTime;
       if (!this.spawnTime) {
         this.spawnTime = [5, 15];
       }
-    
 
       this.enemiesLevel = this.mission.waves[this.id].level;
       this.enemies = this.mission.waves[this.id].enemiesTotal;
@@ -335,17 +325,14 @@ export let wave = {
       this.ammo = this.mission.waves[this.id].ammo;
       this.spawnChance = this.mission.waves[this.id].spawnChance;
       this.name = this.mission.waves[this.id].name;
-      this.bannedCard = this.mission.waves[this.id].bannedCard
-      this.levelId = this.mission.levelId
+      this.bannedCard = this.mission.waves[this.id].bannedCard;
+      this.levelId = this.mission.levelId;
 
-      if(this.mission.waves[this.id].boss){
-
-        
-
-          this.boss = this.mission.waves[this.id].boss
-          this.bossTotal = this.mission.waves[this.id].bossTotal
-          this.bossLevel = this.mission.waves[this.id].bossLevel
-          this.bossSpawnChance = this.mission.waves[this.id].bossSpawnChance
+      if (this.mission.waves[this.id].boss) {
+        this.boss = this.mission.waves[this.id].boss;
+        this.bossTotal = this.mission.waves[this.id].bossTotal;
+        this.bossLevel = this.mission.waves[this.id].bossLevel;
+        this.bossSpawnChance = this.mission.waves[this.id].bossSpawnChance;
       }
 
       if (this.numOfWaves <= this.id + 1) {
@@ -353,55 +340,43 @@ export let wave = {
         console.log("THIS IS THE LASTWAVE");
       }
       console.log("ACABEI DE PEGAR UMA NOVA ONDA DA MISSAO COM getWave()");
-      console.log( 'ONDA CARREGADA', this);
+      console.log("ONDA CARREGADA", this);
 
       wave.startSpawning();
     }
   },
 
   run() {
-    
-
-    if(this.isSpawning){
-      console.log('MOB ESTA PRESTE A SPAWNAR');
-      return
+    if (this.isSpawning) {
+      // console.log("MOB ESTA PRESTE A SPAWNAR");
+      return;
     }
 
-    if(!wave.waveLoaded){
-      console.log('NAO TEM ONDA CARREGADA');
-      return
+    if (!wave.waveLoaded) {
+      // console.log("NAO TEM ONDA CARREGADA");
+      return;
     }
 
     //se acabou a onda
     if (this.enemiesToGo <= 0) {
       if (areEnemiesFromWave()) {
-        console.log(" 0 mobs para spawnar, mas faltam mobs para matar ");
+        // console.log(" 0 mobs para spawnar, mas faltam mobs para matar ");
         return;
       }
       this.waveLoaded = false;
-      
-      
-      
 
-      console.log("SPAWNEI TODOS OS MOBS");
+      // console.log("SPAWNEI TODOS OS MOBS");
 
       return;
       // se nao acabou a onda e tem espaço
     } else if (!areFull()) {
-      
-      this.startSpawning()
-      
-      
-      
-      
+      this.startSpawning();
     } else {
-      
-      console.log("NAO CONSEGUI ADICIONAR MOB");
+      // console.log("NAO CONSEGUI ADICIONAR MOB");
     }
   },
 
   popUpVictory() {
-    
     mainOpaque();
 
     let popUpP = document.createElement("div");
@@ -415,11 +390,11 @@ export let wave = {
       if (current + 1 <= 9) {
         console.log(current + 1);
 
-        let proximaMissao = loadedCampain.levels[parseInt(current) + 1]
-        if(proximaMissao){
+        let proximaMissao = loadedCampain.levels[parseInt(current) + 1];
+        if (proximaMissao) {
           // proximaMissao.locked = false;
         }
-        
+
         window.location.assign("index.html");
         // console.log(imperio);
       }
@@ -441,9 +416,8 @@ export let wave = {
       this.popUpVictory();
       this.ended = true;
       return;
+    }
 
-    } 
-    
     // pop up que indica vitoria da wave
     if (!hasMobFromWave && this.enemiesToGo <= 0 && !this.lastWave) {
       mainOpaque();
@@ -458,8 +432,6 @@ export let wave = {
       button.id = "popup-success-btn";
       popUpP.appendChild(button);
       button.addEventListener("click", () => {
-
-        
         money.add(this.money);
         ammo.add(this.ammo);
         numCartas.add(this.cards);
@@ -470,9 +442,8 @@ export let wave = {
         this.ended = false;
         healthWrapP.classList.remove("aparecer");
 
-        console.log('ONDA DEPOIS DO POPUP ABAIXO:');
+        console.log("ONDA DEPOIS DO POPUP ABAIXO:");
         console.log(this);
-
       });
 
       let wavepassed = document.createElement("div");
@@ -712,7 +683,7 @@ function openMap(_campain) {
     slot.children[1].innerHTML = loadedCampain.levels[i].name;
     slot.children[1].style.fontFamily = loadedCampain.fontFamily;
     slot.children[1].style.fontSize = loadedCampain.fontSize;
-    slot.style.display = 'flex'
+    slot.style.display = "flex";
 
     if (loadedCampain.levels[i].locked) {
       slot.style.opacity = 0.6;
@@ -731,13 +702,13 @@ function openMap(_campain) {
         loadedCampain.levels[i].active == false
       )
         return;
-      wave.setPool(_campain.levels[i],_campain);
+      wave.setPool(_campain.levels[i], _campain);
       chooseMonark();
       closeMap();
       current = i;
       console.log("current: ", current);
-      marketObj.canBeOpened(true)
-      bodyP.style.overflowY = 'visible'
+      marketObj.canBeOpened(true);
+      bodyP.style.overflowY = "visible";
     });
     // console.log(_campain);
   }
@@ -809,24 +780,18 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-function patch(){
+function patch() {
+  let save = JSON.parse(localStorage.getItem("mySave"));
 
- let save = JSON.parse(localStorage.getItem("mySave"))
+  if (!save) return;
+  save.levels[2].active = true;
+  save.levels[3].active = true;
+  save.levels[4].active = true;
+  localStorage.setItem("mySave", JSON.stringify(save));
 
- if(!save)return
- save.levels[2].active = true
- save.levels[3].active = true
- save.levels[4].active = true
- localStorage.setItem("mySave", JSON.stringify(save))
- 
- console.log(JSON.parse(localStorage.getItem("mySave")));
-
-  
-
-
-
+  console.log(JSON.parse(localStorage.getItem("mySave")));
 }
 
 window.onload = (event) => {
-  patch()
+  patch();
 };

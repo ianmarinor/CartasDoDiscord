@@ -1318,7 +1318,7 @@ let rouba = {
           this._coolDown = 100;
 
           this.hide(this._displayP.children[2]);
-          this._thisCardP.style.backgroundImage = 'url("pics/roubaFundo2.gif")';
+          // this._thisCardP.style.backgroundImage = 'url("pics/roubaFundo2.gif")';
 
           this.hide(this._nomeP, false);
           this.hide(this._retratoP, false);
@@ -2141,7 +2141,7 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    spawnCamarada();z
+    spawnCamarada();
   }
 });
 
@@ -2155,7 +2155,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     // spawnTank();
-    spawnRouba();
+    spawnMonark();
   }
 });
 
