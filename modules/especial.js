@@ -1528,6 +1528,8 @@ export let especiais = {
         x.cartaId == "abelha" ? numOfBees++ : false;
       });
 
+      
+
       if (numOfBees > 0) {
         this.dano = this.onlyReadDmg * numOfBees;
       }
