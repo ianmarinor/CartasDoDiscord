@@ -265,7 +265,7 @@ export let imperio = {
           cards: 10,
           spawnChance: 90,
           name: "REVOLUÇÃO",
-          spawnTime: [1, 6],
+          spawnTime: [1, 4],
         },
       ],
     },

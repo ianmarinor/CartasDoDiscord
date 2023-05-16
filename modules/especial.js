@@ -1547,13 +1547,13 @@ export let especiais = {
         }
       };
 
-      let poisonDmg = 1;
+      let poisonDmg = this._numOfBees;
 
       if (turuInField()) {
-        poisonDmg = 8;
+        poisonDmg *= 8;
       }
 
-      let timer = 1200;
+      let timer = 1000;
 
       this.poisonInterval = setInterval(() => {
         if (this._dead || trigger === false) {
@@ -2108,14 +2108,14 @@ export let especiais = {
     },
 
     cfg() {
-      this.healingBoostCoolDown = 2000;
+      this.healingBoostCoolDown = 1000;
       this.dano = 12;
       this.targetPointSetter(320);
     },
 
     healingBoost() {
-      this.healValue = 7;
-      this.healPlayerValue = 2
+      this.healValue = 3;
+      this.healPlayerValue = 1
 
       invObj.map((x) => {
         if (x.hashp && !x._fullHp) {
@@ -2127,7 +2127,7 @@ export let especiais = {
       
         hpPlayer.add(this.healPlayerValue);
         this._healingDone += this.healValue;
-        this.buildUlt(this.healValue);
+        
       
 
       this.heal(this.healValue * 2);
