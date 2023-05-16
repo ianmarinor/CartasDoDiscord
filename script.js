@@ -637,7 +637,7 @@ export let debug = {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyM") {
-    debug.start();
+    // debug.start();
   }
 });
 

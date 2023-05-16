@@ -84,7 +84,8 @@ export let campanhaTeste = {
 
   saveInfo:{
     gameVersion: 'Alpha 1.3',
-    saveVersion: '1.0'
+    saveVersion: '1.0',
+    
   },
 
 
@@ -146,7 +147,8 @@ export let imperio = {
 
   saveInfo:{
     gameVersion: 'Alpha 1.3',
-    saveVersion: '1.0'
+    saveVersion: '1.0',
+    demoVersion: true,
   },
 
   setMissionPics(_index) {

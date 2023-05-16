@@ -65,4 +65,4 @@ let _saveInfo = {
 
 
 let save = Object.assign(foo,_saveInfo)
-console.log(save);
+// console.log(save);

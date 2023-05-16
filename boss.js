@@ -246,11 +246,11 @@ export let wave = {
   setPool(_pool, _campain, _missionFromSave, _entireSave) {
     this.mission = _pool;
     this.campain = _campain;
-    this.save = _entireSave
+    this.save = _entireSave;
 
-    this.missionFromSave = _missionFromSave
+    this.missionFromSave = _missionFromSave;
 
-    this.id = this.missionFromSave.waveToPlay
+    this.id = this.missionFromSave.waveToPlay;
   },
 
   startSpawning() {
@@ -329,8 +329,7 @@ export let wave = {
       if (this.mission.waves[this.id].level) {
         this.enemiesLevel = this.mission.waves[this.id].level;
       } else {
-
-        this.enemiesLevel = false
+        this.enemiesLevel = false;
         console.log("!!!!! MISSAO ESTA SEM LEVEL !!!!!");
         console.log("|!!!!! MISSAO ESTA SEM LEVEL !!!!!|");
       }
@@ -410,11 +409,10 @@ export let wave = {
         console.log(current + 1);
 
         let proximaMissao = loadedCampain.levels[parseInt(current) + 1];
-        
+
         if (proximaMissao) {
           proximaMissao.locked = false;
         }
-        
 
         window.location.assign("index.html");
         // console.log(imperio);
@@ -440,16 +438,19 @@ export let wave = {
     }
 
     // pop up que indica vitoria da wave
-    if ((!hasMobFromWave && this.enemiesToGo <= 0 && !this.lastWave) || absulute) {
+    if (
+      (!hasMobFromWave && this.enemiesToGo <= 0 && !this.lastWave) ||
+      absulute
+    ) {
       mainOpaque();
       this.ended = true;
       // console.trace();
 
       // upload this wave checkpoint ot save
-      let thisLevelInSave = loadedCampain.levels[parseInt(current)]
-        this.id++
-        thisLevelInSave.waveToPlay = this.id
-        localStorage.setItem("mySave", JSON.stringify(loadedCampain))
+      let thisLevelInSave = loadedCampain.levels[parseInt(current)];
+      this.id++;
+      thisLevelInSave.waveToPlay = this.id;
+      localStorage.setItem("mySave", JSON.stringify(loadedCampain));
       let popUpP = document.createElement("div");
       popUpP.id = "popup-success-wave";
       bodyP.appendChild(popUpP);
@@ -475,7 +476,7 @@ export let wave = {
       let wavepassed = document.createElement("div");
       wavepassed.id = "popup-success-wavepassed";
       popUpP.appendChild(wavepassed);
-      let onda = this.id ;
+      let onda = this.id;
       wavepassed.innerHTML = "ONDA " + onda + " COMPLETADA";
 
       let reward = document.createElement("div");
@@ -673,12 +674,7 @@ let loadedCampain;
 function openMap(_campain) {
   console.log("ABRIR O MAPA");
 
-  if (JSON.parse(localStorage.getItem("mySave"))) {
-    loadedCampain = JSON.parse(localStorage.getItem("mySave"));
-  } else {
-    loadedCampain = _campain;
-    console.log(" NO SAVE JUST CREATED NEW");
-  }
+  loadedCampain = JSON.parse(localStorage.getItem("mySave"));
 
   map.active = true;
   popUpP.id = "map";
@@ -709,6 +705,10 @@ function openMap(_campain) {
     slot.children[1].style.fontSize = loadedCampain.fontSize;
     slot.style.display = "flex";
 
+    if (loadedCampain.saveInfo.demoVersion && i > 0) {
+      loadedCampain.levels[i].active = false;
+    }
+
     if (loadedCampain.levels[i].locked) {
       slot.style.opacity = 0.6;
       slot.children[2].innerHTML = "🔒";
@@ -720,11 +720,13 @@ function openMap(_campain) {
       slot.classList.add("selected");
     }
 
+    
+
     if (!loadedCampain.levels[i].active) {
       slot.style.opacity = 0.3;
       slot.children[2].innerHTML = "❌";
       // slot.style.cursor = 'default'
-    } 
+    }
 
     slot.addEventListener("click", () => {
       if (
@@ -732,7 +734,12 @@ function openMap(_campain) {
         loadedCampain.levels[i].active == false
       )
         return;
-      wave.setPool(_campain.levels[i], _campain, loadedCampain.levels[i],loadedCampain);
+      wave.setPool(
+        _campain.levels[i],
+        _campain,
+        loadedCampain.levels[i],
+        loadedCampain
+      );
       chooseMonark();
       closeMap();
       current = i;
@@ -814,23 +821,28 @@ document.addEventListener("keydown", (event) => {
 function patch() {
   let save = JSON.parse(localStorage.getItem("mySave"));
 
-  if (!save) return;
-  
-console.log(save);
+  //se nao tem save cria um
+  if (!save) {
 
-  if(!save.saveInfo){
+    
+
     localStorage.setItem("mySave", JSON.stringify(imperio));
-    console.log('---SAVE OBSOLETO---');
-    console.log('---RESETANDO SAVE---');
-  } else {
-    localStorage.setItem("mySave", JSON.stringify(save));
-    console.log('---SAVE UP TO DATE---');
+    console.log("------------------");
+    console.log(save);
+    console.log("NO SAVE");
+    console.log("ACABEI DE CRIAR UM SAVE");
+    console.log("------------------");
+    return;
   }
 
-
-  
-
-  
+  if (!save.saveInfo) {
+    localStorage.setItem("mySave", JSON.stringify(imperio));
+    console.log("---SAVE OBSOLETO---");
+    console.log("---RESETANDO SAVE---");
+  } else {
+    localStorage.setItem("mySave", JSON.stringify(save));
+    console.log("---SAVE UP TO DATE---");
+  }
 }
 
 window.onload = (event) => {
