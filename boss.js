@@ -710,6 +710,7 @@ function openMap(_campain) {
       slot.style.opacity = 0.6;
       slot.children[2].innerHTML = "🔒";
       // slot.style.cursor = 'default'
+      slot.classList.remove("selected");
     } else {
       slot.style.opacity = 1;
       slot.children[2].innerHTML = "";
@@ -721,6 +722,7 @@ function openMap(_campain) {
       slot.style.opacity = 0.3;
       slot.children[2].innerHTML = "❌";
       // slot.style.cursor = 'default'
+      slot.classList.remove("selected");
     } 
 
     slot.addEventListener("click", () => {
@@ -811,9 +813,21 @@ document.addEventListener("keydown", (event) => {
 function patch() {
   let save = JSON.parse(localStorage.getItem("mySave"));
 
-  if (!save) return;
+  if (!save) {
+
+    
+
+    localStorage.setItem("mySave", JSON.stringify(imperio));
+    console.log("------------------");
+    console.log(save);
+    console.log("NO SAVE");
+    console.log("ACABEI DE CRIAR UM SAVE");
+    console.log("------------------");
+    return;
+  }
+
   
-console.log(save);
+
 
   if(!save.saveInfo){
     localStorage.setItem("mySave", JSON.stringify(imperio));
