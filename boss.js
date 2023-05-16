@@ -673,13 +673,10 @@ let loadedCampain;
 function openMap(_campain) {
   console.log("ABRIR O MAPA");
 
-  if (JSON.parse(localStorage.getItem("mySave"))) {
-    loadedCampain = JSON.parse(localStorage.getItem("mySave"));
-  } else {
-    loadedCampain = _campain;
-    console.log(" NO SAVE JUST CREATED NEW");
-  }
-
+  
+  loadedCampain = JSON.parse(localStorage.getItem("mySave"));
+ 
+   
   map.active = true;
   popUpP.id = "map";
   // let missionWrapP = document.getElementById('missionsWrap')
