@@ -2370,7 +2370,7 @@ function tick() {
         carta.print();
       }
 
-      carta.tick ? carta.tick() : false;
+      carta.tick ? carta.tickDefault() : false;
     }
 
     for (let i = 0; i < 6; i++) {
@@ -2653,6 +2653,7 @@ export let hpPlayer = {
   },
 
   remove(n) {
+    if(n<1)return
     this.dmgTaken += n;
 
     audioPlayer(this._audioHit, true, this._CHN, 0.5);
@@ -2842,7 +2843,7 @@ export function startGame2() {
   mao.replaceChild(mao3, mao.children[3]);
   mao.replaceChild(mao4, mao.children[4]);
   mao.replaceChild(mao5, mao.children[5]);
-  numCartas.set(50);
+  numCartas.set(100);
 
   rodadas = 1;
   // resetBoss();

@@ -30,7 +30,7 @@ import {
   mainOpaque,
 } from "../script.js";
 import { boss, wave } from "../boss.js";
-import { areObj } from "../arena.js";
+import { areObj, smokeOnInv } from "../arena.js";
 
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
@@ -229,6 +229,18 @@ export class Especial {
 
   ult() {}
 
+
+  tickDefault(){
+    if(this._barrieraActive){
+
+      this._targetPoint += 2000
+    } else {
+      this._targetPoint = this._targetPointNatural
+    }
+
+    this.tick()
+  }
+
   place() {
     for (let i = 0; i < 3; i++) {
       if (this == slotEspObj[i]) {
@@ -344,9 +356,15 @@ export class Especial {
       this._targetPoint = 1;
     }
 
+    
+
     if (!_onlySurface) {
       this._targetPointNatural = this._targetPoint;
     }
+
+
+
+
   }
 
   setTotalHp() {
@@ -711,10 +729,8 @@ export class Especial {
 
     this._targetPoint += 1200;
     this._stunnedCooldown = _stunnedCooldown;
-    if (this._barrieraActive) {
-      this._barrieraActive = false;
-      this._notDefaultbarriera = true;
-    }
+
+    
   }
 
   removeStun(_absolute) {
@@ -726,9 +742,7 @@ export class Especial {
 
     this.targetPointSetter(this._targetPointNatural, true);
 
-    if (this._notDefaultbarriera) {
-      this._barrieraActive = true;
-    }
+    
 
     setTimeout(
       () => this._thisCardP.classList.add("unstunned"),
@@ -1056,7 +1070,11 @@ export let especiais = {
 
         if (x._barreira != undefined) {
           x._barreira = x._barreiraMax;
+          x._barrieraActive = true
         }
+
+        smokeOnInv.smoke(false)
+
       });
 
       hpPlayer.add(50);
@@ -1529,7 +1547,7 @@ export let especiais = {
         }
       };
 
-      let poisonDmg = 2;
+      let poisonDmg = 1;
 
       if (turuInField()) {
         poisonDmg = 8;
@@ -2090,28 +2108,29 @@ export let especiais = {
     },
 
     cfg() {
-      this.healingBoostCoolDown = 6000;
-      this.dano = gerarNumero(6, 12);
+      this.healingBoostCoolDown = 2000;
+      this.dano = 12;
       this.targetPointSetter(320);
     },
 
     healingBoost() {
-      let healValue = gerarNumero(7, 11);
+      this.healValue = 7;
+      this.healPlayerValue = 2
 
       invObj.map((x) => {
         if (x.hashp && !x._fullHp) {
-          x.heal(healValue);
-          this.buildUlt(healValue);
-          this._healingDone += healValue;
+          x.heal(this.healValue);
+          this.buildUlt(this.healValue);
+          this._healingDone += this.healValue;
         }
       });
-      if (!hpPlayer.isFull && per(80)) {
-        hpPlayer.add(healValue);
-        this._healingDone += healValue;
-        this.buildUlt(healValue);
-      }
+      
+        hpPlayer.add(this.healPlayerValue);
+        this._healingDone += this.healValue;
+        this.buildUlt(this.healValue);
+      
 
-      this.heal(healValue * 2);
+      this.heal(this.healValue * 2);
     },
 
     ult() {
@@ -2596,7 +2615,7 @@ export let especiais = {
     hp: 5,
     maxHealth: 5,
     dano: undefined,
-    _barreira: 35,
+    _barreira: 50,
     _barrieraActive: true,
 
     cfg() {
@@ -2620,18 +2639,33 @@ export let especiais = {
     },
 
     tick() {
-      if (this._barreira > 0) {
-        this._cargoP.innerHTML = progressBar(
-          this._barreira,
-          this._barreiraMax,
-          undefined,
-          undefined,
-          true
-        );
+
+      this._cargoP.innerHTML = progressBar(
+        this._barreira,
+        this._barreiraMax,
+        undefined,
+        undefined,
+        true
+      );
+
+      if (this._barreira > 0 && !this.unableToAttack()) {
+        
+        this._barrieraActive = true
+      } else {
+        this._barrieraActive = false
+
+      }
+
+      if(this._barrieraActive){
+
         this._cargoP.style.visibility = "visible";
+
       } else {
         this._cargoP.style.visibility = "hidden";
       }
+
+
+
     },
 
     everyRound() {},
@@ -2671,7 +2705,7 @@ export let especiais = {
     raridade: raridades.campones,
     energia: 0,
     emoji: "",
-    retrato: "url('https://i.giphy.com/media/ZBhHpdFmSguZcktzyu/200w.webp')",
+    retrato: "url('/pics/sapatoRetrato.webp')",
     cargo: "",
     dmgBoss: false,
     hashp: true,
@@ -2690,11 +2724,10 @@ export let especiais = {
     tick() {
       invObj.map((x) => {
         if (x.Twelve && !x.isMonark && !x.hasHelpedSapato) {
-          if (this._fullHp) {
+         
             this.addBuff(12);
-          } else {
             this.heal(12);
-          }
+          
 
           x.hasHelpedSapato = true;
         }
@@ -2713,7 +2746,7 @@ export let especiais = {
 
       this.ataque(this.dano, 0);
 
-      this.dano += this.hp - 1;
+      this.dano += 24;
       if (this.dano > 1200) {
         this.dano = 1200;
       }
@@ -2750,6 +2783,72 @@ export let especiais = {
       visibility: "visible",
     },
   },
+
+  totem: {
+    cartaId: "sapato",
+    nome: "SAPATO",
+    raridade: raridades.campones,
+    energia: 0,
+    emoji: "",
+    retrato: "url('/pics/sapatoRetrato.webp')",
+    cargo: "",
+    dmgBoss: false,
+    hashp: true,
+    hp: 12,
+    maxHealth: 12,
+    dano: 12,
+    _invHiddenButton: false,
+    numOfTwelves: 0,
+    customButtonEmoji: true,
+    requireAmmo: false,
+
+    //AUDIO FILES
+    _audioDespawnFiles: 4,
+    _sourceDespawn: "totem/sapato",
+
+    tick() {
+     
+    },
+
+    cfg() {
+      
+    },
+
+    everyRound() {},
+
+    poder() {
+      
+    },
+
+    nomeStyle: {
+      fontSize: "180%",
+      fontFamily: "julia",
+      color: "cyan",
+    },
+
+    retratoStyle: {
+      border: "2px solid cyan",
+      backgroundColor: "",
+    },
+    cargoStyle: {
+      fontFamily: "",
+      fontSize: "170%",
+      visibility: "visible",
+    },
+    ataqueStyle: {
+      color: "cyan",
+      fontSize: "",
+      fontFamily: "",
+      visibility: "visible",
+    },
+    novoAtaqueStyle: {
+      color: "cyan",
+      fontSize: "",
+      fontFamily: "",
+      visibility: "visible",
+    },
+  },
+
 
   sentry: {
     cartaId: "sentry",

@@ -50,8 +50,19 @@ let foo = {
   ],
 };
 
-let campanhaPronta = Object.assign(new Campanha(foo), foo);
+foo = {
+  maria: 25
+}
 
-// campanhaPronta.start();
+let _saveInfo = {
 
-// console.log("campanhaPronta: ", campanhaPronta);
+  saveInfo: {
+    builtVersion: 1,
+    saveVersion: 1.5,
+  }
+  
+};
+
+
+let save = Object.assign(foo,_saveInfo)
+console.log(save);

@@ -230,7 +230,7 @@ export let wave = {
   overallEnemiesKilled: 0,
   overallEnemies: 0,
   progress: 0,
-  enemiesLevel: [],
+  enemiesLevel: false,
   timeBeforeNextWave: 5000,
 
   tick() {
@@ -243,9 +243,14 @@ export let wave = {
     this.progress = (this.overallEnemiesKilled / this.overallEnemies) * 100;
   },
 
-  setPool(_pool, _campain) {
+  setPool(_pool, _campain, _missionFromSave, _entireSave) {
     this.mission = _pool;
     this.campain = _campain;
+    this.save = _entireSave
+
+    this.missionFromSave = _missionFromSave
+
+    this.id = this.missionFromSave.waveToPlay
   },
 
   startSpawning() {
@@ -259,7 +264,7 @@ export let wave = {
     let time = gerarNumero(spawnTimeMulti[0], spawnTimeMulti[1]);
 
     this.summonTimeout = setTimeout(() => {
-      if (this.boss) {
+      if (waveObj.boss) {
         if (per(this.bossSpawnChance) && this.bossTotal && this.boss) {
           waveObj.boss[gerarNumero(0, waveObj.boss.length - 1)]();
           this.bossTotal--;
@@ -274,7 +279,7 @@ export let wave = {
       console.log("tempo de spawn", time);
 
       if (waveObj.supports && per(waveObj.chanceNotSupport)) {
-        waveObj.supports[gerarNumero(0, waveObj.enemies.length - 1)]();
+        waveObj.supports[gerarNumero(0, waveObj.supports.length - 1)]();
       } else {
         waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
         this.enemiesSpawned++;
@@ -301,11 +306,12 @@ export let wave = {
     if (!this.waveLoaded) {
       //pega a wave da missao na memoria
 
+      console.log(this.id);
+
       healthWrapP.classList.add("aparecer");
 
       this.overallEnemies = this.mission.totalNumOfEnemies;
       this.numOfWaves = this.mission.numOfWaves;
-      this.id++;
 
       let timeBeforeArr = this.mission.waves[this.id].timeBeforeNextWave;
       if (!timeBeforeArr) {
@@ -323,6 +329,8 @@ export let wave = {
       if (this.mission.waves[this.id].level) {
         this.enemiesLevel = this.mission.waves[this.id].level;
       } else {
+
+        this.enemiesLevel = false
         console.log("!!!!! MISSAO ESTA SEM LEVEL !!!!!");
         console.log("|!!!!! MISSAO ESTA SEM LEVEL !!!!!|");
       }
@@ -402,9 +410,11 @@ export let wave = {
         console.log(current + 1);
 
         let proximaMissao = loadedCampain.levels[parseInt(current) + 1];
+        
         if (proximaMissao) {
           proximaMissao.locked = false;
         }
+        
 
         window.location.assign("index.html");
         // console.log(imperio);
@@ -417,7 +427,7 @@ export let wave = {
     });
   },
 
-  popUpSuccess() {
+  popUpSuccess(absulute) {
     if (this.ended) return;
 
     let hasMobFromWave = areObj.some((x) => x.isPartOfWave);
@@ -430,11 +440,16 @@ export let wave = {
     }
 
     // pop up que indica vitoria da wave
-    if (!hasMobFromWave && this.enemiesToGo <= 0 && !this.lastWave) {
+    if ((!hasMobFromWave && this.enemiesToGo <= 0 && !this.lastWave) || absulute) {
       mainOpaque();
       this.ended = true;
       // console.trace();
 
+      // upload this wave checkpoint ot save
+      let thisLevelInSave = loadedCampain.levels[parseInt(current)]
+        this.id++
+        thisLevelInSave.waveToPlay = this.id
+        localStorage.setItem("mySave", JSON.stringify(loadedCampain))
       let popUpP = document.createElement("div");
       popUpP.id = "popup-success-wave";
       bodyP.appendChild(popUpP);
@@ -460,7 +475,7 @@ export let wave = {
       let wavepassed = document.createElement("div");
       wavepassed.id = "popup-success-wavepassed";
       popUpP.appendChild(wavepassed);
-      let onda = this.id + 1;
+      let onda = this.id ;
       wavepassed.innerHTML = "ONDA " + onda + " COMPLETADA";
 
       let reward = document.createElement("div");
@@ -476,7 +491,7 @@ export let wave = {
       let ammoP = document.createElement("div");
       ammoP.id = "popup-success-ammoP";
       reward.appendChild(ammoP);
-      ammoP.innerHTML = "⚔️" + this.ammo;
+      ammoP.innerHTML = "💧" + this.ammo;
 
       let cardsP = document.createElement("div");
       cardsP.id = "popup-success-cardsP";
@@ -705,13 +720,19 @@ function openMap(_campain) {
       slot.classList.add("selected");
     }
 
+    if (!loadedCampain.levels[i].active) {
+      slot.style.opacity = 0.3;
+      slot.children[2].innerHTML = "❌";
+      // slot.style.cursor = 'default'
+    } 
+
     slot.addEventListener("click", () => {
       if (
         loadedCampain.levels[i].locked ||
         loadedCampain.levels[i].active == false
       )
         return;
-      wave.setPool(_campain.levels[i], _campain);
+      wave.setPool(_campain.levels[i], _campain, loadedCampain.levels[i],loadedCampain);
       chooseMonark();
       closeMap();
       current = i;
@@ -794,16 +815,22 @@ function patch() {
   let save = JSON.parse(localStorage.getItem("mySave"));
 
   if (!save) return;
-  save.levels[2].active = true;
-  save.levels[3].active = true;
-  save.levels[4].active = true;
-  localStorage.setItem("mySave", JSON.stringify(save));
+  
+console.log(save);
 
-  if(!save.id){
-    localStorage.setItem("mySave", JSON.stringify(imperio))
+  if(!save.saveInfo){
+    localStorage.setItem("mySave", JSON.stringify(imperio));
+    console.log('---SAVE OBSOLETO---');
+    console.log('---RESETANDO SAVE---');
+  } else {
+    localStorage.setItem("mySave", JSON.stringify(save));
+    console.log('---SAVE UP TO DATE---');
   }
 
-  // console.log(JSON.parse(localStorage.getItem("mySave")));
+
+  
+
+  
 }
 
 window.onload = (event) => {

@@ -373,7 +373,7 @@ class Inimigo {
     // let life = wave.progress
     // console.log(wave.enemiesLevel);
 
-    if (wave.bossLevel) {
+    if (wave.enemiesLevel) {
       this._level = gerarNumero(wave.enemiesLevel[0], wave.enemiesLevel[1]);
     } else {
       this._level = 1;
@@ -626,6 +626,45 @@ class Inimigo {
     wave.popUpSuccess();
   }
 
+  areaAtaque(dmg) {
+    let dano;
+    let danoPlayerReducerDividend = 10;
+
+    if (dmg) {
+      dano = dmg;
+    } else {
+      dano = this.dano;
+    }
+
+    //se tem escudo
+
+    let hasShildInInv = invObj.some((x) => x._barrieraActive);
+
+    if (hasShildInInv) {
+      console.log("dano em area tankado");
+
+      for (let i = 0; i < 99; i++) {
+        let slot = gerarNumero(0, 5);
+
+        if (invObj[slot]._barrieraActive) {
+          let vitima = invObj[slot];
+
+          vitima.dmg(dano * 6);
+          break
+        }
+      }
+
+      
+    } else {
+      invObj.map((x) => {
+        if (!x.isNormal && !x.isInvisible) {
+          x.dmg(dano);
+        }
+      });
+      hpPlayer.remove(Math.trunc(dano / danoPlayerReducerDividend));
+    }
+  }
+
   ataque(dmg) {
     let dano;
 
@@ -792,7 +831,6 @@ class Inimigo {
     let placarAudioChannel = document.createElement("audio");
     if (!this._coolDownNatural) return;
 
-    
     let oneSec = 1000;
     let timer = setInterval(() => {
       if (this._coolDown > 4) {
@@ -1058,7 +1096,7 @@ let camarada = {
   _CHN: document.createElement("audio"),
 
   //AUDIO FILES
-  
+
   _sourceUlt: "comunaShort.mp3",
 
   levelCfg() {
@@ -1102,9 +1140,9 @@ let camarada = {
     areObj.map((x) => {
       if (!x.empty) {
         x.heal(this.healValue);
-        audioPlayer(this._sourceUlt, true, this._CHN, 0.5);
       }
     });
+    audioPlayer(this._sourceUlt, false, this._CHN, 0.2);
     borderBlink();
   },
 };
@@ -1123,7 +1161,6 @@ let lux = {
   _money: 30,
   _doesAttack: false,
   _hasdmg: true,
-  _audioSpawn: "tank.mp3",
   energia: "",
   emoji: "",
   hp: 25,
@@ -1132,7 +1169,6 @@ let lux = {
   attackChance: false,
   ulti: 0,
   maxUlti: 50,
-  tank: true,
   _CHN: document.createElement("audio"),
   _attackAtSpawn: false,
   _coolDownNatural: 11,
@@ -1152,7 +1188,7 @@ let lux = {
   },
 
   cfg() {
-    this.targetPointSetter(700);
+    this.targetPointSetter(180);
 
     this.retratoBorder("3px solid #bbbb14");
 
@@ -1209,6 +1245,7 @@ let lux = {
     }
   },
   ult() {
+    if (this._dead) return;
     console.log("ULTEI");
 
     this.ulti = 0;
@@ -1218,12 +1255,7 @@ let lux = {
     this._coolDown = this._coolDownNatural;
     this._doesAttack = true;
 
-    invObj.map((x) => {
-      if(!x.isNormal){
-        x.dmg(this.dano);
-
-      }
-    });
+    this.areaAtaque();
 
     this._coolDown = this._coolDownNatural;
     this._doesAttack = true;
@@ -1314,6 +1346,7 @@ let rouba = {
   tick() {},
 
   poder() {
+    if (this._dead) return;
     let faixa = this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".ogg";
 
     for (let i = 0; i < 8; i++) {
@@ -1380,7 +1413,7 @@ let tank = {
   _doesAttack: true,
 
   levelCfg() {
-    this.dano = gerarNumero(85, 97);
+    this.dano = 90;
 
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
@@ -1452,15 +1485,8 @@ let tank = {
   },
 
   poder() {
-    console.log("kaboom");
-    this.ataque();
-    invObj.map((x) => {
-      x.dmg(Math.trunc(this.dano / 5));
-    });
-
+    this.areaAtaque();
     this.kill(true);
-
-    console.trace();
   },
 };
 
@@ -1500,21 +1526,12 @@ let dog = {
   },
 
   primaryAttack() {
-   
-    
-
     if (this.ataque(this.dano)) {
-     
-      areObj.map(
-        (x)=>{
-          if(x.cartaId == 'vitor'){
-            x.heal(this.dano);
-          }
+      areObj.map((x) => {
+        if (x.cartaId == "vitor") {
+          x.heal(this.dano);
         }
-      )
-
-
-      
+      });
     }
   },
 
@@ -1553,7 +1570,7 @@ let metaforando = {
   dano: 20,
   miniBoss: true,
   emoji: "🐕",
-  _coolDownNatural: 12,
+  _coolDownNatural: 6,
 
   levelCfg() {
     this.dano = 3;
@@ -1731,12 +1748,14 @@ let smoke = {
   tick() {},
 
   poder() {
-    if(this._dead)return
+    if (this._dead) return;
     if (smokeOnInv.status == true || smokeOnInv.status == undefined) return;
     smokeOnInv.smoke(true, this.smokeWeight);
 
     let faixa = this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".mp3";
     audioPlayer(faixa, false, this._CHN, 0.1);
+
+    this.ataque(this.dano);
 
     setTimeout(() => {
       this.kill();
@@ -1846,6 +1865,7 @@ let ramattra = {
     this.dano = 20;
     this.dano *= this._level;
     this.setHp(this.hp * this._level);
+    this._areaDmg = Math.trunc(this.dano / 20);
   },
 
   cfg() {
@@ -1861,19 +1881,13 @@ let ramattra = {
 
   areaDmg() {
     if (this._dead) return;
-    let areaAtackFrequency = 810;
+    let areaAtackFrequency = 1000;
 
     this.areaDmgInterval = setInterval(() => {
       if (this._dead) {
         clearInterval(this.areaDmgInterval);
       } else {
-        console.log("dei dano");
-        invObj.map((x) => {
-          if(!x.isNormal){
-
-            x.dmg(Math.trunc(this.dano / 10));
-          }
-        });
+        this.areaAtaque(this._areaDmg);
       }
     }, areaAtackFrequency);
   },
@@ -1911,8 +1925,7 @@ let stalin = {
 
     this.dano = 7;
     this.setHp(4000);
-    this.healValue = 360
-    
+    this.healValue = 360;
   },
 
   cfg() {
@@ -2148,23 +2161,24 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    spawnCamarada();
+    spawnRouba();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
     // spawnLiberdade();
-    spawnRouba();
+    spawnLux();
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     // spawnTank();
-    spawnMonark();
+    spawnRamattra();
   }
 });
+
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyK") {
