@@ -533,7 +533,9 @@ export let imperio = {
 
         {
           enemiesTotal: 24,
-          enemies: [spawnSmoke, spawnTank],
+          enemies: [spawnTank],
+          supports: [spawnSmoke],
+          chanceNotSupport: [33],
           level: [5, 5],
           money: 350,
           ammo: 10,
@@ -544,8 +546,8 @@ export let imperio = {
 
           boss: [spawnVitor],
           bossTotal: 5,
-          bossLevel: [1, 1],
-          bossSpawnChance: 50,
+          bossLevel: [1, 2],
+          bossSpawnChance: 33,
 
         },
 
