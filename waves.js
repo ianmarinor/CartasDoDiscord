@@ -539,7 +539,7 @@ export let imperio = {
           ammo: 10,
           cards: 20,
           name: "SÃO PAULO",
-          spawnTime: [5, 15],
+          spawnTime: [1, 5],
           timeBeforeNextWave: [10, 12],
 
           boss: [spawnVitor],
