@@ -272,9 +272,15 @@ export let wave = {
       }
 
       console.log("tempo de spawn", time);
-      waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
-      this.enemiesSpawned++;
-      this.enemiesToGo--;
+
+      if (waveObj.supports && per(waveObj.chanceNotSupport)) {
+        waveObj.supports[gerarNumero(0, waveObj.enemies.length - 1)]();
+      } else {
+        waveObj.enemies[gerarNumero(0, waveObj.enemies.length - 1)]();
+        this.enemiesSpawned++;
+        this.enemiesToGo--;
+      }
+
       this.isSpawning = false;
       console.log("INIMIGO ADICIONADO");
     }, time);
@@ -314,7 +320,12 @@ export let wave = {
         this.spawnTime = [5, 15];
       }
 
-      this.enemiesLevel = this.mission.waves[this.id].level;
+      if (this.mission.waves[this.id].level) {
+        this.enemiesLevel = this.mission.waves[this.id].level;
+      } else {
+        console.log("!!!!! MISSAO ESTA SEM LEVEL !!!!!");
+        console.log("|!!!!! MISSAO ESTA SEM LEVEL !!!!!|");
+      }
       this.enemies = this.mission.waves[this.id].enemiesTotal;
       this.enemiesSpawned = 0;
       this.enemiesToGo = this.enemies;
@@ -392,7 +403,7 @@ export let wave = {
 
         let proximaMissao = loadedCampain.levels[parseInt(current) + 1];
         if (proximaMissao) {
-          // proximaMissao.locked = false;
+          proximaMissao.locked = false;
         }
 
         window.location.assign("index.html");
@@ -649,8 +660,6 @@ function openMap(_campain) {
 
   if (JSON.parse(localStorage.getItem("mySave"))) {
     loadedCampain = JSON.parse(localStorage.getItem("mySave"));
-    console.log(" ----------- THIS IS MY loadedCampain SAVE  ----------- ");
-    console.log(JSON.parse(localStorage.getItem("mySave")));
   } else {
     loadedCampain = _campain;
     console.log(" NO SAVE JUST CREATED NEW");
@@ -706,7 +715,8 @@ function openMap(_campain) {
       chooseMonark();
       closeMap();
       current = i;
-      console.log("current: ", current);
+      console.log("CAMPAIN", _campain);
+      console.log("SAVE", loadedCampain);
       marketObj.canBeOpened(true);
       bodyP.style.overflowY = "visible";
     });
@@ -789,7 +799,11 @@ function patch() {
   save.levels[4].active = true;
   localStorage.setItem("mySave", JSON.stringify(save));
 
-  console.log(JSON.parse(localStorage.getItem("mySave")));
+  if(!save.id){
+    localStorage.setItem("mySave", JSON.stringify(imperio))
+  }
+
+  // console.log(JSON.parse(localStorage.getItem("mySave")));
 }
 
 window.onload = (event) => {

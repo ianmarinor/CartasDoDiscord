@@ -1069,7 +1069,7 @@ function moverToCartaMao() {
   for (let i = 0; i < 6; i++) {
     if (mao.children[i].id == "mao" + i) {
       moveToMao(i);
-      console.log("ssss");
+      // console.log("ssss");
       break;
     } else {
     }

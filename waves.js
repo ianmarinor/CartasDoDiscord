@@ -48,10 +48,33 @@ class Campanha {
     }
   }
 
+  setDefaultWave(){
+
+    for (let i = 0; i < this.levels.length; i++) {
+      let missão = this.levels[i];
+// console.log(missão.waves);
+
+      if(missão){
+        missão.waves.map(
+          (x)=>{
+            if(x.supports && !x.chanceNotSupport){
+              x.chanceNotSupport = 20
+            }
+          }
+        )
+
+
+      }
+      
+    }
+
+  }
+
   start() {
     this.getNumberOfEnemies();
     this.getNumberOfWaves();
     this.getLevelId();
+    this.setDefaultWave()
   }
 }
 
@@ -140,7 +163,8 @@ export let imperio = {
 
         {
           enemiesTotal: 12,
-          enemies: [spawnAwp, spawnSmoke],
+          enemies: [spawnAwp],
+          supports: [spawnSmoke],
           boss: [],
           bossTotal: 0,
           bossLevel: [],
@@ -157,7 +181,7 @@ export let imperio = {
         {
           enemiesTotal: 30,
           enemies: [spawnMonark],
-          level: [4, 5],
+          level: [1, 2],
 
           boss: [spawnVitor, spawnLiberdade],
           bossTotal: 1,
@@ -170,13 +194,14 @@ export let imperio = {
           cards: 10,
           spawnChance: 100,
           name: "CHUVA DE MONARK",
-          spawnTime: [1, 2],
+          spawnTime: [1, 1.5],
           timeBeforeNextWave: [8, 10],
         },
 
         {
           enemiesTotal: 10,
-          enemies: [spawnMenosCartas, spawnSmoke],
+          enemies: [spawnMenosCartas],
+          supports: [spawnSmoke],
           level: [4, 5],
 
           boss: [spawnLiberdade],
@@ -195,7 +220,9 @@ export let imperio = {
 
         {
           enemiesTotal: 10,
-          enemies: [spawnMenosCartas, spawnSmoke, spawnRouba],
+          enemies: [spawnMenosCartas],
+          supports: [spawnSmoke, spawnRouba],
+          chanceNotSupport: 66,
           level: [1, 2],
           money: 50,
           ammo: 10,
@@ -208,16 +235,21 @@ export let imperio = {
 
 
         {
-          enemiesTotal: 118,
+          enemiesTotal: 24,
           enemies: [spawnCamarada],
           level: [1, 2],
+
+          boss: [spawnLiberdade],
+          bossTotal: 1,
+          bossLevel: [1, 2],
+          bossSpawnChance: 10,
 
           money: 200,
           ammo: 10,
           cards: 10,
           spawnChance: 90,
           name: "REVOLUÇÃO",
-          spawnTime: [1, 5],
+          spawnTime: [1, 6],
         },
       ],
     },
@@ -236,30 +268,30 @@ export let imperio = {
         {
           enemiesTotal: 15,
           enemies: [spawnAwp, spawnCamarada],
-          level: [2, 3],
-          money: 200,
-          ammo: 15,
+          level: [1, 2],
+          money: 75,
+          ammo: 10,
           cards: 25,
           spawnChance: 20,
           name: "RAZORBACK",
-          spawnTime: [5, 7],
+          spawnTime: [3, 5],
 
           boss: [spawnLiberdade],
           bossTotal: 2,
           bossLevel: [1, 2],
-          bossSpawnChance: 10,
+          bossSpawnChance: 33,
           timeBeforeNextWave: [1, 3],
         },
 
         {
           enemiesTotal: 6,
-          enemies: [spawnMenosCartas, spawnSmoke],
+          enemies: [spawnMenosCartas, spawnSmoke, spawnRouba],
           level: [5, 5],
           money: 200,
           ammo: 15,
           cards: 25,
           spawnChance: 2,
-          name: "DESERTO II",
+          name: "DESERTO",
           spawnTime: [6, 10],
 
           boss: [spawnLiberdade, spawnVitor],
@@ -798,6 +830,7 @@ export let imperio = {
       name: "BRASIL",
       completed: false,
       locked: true,
+      waves: [],
     },
 
     // NIVEL 10

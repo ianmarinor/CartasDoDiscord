@@ -1055,6 +1055,11 @@ let camarada = {
   _canBeCritic: false,
   _attackAtSpawn: true,
   _coolDownNatural: 6,
+  _CHN: document.createElement("audio"),
+
+  //AUDIO FILES
+  
+  _sourceUlt: "comunaShort.mp3",
 
   levelCfg() {
     this.setHp(this.hp * this._level);
@@ -1079,7 +1084,7 @@ let camarada = {
 
     this._cargoP.innerHTML = frases[gerarNumero(0, frases.length - 1)];
     this._cargoP.style.fontSize = "65%";
-    this.audioSpawn(0.5);
+    // this.audioSpawn(0.5);
     this.targetPointSetter(550);
   },
 
@@ -1097,6 +1102,7 @@ let camarada = {
     areObj.map((x) => {
       if (!x.empty) {
         x.heal(this.healValue);
+        audioPlayer(this._sourceUlt, true, this._CHN, 0.5);
       }
     });
     borderBlink();
@@ -1469,14 +1475,14 @@ let dog = {
   _enemy: true,
   _canBeDeleted: false,
   _cfgAdded: false,
-  _money: 10,
+  _money: 0,
   _attackAtSpawn: true,
   _doesAttack: true,
   _audioSpawn: "dog.mp3",
   attackChance: 15,
   isPartOfWave: false,
-  hp: 30,
-  maxHealth: 30,
+  hp: 50,
+  maxHealth: 50,
   dano: 8,
   _coolDownNatural: 5,
 
@@ -1725,6 +1731,7 @@ let smoke = {
   tick() {},
 
   poder() {
+    if(this._dead)return
     if (smokeOnInv.status == true || smokeOnInv.status == undefined) return;
     smokeOnInv.smoke(true, this.smokeWeight);
 
