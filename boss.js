@@ -424,6 +424,12 @@ export let wave = {
       console.log(JSON.parse(localStorage.getItem("mySave")));
       //  console.log(loadedCampain);
       console.log(" ----------- THERE IS SAVE ----------- ");
+
+        console.log('-----------------')
+        console.log('SAVE AFTER MISSION COMPLETED')
+        console.log(JSON.parse(localStorage.getItem("mySave")));
+        console.log('-----------------')
+
     });
   },
 
@@ -450,6 +456,12 @@ export let wave = {
         this.id++
         thisLevelInSave.waveToPlay = this.id
         localStorage.setItem("mySave", JSON.stringify(loadedCampain))
+
+        console.log('-----------------')
+        console.log('SAVE AFTER WAVE COMPLETED')
+        console.log(JSON.parse(localStorage.getItem("mySave")));
+        console.log('-----------------')
+
       let popUpP = document.createElement("div");
       popUpP.id = "popup-success-wave";
       bodyP.appendChild(popUpP);
