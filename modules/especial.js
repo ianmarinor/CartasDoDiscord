@@ -1540,7 +1540,7 @@ export let especiais = {
 
     poison(trigger) {
       let turuInField = () => {
-        if (!invObj.some((x) => x._integrante == "Turu")) {
+        if (!invObj.some((x) => x._integrante == "Turu") || !invObj.some((x) => x.cartaId == "estoico") ) {
           return false;
         } else {
           return true;
@@ -1551,10 +1551,10 @@ export let especiais = {
 
 
       if (turuInField()) {
-        poisonDmg = 8;
+        poisonDmg = 30;
       }
 
-      let timer = 1200;
+      let timer = 1000;
 
       this.poisonInterval = setInterval(() => {
         if (this._dead || trigger === false) {
@@ -2109,14 +2109,14 @@ export let especiais = {
     },
 
     cfg() {
-      this.healingBoostCoolDown = 2000;
+      this.healingBoostCoolDown = 1000;
       this.dano = 12;
       this.targetPointSetter(320);
     },
 
     healingBoost() {
-      this.healValue = 7;
-      this.healPlayerValue = 2
+      this.healValue = 2;
+      this.healPlayerValue = 1
 
       invObj.map((x) => {
         if (x.hashp && !x._fullHp) {
