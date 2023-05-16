@@ -1317,7 +1317,7 @@ let rouba = {
   tank: true,
   _CHN: document.createElement("audio"),
   _attackAtSpawn: false,
-  _coolDownNatural: 3,
+  _coolDownNatural: 1,
   _doesAttack: false,
   isPartOfWave: false,
 
