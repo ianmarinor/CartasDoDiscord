@@ -1623,28 +1623,41 @@ function criarBtn() {
     let carta = invObj[i];
 
     if (!carta._invEventAdded) {
-      let buttonWithEvent = inv.children[i].children[3].children[2];
+      // let buttonWithEvent = inv.children[i].children[3].children[2];
+      let buttonWithEvent = inv.children[i].children[1]
       let cargo = inv.children[i].children[2];
       let energia = inv.children[i].children[3].children[0];
+      
 
       let cargoLimpo = cargo.cloneNode(true);
       let limpo = buttonWithEvent.cloneNode(true);
       let energiaLimpo = energia.cloneNode(true);
+      
 
       inv.children[i].replaceChild(cargoLimpo, cargo);
-      inv.children[i].children[3].replaceChild(limpo, buttonWithEvent);
+      // inv.replaceChild(cartaLimpa,cartaInteira)
+// 
+      // inv.children[i].children[3].replaceChild(limpo, buttonWithEvent);
+
+      inv.children[i].replaceChild(limpo, buttonWithEvent);
       inv.children[i].children[3].replaceChild(energiaLimpo, energia);
 
       limpo.addEventListener("click", function () {
         if (invObj[i].poder) {
           invObj[i].poder();
-        }
+        } 
       });
 
       cargoLimpo.addEventListener("click", () => carta.ult());
       energiaLimpo.addEventListener("click", () => {
         carta.energiaPoderDefault();
       });
+
+      // cartaInteira.addEventListener("click", () => carta.rightClick());
+
+
+
+
 
       carta._invEventAdded = true;
     }
@@ -2821,11 +2834,11 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-inv.addEventListener("click", deletarDeck);
+// inv.addEventListener("click", deletarDeck);
 
 for (let p = 0; p < 6; p++) {
   let slot = inv.children[p].children[1];
-  slot.addEventListener("click", deletarDeck);
+  // slot.addEventListener("click", deletarDeck);
 }
 
 // btnReset.addEventListener('click', moverCartaMonark)
@@ -2856,7 +2869,7 @@ export function startGame2() {
   tick();
   globalCoolDown();
   removeBuffAll();
-  wCoolDown.set(false);
+  // wCoolDown.set(false);
   for (let i = 0; i < 6; i++) {
     moveToMao(i);
 
@@ -2980,7 +2993,7 @@ document.addEventListener("keydown", (event) => {
 function COM(x) {
   eval(x);
 }
-
+window.addEventListener("contextmenu", e => e.preventDefault());
 // LIST BINDS
 //  1, 2, 3, 4 ---> USAR CARTAS NO DECK
 //  Q --->  USAR DECK INTEIRO

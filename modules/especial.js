@@ -130,7 +130,6 @@ export function comunistaPE() {
   }
 }
 
-
 export class Especial {
   constructor(card) {
     //unique
@@ -171,7 +170,8 @@ export class Especial {
     this._invHiddenButton = false;
     this._maoHiddenButton = true;
     this._poderUsing = false;
-    this._attacking = false;
+
+    this._isAttacking = undefined;
 
     this._stunned = false;
     this._stunWeight = false;
@@ -214,6 +214,7 @@ export class Especial {
 
     //AUDIO
     this._CHN = document.createElement("audio");
+    this._CHN2 = document.createElement("audio");
   }
 
   energiaPoderDefault() {
@@ -229,16 +230,23 @@ export class Especial {
 
   ult() {}
 
+  onCoolDownFinish() {}
 
-  tickDefault(){
-    if(this._barrieraActive){
-
-      this._targetPoint += 2000
+  tickDefault() {
+    if (this._barrieraActive) {
+      this._targetPoint += 2000;
     } else {
-      this._targetPoint = this._targetPointNatural
+      this._targetPoint = this._targetPointNatural;
     }
 
-    this.tick()
+    this.tick();
+    this.tickAttack();
+  }
+
+  tickAttack() {
+    if (this._isAttacking && this._poderLoop) {
+      this.poderLoop();
+    }
   }
 
   place() {
@@ -356,15 +364,9 @@ export class Especial {
       this._targetPoint = 1;
     }
 
-    
-
     if (!_onlySurface) {
       this._targetPointNatural = this._targetPoint;
     }
-
-
-
-
   }
 
   setTotalHp() {
@@ -555,9 +557,23 @@ export class Especial {
     }
   }
 
+  unableToStartToAttack() {
+    let cantStartAttackCondition =
+      this._stunned ||
+      this._dead ||
+      !this.ammoCheck() ||
+      this._cantStartToAttack;
+
+    if (cantStartAttackCondition) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   unableToAttack() {
     let cantAttackCondition =
-      this._stunned || this._dead || this._attackDisable;
+      this._stunned || this._dead || this._onAttackCoolDown || this._cantAttack;
 
     if (cantAttackCondition) {
       return true;
@@ -567,9 +583,9 @@ export class Especial {
   }
 
   coolDown(_time) {
-    this._attackDisable = true;
+    this._onAttackCoolDown = true;
     setTimeout(() => {
-      this._attackDisable = false;
+      this._onAttackCoolDown = false;
     }, _time);
   }
 
@@ -593,17 +609,20 @@ export class Especial {
     if (this.isInvisible) return;
     if (this.useBarrier(n)) return;
 
+    this.didHit();
+
+    if (this._uber) {
+      n = 0;
+    }
+
     this._dmgTaken += n;
     this._lastDmgTaken = n;
-    this.didHit();
 
     if (this.hashp == false) {
       efeitoDano(this);
       this.kill();
       return;
     }
-
-    if (this._uber) return;
 
     this._buff -= n;
     if (this._buff > 0) {
@@ -633,6 +652,7 @@ export class Especial {
     }
 
     this._CHN.pause();
+    this._CHN2.pause();
 
     if (this._parentP == inv) {
       elimCardInv(inv.children[this._place]);
@@ -721,16 +741,14 @@ export class Especial {
   }
 
   stun(_stunnedCooldown) {
-    if (this._stunned || this.isInvisible || this._uber ) return;
+    if (this._stunned || this.isInvisible || this._uber) return;
 
-    this._stunned = true
-    this.dmg(1)
+    this._stunned = true;
+    this.dmg(1);
     this._thisCardP.classList.add("stunned");
 
     this._targetPoint += 1200;
     this._stunnedCooldown = _stunnedCooldown;
-
-    
   }
 
   removeStun(_absolute) {
@@ -741,8 +759,6 @@ export class Especial {
     this._thisCardP.classList.remove("stunned");
 
     this.targetPointSetter(this._targetPointNatural, true);
-
-    
 
     setTimeout(
       () => this._thisCardP.classList.add("unstunned"),
@@ -776,6 +792,14 @@ export class Especial {
     }
   }
 
+  rightClick() {
+    if (this._canBeDeleted) {
+      this.kill();
+    } else {
+      console.log("this card cant be deleted");
+    }
+  }
+
   print() {
     this.place();
 
@@ -801,11 +825,13 @@ export class Especial {
     let ulti = parentP.children[this._place].children[2];
     let botao = this._parentP.children[this._place].children[3].children[2];
 
-    if (this._hasUlti != false) {
+    if (this._hasUlti) {
       ulti.textContent = this.ulti + "%";
       this.ulti == 100 && !this.unableToAttack()
         ? (ulti.style.cursor = "pointer")
         : (ulti.style.cursor = "not-allowed");
+    } else if (this._hasUlti === false) {
+      ulti.style.cursor = "default";
     }
 
     if (this.dmgBoss || this._energiaDorment) {
@@ -840,33 +866,51 @@ export class Especial {
         : (botao.style.visibility = "visible");
     }
 
+    this._naturalBorder = this._thisCardP.style.border;
+
+    if (parentP == inv) {
+      if (this.unableToStartToAttack()) {
+        this._isAttacking = false;
+        this._retratoP.style.cursor = "not-allowed";
+      } else {
+        this._retratoP.style.cursor = "pointer";
+      }
+    }
+
+    if (this._isAttacking) {
+      this._thisCardP.classList.add("critico");
+    } else if (this._isAttacking === false) {
+      this._thisCardP.classList.remove("critico");
+      clearInterval(this._borderBlinkingInterval);
+    }
+
     // stilo botao
 
-    if (this.requireAmmo) {
-      this._buttonP.innerHTML = "⚔️";
+    // if (this.requireAmmo) {
+    //   // this._buttonP.innerHTML = "⚔️";
 
-      if (ammo.total > 0 && !this.unableToAttack() && !this._poderUsing) {
-        this._buttonP.style.opacity = 1;
-        this._buttonP.style.cursor = "pointer";
-      } else {
-        this._buttonP.style.opacity = 0.3;
-        this._buttonP.style.cursor = "not-allowed";
-      }
-    } else if (!this.unableToAttack()) {
-      if (!this.customButtonEmoji) {
-        this._buttonP.innerHTML = "🔘";
-      }
+    //   if (ammo.total > 0 && !this.unableToAttack() && !this._poderUsing) {
+    //     this._buttonP.style.opacity = 1;
+    //     this._buttonP.style.cursor = "pointer";
+    //   } else {
+    //     this._buttonP.style.opacity = 0.3;
+    //     this._buttonP.style.cursor = "not-allowed";
+    //   }
+    // } else if (!this.unableToAttack()) {
+    //   if (!this.customButtonEmoji) {
+    //     this._buttonP.innerHTML = "🔘";
+    //   }
 
-      this._buttonP.style.opacity = 1;
-      this._buttonP.style.cursor = "pointer";
-    } else {
-      if (!this.customButtonEmoji) {
-        this._buttonP.innerHTML = "🔘";
-      }
+    //   this._buttonP.style.opacity = 1;
+    //   this._buttonP.style.cursor = "pointer";
+    // } else {
+    //   if (!this.customButtonEmoji) {
+    //     this._buttonP.innerHTML = "🔘";
+    //   }
 
-      this._buttonP.style.opacity = 0.3;
-      this._buttonP.style.cursor = "not-allowed";
-    }
+    //   this._buttonP.style.opacity = 0.3;
+    //   this._buttonP.style.cursor = "not-allowed";
+    // }
 
     //estilo selo
     if (this._exposto) {
@@ -969,6 +1013,10 @@ export class Especial {
       this._hpP.textContent = this._totalHp + "💚";
     }
 
+    this._thisCardP.addEventListener("contextmenu", () => {
+      this.rightClick();
+    });
+
     this.levelSetter();
   }
 
@@ -1070,11 +1118,10 @@ export let especiais = {
 
         if (x._barreira != undefined) {
           x._barreira = x._barreiraMax;
-          x._barrieraActive = true
+          x._barrieraActive = true;
         }
 
-        smokeOnInv.smoke(false)
-
+        smokeOnInv.smoke(false);
       });
 
       hpPlayer.add(50);
@@ -1528,8 +1575,6 @@ export let especiais = {
         x.cartaId == "abelha" ? numOfBees++ : false;
       });
 
-      
-
       if (numOfBees > 0) {
         this.dano = this.onlyReadDmg * numOfBees;
       }
@@ -1542,15 +1587,17 @@ export let especiais = {
 
     poison(trigger) {
       let turuInField = () => {
-        if (!invObj.some((x) => x._integrante == "Turu") || !invObj.some((x) => x.cartaId == "estoico") ) {
+        if (
+          !invObj.some((x) => x._integrante == "Turu") ||
+          !invObj.some((x) => x.cartaId == "estoico")
+        ) {
           return false;
         } else {
           return true;
         }
       };
 
-      let poisonDmg = this._numOfBees
-
+      let poisonDmg = this._numOfBees;
 
       if (turuInField()) {
         poisonDmg = 30;
@@ -1624,7 +1671,6 @@ export let especiais = {
 
     // ataqueE: abelhaEnergia() + "🐝"
   },
-
 
   premioMonark: {
     cartaId: "premiomonark",
@@ -1739,6 +1785,7 @@ export let especiais = {
     emojiHp: "",
     ulti: 0,
     retrato: 'url("/pics/spyRetrato.webp")',
+    retratoAttacking: 'url("/pics/spyRetrato2.gif")',
     cargo: "",
     hashp: false,
     hp: 3,
@@ -1749,12 +1796,30 @@ export let especiais = {
     isInvisible: false,
     dano: undefined,
     clockToVis: false,
+    _poderLoop: true,
+    _invHiddenButton: true,
+
+    _coolDown: 5,
+    _naturalCoolDown: 5,
+    _hasCoolDown: false,
+
+    _audioAttackingFiles: 7,
+    _sourceAttacking: "spy",
 
     cfg() {
       this.dano = gerarNumero(180, 240);
       this._nomeP.style.marginTop = "5px";
 
-      if (per(0.1)) {
+      this._buttonP.style.fontFamily = "tf2";
+      this._cargoP.style.fontSize = "130%";
+
+      if (this.clockReady) {
+        this._cargoP.innerHTML = "⌚";
+      } else {
+        this._cargoP.innerHTML = "";
+      }
+
+      if (per(0.5)) {
         this.dano = gerarNumero(520, 760);
         this.retrato = 'url("/pics/spyRareRetrato.PNG")';
         this.changeRetrato(this.retrato);
@@ -1768,164 +1833,139 @@ export let especiais = {
         this.setHp(999);
       }
 
-      this._cargoP.textContent = "⌚";
-      this._cargoP.style.fontSize = "2em";
-
       this.targetPointSetter(758);
     },
 
     tick() {
-      if (this.clockReady || this.clockToVis) {
-        this._cargoP.style.cursor = "pointer";
-        this._cargoP.style.opacity = "1";
+      this._displayP.children[2].textContent = this._coolDown;
+
+      if (this.clockReady) {
+        this._cargoP.innerHTML = "⌚";
       } else {
-        this._cargoP.style.cursor = "not-allowed";
-        this._cargoP.style.opacity = "0.1";
+        this._cargoP.innerHTML = "";
+      }
+
+      if (this._isAttacking) {
+        this._retratoP.style.backgroundImage = this.retratoAttacking;
+      } else if (!this._isAttacking && !this.isInvisible) {
+        this._retratoP.style.backgroundImage = this.retrato;
       }
     },
 
     didHit() {
       if (this.clockReady && !this.isInvisible) {
-        console.log("ativar relogio");
         this._uber = true;
-        this.hasBeenHit = true;
-        this.ult();
+        this.invis();
       }
     },
 
-    ult() {
-      if (this.unableToAttack()) return;
+    onCoolDownFinish() {
+      if (this.isInvisible) {
+        this.vis();
+        this._coolDown = 12;
+      } else {
+        this.clockReady = true;
+        this._hasCoolDown = false;
+        this._invHiddenButton = true;
+        this._coolDown = this._naturalCoolDown;
+      }
+    },
+
+    invis() {
+      if (this._stunned || this._dead) return;
       let spy = this._thisCardP;
       let spyWatch = this._cargoP;
       let botao = spy.children[3].children[2];
       let retrato = spy.children[1];
 
-      let invisWatch = () => {
-        let invis = () => {
-          spy.className = "invisible";
-          spyWatch.id = "invis";
+      let invis = () => {
+        spy.className = "invisible";
+        spyWatch.id = "invis";
 
-          retrato.classname = "invisible";
-          spy.children[0].className = "invis";
+        retrato.classname = "invisible";
+        spy.children[0].className = "invis";
 
-          // this._energiaP.textContent = this.energia;
+        this.isInvisible = true;
+        retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
+        this._invHiddenButton = false;
+        let spyInvisAu = ["deadRing.mp3", 0.3];
+        snd(spyInvisAu);
 
-          this._invHiddenButton = true;
-
-          retrato.style.backgroundImage = 'url("/pics/spyRetrato3.gif")';
-
-          let spyInvisAu = ["deadRing.mp3", 0.3];
-          snd(spyInvisAu);
-
-          this.clockToVis = true;
-          this.clockReady = false;
-          this.isInvisible = true;
-          this._monarkFree = true;
-          this.hasBeenHit = false;
-          // this.dmgBoss = true;
-          this.changeEmojiToDefault();
-          this.exposto(false);
-        };
-
-        let vis = () => {
-          if (this._dead) return;
-
-          spy.className = "visible";
-          spyWatch.id = "vis";
-          retrato.classList.remove("invisible");
-          retrato.classList.add("visible");
-          spy.children[0].className = "vis";
-          this._invHiddenButton = false;
-          retrato.style.backgroundImage = this.retrato;
-          // this._energiaP = this.dano;
-
-          let spyInvisAu = ["spyInvis.mp3", 0.3];
-          snd(spyInvisAu);
-          this.isInvisible = false;
-          this._monarkFree = false;
-
-          this.clockToVis = false;
-          this.clockReady = false;
-          this._uber = false;
-          // this.dmgBoss = false;
-          this.setEmoji(this._defaultEmojiDano);
-          this.exposto();
-        };
-
-        if (this.clockReady && this.hasBeenHit && !this.unableToAttack()) {
-          invis();
-        } else if (this.isInvisible && !this.unableToAttack()) {
-          vis();
-        }
+        this._cantAttack = true;
+        this._cantStartToAttack = true;
+        this.clockReady = false;
+        this._hasCoolDown = true;
       };
 
-      invisWatch();
+      invis();
     },
 
     vis() {
-      setTimeout(() => {
-        let spy = this._thisCardP;
-        let spyWatch = this._cargoP;
-        let retrato = spy.children[1];
+      this._uber = false;
 
-        if (this._dead) return;
+      let spy = this._thisCardP;
+      let spyWatch = this._cargoP;
+      let retrato = spy.children[1];
 
-        spy.className = "visible";
-        spyWatch.id = "vis";
-        retrato.classList.remove("invisible");
-        retrato.classList.add("visible");
-        spy.children[0].className = "vis";
-        this._invHiddenButton = false;
-        retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
-        this._energiaP = this.dano;
+      if (this._dead) return;
 
-        let spyInvisAu = ["spyInvis.mp3", 0.3];
-        snd(spyInvisAu);
-        this.isInvisible = false;
-        this._monarkFree = false;
+      spy.className = "visible";
+      spyWatch.id = "vis";
+      retrato.classList.remove("invisible");
+      retrato.classList.add("visible");
+      spy.children[0].className = "vis";
+      this._invHiddenButton = false;
+      retrato.style.backgroundImage = 'url("/pics/spyRetrato.webp")';
+      this._energiaP = this.dano;
 
-        this.clockToVis = false;
-        this.clockReady = false;
-        this._uber = false;
-        this.dmgBoss = false;
-        this.setEmoji(this._defaultEmojiDano);
-        this.exposto();
-      }, 450);
-    },
-
-    everyRound() {
-      // para recarregar
-      if (per(33) && !this.isInvisible) {
-        this.clockReady = true;
-        //para acabar invisibilidade
-      } else if (per(20) && this.isInvisible) {
-        this.vis();
-      }
+      let spyInvisAu = ["spyInvis.mp3", 0.3];
+      snd(spyInvisAu);
+      this.isInvisible = false;
+      this._cantAttack = false;
+      this._cantStartToAttack = false;
     },
 
     poder() {
+      if (this._isAttacking) {
+        this._isAttacking = false;
+      } else {
+        this._isAttacking = true;
+      }
+    },
+
+    poderLoop() {
       if (this.unableToAttack()) return;
 
       if (ammo.total <= 0) {
         return;
       }
 
-      let spy = this._thisCardP;
-      let retrato = spy.children[1];
+      this.ataque();
 
-      retrato.style.backgroundImage = 'url("/pics/spyRetrato2.gif")';
+      let faixa =
+        this._sourceAttacking +
+        gerarNumero(1, this._audioAttackingFiles) +
+        ".mp3";
 
-      this.ataque() ? (this.energia += gerarNumero(3, 5)) : 0;
-
-      let stabAu = ["stab.mp3", 0.1];
-      snd(stabAu);
-
-      if (gerarNumero(1, 3) == 2) {
-        let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3", 0.2];
-        snd(spyAu);
+      // stab
+      if (this._isAttacking) {
+        audioPlayer("stab.mp3", false, this._CHN, 0.2);
       }
 
-      this.coolDown(550);
+      if (per(20) && this._CHN2.paused) {
+        //voiceLine
+        audioPlayer(faixa, true, this._CHN2, 0.1);
+      }
+
+      // let stabAu = ["stab.mp3", 0.1];
+      // snd(stabAu);
+
+      // if (gerarNumero(1, 3) == 2) {
+      //   let spyAu = ["spy" + gerarNumero(1, 7) + ".mp3", 0.2];
+      //   snd(spyAu);
+      // }
+
+      this.coolDown(650);
     },
 
     nomeStyle: {
@@ -1996,9 +2036,9 @@ export let especiais = {
       }
 
       if (this.dano <= 1) {
-        this._attackDisable = true;
+        this._onAttackCoolDown = true;
       } else {
-        this._attackDisable = false;
+        this._onAttackCoolDown = false;
       }
 
       let hasTuruInInv = invObj.map((x) => {
@@ -2118,7 +2158,7 @@ export let especiais = {
 
     healingBoost() {
       this.healValue = 2;
-      this.healPlayerValue = 1
+      this.healPlayerValue = 1;
 
       invObj.map((x) => {
         if (x.hashp && !x._fullHp) {
@@ -2127,17 +2167,17 @@ export let especiais = {
           this._healingDone += this.healValue;
         }
       });
-      
-        hpPlayer.add(this.healPlayerValue);
-        // this._healingDone += this.healValue;
-        
+
+      hpPlayer.add(this.healPlayerValue);
+      // this._healingDone += this.healValue;
+
       this.heal(this.healValue * 2);
     },
 
     ult() {
       if (this._parentP != inv) return;
 
-      let buff = 210
+      let buff = 210;
       if (this.ulti != 100 || this.unableToAttack()) return;
 
       invObj.map(function (x) {
@@ -2147,11 +2187,6 @@ export let especiais = {
       });
       this.ulti = 0;
       this._cargoP.classList.remove("critico");
-
-
-
-
-
     },
 
     poder() {
@@ -2310,9 +2345,9 @@ export let especiais = {
             console.log("DANO DO JHIN " + this.dano);
           }
 
-          this._attackDisable = true;
+          this._onAttackCoolDown = true;
           setTimeout((x) => {
-            this._attackDisable = false;
+            this._onAttackCoolDown = false;
           }, 1200);
 
           let cardComEnergia = [];
@@ -2645,7 +2680,6 @@ export let especiais = {
     },
 
     tick() {
-
       this._cargoP.innerHTML = progressBar(
         this._barreira,
         this._barreiraMax,
@@ -2655,23 +2689,16 @@ export let especiais = {
       );
 
       if (this._barreira > 0 && !this.unableToAttack()) {
-        
-        this._barrieraActive = true
+        this._barrieraActive = true;
       } else {
-        this._barrieraActive = false
-
+        this._barrieraActive = false;
       }
 
-      if(this._barrieraActive){
-
+      if (this._barrieraActive) {
         this._cargoP.style.visibility = "visible";
-
       } else {
         this._cargoP.style.visibility = "hidden";
       }
-
-
-
     },
 
     everyRound() {},
@@ -2730,10 +2757,8 @@ export let especiais = {
     tick() {
       invObj.map((x) => {
         if (x.Twelve && !x.isMonark && !x.hasHelpedSapato) {
-         
-            this.addBuff(12);
-            this.heal(12);
-          
+          this.addBuff(12);
+          this.heal(12);
 
           x.hasHelpedSapato = true;
         }
@@ -2812,19 +2837,13 @@ export let especiais = {
     _audioDespawnFiles: 4,
     _sourceDespawn: "totem/sapato",
 
-    tick() {
-     
-    },
+    tick() {},
 
-    cfg() {
-      
-    },
+    cfg() {},
 
     everyRound() {},
 
-    poder() {
-      
-    },
+    poder() {},
 
     nomeStyle: {
       fontSize: "180%",
@@ -2854,7 +2873,6 @@ export let especiais = {
       visibility: "visible",
     },
   },
-
 
   sentry: {
     cartaId: "sentry",
@@ -3059,8 +3077,6 @@ export function escolherEspecial(teste) {
 
       num = gerarNumero(1, 4);
 
-  
-
       if (!true) {
         especial = objBinder(especiais.dva);
       } else if (num == 1) {
@@ -3247,27 +3263,24 @@ export let lucioEfeito = {
 };
 
 export function especialCoolDown() {
-
-  invObj.map(
-    (x)=>{
-
-      if(x._stunnedCooldown > 0){
-        x._stunnedCooldown --
-      } else {
-        if(!x.empty && x._stunned)
-        x.removeStun()
-      }
-
-
-
+  invObj.map((x) => {
+    if (x._stunnedCooldown > 0) {
+      x._stunnedCooldown--;
+    } else {
+      if (!x.empty && x._stunned) x.removeStun();
     }
-  )
 
+    if (x._hasCoolDown) {
+      x._coolDown--;
+      if (x._coolDown <= 0) {
+        x._coolDown = x._naturalCoolDown;
+        x.onCoolDownFinish();
+      }
+    }
+  });
 }
 
-export function especialTick() {
-  
-}
+export function especialTick() {}
 
 function estoico() {}
 function lucio() {}

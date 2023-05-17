@@ -191,7 +191,7 @@ const cartaEsp =
   '<div class="poderEsp">' +
   '<p class="ataqueEsp"></p>' +
   '<p class="novoAtaqueEsp"></p>' +
-  '<div class="action">🔘</div>' +
+  '<p class="action"></p>' +
   "</div>" +
   '<p class="seedEsp"></p>' +
   '<p class="seloEsp"></p>' +

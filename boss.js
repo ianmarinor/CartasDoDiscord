@@ -79,150 +79,150 @@ export function toMonark(_cartaObj, _despawnTime) {
   carta._despawn = gerarNumero(2, 8);
 }
 
-class Boss {
-  constructor(_health, _fullHealth, _name) {
-    this.name = _name;
-    this.health = _health;
-    this.fullHealth = _fullHealth;
-    this.percentHealth = 100;
-    this.dmgTaken = 0;
-    this._coolDown = false;
-    this._gotHitLastRound = [false, 0];
-    this._CHN = document.createElement("audio");
-    this._audioPoder = "bossPower.mp3";
-    this._audioHitDefault = "bossHit.mp3";
-    this._cartaP = false;
-    this._imageHit = false;
-    this._imageUlt = false;
-    this._image = false;
-  }
+// class Boss {
+//   constructor(_health, _fullHealth, _name) {
+//     this.name = _name;
+//     this.health = _health;
+//     this.fullHealth = _fullHealth;
+//     this.percentHealth = 100;
+//     this.dmgTaken = 0;
+//     this._coolDown = false;
+//     this._gotHitLastRound = [false, 0];
+//     this._CHN = document.createElement("audio");
+//     this._audioPoder = "bossPower.mp3";
+//     this._audioHitDefault = "bossHit.mp3";
+//     this._cartaP = false;
+//     this._imageHit = false;
+//     this._imageUlt = false;
+//     this._image = false;
+//   }
+  
+//   imageHit() {
+//     if (this._imageHitCoolDown) return;
 
-  imageHit() {
-    if (this._imageHitCoolDown) return;
+//     let img = this._imageHit[gerarNumero(0, this._imageHit.length - 1)];
 
-    let img = this._imageHit[gerarNumero(0, this._imageHit.length - 1)];
+//     this._cartaP.style.backgroundImage = img;
+//     this._cartaP.style.border = "4px dashed red";
+//     this._cartaP.classList.remove("bossAnimation");
+//     this._imageHitCoolDown = true;
 
-    this._cartaP.style.backgroundImage = img;
-    this._cartaP.style.border = "4px dashed red";
-    this._cartaP.classList.remove("bossAnimation");
-    this._imageHitCoolDown = true;
+//     setTimeout(() => {
+//       this._cartaP.style.backgroundImage = this._image;
+//       this._cartaP.style.border = "5px solid red";
+//       this._cartaP.classList.add("bossAnimation");
+//       this._imageHitCoolDown = false;
+//     }, 450);
+//   }
 
-    setTimeout(() => {
-      this._cartaP.style.backgroundImage = this._image;
-      this._cartaP.style.border = "5px solid red";
-      this._cartaP.classList.add("bossAnimation");
-      this._imageHitCoolDown = false;
-    }, 450);
-  }
+//   dmg(n) {
+//     if (this._isUlting) return;
+//     this.health -= n;
+//     this.dmgTaken += n;
 
-  dmg(n) {
-    if (this._isUlting) return;
-    this.health -= n;
-    this.dmgTaken += n;
+//     let vol;
+//     if (n < 100) {
+//       vol = 0.2;
+//     } else if (n < 400) {
+//       vol = 0.3;
+//     } else {
+//       vol = 0.8;
+//     }
 
-    let vol;
-    if (n < 100) {
-      vol = 0.2;
-    } else if (n < 400) {
-      vol = 0.3;
-    } else {
-      vol = 0.8;
-    }
+//     this.antiSpam();
+//     this.imageHit();
+//     // audioPlayer(this._audioHitDefault, false, this._CHN, vol);
 
-    this.antiSpam();
-    this.imageHit();
-    // audioPlayer(this._audioHitDefault, false, this._CHN, vol);
+//     if (per(5)) {
+//       let faixa = this._audioHit[gerarNumero(0, this._audioHit.length - 1)];
 
-    if (per(5)) {
-      let faixa = this._audioHit[gerarNumero(0, this._audioHit.length - 1)];
+//       audioPlayer(faixa, true, this._CHN);
+//     }
+//     this.percentHealth = (this.health / this.fullHealth) * 100;
 
-      audioPlayer(faixa, true, this._CHN);
-    }
-    this.percentHealth = (this.health / this.fullHealth) * 100;
+//     if (this.health <= 0) {
+//       this.health = 0;
 
-    if (this.health <= 0) {
-      this.health = 0;
+//       bossDead();
+//       // return animatebossHealth(n);
 
-      bossDead();
-      // return animatebossHealth(n);
+//       //   return (bossHealthP.value = this.health);
+//     } else {
+//       //   return (bossHealthP.value = this.health);
+//       // return animatebossHealth(n);
+//     }
+//   }
 
-      //   return (bossHealthP.value = this.health);
-    } else {
-      //   return (bossHealthP.value = this.health);
-      // return animatebossHealth(n);
-    }
-  }
+//   antiSpam() {
+//     let delay = gerarNumero(750, 1800);
+//     let chance = 13;
 
-  antiSpam() {
-    let delay = gerarNumero(750, 1800);
-    let chance = 13;
+//     if (false) {
+//       setTimeout(
+//         () => {
+//           let obj = populateArena();
 
-    if (false) {
-      setTimeout(
-        () => {
-          let obj = populateArena();
+//           obj ? (obj.isInvisible = true) : 0;
+//         },
 
-          obj ? (obj.isInvisible = true) : 0;
-        },
+//         delay
+//       );
+//     }
+//   }
 
-        delay
-      );
-    }
-  }
+//   summon() {}
 
-  summon() {}
+//   heal(n) {
+//     this.health += n;
+//     if (this.health > this.fullHealth) {
+//       this.health = this.fullHealth;
+//       // animatebossHealth();
+//     }
+//     // animatebossHealth();
+//   }
 
-  heal(n) {
-    this.health += n;
-    if (this.health > this.fullHealth) {
-      this.health = this.fullHealth;
-      // animatebossHealth();
-    }
-    // animatebossHealth();
-  }
+//   set(n) {
+//     this.health = n;
 
-  set(n) {
-    this.health = n;
+//     return (bossHealthP.value = this.health);
+//   }
 
-    return (bossHealthP.value = this.health);
-  }
+//   setFull(n) {
+//     this.fullHealth = n;
+//     return (bossHealthP.max = this.fullHealth);
+//   }
 
-  setFull(n) {
-    this.fullHealth = n;
-    return (bossHealthP.max = this.fullHealth);
-  }
+//   stopAnimation(x) {
+//     if (x) {
+//       bossP().classList.remove("bossAnimation");
+//     } else {
+//       bossP().classList.add("bossAnimation");
+//     }
+//   }
 
-  stopAnimation(x) {
-    if (x) {
-      bossP().classList.remove("bossAnimation");
-    } else {
-      bossP().classList.add("bossAnimation");
-    }
-  }
+//   treme(x) {
+//     if (x) {
+//       bossP().classList.remove("bossAnimation");
+//       bossP().classList.add("critico");
+//     } else {
+//       bossP().classList.remove("critico");
+//       bossP().classList.add("bossAnimation");
+//     }
+//   }
 
-  treme(x) {
-    if (x) {
-      bossP().classList.remove("bossAnimation");
-      bossP().classList.add("critico");
-    } else {
-      bossP().classList.remove("critico");
-      bossP().classList.add("bossAnimation");
-    }
-  }
+//   coolDown(n) {
+//     this._coolDown = true;
 
-  coolDown(n) {
-    this._coolDown = true;
+//     setTimeout(() => {
+//       this._coolDown = false;
+//     }, n);
+//   }
 
-    setTimeout(() => {
-      this._coolDown = false;
-    }, n);
-  }
-
-  everyRoundDefault() {}
-  everyRound() {
-    this.everyRoundDefault();
-  }
-}
+//   everyRoundDefault() {}
+//   everyRound() {
+//     this.everyRoundDefault();
+//   }
+// }
 
 export let wave = {
   mission: undefined,
@@ -534,6 +534,7 @@ export let rDifficulty = {
 export let boss;
 
 function createMonark() {
+  return
   let bossClass = new Boss(15000, 15000, "monark");
 
   let monark = {
@@ -775,6 +776,7 @@ pickTeste.addEventListener("click", () => {
 let hasSpawned = false;
 
 export function spawnBoss() {
+  return
   if (rodadas >= 10 && !hasSpawned) {
     if (chosenBoss == "monark") {
       createMonark();
