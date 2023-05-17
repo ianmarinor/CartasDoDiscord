@@ -1286,7 +1286,7 @@ let lux = {
 
   poder() {
     let faixa = this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".mp3";
-    audioPlayer(faixa, true, this._CHN, 0.5);
+    audioPlayer(faixa, true, this._CHN, 0.2);
     this.ult();
     this.hide(this._energiaP);
   },
@@ -2175,7 +2175,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyC") {
     // spawnTank();
-    spawnRamattra();
+    spawnLiberdade();
   }
 });
 

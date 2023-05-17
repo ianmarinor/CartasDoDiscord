@@ -215,6 +215,7 @@ export class Especial {
     //AUDIO
     this._CHN = document.createElement("audio");
     this._CHN2 = document.createElement("audio");
+    this._CHN3 = document.createElement("audio");
   }
 
   energiaPoderDefault() {
@@ -233,6 +234,13 @@ export class Especial {
   onCoolDownFinish() {}
 
   tickDefault() {
+    // console.log(this.parentP);
+    if (this._parentP == inv && !this._cfgDefaultOnInvAdded) {
+      this.cfgDefaultOnInv();
+      this._cfgDefaultOnInvAdded = true;
+      console.log("adicionei");
+    }
+
     if (this._barrieraActive) {
       this._targetPoint += 2000;
     } else {
@@ -397,12 +405,6 @@ export class Especial {
     let ulti = inv.children[this._place].children[2];
 
     ulti.textContent = this.ulti + "%";
-  }
-
-  buildUltAuto() {
-    if (this._hasUlti) {
-      per(20) ? this.buildUlt(1) : false;
-    }
   }
 
   areaAtack() {
@@ -582,6 +584,14 @@ export class Especial {
     }
   }
 
+  unableToUlt() {
+    if (this._stunned || this._dead || this._cantUlt || this.ulti < 100) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   coolDown(_time) {
     this._onAttackCoolDown = true;
     setTimeout(() => {
@@ -732,9 +742,7 @@ export class Especial {
     element.style.cursor = cursor;
   }
 
-  everyRoundDefault() {
-    this.buildUltAuto();
-  }
+  everyRoundDefault() {}
 
   energiaDorment(_trigger) {
     this._energiaDorment = _trigger;
@@ -827,7 +835,7 @@ export class Especial {
 
     if (this._hasUlti) {
       ulti.textContent = this.ulti + "%";
-      this.ulti == 100 && !this.unableToAttack()
+      this.ulti == 100 && !this.unableToUlt()
         ? (ulti.style.cursor = "pointer")
         : (ulti.style.cursor = "not-allowed");
     } else if (this._hasUlti === false) {
@@ -992,6 +1000,18 @@ export class Especial {
   // this method will set dafaults for each card and will run only once
   cfg() {
     false;
+  }
+
+  cfgDefaultOnInv() {
+    this._retratoP.addEventListener("dblclick", () => {
+      if (this._poderLoop && !this._isAttacking) {
+        this._isAttacking = true;
+      }
+    });
+
+    this._retratoP.addEventListener("click", () => {
+      this.poder();
+    });
   }
 
   cfgDefault() {
@@ -1853,6 +1873,7 @@ export let especiais = {
     },
 
     didHit() {
+      if (this._stunned || this._dead) return;
       if (this.clockReady && !this.isInvisible) {
         this._uber = true;
         this.invis();
@@ -1872,7 +1893,6 @@ export let especiais = {
     },
 
     invis() {
-      if (this._stunned || this._dead) return;
       let spy = this._thisCardP;
       let spyWatch = this._cargoP;
       let botao = spy.children[3].children[2];
@@ -1929,7 +1949,7 @@ export let especiais = {
       if (this._isAttacking) {
         this._isAttacking = false;
       } else {
-        this._isAttacking = true;
+        this.poderLoop();
       }
     },
 
@@ -1948,9 +1968,8 @@ export let especiais = {
         ".mp3";
 
       // stab
-      if (this._isAttacking) {
-        audioPlayer("stab.mp3", false, this._CHN, 0.2);
-      }
+
+      audioPlayer("stab.mp3", false, this._CHN, 0.2);
 
       if (per(20) && this._CHN2.paused) {
         //voiceLine
@@ -2088,14 +2107,18 @@ export let especiais = {
     emoji: "",
     cargo: "0%",
     retrato: "url('pics/retratoLucio.jpg')",
+    retratoUlting: "url('pics/lucioUltingRetrato.gif')",
     dmgBoss: false,
     dano: 4,
     _hasUlti: true,
-    ulti: 0,
-
+    ulti: 100,
+    _poderLoop: true,
     hp: 15,
     maxHealth: 15,
     hashp: true,
+
+    _audioUltingFiles: 2,
+    _sourceUlting: "lucio/ulting",
 
     nomeStyle: {
       fontSize: "250%",
@@ -2125,24 +2148,31 @@ export let especiais = {
     },
 
     tick() {
+      // ulti interrompida
+      if (this._ulting && this._stunned) {
+        this._CHN3.pause();
+        this.changeRetrato(this.retrato);
+        this._ulting = false;
+
+
+        if (per(50)) {
+          if (per(50)) {
+            audioPlayer("lucio/ultiInterrupted.oga", true, this._CHN, 0.6);
+          } else {
+            audioPlayer("lucio/ultiInterrupted.mp3", true, this._CHN, 0.3);
+          }
+        }
+      }
+
       if (this.startedBoost) return;
-
-      let prevBorder = this._thisCardP.style.border;
-
-      let borderBlink = () => {
-        this._thisCardP.style.border = "5px solid cyan";
-
-        setTimeout(() => {
-          this._thisCardP.style.border = prevBorder;
-        }, 850);
-      };
-
       this.startedBoost = true;
       this.healingBoostInterval = setInterval(() => {
-        if (!this._dead) {
+        if (
+          !this._dead &&
+          (!invObj.every((x) => x._fullHp) || !hpPlayer.isFull)
+        ) {
           console.log("LUCIO curou");
           this.healingBoost();
-          borderBlink();
         } else {
           clearInterval(this.healingBoostInterval);
           this.startedBoost = false;
@@ -2157,8 +2187,17 @@ export let especiais = {
     },
 
     healingBoost() {
-      this.healValue = 2;
-      this.healPlayerValue = 1;
+      let prevBorder = this._thisCardP.style.border;
+      let borderBlink = () => {
+        this._thisCardP.style.border = "5px solid cyan";
+
+        setTimeout(() => {
+          this._thisCardP.style.border = prevBorder;
+        }, 850);
+      };
+
+      this.healValue = 1;
+      this.healPlayerValue = () => gerarNumero(0, 1);
 
       invObj.map((x) => {
         if (x.hashp && !x._fullHp) {
@@ -2167,38 +2206,53 @@ export let especiais = {
           this._healingDone += this.healValue;
         }
       });
-
-      hpPlayer.add(this.healPlayerValue);
+      borderBlink();
+      hpPlayer.add(this.healPlayerValue());
       // this._healingDone += this.healValue;
 
       this.heal(this.healValue * 2);
     },
 
     ult() {
-      if (this._parentP != inv) return;
-
-      let buff = 210;
-      if (this.ulti != 100 || this.unableToAttack()) return;
-
-      invObj.map(function (x) {
-        if (x.hashp) {
-          x.addBuff(buff);
-        }
-      });
+      if (this.unableToUlt()) return;
+      // this._cantUlt = true
+      let faixa =
+        this._sourceUlting + gerarNumero(1, this._audioUltingFiles) + ".mp3";
+      audioPlayer(faixa, true, this._CHN3, 0.8);
+      this._ulting = true;
       this.ulti = 0;
-      this._cargoP.classList.remove("critico");
+      this.changeRetrato(this.retratoUlting);
+
+      let ulti = () => {
+        let buff = 210;
+        this._isAttacking = false;
+        invObj.map(function (x) {
+          if (x.hashp) {
+            x.addBuff(buff);
+          }
+        });
+        this._cargoP.classList.remove("critico");
+      };
+
+      setTimeout(() => {
+        this.changeRetrato(this.retrato);
+        this._ulting = false;
+        // this._cantUlt = false
+        if (this._stunned || this._dead) return;
+        ulti();
+      }, 2000);
     },
 
-    poder() {
+    poderLoop() {
       if (this.unableToAttack() || this._poderUsing || !this.ammoCheck())
         return;
 
       this._poderUsing = true;
 
-      let ultiRate = () => gerarNumero(0, 2);
+      let ultiRate = () => (per(33) ? 1 : 0);
 
       let ammo = 1;
-      let tiros = 3;
+      let tiros = 6;
 
       let weapon = () => {
         if (this._dead) return;
@@ -2212,6 +2266,7 @@ export let especiais = {
         if (tiros == 0 || this._dead) {
           clearInterval(multiShot);
           this._poderUsing = false;
+          this.coolDown(1000);
           return;
         }
       };
@@ -2219,6 +2274,14 @@ export let especiais = {
       let multiShot = setInterval(() => {
         weapon();
       }, 220);
+    },
+
+    poder() {
+      if (this._isAttacking) {
+        this._isAttacking = false;
+      } else {
+        this.poderLoop();
+      }
     },
   },
 
@@ -2416,9 +2479,10 @@ export let especiais = {
     energia: 10,
     emoji: "",
     cargo: "0%",
-    retrato: "url('pics/dvaMecaRetrato.jpg')",
+    retrato: "url('pics/dvaRetrato.png')",
+    retrato2: "url('pics/dvaMecaRetrato.jpg')",
     dmgBoss: false,
-    ulti: 0,
+    ulti: 100,
     dano: 10,
     hp: 100,
     maxHealth: 100,
@@ -2426,7 +2490,7 @@ export let especiais = {
     _hasUlti: true,
     tank: true,
     requireAmmo: true,
-
+    _poderLoop: true,
     //AUDIO FILES
     _audioChosenFiles: 5,
     _sourceChosen: "dva/chosen",
@@ -2443,7 +2507,31 @@ export let especiais = {
     _audioNeedHealingFiles: 2,
     _sourceNeedHealing: "dva/needHealing",
 
-    tick() {},
+    _audioGunLongFiles: 1,
+    _sourceGunLong: "dva/gunLong",
+
+    tick() {
+      if (this._CHN2.paused && this._isAttacking) {
+        let faixa = "dva/gunLong1.mp3";
+
+        audioPlayer(faixa, true, this._CHN2, 0.3);
+      } else if (!this._isAttacking) {
+        this._CHN2.pause();
+      }
+
+      if (this._isAttacking && !this.miniDva) {
+        this.changeRetrato(this.retrato2);
+      } else {
+        this.changeRetrato(this.retrato);
+      }
+
+      if (this._ulting) {
+        this.changeRetrato('url("/pics/dvaUlting.gif")');
+      }
+      if (this.miniDva) {
+        this.changeRetrato('url("/pics/dva.webp")');
+      }
+    },
 
     cfg() {
       this.dano = gerarNumero(38, 55);
@@ -2451,12 +2539,11 @@ export let especiais = {
     },
 
     ult() {
-      if (this.ulti != 100 || this.unableToAttack()) return;
+      if (this.unableToUlt()) return;
 
       let dvaToMinidva = () => {
         this.setHp(10);
-        this.changeRetrato('url("/pics/dva.webp")');
-        // this.dmgBoss = true;
+
         this.energiaDorment(true);
         this._stunned = false;
         this._thisCardP.children[2].textContent = "";
@@ -2467,12 +2554,20 @@ export let especiais = {
         this.tank = false;
         this._thisCardP.classList.remove("piscar");
         this.targetPointSetter(400);
+
+        this.miniDva = true;
+        this._ulting = false;
       };
+
+      this._cantAttack = true;
+      this._cantStartToAttack = true;
+      this._cantUlt = true;
 
       this._invHiddenButton = true;
       this._uber = true;
       this.targetPointSetter(1);
       this._ulting = true;
+      this._isAttacking = false;
       this.ulti = 0;
       this._cargoP.classList.remove("critico");
       this.changeRetrato('url("/pics/dvaUlting.gif")');
@@ -2503,7 +2598,7 @@ export let especiais = {
       );
     },
 
-    poder() {
+    poderLoop() {
       if (this.unableToAttack()) return;
 
       if (this._ulting) return;
@@ -2522,6 +2617,14 @@ export let especiais = {
         }
       }
       this.coolDown(650);
+    },
+
+    poder() {
+      if (this._isAttacking) {
+        this._isAttacking = false;
+      } else {
+        this.poderLoop();
+      }
     },
 
     nomeStyle: {
@@ -2980,6 +3083,7 @@ export let especiais = {
 
         if (this.ammonition <= 0 || noEnemy || this.unableToAttack()) {
           this.active = false;
+          this._isAttacking = false;
           clearInterval(tiros);
           return;
         }
@@ -2987,6 +3091,7 @@ export let especiais = {
         rocketLaunchCount == gerarNumero(12, 15) ? launchRocket() : 0;
 
         this.active = true;
+        this._isAttacking = true;
         // console.log("piu");
         this.ataque(this.dano, 0);
         this.ammonition--;

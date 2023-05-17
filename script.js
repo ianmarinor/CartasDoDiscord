@@ -393,6 +393,7 @@ class fabricaDeCarta {
     this._cidadeArray = cidade;
     this._varianteArray = variante;
     this.dano = 0;
+    this._fullHp = true
 
     //dom
     this._cargoP = false;
@@ -1642,13 +1643,14 @@ function criarBtn() {
       inv.children[i].replaceChild(limpo, buttonWithEvent);
       inv.children[i].children[3].replaceChild(energiaLimpo, energia);
 
-      limpo.addEventListener("click", function () {
-        if (invObj[i].poder) {
-          invObj[i].poder();
-        } 
-      });
+      // limpo.addEventListener("click", function () {
+      //   if (invObj[i].poder) {
+      //     invObj[i].poder();
+      //   } 
+      // });
 
       cargoLimpo.addEventListener("click", () => carta.ult());
+
       energiaLimpo.addEventListener("click", () => {
         carta.energiaPoderDefault();
       });
@@ -1776,6 +1778,7 @@ export let emptyObj = {
   _monarkReplaceble: true,
   autoAtaque: false,
   _targetPoint: 0,
+  _fullHp: true,
   place() {
     return false;
   },

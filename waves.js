@@ -167,8 +167,16 @@ export let imperio = {
 
       waves: [
         {
-          enemiesTotal: 6,
-          enemies: [spawnMonark, spawnMenosCartas],
+          enemiesTotal: 14,
+          enemies: [
+            spawnCamarada,
+            spawnTank,
+            spawnAwp,
+            spawnMonark,
+            spawnMenosCartas,
+            spawnLux,
+            spawnRamattra,
+          ],
           boss: [],
           bossTotal: 0,
           level: [1, 1],
@@ -178,7 +186,7 @@ export let imperio = {
           cards: 25,
           spawnChance: 20,
           name: "GENESIS",
-          spawnTime: [7, 15],
+          spawnTime: [10, 10],
           timeBeforeNextWave: [8, 10],
         },
 
