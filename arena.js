@@ -650,11 +650,9 @@ class Inimigo {
           let vitima = invObj[slot];
 
           vitima.dmg(dano * 6);
-          break
+          break;
         }
       }
-
-      
     } else {
       invObj.map((x) => {
         if (!x.isNormal && !x.isInvisible) {
@@ -744,12 +742,7 @@ class Inimigo {
   }
 
   defaultEveryRound() {
-    this.desinfectar();
-
-    if (this._despawn) {
-      this._despawn--;
-      this._despawn == 1 ? this.kill(true) : 0;
-    }
+    // this.desinfectar();
   }
 
   print() {
@@ -953,6 +946,7 @@ let monark = {
   emoji: "💩",
   attackChance: 15,
   _coolDownNatural: 15,
+  isMonark: true,
 
   cfg() {
     audioPlayer(this._audioSpawn, true, this._CHN, 0.4);
@@ -1347,7 +1341,6 @@ let rouba = {
 
   poder() {
     if (this._dead) return;
-    let faixa = this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".ogg";
 
     for (let i = 0; i < 8; i++) {
       invObj.map((x) => {
@@ -1363,12 +1356,13 @@ let rouba = {
           this.hide(this._retratoP, false);
 
           this.setHp(500);
-
+          let faixa =
+            this._sourceUlt + gerarNumero(1, this._audioUltFiles) + ".ogg";
           audioPlayer(faixa, true, this._CHN, 0.5);
 
           setTimeout((x) => {
             this.kill(true);
-          }, 1700);
+          }, 2500);
         }
       });
       if (this.roubei) {
@@ -1643,6 +1637,7 @@ let liberdade = {
   dano: 0,
   miniBoss: true,
   emoji: "",
+  _coolDownNatural: 16,
 
   tick() {
     let healthBar = this._nomeP.children[0];
@@ -1916,7 +1911,7 @@ let stalin = {
   dano: 0,
   miniBoss: true,
   emoji: "",
-  _coolDownNatural: 11,
+  _coolDownNatural: 6,
 
   tick() {},
 
@@ -1939,6 +1934,8 @@ let stalin = {
     this._nomeP.style.margin = "30px  0px 5px";
     this._hpP.style.visibility = "hidden";
     this.targetPointSetter(450);
+
+    
   },
 
   didKill() {
@@ -2161,7 +2158,9 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    spawnRouba();
+    // spawnRouba();
+
+    // invObj[0]._coolDown = Math.trunc(invObj[0]._coolDown / 2);
   }
 });
 
@@ -2178,7 +2177,6 @@ document.addEventListener("keydown", (event) => {
     spawnLiberdade();
   }
 });
-
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyK") {
@@ -2251,7 +2249,7 @@ function camaradaToStalin() {
     // console.log("TODOS CAMARADA");
 
     buffCamarada();
-    audioPlayer(faixa, true, CHNStalin, 0.2);
+    audioPlayer(faixa, true, CHNStalin, 0.1);
     setTimeout(() => {
       if (!allCamarada) return;
       killCamarada();
@@ -2260,6 +2258,18 @@ function camaradaToStalin() {
   } else {
     // console.log("NÃO TODOS CAMARADA");
   }
+}
+
+export function arenaCoolDown() {
+  areObj.map((x) => {
+    if (x.infected) {
+      if (x.infectedCooldown <= 0) {
+        x.desinfectar();
+      } else {
+        x.infectedCooldown--;
+      }
+    }
+  });
 }
 
 window.addEventListener("load", Main);

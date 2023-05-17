@@ -16,6 +16,7 @@ import {
   ammo,
   elimCardInv,
   elimCardMao,
+  emptyObj,
   setEfeito,
   efeitos,
   efeitoDano,
@@ -28,9 +29,12 @@ import {
   rodadas,
   audioPlayer,
   mainOpaque,
+  chosenCard,
+  setChosenCard,
+  setChosenCardObj,
 } from "../script.js";
 import { boss, wave } from "../boss.js";
-import { areObj, smokeOnInv } from "../arena.js";
+import { areEmpty, areObj, smokeOnInv } from "../arena.js";
 
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
@@ -222,7 +226,6 @@ export class Especial {
     if (this._energiaDorment === true) {
       this.dmgBoss = true;
       this.energiaDorment(false);
-      console.log("Energy for Special activated");
     }
 
     this.energiaPoder();
@@ -234,11 +237,15 @@ export class Especial {
   onCoolDownFinish() {}
 
   tickDefault() {
-    // console.log(this.parentP);
+    
+    this._manaP = this._retratoP.children[0]
+
     if (this._parentP == inv && !this._cfgDefaultOnInvAdded) {
       this.cfgDefaultOnInv();
       this._cfgDefaultOnInvAdded = true;
-      console.log("adicionei");
+    }
+
+    if (this._parentP == mao) {
     }
 
     if (this._barrieraActive) {
@@ -255,6 +262,16 @@ export class Especial {
     if (this._isAttacking && this._poderLoop) {
       this.poderLoop();
     }
+  }
+
+  placeNewElements() {
+    let manaDiv = document.createElement("div");
+    manaDiv.className = "mana-retrato";
+    manaDiv.innerHTML = "💧";
+    this._retratoP.appendChild(manaDiv);
+
+    this._manaP = this._retratoP.children[0];
+    console.log('placed');
   }
 
   place() {
@@ -318,6 +335,11 @@ export class Especial {
       this._rightCard = false;
       this._rightCardIndex = null;
       this._rightObj = false;
+    }
+
+    if (!this.hasPlacedAllElements) {
+      this.hasPlacedAllElements = true;
+      this.placeNewElements();
     }
 
     this.checkFullHp();
@@ -804,7 +826,6 @@ export class Especial {
     if (this._canBeDeleted) {
       this.kill();
     } else {
-      console.log("this card cant be deleted");
     }
   }
 
@@ -887,38 +908,13 @@ export class Especial {
 
     if (this._isAttacking) {
       this._thisCardP.classList.add("critico");
+
+      this._manaP.style.opacity = '1'
     } else if (this._isAttacking === false) {
       this._thisCardP.classList.remove("critico");
       clearInterval(this._borderBlinkingInterval);
+      this._manaP.style.opacity = '0.5'
     }
-
-    // stilo botao
-
-    // if (this.requireAmmo) {
-    //   // this._buttonP.innerHTML = "⚔️";
-
-    //   if (ammo.total > 0 && !this.unableToAttack() && !this._poderUsing) {
-    //     this._buttonP.style.opacity = 1;
-    //     this._buttonP.style.cursor = "pointer";
-    //   } else {
-    //     this._buttonP.style.opacity = 0.3;
-    //     this._buttonP.style.cursor = "not-allowed";
-    //   }
-    // } else if (!this.unableToAttack()) {
-    //   if (!this.customButtonEmoji) {
-    //     this._buttonP.innerHTML = "🔘";
-    //   }
-
-    //   this._buttonP.style.opacity = 1;
-    //   this._buttonP.style.cursor = "pointer";
-    // } else {
-    //   if (!this.customButtonEmoji) {
-    //     this._buttonP.innerHTML = "🔘";
-    //   }
-
-    //   this._buttonP.style.opacity = 0.3;
-    //   this._buttonP.style.cursor = "not-allowed";
-    // }
 
     //estilo selo
     if (this._exposto) {
@@ -941,7 +937,7 @@ export class Especial {
     this.lowHpWarning();
 
     if (this._parentP == mao) {
-      this.tickMao();
+      this.tickMaoDefault();
     }
   }
 
@@ -952,6 +948,19 @@ export class Especial {
       return true;
     }
   }
+
+  tickMaoDefault() {
+    if (this._thisCardP == chosenCard) {
+      this._thisCardP.style.bottom = "66px";
+      this._chosenCardMao = true;
+    } else {
+      this._chosenCardMao = false;
+      this._thisCardP.style.bottom = "0px";
+    }
+
+    this.tickMao();
+  }
+
   tickMao() {}
   lowHpWarning() {
     if (!this.hashp) return;
@@ -1002,10 +1011,29 @@ export class Especial {
     false;
   }
 
+  chosenCardMao() {
+    if (this._chosenCardMao) {
+      setChosenCard(0);
+      setChosenCardObj(emptyObj);
+    } else {
+      setChosenCard(this._thisCardP);
+      setChosenCardObj(this);
+    }
+  }
+
+  leftClick() {
+    if (this._parentP == mao) {
+      this.chosenCardMao();
+    }
+  }
+
   cfgDefaultOnInv() {
     this._retratoP.addEventListener("dblclick", () => {
       if (this._poderLoop && !this._isAttacking) {
+        
         this._isAttacking = true;
+      } else if (this._poderLoop && this._isAttacking) {
+        this._isAttacking = false;
       }
     });
 
@@ -1037,7 +1065,24 @@ export class Especial {
       this.rightClick();
     });
 
+    this._thisCardP.addEventListener("click", () => {
+      this.leftClick();
+    });
+
     this.levelSetter();
+
+    if (this._hasCoolDown) {
+      this._coolDown = this._naturalCoolDown;
+    }
+
+    //criar slot pra mana
+
+    if (this.requireAmmo) {
+      this._manaP.textContent = "💧";
+    } else {
+      this._manaP.textContent = "";
+    }
+
   }
 
   integranteRequiredCard() {
@@ -1204,6 +1249,7 @@ export let especiais = {
     _invHiddenButton: true,
     sonoCoolDown: undefined,
     sonoCoolDownInterval: undefined,
+    _poderLoop: true,
 
     cfg() {
       this.targetPointSetter(500);
@@ -1213,7 +1259,6 @@ export let especiais = {
       if (this.dormindo) return;
 
       this.dormiu(true);
-      console.log("CLICKEI PARA DORMIR");
     },
 
     tick() {
@@ -1224,6 +1269,12 @@ export let especiais = {
         this.disableButton();
       } else {
         this.activateButtonForSpeaker("monark");
+      }
+
+      if (this.dormindo) {
+        this._isAttacking = false;
+      } else {
+        this._isAttacking = true;
       }
     },
 
@@ -1238,8 +1289,6 @@ export let especiais = {
           } else {
             this.sonoCoolDown--;
             descriptionSpeaker.innerHTML = this.sonoCoolDown + "&#128564;";
-
-            console.log("DORMINDO");
           }
         }, 1000);
       };
@@ -1256,7 +1305,11 @@ export let especiais = {
         sonoCoolDownStart();
 
         this.dormindo = true;
-        this.addBuff(25);
+
+        if (this.energia < 80) {
+          this.addBuff(35);
+        }
+
         this.targetPointSetter(1000);
         this.changeRetrato(speakerDorminfo);
         this.energiaDorment(true);
@@ -1276,14 +1329,14 @@ export let especiais = {
       }
     },
 
-    poder() {
+    poder() {},
+
+    poderLoop() {
       if (this.unableToAttack()) return;
       if (this.dormindo) return;
 
-      this.coolDown(350);
-
       let speakerSono = () => {
-        let highRiskSleep = gerarNumero(220, 500);
+        let highRiskSleep = gerarNumero(80, 150);
         let caraCoroa = per(90);
         let normalChance = per(15);
 
@@ -1303,26 +1356,19 @@ export let especiais = {
         return;
       }
 
-      for (let j = 0; j < 10; j++) {
-        let vitima = areObj[j];
-        let matchingCards = areObj.some(
-          (x) => x.cartaId == "monark" && !x.isInvisible
-        );
+      for (let i = 0; i < 99; i++) {
+        let vitima = areObj[gerarNumero(0, 5)];
 
-        if (
-          !matchingCards ||
-          areObj[j].cartaId != "monark" ||
-          vitima.isInvisible
-        )
-          continue;
-        if (!this.dormindo) {
-          this.energia += gerarNumero(8, 48);
+        if (vitima.isMonark) {
+          this.energia += gerarNumero(8, 20);
           vitima.kill();
 
           snd(order);
           break;
         }
       }
+
+      this.coolDown(2500);
     },
 
     cleanArena() {
@@ -1336,7 +1382,7 @@ export let especiais = {
 
           this.energia += despawn;
           carta.kill();
-          console.log("ELIMINEI MONARK");
+
           return true;
         }
       }
@@ -1567,19 +1613,13 @@ export let especiais = {
     dano: 15,
 
     cfg() {
-      let _dano = gerarNumero(24, 30);
+      let _dano = 35;
       this.dano = _dano;
       this.onlyReadDmg = _dano;
       this.targetPointSetter(100);
     },
 
     tick() {
-      // if (this.buffAdded) {
-      // } else {
-      //   this.buffAdded = true;
-      //   this.addBuff(15);
-      // }
-
       if (this._dead) {
         clearInterval(this.attackInterval);
         return;
@@ -1636,7 +1676,8 @@ export let especiais = {
     },
 
     poder() {
-      if (this.unableToAttack()) return;
+      if (this.unableToStartToAttack()) return;
+      this._cantStartToAttack = true;
       let timer = 1200;
 
       if (this._attacking || this._dead) {
@@ -1648,7 +1689,7 @@ export let especiais = {
       this.poison();
 
       this._invHiddenButton = true;
-      this.ataque(this.dano);
+      this.ataque(this.dano, false);
 
       this.attackInterval = setInterval(() => {
         this._attacking = true;
@@ -1712,16 +1753,9 @@ export let especiais = {
       this.targetPointSetter(200);
     },
 
-    tick() {
-      this.integranteRequiredCard();
-    },
+    tick() {},
 
-    tickMao() {
-      this._cargoP.innerHTML =
-        this._requiredIntegrante.toUpperCase() +
-        "<br>" +
-        this._requiredIntegrante2.toUpperCase();
-    },
+    tickMao() {},
 
     poder() {
       if (this.unableToAttack()) return;
@@ -1758,6 +1792,7 @@ export let especiais = {
           x.critico(false);
           x.readyToAttack = false;
           x.infected = true;
+          x.infectedCooldown = 3;
         });
       }
 
@@ -1819,7 +1854,6 @@ export let especiais = {
     _poderLoop: true,
     _invHiddenButton: true,
 
-    _coolDown: 5,
     _naturalCoolDown: 5,
     _hasCoolDown: false,
 
@@ -2017,7 +2051,7 @@ export let especiais = {
 
   estoicoTuru: {
     cartaId: "estoico",
-    nome: "ESTOICO <br> TURU",
+    nome: " TURU ESTÓICO ",
     raridade: raridades.campones,
     pontoEspecial: 0,
     energia: 0,
@@ -2031,9 +2065,24 @@ export let especiais = {
     maxHealth: 80,
     hashp: true,
     dmgEstoico: 0,
+    requireAmm: false,
+
+    _barreira: 50,
+    _barrieraActive: true,
 
     cfg() {
+      this._barreiraMax = this._barreira;
       this.targetPointSetter(660);
+
+      this._nomeP.style.marginTop = "20px";
+
+      this._cargoP.innerHTML = progressBar(
+        this._barreira,
+        this._barreiraMax,
+        "grey",
+        "#ffffff",
+        true
+      );
     },
 
     poder() {
@@ -2049,11 +2098,6 @@ export let especiais = {
     },
 
     tick() {
-      if (!this.buffAdded) {
-        this.addBuff(20);
-        this.buffAdded = true;
-      }
-
       if (this.dano <= 1) {
         this._onAttackCoolDown = true;
       } else {
@@ -2069,7 +2113,7 @@ export let especiais = {
     },
 
     nomeStyle: {
-      fontSize: "250%",
+      fontSize: "200%",
       fontFamily: "estoico",
       color: "",
     },
@@ -2154,7 +2198,6 @@ export let especiais = {
         this.changeRetrato(this.retrato);
         this._ulting = false;
 
-
         if (per(50)) {
           if (per(50)) {
             audioPlayer("lucio/ultiInterrupted.oga", true, this._CHN, 0.6);
@@ -2171,7 +2214,6 @@ export let especiais = {
           !this._dead &&
           (!invObj.every((x) => x._fullHp) || !hpPlayer.isFull)
         ) {
-          console.log("LUCIO curou");
           this.healingBoost();
         } else {
           clearInterval(this.healingBoostInterval);
@@ -2307,34 +2349,52 @@ export let especiais = {
 
     tick() {
       this.setDmg();
+
+      if (this.unableToAttack()) {
+        this._retratoP.style.cursor = "not-allowed";
+      } else {
+        this._retratoP.style.cursor = "pointer";
+      }
     },
 
     cfg() {
       this.targetPointSetter(650);
+      this.dano = 4;
     },
 
     setDmg() {
-      this.dano = 4;
+      if (this.tiros == 1) {
+        this.ultimoTiro = true;
+      }
 
       let somaEnergia = 0;
 
       invObj.map((x) => {
         if (x.Gandalf && x.dmgBoss) {
-          somaEnergia += x.energia * 2;
+          if (this.ultimoTiro) {
+            somaEnergia += x.energia * 8;
+          } else {
+            somaEnergia += x.energia * 4;
+          }
         } else if (x.dmgBoss) {
-          somaEnergia += x.energia;
+          if (this.ultimoTiro) {
+            somaEnergia += x.energia * 2;
+          } else {
+            somaEnergia += x.energia;
+          }
+        } else if (x.empty) {
+          somaEnergia += 0;
         }
       });
 
-      this.dano += somaEnergia;
-      if (this.tiros == 1) {
-        this.dano *= 4;
+      if (somaEnergia > this.dano) {
+        this.dano = somaEnergia + 4;
+      } else {
       }
     },
 
     poder() {
       if (this.unableToAttack()) {
-        console.log(this + " NOT ABLE TO ATTACK");
         return;
       }
 
@@ -2396,7 +2456,7 @@ export let especiais = {
             snd(countAu);
 
             this.ataque(this.dano, 0);
-            console.log("DANO DO JHIN " + this.dano);
+
             playJhinAu(1);
             this.tiros--;
             this.kill();
@@ -2404,42 +2464,12 @@ export let especiais = {
             this.tiros--;
             tirosString.textContent = this.tiros;
             this.ataque(this.dano, 0);
-
-            console.log("DANO DO JHIN " + this.dano);
           }
 
-          this._onAttackCoolDown = true;
-          setTimeout((x) => {
-            this._onAttackCoolDown = false;
-          }, 1200);
-
-          let cardComEnergia = [];
-
-          invObj.map((x) => {
-            if (x.dmgBoss) {
-              cardComEnergia.push(x);
-            }
-          });
-
-          let cartaMaxima = Math.max(...cardComEnergia.map((x) => x.energia));
-
-          for (let i = 0; i < 6; i++) {
-            let x = invObj[i];
-
-            if (x.energia && x.dmgBoss && x.energia == cartaMaxima && per(0)) {
-              x.kill();
-
-              return;
-            }
-          }
-
-          // invObj.map((x) => {
-
-          // });
-
+          this.coolDown(3000);
           break;
         }
-
+        this.coolDown(3000);
         break;
       }
     },
@@ -2673,25 +2703,27 @@ export let especiais = {
     dano: undefined,
     exploding: false,
     _monarkReplaceble: false,
+    _hasCoolDown: true,
+    _naturalCoolDown: 4,
 
     cfg() {
       let dano = gerarNumero(40, 85);
 
       this.dano = dano;
       this.targetPointSetter(790);
+
+      this._coolDown = gerarNumero(60, 120);
     },
 
-    everyRound() {
-      if (this.exploding || this._parentP != inv) return;
-
-      let chance = per(3.5);
-
-      if (chance) {
+    onCoolDownFinish() {
+      if (!areEmpty()) {
         this.explode();
       }
     },
 
     explode() {
+      if (this.exploding) return;
+
       audioPlayer("creeper.mp3", false, this._CHN, 0.6);
       if (this._dead) {
         this._CHN.pause();
@@ -2992,12 +3024,12 @@ export let especiais = {
     maxHealth: 40,
     dmgBoss: false,
     hashp: true,
-
     dano: undefined,
-
     ammonition: 80,
     ammonitionMax: undefined,
-
+    _hasCoolDown: true,
+    _naturalCoolDown: 16,
+    _coolDownPaused: false,
     active: false,
 
     cfg() {
@@ -3012,12 +3044,15 @@ export let especiais = {
         `<img width="25" height="25" src="/pics/ammo.PNG" style='display:inline; margin-right: 5px'>`;
 
       this._cargoP.style.opacity = "0";
+      this._buttonP.style.fontFamily = "tf2";
 
       // this.selfHealing();
       this.targetPointSetter(675);
     },
 
     tick() {
+      
+
       this._cargoP.innerHTML =
         progressBar(this.ammonition, this.ammonitionMax, "grey", "#cf6a32") +
         `<img width="25" height="25" src="/pics/ammo.PNG" style='display:inline; margin-right: 5px'>`;
@@ -3032,34 +3067,37 @@ export let especiais = {
         this._thisCardP.classList.remove("critico");
       }
 
+      if (areEmpty() || ammo.total <= 0 || this.active) {
+        this._retratoP.style.cursor = "not-allowed";
+      }
+
+      if (this.ammonitionFull()) {
+        this._hasCoolDown = false;
+        this._buttonP.textContent = "";
+      } else {
+        this._hasCoolDown = true;
+        this._buttonP.textContent = this._coolDown;
+      }
+
       this.ammonition < 0 ? (this.ammonition = 0) : 0;
     },
 
-    ult() {},
-
-    selfHealing() {
-      return;
-      let time = 780;
-      let healAmount = 12;
-
-      let autoHeal = setInterval(() => {
-        if (this._dead) {
-          clearInterval(autoHeal);
-        }
-        if (this.active) {
-          this.heal(healAmount);
-        }
-      }, time);
-    },
-
-    everyRound() {
-      if (this.ammonition != this.ammonitionMax) {
-        this.ammonition += gerarNumero(3, 6);
-        this.ammonition > this.ammonitionMax
-          ? (this.ammonition = this.ammonitionMax)
-          : 0;
+    onCoolDownFinish() {
+      this.ammonition += Math.trunc(this.ammonitionMax / 2);
+      if (this.ammonition > this.ammonitionMax) {
+        this.ammonition = this.ammonitionMax;
       }
     },
+
+    ammonitionFull() {
+      if (this.ammonition == this.ammonitionMax) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    ult() {},
 
     rocket() {
       let rocketDmg = this.dano * gerarNumero(10, 25);
@@ -3083,7 +3121,6 @@ export let especiais = {
 
         if (this.ammonition <= 0 || noEnemy || this.unableToAttack()) {
           this.active = false;
-          this._isAttacking = false;
           clearInterval(tiros);
           return;
         }
@@ -3091,8 +3128,6 @@ export let especiais = {
         rocketLaunchCount == gerarNumero(12, 15) ? launchRocket() : 0;
 
         this.active = true;
-        this._isAttacking = true;
-        // console.log("piu");
         this.ataque(this.dano, 0);
         this.ammonition--;
         rocketLaunchCount++;
@@ -3104,7 +3139,8 @@ export let especiais = {
         ammo.total <= 0 ||
         this.active ||
         this.unableToAttack() ||
-        this.ammonition <= 0
+        this.ammonition <= 0 ||
+        areEmpty()
       ) {
         return;
       }
@@ -3203,7 +3239,7 @@ export function escolherEspecial(teste) {
       num = gerarNumero(1, 6);
 
       if (!true) {
-        especial = objBinder(especiais.sapato);
+        especial = objBinder(especiais.jhin);
       } else if (num == 1) {
         especial = objBinder(especiais.speaker);
       } else if (num == 2) {
@@ -3376,6 +3412,7 @@ export function especialCoolDown() {
     }
 
     if (x._hasCoolDown) {
+      if (x._coolDownPaused) return;
       x._coolDown--;
       if (x._coolDown <= 0) {
         x._coolDown = x._naturalCoolDown;

@@ -15,6 +15,7 @@ import {
   spawnLiberdade,
   spawnVitor,
   arenaTick,
+  arenaCoolDown
 } from "./arena.js";
 
 import {
@@ -393,13 +394,21 @@ class fabricaDeCarta {
     this._cidadeArray = cidade;
     this._varianteArray = variante;
     this.dano = 0;
-    this._fullHp = true
-
+    this._fullHp = true;
+    this._canBeDeleted = true;
     //dom
     this._cargoP = false;
     this._hpP = false;
     this._nomeP = false;
     this._cidadeP = false;
+  }
+
+  rightClick() {
+    if (this._canBeDeleted) {
+      this.kill();
+    } else {
+      console.log("this card cant be deleted");
+    }
   }
 
   removeBuff(n) {}
@@ -523,7 +532,51 @@ class fabricaDeCarta {
     if (this._integrante == "Blackao" && this.blackaoProtetor) {
       this.poder = this.blackaoBoi;
     }
+
+    this.tickDefault();
   }
+
+  chosenCardMao() {
+    if (this._chosenCardMao) {
+      chosenCard = 0;
+      chosenCardObj = emptyObj;
+      // this._thisCardP.bottom = "0px";
+    } else {
+      chosenCard = this._thisCardP;
+      chosenCardObj = this;
+      // this._thisCardP.style.bottom = "66px";
+    }
+  }
+
+  tickDefault() {
+    this.tick();
+
+    if (this._parentP == mao) {
+      
+      if (this._thisCardP == chosenCard) {
+        this._thisCardP.style.bottom = "66px";
+        this._chosenCardMao = true;
+      } else {
+        this._chosenCardMao = false;
+        this._thisCardP.style.bottom = "0px";
+      }
+    }
+
+    if (!this.rightClickEventAdded && this._parentP == mao) {
+      this._thisCardP.addEventListener("contextmenu", () => {
+        this.rightClick();
+      });
+
+      this._thisCardP.addEventListener("click", () => {
+        this.chosenCardMao();
+      });
+
+      console.log(1);
+      this.rightClickEventAdded = true;
+    }
+  }
+
+  tick() {}
 
   cfgDefault() {
     this.energiaNatural = this.energia;
@@ -1076,9 +1129,14 @@ function moverToCartaMao() {
     }
   }
 }
-let chosenCard = 0;
+export let chosenCard = 0;
+
+export function setChosenCard(x)  {
+  chosenCard = x
+}
 
 export function selectHandCard() {
+  return;
   for (let k = 0; k < 6; k++) {
     let mao = () => document.getElementById("mao");
 
@@ -1086,39 +1144,41 @@ export function selectHandCard() {
     let retrato = () => mao().children[k].children[1];
     let carta = retrato().offsetParent;
     let creeperCard = carta.id == "creeper";
+    let objCartaClickada = maoObj[k];
+    let objChosen;
 
     // reset()
 
     if (slotMao()) {
       retrato().addEventListener("click", function (e) {
-        function naoFoi() {
-          return carta.dataset.inv == undefined;
+        function lowerCard() {
+          chosenCard.style.bottom = "0px";
+
+          console.log("objCarta: ", objCartaClickada);
+          //
         }
-        if (naoFoi()) {
-          function lowerCard() {
-            chosenCard.style.bottom = "0px";
-            //
-          }
+        function raiseCard() {
+          chosenCard.style.bottom = "66px";
 
-          function raiseCard() {
-            chosenCard.style.bottom = "66px";
+          objCartaClickada.chosenCard = true;
 
-            document.addEventListener("keydown", (event) => {
-              if (event.code == "Space") {
-                moverToDeckSpace();
-              }
-            });
-          }
+          console.log("objCarta: ", objCartaClickada);
 
-          if (chosenCard != 0) {
-            lowerCard();
-          }
-
-          chosenCard = retrato().offsetParent;
-          chosenCardObj = maoObj[k];
-
-          raiseCard();
+          document.addEventListener("keydown", (event) => {
+            if (event.code == "Space") {
+              moverToDeckSpace();
+            }
+          });
         }
+
+        if (chosenCard != 0) {
+          lowerCard();
+        }
+
+        chosenCard = retrato().offsetParent;
+        chosenCardObj = maoObj[k];
+
+        raiseCard();
       });
 
       retrato().addEventListener("contextmenu", function () {
@@ -1132,6 +1192,12 @@ export function selectHandCard() {
     }
   }
 }
+
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Space") {
+    moverToDeckSpace();
+  }
+});
 
 for (let d = 1; d < 7; d++) {
   let deck = "empty" + d;
@@ -1625,19 +1691,17 @@ function criarBtn() {
 
     if (!carta._invEventAdded) {
       // let buttonWithEvent = inv.children[i].children[3].children[2];
-      let buttonWithEvent = inv.children[i].children[1]
+      let buttonWithEvent = inv.children[i].children[1];
       let cargo = inv.children[i].children[2];
       let energia = inv.children[i].children[3].children[0];
-      
 
       let cargoLimpo = cargo.cloneNode(true);
       let limpo = buttonWithEvent.cloneNode(true);
       let energiaLimpo = energia.cloneNode(true);
-      
 
       inv.children[i].replaceChild(cargoLimpo, cargo);
       // inv.replaceChild(cartaLimpa,cartaInteira)
-// 
+      //
       // inv.children[i].children[3].replaceChild(limpo, buttonWithEvent);
 
       inv.children[i].replaceChild(limpo, buttonWithEvent);
@@ -1646,7 +1710,7 @@ function criarBtn() {
       // limpo.addEventListener("click", function () {
       //   if (invObj[i].poder) {
       //     invObj[i].poder();
-      //   } 
+      //   }
       // });
 
       cargoLimpo.addEventListener("click", () => carta.ult());
@@ -1656,10 +1720,6 @@ function criarBtn() {
       });
 
       // cartaInteira.addEventListener("click", () => carta.rightClick());
-
-
-
-
 
       carta._invEventAdded = true;
     }
@@ -1815,7 +1875,11 @@ export let invObj = [
   emptyObj,
 ];
 
-let chosenCardObj = [emptyObj];
+export let chosenCardObj = [emptyObj];
+
+export function setChosenCardObj (x) {
+  chosenCardObj = x
+}
 
 export function objToMao(x, y) {
   maoObj[x] = y;
@@ -2434,6 +2498,7 @@ function globalCoolDown() {
     if (gamePaused) {
     } else {
       especialCoolDown();
+      arenaCoolDown()
 
       // console.log(i++);
     }
@@ -2669,10 +2734,10 @@ export let hpPlayer = {
   },
 
   remove(n) {
-    if(n<1)return
+    if (n < 1) return;
     this.dmgTaken += n;
 
-    audioPlayer(this._audioHit, true, this._CHN, 0.5);
+    // audioPlayer(this._audioHit, true, this._CHN, 0.5);
 
     let resto = this.buffTank(n);
 
@@ -2996,7 +3061,7 @@ document.addEventListener("keydown", (event) => {
 function COM(x) {
   eval(x);
 }
-window.addEventListener("contextmenu", e => e.preventDefault());
+window.addEventListener("contextmenu", (e) => e.preventDefault());
 // LIST BINDS
 //  1, 2, 3, 4 ---> USAR CARTAS NO DECK
 //  Q --->  USAR DECK INTEIRO
