@@ -265,13 +265,25 @@ export class Especial {
   }
 
   placeNewElements() {
-    let manaDiv = document.createElement("div");
-    manaDiv.className = "mana-retrato";
-    manaDiv.innerHTML = "💧";
-    this._retratoP.appendChild(manaDiv);
 
-    this._manaP = this._retratoP.children[0];
-    console.log('placed');
+
+    if(this._retratoP.children[0] == undefined){
+
+
+
+      let manaDiv = document.createElement("div");
+      manaDiv.className = "mana-retrato";
+      manaDiv.innerHTML = "💧";
+      this._retratoP.appendChild(manaDiv);
+  
+      this._manaP = this._retratoP.children[0];
+      console.log('placed');
+    } else {
+      console.log('already there');
+      this._manaP = this._retratoP.children[0];
+    }
+
+
   }
 
   place() {
@@ -676,6 +688,7 @@ export class Especial {
   dmgReceived() {}
 
   kill(absolute) {
+    console.trace();
     if (!this._parentP) return;
 
     if (this.cartaId == "creeper" && !this.exploding && !absolute) {
@@ -691,6 +704,12 @@ export class Especial {
     } else {
       elimCardMao(mao.children[this._place]);
     }
+    
+    console.log('--------------------------');
+    console.log('this._place: ', this._place);
+    console.log('this._parentP: ', this._parentP);
+    console.log('--------------------------');
+
 
     this._dead = true;
   }
@@ -834,6 +853,7 @@ export class Especial {
 
     if (!this._cfgDefaultAdded) {
       this.cfgDefault();
+      console.log(this._place,'DDEDDDD');
       this._cfgDefaultAdded = true;
     }
 
@@ -939,7 +959,16 @@ export class Especial {
     if (this._parentP == mao) {
       this.tickMaoDefault();
     }
+
+    if (this.requireAmmo) {
+      this._manaP.textContent = "💧";
+    } else {
+      this._manaP.textContent = "";
+    }
+
   }
+
+
 
   ammoCheck() {
     if (ammo.total <= 0) {
@@ -947,6 +976,10 @@ export class Especial {
     } else {
       return true;
     }
+
+   
+
+
   }
 
   tickMaoDefault() {
@@ -1077,11 +1110,7 @@ export class Especial {
 
     //criar slot pra mana
 
-    if (this.requireAmmo) {
-      this._manaP.textContent = "💧";
-    } else {
-      this._manaP.textContent = "";
-    }
+    
 
   }
 

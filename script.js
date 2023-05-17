@@ -608,6 +608,7 @@ class fabricaDeCarta {
   }
 
   kill() {
+    // console.trace();
     if (!this._parentP) return;
     if (this._parentP == inv) {
       this._thisCardP.classList.add("morto");
@@ -1807,7 +1808,7 @@ export function elimCardMao(x) {
     mao.replaceChild(mao5, x);
     slot = 5;
   }
-
+// console.trace();
   maoObj[slot] = emptyObj;
 
   return slot;
@@ -2150,19 +2151,13 @@ export let placarArena = {
 
 function dmgBoss() {
   let energiaTotal = 0;
-  let dinheiroTotal = 0;
+  
 
-  let numOfCards = () => {
-    let num = 0;
-
-    invObj.map((x) => (x.dmgBoss == true ? num++ : false));
-
-    return num;
-  };
+ 
 
   // ENERGIA
 
-  let multiplicador = parseFloat(1 + "." + numOfCards());
+  
   for (const x of invObj) {
     if (x.dmgBoss != true) {
       continue;
