@@ -8,6 +8,8 @@ import {
   placarArena,
   numCartas,
   mainOpaque,
+  criarPopUp,
+  fecharPopUp
 } from "/script.js";
 import {
   spawnMonark,
@@ -666,6 +668,7 @@ function startGame() {
   main.style.display = "grid";
   testP.style.display = "block";
   startGame2();
+  
 }
 
 function chooseMonark() {

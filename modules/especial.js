@@ -1,7 +1,7 @@
 import { seedRNG, start } from "./seedFabricator.js";
 import { integrante } from "../integrante.js";
 import { cidade } from "../cidade.js";
-import { slotEspObj, slotEsp } from "../slotEspecial.js";
+// import { slotEspObj, slotEsp } from "../slotEspecial.js";
 import {
   snd,
   semCarta,
@@ -35,10 +35,11 @@ import {
 } from "../script.js";
 import { boss, wave } from "../boss.js";
 import { areEmpty, areObj, smokeOnInv } from "../arena.js";
+import { deckObj } from "../market.js";
 
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
-
+let deck = document.getElementById("slotEsp");
 const mainP = document.getElementById("main");
 const bodyP = document.getElementsByTagName("body")[0];
 
@@ -222,6 +223,23 @@ export class Especial {
     this._CHN3 = document.createElement("audio");
   }
 
+  onMountDefault(){
+    this.print()
+    
+
+
+
+
+
+    
+    console.log('montei');
+    this.onMount()
+  }
+
+  onMount(){
+
+  }
+
   energiaPoderDefault() {
     if (this._energiaDorment === true) {
       this.dmgBoss = true;
@@ -287,10 +305,10 @@ export class Especial {
   }
 
   place() {
-    for (let i = 0; i < 3; i++) {
-      if (this == slotEspObj[i]) {
-        this._parent = slotEspObj;
-        this._parentP = slotEsp;
+    for (let i = 0; i < deckObj.length; i++) {
+      if (this == deckObj[i]) {
+        this._parent = deckObj;
+        this._parentP = deck;
         break;
       }
     }
@@ -310,6 +328,7 @@ export class Especial {
         break;
       }
     }
+
     //
     this._place = this._parent.indexOf(this);
 
@@ -3208,7 +3227,7 @@ export let especiais = {
   },
 };
 
-function objBinder(obj) {
+ function objBinder(obj) {
   let newo = new Especial(obj);
 
   return Object.assign(newo, obj);

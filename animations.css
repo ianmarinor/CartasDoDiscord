@@ -33,6 +33,12 @@
   
 }
 
+.popUp {
+  animation: aparecer 1s;
+  animation-iteration-count: 1;
+  opacity: 1;
+}
+
 
 .piscar {
     animation: piscar 110ms;

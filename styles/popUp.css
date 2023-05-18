@@ -1,0 +1,13 @@
+#popUp {
+  position: absolute;
+  border: 2px solid #52ff42bc;
+  width: 1350px;
+  height: 800px;
+  background-color: rgb(47, 106, 121);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  left: calc(50% - 675px);
+  top: 5%;
+  /* border-radius: 200px 200px 0px 200px; */
+}

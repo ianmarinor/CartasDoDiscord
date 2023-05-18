@@ -1,13 +1,183 @@
 #market {
-    position: absolute;
-    border: 1px solid #52ff42bc;
-    width: 1000px;
-    height: 700px;
-    background-color: rgb(72, 69, 69);
-    background-size: cover;
-    background-repeat: no-repeat;
+  position: absolute;
+  border: 2npx solid #52ff42bc;
+  width: 1350px;
+  height: 800px;
+  background-color: rgb(12, 12, 78);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  left: calc(50% - 675px);
+  top: 5%;
+  border-radius: 200px 200px 0px 200px;
   
-    left: calc( 50% - 500px );
-    top: calc( 50% - 350px );
-    
-  }
+
+  
+
+}
+
+#slotEsp {
+  display: grid;
+
+  grid-template-areas:
+    "top top1"
+    "sangue-azul cavaleiro"
+    "campones campones1";
+
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr ;
+
+  width: 100%;
+  height: 100%;
+  background-color: #1f350853;
+  display: none;
+  border-radius: 200px 200px 0px 200px;
+  
+}
+
+
+#rainha-market{
+  width: 180px;
+  height: 255px;
+
+  grid-area: top;
+  align-self: center;
+  justify-self: center;
+
+  background-color: aliceblue;
+  grid-column: 1 / span 2;
+}
+
+
+#sangue-azul-market-1,#sangue-azul-market-2{
+  width: 180px;
+  height: 255px;
+
+  grid-area: sangue-azul;
+  align-self: center;
+  justify-self: end;
+
+  background-color: rgb(45, 15, 239);
+
+  display: flex;
+  justify-content: space-between;
+  margin-right: 100px;
+
+/* display: none; */
+
+
+
+}
+
+#sangue-azul-market-2{
+  background-color: rgb(30, 10, 158);
+  justify-self: center;
+}
+
+
+#cavaleiro-market-1,#cavaleiro-market-2{
+  width: 180px;
+  height: 255px;
+
+  grid-area: cavaleiro;
+  align-self: center;
+  justify-self: start;
+
+  background-color: aliceblue;
+
+  display: flex;
+  justify-content: space-between;
+  margin-left: 100px;
+/* display: none; */
+
+}
+
+#cavaleiro-market-2{
+  background-color: rgb(110, 109, 113);
+  justify-self: center;
+}
+
+
+
+
+
+
+
+
+#campones-market-1,#campones-market-2{
+  width: 180px;
+  height: 255px;
+
+  grid-area: campones;
+  align-self: center;
+  justify-self: end;
+
+  background-color: rgb(221, 240, 97);
+
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+/* display: none; */
+
+}
+
+#campones-market-2{
+  background-color: rgb(108, 105, 16);
+  justify-self: start;
+  grid-area: campones1;
+  margin-left: 10px;
+}
+
+
+#topWrapper,
+#bottomWrapper {
+  width: 395px;
+  height: 255px;
+
+  grid-area: top;
+  align-self: center;
+  justify-self: center;
+
+  background-color: aliceblue;
+}
+
+#middleWrapper {
+  width: 913px;
+  height: 255px;
+
+  grid-area: middle;
+  align-self: center;
+  justify-self: center;
+
+  background-color: aliceblue;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+#bottomWrapper {
+  grid-area: bottom;
+}
+
+#leftWrapper {
+  width: 385px;
+  height: 255px;
+  grid-area: middle;
+  background-color: rgb(214, 92, 36);
+  display: flex;
+  justify-self: end;
+  margin-right: calc(385px / 2);
+
+}
+
+#rightWrapper {
+  width: 385px;
+  height: 255px;
+  justify-self: start;
+  background-color: rgb(57, 36, 214);
+  grid-area: middle;
+  display: flex;
+
+  margin-left: calc(385px / 2);
+
+}

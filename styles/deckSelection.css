@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+}
+
+#deck-selection {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(226, 43, 43);
+
+  display: flex;
+  flex-direction: row;
+}
+
+#cards-selection {
+  width: 50%;
+  height: 100%;
+  background-color: rgb(49, 43, 226);
+
+  display: grid;
+  grid-template-areas:
+    "btn"
+    "selection";
+
+  grid-template-rows: 10% 90%;
+}
+
+#btn-display {
+  width: 100%;
+  height: 50%;
+
+  grid-area: btn;
+  /* background-color: black; */
+
+  display: flex;
+  justify-content: space-around;
+  align-self: center;
+}
+
+#btn-rainha,
+#btn-sangue-azul,
+#btn-cavaleiro,
+#btn-campones {
+  /* border: none; */
+
+  width: 20%;
+  height: 100%;
+
+  background-color: aqua;
+}
+
+#selected-cards {
+  width: 50%;
+  height: 100%;
+  background-color: rgb(43, 226, 80);
+}
+
+#display-cards-selection {
+  grid-area: selection;
+
+    height: 100%;
+    width: 100%;
+
+  display: grid;
+  grid-template-areas:
+    "card1 card2 card3 card4"
+    "card5 card6 card7 card8"
+    "card9 card10 card11 card12"
+    "card13 card14 card15 card16";
+
+  grid-template-rows: repeat(4,1fr);
+  grid-template-columns: repeat(4,1fr);
+}
+
+.selection-pic{
+    height: 100px;
+    width: 100px;
+
+    background-color: brown;
+    grid-area: card1;
+
+    align-self: center;
+    justify-self: center;
+    background-size: cover;
+
+    border: 2px solid yellow;
+}

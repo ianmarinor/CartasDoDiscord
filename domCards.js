@@ -6,7 +6,7 @@ export let menosClickBlueprint =
   "ROUBA-CARTAS" +
   "</p>" +
   "</div>" +
-  '<div class="retrato" style="display: block; background-image: ' +
+  '<div class="retrato-inimigo" style="display: block; background-image: ' +
   menosClickBPicture +
   '"></div>' +
   '<p class="cargo"></p>' +
@@ -28,7 +28,7 @@ export let camaradaBlueprint =
   "BLACKAO CAMARADA" +
   "</p>" +
   "</div>" +
-  '<div class="retrato" style="display: block; background-image: ' +
+  '<div class="retrato-inimigo" style="display: block; background-image: ' +
   camaradaBPicture +
   '"></div>' +
   '<p class="cargo"></p>' +
@@ -50,7 +50,7 @@ export let tankBlueprint =
   "TANK" +
   "</p>" +
   "</div>" +
-  '<div class="retrato" style="display: block; background-image: ' +
+  '<div class="retrato-inimigo" style="display: block; background-image: ' +
   tankBPicture +
   '"></div>' +
   '<p class="cargo" style="transform: rotate(0deg)">  <progress style="width: 75%; border: none; background-color: #895538; height: 40%" value="0" max="60"> </progress>   </p>' +
@@ -74,7 +74,7 @@ export let dogBlueprint =
   dogNome +
   "</p>" +
   "</div>" +
-  '<div class="retrato" style="  display: block; background-image: ' +
+  '<div class="retrato-inimigo" style="  display: block; background-image: ' +
   dogBPicture +
   '; background-size: cover; "></div>' +
   '<p class="cargo"></p>' +
@@ -106,7 +106,7 @@ export function blueprintBuilder(_id, _name, _photo) {
     "</p>" +
     '<p class="cidade-inimigo"  >' +
     "</div>" +
-    '<div class="retrato" style="  display: block; background-image: ' +
+    '<div class="retrato-inimigo" style="  display: block; background-image: ' +
     picture +
     '; background-size: cover; "></div>' +
     '<p class="cargo-inimigo"></p>' +

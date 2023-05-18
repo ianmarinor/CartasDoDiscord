@@ -35,6 +35,8 @@ import {
 import { start } from "./modules/seedFabricator.js";
 // import { wavePool } from "./waves.js";
 
+
+
 export const are = document.getElementById("are");
 const secret = document.getElementById("test");
 const placarInimigoDano = document.getElementById("placarInimigoDano");
@@ -1136,8 +1138,22 @@ let camarada = {
         x.heal(this.healValue);
       }
     });
-    audioPlayer(this._sourceUlt, false, this._CHN, 0.2);
+
     borderBlink();
+
+  let numOfCamaradaPlaying = 0
+
+let foo = areObj.forEach((x) => {
+  if(x.cartaId == 'camarada' &&  !x._CHN.paused){
+    numOfCamaradaPlaying++;
+  }
+console.log(numOfCamaradaPlaying);
+}) 
+
+if(numOfCamaradaPlaying == 0 ||numOfCamaradaPlaying == 6 ){
+  audioPlayer(this._sourceUlt, true, this._CHN, 0.2);
+}
+
   },
 };
 
@@ -2158,7 +2174,7 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    // spawnRouba();
+    spawnRamattra();
 
     // invObj[0]._coolDown = Math.trunc(invObj[0]._coolDown / 2);
   }
@@ -2167,7 +2183,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyX") {
     // spawnLiberdade();
-    spawnLux();
+    spawnCamarada();
   }
 });
 

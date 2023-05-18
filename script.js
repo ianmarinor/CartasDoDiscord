@@ -15,7 +15,7 @@ import {
   spawnLiberdade,
   spawnVitor,
   arenaTick,
-  arenaCoolDown
+  arenaCoolDown,
 } from "./arena.js";
 
 import {
@@ -27,7 +27,8 @@ import {
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
-import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
+import { openDeck } from "./deckSelection.js";
+// import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
 import {
   boss,
   spawnBoss,
@@ -552,7 +553,6 @@ class fabricaDeCarta {
     this.tick();
 
     if (this._parentP == mao) {
-      
       if (this._thisCardP == chosenCard) {
         this._thisCardP.style.bottom = "66px";
         this._chosenCardMao = true;
@@ -639,7 +639,7 @@ export const semCarta =
   '<p class="novoAtaque"></p>' +
   '<button class="action">PRESS</button>' +
   "</div>";
-
+const bodyP = document.getElementsByTagName("body")[0];
 let button = document.getElementById("btn");
 let inv = document.getElementById("inv");
 let arenaP = document.querySelector(".arena");
@@ -1132,8 +1132,8 @@ function moverToCartaMao() {
 }
 export let chosenCard = 0;
 
-export function setChosenCard(x)  {
-  chosenCard = x
+export function setChosenCard(x) {
+  chosenCard = x;
 }
 
 export function selectHandCard() {
@@ -1808,7 +1808,7 @@ export function elimCardMao(x) {
     mao.replaceChild(mao5, x);
     slot = 5;
   }
-// console.trace();
+  // console.trace();
   maoObj[slot] = emptyObj;
 
   return slot;
@@ -1878,8 +1878,8 @@ export let invObj = [
 
 export let chosenCardObj = [emptyObj];
 
-export function setChosenCardObj (x) {
-  chosenCardObj = x
+export function setChosenCardObj(x) {
+  chosenCardObj = x;
 }
 
 export function objToMao(x, y) {
@@ -2151,13 +2151,9 @@ export let placarArena = {
 
 function dmgBoss() {
   let energiaTotal = 0;
-  
-
- 
 
   // ENERGIA
 
-  
   for (const x of invObj) {
     if (x.dmgBoss != true) {
       continue;
@@ -2324,7 +2320,7 @@ export function tudo() {
     colocarInfoNoWrap();
     critico();
     copyCard = cartaParaMover.cloneNode(true);
-    ativarBtn();
+    // ativarBtn();
 
     numCartas.remove(1);
     spawnBoss();
@@ -2427,7 +2423,7 @@ function tick() {
     deckCheio();
     somaPontos();
     aplicarEfeitos();
-    ativarBtn();
+    // ativarBtn();
     criarBtn();
     placarArena.printP();
     updatePlacarInimigo(false);
@@ -2467,11 +2463,10 @@ function tick() {
     }
 
     for (let i = 0; i < 3; i++) {
-      let cartaO = slotEspObj[i];
-
-      if (cartaO) {
-        cartaO.print();
-      }
+      // let cartaO = slotEspObj[i];
+      // if (cartaO) {
+      //   cartaO.print();
+      // }
     }
 
     novaCarta.place();
@@ -2493,7 +2488,7 @@ function globalCoolDown() {
     if (gamePaused) {
     } else {
       especialCoolDown();
-      arenaCoolDown()
+      arenaCoolDown();
 
       // console.log(i++);
     }
@@ -2938,6 +2933,7 @@ export function startGame2() {
 
     rodadas = 0;
   }
+  setTimeout(openDeck, 12);
 }
 
 document.addEventListener("contextmenu", function () {
@@ -3038,18 +3034,61 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+// CRIADOR DE POPUPS
+
+let popUpObj = {
+  isAnyOn: false,
+};
+
+let popUpP = document.createElement("div");
+
+export function criarPopUp(_appenThis, _display , _popUpId ) {
+  if (popUpObj.isAnyOn) return;
+
+  if (_popUpId) {
+    popUpP.id = _popUpId;
+  } else {
+    popUpP.id = "popUp";
+    popUpP.className = "popUp";
+  }
+
+  bodyP.appendChild(popUpP);
+  mainOpaque(true);
+
+  _appenThis && popUpP.appendChild(_appenThis);
+  _appenThis.style.display = _display
+  popUpObj.isAnyOn = true;
+}
+
+export function fecharPopUp(_popUpId) {
+  if (!popUpObj.isAnyOn) return;
+
+  if (_popUpId) {
+    popUpP.id = _popUpId;
+  } else {
+    popUpP.id = "popUp";
+  }
+  popUpP.remove();
+  mainOpaque(false);
+
+  popUpObj.isAnyOn = false;
+}
+
 // COMMAND PROMP
 
 let promptP = document.getElementById("prompt");
+
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyU") {
-    COM(promptP.value);
+    // COM(promptP.value);
+    fecharPopUp();
+    console.log(99999999999999999999);
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyV") {
-    console.log(rodadas);
+    criarPopUp();
   }
 });
 

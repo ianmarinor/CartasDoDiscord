@@ -1,13 +1,52 @@
 @media screen and (max-width: 1920px) {
-  /* body {
-    display: none;
-    opacity: 0;
+
+
+  :root {
+    --monark: #411a12;
+    --semCargo: #bababa;
+    --people: #d38a8a;
+    --gentleman: #e3ba48;
+    --nobre: #6060e1;
+    --lord: #ee17ad;
+    --lideDaOposicao: #ff4400;
+    --ministro: #2bd6d6;
+    --speaker: #19ee11;
+    --primeMinister: #050505;
+    --premioMarino: #fcd703;
+  
+    --tamanhoCartaWidth: 150px;
+    --tamanhoCartaHeight: 227px;
+  
+    --tamanhoCartaInimigoWidth: 150px;
+    --tamanhoCartaInimigoHeight: 227px;
+  
+  
+    /* --tamanhoCartaInimigoWidth: 160px;
+    --tamanhoCartaInimigoHeight: 250px; */
+  
+    --heigthCartaBoss: 170px;
+    --widthCartaBoss: 120px;
+    /* CELULAR */
+  
+    --cartaWidthCelular: 110px;
+    --cartaHeigthCelular: 185px;
+    --cargoCelularFontSize: 9px;
+  }
+
+
+  body {
+    width: 1600px;
+    height: 900px;
   }
 
   main {
-    opacity: 1;
     width: 1600px;
-    height: 1200px;
+    /* height: 890px; */
+    overflow: scroll;
+
+    overflow-x: hidden;
+
+    display: inline-grid;
 
     grid-template-areas:
       "d boss ca"
@@ -18,5 +57,175 @@
 
     grid-template-columns: 23% 70% 7%;
     grid-template-rows: 0.1fr 1fr 1fr 0.1fr 1fr;
-  } */
+    grid-template-rows: 5% 30% 30% 5% 30%;
+  }
+
+.nome,
+.nome-inimigo,
+.nomeEsp {
+  margin-top: 0.2em;
+  font-size: 110%;
+}
+
+.cidade {
+  /* background-color: #6637be; */
+  text-align: end;
+  font-size: 80%;
+}
+
+.retrato,
+.retrato-inimigo,
+.retratoEsp {
+  display: none;
+  width: 75%;
+  height: 45%;
+  background-color: #4b4747;
+  border-radius: 5px;
+
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  border: #020101 2px solid;
+  position: relative;
+  /* border-radius: 27px 28px 200px 200px; */
+
+  /* border-radius: 173px 173px 173px 173px; */
+  /* border-radius: 200px 200px 200px 200px; */
+  /* border-radius: 0px 0px 200px 200px; */
+}
+
+.retrato{
+  border: #0f0f0f 3px solid;
+  border-radius: 0px 0px 200px 200px;
+}
+
+.cargo {
+  /* background-color: #37be49; */
+  font-size: 0.7em;
+  /* transform: rotate(-10deg); */
+  /* margin: 10px; */
+}
+
+
+  #inv,
+  #are {
+    /* grid-area: inv; */
+    height: 240px;
+    width: 960px;
+    background-color: #242427;
+
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 10px;
+    overflow: hidden;
+    border: rgba(0, 0, 0, 0.599) solid 3px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: -6px 13px 25px -3px rgba(0,0,0,0.59);
+    box-shadow: 2px 0px 41px 9px rgba(0, 4, 13, 0.87) inset;
+
+  }
+
+  #mao {
+    grid-area: mao;
+    /* border: 3px solid rgba(30, 178, 183, 0.38); */
+    /* background-color: #2f444413; */
+    align-self: center;
+
+    height: 240px;
+    width: 960px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+
+    justify-items: center;
+    align-items: center;
+
+    /* visibility: hidden; */
+  }
+
+  #wrapAndInv {
+    margin-right: 47px;
+    position: relative;
+    display: flex;
+    grid-area: inv;
+
+    flex-direction: row-reverse;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+  }
+
+  #healthPlayerWrap,
+  #ammoWrap {
+    width: 130px;
+    display: flex;
+    grid-area: dicas;
+    justify-content: end;
+
+    justify-self: start;
+    align-self: baseline;
+    /* background-color: #010101; */
+    /* margin-left: 150px; */
+    /* margin-top: 10px; */
+  }
+
+  #healthPlayerWrap {
+    margin-left: 45px;
+  }
+
+  #healthPlayerWrap > *,
+  #ammoWrap > * {
+    width: 60px;
+    font-size: 1.5em;
+    color: wheat;
+    text-align: start;
+  }
+
+  #ammoWrap {
+    justify-self: start;
+    margin-left: 140px;
+    text-align: left;
+  }
+  #ammo {
+    text-align: right;
+  }
+
+  #money {
+    text-align: center;
+    font-size: 1em;
+    color: wheat;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  }
+
+  #moneyWrap {
+    display: flex;
+    font-size: 30px;
+    margin-right: 30px;
+    
+  }
+
+  #moneyEmoji {
+    font-size: 1em;
+  }
+
+  #placarArena {
+    width: 80px;
+    display: flex;
+
+    margin-top: -160px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-direction: column;
+
+    justify-self: start;
+  }
 }

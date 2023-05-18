@@ -11,15 +11,12 @@
   --primeMinister: #050505;
   --premioMarino: #fcd703;
 
-  --tamanhoCartaWidth: 190px;
-  --tamanhoCartaHeight: 295px;
+  --tamanhoCartaWidth: 145px;
+  --tamanhoCartaHeight: 227px;
 
-  --tamanhoCartaInimigoWidth: 128px;
-  --tamanhoCartaInimigoHeight: 190px;
+  --tamanhoCartaInimigoWidth: 145px;
+  --tamanhoCartaInimigoHeight: 225px;
 
-
-  --tamanhoCartaInimigoWidth: 190px;
-  --tamanhoCartaInimigoHeight: 295px;
 
   /* --tamanhoCartaInimigoWidth: 160px;
   --tamanhoCartaInimigoHeight: 250px; */
@@ -215,6 +212,7 @@ body {
 section {
   display: none;
 }
+
 main {
   height: 100%;
   /* width: 100vh; */
@@ -379,6 +377,7 @@ li {
   display: flex;
   grid-area: dicas;
   justify-content: end;
+  align-items: baseline;
 
   justify-self: start;
   align-self: start;
@@ -394,15 +393,24 @@ li {
 #healthPlayerWrap > *,
 #ammoWrap > * {
   width: 60px;
-  font-size: 2.5em;
+  font-size: 1.5em;
   color: wheat;
   text-align: end;
 }
 
 #ammoWrap {
-  align-self: start;
+  align-self: baseline;
   justify-self: start;
-  margin-left: 150px;
+  /* margin-left: 800px; */
+  text-align: left;
+}
+
+#ammoEmoji{
+  text-align: left;
+}
+
+#healthPlayerEmoji{
+  text-align: left;
 }
 
 #healthPlayerBuff {
@@ -487,16 +495,20 @@ li {
 }
 
 #placarArena {
-  /* background-color: green; */
 
-  width: 1333px;
 
+
+  width: 50px;
   display: flex;
 
   margin-top: 10px;
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  flex-direction: column;
+
 }
 
 #placarArena > * {
@@ -536,12 +548,12 @@ li {
   position: relative;
   /* border: 2px solid rgb(0, 0, 0, 0.4); */
   font-weight: 900;
-  color: rgb(0, 0, 0, 0.4);
+  color: rgb(0, 0, 0);
 
   height: 100px;
   width: 100px;
   border-radius: 100%;
-  background-color: #0909093a;
+  background-color: #090909;
   opacity: 0.5;
 }
 
@@ -644,23 +656,8 @@ li {
   left: 46%;
 }
 
-#slotEsp {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 320px;
-  width: 650px;
-  grid-area: especial;
-  border: 7px double rgba(170, 183, 30, 0.129);
-  background-color: #1f350853;
-  align-self: center;
-  display: none;
-}
-#slotEsp > div {
-  height: var(--tamanhoCartaHeight);
-  width: var(--tamanhoCartaWidth);
-  /* border-radius: 15px; */
-}
+
+
 
 #carta-premiomarino {
   background: linear-gradient(rgba(238, 238, 59, 0.9)  , rgb(0, 0,0, 0.2), rgba(238, 238, 59, 0.9) ), 
@@ -743,6 +740,7 @@ li {
   color: #090909;
 
   border: 2px solid #020101;
+  box-shadow: -1px -2px 54px -2px rgb(96, 5, 49) inset;
 }
 
 #carta-nobre {
@@ -756,6 +754,7 @@ li {
   border-radius: 15px;
   position: relative;
   border: 2px solid #020101;
+  box-shadow: -1px -2px 54px -2px #2c2c66 inset;
 }
 
 #carta-gentleman {
@@ -768,7 +767,8 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 1px solid #020101;
+  border: 2px solid #020101;
+  box-shadow: -1px -2px 54px -2px rgb(68, 58, 2) inset;
 }
 
 #carta-people {
@@ -784,6 +784,7 @@ li {
   position: relative;
   border: 1px solid #020101;
   font-size: 1em;
+  box-shadow: -1px -2px 54px -2px rgb(116, 11, 11) inset;
 }
 #carta-semcargo {
   background-color: var(--semCargo);
@@ -795,8 +796,10 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 1px solid #020101;
+  border: 2px solid #020101;
   color: black;
+  box-shadow: -1px -2px 54px -2px rgba(0,0,0,1) inset;
+
 }
 
 #carta-monark {
@@ -1239,13 +1242,13 @@ li {
 }
 .retratoEsp {
   display: inherit;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 
 .cargo {
   /* background-color: #37be49; */
   font-size: 1em;
-  transform: rotate(-10deg);
+  /* transform: rotate(-10deg); */
   margin: 10px;
 }
 .cargoEsp {
@@ -1434,10 +1437,10 @@ div[id^="empty-"] {
 #empty4,
 #empty5,
 #empty6 {
-  height: 100px;
-  width: 100px;
+  height: 64px;
+  width: 64px;
   border-radius: 50px;
-  background-color: #0909092b;
+  background-color: #090909;
   display: block;
   opacity: 0.5;
 }
@@ -1455,7 +1458,7 @@ div[id^="empty-"] {
 #mao {
   grid-area: mao;
   /* border: 3px solid rgba(30, 178, 183, 0.38); */
-  /* background-color: #2f444413; */
+  /* background-color: #000000; */
   align-self: center;
 
   height: 305px;
