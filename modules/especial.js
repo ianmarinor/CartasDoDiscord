@@ -1150,6 +1150,7 @@ export class Especial {
 }
 
 export let especiais = {
+  
   notSpecial: {
     cartaId: "notSpecial",
     nome: "",
@@ -3225,7 +3226,7 @@ export let especiais = {
       visibility: "visible",
     },
   },
-};
+}
 
  function objBinder(obj) {
   let newo = new Especial(obj);

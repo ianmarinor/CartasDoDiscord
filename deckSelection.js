@@ -19,6 +19,8 @@ export function openDeck() {
     // selection0.style.backgroundImage = 'url("pics/spyRetrato.webp")'
     // selection0.id = 'selection-0'
     
+
+
     let selectionArr = []
 
     for(let i = 1; i < 17; i ++){
@@ -29,10 +31,11 @@ export function openDeck() {
         selectionArr.push(op)
         displayGrid.appendChild(op)
 
-        op.style.backgroundImage = especiais[i - 1].retrato
+        especiais
+        console.log('especiais: ', especiais);
+        // op.style.backgroundImage = especiais[i - 1].retrato
 
         if(i < 5){
-
             op.style.gridArea = i / i
         } else if ( i < 9){
             op.style.gridArea = i / i + 1
