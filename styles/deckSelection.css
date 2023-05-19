@@ -82,5 +82,132 @@
     justify-self: center;
     background-size: cover;
 
-    border: 2px solid yellow;
+    border: 2px solid rgb(183, 0, 255);
+}
+
+.selection-pic:hover{
+
+  height: 125px;
+  width: 125px;
+
+}
+
+#selected-cards{
+
+  height: 100%;
+  width: 80%;
+  background-color: rgb(166, 166, 166);
+
+  display: grid;
+  grid-template-areas:
+  "top top1"
+  "sangue-azul cavaleiro"
+  "campones campones1";
+
+
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+
+}
+
+.rainha-selected{
+  width: 180px;
+  height: 255px;
+
+  grid-area: top;
+  align-self: center;
+  justify-self: center;
+
+  /* background-color: rgb(147, 13, 151); */
+  grid-column: 1 / span 2;
+}
+
+
+.sangue-azul-selected-1,.sangue-azul-selected-2{
+  width: 180px;
+  height: 255px;
+
+  grid-area: sangue-azul;
+  align-self: center;
+  justify-self: end;
+
+  /* background-color: rgb(17, 5, 98); */
+
+  display: flex;
+  justify-content: space-between;
+  margin-right: 85px;
+  /* display: none; */
+  
+  
+  
+}
+
+.sangue-azul-selected-2{
+  
+  /* background-color: rgb(30, 10, 158); */
+  justify-self: start;
+  margin-left: 25px;
+}
+
+
+.cavaleiro-selected-1,.cavaleiro-selected-2{
+  width: 180px;
+  height: 255px;
+
+  grid-area: cavaleiro;
+  align-self: center;
+  justify-self: start;
+
+  /* background-color: rgb(13, 161, 7); */
+
+  display: flex;
+  justify-content: space-between;
+  margin-left: 85px;
+/* display: none; */
+
+}
+
+.cavaleiro-selected-2{
+  /* background-color: rgb(169, 156, 19); */
+  justify-self: end;
+  margin-right: 25px;
+}
+
+.campones-selected-1,.campones-selected-2{
+  width: 180px;
+  height: 255px;
+
+  grid-area: campones;
+  align-self: center;
+  justify-self: end;
+
+  /* background-color: rgb(221, 240, 97); */
+
+  display: flex;
+  justify-content: space-between;
+  margin-right: 2px;
+/* display: none; */
+
+}
+
+.campones-selected-2{
+  /* background-color: rgb(108, 105, 16); */
+  justify-self: start;
+  grid-area: campones1;
+  margin-left: 2px;
+}
+
+#button-start-after-selection{
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: rgb(108, 31, 16);
+
+  border: 0px solid #1C6EA4;
+  border-radius: 40px 40px 40px 40px;
+
+  left: 65.8%;
+  top: 45% ;
+
+  cursor: pointer;
 }

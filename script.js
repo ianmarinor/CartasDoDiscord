@@ -27,7 +27,7 @@ import {
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
-import { openDeck } from "./deckSelection.js";
+import { openDeck, selectedCardsdeckObj, tickDeckSelection } from "./deckSelection.js";
 // import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
 import {
   boss,
@@ -39,7 +39,7 @@ import {
   map,
 } from "./boss.js";
 
-import { marketObj, closeMarket, openMarket } from "./market.js";
+import { marketObj, closeMarket, openMarket, deckObj } from "./market.js";
 
 let versaoHTML = document.getElementById("versao");
 let versao = "Alfa 1.3.5";
@@ -664,6 +664,7 @@ let hpPlayerEmojiP = document.getElementById("healthPlayerEmoji");
 let ammoP = document.getElementById("ammo");
 let hpPlayerWrapP = document.getElementById("healthPlayerWrap");
 let endP = document.getElementById("end");
+const selectedCards = document.getElementById("selected-cards");
 
 let mao0 = mao.children[0];
 let mao1 = mao.children[1];
@@ -1758,6 +1759,59 @@ export function poderesEspeciais(x) {
   spy();
 }
 
+export function elimCardSelected(x) {
+  let slot;
+  // let empty1 = (empty1.className = "sangue-azul-selected-1");
+  // let emptySangue2 = (empty1.className = "sangue-azul-selected-2");
+  // let cavaleiro1 = (empty1.className = "cavaleiro-selected-1");
+  // let cavaleiro2 = (empty1.className = "cavaleiro-selected-2");
+  // let campones1 = (empty1.className = "sangue-azul-selected-1");
+  // let campones2 = (empty1.className = "sangue-azul-selected-2");
+  
+  let empty1 = document.createElement('div')
+
+  if (x == selectedCards.children[0]) {
+    empty1.className = "rainha-selected";
+    empty1.id = "";
+    selectedCards.replaceChild(empty1, x);
+    slot = 0;
+  } else if (x == selectedCards.children[1]) {
+    empty1.className = "sangue-azul-selected-1"
+    empty1.id = "";
+    selectedCards.replaceChild(empty1, x);
+    slot = 1;
+  } else if (x == selectedCards.children[2]) {
+    empty1.className = "sangue-azul-selected-2"
+    empty1.id = "";
+    selectedCards.replaceChild(empty1, x);
+    slot = 2;
+  } else if (x == selectedCards.children[3]) {
+    empty1.className = "cavaleiro-selected-1"
+    empty1.id = "";
+    selectedCards.replaceChild(empty1, x);
+    slot = 3;
+  } else if (x == selectedCards.children[4]) {
+    empty1.className = "cavaleiro-selected-2"
+    empty1.id = "";
+    selectedCards.replaceChild(empty1, x);
+    slot = 4;
+  } else if (x == selectedCards.children[5]) {
+    empty1.className = "campones-selected-1"
+    empty1.id = "";
+    selectedCards.replaceChild(empty1, x);
+    slot = 5;
+  } else if (x == selectedCards.children[6]) {
+    empty1.className = "campones-selected-2"
+    empty1.id = "";
+    selectedCards.replaceChild(empty1, x);
+    slot = 6;
+  }
+  // selectedCardsdeckObj[slot]._selected = false
+  selectedCardsdeckObj[slot] = emptyObj;
+
+  return slot;
+}
+
 export function elimCardInv(x) {
   let slot;
 
@@ -1888,8 +1942,20 @@ export function objToMao(x, y) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyO") {
-    console.group("ARE");
-    console.log(areObj);
+    console.group("SELECTION");
+    console.log(selectedCardsdeckObj);
+    console.groupEnd();
+
+    console.group("ESPECIAL");
+    console.log(deckObj);
+    console.groupEnd();
+
+    console.group("NOVA CARTA");
+    console.log(novaCarta);
+    console.groupEnd();
+
+    console.group("MAO");
+    console.log(maoObj);
     console.groupEnd();
 
     console.group("INV");
@@ -1897,20 +1963,8 @@ document.addEventListener("keydown", (event) => {
 
     console.groupEnd();
 
-    console.group("MAO");
-    console.log(maoObj);
-    console.groupEnd();
-
-    console.group("NOVA CARTA");
-    console.log(novaCarta);
-    console.groupEnd();
-
-    console.group("ESPECIAL");
-    console.log(slotEspObj);
-    console.groupEnd();
-
-    console.group("BOSS");
-    console.log(boss ? boss : "BOSS NOT SPAWNED");
+    console.group("ARE");
+    console.log(areObj);
     console.groupEnd();
 
     console.group("MONEY");
@@ -2417,6 +2471,7 @@ function tick() {
   if (!TICK) return;
 
   setInterval(function () {
+    tickDeckSelection()
     allMonark();
     specialInDeck();
     deckVazio();
@@ -3042,7 +3097,7 @@ let popUpObj = {
 
 let popUpP = document.createElement("div");
 
-export function criarPopUp(_appenThis, _display , _popUpId ) {
+export function criarPopUp(_appenThis, _display, _popUpId) {
   if (popUpObj.isAnyOn) return;
 
   if (_popUpId) {
@@ -3056,18 +3111,19 @@ export function criarPopUp(_appenThis, _display , _popUpId ) {
   mainOpaque(true);
 
   _appenThis && popUpP.appendChild(_appenThis);
-  _appenThis.style.display = _display
+  _appenThis.style.display = _display;
   popUpObj.isAnyOn = true;
 }
 
 export function fecharPopUp(_popUpId) {
-  if (!popUpObj.isAnyOn) return;
+  if (!popUpObj.isAnyOn || (popUpP.id == 'popUpStrong' && !_popUpId)) return;
 
   if (_popUpId) {
     popUpP.id = _popUpId;
   } else {
     popUpP.id = "popUp";
   }
+console.log(popUpP);
   popUpP.remove();
   mainOpaque(false);
 
@@ -3082,7 +3138,7 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyU") {
     // COM(promptP.value);
     fecharPopUp();
-    console.log(99999999999999999999);
+    
   }
 });
 

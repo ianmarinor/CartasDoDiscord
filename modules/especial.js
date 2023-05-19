@@ -32,17 +32,19 @@ import {
   chosenCard,
   setChosenCard,
   setChosenCardObj,
+  elimCardSelected
 } from "../script.js";
 import { boss, wave } from "../boss.js";
 import { areEmpty, areObj, smokeOnInv } from "../arena.js";
-import { deckObj } from "../market.js";
+import { deckObj, spawn } from "../market.js";
+import { selectedCardsdeckObj } from "../deckSelection.js";
 
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
 let deck = document.getElementById("slotEsp");
 const mainP = document.getElementById("main");
 const bodyP = document.getElementsByTagName("body")[0];
-
+let selectedCards = document.getElementById("selected-cards");
 function progressBar(_value, _max, _bgColor, _progressColor, _isBarrier) {
   let value = _value;
   let max = _max;
@@ -162,6 +164,8 @@ export class Especial {
     this.novoAtaqueStyle = card.novoAtaqueStyle;
 
     //defaults
+    // if card selected at card selection
+    this._selected = undefined
     this._level = false;
     this._dead = false;
     this._place = false;
@@ -223,22 +227,64 @@ export class Especial {
     this._CHN3 = document.createElement("audio");
   }
 
-  onMountDefault(){
-    this.print()
+  selectMe() {
+
+    let checkForDouble = () => selectedCardsdeckObj.some((x)=> x.cartaId == this.cartaId)
+
+    if (this.raridade == "rainha" && !checkForDouble()) {
+      spawn.cartaEspecial(this.cartaId, selectedCards, 0);
+    } else if (this.raridade == "sangueAzul" && !checkForDouble() ) {
+      if (selectedCardsdeckObj[1].empty) {
+        spawn.cartaEspecial(this.cartaId, selectedCards, 1);
+      } else if (selectedCardsdeckObj[2].empty) {
+        spawn.cartaEspecial(this.cartaId, selectedCards, 2);
+      }
+    } else if (this.raridade == "cavaleiro" && !checkForDouble()) {
+      if (selectedCardsdeckObj[3].empty) {
+        spawn.cartaEspecial(this.cartaId, selectedCards, 3);
+      } else if (selectedCardsdeckObj[4].empty) {
+        spawn.cartaEspecial(this.cartaId, selectedCards, 4);
+      }
+    } else if (this.raridade == "campones" && !checkForDouble()) {
+      if (selectedCardsdeckObj[5].empty) {
+        spawn.cartaEspecial(this.cartaId, selectedCards, 5);
+      } else if (selectedCardsdeckObj[6].empty) {
+        spawn.cartaEspecial(this.cartaId, selectedCards, 6);
+      }
+    }
+  }
+  onMountDefault() {
+    this.print();
+
+    if (this._parentP == selectedCards) {
+      if (this.raridade == "rainha") {
+        this._thisCardP.className = "rainha-selected";
+      } else if (this.raridade == "sangueAzul") {
+        if (this._place == 1) {
+          this._thisCardP.className = "sangue-azul-selected-1";
+        } else {
+          this._thisCardP.className = "sangue-azul-selected-2";
+        }
+      } else if (this.raridade == "cavaleiro") {
+        if (this._place == 3) {
+          this._thisCardP.className = "cavaleiro-selected-1";
+        } else {
+          this._thisCardP.className = "cavaleiro-selected-2";
+        }
+      } else if (this.raridade == "campones") {
+        if (this._place == 5) {
+          this._thisCardP.className = "campones-selected-1";
+        } else {
+          this._thisCardP.className = "campones-selected-2";
+        }
+      }
+    }
+
     
-
-
-
-
-
-    
-    console.log('montei');
-    this.onMount()
+    this.onMount();
   }
 
-  onMount(){
-
-  }
+  onMount() {}
 
   energiaPoderDefault() {
     if (this._energiaDorment === true) {
@@ -255,8 +301,7 @@ export class Especial {
   onCoolDownFinish() {}
 
   tickDefault() {
-    
-    this._manaP = this._retratoP.children[0]
+    this._manaP = this._retratoP.children[0];
 
     if (this._parentP == inv && !this._cfgDefaultOnInvAdded) {
       this.cfgDefaultOnInv();
@@ -283,28 +328,29 @@ export class Especial {
   }
 
   placeNewElements() {
-
-
-    if(this._retratoP.children[0] == undefined){
-
-
-
+    if (this._retratoP.children[0] == undefined) {
       let manaDiv = document.createElement("div");
       manaDiv.className = "mana-retrato";
       manaDiv.innerHTML = "💧";
       this._retratoP.appendChild(manaDiv);
-  
+
       this._manaP = this._retratoP.children[0];
-      console.log('placed');
+      
     } else {
-      console.log('already there');
+      
       this._manaP = this._retratoP.children[0];
     }
-
-
   }
 
   place() {
+    for (let i = 0; i < selectedCardsdeckObj.length; i++) {
+      if (this == selectedCardsdeckObj[i]) {
+        this._parent = selectedCardsdeckObj;
+        this._parentP = selectedCards;
+        break;
+      }
+    }
+
     for (let i = 0; i < deckObj.length; i++) {
       if (this == deckObj[i]) {
         this._parent = deckObj;
@@ -707,7 +753,7 @@ export class Especial {
   dmgReceived() {}
 
   kill(absolute) {
-    console.trace();
+    
     if (!this._parentP) return;
 
     if (this.cartaId == "creeper" && !this.exploding && !absolute) {
@@ -720,15 +766,17 @@ export class Especial {
 
     if (this._parentP == inv) {
       elimCardInv(inv.children[this._place]);
-    } else {
+    } else if (this._parentP == mao) {
       elimCardMao(mao.children[this._place]);
+    } else if (this._parentP == selectedCards){
+      elimCardSelected(selectedCards.children[this._place])
+      this._selected = false
     }
-    
-    console.log('--------------------------');
-    console.log('this._place: ', this._place);
-    console.log('this._parentP: ', this._parentP);
-    console.log('--------------------------');
 
+    
+    
+    
+    
 
     this._dead = true;
   }
@@ -872,7 +920,7 @@ export class Especial {
 
     if (!this._cfgDefaultAdded) {
       this.cfgDefault();
-      console.log(this._place,'DDEDDDD');
+      
       this._cfgDefaultAdded = true;
     }
 
@@ -948,11 +996,11 @@ export class Especial {
     if (this._isAttacking) {
       this._thisCardP.classList.add("critico");
 
-      this._manaP.style.opacity = '1'
+      this._manaP.style.opacity = "1";
     } else if (this._isAttacking === false) {
       this._thisCardP.classList.remove("critico");
       clearInterval(this._borderBlinkingInterval);
-      this._manaP.style.opacity = '0.5'
+      this._manaP.style.opacity = "0.5";
     }
 
     //estilo selo
@@ -984,10 +1032,7 @@ export class Especial {
     } else {
       this._manaP.textContent = "";
     }
-
   }
-
-
 
   ammoCheck() {
     if (ammo.total <= 0) {
@@ -995,10 +1040,6 @@ export class Especial {
     } else {
       return true;
     }
-
-   
-
-
   }
 
   tickMaoDefault() {
@@ -1082,7 +1123,6 @@ export class Especial {
   cfgDefaultOnInv() {
     this._retratoP.addEventListener("dblclick", () => {
       if (this._poderLoop && !this._isAttacking) {
-        
         this._isAttacking = true;
       } else if (this._poderLoop && this._isAttacking) {
         this._isAttacking = false;
@@ -1128,9 +1168,6 @@ export class Especial {
     }
 
     //criar slot pra mana
-
-    
-
   }
 
   integranteRequiredCard() {
@@ -1149,26 +1186,11 @@ export class Especial {
   }
 }
 
-export let especiais = {
-  
-  notSpecial: {
-    cartaId: "notSpecial",
-    nome: "",
-    raridade: "false",
-    pontoEspecial: 0,
-    energia: 0,
-    poder: false,
-    efeito: "",
-    familia: "",
-    descricao: "",
-    emoji: "",
-    retrato: "",
-  },
-
-  tenica: {
+export let especiais = [
+  {
     cartaId: "especial-tenica",
     nome: "TÉNICA",
-    raridade: raridades.rainha,
+    raridade: "rainha",
     energia: undefined,
     emoji: "👑",
     allyEmoji: "👑",
@@ -1281,10 +1303,10 @@ export let especiais = {
     },
   },
 
-  speaker: {
+  {
     cartaId: "carta-speaker",
     nome: "SPEAKER",
-    raridade: raridades.cavaleiro,
+    raridade: "cavaleiro",
     energia: 1,
     emoji: " 😡",
     retrato: "url('pics/SPEAKER.webp')",
@@ -1466,10 +1488,10 @@ export let especiais = {
     },
   },
 
-  maisCartas: {
+  {
     cartaId: "especial-click",
     nome: "MAIS CARTAS",
-    raridade: raridades.campones,
+    raridade: "campones",
 
     energia: 15,
 
@@ -1557,10 +1579,10 @@ export let especiais = {
     },
   },
 
-  maisAmmo: {
+  {
     cartaId: "maisAmmo",
     nome: "MAIS MANA",
-    raridade: raridades.campones,
+    raridade: "campones",
 
     energia: 15,
 
@@ -1642,10 +1664,10 @@ export let especiais = {
     },
   },
 
-  abelha: {
+  {
     cartaId: "abelha",
     nome: "ABELHA",
-    raridade: raridades.sangueAzul,
+    raridade: "cavaleiro",
     _invHiddenButton: false,
 
     energia: 0,
@@ -1782,10 +1804,10 @@ export let especiais = {
     // ataqueE: abelhaEnergia() + "🐝"
   },
 
-  premioMonark: {
+  {
     cartaId: "premiomonark",
     nome: "PREMIO MONARK",
-    raridade: raridades.sangueAzul,
+    raridade: "rainha",
     energia: 0,
     emoji: "",
 
@@ -1879,10 +1901,10 @@ export let especiais = {
     },
   },
 
-  spy: {
+  {
     cartaId: "spy",
     nome: "SPY",
-    raridade: raridades.cavaleiro,
+    raridade: "sangueAzul",
     energia: 1,
     requireAmmo: true,
     emoji: "💥",
@@ -2098,10 +2120,10 @@ export let especiais = {
     },
   },
 
-  estoicoTuru: {
+  {
     cartaId: "estoico",
     nome: " TURU ESTÓICO ",
-    raridade: raridades.campones,
+    raridade: "cavaleiro",
     pontoEspecial: 0,
     energia: 0,
     tank: true,
@@ -2190,10 +2212,10 @@ export let especiais = {
     },
   },
 
-  lucio: {
+  {
     cartaId: "lucio",
     nome: "LÚCIO",
-    raridade: raridades.sangueAzul,
+    raridade: "sangueAzul",
 
     energia: 1,
     requireAmmo: true,
@@ -2376,10 +2398,10 @@ export let especiais = {
     },
   },
 
-  jhin: {
+  {
     cartaId: "jhin",
     nome: "JHIN",
-    raridade: raridades.cavaleiro,
+    raridade: "cavaleiro",
 
     energia: 4,
 
@@ -2551,10 +2573,10 @@ export let especiais = {
     },
   },
 
-  dva: {
+  {
     cartaId: "dva",
     nome: "D.Va",
-    raridade: raridades.sangueAzul,
+    raridade: "sangueAzul",
     energia: 10,
     emoji: "",
     cargo: "0%",
@@ -2735,10 +2757,10 @@ export let especiais = {
     },
   },
 
-  creeper: {
+  {
     cartaId: "creeper",
     nome: "CREEPER",
-    raridade: raridades.cavaleiro,
+    raridade: "cavaleiro",
     energia: 0,
     emoji: "",
     retrato: "url('pics/retratoCreeper.png')",
@@ -2826,10 +2848,10 @@ export let especiais = {
     // ataqueE: abelhaEnergia() + "🐝"
   },
 
-  cabeca: {
+  {
     cartaId: "cabeca",
     nome: "CURTAS HEAD",
-    raridade: raridades.campones,
+    raridade: "campones",
     energia: 0,
     emoji: "",
     retrato: "url('pics/cabecaRetrato.png')",
@@ -2915,11 +2937,10 @@ export let especiais = {
       visibility: "visible",
     },
   },
-
-  sapato: {
+  {
     cartaId: "sapato",
     nome: "SAPATO",
-    raridade: raridades.campones,
+    raridade: "cavaleiro",
     energia: 0,
     emoji: "",
     retrato: "url('/pics/sapatoRetrato.webp')",
@@ -2999,10 +3020,10 @@ export let especiais = {
     },
   },
 
-  totem: {
+  {
     cartaId: "sapato",
     nome: "SAPATO",
-    raridade: raridades.campones,
+    raridade: "cavaleiro",
     energia: 0,
     emoji: "",
     retrato: "url('/pics/sapatoRetrato.webp')",
@@ -3058,10 +3079,10 @@ export let especiais = {
     },
   },
 
-  sentry: {
+  {
     cartaId: "sentry",
     nome: "SENTRY <br> GUN",
-    raridade: raridades.cavaleiro,
+    raridade: "sangueAzul",
     energia: 1,
     requireAmmo: true,
     emoji: "💥",
@@ -3100,8 +3121,6 @@ export let especiais = {
     },
 
     tick() {
-      
-
       this._cargoP.innerHTML =
         progressBar(this.ammonition, this.ammonitionMax, "grey", "#cf6a32") +
         `<img width="25" height="25" src="/pics/ammo.PNG" style='display:inline; margin-right: 5px'>`;
@@ -3226,9 +3245,9 @@ export let especiais = {
       visibility: "visible",
     },
   },
-}
+];
 
- function objBinder(obj) {
+function objBinder(obj) {
   let newo = new Especial(obj);
 
   return Object.assign(newo, obj);
@@ -3239,6 +3258,7 @@ export let especial = "";
 let raridade = "";
 
 export function escolherEspecial(teste) {
+  return;
   seedString = teste;
 
   seed2 = seedString[2];
@@ -3246,8 +3266,8 @@ export function escolherEspecial(teste) {
 
   if (!raridades.semRaridade.rng()) {
     //RAINHA
-    if (raridades.rainha.rng()) {
-      raridade = raridades.rainha;
+    if ("rainha".rng()) {
+      raridade = "rainha";
 
       let num;
 
@@ -3260,11 +3280,10 @@ export function escolherEspecial(teste) {
       }
 
       //SANGUE AZUL
-    } else if (raridades.sangueAzul.rng()) {
-      raridade = raridades.sangueAzul;
+    } else if ("sangueAzul".rng()) {
+      raridade = "sangueAzul";
 
       let num;
-
       num = gerarNumero(1, 4);
 
       if (!true) {
@@ -3280,8 +3299,8 @@ export function escolherEspecial(teste) {
       }
 
       //CAVALEIRO
-    } else if (raridades.cavaleiro.rng()) {
-      raridade = raridades.cavaleiro;
+    } else if ("cavaleiro".rng()) {
+      raridade = "cavaleiro";
 
       let num;
 
@@ -3305,7 +3324,7 @@ export function escolherEspecial(teste) {
 
       //CAMPONESES
     } else {
-      raridade = raridades.campones;
+      raridade = "campones";
 
       let num;
 

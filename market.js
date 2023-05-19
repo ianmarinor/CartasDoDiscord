@@ -39,7 +39,7 @@ import {
   invObj,
   maoObj,
 } from "./script.js";
-import { gerarNumero, teste } from "./script.js";
+import { selectedCardsdeckObj } from "./deckSelection.js";
 
 const secret = document.getElementById("test");
 const inv = document.getElementById("inv");
@@ -50,6 +50,9 @@ let btnDisplay = document.getElementById("btnEspecial");
 let deck = document.getElementById("slotEsp");
 const mao = document.getElementById("mao");
 const are = document.getElementById("are");
+let selectedCards = document.getElementById("selected-cards");
+
+
 
 export let marketObj = {
   active: false,
@@ -72,7 +75,7 @@ export function openMarket() {
   popUpP.id = "market";
   bodyP.appendChild(popUpP);
   mainOpaque();
-  console.log("ABRIU MERCADO");
+  
 
   popUpP.appendChild(deck);
   // popUpP.appendChild(btnDisplay);
@@ -135,11 +138,22 @@ export function blueprintEspecial(_id, _name, _photo) {
 
 export let deckObj;
 
-function inserirEspecialDomAndObject(blueprint, object, _where, _whereObject) {
+export let sendSelectedCardsToMarket = (_selectionObj) =>{
+  deckObj = _selectionObj
+}
+
+function inserirEspecialDomAndObject(blueprint, object, _where, _whereObject,_num) {
   let position = _where;
   let positionObj = _whereObject;
+  
 
-  let num = 0;
+
+  let num 
+  
+  _num  ? num = _num : num = 0
+
+
+  
   let slot = position.children[num];
 
   secret.innerHTML = blueprint;
@@ -148,7 +162,7 @@ function inserirEspecialDomAndObject(blueprint, object, _where, _whereObject) {
     position.replaceChild(secret.children[0], slot);
     positionObj[num] = Object.assign(new Especial(object), object);
     positionObj[num].onMountDefault();
-    console.log(positionObj[num]);
+    
     return positionObj[num];
   }
 }
@@ -159,17 +173,26 @@ export let spawn = {
     return;
   },
 
-  carta(obj,_where){
+  carta(obj, _where) {
     spawnBluePrint(obj, _where);
   },
 
-  cartaEspecial(_obj,_where){
-    spawnBluePrint(especiais[_obj], _where);
-  }
+  cartaEspecial(_cartaId, _where,_slot) {
+    for (let i = 0; i < especiais.length; i++) {
+      
+      if (_cartaId == especiais[i].cartaId){
+        
+        spawnBluePrint(especiais[i], _where,_slot);
+        break;
+      }
+    }
+  },
 };
 
-export function spawnBluePrint(_quem, _where) {
+export function spawnBluePrint(_quem, _where,_slot) {
   let position = _where;
+
+
 
   let positionObj = () => {
     if (!position || position == mao) {
@@ -187,6 +210,11 @@ export function spawnBluePrint(_quem, _where) {
     if (position == deck) {
       return deckObj;
     }
+
+    if (position == selectedCards) {
+      return selectedCardsdeckObj;
+    }
+
   };
 
   if (!position) {
@@ -195,25 +223,32 @@ export function spawnBluePrint(_quem, _where) {
     position = _where;
   }
 
-  console.log("TRYING TO SPAWN TENICA");
+  
   let cartaObj = _quem;
   const cartaBluePrint = blueprintEspecial(
     cartaObj.cartaId,
     cartaObj.nome,
     cartaObj.retrato
   );
-  console.log("cartaBluePrint: ", cartaBluePrint);
-  inserirEspecialDomAndObject(cartaBluePrint, cartaObj, position, positionObj());
+  
+  inserirEspecialDomAndObject(
+    cartaBluePrint,
+    cartaObj,
+    position,
+    positionObj(),
+    _slot
+  );
 }
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyT") {
-    spawn.cartaEspecial('tenica');   
+    spawn.cartaEspecial("dva",selectedCards);
+    
   }
 });
 
 function Main() {
-  deckObj = {
+  deckObj = [
     emptyObj,
     emptyObj,
     emptyObj,
@@ -221,6 +256,6 @@ function Main() {
     emptyObj,
     emptyObj,
     emptyObj,
-  };
+  ]
 }
 window.addEventListener("load", Main);
