@@ -85,7 +85,7 @@
     border: 2px solid rgb(183, 0, 255);
 }
 
-.selection-pic:hover{
+.btn-selection-active:hover{
 
   height: 125px;
   width: 125px;
@@ -201,13 +201,26 @@
   position: absolute;
   width: 100px;
   height: 100px;
-  background-color: rgb(108, 31, 16);
-
-  border: 0px solid #1C6EA4;
-  border-radius: 40px 40px 40px 40px;
+  
 
   left: 65.8%;
   top: 45% ;
 
+  background-color: rgb(108, 31, 16);
+
+  border: 0px solid #1C6EA4;
+  border-radius: 40px 40px 40px 40px;
+  
+}
+
+.btn-selection-active{
+  
+
   cursor: pointer;
+}
+
+.btn-selection-inactive{
+
+  cursor: default;
+  opacity: 0.4;
 }

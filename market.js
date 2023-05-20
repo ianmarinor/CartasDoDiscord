@@ -47,7 +47,7 @@ let bodyP = document.getElementsByTagName("body")[0];
 let moneyP = document.getElementById("store");
 let popUpP = document.createElement("div");
 let btnDisplay = document.getElementById("btnEspecial");
-let deck = document.getElementById("slotEsp");
+const deck = document.getElementById("slotEsp");
 const mao = document.getElementById("mao");
 const are = document.getElementById("are");
 let selectedCards = document.getElementById("selected-cards");
@@ -109,7 +109,7 @@ export function blueprintEspecial(_id, _name, _photo) {
   let picture = _photo;
 
   let defaultBlueprint =
-    '<div class="cartaEsp" id="' +
+    '<div  id="' +
     id +
     '"> ' +
     '<div class="nameAndCidadeWrapperEsp">' +
@@ -140,6 +140,9 @@ export let deckObj;
 
 export let sendSelectedCardsToMarket = (_selectionObj) =>{
   deckObj = _selectionObj
+  deckObj.map((x)=>{
+    // x.putInDeck()
+  })
 }
 
 function inserirEspecialDomAndObject(blueprint, object, _where, _whereObject,_num) {
@@ -150,7 +153,22 @@ function inserirEspecialDomAndObject(blueprint, object, _where, _whereObject,_nu
 
   let num 
   
-  _num  ? num = _num : num = 0
+  if(_num){
+    num = _num
+  } else {
+    
+
+
+    for(let i =0; i<positionObj.length;i++){
+      if(positionObj[i].empty){
+        num = i
+        break
+      }
+    }
+  if(num === undefined)return    
+
+  }
+  
 
 
   
@@ -191,7 +209,8 @@ export let spawn = {
 
 export function spawnBluePrint(_quem, _where,_slot) {
   let position = _where;
-
+  let slot = _slot
+  
 
 
   let positionObj = () => {
@@ -236,13 +255,14 @@ export function spawnBluePrint(_quem, _where,_slot) {
     cartaObj,
     position,
     positionObj(),
-    _slot
+    slot
   );
 }
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyT") {
-    spawn.cartaEspecial("dva",selectedCards);
+    spawn.cartaEspecial("maisAmmo",mao, 0);
+    spawn.cartaEspecial("especial-click",mao, 1);
     
   }
 });

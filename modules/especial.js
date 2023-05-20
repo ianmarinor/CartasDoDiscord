@@ -37,7 +37,7 @@ import {
 import { boss, wave } from "../boss.js";
 import { areEmpty, areObj, smokeOnInv } from "../arena.js";
 import { deckObj, spawn } from "../market.js";
-import { selectedCardsdeckObj } from "../deckSelection.js";
+import { selectedCardsdeckObj, escolherClasse } from "../deckSelection.js";
 
 // import { stringSeed } from "../slotEspecial.js";
 let seedString = seedRNG();
@@ -165,7 +165,7 @@ export class Especial {
 
     //defaults
     // if card selected at card selection
-    this._selected = undefined
+    // this._selected = undefined
     this._level = false;
     this._dead = false;
     this._place = false;
@@ -227,6 +227,16 @@ export class Especial {
     this._CHN3 = document.createElement("audio");
   }
 
+  putInDeck(){
+
+
+  console.log(this._thisCardP);
+ spawn.cartaEspecial(this.cartaId, deck, this._place);
+
+ console.log(this, 'ADICIONADO AO MARKET');
+ console.log(this._place, '11111');
+  }
+
   selectMe() {
 
     let checkForDouble = () => selectedCardsdeckObj.some((x)=> x.cartaId == this.cartaId)
@@ -253,6 +263,23 @@ export class Especial {
       }
     }
   }
+
+  // methods for card  style editing
+
+  styleCustom(_element,_style,_setting){
+    _element.style[_style] = _setting
+  }
+
+  setFont(_element, _font){
+    _element.style.fontFamily = _font
+
+  }
+
+  setBorder(_element,_border){
+    _element.style.border = _border
+  }
+
+
   onMountDefault() {
     this.print();
 
@@ -299,6 +326,34 @@ export class Especial {
   ult() {}
 
   onCoolDownFinish() {}
+
+  tickDeck(){
+    
+    switch (this.raridade) {
+      case 'rainha':
+          this._preco = 1250
+        break;
+        case 'sangueAzul':
+          this._preco = 200
+        break;
+        case 'cavaleiro':
+          this._preco = 100
+        break;
+        case 'campones':
+          this._preco = 50
+        break;
+
+    }
+
+    if(this._preco <= money.total){
+      this._canBeSold = true
+      this._thisCardP.style.opacity = 1
+    } else {
+      this._canBeSold = false
+      this._thisCardP.style.opacity = 0.2
+    }
+
+  }
 
   tickDefault() {
     this._manaP = this._retratoP.children[0];
@@ -770,7 +825,8 @@ export class Especial {
       elimCardMao(mao.children[this._place]);
     } else if (this._parentP == selectedCards){
       elimCardSelected(selectedCards.children[this._place])
-      this._selected = false
+      escolherClasse(this.raridade)
+      // this._selected = false
     }
 
     
@@ -909,9 +965,10 @@ export class Especial {
   }
 
   rightClick() {
-    if (this._canBeDeleted) {
+    if (this._canBeDeleted && this._parentP != deck) {
       this.kill();
     } else {
+      this.kill(true);
     }
   }
 
@@ -1114,9 +1171,21 @@ export class Especial {
     }
   }
 
+  comprar(){
+    if(this._preco <= money.total && maoObj.some((x)=> x.empty)){
+      spawn.cartaEspecial(this.cartaId,mao,0)
+      money.remove(this._preco)
+    }
+    
+
+  }
+
   leftClick() {
     if (this._parentP == mao) {
       this.chosenCardMao();
+    } else if (this._parentP == deck){
+      console.log('mover pro inv');
+      this.comprar()
     }
   }
 
@@ -1189,6 +1258,7 @@ export class Especial {
 export let especiais = [
   {
     cartaId: "especial-tenica",
+    tenica: true ,
     nome: "TÉNICA",
     raridade: "rainha",
     energia: undefined,
@@ -1202,8 +1272,16 @@ export let especiais = [
     dmgBoss: false,
     tank: true,
 
+    onMount(){
+
+
+      this.setFont(this._nomeP, "Cormorant Upright")
+      this.setBorder(this._retratoP, "2px solid gold")
+      this.styleCustom(this._nomeP,'marginTop','15px')
+    },
+
     cfg() {
-      let energia = gerarNumero(65, 82);
+      let energia = 72;
       this.energia = energia;
       this.targetPointSetter(770);
     },
@@ -1274,33 +1352,6 @@ export let especiais = [
       snd(tenicaAu);
       this._invHiddenButton = true;
     },
-
-    nomeStyle: {
-      fontSize: "",
-      fontFamily: "Cormorant Upright",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px double gold",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "",
-    },
-    ataqueStyle: {
-      color: "black",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
-    },
   },
 
   {
@@ -1321,6 +1372,27 @@ export let especiais = [
     sonoCoolDown: undefined,
     sonoCoolDownInterval: undefined,
     _poderLoop: true,
+
+   
+
+    retratoStyle: {
+      border: "2px dotted #18d742",
+      backgroundColor: "",
+    },
+
+    onMount(){
+
+      this.setFont(this._nomeP, 'speaker')
+      
+      this._cargoP.textContent = this.cargo
+
+      this.setBorder(this._retratoP, "2px solid #18d742")
+      this.styleCustom(this._cargoP, 'fontSize', '80%')
+      this.styleCustom(this._nomeP, 'fontSize', '150%')
+      this.styleCustom(this._nomeP, 'marginTop', '10px')
+
+    },
+    
 
     cfg() {
       this.targetPointSetter(500);
@@ -1459,33 +1531,7 @@ export let especiais = [
       }
     },
 
-    nomeStyle: {
-      fontSize: "",
-      fontFamily: "",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px dotted #18d742",
-      backgroundColor: "",
-    },
-
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
-    },
+    
   },
 
   {
@@ -1506,6 +1552,16 @@ export let especiais = [
     _requiredIntegrante: true,
     _invHiddenButton: true,
     _requiredCidade: true,
+
+    onMount(){
+
+      this.setBorder(this._retratoP, "2px solid #dea710")
+
+      
+
+    }
+    ,
+
     cfg() {
       this.energia = gerarNumero(25, 50);
 
@@ -1539,6 +1595,7 @@ export let especiais = [
 
     poder() {
       if (this.unableToAttack()) return;
+
       if (this.giveCard) {
         numCartas.add(this.energia);
         if (packP.children[0].id == "carta") {
@@ -1546,42 +1603,15 @@ export let especiais = [
         }
       }
 
+      audioPlayer('maisCartas/ulting1.mp3', false ,this._CHN2, 0.4)
+
       this.kill();
-    },
-
-    // ataqueE: bonusCartasPE()
-    nomeStyle: {
-      fontSize: "130%",
-      fontFamily: "",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px solid #dea710",
-
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
     },
   },
 
   {
     cartaId: "maisAmmo",
-    nome: "MAIS MANA",
+    nome: "MENOS COOLDOWN",
     raridade: "campones",
 
     energia: 15,
@@ -1596,6 +1626,16 @@ export let especiais = [
     dmgBoss: false,
     _requiredIntegrante: true,
     _invHiddenButton: true,
+
+
+
+    onMount(){
+
+      this.hide(this._energiaP)
+      this.setBorder(this._retratoP, '2px solid #0000ff')
+
+    },
+
     cfg() {
       this.energia = gerarNumero(2, 7);
 
@@ -1682,6 +1722,16 @@ export let especiais = [
     maxHealth: 10,
     hashp: true,
     dano: 15,
+
+
+
+    onMount(){
+
+      this.setFont(this._nomeP, 'minecraft')
+      this.styleCustom(this._nomeP, 'fontSize', '150%')
+      this.setBorder(this._retratoP, "2px solid #ffec1a" )
+
+    },
 
     cfg() {
       let _dano = 35;
@@ -1774,32 +1824,7 @@ export let especiais = [
       }, timer);
     },
 
-    nomeStyle: {
-      fontSize: "180%",
-      fontFamily: "minecraft",
-      color: "#AAAAAA",
-    },
-
-    retratoStyle: {
-      border: "2px solid #545251",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "170%",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
-    },
+    
 
     // ataqueE: abelhaEnergia() + "🐝"
   },
@@ -1811,7 +1836,7 @@ export let especiais = [
     energia: 0,
     emoji: "",
 
-    retrato: 'url("/pics/retratoPremioMonark.gif")',
+    retrato: "url('pics/retratoPremioMonark.gif')",
     cargo: "",
     hp: 70,
     hashp: true,
@@ -1820,13 +1845,22 @@ export let especiais = [
     _requiredIntegrante: true,
     _requiredIntegrante2: true,
     _invHiddenButton: true,
+
+
+    onMount(){
+      this.setFont(this._nomeP,'premiomonark')
+      this.styleCustom(this._nomeP, 'fontSize', '120%')
+      this.hide(this._energiaP, true)
+      this.setBorder(this._thisCardP, "4px solid gray")
+      this.setBorder(this._retratoP, "3px solid gray")
+    },
+
+
     cfg() {
       this.targetPointSetter(200);
     },
 
-    tick() {},
 
-    tickMao() {},
 
     poder() {
       if (this.unableToAttack()) return;
@@ -1910,7 +1944,7 @@ export let especiais = [
     emoji: "💥",
     emojiHp: "",
     ulti: 0,
-    retrato: 'url("/pics/spyRetrato.webp")',
+    retrato: "url('/pics/spyRetrato.webp')",
     retratoAttacking: 'url("/pics/spyRetrato2.gif")',
     cargo: "",
     hashp: false,
@@ -1931,12 +1965,22 @@ export let especiais = [
     _audioAttackingFiles: 7,
     _sourceAttacking: "spy",
 
+
+    onMount(){
+      this.setFont(this._nomeP, 'tf2')
+      this.styleCustom(this._nomeP, 'fontSize', '190%')
+      this.styleCustom(this._retratoP, 'backgroundColor', 'unset')
+      this.setBorder(this._retratoP, "2px solid #cf6a32")
+
+      this._nomeP.style.marginTop = "5px";
+      this._cargoP.style.fontSize = "130%";
+
+
+    },
+
     cfg() {
       this.dano = gerarNumero(180, 240);
-      this._nomeP.style.marginTop = "5px";
-
-      this._buttonP.style.fontFamily = "tf2";
-      this._cargoP.style.fontSize = "130%";
+      
 
       if (this.clockReady) {
         this._cargoP.innerHTML = "⌚";
@@ -2092,32 +2136,7 @@ export let especiais = [
       this.coolDown(650);
     },
 
-    nomeStyle: {
-      fontSize: "210%",
-      fontFamily: "tf2",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px solid #cf6a32",
-      backgroundColor: "unset",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "120%",
-      fontFamily: "tf2",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "120%",
-      fontFamily: "tf2",
-      visibility: "visible",
-    },
+   
   },
 
   {
@@ -2140,6 +2159,16 @@ export let especiais = [
 
     _barreira: 50,
     _barrieraActive: true,
+
+    
+
+    onMount(){
+      this.setFont(this._nomeP, 'estoico')
+      this.styleCustom(this._nomeP, 'fontSize' , '180%')
+      this.setBorder(this._retratoP, '2px solid #adb6b2')
+
+
+    },
 
     cfg() {
       this._barreiraMax = this._barreira;
@@ -2183,40 +2212,14 @@ export let especiais = [
       });
     },
 
-    nomeStyle: {
-      fontSize: "200%",
-      fontFamily: "estoico",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px solid #cde2e0",
-      backgroundColor: "unset",
-    },
-
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "150%",
-      fontFamily: "estoico",
-      visibility: "visible",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "150%",
-      fontFamily: "estoico",
-      visibility: "visible",
-    },
+   
   },
 
   {
     cartaId: "lucio",
+    lucio: true,
     nome: "LÚCIO",
     raridade: "sangueAzul",
-
     energia: 1,
     requireAmmo: true,
     emoji: "",
@@ -2226,7 +2229,7 @@ export let especiais = [
     dmgBoss: false,
     dano: 4,
     _hasUlti: true,
-    ulti: 100,
+    ulti: 0,
     _poderLoop: true,
     hp: 15,
     maxHealth: 15,
@@ -2235,31 +2238,13 @@ export let especiais = [
     _audioUltingFiles: 2,
     _sourceUlting: "lucio/ulting",
 
-    nomeStyle: {
-      fontSize: "250%",
-      fontFamily: "overwatch",
-      color: "",
-    },
+    onMount(){
+      this.setFont(this._nomeP, 'overwatch')
+      this.setFont(this._cargoP, 'overwatch')
+      this.styleCustom(this._nomeP, 'fontSize', '170%')
+      this.styleCustom(this._cargoP, 'fontSize', '170%')
+      this.setBorder(this._retratoP,"2px solid #15b871")
 
-    retratoStyle: {
-      border: "2px solid #15b871",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "overwatch",
-      fontSize: "250%",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "150%",
-      fontFamily: "overwatch",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "150%",
-      fontFamily: "overwatch",
-      visibility: "visible",
     },
 
     tick() {
@@ -2418,6 +2403,15 @@ export let especiais = [
     aim: "are",
     atirador: false,
 
+
+    onMount(){
+      this.setFont(this._nomeP, 'lol')
+      this.styleCustom(this._nomeP, 'fontSize' , '180%')
+      this.setBorder(this._retratoP, '2px solid #ffbc42')
+
+
+    },
+
     tick() {
       this.setDmg();
 
@@ -2545,36 +2539,12 @@ export let especiais = [
       }
     },
 
-    nomeStyle: {
-      fontSize: "250%",
-      fontFamily: "lol",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px solid #FFBC42",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "lol",
-      fontSize: "250%",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "100%",
-      fontFamily: "lol",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "120%",
-      fontFamily: "lol",
-      visibility: "",
-    },
+   
   },
 
   {
     cartaId: "dva",
+    dva: true,
     nome: "D.Va",
     raridade: "sangueAzul",
     energia: 10,
@@ -2583,7 +2553,7 @@ export let especiais = [
     retrato: "url('pics/dvaRetrato.png')",
     retrato2: "url('pics/dvaMecaRetrato.jpg')",
     dmgBoss: false,
-    ulti: 100,
+    ulti: 0,
     dano: 10,
     hp: 100,
     maxHealth: 100,
@@ -2611,6 +2581,15 @@ export let especiais = [
     _audioGunLongFiles: 1,
     _sourceGunLong: "dva/gunLong",
 
+
+  onMount(){
+    this.setFont(this._nomeP, 'overwatch')
+    this.setFont(this._cargoP, 'overwatch')
+    this.styleCustom(this._nomeP, 'fontSize', '170%')
+    this.styleCustom(this._cargoP, 'fontSize', '170%')
+    this.setBorder(this._retratoP,"2px solid #ee4bb5")
+  },
+
     tick() {
       if (this._CHN2.paused && this._isAttacking) {
         let faixa = "dva/gunLong1.mp3";
@@ -2635,7 +2614,7 @@ export let especiais = [
     },
 
     cfg() {
-      this.dano = gerarNumero(38, 55);
+      this.dano = 45
       this.targetPointSetter(680);
     },
 
@@ -2728,33 +2707,7 @@ export let especiais = [
       }
     },
 
-    nomeStyle: {
-      fontSize: "250%",
-      fontFamily: "overwatch",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px solid #ee4bb5",
-      backgroundColor: "",
-      backgroundSize: "cover",
-    },
-    cargoStyle: {
-      fontFamily: "overwatch",
-      fontSize: "250%",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "150%",
-      fontFamily: "overwatch",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "150%",
-      fontFamily: "overwatch",
-      visibility: "visible",
-    },
+    
   },
 
   {
@@ -2776,6 +2729,16 @@ export let especiais = [
     _monarkReplaceble: false,
     _hasCoolDown: true,
     _naturalCoolDown: 4,
+
+
+    onMount(){
+
+      this.hide(this._energiaP)
+      this.setFont(this._nomeP, 'minecraft')
+      this.styleCustom(this._nomeP, 'fontSize', '150%')
+      this.setBorder(this._retratoP, "2px solid #164d0d" )
+
+    },
 
     cfg() {
       let dano = gerarNumero(40, 85);
@@ -2818,32 +2781,7 @@ export let especiais = [
       }, 2600);
     },
 
-    nomeStyle: {
-      fontSize: "180%",
-      fontFamily: "minecraft",
-      color: "#555555",
-    },
-
-    retratoStyle: {
-      border: "2px solid #164d0d",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "170%",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "hidden",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "hidden",
-    },
+  
 
     // ataqueE: abelhaEnergia() + "🐝"
   },
@@ -2865,6 +2803,15 @@ export let especiais = [
     _barreira: 50,
     _barrieraActive: true,
 
+
+    onMount(){
+
+      this.hide(this._energiaP, true)
+      this.setBorder(this._retratoP, "2px solid #044dde")
+
+      
+
+    },
     cfg() {
       this._barreiraMax = this._barreira;
 
@@ -2959,6 +2906,19 @@ export let especiais = [
     _audioDespawnFiles: 4,
     _sourceDespawn: "sapato/sapato",
 
+
+    onMount(){
+
+      
+      this.setFont(this._nomeP, 'julia')
+      this.styleCustom(this._nomeP, 'fontSize', '150%')
+      this.setBorder(this._retratoP, "2px solid cyan" )
+
+
+
+    },
+    
+
     tick() {
       invObj.map((x) => {
         if (x.Twelve && !x.isMonark && !x.hasHelpedSapato) {
@@ -2991,92 +2951,6 @@ export let especiais = [
       this.coolDown(350);
     },
 
-    nomeStyle: {
-      fontSize: "180%",
-      fontFamily: "julia",
-      color: "cyan",
-    },
-
-    retratoStyle: {
-      border: "2px solid cyan",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "170%",
-      visibility: "visible",
-    },
-    ataqueStyle: {
-      color: "cyan",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
-    },
-    novoAtaqueStyle: {
-      color: "cyan",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
-    },
-  },
-
-  {
-    cartaId: "sapato",
-    nome: "SAPATO",
-    raridade: "cavaleiro",
-    energia: 0,
-    emoji: "",
-    retrato: "url('/pics/sapatoRetrato.webp')",
-    cargo: "",
-    dmgBoss: false,
-    hashp: true,
-    hp: 12,
-    maxHealth: 12,
-    dano: 12,
-    _invHiddenButton: false,
-    numOfTwelves: 0,
-    customButtonEmoji: true,
-    requireAmmo: false,
-
-    //AUDIO FILES
-    _audioDespawnFiles: 4,
-    _sourceDespawn: "totem/sapato",
-
-    tick() {},
-
-    cfg() {},
-
-    everyRound() {},
-
-    poder() {},
-
-    nomeStyle: {
-      fontSize: "180%",
-      fontFamily: "julia",
-      color: "cyan",
-    },
-
-    retratoStyle: {
-      border: "2px solid cyan",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "170%",
-      visibility: "visible",
-    },
-    ataqueStyle: {
-      color: "cyan",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
-    },
-    novoAtaqueStyle: {
-      color: "cyan",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
-    },
   },
 
   {
@@ -3088,7 +2962,7 @@ export let especiais = [
     emoji: "💥",
     emojiHp: "",
     ulti: 0,
-    retrato: 'url("/pics/sentryRetrato.PNG")',
+    retrato: "url('/pics/sentryRetrato.PNG')",
     cargo: "",
     hp: 40,
     maxHealth: 40,
@@ -3101,6 +2975,18 @@ export let especiais = [
     _naturalCoolDown: 16,
     _coolDownPaused: false,
     active: false,
+
+    onMount(){
+      this.setFont(this._nomeP, 'tf2')
+      this.styleCustom(this._nomeP, 'fontSize', '130%')
+      this.styleCustom(this._retratoP, 'backgroundColor', 'unset')
+      this.setBorder(this._retratoP, "2px solid #cf6a32")
+
+      this._nomeP.style.marginTop = "5px";
+      this._cargoP.style.fontSize = "130%";
+
+
+    },
 
     cfg() {
       this.dano = gerarNumero(8, 12);
@@ -3218,32 +3104,6 @@ export let especiais = [
       this.tiro();
     },
 
-    nomeStyle: {
-      fontSize: "150%",
-      fontFamily: "tf2",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px solid #cf6a32",
-      backgroundColor: "unset",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "120%",
-      fontFamily: "tf2",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "120%",
-      fontFamily: "tf2",
-      visibility: "visible",
-    },
   },
 ];
 

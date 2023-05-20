@@ -27,7 +27,11 @@ import {
 } from "./modules/especial.js";
 
 import { aplicarEfeitos } from "./aplicarEfeito.js";
-import { openDeck, selectedCardsdeckObj, tickDeckSelection } from "./deckSelection.js";
+import {
+  openDeck,
+  selectedCardsdeckObj,
+  tickDeckSelection,
+} from "./deckSelection.js";
 // import { ativarBtn, limparEsp, slotEspObj } from "./slotEspecial.js";
 import {
   boss,
@@ -1767,8 +1771,8 @@ export function elimCardSelected(x) {
   // let cavaleiro2 = (empty1.className = "cavaleiro-selected-2");
   // let campones1 = (empty1.className = "sangue-azul-selected-1");
   // let campones2 = (empty1.className = "sangue-azul-selected-2");
-  
-  let empty1 = document.createElement('div')
+
+  let empty1 = document.createElement("div");
 
   if (x == selectedCards.children[0]) {
     empty1.className = "rainha-selected";
@@ -1776,32 +1780,32 @@ export function elimCardSelected(x) {
     selectedCards.replaceChild(empty1, x);
     slot = 0;
   } else if (x == selectedCards.children[1]) {
-    empty1.className = "sangue-azul-selected-1"
+    empty1.className = "sangue-azul-selected-1";
     empty1.id = "";
     selectedCards.replaceChild(empty1, x);
     slot = 1;
   } else if (x == selectedCards.children[2]) {
-    empty1.className = "sangue-azul-selected-2"
+    empty1.className = "sangue-azul-selected-2";
     empty1.id = "";
     selectedCards.replaceChild(empty1, x);
     slot = 2;
   } else if (x == selectedCards.children[3]) {
-    empty1.className = "cavaleiro-selected-1"
+    empty1.className = "cavaleiro-selected-1";
     empty1.id = "";
     selectedCards.replaceChild(empty1, x);
     slot = 3;
   } else if (x == selectedCards.children[4]) {
-    empty1.className = "cavaleiro-selected-2"
+    empty1.className = "cavaleiro-selected-2";
     empty1.id = "";
     selectedCards.replaceChild(empty1, x);
     slot = 4;
   } else if (x == selectedCards.children[5]) {
-    empty1.className = "campones-selected-1"
+    empty1.className = "campones-selected-1";
     empty1.id = "";
     selectedCards.replaceChild(empty1, x);
     slot = 5;
   } else if (x == selectedCards.children[6]) {
-    empty1.className = "campones-selected-2"
+    empty1.className = "campones-selected-2";
     empty1.id = "";
     selectedCards.replaceChild(empty1, x);
     slot = 6;
@@ -2017,7 +2021,7 @@ function deletarDeck(e) {
     }
   }
 }
-
+let marketMoneyP = document.getElementById('money-market')
 export let money = {
   total: 0,
 
@@ -2034,11 +2038,13 @@ export let money = {
       this.total -= n;
     }
     moneyP.innerHTML = this.total;
+    marketMoneyP.innerHTML = this.total;
   },
 
   set(n) {
     this.total = n;
     moneyP.innerHTML = this.total;
+    marketMoneyP.innerHTML = this.total;
   },
 
   printP(n) {
@@ -2277,16 +2283,18 @@ function animateSell(start, plus) {
     if (plus - x < 40) {
       x++;
       moneyP.textContent = parseInt(moneyP.textContent) + 1;
+      marketMoneyP.textContent = parseInt(moneyP.textContent) + 1;
       money.addAbsolute(1);
       // ativarBtn()
     } else {
       x += increment;
       money.addAbsolute(increment);
       moneyP.textContent = parseInt(moneyP.textContent) + increment;
+      marketMoneyP.textContent = parseInt(moneyP.textContent) + increment;
       // ativarBtn()
     }
 
-    ativarBtn();
+    // ativarBtn();
     //
 
     if (x >= plus) {
@@ -2471,7 +2479,7 @@ function tick() {
   if (!TICK) return;
 
   setInterval(function () {
-    tickDeckSelection()
+    tickDeckSelection();
     allMonark();
     specialInDeck();
     deckVazio();
@@ -2486,6 +2494,13 @@ function tick() {
     chooseTargetInv();
     arenaTick();
     especialTick();
+
+    for (let i = 0; i < 7; i++) {
+      let carta = deckObj[i];
+      if (!carta.empty) {
+        carta.tickDeck();
+      }
+    }
 
     for (let i = 0; i < 6; i++) {
       let carta = invObj[i];
@@ -2988,7 +3003,7 @@ export function startGame2() {
 
     rodadas = 0;
   }
-  setTimeout(openDeck, 12);
+  // setTimeout(openDeck, 12);
 }
 
 document.addEventListener("contextmenu", function () {
@@ -3116,14 +3131,14 @@ export function criarPopUp(_appenThis, _display, _popUpId) {
 }
 
 export function fecharPopUp(_popUpId) {
-  if (!popUpObj.isAnyOn || (popUpP.id == 'popUpStrong' && !_popUpId)) return;
+  if (!popUpObj.isAnyOn || (popUpP.id == "popUpStrong" && !_popUpId)) return;
 
   if (_popUpId) {
     popUpP.id = _popUpId;
   } else {
     popUpP.id = "popUp";
   }
-console.log(popUpP);
+  console.log(popUpP);
   popUpP.remove();
   mainOpaque(false);
 
@@ -3138,7 +3153,6 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyU") {
     // COM(promptP.value);
     fecharPopUp();
-    
   }
 });
 

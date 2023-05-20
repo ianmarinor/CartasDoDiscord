@@ -84,6 +84,11 @@ a:hover {
   src: url("/fonts/imperio.ttf");
 }
 
+@font-face {
+  font-family: "speaker";
+  src: url("/fonts/speaker.ttf");
+}
+
 
 * {
   box-sizing: border-box;
@@ -911,7 +916,7 @@ li {
 }
 
 #abelha {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1),  rgba(0, 0, 0, 0.7)),
     url(pics/fundoAbelha.gif);
 
   font-family: minecraft;
@@ -923,7 +928,7 @@ li {
   justify-content: space-between;
   border-radius: 15px;
   position: relative;
-  border: 3px solid #545251;
+  border: 3px solid #ffec1a;
   font-weight: 900;
   color: #ffec1a;
 }
@@ -995,7 +1000,8 @@ li {
   background-repeat: no-repeat;
   background-size: COVER;
   font-family: premiomonark;
-  border: 4px solid black;
+  border: 3px solid black;
+  color: gray;
 }
 
 #estoico {
@@ -1021,7 +1027,7 @@ li {
   font-family: estoico;
   /* color: #cde2e0; */
   color: #adb6b2;
-  border: 2px solid #cde2e0;
+  border: 2px solid #adb6b2;
 }
 #spy {
   /* background:  url(/pics/fundoPremioMonark.gif); */
@@ -1205,17 +1211,6 @@ li {
   font-size: 150%;
 }
 
-/* .nome-inimigo {
-  font-size: 100%;
-} */
-
-/* .nome1, .nome2 , .nome3 , .nome4  , .nome5, .nome6 {
-  
-  color: #2f2f2f;
-  
-  position: relative;
-  bottom: -25px;
-} */
 
 .cidade {
   /* background-color: #6637be; */
@@ -1282,6 +1277,10 @@ li {
 .ataque {
   width: 35%;
   white-space: nowrap;
+}
+
+.ataqueEsp,.novoAtaqueEsp,.actionEsp{
+font-size: 0.80em;
 }
 .novoAtaque,
 .novoAtaqueEsp {
