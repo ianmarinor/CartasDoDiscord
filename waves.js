@@ -139,7 +139,7 @@ export let imperio = {
   id: 1,
 
   saveInfo:{
-    gameVersion: 'Alpha 1.3',
+    gameVersion: 'Alpha 1.4',
     saveVersion: '1.0'
   },
 

@@ -46,7 +46,7 @@ import {
 import { marketObj, closeMarket, openMarket, deckObj } from "./market.js";
 
 let versaoHTML = document.getElementById("versao");
-let versao = "Alfa 1.3.5";
+let versao = "Alfa 1.4";
 versaoHTML.innerHTML = versao;
 
 function showVersion() {}
