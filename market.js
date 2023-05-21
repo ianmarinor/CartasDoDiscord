@@ -261,8 +261,8 @@ export function spawnBluePrint(_quem, _where,_slot) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyT") {
-    spawn.cartaEspecial("maisAmmo",mao, 0);
-    spawn.cartaEspecial("especial-click",mao, 1);
+    spawn.cartaEspecial("cabeca",mao, 0);
+    // spawn.cartaEspecial("especial-tenica",mao, 1);
     
   }
 });

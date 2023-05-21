@@ -32,7 +32,7 @@ import {
   chosenCard,
   setChosenCard,
   setChosenCardObj,
-  elimCardSelected
+  elimCardSelected,
 } from "../script.js";
 import { boss, wave } from "../boss.js";
 import { areEmpty, areObj, smokeOnInv } from "../arena.js";
@@ -227,23 +227,24 @@ export class Especial {
     this._CHN3 = document.createElement("audio");
   }
 
-  putInDeck(){
+  poder(){
+    
+  }
+  putInDeck() {
+    console.log(this._thisCardP);
+    spawn.cartaEspecial(this.cartaId, deck, this._place);
 
-
-  console.log(this._thisCardP);
- spawn.cartaEspecial(this.cartaId, deck, this._place);
-
- console.log(this, 'ADICIONADO AO MARKET');
- console.log(this._place, '11111');
+    console.log(this, "ADICIONADO AO MARKET");
+    console.log(this._place, "11111");
   }
 
   selectMe() {
+    let checkForDouble = () =>
+      selectedCardsdeckObj.some((x) => x.cartaId == this.cartaId);
 
-    let checkForDouble = () => selectedCardsdeckObj.some((x)=> x.cartaId == this.cartaId)
-
-    if (this.raridade == "rainha" && !checkForDouble()) {
+    if (this.raridade == "rainha" && selectedCardsdeckObj[0].empty) {
       spawn.cartaEspecial(this.cartaId, selectedCards, 0);
-    } else if (this.raridade == "sangueAzul" && !checkForDouble() ) {
+    } else if (this.raridade == "sangueAzul" && !checkForDouble()) {
       if (selectedCardsdeckObj[1].empty) {
         spawn.cartaEspecial(this.cartaId, selectedCards, 1);
       } else if (selectedCardsdeckObj[2].empty) {
@@ -266,19 +267,17 @@ export class Especial {
 
   // methods for card  style editing
 
-  styleCustom(_element,_style,_setting){
-    _element.style[_style] = _setting
+  styleCustom(_element, _style, _setting) {
+    _element.style[_style] = _setting;
   }
 
-  setFont(_element, _font){
-    _element.style.fontFamily = _font
-
+  setFont(_element, _font) {
+    _element.style.fontFamily = _font;
   }
 
-  setBorder(_element,_border){
-    _element.style.border = _border
+  setBorder(_element, _border) {
+    _element.style.border = _border;
   }
-
 
   onMountDefault() {
     this.print();
@@ -307,7 +306,6 @@ export class Especial {
       }
     }
 
-    
     this.onMount();
   }
 
@@ -327,32 +325,29 @@ export class Especial {
 
   onCoolDownFinish() {}
 
-  tickDeck(){
-    
+  tickDeck() {
     switch (this.raridade) {
-      case 'rainha':
-          this._preco = 1250
+      case "rainha":
+        this._preco = 1250;
         break;
-        case 'sangueAzul':
-          this._preco = 200
+      case "sangueAzul":
+        this._preco = 200;
         break;
-        case 'cavaleiro':
-          this._preco = 100
+      case "cavaleiro":
+        this._preco = 100;
         break;
-        case 'campones':
-          this._preco = 50
+      case "campones":
+        this._preco = 50;
         break;
-
     }
 
-    if(this._preco <= money.total){
-      this._canBeSold = true
-      this._thisCardP.style.opacity = 1
+    if (this._preco <= money.total) {
+      this._canBeSold = true;
+      this._thisCardP.style.opacity = 1;
     } else {
-      this._canBeSold = false
-      this._thisCardP.style.opacity = 0.2
+      this._canBeSold = false;
+      this._thisCardP.style.opacity = 0.2;
     }
-
   }
 
   tickDefault() {
@@ -367,7 +362,7 @@ export class Especial {
     }
 
     if (this._barrieraActive) {
-      this._targetPoint += 2000;
+      this._targetPoint = this._targetWithBarrier
     } else {
       this._targetPoint = this._targetPointNatural;
     }
@@ -390,9 +385,7 @@ export class Especial {
       this._retratoP.appendChild(manaDiv);
 
       this._manaP = this._retratoP.children[0];
-      
     } else {
-      
       this._manaP = this._retratoP.children[0];
     }
   }
@@ -517,9 +510,9 @@ export class Especial {
 
   targetPointSetter(_targetPoint, _onlySurface) {
     if (per(50)) {
-      this._targetPoint = _targetPoint + gerarNumero(0, 12);
+      this._targetPoint = _targetPoint + gerarNumero(0, 18);
     } else {
-      this._targetPoint = _targetPoint - gerarNumero(0, 12);
+      this._targetPoint = _targetPoint - gerarNumero(0, 18);
     }
 
     if (this._targetPoint < 1) {
@@ -528,6 +521,7 @@ export class Especial {
 
     if (!_onlySurface) {
       this._targetPointNatural = this._targetPoint;
+      this._targetWithBarrier = this._targetPointNatural + gerarNumero(950,1050)
     }
   }
 
@@ -717,7 +711,7 @@ export class Especial {
     let cantStartAttackCondition =
       this._stunned ||
       this._dead ||
-      !this.ammoCheck() ||
+     (this.requireAmmo && !this.ammoCheck()) ||
       this._cantStartToAttack;
 
     if (cantStartAttackCondition) {
@@ -808,7 +802,6 @@ export class Especial {
   dmgReceived() {}
 
   kill(absolute) {
-    
     if (!this._parentP) return;
 
     if (this.cartaId == "creeper" && !this.exploding && !absolute) {
@@ -823,16 +816,11 @@ export class Especial {
       elimCardInv(inv.children[this._place]);
     } else if (this._parentP == mao) {
       elimCardMao(mao.children[this._place]);
-    } else if (this._parentP == selectedCards){
-      elimCardSelected(selectedCards.children[this._place])
-      escolherClasse(this.raridade)
+    } else if (this._parentP == selectedCards) {
+      elimCardSelected(selectedCards.children[this._place]);
+      escolherClasse(this.raridade);
       // this._selected = false
     }
-
-    
-    
-    
-    
 
     this._dead = true;
   }
@@ -977,7 +965,7 @@ export class Especial {
 
     if (!this._cfgDefaultAdded) {
       this.cfgDefault();
-      
+
       this._cfgDefaultAdded = true;
     }
 
@@ -1050,10 +1038,11 @@ export class Especial {
       }
     }
 
-    if (this._isAttacking) {
+    if (this._isAttacking && this.requireAmmo) {
       this._thisCardP.classList.add("critico");
 
       this._manaP.style.opacity = "1";
+
     } else if (this._isAttacking === false) {
       this._thisCardP.classList.remove("critico");
       clearInterval(this._borderBlinkingInterval);
@@ -1171,21 +1160,19 @@ export class Especial {
     }
   }
 
-  comprar(){
-    if(this._preco <= money.total && maoObj.some((x)=> x.empty)){
-      spawn.cartaEspecial(this.cartaId,mao,0)
-      money.remove(this._preco)
+  comprar() {
+    if (this._preco <= money.total && maoObj.some((x) => x.empty)) {
+      spawn.cartaEspecial(this.cartaId, mao, 0);
+      money.remove(this._preco);
     }
-    
-
   }
 
   leftClick() {
     if (this._parentP == mao) {
       this.chosenCardMao();
-    } else if (this._parentP == deck){
-      console.log('mover pro inv');
-      this.comprar()
+    } else if (this._parentP == deck) {
+      console.log("mover pro inv");
+      this.comprar();
     }
   }
 
@@ -1258,7 +1245,7 @@ export class Especial {
 export let especiais = [
   {
     cartaId: "especial-tenica",
-    tenica: true ,
+    tenica: true,
     nome: "TÉNICA",
     raridade: "rainha",
     energia: undefined,
@@ -1270,14 +1257,11 @@ export let especiais = [
     hashp: true,
     maxHealth: 250,
     dmgBoss: false,
-    tank: true,
 
-    onMount(){
-
-
-      this.setFont(this._nomeP, "Cormorant Upright")
-      this.setBorder(this._retratoP, "2px solid gold")
-      this.styleCustom(this._nomeP,'marginTop','15px')
+    onMount() {
+      this.setFont(this._nomeP, "Cormorant Upright");
+      this.setBorder(this._retratoP, "2px solid gold");
+      this.styleCustom(this._nomeP, "marginTop", "15px");
     },
 
     cfg() {
@@ -1288,8 +1272,10 @@ export let especiais = [
 
     poder() {
       if (this.unableToAttack()) return;
+      // this._retratoP.style.cursor = "not-allowed"
+      this._cantStartToAttack = true
+      this._cantAttack = true
       let varianteTenica = inv.children[this._place];
-      let botao = varianteTenica.children[3].children[2];
 
       // buffa farms
       for (let j = 0; j < 6; j++) {
@@ -1356,6 +1342,7 @@ export let especiais = [
 
   {
     cartaId: "carta-speaker",
+    speaker: true,
     nome: "SPEAKER",
     raridade: "cavaleiro",
     energia: 1,
@@ -1373,26 +1360,19 @@ export let especiais = [
     sonoCoolDownInterval: undefined,
     _poderLoop: true,
 
-   
-
     retratoStyle: {
       border: "2px dotted #18d742",
       backgroundColor: "",
     },
 
-    onMount(){
-
-      this.setFont(this._nomeP, 'speaker')
-      
-      this._cargoP.textContent = this.cargo
-
-      this.setBorder(this._retratoP, "2px solid #18d742")
-      this.styleCustom(this._cargoP, 'fontSize', '80%')
-      this.styleCustom(this._nomeP, 'fontSize', '150%')
-      this.styleCustom(this._nomeP, 'marginTop', '10px')
-
+    onMount() {
+      this.setFont(this._nomeP, "speaker");
+      this._cargoP.textContent = this.cargo;
+      this.setBorder(this._retratoP, "2px solid #18d742");
+      this.styleCustom(this._cargoP, "fontSize", "80%");
+      this.styleCustom(this._nomeP, "fontSize", "150%");
+      this.styleCustom(this._nomeP, "marginTop", "10px");
     },
-    
 
     cfg() {
       this.targetPointSetter(500);
@@ -1405,6 +1385,8 @@ export let especiais = [
     },
 
     tick() {
+      this.styleCustom(this._retratoP, "cursor", "not-allowed");
+
       if (this._energiaDorment === false && this.dormindo) {
         this.dmgBoss = true;
       }
@@ -1530,8 +1512,6 @@ export let especiais = [
         }
       }
     },
-
-    
   },
 
   {
@@ -1553,19 +1533,13 @@ export let especiais = [
     _invHiddenButton: true,
     _requiredCidade: true,
 
-    onMount(){
-
-      this.setBorder(this._retratoP, "2px solid #dea710")
-
-      
-
-    }
-    ,
-
-    cfg() {
-      this.energia = gerarNumero(25, 50);
-
+    onMount() {
       this._nomeP.style.marginTop = "7px";
+      this.setBorder(this._retratoP, "2px solid #dea710");
+    },
+    cfg() {
+      this.energia = 25;
+
       // this._cargoP.style.visibility = "hidden";
       this.targetPointSetter(580);
     },
@@ -1577,35 +1551,32 @@ export let especiais = [
       }
     },
 
+    poder() {},
+
+    giveMoreCards() {
+      this._thisCardP.classList.add("critico");
+      setTimeout(() => {
+        if (this._dead || this.unableToAttack()) return;
+
+        numCartas.add(this.energia);
+
+        audioPlayer("maisCartas/ulting1.mp3", false, this._CHN2, 0.4);
+        this.kill();
+      }, 1200);
+    },
+
     tick() {
       let hasIntegrante = invObj.some(
         (x) => x._integrante == this._requiredIntegrante && !x.isMonark
       );
 
-      if (hasIntegrante) {
-        this._invHiddenButton = false;
-        this._thisCardP.classList.add("critico");
-        this.giveCard = true;
+      this.styleCustom(this._retratoP, "cursor", "not-allowed");
+
+      if (hasIntegrante && !this.hasStarted) {
+        this.giveMoreCards();
+        this.hasStarted = true;
       } else {
-        this._invHiddenButton = true;
-        this._thisCardP.classList.remove("critico");
-        this.giveCard = false;
       }
-    },
-
-    poder() {
-      if (this.unableToAttack()) return;
-
-      if (this.giveCard) {
-        numCartas.add(this.energia);
-        if (packP.children[0].id == "carta") {
-          tudo();
-        }
-      }
-
-      audioPlayer('maisCartas/ulting1.mp3', false ,this._CHN2, 0.4)
-
-      this.kill();
     },
   },
 
@@ -1627,16 +1598,15 @@ export let especiais = [
     _requiredIntegrante: true,
     _invHiddenButton: true,
 
-
-
-    onMount(){
-
-      this.hide(this._energiaP)
-      this.setBorder(this._retratoP, '2px solid #0000ff')
-
+    onMount() {
+      this.styleCustom(this._retratoP, "backgroundSize", "100% 100%");
+      this.hide(this._energiaP);
+      this.setBorder(this._retratoP, "2px solid #0000ff");
     },
 
     cfg() {
+      this._cantStartToAttack = true;
+
       this.energia = gerarNumero(2, 7);
 
       this._nomeP.style.marginTop = "7px";
@@ -1654,53 +1624,33 @@ export let especiais = [
       let hasIntegrante = invObj.some(
         (x) => x._integrante == this._requiredIntegrante && !x.isMonark
       );
-
-      if (hasIntegrante) {
-        this._invHiddenButton = false;
+      this.styleCustom(this._retratoP, "cursor", "not-allowed");
+      if (hasIntegrante && !this.hasStarted) {
+        this.takeOutCoolDown();
         this._thisCardP.classList.add("critico");
-        this.giveCard = true;
+        this.hasStarted = true;
       } else {
-        this._invHiddenButton = true;
-        this._thisCardP.classList.remove("critico");
-        this.giveCard = false;
       }
     },
+    poder() {},
 
-    poder() {
-      if (this.unableToAttack()) return;
-      if (this.giveCard) {
-        ammo.add(this.energia);
-      }
+    takeOutCoolDown() {
+      setTimeout(() => {
+        if (this._dead) return;
+        invObj.map((x) => {
+          if (x._hasCoolDown) {
+            if (x._coolDown <= 3) {
+            } else {
+              if (!this.unableToAttack()) {
+                x._coolDown = 3;
+              }
+            }
+          }
+        });
 
-      this.kill();
-    },
-
-    // ataqueE: bonusCartasPE()
-    nomeStyle: {
-      fontSize: "130%",
-      fontFamily: "",
-      color: "",
-    },
-
-    retratoStyle: {
-      border: "2px solid #0000ff",
-      backgroundColor: "",
-    },
-    cargoStyle: {
-      fontFamily: "",
-      fontSize: "",
-    },
-    ataqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "",
-    },
-    novoAtaqueStyle: {
-      color: "",
-      fontSize: "",
-      fontFamily: "",
-      visibility: "visible",
+        audioPlayer("maisCartas/ulting1.mp3", false, this._CHN2, 0.4);
+        this.kill();
+      }, 1200);
     },
   },
 
@@ -1723,14 +1673,10 @@ export let especiais = [
     hashp: true,
     dano: 15,
 
-
-
-    onMount(){
-
-      this.setFont(this._nomeP, 'minecraft')
-      this.styleCustom(this._nomeP, 'fontSize', '150%')
-      this.setBorder(this._retratoP, "2px solid #ffec1a" )
-
+    onMount() {
+      this.setFont(this._nomeP, "minecraft");
+      this.styleCustom(this._nomeP, "fontSize", "150%");
+      this.setBorder(this._retratoP, "2px solid #ffec1a");
     },
 
     cfg() {
@@ -1824,8 +1770,6 @@ export let especiais = [
       }, timer);
     },
 
-    
-
     // ataqueE: abelhaEnergia() + "🐝"
   },
 
@@ -1846,21 +1790,17 @@ export let especiais = [
     _requiredIntegrante2: true,
     _invHiddenButton: true,
 
-
-    onMount(){
-      this.setFont(this._nomeP,'premiomonark')
-      this.styleCustom(this._nomeP, 'fontSize', '120%')
-      this.hide(this._energiaP, true)
-      this.setBorder(this._thisCardP, "4px solid gray")
-      this.setBorder(this._retratoP, "3px solid gray")
+    onMount() {
+      this.setFont(this._nomeP, "premiomonark");
+      this.styleCustom(this._nomeP, "fontSize", "120%");
+      this.hide(this._energiaP, true);
+      this.setBorder(this._thisCardP, "4px solid gray");
+      this.setBorder(this._retratoP, "3px solid gray");
     },
-
 
     cfg() {
       this.targetPointSetter(200);
     },
-
-
 
     poder() {
       if (this.unableToAttack()) return;
@@ -1937,6 +1877,7 @@ export let especiais = [
 
   {
     cartaId: "spy",
+    spy: true,
     nome: "SPY",
     raridade: "sangueAzul",
     energia: 1,
@@ -1954,7 +1895,7 @@ export let especiais = [
     hashp: true,
     clockReady: true,
     isInvisible: false,
-    dano: undefined,
+    dano: 90,
     clockToVis: false,
     _poderLoop: true,
     _invHiddenButton: true,
@@ -1965,23 +1906,17 @@ export let especiais = [
     _audioAttackingFiles: 7,
     _sourceAttacking: "spy",
 
-
-    onMount(){
-      this.setFont(this._nomeP, 'tf2')
-      this.styleCustom(this._nomeP, 'fontSize', '190%')
-      this.styleCustom(this._retratoP, 'backgroundColor', 'unset')
-      this.setBorder(this._retratoP, "2px solid #cf6a32")
+    onMount() {
+      this.setFont(this._nomeP, "tf2");
+      this.styleCustom(this._nomeP, "fontSize", "190%");
+      this.styleCustom(this._retratoP, "backgroundColor", "unset");
+      this.setBorder(this._retratoP, "2px solid #cf6a32");
 
       this._nomeP.style.marginTop = "5px";
       this._cargoP.style.fontSize = "130%";
-
-
     },
 
     cfg() {
-      this.dano = gerarNumero(180, 240);
-      
-
       if (this.clockReady) {
         this._cargoP.innerHTML = "⌚";
       } else {
@@ -2025,6 +1960,7 @@ export let especiais = [
       if (this._stunned || this._dead) return;
       if (this.clockReady && !this.isInvisible) {
         this._uber = true;
+        this._coolDown = this._naturalCoolDown;
         this.invis();
       }
     },
@@ -2135,12 +2071,11 @@ export let especiais = [
 
       this.coolDown(650);
     },
-
-   
   },
 
   {
     cartaId: "estoico",
+    estoico: true,
     nome: " TURU ESTÓICO ",
     raridade: "cavaleiro",
     pontoEspecial: 0,
@@ -2154,22 +2089,17 @@ export let especiais = [
     hp: 80,
     maxHealth: 80,
     hashp: true,
-    dmgEstoico: 0,
-    requireAmm: false,
-
+    requireAmmo: false,
+    _isAttacking: undefined,
     _barreira: 50,
     _barrieraActive: true,
 
-    
-
-    onMount(){
-      this.setFont(this._nomeP, 'estoico')
-      this.styleCustom(this._nomeP, 'fontSize' , '180%')
-      this.setBorder(this._retratoP, '2px solid #adb6b2')
-
-
+    onMount() {
+      this.setFont(this._nomeP, "estoico");
+      this.styleCustom(this._nomeP, "fontSize", "180%");
+      this.setBorder(this._retratoP, "2px solid #adb6b2");
+      this._nomeP.style.marginTop = "20px";
     },
-
     cfg() {
       this._barreiraMax = this._barreira;
       this.targetPointSetter(660);
@@ -2185,34 +2115,53 @@ export let especiais = [
       );
     },
 
-    poder() {
-      if (this.unableToAttack()) return;
-
-      this.ataque(this.dano, 0, [true, this.dano]);
-
-      this.dano = 1;
-    },
-
-    didHit() {
-      this.dano += this._lastDmgTaken;
-    },
-
     tick() {
-      if (this.dano <= 1) {
-        this._onAttackCoolDown = true;
-      } else {
-        this._onAttackCoolDown = false;
+      this.styleCustom(this._retratoP, "cursor", "not-allowed");
+      if (this._barreira <= 0 && !this.hasStarted) {
+        this._thisCardP.classList.add("critico");
+        this.hasStarted = true;
+        this.poderAuto();
       }
 
-      let hasTuruInInv = invObj.map((x) => {
-        if (x.Turu && !x.hasHelpedEstoico) {
-          this.addBuff(20);
-          x.hasHelpedEstoico = true;
-        }
-      });
+      if (this._mit > 1 && !this.hasStarted) {
+        this.dano = this._mit;
+      }
+
+      
+
+      this._cargoP.innerHTML = progressBar(
+        this._barreira,
+        this._barreiraMax,
+        "grey",
+        "#ffffff",
+        true
+      );
+
+      if (this._barreira < 1) {
+        this.hide(this._cargoP);
+      }
     },
 
-   
+
+    poderAuto() {
+      
+
+      this.addBuff(100)
+
+      this._thisCardP.className ='critico'
+      console.log( this._thisCardP);
+      this.dano *= 6;
+
+      setTimeout(() => {
+        if (this.unableToAttack()) {
+          this.kill();
+          return;
+        }
+
+        this.areaAtack(this.dano / 6);
+        this.kill()
+      }, 1200);
+    },
   },
 
   {
@@ -2238,13 +2187,12 @@ export let especiais = [
     _audioUltingFiles: 2,
     _sourceUlting: "lucio/ulting",
 
-    onMount(){
-      this.setFont(this._nomeP, 'overwatch')
-      this.setFont(this._cargoP, 'overwatch')
-      this.styleCustom(this._nomeP, 'fontSize', '170%')
-      this.styleCustom(this._cargoP, 'fontSize', '170%')
-      this.setBorder(this._retratoP,"2px solid #15b871")
-
+    onMount() {
+      this.setFont(this._nomeP, "overwatch");
+      this.setFont(this._cargoP, "overwatch");
+      this.styleCustom(this._nomeP, "fontSize", "170%");
+      this.styleCustom(this._cargoP, "fontSize", "170%");
+      this.setBorder(this._retratoP, "2px solid #15b871");
     },
 
     tick() {
@@ -2385,6 +2333,7 @@ export let especiais = [
 
   {
     cartaId: "jhin",
+    jhin: true,
     nome: "JHIN",
     raridade: "cavaleiro",
 
@@ -2403,13 +2352,13 @@ export let especiais = [
     aim: "are",
     atirador: false,
 
-
-    onMount(){
-      this.setFont(this._nomeP, 'lol')
-      this.styleCustom(this._nomeP, 'fontSize' , '180%')
-      this.setBorder(this._retratoP, '2px solid #ffbc42')
-
-
+    onMount() {
+      this.setFont(this._nomeP, "lol");
+      this.setFont(this._cargoP, "lol");
+      this.styleCustom(this._cargoP, "fontSize", "130%");
+      this.styleCustom(this._nomeP, "fontSize", "180%");
+      this.setBorder(this._retratoP, "2px solid #ffbc42");
+      this._cargoP.innerHTML = this.tiros
     },
 
     tick() {
@@ -2531,15 +2480,13 @@ export let especiais = [
             this.ataque(this.dano, 0);
           }
 
-          this.coolDown(3000);
+          this.coolDown(1000);
           break;
         }
-        this.coolDown(3000);
+        this.coolDown(1000);
         break;
       }
     },
-
-   
   },
 
   {
@@ -2581,14 +2528,13 @@ export let especiais = [
     _audioGunLongFiles: 1,
     _sourceGunLong: "dva/gunLong",
 
-
-  onMount(){
-    this.setFont(this._nomeP, 'overwatch')
-    this.setFont(this._cargoP, 'overwatch')
-    this.styleCustom(this._nomeP, 'fontSize', '170%')
-    this.styleCustom(this._cargoP, 'fontSize', '170%')
-    this.setBorder(this._retratoP,"2px solid #ee4bb5")
-  },
+    onMount() {
+      this.setFont(this._nomeP, "overwatch");
+      this.setFont(this._cargoP, "overwatch");
+      this.styleCustom(this._nomeP, "fontSize", "170%");
+      this.styleCustom(this._cargoP, "fontSize", "170%");
+      this.setBorder(this._retratoP, "2px solid #ee4bb5");
+    },
 
     tick() {
       if (this._CHN2.paused && this._isAttacking) {
@@ -2614,7 +2560,7 @@ export let especiais = [
     },
 
     cfg() {
-      this.dano = 45
+      this.dano = 45;
       this.targetPointSetter(680);
     },
 
@@ -2706,8 +2652,6 @@ export let especiais = [
         this.poderLoop();
       }
     },
-
-    
   },
 
   {
@@ -2730,14 +2674,11 @@ export let especiais = [
     _hasCoolDown: true,
     _naturalCoolDown: 4,
 
-
-    onMount(){
-
-      this.hide(this._energiaP)
-      this.setFont(this._nomeP, 'minecraft')
-      this.styleCustom(this._nomeP, 'fontSize', '150%')
-      this.setBorder(this._retratoP, "2px solid #164d0d" )
-
+    onMount() {
+      this.hide(this._energiaP);
+      this.setFont(this._nomeP, "minecraft");
+      this.styleCustom(this._nomeP, "fontSize", "150%");
+      this.setBorder(this._retratoP, "2px solid #164d0d");
     },
 
     cfg() {
@@ -2781,14 +2722,13 @@ export let especiais = [
       }, 2600);
     },
 
-  
-
     // ataqueE: abelhaEnergia() + "🐝"
   },
 
   {
     cartaId: "cabeca",
     nome: "CURTAS HEAD",
+    cabeca: true,
     raridade: "campones",
     energia: 0,
     emoji: "",
@@ -2803,14 +2743,9 @@ export let especiais = [
     _barreira: 50,
     _barrieraActive: true,
 
-
-    onMount(){
-
-      this.hide(this._energiaP, true)
-      this.setBorder(this._retratoP, "2px solid #044dde")
-
-      
-
+    onMount() {
+      this.hide(this._energiaP, true);
+      this.setBorder(this._retratoP, "2px solid #044dde");
     },
     cfg() {
       this._barreiraMax = this._barreira;
@@ -2840,6 +2775,10 @@ export let especiais = [
         undefined,
         true
       );
+
+     
+      this._cantStartToAttack = true
+
 
       if (this._barreira > 0 && !this.unableToAttack()) {
         this._barrieraActive = true;
@@ -2906,18 +2845,11 @@ export let especiais = [
     _audioDespawnFiles: 4,
     _sourceDespawn: "sapato/sapato",
 
-
-    onMount(){
-
-      
-      this.setFont(this._nomeP, 'julia')
-      this.styleCustom(this._nomeP, 'fontSize', '150%')
-      this.setBorder(this._retratoP, "2px solid cyan" )
-
-
-
+    onMount() {
+      this.setFont(this._nomeP, "julia");
+      this.styleCustom(this._nomeP, "fontSize", "150%");
+      this.setBorder(this._retratoP, "2px solid cyan");
     },
-    
 
     tick() {
       invObj.map((x) => {
@@ -2950,7 +2882,6 @@ export let especiais = [
       this.dmg(5);
       this.coolDown(350);
     },
-
   },
 
   {
@@ -2976,16 +2907,14 @@ export let especiais = [
     _coolDownPaused: false,
     active: false,
 
-    onMount(){
-      this.setFont(this._nomeP, 'tf2')
-      this.styleCustom(this._nomeP, 'fontSize', '130%')
-      this.styleCustom(this._retratoP, 'backgroundColor', 'unset')
-      this.setBorder(this._retratoP, "2px solid #cf6a32")
+    onMount() {
+      this.setFont(this._nomeP, "tf2");
+      this.styleCustom(this._nomeP, "fontSize", "130%");
+      this.styleCustom(this._retratoP, "backgroundColor", "unset");
+      this.setBorder(this._retratoP, "2px solid #cf6a32");
 
       this._nomeP.style.marginTop = "5px";
       this._cargoP.style.fontSize = "130%";
-
-
     },
 
     cfg() {
@@ -3103,7 +3032,6 @@ export let especiais = [
 
       this.tiro();
     },
-
   },
 ];
 

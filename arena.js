@@ -2174,7 +2174,7 @@ function inserirmMiniBossDomAndObject(blueprint, object) {
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyZ") {
-    spawnRamattra();
+    spawnSmoke();
 
     // invObj[0]._coolDown = Math.trunc(invObj[0]._coolDown / 2);
   }

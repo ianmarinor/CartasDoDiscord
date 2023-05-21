@@ -2021,7 +2021,7 @@ function deletarDeck(e) {
     }
   }
 }
-let marketMoneyP = document.getElementById('money-market')
+let marketMoneyP = document.getElementById("money-market");
 export let money = {
   total: 0,
 
@@ -2177,7 +2177,7 @@ export let placarArena = {
   action() {
     dmgBoss(this.energiaTotal);
     money.add(Math.floor(this.dinheiroTotal));
-    ammo.add(this.ammoTotal);
+    // ammo.add(this.ammoTotal);
     numCartas.add(this.bonusCards);
   },
 
@@ -2560,10 +2560,24 @@ function globalCoolDown() {
       especialCoolDown();
       arenaCoolDown();
 
-      // console.log(i++);
+      ammoFarm.give();
     }
   }, coolDown);
 }
+
+export let ammoFarm = {
+  active: false,
+  amount: 1,
+
+  set(_trigger){
+    this.active = _trigger
+  },
+
+  give() {
+    if (!this.active) return;
+    ammo.add(this.amount);
+  },
+};
 
 function allMonark() {
   let monark0 = inv.children[0].id == "carta-monark";
@@ -2754,6 +2768,10 @@ export let hpPlayer = {
     heart.style.backgroundColor = "red";
     heart.style.border = "4px dotted black";
     heart.style.borderRadius = "5px";
+
+    let playerChannel = document.createElement("audio");
+
+    audioPlayer("playerHit.mp3", false, playerChannel, 0.5);
 
     setTimeout(function () {
       heart.style.backgroundColor = "";
@@ -2991,9 +3009,9 @@ export function startGame2() {
 
   vendas.set(50);
   hpPlayer.set(100);
-  ammo.set(5);
   // countdown.valueSet(20);
   money.set(125);
+  ammo.set(0)
   tick();
   globalCoolDown();
   removeBuffAll();
@@ -3003,7 +3021,7 @@ export function startGame2() {
 
     rodadas = 0;
   }
-  // setTimeout(openDeck, 12);
+  setTimeout(openDeck, 12);
 }
 
 document.addEventListener("contextmenu", function () {
@@ -3117,6 +3135,7 @@ export function criarPopUp(_appenThis, _display, _popUpId) {
 
   if (_popUpId) {
     popUpP.id = _popUpId;
+    popUpP.className = "popUp";
   } else {
     popUpP.id = "popUp";
     popUpP.className = "popUp";

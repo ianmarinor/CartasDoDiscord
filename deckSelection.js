@@ -1,4 +1,4 @@
-import { criarPopUp, emptyObj, fecharPopUp } from "./script.js";
+import { criarPopUp, emptyObj, fecharPopUp, ammoFarm } from "./script.js";
 
 import {
   especiais,
@@ -50,6 +50,7 @@ function selectionCompleted() {
   deck.children[6].classList.add('campones-market-2')
   fecharPopUp("popUpStrong");
 
+  ammoFarm.set(true)
 
 }
 
